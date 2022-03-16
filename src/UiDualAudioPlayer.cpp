@@ -23,10 +23,10 @@
 
 #include "UiDualAudioPlayer.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-void UiDualAudioMessage::timerCallback() {
-    if( ! _audio_player->is_playing() )
+void UiDualAudioMessage::timerCallback()
+{
+    if (!_audio_player->is_playing())
     {
         play_old->setButtonText("PLAY");
         play_new->setButtonText("PLAY");
@@ -36,131 +36,141 @@ void UiDualAudioMessage::timerCallback() {
 //[/MiscUserDefs]
 
 //==============================================================================
-UiDualAudioMessage::UiDualAudioMessage (AppInstanceStore*app_instance_store_, UiDualAudioMessageListener*const listener_, const String& project_name_, AudioPlayer*const audio_player_)
-    : UiEditor("B-AudioPlayer"),_app_instance_store(app_instance_store_),_listener(listener_),_audio_player(audio_player_)
+UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
+                                       UiDualAudioMessageListener *const listener_,
+                                       const String &project_name_,
+                                       AudioPlayer *const audio_player_)
+    : UiEditor("B-AudioPlayer"), _app_instance_store(app_instance_store_), _listener(listener_),
+      _audio_player(audio_player_)
 {
-    addAndMakeVisible (ok = new TextButton (String()));
-    ok->setExplicitFocusOrder (2);
-    ok->setButtonText (TRANS("OK / ASSIGN"));
-    ok->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight | Button::ConnectedOnTop | Button::ConnectedOnBottom);
-    ok->addListener (this);
-    ok->setColour (TextButton::buttonColourId, Colours::black);
-    ok->setColour (TextButton::buttonOnColourId, Colour (0x004444ff));
-    ok->setColour (TextButton::textColourOnId, Colours::chartreuse);
-    ok->setColour (TextButton::textColourOffId, Colours::chartreuse);
+    addAndMakeVisible(ok = new TextButton(String()));
+    ok->setExplicitFocusOrder(2);
+    ok->setButtonText(TRANS("OK / ASSIGN"));
+    ok->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
+                          Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    ok->addListener(this);
+    ok->setColour(TextButton::buttonColourId, Colours::black);
+    ok->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
+    ok->setColour(TextButton::textColourOnId, Colours::chartreuse);
+    ok->setColour(TextButton::textColourOffId, Colours::chartreuse);
 
-    addAndMakeVisible (cancel = new TextButton (String()));
-    cancel->setExplicitFocusOrder (3);
-    cancel->setButtonText (TRANS("CANCEL"));
-    cancel->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight | Button::ConnectedOnTop | Button::ConnectedOnBottom);
-    cancel->addListener (this);
-    cancel->setColour (TextButton::buttonColourId, Colours::black);
-    cancel->setColour (TextButton::buttonOnColourId, Colour (0x004444ff));
-    cancel->setColour (TextButton::textColourOnId, Colours::red);
-    cancel->setColour (TextButton::textColourOffId, Colours::red);
+    addAndMakeVisible(cancel = new TextButton(String()));
+    cancel->setExplicitFocusOrder(3);
+    cancel->setButtonText(TRANS("CANCEL"));
+    cancel->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
+                              Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    cancel->addListener(this);
+    cancel->setColour(TextButton::buttonColourId, Colours::black);
+    cancel->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
+    cancel->setColour(TextButton::textColourOnId, Colours::red);
+    cancel->setColour(TextButton::textColourOffId, Colours::red);
 
-    addAndMakeVisible (audio_thumb_new = new Slider (String()));
-    audio_thumb_new->setRange (0, 10, 0);
-    audio_thumb_new->setSliderStyle (Slider::LinearHorizontal);
-    audio_thumb_new->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
-    audio_thumb_new->addListener (this);
+    addAndMakeVisible(audio_thumb_new = new Slider(String()));
+    audio_thumb_new->setRange(0, 10, 0);
+    audio_thumb_new->setSliderStyle(Slider::LinearHorizontal);
+    audio_thumb_new->setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
+    audio_thumb_new->addListener(this);
 
-    addAndMakeVisible (play_new = new TextButton (String()));
-    play_new->setExplicitFocusOrder (2);
-    play_new->setButtonText (TRANS("PLAY"));
-    play_new->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight | Button::ConnectedOnTop | Button::ConnectedOnBottom);
-    play_new->addListener (this);
-    play_new->setColour (TextButton::buttonColourId, Colours::black);
-    play_new->setColour (TextButton::buttonOnColourId, Colour (0x004444ff));
-    play_new->setColour (TextButton::textColourOnId, Colours::chartreuse);
-    play_new->setColour (TextButton::textColourOffId, Colours::chartreuse);
+    addAndMakeVisible(play_new = new TextButton(String()));
+    play_new->setExplicitFocusOrder(2);
+    play_new->setButtonText(TRANS("PLAY"));
+    play_new->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
+                                Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    play_new->addListener(this);
+    play_new->setColour(TextButton::buttonColourId, Colours::black);
+    play_new->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
+    play_new->setColour(TextButton::textColourOnId, Colours::chartreuse);
+    play_new->setColour(TextButton::textColourOffId, Colours::chartreuse);
 
-    addAndMakeVisible (audio_thumb_old = new Slider (String()));
-    audio_thumb_old->setRange (0, 10, 0);
-    audio_thumb_old->setSliderStyle (Slider::LinearHorizontal);
-    audio_thumb_old->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
-    audio_thumb_old->addListener (this);
+    addAndMakeVisible(audio_thumb_old = new Slider(String()));
+    audio_thumb_old->setRange(0, 10, 0);
+    audio_thumb_old->setSliderStyle(Slider::LinearHorizontal);
+    audio_thumb_old->setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
+    audio_thumb_old->addListener(this);
 
-    addAndMakeVisible (titel2 = new Label (String(),
-                                           TRANS("Would you like to assign this audio to project: ")));
-    titel2->setFont (Font ("Oswald", 18.00f, Font::plain));
-    titel2->setJustificationType (Justification::centredLeft);
-    titel2->setEditable (false, false, false);
-    titel2->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    titel2->setColour (TextEditor::textColourId, Colours::black);
-    titel2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(
+        titel2 = new Label(String(), TRANS("Would you like to assign this audio to project: ")));
+    titel2->setFont(Font("Oswald", 18.00f, Font::plain));
+    titel2->setJustificationType(Justification::centredLeft);
+    titel2->setEditable(false, false, false);
+    titel2->setColour(Label::textColourId,
+                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    titel2->setColour(TextEditor::textColourId, Colours::black);
+    titel2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (project_name = new Label (String(),
-            TRANS("XYZ")));
-    project_name->setFont (Font ("Oswald", 18.00f, Font::plain));
-    project_name->setJustificationType (Justification::centred);
-    project_name->setEditable (false, false, false);
-    project_name->setColour (Label::textColourId, Colours::aqua);
-    project_name->setColour (TextEditor::textColourId, Colours::black);
-    project_name->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(project_name = new Label(String(), TRANS("XYZ")));
+    project_name->setFont(Font("Oswald", 18.00f, Font::plain));
+    project_name->setJustificationType(Justification::centred);
+    project_name->setEditable(false, false, false);
+    project_name->setColour(Label::textColourId, Colours::aqua);
+    project_name->setColour(TextEditor::textColourId, Colours::black);
+    project_name->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (titel4 = new Label (String(),
-                                           TRANS("?")));
-    titel4->setFont (Font ("Oswald", 18.00f, Font::plain));
-    titel4->setJustificationType (Justification::centredRight);
-    titel4->setEditable (false, false, false);
-    titel4->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    titel4->setColour (TextEditor::textColourId, Colours::black);
-    titel4->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(titel4 = new Label(String(), TRANS("?")));
+    titel4->setFont(Font("Oswald", 18.00f, Font::plain));
+    titel4->setJustificationType(Justification::centredRight);
+    titel4->setEditable(false, false, false);
+    titel4->setColour(Label::textColourId,
+                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    titel4->setColour(TextEditor::textColourId, Colours::black);
+    titel4->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (old_info_2 = new Label (String(),
-            TRANS("Assigning a audio file will create a copy of the file you like to asign. It also replaces existing audio assigns for this projects (unrestoreable).")));
-    old_info_2->setFont (Font ("Oswald", 18.00f, Font::plain));
-    old_info_2->setJustificationType (Justification::topLeft);
-    old_info_2->setEditable (false, false, false);
-    old_info_2->setColour (Label::textColourId, Colours::red);
-    old_info_2->setColour (TextEditor::textColourId, Colours::black);
-    old_info_2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(
+        old_info_2 = new Label(
+            String(),
+            TRANS("Assigning a audio file will create a copy of the file you like to asign. It "
+                  "also replaces existing audio assigns for this projects (unrestoreable).")));
+    old_info_2->setFont(Font("Oswald", 18.00f, Font::plain));
+    old_info_2->setJustificationType(Justification::topLeft);
+    old_info_2->setEditable(false, false, false);
+    old_info_2->setColour(Label::textColourId, Colours::red);
+    old_info_2->setColour(TextEditor::textColourId, Colours::black);
+    old_info_2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (old_info_3 = new Label (String(),
-            TRANS("NOTE:")));
-    old_info_3->setFont (Font ("Oswald", 18.00f, Font::plain));
-    old_info_3->setJustificationType (Justification::topLeft);
-    old_info_3->setEditable (false, false, false);
-    old_info_3->setColour (Label::textColourId, Colours::red);
-    old_info_3->setColour (TextEditor::textColourId, Colours::black);
-    old_info_3->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(old_info_3 = new Label(String(), TRANS("NOTE:")));
+    old_info_3->setFont(Font("Oswald", 18.00f, Font::plain));
+    old_info_3->setJustificationType(Justification::topLeft);
+    old_info_3->setEditable(false, false, false);
+    old_info_3->setColour(Label::textColourId, Colours::red);
+    old_info_3->setColour(TextEditor::textColourId, Colours::black);
+    old_info_3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (titel7 = new Label (String(),
-                                           TRANS("ASSIGN SAMPLE AUDIO TO PROJECT")));
-    titel7->setFont (Font ("Oswald", 25.00f, Font::bold));
-    titel7->setJustificationType (Justification::centredLeft);
-    titel7->setEditable (false, false, false);
-    titel7->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    titel7->setColour (TextEditor::textColourId, Colours::black);
-    titel7->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(titel7 = new Label(String(), TRANS("ASSIGN SAMPLE AUDIO TO PROJECT")));
+    titel7->setFont(Font("Oswald", 25.00f, Font::bold));
+    titel7->setJustificationType(Justification::centredLeft);
+    titel7->setEditable(false, false, false);
+    titel7->setColour(Label::textColourId,
+                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    titel7->setColour(TextEditor::textColourId, Colours::black);
+    titel7->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (play_old = new TextButton (String()));
-    play_old->setExplicitFocusOrder (2);
-    play_old->setButtonText (TRANS("PLAY"));
-    play_old->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight | Button::ConnectedOnTop | Button::ConnectedOnBottom);
-    play_old->addListener (this);
-    play_old->setColour (TextButton::buttonColourId, Colours::black);
-    play_old->setColour (TextButton::buttonOnColourId, Colour (0x004444ff));
-    play_old->setColour (TextButton::textColourOnId, Colours::red);
-    play_old->setColour (TextButton::textColourOffId, Colours::red);
+    addAndMakeVisible(play_old = new TextButton(String()));
+    play_old->setExplicitFocusOrder(2);
+    play_old->setButtonText(TRANS("PLAY"));
+    play_old->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
+                                Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    play_old->addListener(this);
+    play_old->setColour(TextButton::buttonColourId, Colours::black);
+    play_old->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
+    play_old->setColour(TextButton::textColourOnId, Colours::red);
+    play_old->setColour(TextButton::textColourOffId, Colours::red);
 
-    addAndMakeVisible (old_info_1 = new Label (String(),
-            TRANS("Currently assigned audio file (will be replaced)")));
-    old_info_1->setFont (Font ("Oswald", 18.00f, Font::plain));
-    old_info_1->setJustificationType (Justification::centredLeft);
-    old_info_1->setEditable (false, false, false);
-    old_info_1->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    old_info_1->setColour (TextEditor::textColourId, Colours::black);
-    old_info_1->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(old_info_1 = new Label(
+                          String(), TRANS("Currently assigned audio file (will be replaced)")));
+    old_info_1->setFont(Font("Oswald", 18.00f, Font::plain));
+    old_info_1->setJustificationType(Justification::centredLeft);
+    old_info_1->setEditable(false, false, false);
+    old_info_1->setColour(Label::textColourId,
+                          Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    old_info_1->setColour(TextEditor::textColourId, Colours::black);
+    old_info_1->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (toolbar = new UiEditorToolbar (this, false, true, false));
-
+    addAndMakeVisible(toolbar = new UiEditorToolbar(this, false, true, false));
 
     //[UserPreSize]
-    project_name->setText(project_name_,dontSendNotification);
+    project_name->setText(project_name_, dontSendNotification);
 
-    if( ! _listener->get_old_audio_file().existsAsFile() )
+    if (!_listener->get_old_audio_file().existsAsFile())
     {
         audio_thumb_old->setEnabled(false);
         play_old->setEnabled(false);
@@ -170,18 +180,18 @@ UiDualAudioMessage::UiDualAudioMessage (AppInstanceStore*app_instance_store_, Ui
     }
     //[/UserPreSize]
 
-    setSize (440, 305);
-
+    setSize(440, 305);
 
     //[Constructor] You can add your own custom stuff here..
-    center_relative_and_make_visible( reinterpret_cast< Component*const >( _app_instance_store->editor ) );
-    //setAlwaysOnTop(true);
-    enterModalState( true );
+    center_relative_and_make_visible(
+        reinterpret_cast<Component *const>(_app_instance_store->editor));
+    // setAlwaysOnTop(true);
+    enterModalState(true);
     // AUTO START
     _playing_thumb = nullptr;
-    buttonClicked( play_new );
+    buttonClicked(play_new);
 
-    startTimer( 50 );
+    startTimer(50);
     //[/Constructor]
 }
 
@@ -205,24 +215,23 @@ UiDualAudioMessage::~UiDualAudioMessage()
     old_info_1 = nullptr;
     toolbar = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiDualAudioMessage::paint (Graphics& g)
+void UiDualAudioMessage::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll (Colours::white);
+    g.fillAll(Colours::white);
 
-    g.setColour (Colour (0xff161616));
-    g.fillRect (0, 0, getWidth() - 0, getHeight() - 0);
+    g.setColour(Colour(0xff161616));
+    g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.drawRect (0, 0, getWidth() - 0, getHeight() - 0, 2);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
     //[UserPaint] Add your own custom painting code here..
     ResizableWindow::moved();
@@ -234,26 +243,45 @@ void UiDualAudioMessage::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    ok->setBounds (proportionOfWidth (0.7273f) - proportionOfWidth (0.2045f), proportionOfHeight (0.8525f), proportionOfWidth (0.2045f), proportionOfHeight (0.0820f));
-    cancel->setBounds (proportionOfWidth (0.9546f) - proportionOfWidth (0.2045f), proportionOfHeight (0.8525f), proportionOfWidth (0.2045f), proportionOfHeight (0.0820f));
-    audio_thumb_new->setBounds (proportionOfWidth (0.2045f), proportionOfHeight (0.2951f), proportionOfWidth (0.7500f), proportionOfHeight (0.0787f));
-    play_new->setBounds (proportionOfWidth (0.1818f) - proportionOfWidth (0.1364f), proportionOfHeight (0.2951f), proportionOfWidth (0.1364f), proportionOfHeight (0.0820f));
-    audio_thumb_old->setBounds (proportionOfWidth (0.2045f), proportionOfHeight (0.5246f), proportionOfWidth (0.7500f), proportionOfHeight (0.0787f));
-    titel2->setBounds (proportionOfWidth (0.0455f), proportionOfHeight (0.1803f), proportionOfWidth (0.4773f), proportionOfHeight (0.0984f));
-    project_name->setBounds (proportionOfWidth (0.5455f), proportionOfHeight (0.1803f), proportionOfWidth (0.3409f), proportionOfHeight (0.0984f));
-    titel4->setBounds (proportionOfWidth (0.9546f) - proportionOfWidth (0.0591f), proportionOfHeight (0.1803f), proportionOfWidth (0.0591f), proportionOfHeight (0.0984f));
-    old_info_2->setBounds (proportionOfWidth (0.1364f), proportionOfHeight (0.6557f), proportionOfWidth (0.8182f), proportionOfHeight (0.1639f));
-    old_info_3->setBounds (proportionOfWidth (0.0455f), proportionOfHeight (0.6557f), proportionOfWidth (0.0909f), proportionOfHeight (0.0984f));
-    titel7->setBounds (proportionOfWidth (0.0455f), proportionOfHeight (0.0328f), proportionOfWidth (0.8000f), proportionOfHeight (0.1312f));
-    play_old->setBounds (proportionOfWidth (0.1818f) - proportionOfWidth (0.1364f), proportionOfHeight (0.5246f), proportionOfWidth (0.1364f), proportionOfHeight (0.0820f));
-    old_info_1->setBounds (proportionOfWidth (0.0455f), proportionOfHeight (0.4098f), proportionOfWidth (0.9091f), proportionOfHeight (0.0984f));
-    toolbar->setBounds (getWidth() - proportionOfWidth (0.1136f), proportionOfHeight (-0.1738f), proportionOfWidth (0.1136f), proportionOfHeight (0.6557f));
+    ok->setBounds(proportionOfWidth(0.7273f) - proportionOfWidth(0.2045f),
+                  proportionOfHeight(0.8525f), proportionOfWidth(0.2045f),
+                  proportionOfHeight(0.0820f));
+    cancel->setBounds(proportionOfWidth(0.9546f) - proportionOfWidth(0.2045f),
+                      proportionOfHeight(0.8525f), proportionOfWidth(0.2045f),
+                      proportionOfHeight(0.0820f));
+    audio_thumb_new->setBounds(proportionOfWidth(0.2045f), proportionOfHeight(0.2951f),
+                               proportionOfWidth(0.7500f), proportionOfHeight(0.0787f));
+    play_new->setBounds(proportionOfWidth(0.1818f) - proportionOfWidth(0.1364f),
+                        proportionOfHeight(0.2951f), proportionOfWidth(0.1364f),
+                        proportionOfHeight(0.0820f));
+    audio_thumb_old->setBounds(proportionOfWidth(0.2045f), proportionOfHeight(0.5246f),
+                               proportionOfWidth(0.7500f), proportionOfHeight(0.0787f));
+    titel2->setBounds(proportionOfWidth(0.0455f), proportionOfHeight(0.1803f),
+                      proportionOfWidth(0.4773f), proportionOfHeight(0.0984f));
+    project_name->setBounds(proportionOfWidth(0.5455f), proportionOfHeight(0.1803f),
+                            proportionOfWidth(0.3409f), proportionOfHeight(0.0984f));
+    titel4->setBounds(proportionOfWidth(0.9546f) - proportionOfWidth(0.0591f),
+                      proportionOfHeight(0.1803f), proportionOfWidth(0.0591f),
+                      proportionOfHeight(0.0984f));
+    old_info_2->setBounds(proportionOfWidth(0.1364f), proportionOfHeight(0.6557f),
+                          proportionOfWidth(0.8182f), proportionOfHeight(0.1639f));
+    old_info_3->setBounds(proportionOfWidth(0.0455f), proportionOfHeight(0.6557f),
+                          proportionOfWidth(0.0909f), proportionOfHeight(0.0984f));
+    titel7->setBounds(proportionOfWidth(0.0455f), proportionOfHeight(0.0328f),
+                      proportionOfWidth(0.8000f), proportionOfHeight(0.1312f));
+    play_old->setBounds(proportionOfWidth(0.1818f) - proportionOfWidth(0.1364f),
+                        proportionOfHeight(0.5246f), proportionOfWidth(0.1364f),
+                        proportionOfHeight(0.0820f));
+    old_info_1->setBounds(proportionOfWidth(0.0455f), proportionOfHeight(0.4098f),
+                          proportionOfWidth(0.9091f), proportionOfHeight(0.0984f));
+    toolbar->setBounds(getWidth() - proportionOfWidth(0.1136f), proportionOfHeight(-0.1738f),
+                       proportionOfWidth(0.1136f), proportionOfHeight(0.6557f));
     //[UserResized] Add your own custom resize handling here..
     ResizableWindow::resized();
     //[/UserResized]
 }
 
-void UiDualAudioMessage::buttonClicked (Button* buttonThatWasClicked)
+void UiDualAudioMessage::buttonClicked(Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -261,7 +289,7 @@ void UiDualAudioMessage::buttonClicked (Button* buttonThatWasClicked)
     if (buttonThatWasClicked == ok)
     {
         //[UserButtonCode_ok] -- add your button handler code here..
-        _audio_player->stop( true );
+        _audio_player->stop(true);
         _listener->perform_ok();
         delete this;
         //[/UserButtonCode_ok]
@@ -269,7 +297,7 @@ void UiDualAudioMessage::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == cancel)
     {
         //[UserButtonCode_cancel] -- add your button handler code here..
-        _audio_player->stop( true );
+        _audio_player->stop(true);
         _listener->perform_chancel();
         delete this;
         //[/UserButtonCode_cancel]
@@ -277,10 +305,10 @@ void UiDualAudioMessage::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == play_new)
     {
         //[UserButtonCode_play_new] -- add your button handler code here..
-        if( _playing_thumb != audio_thumb_new )
+        if (_playing_thumb != audio_thumb_new)
         {
             _audio_player->stop();
-            if( _audio_player->loadFileIntoTransport( _listener->get_new_audio_file() ) )
+            if (_audio_player->loadFileIntoTransport(_listener->get_new_audio_file()))
             {
                 _audio_player->play(audio_thumb_new);
                 _playing_thumb = audio_thumb_new;
@@ -300,10 +328,10 @@ void UiDualAudioMessage::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == play_old)
     {
         //[UserButtonCode_play_old] -- add your button handler code here..
-        if( _playing_thumb != audio_thumb_old )
+        if (_playing_thumb != audio_thumb_old)
         {
             _audio_player->stop();
-            if( _audio_player->loadFileIntoTransport( _listener->get_old_audio_file() ) )
+            if (_audio_player->loadFileIntoTransport(_listener->get_old_audio_file()))
             {
                 _audio_player->play(audio_thumb_old);
                 _playing_thumb = audio_thumb_old;
@@ -325,7 +353,7 @@ void UiDualAudioMessage::buttonClicked (Button* buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiDualAudioMessage::sliderValueChanged (Slider* sliderThatWasMoved)
+void UiDualAudioMessage::sliderValueChanged(Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
@@ -345,11 +373,8 @@ void UiDualAudioMessage::sliderValueChanged (Slider* sliderThatWasMoved)
     //[/UsersliderValueChanged_Post]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -437,7 +462,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

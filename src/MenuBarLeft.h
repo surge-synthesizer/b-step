@@ -29,8 +29,6 @@ class GstepAudioProcessorEditor;
 class ModelBase;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -39,48 +37,48 @@ class ModelBase;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class MenuBarLeft  : public Component,
-                    public Button::Listener
+class MenuBarLeft : public Component, public Button::Listener
 {
-public:
+  public:
     //==============================================================================
-    MenuBarLeft (AppInstanceStore*const app_instance_store_, GstepAudioProcessorEditor*const main_window_);
+    MenuBarLeft(AppInstanceStore *const app_instance_store_,
+                GstepAudioProcessorEditor *const main_window_);
     ~MenuBarLeft();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
-    GstepAudioProcessorEditor*const _main_window;
+    AppInstanceStore *const _app_instance_store;
+    GstepAudioProcessorEditor *const _main_window;
 
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
-public:
-    void refresh_ui( Array< Component* >& components_to_repaint_ );
-private:
+  public:
+    void refresh_ui(Array<Component *> &components_to_repaint_);
+
+  private:
     void set_user_mode();
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
+    void buttonClicked(Button *buttonThatWasClicked);
 
     // Binary resources:
-    static const char* _5stars_svg;
+    static const char *_5stars_svg;
     static const int _5stars_svgSize;
-    static const char* _3stars_svg;
+    static const char *_3stars_svg;
     static const int _3stars_svgSize;
-    static const char* _1stars_svg;
+    static const char *_1stars_svg;
     static const int _1stars_svgSize;
-    static const char* _5starson_svg;
+    static const char *_5starson_svg;
     static const int _5starson_svgSize;
-    static const char* _3starson_svg;
+    static const char *_3starson_svg;
     static const int _3starson_svgSize;
-    static const char* _1starson_svg;
+    static const char *_1starson_svg;
     static const int _1starson_svgSize;
 
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -99,12 +97,11 @@ private:
     ScopedPointer<Drawable> drawable2;
     ScopedPointer<Drawable> drawable3;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MenuBarLeft)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MenuBarLeft)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_A2547B656C4F7F86__
+#endif // __JUCE_HEADER_A2547B656C4F7F86__

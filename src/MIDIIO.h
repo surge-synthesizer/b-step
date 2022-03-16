@@ -19,12 +19,13 @@
 // ************************************************************************************************
 class MIDIInListener
 {
-public:
-    virtual void process( const MidiMessage& message_ ) = 0;
-protected:
+  public:
+    virtual void process(const MidiMessage &message_) = 0;
+
+  protected:
     virtual ~MIDIInListener() {}
 
-    JUCE_LEAK_DETECTOR (MIDIInListener)
+    JUCE_LEAK_DETECTOR(MIDIInListener)
 };
 
 // CONST STRINGS
@@ -33,7 +34,8 @@ protected:
 #define VIRTUAL_PORT "Create Virtual Port"
 #define USE_MASTER_OUT "Use Master Output"
 
-enum {
+enum
+{
     IS_DISABLED_PORT = -1,
 
     IS_VIRTUAL_PORT = 9991,
@@ -42,16 +44,15 @@ enum {
 };
 
 class AppInstanceStore;
-template<class port_type>
-class MidiIOObject
+template <class port_type> class MidiIOObject
 {
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
 
     // PROPERTIES
-protected:
-    AppInstanceStore*const _app_instance_store;
+  protected:
+    AppInstanceStore *const _app_instance_store;
     std::unique_ptr<port_type> _midi_port;
     String _port_name;
     String _standalone_portname;
@@ -66,20 +67,15 @@ protected:
     // --------------------------------------------------------------------------------------------
 
     //// CTOR
-private:
+  private:
     MidiIOObject(); //-> delete
-protected:
-    MidiIOObject( AppInstanceStore*const app_instance_store_ )
-        : _app_instance_store( app_instance_store_ ),
-          _midi_port( nullptr ),
-          _port_name(DISABLED_PORT),
-          _standalone_portname(DISABLED_PORT),
-          _at_dev_index(-1),
-          _is_succesful_opend( false ),
-          _is_in_host_handling( false ),
-          _use_master_midi_out( false ),
-          _is_enabled( false )
-    {}
+  protected:
+    MidiIOObject(AppInstanceStore *const app_instance_store_)
+        : _app_instance_store(app_instance_store_), _midi_port(nullptr), _port_name(DISABLED_PORT),
+          _standalone_portname(DISABLED_PORT), _at_dev_index(-1), _is_succesful_opend(false),
+          _is_in_host_handling(false), _use_master_midi_out(false), _is_enabled(false)
+    {
+    }
     virtual ~MidiIOObject() {}
 
     // --------------------------------------------------------------------------------------------
@@ -87,8 +83,8 @@ protected:
     // --------------------------------------------------------------------------------------------
 
     //// Interface
-public:
-    void set_port_name( const String& name_, int at_dev_index_ )
+  public:
+    void set_port_name(const String &name_, int at_dev_index_)
     {
         _port_name = name_;
         _at_dev_index = at_dev_index_;
@@ -96,23 +92,23 @@ public:
         _is_in_host_handling = false;
         _use_master_midi_out = false;
         _is_enabled = true;
-        if( _port_name == IN_HOST_MIDI_HANDLING )
+        if (_port_name == IN_HOST_MIDI_HANDLING)
         {
             _is_in_host_handling = true;
             _is_succesful_opend = true;
             _is_enabled = true;
             _at_dev_index = IS_IN_HOST_HANDLING;
         }
-        else if( _port_name == DISABLED_PORT )
+        else if (_port_name == DISABLED_PORT)
         {
             _is_in_host_handling = false;
             _is_succesful_opend = false;
             _is_enabled = false;
             _at_dev_index = IS_DISABLED_PORT;
         }
-        else if( _port_name == VIRTUAL_PORT )
+        else if (_port_name == VIRTUAL_PORT)
             _at_dev_index = IS_VIRTUAL_PORT;
-        else if( _port_name == USE_MASTER_OUT )
+        else if (_port_name == USE_MASTER_OUT)
         {
             _is_succesful_opend = true;
             _is_enabled = true;
@@ -122,23 +118,23 @@ public:
         }
     }
 
-    static bool is_device_at_index_available( const String& name_, int at_dev_index_ )
+    static bool is_device_at_index_available(const String &name_, int at_dev_index_)
     {
-        if( name_.compare( IN_HOST_MIDI_HANDLING ) == 0 )
+        if (name_.compare(IN_HOST_MIDI_HANDLING) == 0)
             return true;
-        if( name_.compare( DISABLED_PORT ) == 0 )
+        if (name_.compare(DISABLED_PORT) == 0)
             return true;
-        if( name_.compare( VIRTUAL_PORT ) == 0 )
+        if (name_.compare(VIRTUAL_PORT) == 0)
             return true;
-        if( name_.compare( USE_MASTER_OUT ) == 0 )
+        if (name_.compare(USE_MASTER_OUT) == 0)
             return true;
 
-        if( at_dev_index_ <= 0 )
+        if (at_dev_index_ <= 0)
             return false;
 
         StringArray ports = port_type::getDevices();
 
-        if( ports[at_dev_index_] == name_ )
+        if (ports[at_dev_index_] == name_)
         {
             return true;
         }
@@ -146,17 +142,17 @@ public:
     }
 
     // -1 == not found
-    static int get_port_index_at_Nth_index( const String& name_, int Nth_index_ )
+    static int get_port_index_at_Nth_index(const String &name_, int Nth_index_)
     {
         StringArray ports = port_type::getDevices();
 
         int Nth_counter = -1;
-        for( int i = 0 ; i!= ports.size(); ++i )
+        for (int i = 0; i != ports.size(); ++i)
         {
-            if( ports[i] == name_ )
+            if (ports[i] == name_)
             {
                 ++Nth_counter;
-                if( Nth_index_ ==  Nth_counter )
+                if (Nth_index_ == Nth_counter)
                     return i;
             }
         }
@@ -164,22 +160,10 @@ public:
         return -1;
     }
 
-    bool is_in_host_handling() const
-    {
-        return _is_in_host_handling;
-    }
-    bool use_master_midi_out() const
-    {
-        return _use_master_midi_out;
-    }
-    bool is_enabled() const
-    {
-        return _is_enabled;
-    }
-    int get_dev_index() const
-    {
-        return _at_dev_index;
-    }
+    bool is_in_host_handling() const { return _is_in_host_handling; }
+    bool use_master_midi_out() const { return _use_master_midi_out; }
+    bool is_enabled() const { return _is_enabled; }
+    int get_dev_index() const { return _at_dev_index; }
 
     virtual bool close_port() = 0;
     virtual bool open_port() = 0;
@@ -194,47 +178,34 @@ public:
         _is_succesful_opend = false;
     }
 
-    const String& port_name() const
-    {
-        return _port_name;
-    }
-    const String& standalone_portname() const
-    {
-        return _standalone_portname;
-    }
-    void set_standalone_portname(const String& port_name_ )
-    {
-        _standalone_portname = port_name_;
-    }
-    bool is_open() const
-    {
-        return _is_succesful_opend;
-    }
+    const String &port_name() const { return _port_name; }
+    const String &standalone_portname() const { return _standalone_portname; }
+    void set_standalone_portname(const String &port_name_) { _standalone_portname = port_name_; }
+    bool is_open() const { return _is_succesful_opend; }
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MidiIOObject)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiIOObject)
 };
 
-class MidiInputObject : public MidiIOObject< MidiInput >, public MidiInputCallback
+class MidiInputObject : public MidiIOObject<MidiInput>, public MidiInputCallback
 {
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
 
     // PROPERTIES
-public:
-    MIDIInListener* _receiver;
+  public:
+    MIDIInListener *_receiver;
 
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
 
     //// CTOR
-private:
+  private:
     MidiInputObject(); //->delete
-public:
-    MidiInputObject( AppInstanceStore*const app_instance_store_, MIDIInListener*const receiver_ )
-        : MidiIOObject< MidiInput >( app_instance_store_ ),
-          _receiver( receiver_ )
+  public:
+    MidiInputObject(AppInstanceStore *const app_instance_store_, MIDIInListener *const receiver_)
+        : MidiIOObject<MidiInput>(app_instance_store_), _receiver(receiver_)
     {
         BOOT(MidiInputObject);
     }
@@ -249,67 +220,65 @@ public:
     // --------------------------------------------------------------------------------------------
 
     //// Interface
-private:
-    void handleIncomingMidiMessage (MidiInput* source, const MidiMessage& message ) override
+  private:
+    void handleIncomingMidiMessage(MidiInput *source, const MidiMessage &message) override
     {
-        if( source == _midi_port.get() )
+        if (source == _midi_port.get())
         {
-            if( _receiver )
-                _receiver->process( message );
+            if (_receiver)
+                _receiver->process(message);
         }
     }
 
-public:
-    void process ( const MidiMessage& message )
+  public:
+    void process(const MidiMessage &message)
     {
-        handleIncomingMidiMessage( _midi_port.get(), message );
+        handleIncomingMidiMessage(_midi_port.get(), message);
     }
 
-public:
+  public:
     bool open_port()
     {
         close_port();
 
-        DBG( "try open_port INPUT" );
-        if( _port_name == IN_HOST_MIDI_HANDLING )
+        DBG("try open_port INPUT");
+        if (_port_name == IN_HOST_MIDI_HANDLING)
         {
             _is_succesful_opend = true;
             return true;
         }
-        if( _port_name == DISABLED_PORT )
+        if (_port_name == DISABLED_PORT)
         {
             _is_succesful_opend = false;
             return false;
         }
-        if( _at_dev_index < 0 )
+        if (_at_dev_index < 0)
             return false;
 
         bool success = false;
-        DBG( _port_name );
-        if( _port_name != VIRTUAL_PORT )
+        DBG(_port_name);
+        if (_port_name != VIRTUAL_PORT)
         {
-            if( _at_dev_index < MidiInput::getDevices().size() )
+            if (_at_dev_index < MidiInput::getDevices().size())
             {
-                _midi_port = MidiInput::openDevice( _at_dev_index, this );
+                _midi_port = MidiInput::openDevice(_at_dev_index, this);
 
-                if( _midi_port )
+                if (_midi_port)
                 {
-                    DBG( _port_name );
-                    _midi_port->setName( String("B-Step receive @ ") + _port_name );
-                    DBG( "success" );
+                    DBG(_port_name);
+                    _midi_port->setName(String("B-Step receive @ ") + _port_name);
+                    DBG("success");
                     _midi_port->start();
                     success = true;
                 }
-                else if( _app_instance_store->editor )
+                else if (_app_instance_store->editor)
                 {
-                    AlertWindow::showMessageBox
-                    (
-                        AlertWindow::WarningIcon,
-                        "ERROR OPEN PORT!",
-                        String("Can NOT open port: ")+_port_name +String("\nPlease make sure the port is free and NOT in use by your DAW or another application."),
-                        "Ok",
-                        reinterpret_cast< Component*>( _app_instance_store->editor )
-                    );
+                    AlertWindow::showMessageBox(
+                        AlertWindow::WarningIcon, "ERROR OPEN PORT!",
+                        String("Can NOT open port: ") + _port_name +
+                            String("\nPlease make sure the port is free and NOT in use by your DAW "
+                                   "or another application."),
+                        "Ok", reinterpret_cast<Component *>(_app_instance_store->editor));
                 }
             }
         }
@@ -317,12 +286,12 @@ public:
 #ifndef JUCE_ANDROID
         else
         {
-            DBG( "try virtual IN" );
-            _midi_port = MidiInput::createNewDevice( "B-Step", this );
-            if( _midi_port )
+            DBG("try virtual IN");
+            _midi_port = MidiInput::createNewDevice("B-Step", this);
+            if (_midi_port)
             {
-                DBG( _port_name );
-                DBG( "success" );
+                DBG(_port_name);
+                DBG("success");
                 _midi_port->start();
                 success = true;
             }
@@ -331,49 +300,49 @@ public:
 #endif
         _is_succesful_opend = success;
 
-        if( ! success )
-            MIDI_ERROR_LOG( "Error open MIDI In port: " + _port_name + " May be the port is already in use.\n" );
+        if (!success)
+            MIDI_ERROR_LOG("Error open MIDI In port: " + _port_name +
+                           " May be the port is already in use.\n");
 
         return success;
     }
 
     bool close_port() override
     {
-        if( _port_name == IN_HOST_MIDI_HANDLING || _port_name == DISABLED_PORT )
+        if (_port_name == IN_HOST_MIDI_HANDLING || _port_name == DISABLED_PORT)
             return true;
 
         _is_succesful_opend = false;
 
-        if( _midi_port )
+        if (_midi_port)
         {
             //_midi_port->stop();
             _midi_port.reset(nullptr);
-            //MidiInput* tmp = _midi_port;
+            // MidiInput* tmp = _midi_port;
             //_midi_port = nullptr;
-            //delete tmp;
+            // delete tmp;
         }
 
         return 0;
     }
 };
 
-class MidiOutputObject : public MidiIOObject< MidiOutput >
+class MidiOutputObject : public MidiIOObject<MidiOutput>
 {
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
 
     // PROPERTIES
-private:
-
+  private:
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
 
     //// CTOR
-public:
-    MidiOutputObject( AppInstanceStore*const app_instance_store_ )
-        : MidiIOObject< MidiOutput >( app_instance_store_ )
+  public:
+    MidiOutputObject(AppInstanceStore *const app_instance_store_)
+        : MidiIOObject<MidiOutput>(app_instance_store_)
     {
         BOOT(MidiOutputObject);
     }
@@ -387,68 +356,66 @@ public:
     // --------------------------------------------------------------------------------------------
 
     //// Interface
-public:
+  public:
     bool open_port()
     {
         close_port();
 
-        DBG( "try open_port OUTPUT" );
-        if( _port_name.compare( IN_HOST_MIDI_HANDLING ) == 0 )
+        DBG("try open_port OUTPUT");
+        if (_port_name.compare(IN_HOST_MIDI_HANDLING) == 0)
         {
             _is_succesful_opend = true;
             return true;
         }
-        if( _port_name.compare( USE_MASTER_OUT ) == 0 )
+        if (_port_name.compare(USE_MASTER_OUT) == 0)
         {
             _is_succesful_opend = true;
             return true;
         }
-        if( _port_name.compare( DISABLED_PORT ) == 0 )
+        if (_port_name.compare(DISABLED_PORT) == 0)
         {
             _is_succesful_opend = false;
             return false;
         }
-        if( _at_dev_index < 0 )
+        if (_at_dev_index < 0)
         {
             return false;
         }
 
         bool success = false;
-        if( _port_name != VIRTUAL_PORT )
+        if (_port_name != VIRTUAL_PORT)
         {
-            if( _at_dev_index < MidiOutput::getDevices().size() )
+            if (_at_dev_index < MidiOutput::getDevices().size())
             {
-                _midi_port = MidiOutput::openDevice( _at_dev_index );
+                _midi_port = MidiOutput::openDevice(_at_dev_index);
 
-                if( _midi_port )
+                if (_midi_port)
                 {
-                    DBG( _port_name );
-                    DBG( "success" );
+                    DBG(_port_name);
+                    DBG("success");
                     _is_succesful_opend = true;
                     success = true;
                 }
-                else if( _app_instance_store->editor )
+                else if (_app_instance_store->editor)
                 {
-                    AlertWindow::showMessageBox
-                    (
-                        AlertWindow::WarningIcon,
-                        "ERROR OPEN PORT!",
-                        String("Can NOT open port: ")+_port_name +String("\nPlease make sure the port is free and NOT in use by your DAW or another application."),
-                        "Ok",
-                        reinterpret_cast< Component*>( _app_instance_store->editor )
-                    );
+                    AlertWindow::showMessageBox(
+                        AlertWindow::WarningIcon, "ERROR OPEN PORT!",
+                        String("Can NOT open port: ") + _port_name +
+                            String("\nPlease make sure the port is free and NOT in use by your DAW "
+                                   "or another application."),
+                        "Ok", reinterpret_cast<Component *>(_app_instance_store->editor));
                 }
             }
         }
 #ifndef JUCE_WINDOWS
-#ifndef  JUCE_ANDROID
+#ifndef JUCE_ANDROID
         else
         {
-            DBG( "try virtual OUTPUT" );
-            _midi_port = MidiOutput::createNewDevice( "B-Step" );
-            if( _midi_port )
+            DBG("try virtual OUTPUT");
+            _midi_port = MidiOutput::createNewDevice("B-Step");
+            if (_midi_port)
             {
-                DBG( "success" );
+                DBG("success");
                 _is_succesful_opend = true;
                 success = true;
             }
@@ -459,12 +426,13 @@ public:
         _is_succesful_opend = success;
 
 #ifndef B_STEP_STANDALONE
-        if( _midi_port )
+        if (_midi_port)
             _midi_port->startBackgroundThread();
 #endif
 
-        if( ! success )
-            MIDI_ERROR_LOG( "Error open MIDI Out port: " + _port_name + " Unknown issue - please check your device and try again.\n" );
+        if (!success)
+            MIDI_ERROR_LOG("Error open MIDI Out port: " + _port_name +
+                           " Unknown issue - please check your device and try again.\n");
 
         return success;
     }
@@ -472,14 +440,15 @@ public:
     CriticalSection close_lock;
     bool close_port() override
     {
-        if( _port_name.compare( IN_HOST_MIDI_HANDLING ) == 0 || _port_name.compare( DISABLED_PORT ) == 0 )
+        if (_port_name.compare(IN_HOST_MIDI_HANDLING) == 0 ||
+            _port_name.compare(DISABLED_PORT) == 0)
             return true;
 
         ScopedLock locked(close_lock);
 
         _is_succesful_opend = false;
 
-        if( _midi_port )
+        if (_midi_port)
         {
 #ifndef B_STEP_STANDALONE
             _midi_port->clearAllPendingMessages();
@@ -494,37 +463,43 @@ public:
         return _is_succesful_opend;
     }
 
-    // ATTENTION VST MODE: everything what you send over this dev VIA "in host handling" expected that there is
-    // the current buffer setted in the AUDIO-PROCESSOR. So that also means that that function have to
-    // call in the processBlock!
-    void send_message( const MidiMessage& message_, bool use_sample_timestamp = false )
+    // ATTENTION VST MODE: everything what you send over this dev VIA "in host handling" expected
+    // that there is the current buffer setted in the AUDIO-PROCESSOR. So that also means that that
+    // function have to call in the processBlock!
+    void send_message(const MidiMessage &message_, bool use_sample_timestamp = false)
     {
 #ifndef B_STEP_STANDALONE
-        if( _is_in_host_handling )
+        if (_is_in_host_handling)
         {
-            if( _app_instance_store->audio_processor->_current_buffer )
+            if (_app_instance_store->audio_processor->_current_buffer)
             {
-                _app_instance_store->audio_processor->_current_buffer->addEvent( message_, _app_instance_store->audio_processor->_current_vst_samples_delay );
+                _app_instance_store->audio_processor->_current_buffer->addEvent(
+                    message_, _app_instance_store->audio_processor->_current_vst_samples_delay);
             }
         }
         else
 #endif
         {
-            if( close_lock.tryEnter() )
+            if (close_lock.tryEnter())
             {
 #ifndef B_STEP_STANDALONE
-                if( use_sample_timestamp )
+                if (use_sample_timestamp)
                 {
                     MidiBuffer buffer;
-                    buffer.addEvent( message_, _app_instance_store->audio_processor->_current_vst_samples_delay );
-                    if( _midi_port )
-                        _midi_port->sendBlockOfMessages( buffer, Time::getMillisecondCounter()+_app_instance_store->audio_processor->latency_corretion_ms, _app_instance_store->audio_processor->_current_sample_rate );
+                    buffer.addEvent(
+                        message_, _app_instance_store->audio_processor->_current_vst_samples_delay);
+                    if (_midi_port)
+                        _midi_port->sendBlockOfMessages(
+                            buffer,
+                            Time::getMillisecondCounter() +
+                                _app_instance_store->audio_processor->latency_corretion_ms,
+                            _app_instance_store->audio_processor->_current_sample_rate);
                 }
                 else
 #endif
                 {
-                    if( _midi_port )
-                        _midi_port->sendMessageNow( message_ );
+                    if (_midi_port)
+                        _midi_port->sendMessageNow(message_);
                 }
             }
             close_lock.exit();
@@ -535,20 +510,20 @@ public:
 // HELPER FOR CHECKING IF THE PORT IS NOT USED MORE THAN TWO TIMES
 class MultiMIDIMessageOutputGuard
 {
-    Array< int > feeded_ports;
+    Array<int> feeded_ports;
 
-public:
-    inline bool is_port_valid_for_sending( MidiOutputObject* port_ )
+  public:
+    inline bool is_port_valid_for_sending(MidiOutputObject *port_)
     {
         bool is_valid = false;
 
         int dev_index = port_->get_dev_index();
-        if( ! feeded_ports.contains( dev_index ) )
+        if (!feeded_ports.contains(dev_index))
         {
-            feeded_ports.add( dev_index );
-            if( dev_index != IS_SAME_AS_MASTER_OUT )
+            feeded_ports.add(dev_index);
+            if (dev_index != IS_SAME_AS_MASTER_OUT)
             {
-                if( port_->is_open() )
+                if (port_->is_open())
                     is_valid = true;
             }
         }
@@ -556,9 +531,8 @@ public:
         return is_valid;
     }
 
-    JUCE_LEAK_DETECTOR (MultiMIDIMessageOutputGuard)
+    JUCE_LEAK_DETECTOR(MultiMIDIMessageOutputGuard)
 };
-
 
 class MidiIOHandler
 {
@@ -567,23 +541,21 @@ class MidiIOHandler
     // --------------------------------------------------------------------------------------------
 
     // PROPERTIES
-private:
-    AppInstanceStore*const _app_instance_store;
-    OwnedArray< MidiOutputObject > midi_outs;
+  private:
+    AppInstanceStore *const _app_instance_store;
+    OwnedArray<MidiOutputObject> midi_outs;
 
-public:
+  public:
     MidiInputObject midi_in;
 
-    bool is_master_outport_open()  {
-        return midi_outs.getUnchecked(0)->is_open();
-    }
+    bool is_master_outport_open() { return midi_outs.getUnchecked(0)->is_open(); }
 
     bool is_a_outport_enabled()
     {
         bool is_enabled = false;
-        for ( int i = 0; i != BAR_GROUPS+MIDI_OUT_B ; ++i )
+        for (int i = 0; i != BAR_GROUPS + MIDI_OUT_B; ++i)
         {
-            if( midi_outs.getUnchecked(i)->is_enabled() )
+            if (midi_outs.getUnchecked(i)->is_enabled())
             {
                 is_enabled = true;
                 break;
@@ -593,15 +565,15 @@ public:
         return is_enabled;
     }
 
-    MidiOutputObject& get_out_port( uint8 barstring_id )
+    MidiOutputObject &get_out_port(uint8 barstring_id)
     {
         return *midi_outs.getUnchecked(barstring_id);
     }
 
-    MidiOutputObject& get_out_port_for_sending( uint8 barstring_id )
+    MidiOutputObject &get_out_port_for_sending(uint8 barstring_id)
     {
-        if( barstring_id > 0 )
-            if( midi_outs.getUnchecked(barstring_id)->use_master_midi_out() )
+        if (barstring_id > 0)
+            if (midi_outs.getUnchecked(barstring_id)->use_master_midi_out())
             {
                 return *midi_outs.getUnchecked(0);
             }
@@ -624,23 +596,23 @@ public:
     // --------------------------------------------------------------------------------------------
 
     //// CTOR
-private:
+  private:
     MidiIOHandler(); //-> delete
-public:
-    MidiIOHandler( AppInstanceStore*const app_instance_store_ );
+  public:
+    MidiIOHandler(AppInstanceStore *const app_instance_store_);
     EMPTY_D_CTOR_OUT_WRITE(MidiIOHandler);
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
 
     //// LOAD AND SAVE
-public:
-    void save_to( XmlElement& xml ) const;
-    void load_from( const XmlElement& xml );
+  public:
+    void save_to(XmlElement &xml) const;
+    void load_from(const XmlElement &xml);
 
-    void load_from_1_2( const XmlElement& xml );
+    void load_from_1_2(const XmlElement &xml);
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MidiIOHandler)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiIOHandler)
 };
 
-#endif  // MIDIIO_H_INCLUDED
+#endif // MIDIIO_H_INCLUDED

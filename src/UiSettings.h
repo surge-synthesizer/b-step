@@ -34,15 +34,17 @@ class UiQuestionIsYourFriend;
 class UiTextImExport;
 class EditorConfig : public UIUserData
 {
-    AppInstanceStore*const _app_instance_store;
+    AppInstanceStore *const _app_instance_store;
     float _resize_denominator;
-public:
-    bool demo_time_is_over;
-public:
-    MONO_Controller* slider_controller_is_down;
-    Array< MONO_Controller* > sliders_for_popup_info;
 
-    ScopedPointer< MultidragSource > multidrag_source;
+  public:
+    bool demo_time_is_over;
+
+  public:
+    MONO_Controller *slider_controller_is_down;
+    Array<MONO_Controller *> sliders_for_popup_info;
+
+    ScopedPointer<MultidragSource> multidrag_source;
 
     ScopedPointer<ControllerMIDILearn> controller_mid_learn;
     ScopedPointer<UiEditorMidiLearn> midi_learn_editor;
@@ -69,7 +71,7 @@ public:
     Point<int> XY_style_editor;
     Point<int> XY_file_manager;
 
-    uint32* current_editable_colour;
+    uint32 *current_editable_colour;
     uint8 selected_bar_clipboard_id;
 
     // LIVE VAR TO DO NOT SHOW THE NEW VERSIONS INFO AGAIN
@@ -77,12 +79,12 @@ public:
 
     void close_all_editors();
 
-    Array< String > drum_names;
+    Array<String> drum_names;
 
-    EditorConfig( AppInstanceStore*const app_instance_store_ );
+    EditorConfig(AppInstanceStore *const app_instance_store_);
     ~EditorConfig();
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (EditorConfig)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EditorConfig)
 };
 
-#endif  // UISETTINGS_H_INCLUDED
+#endif // UISETTINGS_H_INCLUDED

@@ -25,7 +25,6 @@
 
 class GstepAudioProcessor;
 
-
 class PopUpAbout;
 class PopUpDemo;
 
@@ -53,8 +52,6 @@ class UiEditorInputPopup;
 #include "UiEditorFileManager.h"
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -63,13 +60,11 @@ class UiEditorInputPopup;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class GstepAudioProcessorEditor  : public AudioProcessorEditor,
-    public Timer,
-    public KeyListener
+class GstepAudioProcessorEditor : public AudioProcessorEditor, public Timer, public KeyListener
 {
-public:
+  public:
     //==============================================================================
-    GstepAudioProcessorEditor (GstepAudioProcessor* processor_);
+    GstepAudioProcessorEditor(GstepAudioProcessor *processor_);
     ~GstepAudioProcessorEditor();
 
     //==============================================================================
@@ -79,17 +74,20 @@ public:
     // --------------------------------------------------------------------------------------------
 
     // SUB EDITORS
-private:
+  private:
     friend class StandaloneFilterWindow;
-public:
-    AppInstanceStore*const _app_instance_store;
-private:
-    Updater*updater;
-    UiEditorKeyboard*keyboard;
-public:
+
+  public:
+    AppInstanceStore *const _app_instance_store;
+
+  private:
+    Updater *updater;
+    UiEditorKeyboard *keyboard;
+
+  public:
     bool force_repaint_all;
     CriticalSection lock; // skipp unneded updates if one is pending
-private:
+  private:
     uint8 parent_menu_bar_height;
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
@@ -97,23 +95,23 @@ private:
 
     // LAYOUT.h
     OwnedArray<UiColumnWrapper> _columns_fixed_steps;
-    OwnedArray< OwnedArray<UiColumnWrapper> > _columns;
+    OwnedArray<OwnedArray<UiColumnWrapper>> _columns;
     OwnedArray<UiColumnWrapper> _columns_fixed_bar;
-    Array<ModelBase*> _last_painted_selected_bar_models;
+    Array<ModelBase *> _last_painted_selected_bar_models;
 
     OwnedArray<LabelPopupWithLivetime> open_label_popups;
     int8 last_painted_bar;
     int8 last_painted_layer;
 
     void visibilityChanged() override;
-    void get_step_area( Rectangle<int>& );
-    void get_bar_area( Rectangle<int>& );
-    void get_selecter_area( Rectangle<int>&, uint8 id );
+    void get_step_area(Rectangle<int> &);
+    void get_bar_area(Rectangle<int> &);
+    void get_selecter_area(Rectangle<int> &, uint8 id);
     bool refresh_bar_select_paint;
-    void refresh_selected_bar( Array< Component* >& components_to_repaint_ );
+    void refresh_selected_bar(Array<Component *> &components_to_repaint_);
     void timerCallback() override;
     void check_paint_slider_value_popup();
-    void complex_paint (Graphics& g);
+    void complex_paint(Graphics &g);
     void init_column_wrappers();
     void init_layer_controllers_until_steps();
     void init_layer_controllers_fixed_bar_part();
@@ -122,31 +120,28 @@ private:
 
     int default_width;
     int default_height;
-    
+
     bool is_first_callback;
-    
-public:
-    float width_propertion() const {
-        return 1.f/APPDEF_UIUserData::WINDOW_WIDTH*getWidth();
-    }
-    float height_propertion() const {
-        return 1.f/APPDEF_UIUserData::WINDOW_HEIGHT*getHeight();
-    }
 
-private:
-    bool keyPressed ( const KeyPress& key_, Component *originatingComponent_ ) override;
-    void mouseDown( const MouseEvent& e_ ) override;
+  public:
+    float width_propertion() const { return 1.f / APPDEF_UIUserData::WINDOW_WIDTH * getWidth(); }
+    float height_propertion() const { return 1.f / APPDEF_UIUserData::WINDOW_HEIGHT * getHeight(); }
 
-public:
-    void set_layer_controllers_page(int layer_id, bool force = false );
+  private:
+    bool keyPressed(const KeyPress &key_, Component *originatingComponent_) override;
+    void mouseDown(const MouseEvent &e_) override;
 
-private:
-    EditorConfig* _config;
-    UiEditorInputPopup* input_popup;
+  public:
+    void set_layer_controllers_page(int layer_id, bool force = false);
 
-public:
+  private:
+    EditorConfig *_config;
+    UiEditorInputPopup *input_popup;
+
+  public:
     ScopedPointer<UiEditorRightMainwindows> _editor_right_mainwindow;
-private:
+
+  private:
     ScopedPointer<MenuBarRight> _menue_bar_right;
     ScopedPointer<MenuBarLeft> _menue_bar_left;
 
@@ -156,12 +151,13 @@ private:
 
     // EDIOR WINDOWS
     friend class MenuBarRight;
-public:
-    void open_settings_editor( bool focus_midi_learn_ = false, bool focus_master_out_ = false );
+
+  public:
+    void open_settings_editor(bool focus_midi_learn_ = false, bool focus_master_out_ = false);
     void open_chord_editor();
     void open_midi_learn_editor();
-    void open_reader( VIEW_TYPE type_ );
-    void open_writer( VIEW_TYPE type_ );
+    void open_reader(VIEW_TYPE type_);
+    void open_writer(VIEW_TYPE type_);
     void open_demo_window();
     bool open_whats_window();
 
@@ -172,9 +168,10 @@ public:
     // --------------------------------------------------------------------------------------------
 
     // SPEZIAL
-public:
+  public:
     void auto_resize_to_user_area();
-private:
+
+  private:
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
@@ -182,30 +179,28 @@ private:
     ScopedPointer<ResizableCornerComponent> resizer;
 
     /** *************************************************************** */
-public:
+  public:
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     ComponentBoundsConstrainer resizeLimits;
-public:
+
+  public:
     //[/UserVariables]
 
     //==============================================================================
     ScopedPointer<ImageButton> midi_learn_focus;
     ScopedPointer<Label> midi_cc_value;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GstepAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GstepAudioProcessorEditor)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_AD410155B668684B__
+#endif // __JUCE_HEADER_AD410155B668684B__

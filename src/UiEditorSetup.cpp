@@ -28,11 +28,11 @@
 
 #include "UiEditorSetup.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 void UiEditorSetup::refresh_ui()
 {
-    slider_playback_mode->setValue( _app_instance_store->audio_processor->note_playback_mode, dontSendNotification );
+    slider_playback_mode->setValue(_app_instance_store->audio_processor->note_playback_mode,
+                                   dontSendNotification);
 }
 
 void UiEditorSetup::on_close_clicked()
@@ -40,29 +40,30 @@ void UiEditorSetup::on_close_clicked()
     _app_instance_store->editor_config.setup_editor = nullptr;
 }
 
-void set_playback_label_text( int playback_mode_, Label*label_ )
+void set_playback_label_text(int playback_mode_, Label *label_)
 {
-    switch( playback_mode_ )
+    switch (playback_mode_)
     {
-    case APPDEF_ProcessorUserData::PLAYBACK_MODE_POLYPHON_OVERLAY :
+    case APPDEF_ProcessorUserData::PLAYBACK_MODE_POLYPHON_OVERLAY:
         label_->setText("PLAYBACK: POLYPHONIC - OVERLAY ALL", dontSendNotification);
         break;
-    case APPDEF_ProcessorUserData::PLAYBACK_MODE_POLYPHON_STOP_NOTES_BEFORE_PLAY_SAME :
+    case APPDEF_ProcessorUserData::PLAYBACK_MODE_POLYPHON_STOP_NOTES_BEFORE_PLAY_SAME:
         label_->setText("PLAYBACK: POLYPHONIC - PLAY LAST", dontSendNotification);
         break;
-    case APPDEF_ProcessorUserData::PLAYBACK_MODE_POLYPHON_RETRIGGER :
-        label_->setText("PLAYBACK: POLYPHONIC - PLAY LAST, RETRIGGER STOPPED", dontSendNotification);
+    case APPDEF_ProcessorUserData::PLAYBACK_MODE_POLYPHON_RETRIGGER:
+        label_->setText("PLAYBACK: POLYPHONIC - PLAY LAST, RETRIGGER STOPPED",
+                        dontSendNotification);
         break;
-    case APPDEF_ProcessorUserData::PLAYBACK_MODE_POLYPHON_EXPAND_LAST :
+    case APPDEF_ProcessorUserData::PLAYBACK_MODE_POLYPHON_EXPAND_LAST:
         label_->setText("PLAYBACK: POLYPHONIC - PLAY LAST, EXPAND LAST", dontSendNotification);
         break;
-    case APPDEF_ProcessorUserData::PLAYBACK_MODE_MONOPHON :
+    case APPDEF_ProcessorUserData::PLAYBACK_MODE_MONOPHON:
         label_->setText("PLAYBACK: MONOPHONIC", dontSendNotification);
         break;
-    case APPDEF_ProcessorUserData::PLAYBACK_MODE_MONOPHON_RETRIGGER :
+    case APPDEF_ProcessorUserData::PLAYBACK_MODE_MONOPHON_RETRIGGER:
         label_->setText("PLAYBACK: MONOPHONIC - RETRIGGER STOPPED", dontSendNotification);
         break;
-    case APPDEF_ProcessorUserData::PLAYBACK_MODE_MONOPHON_EXPAND_LAST :
+    case APPDEF_ProcessorUserData::PLAYBACK_MODE_MONOPHON_EXPAND_LAST:
         label_->setText("PLAYBACK: MONOPHONIC - EXPAND LAST", dontSendNotification);
         break;
     }
@@ -70,183 +71,204 @@ void set_playback_label_text( int playback_mode_, Label*label_ )
 //[/MiscUserDefs]
 
 //==============================================================================
-UiEditorSetup::UiEditorSetup (AppInstanceStore* const app_instance_store_)
-    : UiEditor("B-Setup"),_app_instance_store(app_instance_store_)
+UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
+    : UiEditor("B-Setup"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible (label_multidrag_on_off2 = new Label (String(),
-            TRANS("Enable Mousewheel on main UI")));
-    label_multidrag_on_off2->setFont (Font (15.00f, Font::plain));
-    label_multidrag_on_off2->setJustificationType (Justification::centredLeft);
-    label_multidrag_on_off2->setEditable (false, false, false);
-    label_multidrag_on_off2->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_multidrag_on_off2->setColour (TextEditor::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_multidrag_on_off2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_multidrag_on_off2 =
+                          new Label(String(), TRANS("Enable Mousewheel on main UI")));
+    label_multidrag_on_off2->setFont(Font(15.00f, Font::plain));
+    label_multidrag_on_off2->setJustificationType(Justification::centredLeft);
+    label_multidrag_on_off2->setEditable(false, false, false);
+    label_multidrag_on_off2->setColour(Label::textColourId,
+                                       Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_multidrag_on_off2->setColour(TextEditor::textColourId,
+                                       Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_multidrag_on_off2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (label_multidrag_on_off = new Label (String(),
-            TRANS("Enable MultiDrag (Multi Copy)")));
-    label_multidrag_on_off->setFont (Font (15.00f, Font::plain));
-    label_multidrag_on_off->setJustificationType (Justification::centredLeft);
-    label_multidrag_on_off->setEditable (false, false, false);
-    label_multidrag_on_off->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_multidrag_on_off->setColour (TextEditor::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_multidrag_on_off->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_multidrag_on_off =
+                          new Label(String(), TRANS("Enable MultiDrag (Multi Copy)")));
+    label_multidrag_on_off->setFont(Font(15.00f, Font::plain));
+    label_multidrag_on_off->setJustificationType(Justification::centredLeft);
+    label_multidrag_on_off->setEditable(false, false, false);
+    label_multidrag_on_off->setColour(Label::textColourId,
+                                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_multidrag_on_off->setColour(TextEditor::textColourId,
+                                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_multidrag_on_off->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (tb_turn_multidrag_on_off = new ToggleButton (String()));
-    tb_turn_multidrag_on_off->setExplicitFocusOrder (2);
-    tb_turn_multidrag_on_off->addListener (this);
+    addAndMakeVisible(tb_turn_multidrag_on_off = new ToggleButton(String()));
+    tb_turn_multidrag_on_off->setExplicitFocusOrder(2);
+    tb_turn_multidrag_on_off->addListener(this);
 
-    addAndMakeVisible (tb_switch_multidrag_mouse = new ToggleButton (String()));
-    tb_switch_multidrag_mouse->setExplicitFocusOrder (2);
-    tb_switch_multidrag_mouse->addListener (this);
+    addAndMakeVisible(tb_switch_multidrag_mouse = new ToggleButton(String()));
+    tb_switch_multidrag_mouse->setExplicitFocusOrder(2);
+    tb_switch_multidrag_mouse->addListener(this);
 
-    addAndMakeVisible (label_switch_multidrag_mouse = new Label (String(),
-            TRANS("MultiDrag on right Mouse")));
-    label_switch_multidrag_mouse->setFont (Font (15.00f, Font::plain));
-    label_switch_multidrag_mouse->setJustificationType (Justification::centredLeft);
-    label_switch_multidrag_mouse->setEditable (false, false, false);
-    label_switch_multidrag_mouse->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_switch_multidrag_mouse->setColour (TextEditor::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_switch_multidrag_mouse->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_switch_multidrag_mouse =
+                          new Label(String(), TRANS("MultiDrag on right Mouse")));
+    label_switch_multidrag_mouse->setFont(Font(15.00f, Font::plain));
+    label_switch_multidrag_mouse->setJustificationType(Justification::centredLeft);
+    label_switch_multidrag_mouse->setEditable(false, false, false);
+    label_switch_multidrag_mouse->setColour(
+        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_switch_multidrag_mouse->setColour(
+        TextEditor::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_switch_multidrag_mouse->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (label_playback_mode = new Label (String(),
-            TRANS("PLAYBACK: ")));
-    label_playback_mode->setFont (Font (15.00f, Font::plain));
-    label_playback_mode->setJustificationType (Justification::centredLeft);
-    label_playback_mode->setEditable (false, false, false);
-    label_playback_mode->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_playback_mode->setColour (TextEditor::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_playback_mode->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_playback_mode = new Label(String(), TRANS("PLAYBACK: ")));
+    label_playback_mode->setFont(Font(15.00f, Font::plain));
+    label_playback_mode->setJustificationType(Justification::centredLeft);
+    label_playback_mode->setEditable(false, false, false);
+    label_playback_mode->setColour(Label::textColourId,
+                                   Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_playback_mode->setColour(TextEditor::textColourId,
+                                   Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_playback_mode->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (toolbar = new UiEditorToolbar (this, true, true, false));
+    addAndMakeVisible(toolbar = new UiEditorToolbar(this, true, true, false));
 
-    addAndMakeVisible (label_multidrag_delay = new Label (String(),
-            TRANS("MultiDrag Delay")));
-    label_multidrag_delay->setFont (Font (15.00f, Font::plain));
-    label_multidrag_delay->setJustificationType (Justification::centredRight);
-    label_multidrag_delay->setEditable (false, false, false);
-    label_multidrag_delay->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_multidrag_delay->setColour (TextEditor::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_multidrag_delay->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_multidrag_delay = new Label(String(), TRANS("MultiDrag Delay")));
+    label_multidrag_delay->setFont(Font(15.00f, Font::plain));
+    label_multidrag_delay->setJustificationType(Justification::centredRight);
+    label_multidrag_delay->setEditable(false, false, false);
+    label_multidrag_delay->setColour(Label::textColourId,
+                                     Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_multidrag_delay->setColour(TextEditor::textColourId,
+                                     Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_multidrag_delay->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (label_ui_headline = new Label (String(),
-            TRANS("SETTINGS")));
-    label_ui_headline->setFont (Font (30.00f, Font::plain));
-    label_ui_headline->setJustificationType (Justification::centred);
-    label_ui_headline->setEditable (false, false, false);
-    label_ui_headline->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_ui_headline->setColour (TextEditor::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_ui_headline->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_ui_headline = new Label(String(), TRANS("SETTINGS")));
+    label_ui_headline->setFont(Font(30.00f, Font::plain));
+    label_ui_headline->setJustificationType(Justification::centred);
+    label_ui_headline->setEditable(false, false, false);
+    label_ui_headline->setColour(Label::textColourId,
+                                 Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_ui_headline->setColour(TextEditor::textColourId,
+                                 Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_ui_headline->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (sl_multidrag_delay = new Slider (String()));
-    sl_multidrag_delay->setRange (300, 1500, 1);
-    sl_multidrag_delay->setSliderStyle (Slider::LinearHorizontal);
-    sl_multidrag_delay->setTextBoxStyle (Slider::TextBoxLeft, false, 40, 20);
-    sl_multidrag_delay->addListener (this);
+    addAndMakeVisible(sl_multidrag_delay = new Slider(String()));
+    sl_multidrag_delay->setRange(300, 1500, 1);
+    sl_multidrag_delay->setSliderStyle(Slider::LinearHorizontal);
+    sl_multidrag_delay->setTextBoxStyle(Slider::TextBoxLeft, false, 40, 20);
+    sl_multidrag_delay->addListener(this);
 
-    addAndMakeVisible (label_multidrag_sensitivity = new Label (String(),
-            TRANS("MultiDrag Sensitivity")));
-    label_multidrag_sensitivity->setFont (Font (15.00f, Font::plain));
-    label_multidrag_sensitivity->setJustificationType (Justification::centredRight);
-    label_multidrag_sensitivity->setEditable (false, false, false);
-    label_multidrag_sensitivity->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_multidrag_sensitivity->setColour (TextEditor::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_multidrag_sensitivity->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_multidrag_sensitivity =
+                          new Label(String(), TRANS("MultiDrag Sensitivity")));
+    label_multidrag_sensitivity->setFont(Font(15.00f, Font::plain));
+    label_multidrag_sensitivity->setJustificationType(Justification::centredRight);
+    label_multidrag_sensitivity->setEditable(false, false, false);
+    label_multidrag_sensitivity->setColour(
+        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_multidrag_sensitivity->setColour(
+        TextEditor::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_multidrag_sensitivity->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (sl_multidrag_sensitivity = new Slider (String()));
-    sl_multidrag_sensitivity->setRange (0.01, 2, 0.01);
-    sl_multidrag_sensitivity->setSliderStyle (Slider::LinearHorizontal);
-    sl_multidrag_sensitivity->setTextBoxStyle (Slider::TextBoxLeft, false, 40, 20);
-    sl_multidrag_sensitivity->addListener (this);
+    addAndMakeVisible(sl_multidrag_sensitivity = new Slider(String()));
+    sl_multidrag_sensitivity->setRange(0.01, 2, 0.01);
+    sl_multidrag_sensitivity->setSliderStyle(Slider::LinearHorizontal);
+    sl_multidrag_sensitivity->setTextBoxStyle(Slider::TextBoxLeft, false, 40, 20);
+    sl_multidrag_sensitivity->addListener(this);
 
-    addAndMakeVisible (label_simpledrag_sensitivity = new Label (String(),
-            TRANS("SimpleDrag Sensitivity")));
-    label_simpledrag_sensitivity->setFont (Font (20.00f, Font::plain));
-    label_simpledrag_sensitivity->setJustificationType (Justification::centredRight);
-    label_simpledrag_sensitivity->setEditable (false, false, false);
-    label_simpledrag_sensitivity->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_simpledrag_sensitivity->setColour (TextEditor::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_simpledrag_sensitivity->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_simpledrag_sensitivity =
+                          new Label(String(), TRANS("SimpleDrag Sensitivity")));
+    label_simpledrag_sensitivity->setFont(Font(20.00f, Font::plain));
+    label_simpledrag_sensitivity->setJustificationType(Justification::centredRight);
+    label_simpledrag_sensitivity->setEditable(false, false, false);
+    label_simpledrag_sensitivity->setColour(
+        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_simpledrag_sensitivity->setColour(
+        TextEditor::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_simpledrag_sensitivity->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (sl_simpledrag_sensitivity = new Slider (String()));
-    sl_simpledrag_sensitivity->setRange (0.01, 2, 0.01);
-    sl_simpledrag_sensitivity->setSliderStyle (Slider::LinearHorizontal);
-    sl_simpledrag_sensitivity->setTextBoxStyle (Slider::TextBoxLeft, false, 40, 20);
-    sl_simpledrag_sensitivity->addListener (this);
+    addAndMakeVisible(sl_simpledrag_sensitivity = new Slider(String()));
+    sl_simpledrag_sensitivity->setRange(0.01, 2, 0.01);
+    sl_simpledrag_sensitivity->setSliderStyle(Slider::LinearHorizontal);
+    sl_simpledrag_sensitivity->setTextBoxStyle(Slider::TextBoxLeft, false, 40, 20);
+    sl_simpledrag_sensitivity->addListener(this);
 
-    addAndMakeVisible (button_info = new TextButton (String()));
-    button_info->setButtonText (TRANS("?"));
-    button_info->addListener (this);
+    addAndMakeVisible(button_info = new TextButton(String()));
+    button_info->setButtonText(TRANS("?"));
+    button_info->addListener(this);
 
-    addAndMakeVisible (slider_playback_mode = new Slider (String()));
-    slider_playback_mode->setRange (0, 6, 1);
-    slider_playback_mode->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    slider_playback_mode->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
-    slider_playback_mode->setColour (Slider::thumbColourId, Colour (0xff4f4f4f));
-    slider_playback_mode->setColour (Slider::trackColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    slider_playback_mode->setColour (Slider::rotarySliderFillColourId, Colour (0xfff03b00));
-    slider_playback_mode->setColour (Slider::rotarySliderOutlineColourId, Colour (0xff3e3e3e));
-    slider_playback_mode->addListener (this);
+    addAndMakeVisible(slider_playback_mode = new Slider(String()));
+    slider_playback_mode->setRange(0, 6, 1);
+    slider_playback_mode->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    slider_playback_mode->setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
+    slider_playback_mode->setColour(Slider::thumbColourId, Colour(0xff4f4f4f));
+    slider_playback_mode->setColour(Slider::trackColourId,
+                                    Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    slider_playback_mode->setColour(Slider::rotarySliderFillColourId, Colour(0xfff03b00));
+    slider_playback_mode->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff3e3e3e));
+    slider_playback_mode->addListener(this);
 
-    addAndMakeVisible (label_ui_headline2 = new Label (String(),
-            TRANS("NOTE PLAYBACK HANDLING")));
-    label_ui_headline2->setFont (Font (30.00f, Font::plain));
-    label_ui_headline2->setJustificationType (Justification::centred);
-    label_ui_headline2->setEditable (false, false, false);
-    label_ui_headline2->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_ui_headline2->setColour (TextEditor::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_ui_headline2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_ui_headline2 = new Label(String(), TRANS("NOTE PLAYBACK HANDLING")));
+    label_ui_headline2->setFont(Font(30.00f, Font::plain));
+    label_ui_headline2->setJustificationType(Justification::centred);
+    label_ui_headline2->setEditable(false, false, false);
+    label_ui_headline2->setColour(Label::textColourId,
+                                  Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_ui_headline2->setColour(TextEditor::textColourId,
+                                  Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_ui_headline2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (tb_turn_mousewheel_on_off = new ToggleButton (String()));
-    tb_turn_mousewheel_on_off->setExplicitFocusOrder (2);
-    tb_turn_mousewheel_on_off->addListener (this);
+    addAndMakeVisible(tb_turn_mousewheel_on_off = new ToggleButton(String()));
+    tb_turn_mousewheel_on_off->setExplicitFocusOrder(2);
+    tb_turn_mousewheel_on_off->addListener(this);
 
-    addAndMakeVisible (info_playback_modes = new TextButton (String()));
-    info_playback_modes->setButtonText (TRANS("?"));
-    info_playback_modes->addListener (this);
-
+    addAndMakeVisible(info_playback_modes = new TextButton(String()));
+    info_playback_modes->setButtonText(TRANS("?"));
+    info_playback_modes->addListener(this);
 
     //[UserPreSize]
     setOpaque(true);
 
-    sl_simpledrag_sensitivity->setValue( GLOBAL_VALUE_HOLDER::getInstance()->SIMPLEDRAG_SENSITIVITY, dontSendNotification );
-    sl_multidrag_sensitivity->setValue( GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_SENSITIVITY, dontSendNotification );
-    sl_multidrag_delay->setValue( GLOBAL_VALUE_HOLDER::getInstance()->LONG_MOUSE_DOWN_INTERVAL, dontSendNotification );
+    sl_simpledrag_sensitivity->setValue(GLOBAL_VALUE_HOLDER::getInstance()->SIMPLEDRAG_SENSITIVITY,
+                                        dontSendNotification);
+    sl_multidrag_sensitivity->setValue(GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_SENSITIVITY,
+                                       dontSendNotification);
+    sl_multidrag_delay->setValue(GLOBAL_VALUE_HOLDER::getInstance()->LONG_MOUSE_DOWN_INTERVAL,
+                                 dontSendNotification);
 
-    tb_turn_multidrag_on_off->setToggleState( GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_ENABLE, dontSendNotification );
+    tb_turn_multidrag_on_off->setToggleState(GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_ENABLE,
+                                             dontSendNotification);
 
-    tb_switch_multidrag_mouse->setToggleState( GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_AT_RIGHT_MOUSE, dontSendNotification );
+    tb_switch_multidrag_mouse->setToggleState(
+        GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_AT_RIGHT_MOUSE, dontSendNotification);
 
-    slider_playback_mode->setValue( _app_instance_store->audio_processor->note_playback_mode, dontSendNotification );
+    slider_playback_mode->setValue(_app_instance_store->audio_processor->note_playback_mode,
+                                   dontSendNotification);
 
-    tb_turn_mousewheel_on_off->setToggleState( GLOBAL_VALUE_HOLDER::getInstance()->ENABLE_MOUSEWHEEL, dontSendNotification );
+    tb_turn_mousewheel_on_off->setToggleState(GLOBAL_VALUE_HOLDER::getInstance()->ENABLE_MOUSEWHEEL,
+                                              dontSendNotification);
 
-    set_playback_label_text( _app_instance_store->audio_processor->note_playback_mode, label_playback_mode );
+    set_playback_label_text(_app_instance_store->audio_processor->note_playback_mode,
+                            label_playback_mode);
 
-    bool show_right_mouse_options = ! GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_AT_RIGHT_MOUSE
-    && GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_ENABLE;
-    
-    sl_multidrag_delay->setEnabled( show_right_mouse_options);
-    sl_multidrag_sensitivity->setEnabled( show_right_mouse_options );
-    label_multidrag_sensitivity->setEnabled( show_right_mouse_options );
-    label_multidrag_delay->setEnabled( show_right_mouse_options );
-    
+    bool show_right_mouse_options = !GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_AT_RIGHT_MOUSE &&
+                                    GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_ENABLE;
+
+    sl_multidrag_delay->setEnabled(show_right_mouse_options);
+    sl_multidrag_sensitivity->setEnabled(show_right_mouse_options);
+    label_multidrag_sensitivity->setEnabled(show_right_mouse_options);
+    label_multidrag_delay->setEnabled(show_right_mouse_options);
+
     tb_switch_multidrag_mouse->setEnabled(GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_ENABLE);
     label_switch_multidrag_mouse->setEnabled(GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_ENABLE);
     //[/UserPreSize]
 
-    setSize (610, 430);
-
+    setSize(610, 430);
 
     //[Constructor] You can add your own custom stuff here..
-    center_relative_and_make_visible( _app_instance_store->editor );
-    restore_XY( _app_instance_store->editor_config.XY_setup_editor );
+    center_relative_and_make_visible(_app_instance_store->editor);
+    restore_XY(_app_instance_store->editor_config.XY_setup_editor);
     //[/Constructor]
 }
 
 UiEditorSetup::~UiEditorSetup()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
-    _app_instance_store->editor_config.XY_setup_editor = Point<int>(getX(),getY());
+    _app_instance_store->editor_config.XY_setup_editor = Point<int>(getX(), getY());
     //[/Destructor_pre]
 
     label_multidrag_on_off2 = nullptr;
@@ -269,33 +291,38 @@ UiEditorSetup::~UiEditorSetup()
     tb_turn_mousewheel_on_off = nullptr;
     info_playback_modes = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiEditorSetup::paint (Graphics& g)
+void UiEditorSetup::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll (Colours::white);
+    g.fillAll(Colours::white);
 
-    g.setColour (Colour (0xff161616));
-    g.fillRect (0, 0, getWidth() - 0, getHeight() - 0);
+    g.setColour(Colour(0xff161616));
+    g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.drawRect (0, 0, getWidth() - 0, getHeight() - 0, 2);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.fillRoundedRectangle (static_cast<float> (proportionOfWidth (0.0328f)), static_cast<float> (proportionOfHeight (0.2930f)), static_cast<float> (proportionOfWidth (0.9344f)), 1.0f, 10.000f);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.0328f)),
+                           static_cast<float>(proportionOfHeight(0.2930f)),
+                           static_cast<float>(proportionOfWidth(0.9344f)), 1.0f, 10.000f);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.fillRoundedRectangle (static_cast<float> (proportionOfWidth (0.0361f)), static_cast<float> (proportionOfHeight (0.7558f)), static_cast<float> (proportionOfWidth (0.9344f)), 1.0f, 10.000f);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.0361f)),
+                           static_cast<float>(proportionOfHeight(0.7558f)),
+                           static_cast<float>(proportionOfWidth(0.9344f)), 1.0f, 10.000f);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.fillRoundedRectangle (static_cast<float> (proportionOfWidth (0.0361f)), static_cast<float> (proportionOfHeight (0.6628f)), static_cast<float> (proportionOfWidth (0.9344f)), 1.0f, 10.000f);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.0361f)),
+                           static_cast<float>(proportionOfHeight(0.6628f)),
+                           static_cast<float>(proportionOfWidth(0.9344f)), 1.0f, 10.000f);
 
     //[UserPaint] Add your own custom painting code here..
     ResizableWindow::moved();
@@ -307,31 +334,53 @@ void UiEditorSetup::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    label_multidrag_on_off2->setBounds (proportionOfWidth (0.0820f), proportionOfHeight (0.6744f), proportionOfWidth (0.7705f), proportionOfHeight (0.0698f));
-    label_multidrag_on_off->setBounds (proportionOfWidth (0.0820f), proportionOfHeight (0.3256f), proportionOfWidth (0.7705f), proportionOfHeight (0.0698f));
-    tb_turn_multidrag_on_off->setBounds (proportionOfWidth (0.0328f), proportionOfHeight (0.3256f), proportionOfWidth (0.8361f), proportionOfHeight (0.0698f));
-    tb_switch_multidrag_mouse->setBounds (proportionOfWidth (0.0328f), proportionOfHeight (0.3954f), proportionOfWidth (0.8361f), proportionOfHeight (0.0698f));
-    label_switch_multidrag_mouse->setBounds (proportionOfWidth (0.0820f), proportionOfHeight (0.3954f), proportionOfWidth (0.7705f), proportionOfHeight (0.0698f));
-    label_playback_mode->setBounds (proportionOfWidth (0.9016f) - proportionOfWidth (0.7869f), proportionOfHeight (0.8837f), proportionOfWidth (0.7869f), proportionOfHeight (0.0698f));
-    toolbar->setBounds (getWidth() - proportionOfWidth (0.0820f), 0, proportionOfWidth (0.0820f), proportionOfHeight (0.4302f));
-    label_multidrag_delay->setBounds (proportionOfWidth (0.0328f), proportionOfHeight (0.4884f), proportionOfWidth (0.3279f), proportionOfHeight (0.0698f));
-    label_ui_headline->setBounds (proportionOfWidth (0.0656f), proportionOfHeight (0.0465f), proportionOfWidth (0.8689f), proportionOfHeight (0.0930f));
-    sl_multidrag_delay->setBounds (proportionOfWidth (0.3771f), proportionOfHeight (0.4884f), proportionOfWidth (0.4918f), proportionOfHeight (0.0698f));
-    label_multidrag_sensitivity->setBounds (proportionOfWidth (0.0328f), proportionOfHeight (0.5581f), proportionOfWidth (0.3279f), proportionOfHeight (0.0698f));
-    sl_multidrag_sensitivity->setBounds (proportionOfWidth (0.3771f), proportionOfHeight (0.5581f), proportionOfWidth (0.4918f), proportionOfHeight (0.0698f));
-    label_simpledrag_sensitivity->setBounds (proportionOfWidth (0.0328f), proportionOfHeight (0.1861f), proportionOfWidth (0.3279f), proportionOfHeight (0.0698f));
-    sl_simpledrag_sensitivity->setBounds (proportionOfWidth (0.3771f), proportionOfHeight (0.1861f), proportionOfWidth (0.4918f), proportionOfHeight (0.0698f));
-    button_info->setBounds (proportionOfWidth (0.9312f), proportionOfHeight (0.3256f), proportionOfWidth (0.0492f), proportionOfHeight (0.0698f));
-    slider_playback_mode->setBounds (proportionOfWidth (0.0328f), proportionOfHeight (0.8837f), proportionOfWidth (0.0492f), proportionOfHeight (0.0698f));
-    label_ui_headline2->setBounds (proportionOfWidth (0.0656f), proportionOfHeight (0.7674f), proportionOfWidth (0.8689f), proportionOfHeight (0.0930f));
-    tb_turn_mousewheel_on_off->setBounds (proportionOfWidth (0.0328f), proportionOfHeight (0.6744f), proportionOfWidth (0.8361f), proportionOfHeight (0.0698f));
-    info_playback_modes->setBounds (proportionOfWidth (0.9312f), proportionOfHeight (0.7907f), proportionOfWidth (0.0492f), proportionOfHeight (0.0698f));
+    label_multidrag_on_off2->setBounds(proportionOfWidth(0.0820f), proportionOfHeight(0.6744f),
+                                       proportionOfWidth(0.7705f), proportionOfHeight(0.0698f));
+    label_multidrag_on_off->setBounds(proportionOfWidth(0.0820f), proportionOfHeight(0.3256f),
+                                      proportionOfWidth(0.7705f), proportionOfHeight(0.0698f));
+    tb_turn_multidrag_on_off->setBounds(proportionOfWidth(0.0328f), proportionOfHeight(0.3256f),
+                                        proportionOfWidth(0.8361f), proportionOfHeight(0.0698f));
+    tb_switch_multidrag_mouse->setBounds(proportionOfWidth(0.0328f), proportionOfHeight(0.3954f),
+                                         proportionOfWidth(0.8361f), proportionOfHeight(0.0698f));
+    label_switch_multidrag_mouse->setBounds(proportionOfWidth(0.0820f), proportionOfHeight(0.3954f),
+                                            proportionOfWidth(0.7705f),
+                                            proportionOfHeight(0.0698f));
+    label_playback_mode->setBounds(proportionOfWidth(0.9016f) - proportionOfWidth(0.7869f),
+                                   proportionOfHeight(0.8837f), proportionOfWidth(0.7869f),
+                                   proportionOfHeight(0.0698f));
+    toolbar->setBounds(getWidth() - proportionOfWidth(0.0820f), 0, proportionOfWidth(0.0820f),
+                       proportionOfHeight(0.4302f));
+    label_multidrag_delay->setBounds(proportionOfWidth(0.0328f), proportionOfHeight(0.4884f),
+                                     proportionOfWidth(0.3279f), proportionOfHeight(0.0698f));
+    label_ui_headline->setBounds(proportionOfWidth(0.0656f), proportionOfHeight(0.0465f),
+                                 proportionOfWidth(0.8689f), proportionOfHeight(0.0930f));
+    sl_multidrag_delay->setBounds(proportionOfWidth(0.3771f), proportionOfHeight(0.4884f),
+                                  proportionOfWidth(0.4918f), proportionOfHeight(0.0698f));
+    label_multidrag_sensitivity->setBounds(proportionOfWidth(0.0328f), proportionOfHeight(0.5581f),
+                                           proportionOfWidth(0.3279f), proportionOfHeight(0.0698f));
+    sl_multidrag_sensitivity->setBounds(proportionOfWidth(0.3771f), proportionOfHeight(0.5581f),
+                                        proportionOfWidth(0.4918f), proportionOfHeight(0.0698f));
+    label_simpledrag_sensitivity->setBounds(proportionOfWidth(0.0328f), proportionOfHeight(0.1861f),
+                                            proportionOfWidth(0.3279f),
+                                            proportionOfHeight(0.0698f));
+    sl_simpledrag_sensitivity->setBounds(proportionOfWidth(0.3771f), proportionOfHeight(0.1861f),
+                                         proportionOfWidth(0.4918f), proportionOfHeight(0.0698f));
+    button_info->setBounds(proportionOfWidth(0.9312f), proportionOfHeight(0.3256f),
+                           proportionOfWidth(0.0492f), proportionOfHeight(0.0698f));
+    slider_playback_mode->setBounds(proportionOfWidth(0.0328f), proportionOfHeight(0.8837f),
+                                    proportionOfWidth(0.0492f), proportionOfHeight(0.0698f));
+    label_ui_headline2->setBounds(proportionOfWidth(0.0656f), proportionOfHeight(0.7674f),
+                                  proportionOfWidth(0.8689f), proportionOfHeight(0.0930f));
+    tb_turn_mousewheel_on_off->setBounds(proportionOfWidth(0.0328f), proportionOfHeight(0.6744f),
+                                         proportionOfWidth(0.8361f), proportionOfHeight(0.0698f));
+    info_playback_modes->setBounds(proportionOfWidth(0.9312f), proportionOfHeight(0.7907f),
+                                   proportionOfWidth(0.0492f), proportionOfHeight(0.0698f));
     //[UserResized] Add your own custom resize handling here..
     ResizableWindow::resized();
     //[/UserResized]
 }
 
-void UiEditorSetup::buttonClicked (Button* buttonThatWasClicked)
+void UiEditorSetup::buttonClicked(Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -339,56 +388,60 @@ void UiEditorSetup::buttonClicked (Button* buttonThatWasClicked)
     if (buttonThatWasClicked == tb_turn_multidrag_on_off)
     {
         //[UserButtonCode_tb_turn_multidrag_on_off] -- add your button handler code here..
-        GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_ENABLE = buttonThatWasClicked->getToggleState();
+        GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_ENABLE =
+            buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_tb_turn_multidrag_on_off]
     }
     else if (buttonThatWasClicked == tb_switch_multidrag_mouse)
     {
         //[UserButtonCode_tb_switch_multidrag_mouse] -- add your button handler code here..
-        GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_AT_RIGHT_MOUSE = buttonThatWasClicked->getToggleState();
+        GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_AT_RIGHT_MOUSE =
+            buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_tb_switch_multidrag_mouse]
     }
     else if (buttonThatWasClicked == button_info)
     {
         //[UserButtonCode_button_info] -- add your button handler code here..
-        if(! _app_instance_store->editor_config.manual_editor )
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView( _app_instance_store );
+        if (!_app_instance_store->editor_config.manual_editor)
+            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
 
-        _app_instance_store->editor_config.manual_editor->try_open_url( MANUAL_URL+"beginner/multidrag-feature" );
+        _app_instance_store->editor_config.manual_editor->try_open_url(
+            MANUAL_URL + "beginner/multidrag-feature");
         //[/UserButtonCode_button_info]
     }
     else if (buttonThatWasClicked == tb_turn_mousewheel_on_off)
     {
         //[UserButtonCode_tb_turn_mousewheel_on_off] -- add your button handler code here..
-        GLOBAL_VALUE_HOLDER::getInstance()->ENABLE_MOUSEWHEEL = buttonThatWasClicked->getToggleState();
+        GLOBAL_VALUE_HOLDER::getInstance()->ENABLE_MOUSEWHEEL =
+            buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_tb_turn_mousewheel_on_off]
     }
     else if (buttonThatWasClicked == info_playback_modes)
     {
         //[UserButtonCode_info_playback_modes] -- add your button handler code here..
-        if(! _app_instance_store->editor_config.manual_editor )
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView( _app_instance_store );
+        if (!_app_instance_store->editor_config.manual_editor)
+            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
 
-        _app_instance_store->editor_config.manual_editor->try_open_url( MANUAL_URL+"advanced-users/playback-modes" );
+        _app_instance_store->editor_config.manual_editor->try_open_url(
+            MANUAL_URL + "advanced-users/playback-modes");
         //[/UserButtonCode_info_playback_modes]
     }
 
     //[UserbuttonClicked_Post]
-    bool show_right_mouse_options = ! GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_AT_RIGHT_MOUSE
-    && GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_ENABLE;
-    
-    
-    sl_multidrag_delay->setEnabled( show_right_mouse_options);
-    sl_multidrag_sensitivity->setEnabled( show_right_mouse_options );
-    label_multidrag_sensitivity->setEnabled( show_right_mouse_options );
-    label_multidrag_delay->setEnabled( show_right_mouse_options );
-    
+    bool show_right_mouse_options = !GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_AT_RIGHT_MOUSE &&
+                                    GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_ENABLE;
+
+    sl_multidrag_delay->setEnabled(show_right_mouse_options);
+    sl_multidrag_sensitivity->setEnabled(show_right_mouse_options);
+    label_multidrag_sensitivity->setEnabled(show_right_mouse_options);
+    label_multidrag_delay->setEnabled(show_right_mouse_options);
+
     tb_switch_multidrag_mouse->setEnabled(GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_ENABLE);
     label_switch_multidrag_mouse->setEnabled(GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_ENABLE);
     //[/UserbuttonClicked_Post]
 }
 
-void UiEditorSetup::sliderValueChanged (Slider* sliderThatWasMoved)
+void UiEditorSetup::sliderValueChanged(Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
@@ -396,7 +449,8 @@ void UiEditorSetup::sliderValueChanged (Slider* sliderThatWasMoved)
     if (sliderThatWasMoved == sl_multidrag_delay)
     {
         //[UserSliderCode_sl_multidrag_delay] -- add your slider handling code here..
-        GLOBAL_VALUE_HOLDER::getInstance()->LONG_MOUSE_DOWN_INTERVAL = sliderThatWasMoved->getValue();
+        GLOBAL_VALUE_HOLDER::getInstance()->LONG_MOUSE_DOWN_INTERVAL =
+            sliderThatWasMoved->getValue();
         //[/UserSliderCode_sl_multidrag_delay]
     }
     else if (sliderThatWasMoved == sl_multidrag_sensitivity)
@@ -414,8 +468,10 @@ void UiEditorSetup::sliderValueChanged (Slider* sliderThatWasMoved)
     else if (sliderThatWasMoved == slider_playback_mode)
     {
         //[UserSliderCode_slider_playback_mode] -- add your slider handling code here..
-        _app_instance_store->audio_processor->note_playback_mode.set_value( slider_playback_mode->getValue() );
-        set_playback_label_text( _app_instance_store->audio_processor->note_playback_mode, label_playback_mode );
+        _app_instance_store->audio_processor->note_playback_mode.set_value(
+            slider_playback_mode->getValue());
+        set_playback_label_text(_app_instance_store->audio_processor->note_playback_mode,
+                                label_playback_mode);
         //[/UserSliderCode_slider_playback_mode]
     }
 
@@ -423,11 +479,8 @@ void UiEditorSetup::sliderValueChanged (Slider* sliderThatWasMoved)
     //[/UsersliderValueChanged_Post]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -544,7 +597,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

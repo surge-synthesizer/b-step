@@ -29,8 +29,6 @@
 class AppInstanceStore;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -39,44 +37,43 @@ class AppInstanceStore;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorDemo  : public UiEditor,
-                      public Button::Listener
+class UiEditorDemo : public UiEditor, public Button::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiEditorDemo (AppInstanceStore* const app_instance_store_);
+    UiEditorDemo(AppInstanceStore *const app_instance_store_);
     ~UiEditorDemo();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
+    AppInstanceStore *const _app_instance_store;
     void refresh_ui();
     String last_colour_theme;
-private:
+
+  private:
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
+    void buttonClicked(Button *buttonThatWasClicked);
 
     // Binary resources:
-    static const char* demobg_png2;
+    static const char *demobg_png2;
     static const int demobg_png2Size;
-    static const char* democontinuehover_png;
+    static const char *democontinuehover_png;
     static const int democontinuehover_pngSize;
-    static const char* democontinue_png;
+    static const char *democontinue_png;
     static const int democontinue_pngSize;
-    static const char* demogoprohover_png;
+    static const char *demogoprohover_png;
     static const int demogoprohover_pngSize;
-    static const char* demogopro_png;
+    static const char *demogopro_png;
     static const int demogopro_pngSize;
-    static const char* demorestarthover_png;
+    static const char *demorestarthover_png;
     static const int demorestarthover_pngSize;
-    static const char* demorestart_png;
+    static const char *demorestart_png;
     static const int demorestart_pngSize;
 
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -114,13 +111,12 @@ private:
     ScopedPointer<HyperlinkButton> video_17;
     Image cachedImage_demobg_png2;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorDemo)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorDemo)
 };
 
 //[EndFile] You can add extra defines here...
 #endif // DEMO
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_F6D557DA58F99AC__
+#endif // __JUCE_HEADER_F6D557DA58F99AC__

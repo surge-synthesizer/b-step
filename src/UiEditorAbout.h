@@ -30,8 +30,6 @@ class Parser;
 #endif
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -40,29 +38,30 @@ class Parser;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorAbout  : public UiEditor,
-                      public Button::Listener
+class UiEditorAbout : public UiEditor, public Button::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiEditorAbout (AppInstanceStore* const app_instance_store_);
+    UiEditorAbout(AppInstanceStore *const app_instance_store_);
     ~UiEditorAbout();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
+    AppInstanceStore *const _app_instance_store;
 
     bool is_demo;
-public:
+
+  public:
     void on_close_clicked() override;
 #ifdef DEVELOPMENT
-private:
+  private:
     ScopedPointer<Parser> debug_parser;
     bool is_on_shutdown;
-public:
-    void print_debug( String text );
+
+  public:
+    void print_debug(String text);
 #endif
-private:
+  private:
     URL url_facebook;
     URL url_youtube;
     URL url_digg;
@@ -72,22 +71,21 @@ private:
     URL url_google;
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
+    void buttonClicked(Button *buttonThatWasClicked);
 
     // Binary resources:
-    static const char* b_logo_png;
+    static const char *b_logo_png;
     static const int b_logo_pngSize;
-    static const char* vst_logo_100x_png;
+    static const char *vst_logo_100x_png;
     static const int vst_logo_100x_pngSize;
-    static const char* au_logo_100x_png;
+    static const char *au_logo_100x_png;
     static const int au_logo_100x_pngSize;
-    static const char* aboutbox_png;
+    static const char *aboutbox_png;
     static const int aboutbox_pngSize;
 
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -106,12 +104,11 @@ private:
     Image cachedImage_aboutbox_png;
     Image cachedImage_b_logo_png;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorAbout)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorAbout)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_F24D3F196EED8940__
+#endif // __JUCE_HEADER_F24D3F196EED8940__

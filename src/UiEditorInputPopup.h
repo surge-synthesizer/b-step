@@ -16,22 +16,22 @@ class UiEditor;
 // TODO RENAME CLASS, ISNT A UI THING ANYMORE
 class UiEditorInputPopup
 {
-public:
-    UiEditorInputPopup ();
+  public:
+    UiEditorInputPopup();
     ~UiEditorInputPopup();
 
-private:
-    UiEditor* parent_editor;
-    TextEditor* captured_editor;
+  private:
+    UiEditor *parent_editor;
+    TextEditor *captured_editor;
 
-    void capture_editor( TextEditor* source_ );
+    void capture_editor(TextEditor *source_);
     void release_editor();
 
-public:
+  public:
     void refresh_ui();
 
-private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorInputPopup)
+  private:
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorInputPopup)
 };
 
 #endif

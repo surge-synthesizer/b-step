@@ -23,89 +23,88 @@
 
 #include "UiEditorColours.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-void UiEditorColourStyler::timerCallback() {
+void UiEditorColourStyler::timerCallback()
+{
     *editable_colour = colour_selector->getCurrentColour();
 }
 //[/MiscUserDefs]
 
 //==============================================================================
-UiEditorColourStyler::UiEditorColourStyler (ComponentColours* const colours_)
-    : _colours( colours_ ),editable_colour( &colours_->slider_text_colour )
+UiEditorColourStyler::UiEditorColourStyler(ComponentColours *const colours_)
+    : _colours(colours_), editable_colour(&colours_->slider_text_colour)
 {
-    addAndMakeVisible (colour_selector = new ColourSelector (ColourSelector::showSliders | ColourSelector::showColourspace));
+    addAndMakeVisible(colour_selector = new ColourSelector(ColourSelector::showSliders |
+                                                           ColourSelector::showColourspace));
 
-    addAndMakeVisible (col_1 = new TextButton (String()));
-    col_1->addListener (this);
+    addAndMakeVisible(col_1 = new TextButton(String()));
+    col_1->addListener(this);
 
-    addAndMakeVisible (style_1 = new TextButton (String()));
-    style_1->setButtonText (TRANS("PRE 1"));
-    style_1->addListener (this);
-    style_1->setColour (TextButton::buttonColourId, Colour (0xff080d0f));
-    style_1->setColour (TextButton::textColourOffId, Colour (0xff9b9dc8));
+    addAndMakeVisible(style_1 = new TextButton(String()));
+    style_1->setButtonText(TRANS("PRE 1"));
+    style_1->addListener(this);
+    style_1->setColour(TextButton::buttonColourId, Colour(0xff080d0f));
+    style_1->setColour(TextButton::textColourOffId, Colour(0xff9b9dc8));
 
-    addAndMakeVisible (col_2 = new TextButton (String()));
-    col_2->addListener (this);
+    addAndMakeVisible(col_2 = new TextButton(String()));
+    col_2->addListener(this);
 
-    addAndMakeVisible (col_3 = new TextButton (String()));
-    col_3->addListener (this);
+    addAndMakeVisible(col_3 = new TextButton(String()));
+    col_3->addListener(this);
 
-    addAndMakeVisible (col_4 = new TextButton (String()));
-    col_4->addListener (this);
+    addAndMakeVisible(col_4 = new TextButton(String()));
+    col_4->addListener(this);
 
-    addAndMakeVisible (col_5 = new TextButton (String()));
-    col_5->addListener (this);
+    addAndMakeVisible(col_5 = new TextButton(String()));
+    col_5->addListener(this);
 
-    addAndMakeVisible (col_6 = new TextButton (String()));
-    col_6->addListener (this);
+    addAndMakeVisible(col_6 = new TextButton(String()));
+    col_6->addListener(this);
 
-    addAndMakeVisible (col_7 = new TextButton (String()));
-    col_7->addListener (this);
+    addAndMakeVisible(col_7 = new TextButton(String()));
+    col_7->addListener(this);
 
-    addAndMakeVisible (col_8 = new TextButton (String()));
-    col_8->addListener (this);
+    addAndMakeVisible(col_8 = new TextButton(String()));
+    col_8->addListener(this);
 
-    addAndMakeVisible (col_9 = new TextButton (String()));
-    col_9->addListener (this);
+    addAndMakeVisible(col_9 = new TextButton(String()));
+    col_9->addListener(this);
 
-    addAndMakeVisible (col_10 = new TextButton (String()));
-    col_10->addListener (this);
+    addAndMakeVisible(col_10 = new TextButton(String()));
+    col_10->addListener(this);
 
-    addAndMakeVisible (style_2 = new TextButton (String()));
-    style_2->setButtonText (TRANS("PRE 1"));
-    style_2->addListener (this);
-    style_2->setColour (TextButton::buttonColourId, Colour (0xff080d0f));
-    style_2->setColour (TextButton::textColourOffId, Colour (0xff9b9dc8));
+    addAndMakeVisible(style_2 = new TextButton(String()));
+    style_2->setButtonText(TRANS("PRE 1"));
+    style_2->addListener(this);
+    style_2->setColour(TextButton::buttonColourId, Colour(0xff080d0f));
+    style_2->setColour(TextButton::textColourOffId, Colour(0xff9b9dc8));
 
-    addAndMakeVisible (style_3 = new TextButton (String()));
-    style_3->setButtonText (TRANS("PRE 1"));
-    style_3->addListener (this);
-    style_3->setColour (TextButton::buttonColourId, Colour (0xff080d0f));
-    style_3->setColour (TextButton::textColourOffId, Colour (0xff9b9dc8));
+    addAndMakeVisible(style_3 = new TextButton(String()));
+    style_3->setButtonText(TRANS("PRE 1"));
+    style_3->addListener(this);
+    style_3->setColour(TextButton::buttonColourId, Colour(0xff080d0f));
+    style_3->setColour(TextButton::textColourOffId, Colour(0xff9b9dc8));
 
-    addAndMakeVisible (style_4 = new TextButton (String()));
-    style_4->setButtonText (TRANS("PRE 1"));
-    style_4->addListener (this);
-    style_4->setColour (TextButton::buttonColourId, Colour (0xff080d0f));
-    style_4->setColour (TextButton::textColourOffId, Colour (0xff9b9dc8));
+    addAndMakeVisible(style_4 = new TextButton(String()));
+    style_4->setButtonText(TRANS("PRE 1"));
+    style_4->addListener(this);
+    style_4->setColour(TextButton::buttonColourId, Colour(0xff080d0f));
+    style_4->setColour(TextButton::textColourOffId, Colour(0xff9b9dc8));
 
-    addAndMakeVisible (style_5 = new TextButton (String()));
-    style_5->setButtonText (TRANS("PRE 1"));
-    style_5->addListener (this);
-    style_5->setColour (TextButton::buttonColourId, Colour (0xff080d0f));
-    style_5->setColour (TextButton::textColourOffId, Colour (0xff9b9dc8));
+    addAndMakeVisible(style_5 = new TextButton(String()));
+    style_5->setButtonText(TRANS("PRE 1"));
+    style_5->addListener(this);
+    style_5->setColour(TextButton::buttonColourId, Colour(0xff080d0f));
+    style_5->setColour(TextButton::textColourOffId, Colour(0xff9b9dc8));
 
-    addAndMakeVisible (col_11 = new TextButton (String()));
-    col_11->addListener (this);
-
+    addAndMakeVisible(col_11 = new TextButton(String()));
+    col_11->addListener(this);
 
     //[UserPreSize]
-    //font_selector->addItemList(Font::findAllTypefaceNames (), 0);
+    // font_selector->addItemList(Font::findAllTypefaceNames (), 0);
     //[/UserPreSize]
 
-    setSize (420, 380);
-
+    setSize(420, 380);
 
     //[Constructor] You can add your own custom stuff here..
 
@@ -136,28 +135,28 @@ UiEditorColourStyler::~UiEditorColourStyler()
     style_5 = nullptr;
     col_11 = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiEditorColourStyler::paint (Graphics& g)
+void UiEditorColourStyler::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //
     //[/UserPrePaint]
 
-    g.fillAll (Colours::black);
+    g.fillAll(Colours::black);
 
-    g.setColour (Colour (0xff161616));
-    g.fillRect (0, 0, getWidth() - 0, getHeight() - 0);
+    g.setColour(Colour(0xff161616));
+    g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour (Colour (0xffff3b00));
-    g.drawRect (0, 0, getWidth() - 0, getHeight() - 0, 2);
+    g.setColour(Colour(0xffff3b00));
+    g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (20.0f, 418.0f, static_cast<float> (proportionOfWidth (0.8644f)), 1.0f, 10.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(20.0f, 418.0f, static_cast<float>(proportionOfWidth(0.8644f)), 1.0f,
+                           10.000f);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -168,28 +167,28 @@ void UiEditorColourStyler::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    colour_selector->setBounds (20, 20, 250, 300);
-    col_1->setBounds (280, 20, 118, 20);
-    style_1->setBounds (20, 330, 50, 30);
-    col_2->setBounds (280, 50, 118, 20);
-    col_3->setBounds (280, 80, 118, 20);
-    col_4->setBounds (280, 110, 118, 20);
-    col_5->setBounds (280, 140, 118, 20);
-    col_6->setBounds (280, 170, 118, 20);
-    col_7->setBounds (280, 200, 118, 20);
-    col_8->setBounds (280, 230, 118, 20);
-    col_9->setBounds (280, 260, 118, 20);
-    col_10->setBounds (280, 290, 118, 20);
-    style_2->setBounds (70, 330, 50, 30);
-    style_3->setBounds (120, 330, 50, 30);
-    style_4->setBounds (170, 330, 50, 30);
-    style_5->setBounds (220, 330, 50, 30);
-    col_11->setBounds (280, 330, 118, 30);
+    colour_selector->setBounds(20, 20, 250, 300);
+    col_1->setBounds(280, 20, 118, 20);
+    style_1->setBounds(20, 330, 50, 30);
+    col_2->setBounds(280, 50, 118, 20);
+    col_3->setBounds(280, 80, 118, 20);
+    col_4->setBounds(280, 110, 118, 20);
+    col_5->setBounds(280, 140, 118, 20);
+    col_6->setBounds(280, 170, 118, 20);
+    col_7->setBounds(280, 200, 118, 20);
+    col_8->setBounds(280, 230, 118, 20);
+    col_9->setBounds(280, 260, 118, 20);
+    col_10->setBounds(280, 290, 118, 20);
+    style_2->setBounds(70, 330, 50, 30);
+    style_3->setBounds(120, 330, 50, 30);
+    style_4->setBounds(170, 330, 50, 30);
+    style_5->setBounds(220, 330, 50, 30);
+    col_11->setBounds(280, 330, 118, 30);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
 
-void UiEditorColourStyler::buttonClicked (Button* buttonThatWasClicked)
+void UiEditorColourStyler::buttonClicked(Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     stopTimer();
@@ -199,7 +198,7 @@ void UiEditorColourStyler::buttonClicked (Button* buttonThatWasClicked)
     {
         //[UserButtonCode_col_1] -- add your button handler code here..
         editable_colour = &_colours->slider_track_colour;
-        buttonThatWasClicked->setButtonText( "SL - TRCK" );
+        buttonThatWasClicked->setButtonText("SL - TRCK");
         //[/UserButtonCode_col_1]
     }
     else if (buttonThatWasClicked == style_1)
@@ -212,63 +211,63 @@ void UiEditorColourStyler::buttonClicked (Button* buttonThatWasClicked)
         //[UserButtonCode_col_2] -- add your button handler code here..
 
         editable_colour = &_colours->slider_line_colour;
-        buttonThatWasClicked->setButtonText( "SL - LINE" );
+        buttonThatWasClicked->setButtonText("SL - LINE");
         //[/UserButtonCode_col_2]
     }
     else if (buttonThatWasClicked == col_3)
     {
         //[UserButtonCode_col_3] -- add your button handler code here..
         editable_colour = &_colours->slider_text_colour;
-        buttonThatWasClicked->setButtonText( "SL - TXT" );
+        buttonThatWasClicked->setButtonText("SL - TXT");
         //[/UserButtonCode_col_3]
     }
     else if (buttonThatWasClicked == col_4)
     {
         //[UserButtonCode_col_4] -- add your button handler code here..
         editable_colour = &_colours->button_on_colour;
-        buttonThatWasClicked->setButtonText( "BTN - ON" );
+        buttonThatWasClicked->setButtonText("BTN - ON");
         //[/UserButtonCode_col_4]
     }
     else if (buttonThatWasClicked == col_5)
     {
         //[UserButtonCode_col_5] -- add your button handler code here..
         editable_colour = &_colours->button_off_colour;
-        buttonThatWasClicked->setButtonText( "BTN - OFF" );
+        buttonThatWasClicked->setButtonText("BTN - OFF");
         //[/UserButtonCode_col_5]
     }
     else if (buttonThatWasClicked == col_6)
     {
         //[UserButtonCode_col_6] -- add your button handler code here..
         editable_colour = &_colours->button_text_colour;
-        buttonThatWasClicked->setButtonText( "BTN - TXT" );
+        buttonThatWasClicked->setButtonText("BTN - TXT");
         //[/UserButtonCode_col_6]
     }
     else if (buttonThatWasClicked == col_7)
     {
         //[UserButtonCode_col_7] -- add your button handler code here..
         editable_colour = &_colours->slider_line_colour;
-        buttonThatWasClicked->setButtonText( "SL LINE" );
+        buttonThatWasClicked->setButtonText("SL LINE");
         //[/UserButtonCode_col_7]
     }
     else if (buttonThatWasClicked == col_8)
     {
         //[UserButtonCode_col_8] -- add your button handler code here..
         editable_colour = &_colours->bg;
-        buttonThatWasClicked->setButtonText( "BG" );
+        buttonThatWasClicked->setButtonText("BG");
         //[/UserButtonCode_col_8]
     }
     else if (buttonThatWasClicked == col_9)
     {
         //[UserButtonCode_col_9] -- add your button handler code here..
         editable_colour = &_colours->bg_lines;
-        buttonThatWasClicked->setButtonText( "BG - LINES" );
+        buttonThatWasClicked->setButtonText("BG - LINES");
         //[/UserButtonCode_col_9]
     }
     else if (buttonThatWasClicked == col_10)
     {
         //[UserButtonCode_col_10] -- add your button handler code here..
         editable_colour = &_colours->label_text_colour;
-        buttonThatWasClicked->setButtonText( "LBL - TXT" );
+        buttonThatWasClicked->setButtonText("LBL - TXT");
         //[/UserButtonCode_col_10]
     }
     else if (buttonThatWasClicked == style_2)
@@ -298,16 +297,13 @@ void UiEditorColourStyler::buttonClicked (Button* buttonThatWasClicked)
     }
 
     //[UserbuttonClicked_Post]
-    colour_selector->setCurrentColour( *editable_colour );
+    colour_selector->setCurrentColour(*editable_colour);
     startTimer(150);
     //[/UserbuttonClicked_Post]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -390,7 +386,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

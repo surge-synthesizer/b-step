@@ -29,8 +29,6 @@ class UiLabel;
 class BarCopyClipboard;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -39,47 +37,48 @@ class BarCopyClipboard;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorClipboard  : public UiEditor,
-    public Timer,
-    public TextEditor::Listener,
-    public Button::Listener,
-    public Label::Listener
+class UiEditorClipboard : public UiEditor,
+                          public Timer,
+                          public TextEditor::Listener,
+                          public Button::Listener,
+                          public Label::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiEditorClipboard (AppInstanceStore* const app_instance_store_, uint8 clipboard_id_);
+    UiEditorClipboard(AppInstanceStore *const app_instance_store_, uint8 clipboard_id_);
     ~UiEditorClipboard();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
-public:
+    AppInstanceStore *const _app_instance_store;
+
+  public:
     const uint8 _clipboard_id;
-private:
-    BarCopyClipboard& _bar_copy_clipboard;
+
+  private:
+    BarCopyClipboard &_bar_copy_clipboard;
 
     void reload_ui();
     void timerCallback() override;
 
     void on_load_clicked() override;
     void on_save_clicked() override;
-public:
-    void on_close_clicked() override;
-private:
 
-    void textEditorTextChanged( TextEditor &editor_ ) override;
+  public:
+    void on_close_clicked() override;
+
+  private:
+    void textEditorTextChanged(TextEditor &editor_) override;
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
-    void labelTextChanged (Label* labelThatHasChanged);
+    void buttonClicked(Button *buttonThatWasClicked);
+    void labelTextChanged(Label *labelThatHasChanged);
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-public:
+  public:
     //[/UserVariables]
 
     //==============================================================================
@@ -115,12 +114,11 @@ public:
     ScopedPointer<Label> label;
     ScopedPointer<TextButton> button_info;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorClipboard)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorClipboard)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_CE9BCDBBB61A0BE6__
+#endif // __JUCE_HEADER_CE9BCDBBB61A0BE6__

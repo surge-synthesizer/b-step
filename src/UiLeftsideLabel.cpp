@@ -23,33 +23,29 @@
 
 #include "UiLeftsideLabel.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-void UiLeftsideLabel::set_text( const String& text_ )
-{
-    label.set_text(text_);
-}
+void UiLeftsideLabel::set_text(const String &text_) { label.set_text(text_); }
 
-void UiLeftsideLabel::on_style_set( AppStyle*const style_ )
+void UiLeftsideLabel::on_style_set(AppStyle *const style_)
 {
-    if( style_ )
+    if (style_)
     {
-        label.set_style( style_ );
+        label.set_style(style_);
     }
 }
 
-void UiLeftsideLabel::refresh_ui(Array< Component* >& components_to_repaint_)
+void UiLeftsideLabel::refresh_ui(Array<Component *> &components_to_repaint_)
 {
-    if( label.is_repaint_required() )
+    if (label.is_repaint_required())
     {
-        //components_to_repaint_.add( this );
-        //components_to_repaint_.add( &label );
+        // components_to_repaint_.add( this );
+        // components_to_repaint_.add( &label );
     }
 }
 //[/MiscUserDefs]
 
 //==============================================================================
-UiLeftsideLabel::UiLeftsideLabel ()
+UiLeftsideLabel::UiLeftsideLabel()
 {
 
     //[UserPreSize]
@@ -57,12 +53,12 @@ UiLeftsideLabel::UiLeftsideLabel ()
     _style = nullptr;
 
     label.justification = Justification::right;
-    addAndMakeVisible( &label );
+    addAndMakeVisible(&label);
 
 #ifdef DO_NEVER_DEFINE_THIS
     //[/UserPreSize]
 
-    setSize (170, 50);
+    setSize(170, 50);
 
     //[Constructor] You can add your own custom stuff here..
 #endif
@@ -74,14 +70,12 @@ UiLeftsideLabel::~UiLeftsideLabel()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
-
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiLeftsideLabel::paint (Graphics& g)
+void UiLeftsideLabel::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     g.fillAll(Colour(0x00000000));
@@ -95,16 +89,13 @@ void UiLeftsideLabel::paint (Graphics& g)
 void UiLeftsideLabel::resized()
 {
     //[UserResized] Add your own custom resize handling here..
-    label.setBounds( proportionOfWidth (0.0250f), proportionOfHeight (0.1000f), proportionOfWidth (0.8824f), proportionOfHeight (0.8500f) );
+    label.setBounds(proportionOfWidth(0.0250f), proportionOfHeight(0.1000f),
+                    proportionOfWidth(0.8824f), proportionOfHeight(0.8500f));
     //[/UserResized]
 }
 
-
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -125,7 +116,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

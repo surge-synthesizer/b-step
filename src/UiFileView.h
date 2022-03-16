@@ -27,26 +27,26 @@ class UiFileView;
 class FileViewOwner
 {
     friend class UiFileView;
-    virtual void on_view_delete( UiFileView*const ) = 0;
-protected:
+    virtual void on_view_delete(UiFileView *const) = 0;
+
+  protected:
     virtual ~FileViewOwner() {}
 
-    JUCE_LEAK_DETECTOR ( FileViewOwner )
+    JUCE_LEAK_DETECTOR(FileViewOwner)
 };
 
 class UiFileViewListener
 {
     friend class UiFileView;
-    virtual void on_text_changed( String& new_text_ ) = 0;
+    virtual void on_text_changed(String &new_text_) = 0;
     virtual void on_text_chancel() = 0;
-protected:
+
+  protected:
     virtual ~UiFileViewListener() {}
 
-    JUCE_LEAK_DETECTOR ( UiFileViewListener )
+    JUCE_LEAK_DETECTOR(UiFileViewListener)
 };
 //[/Headers]
-
-
 
 //==============================================================================
 /**
@@ -56,79 +56,73 @@ protected:
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiFileView  : public TextButton,
-    public Timer,
-    public TextEditor::Listener,
-    public Button::Listener,
-    public Slider::Listener
+class UiFileView : public TextButton,
+                   public Timer,
+                   public TextEditor::Listener,
+                   public Button::Listener,
+                   public Slider::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiFileView ();
+    UiFileView();
     ~UiFileView();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    FileViewOwner* _owner;
-    void set_owner( FileViewOwner*const owner_ )
-    {
-        _owner = owner_;
-    }
+    FileViewOwner *_owner;
+    void set_owner(FileViewOwner *const owner_) { _owner = owner_; }
 
-    void set_label_text(const String&);
-    void add_button_listener( Button::Listener*const listener_ ) {
-        imageButton->addListener( listener_ );
-    }
-    void show_slider( bool state ) {
-        player_slider->setVisible(state);
-    }
-    Slider* get_thumb() const
+    void set_label_text(const String &);
+    void add_button_listener(Button::Listener *const listener_)
     {
-        return player_slider;
+        imageButton->addListener(listener_);
     }
+    void show_slider(bool state) { player_slider->setVisible(state); }
+    Slider *get_thumb() const { return player_slider; }
 
-    int label_offset ;
-    void set_label_x_offset( int label_offset_ ) {
-        label_offset = label_offset_;
-    }
+    int label_offset;
+    void set_label_x_offset(int label_offset_) { label_offset = label_offset_; }
 
-    void set_label_color( uint32 color )
+    void set_label_color(uint32 color)
     {
-        label->setColour (TextEditor::textColourId, Colour (color));
+        label->setColour(TextEditor::textColourId, Colour(color));
 
         // FORCE COLOR REPAINT
         String temp_text = label->getText();
         label->setText("");
-        label->setText (temp_text,false);
+        label->setText(temp_text, false);
     }
 
-    UiFileViewListener* _listener;
+    UiFileViewListener *_listener;
     bool is_notified;
-    void set_input_listener( UiFileViewListener*const input_listener_, const String& default_name_ ) {
+    void set_input_listener(UiFileViewListener *const input_listener_, const String &default_name_)
+    {
         is_notified = false;
 
         imageButton->toBack();
         label->toFront(false);
 
         _listener = input_listener_;
-        label->setText( default_name_ );
+        label->setText(default_name_);
         startTimer(350);
         label->grabKeyboardFocus();
     }
 
-    void timerCallback() override {
+    void timerCallback() override
+    {
         label->toFront(false);
 
-        label->setText( label->getText() );
-        label->addListener( this );
+        label->setText(label->getText());
+        label->addListener(this);
         label->setWantsKeyboardFocus(true);
         label->grabKeyboardFocus();
 
         stopTimer();
     }
 
-    void textEditorEscapeKeyPressed (TextEditor&) override {
-        if( _listener && ! is_notified )
+    void textEditorEscapeKeyPressed(TextEditor &) override
+    {
+        if (_listener && !is_notified)
         {
             is_notified = true;
             grabKeyboardFocus();
@@ -142,20 +136,21 @@ public:
             // FORCE COLOR REPAINT
             String temp_text = label->getText();
             label->setText("");
-            label->setText (temp_text,false);
+            label->setText(temp_text, false);
 
-            OUT( "ESC");
+            OUT("ESC");
         }
     }
-    void textEditorReturnKeyPressed (TextEditor& te_) override {
-        if( _listener && ! is_notified )
+    void textEditorReturnKeyPressed(TextEditor &te_) override
+    {
+        if (_listener && !is_notified)
         {
             is_notified = true;
             grabKeyboardFocus();
 
             String text = te_.getText();
             _listener->on_text_changed(text);
-            te_.setText( text , false );
+            te_.setText(text, false);
             _listener = nullptr;
 
             label->toBack();
@@ -164,28 +159,28 @@ public:
             // FORCE COLOR REPAINT
             String temp_text = label->getText();
             label->setText("");
-            label->setText (temp_text,false);
+            label->setText(temp_text, false);
         }
     }
-    void textEditorFocusLost (TextEditor& te_) override {
-        if( Desktop::getInstance().findComponentAt( Desktop::getLastMouseDownPosition() ) == label.get()  )
+    void textEditorFocusLost(TextEditor &te_) override
+    {
+        if (Desktop::getInstance().findComponentAt(Desktop::getLastMouseDownPosition()) ==
+            label.get())
         {
             te_.grabKeyboardFocus();
             return;
         }
-        textEditorEscapeKeyPressed( te_ );
+        textEditorEscapeKeyPressed(te_);
     }
 
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
-    void sliderValueChanged (Slider* sliderThatWasMoved);
+    void buttonClicked(Button *buttonThatWasClicked);
+    void sliderValueChanged(Slider *sliderThatWasMoved);
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -194,13 +189,11 @@ private:
     ScopedPointer<ImageButton> imageButton;
     ScopedPointer<Slider> player_slider;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiFileView)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiFileView)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_267DD144E1A31482__
-
+#endif // __JUCE_HEADER_267DD144E1A31482__

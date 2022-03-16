@@ -34,383 +34,347 @@
 
 struct ScalesBase
 {
-    virtual bool is( int8 value_ ) = 0;
+    virtual bool is(int8 value_) = 0;
     virtual int8 tune_offset() = 0;
 
-    virtual ~ScalesBase() {};
+    virtual ~ScalesBase(){};
 
-    JUCE_LEAK_DETECTOR ( ScalesBase )
+    JUCE_LEAK_DETECTOR(ScalesBase)
 };
 
 struct MAJOR : public ScalesBase
 {
-    bool is( int8 value_ ) override
+    bool is(int8 value_) override
     {
-        switch( value_%OCTAVE_MULTIPLIER )
+        switch (value_ % OCTAVE_MULTIPLIER)
         {
             // c 	d 	e 	f 	g 	a 	h
-        case NOTE_C :
+        case NOTE_C:
             return true;
-        case NOTE_D :
+        case NOTE_D:
             return true;
-        case NOTE_E :
+        case NOTE_E:
             return true;
-        case NOTE_F :
+        case NOTE_F:
             return true;
-        case NOTE_G :
+        case NOTE_G:
             return true;
-        case NOTE_A :
+        case NOTE_A:
             return true;
-        case NOTE_B :
+        case NOTE_B:
             return true;
-        default :
+        default:
             return false;
         }
     }
 
-    int8 tune_offset() override
-    {
-        return TUNE_OFFSET_C;
-    }
+    int8 tune_offset() override { return TUNE_OFFSET_C; }
 };
 struct HARMONIC_MINOR : public ScalesBase
 {
-    bool is( int8 value_ ) override
+    bool is(int8 value_) override
     {
-        switch( value_%OCTAVE_MULTIPLIER )
+        switch (value_ % OCTAVE_MULTIPLIER)
         {
             // c 	d 	es 	f 	g 	as 	h
-        case NOTE_C :
+        case NOTE_C:
             return true;
-        case NOTE_D :
+        case NOTE_D:
             return true;
-        case NOTE_E :
+        case NOTE_E:
             return true;
-        case NOTE_F :
+        case NOTE_F:
             return true;
-        case NOTE_G :
+        case NOTE_G:
             return true;
-        case NOTE_Gs :
+        case NOTE_Gs:
             return true;
-        case NOTE_B :
+        case NOTE_B:
             return true;
-        default :
+        default:
             return false;
         }
     }
 
-    int8 tune_offset() override
-    {
-        return TUNE_OFFSET_C;
-    }
+    int8 tune_offset() override { return TUNE_OFFSET_C; }
 };
 struct MELODIC_MINOR : public ScalesBase
 {
-    bool is( int8 value_ ) override
+    bool is(int8 value_) override
     {
-        switch( value_%OCTAVE_MULTIPLIER )
+        switch (value_ % OCTAVE_MULTIPLIER)
         {
             // A, H, C, D, E, Fis, Gis, A
-        case NOTE_C :
+        case NOTE_C:
             return true;
-        case NOTE_D :
+        case NOTE_D:
             return true;
-        case NOTE_E :
+        case NOTE_E:
             return true;
-        case NOTE_Fs :
+        case NOTE_Fs:
             return true;
-        case NOTE_Gs :
+        case NOTE_Gs:
             return true;
-        case NOTE_A :
+        case NOTE_A:
             return true;
-        case NOTE_B :
+        case NOTE_B:
             return true;
-        default :
+        default:
             return false;
         }
     }
 
-    int8 tune_offset() override
-    {
-        return TUNE_OFFSET_A;
-    }
+    int8 tune_offset() override { return TUNE_OFFSET_A; }
 };
 struct HUNGARIAN_MINOR : public ScalesBase
 {
-    bool is( int8 value_ ) override
+    bool is(int8 value_) override
     {
-        switch( value_%OCTAVE_MULTIPLIER )
+        switch (value_ % OCTAVE_MULTIPLIER)
         {
             // A, H, C, Dis, E, F, Gis, A
-        case NOTE_C :
+        case NOTE_C:
             return true;
-        case NOTE_Ds :
+        case NOTE_Ds:
             return true;
-        case NOTE_E :
+        case NOTE_E:
             return true;
-        case NOTE_F :
+        case NOTE_F:
             return true;
-        case NOTE_Gs :
+        case NOTE_Gs:
             return true;
-        case NOTE_A :
+        case NOTE_A:
             return true;
-        case NOTE_B :
+        case NOTE_B:
             return true;
-        default :
+        default:
             return false;
         }
     }
 
-    int8 tune_offset() override
-    {
-        return TUNE_OFFSET_A;
-    }
+    int8 tune_offset() override { return TUNE_OFFSET_A; }
 };
 struct HEPTATONIC : public ScalesBase
 {
-    bool is( int8 value_ ) override
+    bool is(int8 value_) override
     {
-        switch( value_%OCTAVE_MULTIPLIER )
+        switch (value_ % OCTAVE_MULTIPLIER)
         {
             // B♭ A♭ G F E♭ D C
-        case NOTE_C :
+        case NOTE_C:
             return true;
-        case NOTE_D :
+        case NOTE_D:
             return true;
-        case NOTE_Ds :
+        case NOTE_Ds:
             return true;
-        case NOTE_F :
+        case NOTE_F:
             return true;
-        case NOTE_G :
+        case NOTE_G:
             return true;
-        case NOTE_Gs :
+        case NOTE_Gs:
             return true;
-        case NOTE_As :
+        case NOTE_As:
             return true;
-        default :
+        default:
             return false;
         }
     }
 
-    int8 tune_offset() override
-    {
-        return TUNE_OFFSET_A;
-    }
+    int8 tune_offset() override { return TUNE_OFFSET_A; }
 };
 struct JAZZ_MINOR : public ScalesBase
 {
-    bool is( int8 value_ ) override
+    bool is(int8 value_) override
     {
-        switch( value_%OCTAVE_MULTIPLIER )
+        switch (value_ % OCTAVE_MULTIPLIER)
         {
             // A B C D E F♯ G♯ A
-        case NOTE_C :
+        case NOTE_C:
             return true;
-        case NOTE_D :
+        case NOTE_D:
             return true;
-        case NOTE_E :
+        case NOTE_E:
             return true;
-        case NOTE_Fs :
+        case NOTE_Fs:
             return true;
-        case NOTE_Gs :
+        case NOTE_Gs:
             return true;
-        case NOTE_A :
+        case NOTE_A:
             return true;
-        case NOTE_B :
+        case NOTE_B:
             return true;
-        default :
+        default:
             return false;
         }
     }
 
-    int8 tune_offset() override
-    {
-        return TUNE_OFFSET_A;
-    }
+    int8 tune_offset() override { return TUNE_OFFSET_A; }
 };
 struct DOUBLE_HARMONIC : public ScalesBase
 {
-    bool is( int8 value_ ) override
+    bool is(int8 value_) override
     {
-        switch( value_%OCTAVE_MULTIPLIER )
+        switch (value_ % OCTAVE_MULTIPLIER)
         {
             // C Db E F G Ab 	  	  	B 	C TODO from A
-        case NOTE_C :
+        case NOTE_C:
             return true;
-        case NOTE_Cs :
+        case NOTE_Cs:
             return true;
-        case NOTE_E :
+        case NOTE_E:
             return true;
-        case NOTE_F :
+        case NOTE_F:
             return true;
-        case NOTE_G :
+        case NOTE_G:
             return true;
-        case NOTE_Gs :
+        case NOTE_Gs:
             return true;
-        case NOTE_B :
+        case NOTE_B:
             return true;
-        default :
+        default:
             return false;
         }
     }
 
-    int8 tune_offset() override
-    {
-        return TUNE_OFFSET_C;
-    }
+    int8 tune_offset() override { return TUNE_OFFSET_C; }
 };
 struct HARMONIC_MAJOR : public ScalesBase
 {
-    bool is( int8 value_ ) override
+    bool is(int8 value_) override
     {
-        switch( value_%OCTAVE_MULTIPLIER )
+        switch (value_ % OCTAVE_MULTIPLIER)
         {
             // C D E F G Ab B
-        case NOTE_C :
+        case NOTE_C:
             return true;
-        case NOTE_D :
+        case NOTE_D:
             return true;
-        case NOTE_E :
+        case NOTE_E:
             return true;
-        case NOTE_F :
+        case NOTE_F:
             return true;
-        case NOTE_G :
+        case NOTE_G:
             return true;
-        case NOTE_Gs :
+        case NOTE_Gs:
             return true;
-        case NOTE_B :
+        case NOTE_B:
             return true;
-        default :
+        default:
             return false;
         }
     }
 
-    int8 tune_offset() override
-    {
-        return TUNE_OFFSET_C;
-    }
+    int8 tune_offset() override { return TUNE_OFFSET_C; }
 };
 struct HUNGARIAN_GYPSY : public ScalesBase
 {
-    bool is( int8 value_ ) override
+    bool is(int8 value_) override
     {
-        switch( value_%OCTAVE_MULTIPLIER )
+        switch (value_ % OCTAVE_MULTIPLIER)
         {
             // A   B   C   D#  E   F   G/G#
-        case NOTE_C :
+        case NOTE_C:
             return true;
-        case NOTE_Ds :
+        case NOTE_Ds:
             return true;
-        case NOTE_E :
+        case NOTE_E:
             return true;
-        case NOTE_F :
+        case NOTE_F:
             return true;
-        case NOTE_G :
+        case NOTE_G:
             return true;
-        case NOTE_Gs :
+        case NOTE_Gs:
             return true;
-        case NOTE_A :
+        case NOTE_A:
             return true;
-        case NOTE_B :
+        case NOTE_B:
             return true;
-        default :
+        default:
             return false;
         }
     }
 
-    int8 tune_offset() override
-    {
-        return TUNE_OFFSET_A;
-    }
+    int8 tune_offset() override { return TUNE_OFFSET_A; }
 };
-struct PHRYGIAN_DOMINANT  : public ScalesBase
+struct PHRYGIAN_DOMINANT : public ScalesBase
 {
-    bool is( int8 value_ ) override
+    bool is(int8 value_) override
     {
-        switch( value_%OCTAVE_MULTIPLIER )
+        switch (value_ % OCTAVE_MULTIPLIER)
         {
             // C - D♭ - E - F - G - A♭ - B♭ - C
-        case NOTE_C :
+        case NOTE_C:
             return true;
-        case NOTE_Cs :
+        case NOTE_Cs:
             return true;
-        case NOTE_E :
+        case NOTE_E:
             return true;
-        case NOTE_F :
+        case NOTE_F:
             return true;
-        case NOTE_G :
+        case NOTE_G:
             return true;
-        case NOTE_Gs :
+        case NOTE_Gs:
             return true;
-        case NOTE_A :
+        case NOTE_A:
             return true;
-        default :
+        default:
             return false;
         }
     }
 
-    int8 tune_offset() override
-    {
-        return TUNE_OFFSET_C;
-    }
+    int8 tune_offset() override { return TUNE_OFFSET_C; }
 };
 struct OCTATONIC : public ScalesBase
 {
-    bool is( int8 value_ ) override
+    bool is(int8 value_) override
     {
-        switch( value_%OCTAVE_MULTIPLIER )
+        switch (value_ % OCTAVE_MULTIPLIER)
         {
             // D, E, F, G, A♭, B♭, B, C♯, D
-        case NOTE_Cs :
+        case NOTE_Cs:
             return true;
-        case NOTE_D :
+        case NOTE_D:
             return true;
-        case NOTE_E :
+        case NOTE_E:
             return true;
-        case NOTE_F :
+        case NOTE_F:
             return true;
-        case NOTE_G :
+        case NOTE_G:
             return true;
-        case NOTE_Gs :
+        case NOTE_Gs:
             return true;
-        case NOTE_As :
+        case NOTE_As:
             return true;
-        default :
+        default:
             return false;
         }
     }
 
-    int8 tune_offset() override
-    {
-        return TUNE_OFFSET_D;
-    }
+    int8 tune_offset() override { return TUNE_OFFSET_D; }
 };
 struct PENTATONIC_MAJOR : public ScalesBase
 {
-    bool is( int8 value_ ) override
+    bool is(int8 value_) override
     {
-        switch( value_%OCTAVE_MULTIPLIER )
+        switch (value_ % OCTAVE_MULTIPLIER)
         {
             // C, D, E, G, A
-        case NOTE_C :
+        case NOTE_C:
             return true;
-        case NOTE_D :
+        case NOTE_D:
             return true;
-        case NOTE_E :
+        case NOTE_E:
             return true;
-        case NOTE_G :
+        case NOTE_G:
             return true;
-        case NOTE_A :
+        case NOTE_A:
             return true;
-        default :
+        default:
             return false;
         }
     }
 
-    int8 tune_offset() override
-    {
-        return TUNE_OFFSET_C;
-    }
+    int8 tune_offset() override { return TUNE_OFFSET_C; }
 };
 
 struct ScalesList
@@ -418,88 +382,88 @@ struct ScalesList
     static Array<String> get()
     {
         Array<String> names;
-        names.add( "Major" );
-        names.add( "Harmonic Minor" );
-        names.add( "Melodic Minor" );
-        names.add( "Hungarian Minor" );
-        names.add( "Hepatonic" );
-        names.add( "Jazz Minor" );
-        names.add( "Double Harmonic" );
-        names.add( "Harmonic Major" );
-        names.add( "Hungarian Gypsy" );
-        names.add( "Phrygian dominant" );
-        names.add( "Octatonic" );
-        names.add( "Pentatonic Major" );
+        names.add("Major");
+        names.add("Harmonic Minor");
+        names.add("Melodic Minor");
+        names.add("Hungarian Minor");
+        names.add("Hepatonic");
+        names.add("Jazz Minor");
+        names.add("Double Harmonic");
+        names.add("Harmonic Major");
+        names.add("Hungarian Gypsy");
+        names.add("Phrygian dominant");
+        names.add("Octatonic");
+        names.add("Pentatonic Major");
 
         return names;
     }
 
-    static ScalesBase* get( uint8 index )
+    static ScalesBase *get(uint8 index)
     {
-        switch( index )
+        switch (index)
         {
-        case 0 :
+        case 0:
             return new MAJOR();
-        case 1 :
+        case 1:
             return new HARMONIC_MINOR();
-        case 2 :
+        case 2:
             return new MELODIC_MINOR();
-        case 3 :
+        case 3:
             return new HUNGARIAN_MINOR();
-        case 4 :
+        case 4:
             return new HEPTATONIC();
-        case 5 :
+        case 5:
             return new JAZZ_MINOR();
-        case 6 :
+        case 6:
             return new DOUBLE_HARMONIC();
-        case 7 :
+        case 7:
             return new HARMONIC_MAJOR();
-        case 8 :
+        case 8:
             return new HUNGARIAN_GYPSY();
-        case 9 :
+        case 9:
             return new PHRYGIAN_DOMINANT();
-        case 10 :
+        case 10:
             return new OCTATONIC();
-        case 11 :
+        case 11:
             return new PENTATONIC_MAJOR();
         }
 
-        DBG( "ScalesList::get(index) reaches switch end!" );
+        DBG("ScalesList::get(index) reaches switch end!");
         return new MAJOR();
     }
 };
 
-static inline Array< int8 > get_random_chord( uint8 index_ )
+static inline Array<int8> get_random_chord(uint8 index_)
 {
-    Array< int8 > chord_notes;
+    Array<int8> chord_notes;
     int8 random_note;
     bool success;
-    ScalesBase* scale = ScalesList::get( index_ );
-    while( chord_notes.size() != 4 )
+    ScalesBase *scale = ScalesList::get(index_);
+    while (chord_notes.size() != 4)
     {
         // GEN
         Random::getSystemRandom().setSeedRandomly();
-        random_note = Random::getSystemRandom().nextInt(OCTAVE_MULTIPLIER)-OCTAVE_MULTIPLIER/2;
+        random_note = Random::getSystemRandom().nextInt(OCTAVE_MULTIPLIER) - OCTAVE_MULTIPLIER / 2;
 
         // CHECK
-        switch( chord_notes.size() )
+        switch (chord_notes.size())
         {
-        case 0 :
-            success = scale->is( random_note + GUITAR_TUNE_G + scale->tune_offset() );
+        case 0:
+            success = scale->is(random_note + GUITAR_TUNE_G + scale->tune_offset());
             break;
-        case 1 :
-            success = scale->is( random_note + GUITAR_TUNE_D + scale->tune_offset() );
+        case 1:
+            success = scale->is(random_note + GUITAR_TUNE_D + scale->tune_offset());
             break;
-        case 2 :
-            success = scale->is( random_note + GUITAR_TUNE_A + scale->tune_offset() );
+        case 2:
+            success = scale->is(random_note + GUITAR_TUNE_A + scale->tune_offset());
             break;
-        default :
-            success = scale->is( random_note + GUITAR_TUNE_E + scale->tune_offset() );
+        default:
+            success = scale->is(random_note + GUITAR_TUNE_E + scale->tune_offset());
         }
 
-        if( success )
+        if (success)
         {
-            chord_notes.add( random_note );
+            chord_notes.add(random_note);
         }
     }
 

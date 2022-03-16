@@ -38,55 +38,66 @@
 
 #include "UiEditorChords.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-void UiEditorChords::refresh_ui( Array< Component* >& components_to_repaint_ )
+void UiEditorChords::refresh_ui(Array<Component *> &components_to_repaint_)
 {
     set_selected_barchord_color();
 
-    for( int i = 0 ; i != _ui_chords.size() ; ++i )
+    for (int i = 0; i != _ui_chords.size(); ++i)
     {
-        Array< UiChordEditorStringOffset* >& chords = _ui_chords.getReference(i);
+        Array<UiChordEditorStringOffset *> &chords = _ui_chords.getReference(i);
         bool changed = _ui_chord_offset.getUnchecked(i)->is_your_value_changed_since_last_request();
-        for( int j = 0 ; j != chords.size() ; ++j )
+        for (int j = 0; j != chords.size(); ++j)
         {
-            if( changed )
+            if (changed)
                 chords.getUnchecked(j)->repaint_label();
 
-            chords.getUnchecked(j)->refresh_ui( components_to_repaint_ );
+            chords.getUnchecked(j)->refresh_ui(components_to_repaint_);
 
-            _ui_chord_offset.getUnchecked(i)->refresh_ui( components_to_repaint_ );
+            _ui_chord_offset.getUnchecked(i)->refresh_ui(components_to_repaint_);
         }
     }
 
     uint8 tune_offset = _app_instance_store->pattern.note_offset;
-    if( last_pattern_note_offset != tune_offset )
+    if (last_pattern_note_offset != tune_offset)
     {
-        label_string_g->setText( String("String ")+String( MidiMessage::getMidiNoteName(tune_offset+GUITAR_TUNE_G,true,false,false) ), dontSendNotification );
-        label_string_d->setText( String( MidiMessage::getMidiNoteName(tune_offset+GUITAR_TUNE_D,true,false,false) ), dontSendNotification );
-        label_string_a->setText( String( MidiMessage::getMidiNoteName(tune_offset+GUITAR_TUNE_A,true,false,false) ), dontSendNotification );
-        label_string_e->setText( String( MidiMessage::getMidiNoteName(tune_offset+GUITAR_TUNE_E,true,false,false) ), dontSendNotification );
+        label_string_g->setText(String("String ") +
+                                    String(MidiMessage::getMidiNoteName(tune_offset + GUITAR_TUNE_G,
+                                                                        true, false, false)),
+                                dontSendNotification);
+        label_string_d->setText(
+            String(MidiMessage::getMidiNoteName(tune_offset + GUITAR_TUNE_D, true, false, false)),
+            dontSendNotification);
+        label_string_a->setText(
+            String(MidiMessage::getMidiNoteName(tune_offset + GUITAR_TUNE_A, true, false, false)),
+            dontSendNotification);
+        label_string_e->setText(
+            String(MidiMessage::getMidiNoteName(tune_offset + GUITAR_TUNE_E, true, false, false)),
+            dontSendNotification);
 
         // repaint all labels
-        for( int i = 0 ; i != _ui_chords.size() ; ++i )
-            for( int j = 0 ; j != _ui_chords.getReference(i).size() ; ++j )
+        for (int i = 0; i != _ui_chords.size(); ++i)
+            for (int j = 0; j != _ui_chords.getReference(i).size(); ++j)
                 _ui_chords.getReference(i).getReference(j)->repaint_label();
     }
 
-    tb_drum_view->setToggleState(_app_instance_store->editor_config.current_chord_view, dontSendNotification);
+    tb_drum_view->setToggleState(_app_instance_store->editor_config.current_chord_view,
+                                 dontSendNotification);
 }
 
-void UiEditorChords::get_controllers_for_paint_popup( Array< MONO_Controller* >& controllers_that_need_a_popup )
+void UiEditorChords::get_controllers_for_paint_popup(
+    Array<MONO_Controller *> &controllers_that_need_a_popup)
 {
-    if( ! isVisible() )
+    if (!isVisible())
         return;
 
-    for( int i = 0 ; i != _ui_chords.size() ; ++i )
-        for( int j = 0 ; j != _ui_chords.getReference(i).size() ; ++j )
-            _ui_chords.getReference(i).getReference(j)->get_controllers_for_paint_popup( controllers_that_need_a_popup );
+    for (int i = 0; i != _ui_chords.size(); ++i)
+        for (int j = 0; j != _ui_chords.getReference(i).size(); ++j)
+            _ui_chords.getReference(i).getReference(j)->get_controllers_for_paint_popup(
+                controllers_that_need_a_popup);
 }
 
 void UiEditorChords::set_selected_barchord_color()
@@ -94,34 +105,42 @@ void UiEditorChords::set_selected_barchord_color()
     // TODO CHORD ID OF RUNNING BAR
     uint8 selected_bar_id = _app_instance_store->editor_config.selected_bar_id;
 
-    uint8 selected_group = _app_instance_store->pattern.bar( selected_bar_id ).group;
+    uint8 selected_group = _app_instance_store->pattern.bar(selected_bar_id).group;
     uint8 running_bar_id = _app_instance_store->sequencer.get_running_bar_id(selected_group);
-    uint8 running_chord_id = _app_instance_store->pattern.bar( running_bar_id ).chord_id;
-    uint8 selected_chord_id = _app_instance_store->pattern.bar( selected_bar_id ).chord_id;
-    if( last_running_chord_id != running_chord_id || last_selected_preset_id != selected_chord_id )
+    uint8 running_chord_id = _app_instance_store->pattern.bar(running_bar_id).chord_id;
+    uint8 selected_chord_id = _app_instance_store->pattern.bar(selected_bar_id).chord_id;
+    if (last_running_chord_id != running_chord_id || last_selected_preset_id != selected_chord_id)
     {
-        if( last_running_chord_id != 99 )
+        if (last_running_chord_id != 99)
         {
-            for( int i = 0 ; i != _ui_chords.getReference(last_running_chord_id).size() ; ++i )
+            for (int i = 0; i != _ui_chords.getReference(last_running_chord_id).size(); ++i)
             {
-                _ui_chords.getReference(last_running_chord_id).getReference(i)->set_style( _app_instance_store->style_popup_editor_chord );
+                _ui_chords.getReference(last_running_chord_id)
+                    .getReference(i)
+                    ->set_style(_app_instance_store->style_popup_editor_chord);
             }
         }
-        if( last_selected_preset_id != 99 )
+        if (last_selected_preset_id != 99)
         {
-            for( int i = 0 ; i != _ui_chords.getReference(last_selected_preset_id).size() ; ++i )
+            for (int i = 0; i != _ui_chords.getReference(last_selected_preset_id).size(); ++i)
             {
-                _ui_chords.getReference(last_selected_preset_id).getReference(i)->set_style( _app_instance_store->style_popup_editor_chord );
+                _ui_chords.getReference(last_selected_preset_id)
+                    .getReference(i)
+                    ->set_style(_app_instance_store->style_popup_editor_chord);
             }
         }
 
-        for( int i = 0 ; i != _ui_chords.getReference(running_chord_id).size() ; ++i )
+        for (int i = 0; i != _ui_chords.getReference(running_chord_id).size(); ++i)
         {
-            _ui_chords.getReference(running_chord_id).getReference(i)->set_style( _app_instance_store->style_popup_editor_run );
+            _ui_chords.getReference(running_chord_id)
+                .getReference(i)
+                ->set_style(_app_instance_store->style_popup_editor_run);
         }
-        for( int i = 0 ; i != _ui_chords.getReference(selected_chord_id).size() ; ++i )
+        for (int i = 0; i != _ui_chords.getReference(selected_chord_id).size(); ++i)
         {
-            _ui_chords.getReference(selected_chord_id).getReference(i)->set_style( _app_instance_store->style_popup_editor_mute );
+            _ui_chords.getReference(selected_chord_id)
+                .getReference(i)
+                ->set_style(_app_instance_store->style_popup_editor_mute);
         }
     }
 
@@ -129,86 +148,87 @@ void UiEditorChords::set_selected_barchord_color()
     last_running_chord_id = running_chord_id;
 
     uint8 current_tune_offset = _app_instance_store->pattern.note_offset;
-    if( last_tune_offset != current_tune_offset )
+    if (last_tune_offset != current_tune_offset)
     {
-        set_preset_button_text( preset_0, 0 );
-        set_preset_button_text( preset_1, 1 );
-        set_preset_button_text( preset_2, 2 );
-        set_preset_button_text( preset_3, 3 );
-        set_preset_button_text( preset_4, 4 );
-        set_preset_button_text( preset_5, 5 );
-        set_preset_button_text( preset_6, 6 );
-        set_preset_button_text( preset_7, 7 );
-        set_preset_button_text( preset_8, 8 );
-        set_preset_button_text( preset_9, 9 );
-        set_preset_button_text( preset_10, 10 );
-        set_preset_button_text( preset_11, 11 );
-        set_preset_button_text( preset_12, 12 );
-        set_preset_button_text( preset_13, 13 );
+        set_preset_button_text(preset_0, 0);
+        set_preset_button_text(preset_1, 1);
+        set_preset_button_text(preset_2, 2);
+        set_preset_button_text(preset_3, 3);
+        set_preset_button_text(preset_4, 4);
+        set_preset_button_text(preset_5, 5);
+        set_preset_button_text(preset_6, 6);
+        set_preset_button_text(preset_7, 7);
+        set_preset_button_text(preset_8, 8);
+        set_preset_button_text(preset_9, 9);
+        set_preset_button_text(preset_10, 10);
+        set_preset_button_text(preset_11, 11);
+        set_preset_button_text(preset_12, 12);
+        set_preset_button_text(preset_13, 13);
 
         last_tune_offset = current_tune_offset;
     }
 }
 
-void UiEditorChords::set_preset_button_text( TextButton*const button_, uint8 button_id_ ) const
+void UiEditorChords::set_preset_button_text(TextButton *const button_, uint8 button_id_) const
 {
     uint8 note_value = NOTE_A + _app_instance_store->pattern.note_offset - 7 + button_id_;
-    switch( button_id_ )
+    switch (button_id_)
     {
-    case 0 : //A
+    case 0: // A
         break;
-    case 1 : //B
+    case 1: // B
         ++note_value;
         break;
-    case 2 : //C
+    case 2: // C
         ++note_value;
         break;
-    case 3 : //D
+    case 3: // D
         note_value += 2;
         break;
-    case 4 : //E
+    case 4: // E
         note_value += 3;
         break;
-    case 5 : //F
+    case 5: // F
         note_value += 3;
         break;
-    case 6 : //G
+    case 6: // G
         note_value += 4;
         break;
 
-    case 7 : //A m
+    case 7: // A m
         note_value -= 7;
         break;
-    case 8 : //B m
+    case 8: // B m
         (note_value -= 7) += 1;
         break;
-    case 9 : //C m
+    case 9: // C m
         (note_value -= 7) += 1;
         break;
-    case 10 : //D m
+    case 10: // D m
         (note_value -= 7) += 2;
         break;
-    case 11 : //E m
+    case 11: // E m
         (note_value -= 7) += 3;
         break;
-    case 12 : //F m
+    case 12: // F m
         (note_value -= 7) += 3;
         break;
-    case 13 : //F m
+    case 13: // F m
         (note_value -= 7) += 4;
         break;
     }
 
     String post_fix;
-    if( button_id_ > 6 )
+    if (button_id_ > 6)
     {
         post_fix = " m";
     }
 
-    button_->setButtonText( String( MidiMessage::getMidiNoteName(note_value,true,false,false) )+post_fix );
+    button_->setButtonText(String(MidiMessage::getMidiNoteName(note_value, true, false, false)) +
+                           post_fix);
 }
 
-static void inline set_chord_offsets( Chord& chord_, Array< int8 > offsets_ )
+static void inline set_chord_offsets(Chord &chord_, Array<int8> offsets_)
 {
     chord_.offset_e = offsets_.getUnchecked(3);
     chord_.offset_a = offsets_.getUnchecked(2);
@@ -218,11 +238,11 @@ static void inline set_chord_offsets( Chord& chord_, Array< int8 > offsets_ )
 
 void UiEditorChords::on_load_clicked()
 {
-    _app_instance_store->editor->open_reader( VIEW_TYPE::CHORDSETS );
+    _app_instance_store->editor->open_reader(VIEW_TYPE::CHORDSETS);
 }
 void UiEditorChords::on_save_clicked()
 {
-    _app_instance_store->editor->open_writer( VIEW_TYPE::CHORDSETS );
+    _app_instance_store->editor->open_writer(VIEW_TYPE::CHORDSETS);
 }
 void UiEditorChords::on_close_clicked()
 {
@@ -232,352 +252,361 @@ void UiEditorChords::on_close_clicked()
 //[/MiscUserDefs]
 
 //==============================================================================
-UiEditorChords::UiEditorChords (AppInstanceStore* const app_instance_store_)
-    : UiEditor("B-Chords"),_app_instance_store(app_instance_store_)
+UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
+    : UiEditor("B-Chords"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible (lbl_clock_thru = new Label (String(),
-            TRANS("DRUMS\n")));
-    lbl_clock_thru->setFont (Font (15.00f, Font::plain));
-    lbl_clock_thru->setJustificationType (Justification::centred);
-    lbl_clock_thru->setEditable (false, false, false);
-    lbl_clock_thru->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    lbl_clock_thru->setColour (TextEditor::textColourId, Colours::black);
-    lbl_clock_thru->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(lbl_clock_thru = new Label(String(), TRANS("DRUMS\n")));
+    lbl_clock_thru->setFont(Font(15.00f, Font::plain));
+    lbl_clock_thru->setJustificationType(Justification::centred);
+    lbl_clock_thru->setEditable(false, false, false);
+    lbl_clock_thru->setColour(Label::textColourId,
+                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    lbl_clock_thru->setColour(TextEditor::textColourId, Colours::black);
+    lbl_clock_thru->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (tb_drum_view = new ToggleButton (String()));
-    tb_drum_view->setExplicitFocusOrder (2);
-    tb_drum_view->addListener (this);
-    tb_drum_view->setColour (ToggleButton::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    addAndMakeVisible(tb_drum_view = new ToggleButton(String()));
+    tb_drum_view->setExplicitFocusOrder(2);
+    tb_drum_view->addListener(this);
+    tb_drum_view->setColour(ToggleButton::textColourId,
+                            Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible (target_chord_0 = new ToggleButton (String()));
-    target_chord_0->setRadioGroupId (1);
-    target_chord_0->addListener (this);
+    addAndMakeVisible(target_chord_0 = new ToggleButton(String()));
+    target_chord_0->setRadioGroupId(1);
+    target_chord_0->addListener(this);
 
-    addAndMakeVisible (target_chord_1 = new ToggleButton (String()));
-    target_chord_1->setRadioGroupId (1);
-    target_chord_1->addListener (this);
+    addAndMakeVisible(target_chord_1 = new ToggleButton(String()));
+    target_chord_1->setRadioGroupId(1);
+    target_chord_1->addListener(this);
 
-    addAndMakeVisible (target_chord_2 = new ToggleButton (String()));
-    target_chord_2->setRadioGroupId (1);
-    target_chord_2->addListener (this);
+    addAndMakeVisible(target_chord_2 = new ToggleButton(String()));
+    target_chord_2->setRadioGroupId(1);
+    target_chord_2->addListener(this);
 
-    addAndMakeVisible (target_chord_3 = new ToggleButton (String()));
-    target_chord_3->setRadioGroupId (1);
-    target_chord_3->addListener (this);
+    addAndMakeVisible(target_chord_3 = new ToggleButton(String()));
+    target_chord_3->setRadioGroupId(1);
+    target_chord_3->addListener(this);
 
-    addAndMakeVisible (target_chord_4 = new ToggleButton (String()));
-    target_chord_4->setRadioGroupId (1);
-    target_chord_4->addListener (this);
+    addAndMakeVisible(target_chord_4 = new ToggleButton(String()));
+    target_chord_4->setRadioGroupId(1);
+    target_chord_4->addListener(this);
 
-    addAndMakeVisible (target_chord_5 = new ToggleButton (String()));
-    target_chord_5->setRadioGroupId (1);
-    target_chord_5->addListener (this);
+    addAndMakeVisible(target_chord_5 = new ToggleButton(String()));
+    target_chord_5->setRadioGroupId(1);
+    target_chord_5->addListener(this);
 
-    addAndMakeVisible (label_string_g = new Label (String(),
-            TRANS("STRING G")));
-    label_string_g->setFont (Font (15.00f, Font::plain));
-    label_string_g->setJustificationType (Justification::centredRight);
-    label_string_g->setEditable (false, false, false);
-    label_string_g->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_string_g->setColour (TextEditor::textColourId, Colours::black);
-    label_string_g->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_string_g = new Label(String(), TRANS("STRING G")));
+    label_string_g->setFont(Font(15.00f, Font::plain));
+    label_string_g->setJustificationType(Justification::centredRight);
+    label_string_g->setEditable(false, false, false);
+    label_string_g->setColour(Label::textColourId,
+                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_string_g->setColour(TextEditor::textColourId, Colours::black);
+    label_string_g->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (chord_offset_0_0 = new UiChordEditorStringOffset (_app_instance_store,0,0));
+    addAndMakeVisible(chord_offset_0_0 = new UiChordEditorStringOffset(_app_instance_store, 0, 0));
 
-    addAndMakeVisible (chord_offset_0_1 = new UiChordEditorStringOffset (_app_instance_store,0,1));
+    addAndMakeVisible(chord_offset_0_1 = new UiChordEditorStringOffset(_app_instance_store, 0, 1));
 
-    addAndMakeVisible (chord_offset_0_2 = new UiChordEditorStringOffset (_app_instance_store,0,2));
+    addAndMakeVisible(chord_offset_0_2 = new UiChordEditorStringOffset(_app_instance_store, 0, 2));
 
-    addAndMakeVisible (chord_offset_0_3 = new UiChordEditorStringOffset (_app_instance_store,0,3));
+    addAndMakeVisible(chord_offset_0_3 = new UiChordEditorStringOffset(_app_instance_store, 0, 3));
 
-    addAndMakeVisible (chord_offset_1_0 = new UiChordEditorStringOffset (_app_instance_store,1,0));
+    addAndMakeVisible(chord_offset_1_0 = new UiChordEditorStringOffset(_app_instance_store, 1, 0));
 
-    addAndMakeVisible (chord_offset_2_0 = new UiChordEditorStringOffset (_app_instance_store,2,0));
+    addAndMakeVisible(chord_offset_2_0 = new UiChordEditorStringOffset(_app_instance_store, 2, 0));
 
-    addAndMakeVisible (chord_offset_3_0 = new UiChordEditorStringOffset (_app_instance_store,3,0));
+    addAndMakeVisible(chord_offset_3_0 = new UiChordEditorStringOffset(_app_instance_store, 3, 0));
 
-    addAndMakeVisible (chord_offset_4_0 = new UiChordEditorStringOffset (_app_instance_store,4,0));
+    addAndMakeVisible(chord_offset_4_0 = new UiChordEditorStringOffset(_app_instance_store, 4, 0));
 
-    addAndMakeVisible (chord_offset_5_0 = new UiChordEditorStringOffset (_app_instance_store,5,0));
+    addAndMakeVisible(chord_offset_5_0 = new UiChordEditorStringOffset(_app_instance_store, 5, 0));
 
-    addAndMakeVisible (chord_offset_1_1 = new UiChordEditorStringOffset (_app_instance_store,1,1));
+    addAndMakeVisible(chord_offset_1_1 = new UiChordEditorStringOffset(_app_instance_store, 1, 1));
 
-    addAndMakeVisible (chord_offset_1_2 = new UiChordEditorStringOffset (_app_instance_store,1,2));
+    addAndMakeVisible(chord_offset_1_2 = new UiChordEditorStringOffset(_app_instance_store, 1, 2));
 
-    addAndMakeVisible (chord_offset_1_3 = new UiChordEditorStringOffset (_app_instance_store,1,3));
+    addAndMakeVisible(chord_offset_1_3 = new UiChordEditorStringOffset(_app_instance_store, 1, 3));
 
-    addAndMakeVisible (chord_offset_2_1 = new UiChordEditorStringOffset (_app_instance_store,2,1));
+    addAndMakeVisible(chord_offset_2_1 = new UiChordEditorStringOffset(_app_instance_store, 2, 1));
 
-    addAndMakeVisible (chord_offset_2_2 = new UiChordEditorStringOffset (_app_instance_store,2,2));
+    addAndMakeVisible(chord_offset_2_2 = new UiChordEditorStringOffset(_app_instance_store, 2, 2));
 
-    addAndMakeVisible (chord_offset_2_3 = new UiChordEditorStringOffset (_app_instance_store,2,3));
+    addAndMakeVisible(chord_offset_2_3 = new UiChordEditorStringOffset(_app_instance_store, 2, 3));
 
-    addAndMakeVisible (chord_offset_3_1 = new UiChordEditorStringOffset (_app_instance_store,3,1));
+    addAndMakeVisible(chord_offset_3_1 = new UiChordEditorStringOffset(_app_instance_store, 3, 1));
 
-    addAndMakeVisible (chord_offset_3_2 = new UiChordEditorStringOffset (_app_instance_store,3,2));
+    addAndMakeVisible(chord_offset_3_2 = new UiChordEditorStringOffset(_app_instance_store, 3, 2));
 
-    addAndMakeVisible (chord_offset_3_3 = new UiChordEditorStringOffset (_app_instance_store,3,3));
+    addAndMakeVisible(chord_offset_3_3 = new UiChordEditorStringOffset(_app_instance_store, 3, 3));
 
-    addAndMakeVisible (chord_offset_4_1 = new UiChordEditorStringOffset (_app_instance_store,4,1));
+    addAndMakeVisible(chord_offset_4_1 = new UiChordEditorStringOffset(_app_instance_store, 4, 1));
 
-    addAndMakeVisible (chord_offset_4_2 = new UiChordEditorStringOffset (_app_instance_store,4,2));
+    addAndMakeVisible(chord_offset_4_2 = new UiChordEditorStringOffset(_app_instance_store, 4, 2));
 
-    addAndMakeVisible (chord_offset_4_3 = new UiChordEditorStringOffset (_app_instance_store,4,3));
+    addAndMakeVisible(chord_offset_4_3 = new UiChordEditorStringOffset(_app_instance_store, 4, 3));
 
-    addAndMakeVisible (chord_offset_5_1 = new UiChordEditorStringOffset (_app_instance_store,5,1));
+    addAndMakeVisible(chord_offset_5_1 = new UiChordEditorStringOffset(_app_instance_store, 5, 1));
 
-    addAndMakeVisible (chord_offset_5_2 = new UiChordEditorStringOffset (_app_instance_store,5,2));
+    addAndMakeVisible(chord_offset_5_2 = new UiChordEditorStringOffset(_app_instance_store, 5, 2));
 
-    addAndMakeVisible (chord_offset_5_3 = new UiChordEditorStringOffset (_app_instance_store,5,3));
+    addAndMakeVisible(chord_offset_5_3 = new UiChordEditorStringOffset(_app_instance_store, 5, 3));
 
-    addAndMakeVisible (chord_offset_0 = new UiChordEditorChordOffset (_app_instance_store,0));
+    addAndMakeVisible(chord_offset_0 = new UiChordEditorChordOffset(_app_instance_store, 0));
 
-    addAndMakeVisible (chord_offset_1 = new UiChordEditorChordOffset (_app_instance_store,1));
+    addAndMakeVisible(chord_offset_1 = new UiChordEditorChordOffset(_app_instance_store, 1));
 
-    addAndMakeVisible (chord_offset_2 = new UiChordEditorChordOffset (_app_instance_store,2));
-
-    addAndMakeVisible (chord_offset_3 = new UiChordEditorChordOffset (_app_instance_store,3));
-
-    addAndMakeVisible (chord_offset_4 = new UiChordEditorChordOffset (_app_instance_store,4));
-
-    addAndMakeVisible (chord_offset_5 = new UiChordEditorChordOffset (_app_instance_store,5));
-
-    addAndMakeVisible (label_string_d = new Label (String(),
-            TRANS("D")));
-    label_string_d->setFont (Font (15.00f, Font::plain));
-    label_string_d->setJustificationType (Justification::centredRight);
-    label_string_d->setEditable (false, false, false);
-    label_string_d->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_string_d->setColour (TextEditor::textColourId, Colours::black);
-    label_string_d->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_string_a = new Label (String(),
-            TRANS("A")));
-    label_string_a->setFont (Font (15.00f, Font::plain));
-    label_string_a->setJustificationType (Justification::centredRight);
-    label_string_a->setEditable (false, false, false);
-    label_string_a->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_string_a->setColour (TextEditor::textColourId, Colours::black);
-    label_string_a->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_string_e = new Label (String(),
-            TRANS("E")));
-    label_string_e->setFont (Font (15.00f, Font::plain));
-    label_string_e->setJustificationType (Justification::centredRight);
-    label_string_e->setEditable (false, false, false);
-    label_string_e->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_string_e->setColour (TextEditor::textColourId, Colours::black);
-    label_string_e->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_transpose = new Label (String(),
-            TRANS("Transpose\n")));
-    label_transpose->setFont (Font (15.00f, Font::plain));
-    label_transpose->setJustificationType (Justification::centredRight);
-    label_transpose->setEditable (false, false, false);
-    label_transpose->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_transpose->setColour (TextEditor::textColourId, Colours::black);
-    label_transpose->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_preset_target = new Label (String(),
-            TRANS("Preset Target")));
-    label_preset_target->setFont (Font (15.00f, Font::plain));
-    label_preset_target->setJustificationType (Justification::centredRight);
-    label_preset_target->setEditable (false, false, false);
-    label_preset_target->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_preset_target->setColour (TextEditor::textColourId, Colours::black);
-    label_preset_target->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (preset_0 = new TextButton (String()));
-    preset_0->setButtonText (TRANS("A"));
-    preset_0->addListener (this);
-    preset_0->setColour (TextButton::buttonColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-
-    addAndMakeVisible (preset_1 = new TextButton (String()));
-    preset_1->setButtonText (TRANS("B"));
-    preset_1->addListener (this);
-    preset_1->setColour (TextButton::buttonColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-
-    addAndMakeVisible (preset_2 = new TextButton (String()));
-    preset_2->setButtonText (TRANS("C"));
-    preset_2->addListener (this);
-    preset_2->setColour (TextButton::buttonColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-
-    addAndMakeVisible (preset_3 = new TextButton (String()));
-    preset_3->setButtonText (TRANS("D"));
-    preset_3->addListener (this);
-    preset_3->setColour (TextButton::buttonColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-
-    addAndMakeVisible (preset_4 = new TextButton (String()));
-    preset_4->setButtonText (TRANS("E"));
-    preset_4->addListener (this);
-    preset_4->setColour (TextButton::buttonColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-
-    addAndMakeVisible (preset_5 = new TextButton (String()));
-    preset_5->setButtonText (TRANS("F"));
-    preset_5->addListener (this);
-    preset_5->setColour (TextButton::buttonColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-
-    addAndMakeVisible (preset_6 = new TextButton (String()));
-    preset_6->setButtonText (TRANS("G"));
-    preset_6->addListener (this);
-    preset_6->setColour (TextButton::buttonColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-
-    addAndMakeVisible (preset_7 = new TextButton (String()));
-    preset_7->setButtonText (TRANS("A m"));
-    preset_7->addListener (this);
-    preset_7->setColour (TextButton::buttonColourId, Colour (0xff003bff));
-
-    addAndMakeVisible (preset_8 = new TextButton (String()));
-    preset_8->setButtonText (TRANS("B m"));
-    preset_8->addListener (this);
-    preset_8->setColour (TextButton::buttonColourId, Colour (0xff003bff));
-
-    addAndMakeVisible (preset_9 = new TextButton (String()));
-    preset_9->setButtonText (TRANS("C m"));
-    preset_9->addListener (this);
-    preset_9->setColour (TextButton::buttonColourId, Colour (0xff003bff));
-
-    addAndMakeVisible (preset_10 = new TextButton (String()));
-    preset_10->setButtonText (TRANS("D m"));
-    preset_10->addListener (this);
-    preset_10->setColour (TextButton::buttonColourId, Colour (0xff003bff));
-
-    addAndMakeVisible (preset_11 = new TextButton (String()));
-    preset_11->setButtonText (TRANS("E m"));
-    preset_11->addListener (this);
-    preset_11->setColour (TextButton::buttonColourId, Colour (0xff003bff));
-
-    addAndMakeVisible (preset_12 = new TextButton (String()));
-    preset_12->setButtonText (TRANS("F m"));
-    preset_12->addListener (this);
-    preset_12->setColour (TextButton::buttonColourId, Colour (0xff003bff));
-
-    addAndMakeVisible (preset_13 = new TextButton (String()));
-    preset_13->setButtonText (TRANS("G m"));
-    preset_13->addListener (this);
-    preset_13->setColour (TextButton::buttonColourId, Colour (0xff003bff));
-
-    addAndMakeVisible (labe_chord_0 = new Label (String(),
-            TRANS("CHORD 1\n")));
-    labe_chord_0->setFont (Font (15.00f, Font::plain));
-    labe_chord_0->setJustificationType (Justification::centred);
-    labe_chord_0->setEditable (false, false, false);
-    labe_chord_0->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    labe_chord_0->setColour (TextEditor::textColourId, Colours::black);
-    labe_chord_0->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (labe_chord_1 = new Label (String(),
-            TRANS("2")));
-    labe_chord_1->setFont (Font (15.00f, Font::plain));
-    labe_chord_1->setJustificationType (Justification::centred);
-    labe_chord_1->setEditable (false, false, false);
-    labe_chord_1->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    labe_chord_1->setColour (TextEditor::textColourId, Colours::black);
-    labe_chord_1->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (labe_chord_2 = new Label (String(),
-            TRANS("3")));
-    labe_chord_2->setFont (Font (15.00f, Font::plain));
-    labe_chord_2->setJustificationType (Justification::centred);
-    labe_chord_2->setEditable (false, false, false);
-    labe_chord_2->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    labe_chord_2->setColour (TextEditor::textColourId, Colours::black);
-    labe_chord_2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (labe_chord_3 = new Label (String(),
-            TRANS("4")));
-    labe_chord_3->setFont (Font (15.00f, Font::plain));
-    labe_chord_3->setJustificationType (Justification::centred);
-    labe_chord_3->setEditable (false, false, false);
-    labe_chord_3->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    labe_chord_3->setColour (TextEditor::textColourId, Colours::black);
-    labe_chord_3->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (labe_chord_4 = new Label (String(),
-            TRANS("5")));
-    labe_chord_4->setFont (Font (15.00f, Font::plain));
-    labe_chord_4->setJustificationType (Justification::centred);
-    labe_chord_4->setEditable (false, false, false);
-    labe_chord_4->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    labe_chord_4->setColour (TextEditor::textColourId, Colours::black);
-    labe_chord_4->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (labe_chord_5 = new Label (String(),
-            TRANS("6")));
-    labe_chord_5->setFont (Font (15.00f, Font::plain));
-    labe_chord_5->setJustificationType (Justification::centred);
-    labe_chord_5->setEditable (false, false, false);
-    labe_chord_5->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    labe_chord_5->setColour (TextEditor::textColourId, Colours::black);
-    labe_chord_5->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (button_fill_all_from_scale = new TextButton (String()));
-    button_fill_all_from_scale->setButtonText (TRANS("Fill ALL Chords randomly from Scale"));
-    button_fill_all_from_scale->addListener (this);
-    button_fill_all_from_scale->setColour (TextButton::buttonColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-
-    addAndMakeVisible (button_fill_target_from_scale = new TextButton (String()));
-    button_fill_target_from_scale->setButtonText (TRANS("Fill Target Chord randomly from Scale"));
-    button_fill_target_from_scale->addListener (this);
-    button_fill_target_from_scale->setColour (TextButton::buttonColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-
-    addAndMakeVisible (combo_scales = new ComboBox ("new combo box"));
-    combo_scales->setEditableText (false);
-    combo_scales->setJustificationType (Justification::centredLeft);
-    combo_scales->setTextWhenNothingSelected (String());
-    combo_scales->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    combo_scales->addListener (this);
-
-    addAndMakeVisible (toolbar = new UiEditorToolbar (this));
-
-    addAndMakeVisible (button_info = new TextButton (String()));
-    button_info->setButtonText (TRANS("?"));
-    button_info->addListener (this);
-
+    addAndMakeVisible(chord_offset_2 = new UiChordEditorChordOffset(_app_instance_store, 2));
+
+    addAndMakeVisible(chord_offset_3 = new UiChordEditorChordOffset(_app_instance_store, 3));
+
+    addAndMakeVisible(chord_offset_4 = new UiChordEditorChordOffset(_app_instance_store, 4));
+
+    addAndMakeVisible(chord_offset_5 = new UiChordEditorChordOffset(_app_instance_store, 5));
+
+    addAndMakeVisible(label_string_d = new Label(String(), TRANS("D")));
+    label_string_d->setFont(Font(15.00f, Font::plain));
+    label_string_d->setJustificationType(Justification::centredRight);
+    label_string_d->setEditable(false, false, false);
+    label_string_d->setColour(Label::textColourId,
+                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_string_d->setColour(TextEditor::textColourId, Colours::black);
+    label_string_d->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_string_a = new Label(String(), TRANS("A")));
+    label_string_a->setFont(Font(15.00f, Font::plain));
+    label_string_a->setJustificationType(Justification::centredRight);
+    label_string_a->setEditable(false, false, false);
+    label_string_a->setColour(Label::textColourId,
+                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_string_a->setColour(TextEditor::textColourId, Colours::black);
+    label_string_a->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_string_e = new Label(String(), TRANS("E")));
+    label_string_e->setFont(Font(15.00f, Font::plain));
+    label_string_e->setJustificationType(Justification::centredRight);
+    label_string_e->setEditable(false, false, false);
+    label_string_e->setColour(Label::textColourId,
+                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_string_e->setColour(TextEditor::textColourId, Colours::black);
+    label_string_e->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_transpose = new Label(String(), TRANS("Transpose\n")));
+    label_transpose->setFont(Font(15.00f, Font::plain));
+    label_transpose->setJustificationType(Justification::centredRight);
+    label_transpose->setEditable(false, false, false);
+    label_transpose->setColour(Label::textColourId,
+                               Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_transpose->setColour(TextEditor::textColourId, Colours::black);
+    label_transpose->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_preset_target = new Label(String(), TRANS("Preset Target")));
+    label_preset_target->setFont(Font(15.00f, Font::plain));
+    label_preset_target->setJustificationType(Justification::centredRight);
+    label_preset_target->setEditable(false, false, false);
+    label_preset_target->setColour(Label::textColourId,
+                                   Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_preset_target->setColour(TextEditor::textColourId, Colours::black);
+    label_preset_target->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(preset_0 = new TextButton(String()));
+    preset_0->setButtonText(TRANS("A"));
+    preset_0->addListener(this);
+    preset_0->setColour(TextButton::buttonColourId,
+                        Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+
+    addAndMakeVisible(preset_1 = new TextButton(String()));
+    preset_1->setButtonText(TRANS("B"));
+    preset_1->addListener(this);
+    preset_1->setColour(TextButton::buttonColourId,
+                        Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+
+    addAndMakeVisible(preset_2 = new TextButton(String()));
+    preset_2->setButtonText(TRANS("C"));
+    preset_2->addListener(this);
+    preset_2->setColour(TextButton::buttonColourId,
+                        Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+
+    addAndMakeVisible(preset_3 = new TextButton(String()));
+    preset_3->setButtonText(TRANS("D"));
+    preset_3->addListener(this);
+    preset_3->setColour(TextButton::buttonColourId,
+                        Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+
+    addAndMakeVisible(preset_4 = new TextButton(String()));
+    preset_4->setButtonText(TRANS("E"));
+    preset_4->addListener(this);
+    preset_4->setColour(TextButton::buttonColourId,
+                        Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+
+    addAndMakeVisible(preset_5 = new TextButton(String()));
+    preset_5->setButtonText(TRANS("F"));
+    preset_5->addListener(this);
+    preset_5->setColour(TextButton::buttonColourId,
+                        Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+
+    addAndMakeVisible(preset_6 = new TextButton(String()));
+    preset_6->setButtonText(TRANS("G"));
+    preset_6->addListener(this);
+    preset_6->setColour(TextButton::buttonColourId,
+                        Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+
+    addAndMakeVisible(preset_7 = new TextButton(String()));
+    preset_7->setButtonText(TRANS("A m"));
+    preset_7->addListener(this);
+    preset_7->setColour(TextButton::buttonColourId, Colour(0xff003bff));
+
+    addAndMakeVisible(preset_8 = new TextButton(String()));
+    preset_8->setButtonText(TRANS("B m"));
+    preset_8->addListener(this);
+    preset_8->setColour(TextButton::buttonColourId, Colour(0xff003bff));
+
+    addAndMakeVisible(preset_9 = new TextButton(String()));
+    preset_9->setButtonText(TRANS("C m"));
+    preset_9->addListener(this);
+    preset_9->setColour(TextButton::buttonColourId, Colour(0xff003bff));
+
+    addAndMakeVisible(preset_10 = new TextButton(String()));
+    preset_10->setButtonText(TRANS("D m"));
+    preset_10->addListener(this);
+    preset_10->setColour(TextButton::buttonColourId, Colour(0xff003bff));
+
+    addAndMakeVisible(preset_11 = new TextButton(String()));
+    preset_11->setButtonText(TRANS("E m"));
+    preset_11->addListener(this);
+    preset_11->setColour(TextButton::buttonColourId, Colour(0xff003bff));
+
+    addAndMakeVisible(preset_12 = new TextButton(String()));
+    preset_12->setButtonText(TRANS("F m"));
+    preset_12->addListener(this);
+    preset_12->setColour(TextButton::buttonColourId, Colour(0xff003bff));
+
+    addAndMakeVisible(preset_13 = new TextButton(String()));
+    preset_13->setButtonText(TRANS("G m"));
+    preset_13->addListener(this);
+    preset_13->setColour(TextButton::buttonColourId, Colour(0xff003bff));
+
+    addAndMakeVisible(labe_chord_0 = new Label(String(), TRANS("CHORD 1\n")));
+    labe_chord_0->setFont(Font(15.00f, Font::plain));
+    labe_chord_0->setJustificationType(Justification::centred);
+    labe_chord_0->setEditable(false, false, false);
+    labe_chord_0->setColour(Label::textColourId,
+                            Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    labe_chord_0->setColour(TextEditor::textColourId, Colours::black);
+    labe_chord_0->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(labe_chord_1 = new Label(String(), TRANS("2")));
+    labe_chord_1->setFont(Font(15.00f, Font::plain));
+    labe_chord_1->setJustificationType(Justification::centred);
+    labe_chord_1->setEditable(false, false, false);
+    labe_chord_1->setColour(Label::textColourId,
+                            Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    labe_chord_1->setColour(TextEditor::textColourId, Colours::black);
+    labe_chord_1->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(labe_chord_2 = new Label(String(), TRANS("3")));
+    labe_chord_2->setFont(Font(15.00f, Font::plain));
+    labe_chord_2->setJustificationType(Justification::centred);
+    labe_chord_2->setEditable(false, false, false);
+    labe_chord_2->setColour(Label::textColourId,
+                            Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    labe_chord_2->setColour(TextEditor::textColourId, Colours::black);
+    labe_chord_2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(labe_chord_3 = new Label(String(), TRANS("4")));
+    labe_chord_3->setFont(Font(15.00f, Font::plain));
+    labe_chord_3->setJustificationType(Justification::centred);
+    labe_chord_3->setEditable(false, false, false);
+    labe_chord_3->setColour(Label::textColourId,
+                            Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    labe_chord_3->setColour(TextEditor::textColourId, Colours::black);
+    labe_chord_3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(labe_chord_4 = new Label(String(), TRANS("5")));
+    labe_chord_4->setFont(Font(15.00f, Font::plain));
+    labe_chord_4->setJustificationType(Justification::centred);
+    labe_chord_4->setEditable(false, false, false);
+    labe_chord_4->setColour(Label::textColourId,
+                            Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    labe_chord_4->setColour(TextEditor::textColourId, Colours::black);
+    labe_chord_4->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(labe_chord_5 = new Label(String(), TRANS("6")));
+    labe_chord_5->setFont(Font(15.00f, Font::plain));
+    labe_chord_5->setJustificationType(Justification::centred);
+    labe_chord_5->setEditable(false, false, false);
+    labe_chord_5->setColour(Label::textColourId,
+                            Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    labe_chord_5->setColour(TextEditor::textColourId, Colours::black);
+    labe_chord_5->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(button_fill_all_from_scale = new TextButton(String()));
+    button_fill_all_from_scale->setButtonText(TRANS("Fill ALL Chords randomly from Scale"));
+    button_fill_all_from_scale->addListener(this);
+    button_fill_all_from_scale->setColour(
+        TextButton::buttonColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+
+    addAndMakeVisible(button_fill_target_from_scale = new TextButton(String()));
+    button_fill_target_from_scale->setButtonText(TRANS("Fill Target Chord randomly from Scale"));
+    button_fill_target_from_scale->addListener(this);
+    button_fill_target_from_scale->setColour(
+        TextButton::buttonColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+
+    addAndMakeVisible(combo_scales = new ComboBox("new combo box"));
+    combo_scales->setEditableText(false);
+    combo_scales->setJustificationType(Justification::centredLeft);
+    combo_scales->setTextWhenNothingSelected(String());
+    combo_scales->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    combo_scales->addListener(this);
+
+    addAndMakeVisible(toolbar = new UiEditorToolbar(this));
+
+    addAndMakeVisible(button_info = new TextButton(String()));
+    button_info->setButtonText(TRANS("?"));
+    button_info->addListener(this);
 
     //[UserPreSize]
-    _ui_string_offset_0.add( chord_offset_0_0 );
-    _ui_string_offset_0.add( chord_offset_0_1 );
-    _ui_string_offset_0.add( chord_offset_0_2 );
-    _ui_string_offset_0.add( chord_offset_0_3 );
-    _ui_chords.add( _ui_string_offset_0 );
-    _ui_string_offset_1.add( chord_offset_1_0 );
-    _ui_string_offset_1.add( chord_offset_1_1 );
-    _ui_string_offset_1.add( chord_offset_1_2 );
-    _ui_string_offset_1.add( chord_offset_1_3 );
-    _ui_chords.add( _ui_string_offset_1 );
-    _ui_string_offset_2.add( chord_offset_2_0 );
-    _ui_string_offset_2.add( chord_offset_2_1 );
-    _ui_string_offset_2.add( chord_offset_2_2 );
-    _ui_string_offset_2.add( chord_offset_2_3 );
-    _ui_chords.add( _ui_string_offset_2 );
-    _ui_string_offset_3.add( chord_offset_3_0 );
-    _ui_string_offset_3.add( chord_offset_3_1 );
-    _ui_string_offset_3.add( chord_offset_3_2 );
-    _ui_string_offset_3.add( chord_offset_3_3 );
-    _ui_chords.add( _ui_string_offset_3 );
-    _ui_string_offset_4.add( chord_offset_4_0 );
-    _ui_string_offset_4.add( chord_offset_4_1 );
-    _ui_string_offset_4.add( chord_offset_4_2 );
-    _ui_string_offset_4.add( chord_offset_4_3 );
-    _ui_chords.add( _ui_string_offset_4 );
-    _ui_string_offset_5.add( chord_offset_5_0 );
-    _ui_string_offset_5.add( chord_offset_5_1 );
-    _ui_string_offset_5.add( chord_offset_5_2 );
-    _ui_string_offset_5.add( chord_offset_5_3 );
-    _ui_chords.add( _ui_string_offset_5 );
+    _ui_string_offset_0.add(chord_offset_0_0);
+    _ui_string_offset_0.add(chord_offset_0_1);
+    _ui_string_offset_0.add(chord_offset_0_2);
+    _ui_string_offset_0.add(chord_offset_0_3);
+    _ui_chords.add(_ui_string_offset_0);
+    _ui_string_offset_1.add(chord_offset_1_0);
+    _ui_string_offset_1.add(chord_offset_1_1);
+    _ui_string_offset_1.add(chord_offset_1_2);
+    _ui_string_offset_1.add(chord_offset_1_3);
+    _ui_chords.add(_ui_string_offset_1);
+    _ui_string_offset_2.add(chord_offset_2_0);
+    _ui_string_offset_2.add(chord_offset_2_1);
+    _ui_string_offset_2.add(chord_offset_2_2);
+    _ui_string_offset_2.add(chord_offset_2_3);
+    _ui_chords.add(_ui_string_offset_2);
+    _ui_string_offset_3.add(chord_offset_3_0);
+    _ui_string_offset_3.add(chord_offset_3_1);
+    _ui_string_offset_3.add(chord_offset_3_2);
+    _ui_string_offset_3.add(chord_offset_3_3);
+    _ui_chords.add(_ui_string_offset_3);
+    _ui_string_offset_4.add(chord_offset_4_0);
+    _ui_string_offset_4.add(chord_offset_4_1);
+    _ui_string_offset_4.add(chord_offset_4_2);
+    _ui_string_offset_4.add(chord_offset_4_3);
+    _ui_chords.add(_ui_string_offset_4);
+    _ui_string_offset_5.add(chord_offset_5_0);
+    _ui_string_offset_5.add(chord_offset_5_1);
+    _ui_string_offset_5.add(chord_offset_5_2);
+    _ui_string_offset_5.add(chord_offset_5_3);
+    _ui_chords.add(_ui_string_offset_5);
 
-    _ui_chord_offset.add( chord_offset_0 );
-    _ui_chord_offset.add( chord_offset_1 );
-    _ui_chord_offset.add( chord_offset_2 );
-    _ui_chord_offset.add( chord_offset_3 );
-    _ui_chord_offset.add( chord_offset_4 );
-    _ui_chord_offset.add( chord_offset_5 );
+    _ui_chord_offset.add(chord_offset_0);
+    _ui_chord_offset.add(chord_offset_1);
+    _ui_chord_offset.add(chord_offset_2);
+    _ui_chord_offset.add(chord_offset_3);
+    _ui_chord_offset.add(chord_offset_4);
+    _ui_chord_offset.add(chord_offset_5);
 
     Array<String> names = ScalesList::get();
-    for( int i = 0 ; i != names.size() ; ++i )
+    for (int i = 0; i != names.size(); ++i)
     {
-        combo_scales->addItem( names.getUnchecked(i), i+1 );
+        combo_scales->addItem(names.getUnchecked(i), i + 1);
     }
     combo_scales->setSelectedId(1);
 
@@ -588,35 +617,34 @@ UiEditorChords::UiEditorChords (AppInstanceStore* const app_instance_store_)
     last_tune_offset = 99;
     //[/UserPreSize]
 
-    setSize (780, 500);
-
+    setSize(780, 500);
 
     //[Constructor] You can add your own custom stuff here..
     uint8 selected_bar_id = _app_instance_store->editor_config.selected_bar_id;
-    _selected_preset_chord = _app_instance_store->pattern.bar( selected_bar_id ).chord_id;
+    _selected_preset_chord = _app_instance_store->pattern.bar(selected_bar_id).chord_id;
 
-    if( _selected_preset_chord == 0 )
-        target_chord_0->setToggleState( true, NotificationType::dontSendNotification );
-    if( _selected_preset_chord == 1 )
-        target_chord_1->setToggleState( true, NotificationType::dontSendNotification );
-    if( _selected_preset_chord == 2 )
-        target_chord_2->setToggleState( true, NotificationType::dontSendNotification );
-    if( _selected_preset_chord == 3 )
-        target_chord_3->setToggleState( true, NotificationType::dontSendNotification );
-    if( _selected_preset_chord == 4 )
-        target_chord_4->setToggleState( true, NotificationType::dontSendNotification );
-    if( _selected_preset_chord == 5 )
-        target_chord_5->setToggleState( true, NotificationType::dontSendNotification );
+    if (_selected_preset_chord == 0)
+        target_chord_0->setToggleState(true, NotificationType::dontSendNotification);
+    if (_selected_preset_chord == 1)
+        target_chord_1->setToggleState(true, NotificationType::dontSendNotification);
+    if (_selected_preset_chord == 2)
+        target_chord_2->setToggleState(true, NotificationType::dontSendNotification);
+    if (_selected_preset_chord == 3)
+        target_chord_3->setToggleState(true, NotificationType::dontSendNotification);
+    if (_selected_preset_chord == 4)
+        target_chord_4->setToggleState(true, NotificationType::dontSendNotification);
+    if (_selected_preset_chord == 5)
+        target_chord_5->setToggleState(true, NotificationType::dontSendNotification);
 
-    center_relative_and_make_visible( _app_instance_store->editor );
-    restore_XY( _app_instance_store->editor_config.XY_chord_editor );
+    center_relative_and_make_visible(_app_instance_store->editor);
+    restore_XY(_app_instance_store->editor_config.XY_chord_editor);
     //[/Constructor]
 }
 
 UiEditorChords::~UiEditorChords()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
-    _app_instance_store->editor_config.XY_chord_editor = Point<int>(getX(),getY());
+    _app_instance_store->editor_config.XY_chord_editor = Point<int>(getX(), getY());
     //[/Destructor_pre]
 
     lbl_clock_thru = nullptr;
@@ -689,46 +717,48 @@ UiEditorChords::~UiEditorChords()
     toolbar = nullptr;
     button_info = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiEditorChords::paint (Graphics& g)
+void UiEditorChords::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.setColour (Colour (0xff161616));
-    g.fillRect (0, 0, getWidth() - 0, getHeight() - 0);
+    g.setColour(Colour(0xff161616));
+    g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.drawRect (0, 0, getWidth() - 0, getHeight() - 0, 2);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    g.setColour (Colours::white);
-    g.strokePath (internalPath1, PathStrokeType (2.000f, PathStrokeType::beveled, PathStrokeType::rounded));
+    g.setColour(Colours::white);
+    g.strokePath(internalPath1,
+                 PathStrokeType(2.000f, PathStrokeType::beveled, PathStrokeType::rounded));
 
-    g.setColour (Colours::white);
-    g.strokePath (internalPath2, PathStrokeType (2.000f, PathStrokeType::beveled, PathStrokeType::rounded));
+    g.setColour(Colours::white);
+    g.strokePath(internalPath2,
+                 PathStrokeType(2.000f, PathStrokeType::beveled, PathStrokeType::rounded));
 
-    g.setColour (Colour (0xff6ea52a));
-    g.fillPath (internalPath3);
+    g.setColour(Colour(0xff6ea52a));
+    g.fillPath(internalPath3);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.fillPath (internalPath4);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.fillPath(internalPath4);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.fillPath (internalPath5);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.fillPath(internalPath5);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.fillPath (internalPath6);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.fillPath(internalPath6);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.fillPath (internalPath7);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.fillPath(internalPath7);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.fillRoundedRectangle (20.0f, static_cast<float> (proportionOfHeight (0.7600f)), static_cast<float> (proportionOfWidth (0.8974f)), 1.0f, 10.000f);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.fillRoundedRectangle(20.0f, static_cast<float>(proportionOfHeight(0.7600f)),
+                           static_cast<float>(proportionOfWidth(0.8974f)), 1.0f, 10.000f);
 
     //[UserPaint] Add your own custom painting code here..
     ResizableWindow::moved();
@@ -740,114 +770,206 @@ void UiEditorChords::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    lbl_clock_thru->setBounds (proportionOfWidth (0.0513f), proportionOfHeight (0.0300f), proportionOfWidth (0.0936f), proportionOfHeight (0.0600f));
-    tb_drum_view->setBounds (proportionOfWidth (0.0256f), proportionOfHeight (0.0300f), proportionOfWidth (0.1180f), proportionOfHeight (0.0600f));
-    target_chord_0->setBounds (proportionOfWidth (0.1795f), proportionOfHeight (0.6600f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    target_chord_1->setBounds (proportionOfWidth (0.3077f), proportionOfHeight (0.6600f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    target_chord_2->setBounds (proportionOfWidth (0.4359f), proportionOfHeight (0.6600f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    target_chord_3->setBounds (proportionOfWidth (0.5641f), proportionOfHeight (0.6600f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    target_chord_4->setBounds (proportionOfWidth (0.6923f), proportionOfHeight (0.6600f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    target_chord_5->setBounds (proportionOfWidth (0.8205f), proportionOfHeight (0.6600f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    label_string_g->setBounds (proportionOfWidth (0.0321f), proportionOfHeight (0.1200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_0_0->setBounds (proportionOfWidth (0.1654f), proportionOfHeight (0.1200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_0_1->setBounds (proportionOfWidth (0.1654f), proportionOfHeight (0.2200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_0_2->setBounds (proportionOfWidth (0.1654f), proportionOfHeight (0.3200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_0_3->setBounds (proportionOfWidth (0.1654f), proportionOfHeight (0.4200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_1_0->setBounds (proportionOfWidth (0.2936f), proportionOfHeight (0.1200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_2_0->setBounds (proportionOfWidth (0.4244f), proportionOfHeight (0.1200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_3_0->setBounds (proportionOfWidth (0.5526f), proportionOfHeight (0.1200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_4_0->setBounds (proportionOfWidth (0.6795f), proportionOfHeight (0.1200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_5_0->setBounds (proportionOfWidth (0.8077f), proportionOfHeight (0.1200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_1_1->setBounds (proportionOfWidth (0.2936f), proportionOfHeight (0.2200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_1_2->setBounds (proportionOfWidth (0.2936f), proportionOfHeight (0.3200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_1_3->setBounds (proportionOfWidth (0.2936f), proportionOfHeight (0.4200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_2_1->setBounds (proportionOfWidth (0.4244f), proportionOfHeight (0.2200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_2_2->setBounds (proportionOfWidth (0.4244f), proportionOfHeight (0.3200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_2_3->setBounds (proportionOfWidth (0.4244f), proportionOfHeight (0.4200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_3_1->setBounds (proportionOfWidth (0.5526f), proportionOfHeight (0.2200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_3_2->setBounds (proportionOfWidth (0.5526f), proportionOfHeight (0.3200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_3_3->setBounds (proportionOfWidth (0.5526f), proportionOfHeight (0.4200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_4_1->setBounds (proportionOfWidth (0.6795f), proportionOfHeight (0.2200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_4_2->setBounds (proportionOfWidth (0.6795f), proportionOfHeight (0.3200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_4_3->setBounds (proportionOfWidth (0.6795f), proportionOfHeight (0.4200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_5_1->setBounds (proportionOfWidth (0.8077f), proportionOfHeight (0.2200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_5_2->setBounds (proportionOfWidth (0.8077f), proportionOfHeight (0.3200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_5_3->setBounds (proportionOfWidth (0.8077f), proportionOfHeight (0.4200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_0->setBounds (proportionOfWidth (0.1654f), proportionOfHeight (0.5600f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_1->setBounds (proportionOfWidth (0.2936f), proportionOfHeight (0.5600f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_2->setBounds (proportionOfWidth (0.4244f), proportionOfHeight (0.5600f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_3->setBounds (proportionOfWidth (0.5526f), proportionOfHeight (0.5600f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_4->setBounds (proportionOfWidth (0.6795f), proportionOfHeight (0.5600f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    chord_offset_5->setBounds (proportionOfWidth (0.8077f), proportionOfHeight (0.5600f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    label_string_d->setBounds (proportionOfWidth (0.0321f), proportionOfHeight (0.2200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    label_string_a->setBounds (proportionOfWidth (0.0321f), proportionOfHeight (0.3100f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    label_string_e->setBounds (proportionOfWidth (0.0321f), proportionOfHeight (0.4200f), proportionOfWidth (0.1026f), proportionOfHeight (0.0800f));
-    label_transpose->setBounds (proportionOfWidth (0.0256f), proportionOfHeight (0.5700f), proportionOfWidth (0.1090f), proportionOfHeight (0.0600f));
-    label_preset_target->setBounds (proportionOfWidth (0.0256f), proportionOfHeight (0.6700f), proportionOfWidth (0.1090f), proportionOfHeight (0.0600f));
-    preset_0->setBounds (proportionOfWidth (0.0385f), proportionOfHeight (0.7800f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    preset_1->setBounds (proportionOfWidth (0.1026f), proportionOfHeight (0.7800f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    preset_2->setBounds (proportionOfWidth (0.1654f), proportionOfHeight (0.7800f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    preset_3->setBounds (proportionOfWidth (0.2295f), proportionOfHeight (0.7800f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    preset_4->setBounds (proportionOfWidth (0.2936f), proportionOfHeight (0.7800f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    preset_5->setBounds (proportionOfWidth (0.3577f), proportionOfHeight (0.7800f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    preset_6->setBounds (proportionOfWidth (0.4244f), proportionOfHeight (0.7800f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    preset_7->setBounds (proportionOfWidth (0.4885f), proportionOfHeight (0.7800f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    preset_8->setBounds (proportionOfWidth (0.5526f), proportionOfHeight (0.7800f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    preset_9->setBounds (proportionOfWidth (0.6154f), proportionOfHeight (0.7800f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    preset_10->setBounds (proportionOfWidth (0.6795f), proportionOfHeight (0.7800f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    preset_11->setBounds (proportionOfWidth (0.7436f), proportionOfHeight (0.7800f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    preset_12->setBounds (proportionOfWidth (0.8077f), proportionOfHeight (0.7800f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    preset_13->setBounds (proportionOfWidth (0.8718f), proportionOfHeight (0.7800f), proportionOfWidth (0.0526f), proportionOfHeight (0.0800f));
-    labe_chord_0->setBounds (proportionOfWidth (0.1667f), proportionOfHeight (0.0300f), proportionOfWidth (0.1026f), proportionOfHeight (0.0600f));
-    labe_chord_1->setBounds (proportionOfWidth (0.2949f), proportionOfHeight (0.0300f), proportionOfWidth (0.1026f), proportionOfHeight (0.0600f));
-    labe_chord_2->setBounds (proportionOfWidth (0.4231f), proportionOfHeight (0.0300f), proportionOfWidth (0.1026f), proportionOfHeight (0.0600f));
-    labe_chord_3->setBounds (proportionOfWidth (0.5513f), proportionOfHeight (0.0300f), proportionOfWidth (0.1026f), proportionOfHeight (0.0600f));
-    labe_chord_4->setBounds (proportionOfWidth (0.6795f), proportionOfHeight (0.0300f), proportionOfWidth (0.1026f), proportionOfHeight (0.0600f));
-    labe_chord_5->setBounds (proportionOfWidth (0.8077f), proportionOfHeight (0.0300f), proportionOfWidth (0.1026f), proportionOfHeight (0.0600f));
-    button_fill_all_from_scale->setBounds (proportionOfWidth (0.6154f), proportionOfHeight (0.9000f), proportionOfWidth (0.3077f), proportionOfHeight (0.0600f));
-    button_fill_target_from_scale->setBounds (proportionOfWidth (0.3077f), proportionOfHeight (0.9000f), proportionOfWidth (0.2936f), proportionOfHeight (0.0600f));
-    combo_scales->setBounds (proportionOfWidth (0.0385f), proportionOfHeight (0.9000f), proportionOfWidth (0.2564f), proportionOfHeight (0.0600f));
-    toolbar->setBounds (getWidth() - proportionOfWidth (0.0641f), 0, proportionOfWidth (0.0641f), proportionOfHeight (0.4000f));
-    button_info->setBounds (proportionOfWidth (0.9449f), proportionOfHeight (0.4100f), proportionOfWidth (0.0385f), proportionOfHeight (0.0600f));
+    lbl_clock_thru->setBounds(proportionOfWidth(0.0513f), proportionOfHeight(0.0300f),
+                              proportionOfWidth(0.0936f), proportionOfHeight(0.0600f));
+    tb_drum_view->setBounds(proportionOfWidth(0.0256f), proportionOfHeight(0.0300f),
+                            proportionOfWidth(0.1180f), proportionOfHeight(0.0600f));
+    target_chord_0->setBounds(proportionOfWidth(0.1795f), proportionOfHeight(0.6600f),
+                              proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    target_chord_1->setBounds(proportionOfWidth(0.3077f), proportionOfHeight(0.6600f),
+                              proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    target_chord_2->setBounds(proportionOfWidth(0.4359f), proportionOfHeight(0.6600f),
+                              proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    target_chord_3->setBounds(proportionOfWidth(0.5641f), proportionOfHeight(0.6600f),
+                              proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    target_chord_4->setBounds(proportionOfWidth(0.6923f), proportionOfHeight(0.6600f),
+                              proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    target_chord_5->setBounds(proportionOfWidth(0.8205f), proportionOfHeight(0.6600f),
+                              proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    label_string_g->setBounds(proportionOfWidth(0.0321f), proportionOfHeight(0.1200f),
+                              proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_0_0->setBounds(proportionOfWidth(0.1654f), proportionOfHeight(0.1200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_0_1->setBounds(proportionOfWidth(0.1654f), proportionOfHeight(0.2200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_0_2->setBounds(proportionOfWidth(0.1654f), proportionOfHeight(0.3200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_0_3->setBounds(proportionOfWidth(0.1654f), proportionOfHeight(0.4200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_1_0->setBounds(proportionOfWidth(0.2936f), proportionOfHeight(0.1200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_2_0->setBounds(proportionOfWidth(0.4244f), proportionOfHeight(0.1200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_3_0->setBounds(proportionOfWidth(0.5526f), proportionOfHeight(0.1200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_4_0->setBounds(proportionOfWidth(0.6795f), proportionOfHeight(0.1200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_5_0->setBounds(proportionOfWidth(0.8077f), proportionOfHeight(0.1200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_1_1->setBounds(proportionOfWidth(0.2936f), proportionOfHeight(0.2200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_1_2->setBounds(proportionOfWidth(0.2936f), proportionOfHeight(0.3200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_1_3->setBounds(proportionOfWidth(0.2936f), proportionOfHeight(0.4200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_2_1->setBounds(proportionOfWidth(0.4244f), proportionOfHeight(0.2200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_2_2->setBounds(proportionOfWidth(0.4244f), proportionOfHeight(0.3200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_2_3->setBounds(proportionOfWidth(0.4244f), proportionOfHeight(0.4200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_3_1->setBounds(proportionOfWidth(0.5526f), proportionOfHeight(0.2200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_3_2->setBounds(proportionOfWidth(0.5526f), proportionOfHeight(0.3200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_3_3->setBounds(proportionOfWidth(0.5526f), proportionOfHeight(0.4200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_4_1->setBounds(proportionOfWidth(0.6795f), proportionOfHeight(0.2200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_4_2->setBounds(proportionOfWidth(0.6795f), proportionOfHeight(0.3200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_4_3->setBounds(proportionOfWidth(0.6795f), proportionOfHeight(0.4200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_5_1->setBounds(proportionOfWidth(0.8077f), proportionOfHeight(0.2200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_5_2->setBounds(proportionOfWidth(0.8077f), proportionOfHeight(0.3200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_5_3->setBounds(proportionOfWidth(0.8077f), proportionOfHeight(0.4200f),
+                                proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_0->setBounds(proportionOfWidth(0.1654f), proportionOfHeight(0.5600f),
+                              proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_1->setBounds(proportionOfWidth(0.2936f), proportionOfHeight(0.5600f),
+                              proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_2->setBounds(proportionOfWidth(0.4244f), proportionOfHeight(0.5600f),
+                              proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_3->setBounds(proportionOfWidth(0.5526f), proportionOfHeight(0.5600f),
+                              proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_4->setBounds(proportionOfWidth(0.6795f), proportionOfHeight(0.5600f),
+                              proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    chord_offset_5->setBounds(proportionOfWidth(0.8077f), proportionOfHeight(0.5600f),
+                              proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    label_string_d->setBounds(proportionOfWidth(0.0321f), proportionOfHeight(0.2200f),
+                              proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    label_string_a->setBounds(proportionOfWidth(0.0321f), proportionOfHeight(0.3100f),
+                              proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    label_string_e->setBounds(proportionOfWidth(0.0321f), proportionOfHeight(0.4200f),
+                              proportionOfWidth(0.1026f), proportionOfHeight(0.0800f));
+    label_transpose->setBounds(proportionOfWidth(0.0256f), proportionOfHeight(0.5700f),
+                               proportionOfWidth(0.1090f), proportionOfHeight(0.0600f));
+    label_preset_target->setBounds(proportionOfWidth(0.0256f), proportionOfHeight(0.6700f),
+                                   proportionOfWidth(0.1090f), proportionOfHeight(0.0600f));
+    preset_0->setBounds(proportionOfWidth(0.0385f), proportionOfHeight(0.7800f),
+                        proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    preset_1->setBounds(proportionOfWidth(0.1026f), proportionOfHeight(0.7800f),
+                        proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    preset_2->setBounds(proportionOfWidth(0.1654f), proportionOfHeight(0.7800f),
+                        proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    preset_3->setBounds(proportionOfWidth(0.2295f), proportionOfHeight(0.7800f),
+                        proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    preset_4->setBounds(proportionOfWidth(0.2936f), proportionOfHeight(0.7800f),
+                        proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    preset_5->setBounds(proportionOfWidth(0.3577f), proportionOfHeight(0.7800f),
+                        proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    preset_6->setBounds(proportionOfWidth(0.4244f), proportionOfHeight(0.7800f),
+                        proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    preset_7->setBounds(proportionOfWidth(0.4885f), proportionOfHeight(0.7800f),
+                        proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    preset_8->setBounds(proportionOfWidth(0.5526f), proportionOfHeight(0.7800f),
+                        proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    preset_9->setBounds(proportionOfWidth(0.6154f), proportionOfHeight(0.7800f),
+                        proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    preset_10->setBounds(proportionOfWidth(0.6795f), proportionOfHeight(0.7800f),
+                         proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    preset_11->setBounds(proportionOfWidth(0.7436f), proportionOfHeight(0.7800f),
+                         proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    preset_12->setBounds(proportionOfWidth(0.8077f), proportionOfHeight(0.7800f),
+                         proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    preset_13->setBounds(proportionOfWidth(0.8718f), proportionOfHeight(0.7800f),
+                         proportionOfWidth(0.0526f), proportionOfHeight(0.0800f));
+    labe_chord_0->setBounds(proportionOfWidth(0.1667f), proportionOfHeight(0.0300f),
+                            proportionOfWidth(0.1026f), proportionOfHeight(0.0600f));
+    labe_chord_1->setBounds(proportionOfWidth(0.2949f), proportionOfHeight(0.0300f),
+                            proportionOfWidth(0.1026f), proportionOfHeight(0.0600f));
+    labe_chord_2->setBounds(proportionOfWidth(0.4231f), proportionOfHeight(0.0300f),
+                            proportionOfWidth(0.1026f), proportionOfHeight(0.0600f));
+    labe_chord_3->setBounds(proportionOfWidth(0.5513f), proportionOfHeight(0.0300f),
+                            proportionOfWidth(0.1026f), proportionOfHeight(0.0600f));
+    labe_chord_4->setBounds(proportionOfWidth(0.6795f), proportionOfHeight(0.0300f),
+                            proportionOfWidth(0.1026f), proportionOfHeight(0.0600f));
+    labe_chord_5->setBounds(proportionOfWidth(0.8077f), proportionOfHeight(0.0300f),
+                            proportionOfWidth(0.1026f), proportionOfHeight(0.0600f));
+    button_fill_all_from_scale->setBounds(proportionOfWidth(0.6154f), proportionOfHeight(0.9000f),
+                                          proportionOfWidth(0.3077f), proportionOfHeight(0.0600f));
+    button_fill_target_from_scale->setBounds(
+        proportionOfWidth(0.3077f), proportionOfHeight(0.9000f), proportionOfWidth(0.2936f),
+        proportionOfHeight(0.0600f));
+    combo_scales->setBounds(proportionOfWidth(0.0385f), proportionOfHeight(0.9000f),
+                            proportionOfWidth(0.2564f), proportionOfHeight(0.0600f));
+    toolbar->setBounds(getWidth() - proportionOfWidth(0.0641f), 0, proportionOfWidth(0.0641f),
+                       proportionOfHeight(0.4000f));
+    button_info->setBounds(proportionOfWidth(0.9449f), proportionOfHeight(0.4100f),
+                           proportionOfWidth(0.0385f), proportionOfHeight(0.0600f));
     internalPath1.clear();
-    internalPath1.startNewSubPath (static_cast<float> (proportionOfWidth (0.8846f)), static_cast<float> (proportionOfHeight (0.7000f)));
-    internalPath1.lineTo (static_cast<float> (proportionOfWidth (0.9615f)), static_cast<float> (proportionOfHeight (0.7000f)));
-    internalPath1.lineTo (static_cast<float> (proportionOfWidth (0.9615f)), static_cast<float> (proportionOfHeight (0.8000f)));
-    internalPath1.lineTo (static_cast<float> (proportionOfWidth (0.9359f)), static_cast<float> (proportionOfHeight (0.8000f)));
+    internalPath1.startNewSubPath(static_cast<float>(proportionOfWidth(0.8846f)),
+                                  static_cast<float>(proportionOfHeight(0.7000f)));
+    internalPath1.lineTo(static_cast<float>(proportionOfWidth(0.9615f)),
+                         static_cast<float>(proportionOfHeight(0.7000f)));
+    internalPath1.lineTo(static_cast<float>(proportionOfWidth(0.9615f)),
+                         static_cast<float>(proportionOfHeight(0.8000f)));
+    internalPath1.lineTo(static_cast<float>(proportionOfWidth(0.9359f)),
+                         static_cast<float>(proportionOfHeight(0.8000f)));
 
     internalPath2.clear();
-    internalPath2.startNewSubPath (static_cast<float> (proportionOfWidth (0.8846f)), static_cast<float> (proportionOfHeight (0.6800f)));
-    internalPath2.lineTo (static_cast<float> (proportionOfWidth (0.8718f)), static_cast<float> (proportionOfHeight (0.7000f)));
-    internalPath2.lineTo (static_cast<float> (proportionOfWidth (0.8846f)), static_cast<float> (proportionOfHeight (0.7200f)));
+    internalPath2.startNewSubPath(static_cast<float>(proportionOfWidth(0.8846f)),
+                                  static_cast<float>(proportionOfHeight(0.6800f)));
+    internalPath2.lineTo(static_cast<float>(proportionOfWidth(0.8718f)),
+                         static_cast<float>(proportionOfHeight(0.7000f)));
+    internalPath2.lineTo(static_cast<float>(proportionOfWidth(0.8846f)),
+                         static_cast<float>(proportionOfHeight(0.7200f)));
 
     internalPath3.clear();
-    internalPath3.startNewSubPath (static_cast<float> (proportionOfWidth (0.9680f)), static_cast<float> (proportionOfHeight (0.9320f)));
-    internalPath3.lineTo (static_cast<float> (proportionOfWidth (0.9846f)), static_cast<float> (proportionOfHeight (0.9540f)));
-    internalPath3.lineTo (static_cast<float> (proportionOfWidth (0.9680f)), static_cast<float> (proportionOfHeight (0.9740f)));
+    internalPath3.startNewSubPath(static_cast<float>(proportionOfWidth(0.9680f)),
+                                  static_cast<float>(proportionOfHeight(0.9320f)));
+    internalPath3.lineTo(static_cast<float>(proportionOfWidth(0.9846f)),
+                         static_cast<float>(proportionOfHeight(0.9540f)));
+    internalPath3.lineTo(static_cast<float>(proportionOfWidth(0.9680f)),
+                         static_cast<float>(proportionOfHeight(0.9740f)));
     internalPath3.closeSubPath();
 
     internalPath4.clear();
-    internalPath4.startNewSubPath (static_cast<float> (proportionOfWidth (0.0282f)), static_cast<float> (proportionOfHeight (0.4720f)));
-    internalPath4.lineTo (static_cast<float> (proportionOfWidth (0.0282f)), static_cast<float> (proportionOfHeight (0.5120f)));
-    internalPath4.lineTo (static_cast<float> (proportionOfWidth (0.0154f)), static_cast<float> (proportionOfHeight (0.4920f)));
+    internalPath4.startNewSubPath(static_cast<float>(proportionOfWidth(0.0282f)),
+                                  static_cast<float>(proportionOfHeight(0.4720f)));
+    internalPath4.lineTo(static_cast<float>(proportionOfWidth(0.0282f)),
+                         static_cast<float>(proportionOfHeight(0.5120f)));
+    internalPath4.lineTo(static_cast<float>(proportionOfWidth(0.0154f)),
+                         static_cast<float>(proportionOfHeight(0.4920f)));
     internalPath4.closeSubPath();
 
     internalPath5.clear();
-    internalPath5.startNewSubPath (static_cast<float> (proportionOfWidth (0.0282f)), static_cast<float> (proportionOfHeight (0.2720f)));
-    internalPath5.lineTo (static_cast<float> (proportionOfWidth (0.0282f)), static_cast<float> (proportionOfHeight (0.3120f)));
-    internalPath5.lineTo (static_cast<float> (proportionOfWidth (0.0154f)), static_cast<float> (proportionOfHeight (0.2920f)));
+    internalPath5.startNewSubPath(static_cast<float>(proportionOfWidth(0.0282f)),
+                                  static_cast<float>(proportionOfHeight(0.2720f)));
+    internalPath5.lineTo(static_cast<float>(proportionOfWidth(0.0282f)),
+                         static_cast<float>(proportionOfHeight(0.3120f)));
+    internalPath5.lineTo(static_cast<float>(proportionOfWidth(0.0154f)),
+                         static_cast<float>(proportionOfHeight(0.2920f)));
     internalPath5.closeSubPath();
 
     internalPath6.clear();
-    internalPath6.startNewSubPath (static_cast<float> (proportionOfWidth (0.0282f)), static_cast<float> (proportionOfHeight (0.3720f)));
-    internalPath6.lineTo (static_cast<float> (proportionOfWidth (0.0282f)), static_cast<float> (proportionOfHeight (0.4120f)));
-    internalPath6.lineTo (static_cast<float> (proportionOfWidth (0.0154f)), static_cast<float> (proportionOfHeight (0.3920f)));
+    internalPath6.startNewSubPath(static_cast<float>(proportionOfWidth(0.0282f)),
+                                  static_cast<float>(proportionOfHeight(0.3720f)));
+    internalPath6.lineTo(static_cast<float>(proportionOfWidth(0.0282f)),
+                         static_cast<float>(proportionOfHeight(0.4120f)));
+    internalPath6.lineTo(static_cast<float>(proportionOfWidth(0.0154f)),
+                         static_cast<float>(proportionOfHeight(0.3920f)));
     internalPath6.closeSubPath();
 
     internalPath7.clear();
-    internalPath7.startNewSubPath (static_cast<float> (proportionOfWidth (0.0282f)), static_cast<float> (proportionOfHeight (0.1720f)));
-    internalPath7.lineTo (static_cast<float> (proportionOfWidth (0.0282f)), static_cast<float> (proportionOfHeight (0.2120f)));
-    internalPath7.lineTo (static_cast<float> (proportionOfWidth (0.0154f)), static_cast<float> (proportionOfHeight (0.1920f)));
+    internalPath7.startNewSubPath(static_cast<float>(proportionOfWidth(0.0282f)),
+                                  static_cast<float>(proportionOfHeight(0.1720f)));
+    internalPath7.lineTo(static_cast<float>(proportionOfWidth(0.0282f)),
+                         static_cast<float>(proportionOfHeight(0.2120f)));
+    internalPath7.lineTo(static_cast<float>(proportionOfWidth(0.0154f)),
+                         static_cast<float>(proportionOfHeight(0.1920f)));
     internalPath7.closeSubPath();
 
     //[UserResized] Add your own custom resize handling here..
@@ -855,17 +977,18 @@ void UiEditorChords::resized()
     //[/UserResized]
 }
 
-void UiEditorChords::buttonClicked (Button* buttonThatWasClicked)
+void UiEditorChords::buttonClicked(Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
-    ChordSet& target_chord_set = _app_instance_store->pattern.selected_chordset();
-    Chord& target_chord = target_chord_set.chord( _selected_preset_chord );
+    ChordSet &target_chord_set = _app_instance_store->pattern.selected_chordset();
+    Chord &target_chord = target_chord_set.chord(_selected_preset_chord);
     //[/UserbuttonClicked_Pre]
 
     if (buttonThatWasClicked == tb_drum_view)
     {
         //[UserButtonCode_tb_drum_view] -- add your button handler code here..
-        _app_instance_store->editor_config.current_chord_view = buttonThatWasClicked->getToggleState();
+        _app_instance_store->editor_config.current_chord_view =
+            buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_tb_drum_view]
     }
     else if (buttonThatWasClicked == target_chord_0)
@@ -907,96 +1030,96 @@ void UiEditorChords::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == preset_0)
     {
         //[UserButtonCode_preset_0] -- add your button handler code here..
-        set_chord_offsets( target_chord, get_chord( CHORD_AT_E_TUNE::A_MAJOR ) );
+        set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::A_MAJOR));
         //[/UserButtonCode_preset_0]
     }
     else if (buttonThatWasClicked == preset_1)
     {
         //[UserButtonCode_preset_1] -- add your button handler code here..
-        set_chord_offsets( target_chord, get_chord( CHORD_AT_E_TUNE::B_MAJOR ) );
+        set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::B_MAJOR));
         //[/UserButtonCode_preset_1]
     }
     else if (buttonThatWasClicked == preset_2)
     {
         //[UserButtonCode_preset_2] -- add your button handler code here..
-        set_chord_offsets( target_chord, get_chord( CHORD_AT_E_TUNE::C_MAJOR ) );
+        set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::C_MAJOR));
         //[/UserButtonCode_preset_2]
     }
     else if (buttonThatWasClicked == preset_3)
     {
         //[UserButtonCode_preset_3] -- add your button handler code here..
-        set_chord_offsets( target_chord, get_chord( CHORD_AT_E_TUNE::D_MAJOR ) );
+        set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::D_MAJOR));
         //[/UserButtonCode_preset_3]
     }
     else if (buttonThatWasClicked == preset_4)
     {
         //[UserButtonCode_preset_4] -- add your button handler code here..
-        set_chord_offsets( target_chord, get_chord( CHORD_AT_E_TUNE::E_MAJOR ) );
+        set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::E_MAJOR));
         //[/UserButtonCode_preset_4]
     }
     else if (buttonThatWasClicked == preset_5)
     {
         //[UserButtonCode_preset_5] -- add your button handler code here..
-        set_chord_offsets( target_chord, get_chord( CHORD_AT_E_TUNE::F_MAJOR ) );
+        set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::F_MAJOR));
         //[/UserButtonCode_preset_5]
     }
     else if (buttonThatWasClicked == preset_6)
     {
         //[UserButtonCode_preset_6] -- add your button handler code here..
-        set_chord_offsets( target_chord, get_chord( CHORD_AT_E_TUNE::G_MAJOR ) );
+        set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::G_MAJOR));
         //[/UserButtonCode_preset_6]
     }
     else if (buttonThatWasClicked == preset_7)
     {
         //[UserButtonCode_preset_7] -- add your button handler code here..
-        set_chord_offsets( target_chord, get_chord( CHORD_AT_E_TUNE::A_MINOR ) );
+        set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::A_MINOR));
         //[/UserButtonCode_preset_7]
     }
     else if (buttonThatWasClicked == preset_8)
     {
         //[UserButtonCode_preset_8] -- add your button handler code here..
-        set_chord_offsets( target_chord, get_chord( CHORD_AT_E_TUNE::B_MINOR ) );
+        set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::B_MINOR));
         //[/UserButtonCode_preset_8]
     }
     else if (buttonThatWasClicked == preset_9)
     {
         //[UserButtonCode_preset_9] -- add your button handler code here..
-        set_chord_offsets( target_chord, get_chord( CHORD_AT_E_TUNE::C_MINOR ) );
+        set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::C_MINOR));
         //[/UserButtonCode_preset_9]
     }
     else if (buttonThatWasClicked == preset_10)
     {
         //[UserButtonCode_preset_10] -- add your button handler code here..
-        set_chord_offsets( target_chord, get_chord( CHORD_AT_E_TUNE::D_MINOR ) );
+        set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::D_MINOR));
         //[/UserButtonCode_preset_10]
     }
     else if (buttonThatWasClicked == preset_11)
     {
         //[UserButtonCode_preset_11] -- add your button handler code here..
-        set_chord_offsets( target_chord, get_chord( CHORD_AT_E_TUNE::E_MINOR ) );
+        set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::E_MINOR));
         //[/UserButtonCode_preset_11]
     }
     else if (buttonThatWasClicked == preset_12)
     {
         //[UserButtonCode_preset_12] -- add your button handler code here..
-        set_chord_offsets( target_chord, get_chord( CHORD_AT_E_TUNE::F_MINOR ) );
+        set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::F_MINOR));
         //[/UserButtonCode_preset_12]
     }
     else if (buttonThatWasClicked == preset_13)
     {
         //[UserButtonCode_preset_13] -- add your button handler code here..
-        set_chord_offsets( target_chord, get_chord( CHORD_AT_E_TUNE::G_MINOR ) );
+        set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::G_MINOR));
         //[/UserButtonCode_preset_13]
     }
     else if (buttonThatWasClicked == button_fill_all_from_scale)
     {
         //[UserButtonCode_button_fill_all_from_scale] -- add your button handler code here..
-        Array< int8 > offsets;
-        for( int chord_id = 0 ; chord_id != ChordSet::appdeff_t::SUM_CHORDS ; ++chord_id )
+        Array<int8> offsets;
+        for (int chord_id = 0; chord_id != ChordSet::appdeff_t::SUM_CHORDS; ++chord_id)
         {
-            Chord& chord = target_chord_set.chord(chord_id);
-            offsets = get_random_chord( combo_scales->getSelectedItemIndex() );
-            set_chord_offsets( chord, offsets );
+            Chord &chord = target_chord_set.chord(chord_id);
+            offsets = get_random_chord(combo_scales->getSelectedItemIndex());
+            set_chord_offsets(chord, offsets);
             chord.offset_all = 0;
         }
         //[/UserButtonCode_button_fill_all_from_scale]
@@ -1004,20 +1127,21 @@ void UiEditorChords::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == button_fill_target_from_scale)
     {
         //[UserButtonCode_button_fill_target_from_scale] -- add your button handler code here..
-        if( combo_scales->getSelectedItemIndex() != -1 )
+        if (combo_scales->getSelectedItemIndex() != -1)
         {
-            Array< int8 > offsets = get_random_chord( combo_scales->getSelectedItemIndex() );
-            set_chord_offsets( target_chord, offsets );
+            Array<int8> offsets = get_random_chord(combo_scales->getSelectedItemIndex());
+            set_chord_offsets(target_chord, offsets);
         }
         //[/UserButtonCode_button_fill_target_from_scale]
     }
     else if (buttonThatWasClicked == button_info)
     {
         //[UserButtonCode_button_info] -- add your button handler code here..
-        if(! _app_instance_store->editor_config.manual_editor )
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView( _app_instance_store );
+        if (!_app_instance_store->editor_config.manual_editor)
+            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
 
-        _app_instance_store->editor_config.manual_editor->try_open_url( MANUAL_URL+"beginner/the-chord-editor" );
+        _app_instance_store->editor_config.manual_editor->try_open_url(MANUAL_URL +
+                                                                       "beginner/the-chord-editor");
         //[/UserButtonCode_button_info]
     }
 
@@ -1025,7 +1149,7 @@ void UiEditorChords::buttonClicked (Button* buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiEditorChords::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
+void UiEditorChords::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
 {
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]
@@ -1040,11 +1164,8 @@ void UiEditorChords::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     //[/UsercomboBoxChanged_Post]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -1316,7 +1437,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

@@ -29,8 +29,6 @@ class AppInstanceStore;
 class MONO_Controller;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -39,30 +37,29 @@ class MONO_Controller;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiChordEditorStringOffset  : public Component
+class UiChordEditorStringOffset : public Component
 {
-public:
+  public:
     //==============================================================================
-    UiChordEditorStringOffset (AppInstanceStore* const app_instance_store_,uint8 chord_id_, uint8 barstring_id_);
+    UiChordEditorStringOffset(AppInstanceStore *const app_instance_store_, uint8 chord_id_,
+                              uint8 barstring_id_);
     ~UiChordEditorStringOffset();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
+    AppInstanceStore *const _app_instance_store;
 
-    void refresh_ui( Array< Component* >& components_to_repaint_ );
-    void get_controllers_for_paint_popup( Array< MONO_Controller* >& controllers_that_need_a_popup );
+    void refresh_ui(Array<Component *> &components_to_repaint_);
+    void get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_that_need_a_popup);
 
     void repaint_label();
-    void set_style( AppStyle*const );
+    void set_style(AppStyle *const);
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -70,12 +67,11 @@ private:
     ScopedPointer<Label> label;
     ScopedPointer<ModelBase> slider;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiChordEditorStringOffset)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiChordEditorStringOffset)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_FF56F54DD22FFD62__
+#endif // __JUCE_HEADER_FF56F54DD22FFD62__

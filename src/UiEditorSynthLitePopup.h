@@ -26,8 +26,6 @@ class UiEditorSynthLite;
 class MIDIControl;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -36,34 +34,30 @@ class MIDIControl;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorSynthLitePopup  : public Component,
-                                public ComboBox::Listener,
-                                public Button::Listener
+class UiEditorSynthLitePopup : public Component, public ComboBox::Listener, public Button::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiEditorSynthLitePopup (UiEditorSynthLite*const parent_, MIDIControl* midi_control_);
+    UiEditorSynthLitePopup(UiEditorSynthLite *const parent_, MIDIControl *midi_control_);
     ~UiEditorSynthLitePopup();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    void set_element_to_show(Component*const);
+    void set_element_to_show(Component *const);
     void refresh();
 
-    UiEditorSynthLite*const parent;
+    UiEditorSynthLite *const parent;
 
-    MIDIControl* _midi_control;
+    MIDIControl *_midi_control;
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void comboBoxChanged (ComboBox* comboBoxThatHasChanged);
-    void buttonClicked (Button* buttonThatWasClicked);
-    bool keyPressed (const KeyPress& key);
+    void comboBoxChanged(ComboBox *comboBoxThatHasChanged);
+    void buttonClicked(Button *buttonThatWasClicked);
+    bool keyPressed(const KeyPress &key);
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -74,12 +68,11 @@ private:
     ScopedPointer<ComboBox> combo_midi_channel;
     Path internalPath1;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorSynthLitePopup)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorSynthLitePopup)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_BE41B261562DCF2__
+#endif // __JUCE_HEADER_BE41B261562DCF2__

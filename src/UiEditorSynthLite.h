@@ -35,8 +35,6 @@ class MIDIControl;
 class mono_ModulationSlider;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -45,22 +43,22 @@ class mono_ModulationSlider;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorSynthLite  : public AudioProcessorEditor,
-                           public mono_UiRefreshable,
-                           public Button::Listener,
-                           public ComboBox::Listener,
-                           public Slider::Listener
+class UiEditorSynthLite : public AudioProcessorEditor,
+                          public mono_UiRefreshable,
+                          public Button::Listener,
+                          public ComboBox::Listener,
+                          public Slider::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiEditorSynthLite ();
+    UiEditorSynthLite();
     ~UiEditorSynthLite();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
-    MONOVoice*voice;
-    SynthData* synth_data;
+    AppInstanceStore *const _app_instance_store;
+    MONOVoice *voice;
+    SynthData *synth_data;
 
     ScopedPointer<UiEditorSynthLitePopup> popup;
     bool last_ctrl_mode;
@@ -73,10 +71,10 @@ public:
     void show_current_voice_data();
     void show_programs_and_select();
     void show_ctrl_state();
-    void show_info_popup( Component* comp_, MIDIControl* midi_conrtrol_ );
+    void show_info_popup(Component *comp_, MIDIControl *midi_conrtrol_);
 
     float last_shuffle;
-    Array< TextButton* > sequence_buttons;
+    Array<TextButton *> sequence_buttons;
     void resize_sequence_buttons();
     void switch_finalizer_tab();
 
@@ -88,20 +86,18 @@ public:
     const float original_h;
     int last_bank;
     int last_programm;
-    void sliderClicked (Slider*s_) override;
+    void sliderClicked(Slider *s_) override;
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
-    void comboBoxChanged (ComboBox* comboBoxThatHasChanged);
-    void sliderValueChanged (Slider* sliderThatWasMoved);
-    bool keyPressed (const KeyPress& key);
-    void modifierKeysChanged (const ModifierKeys& modifiers);
+    void buttonClicked(Button *buttonThatWasClicked);
+    void comboBoxChanged(ComboBox *comboBoxThatHasChanged);
+    void sliderValueChanged(Slider *sliderThatWasMoved);
+    bool keyPressed(const KeyPress &key);
+    void modifierKeysChanged(const ModifierKeys &modifiers);
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     ScopedPointer<ResizableCornerComponent> resizer;
     ComponentBoundsConstrainer resizeLimits;
@@ -272,12 +268,11 @@ private:
     ScopedPointer<TextButton> button_values_toggle;
     ScopedPointer<mono_ModulationSlider> reverb_width;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorSynthLite)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorSynthLite)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_C931A4A92150166E__
+#endif // __JUCE_HEADER_C931A4A92150166E__

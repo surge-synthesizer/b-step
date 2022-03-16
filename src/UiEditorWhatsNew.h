@@ -27,8 +27,6 @@
 class AppInstanceStore;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -37,37 +35,35 @@ class AppInstanceStore;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorWhatsNew  : public UiEditor,
-    public Timer,
-    public Button::Listener
+class UiEditorWhatsNew : public UiEditor, public Timer, public Button::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiEditorWhatsNew (AppInstanceStore* const app_instance_store_);
+    UiEditorWhatsNew(AppInstanceStore *const app_instance_store_);
     ~UiEditorWhatsNew();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
+    AppInstanceStore *const _app_instance_store;
     void refresh_ui();
     void timerCallback();
-private:
+
+  private:
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
+    void buttonClicked(Button *buttonThatWasClicked);
 
     // Binary resources:
-    static const char* demobg_png2;
+    static const char *demobg_png2;
     static const int demobg_png2Size;
-    static const char* colourstyles_png;
+    static const char *colourstyles_png;
     static const int colourstyles_pngSize;
-    static const char* filemanager_png;
+    static const char *filemanager_png;
     static const int filemanager_pngSize;
 
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -103,12 +99,11 @@ private:
     Image cachedImage_colourstyles_png;
     Image cachedImage_filemanager_png;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorWhatsNew)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorWhatsNew)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_3018A0895B3D780C__
+#endif // __JUCE_HEADER_3018A0895B3D780C__

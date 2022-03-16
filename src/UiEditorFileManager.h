@@ -50,25 +50,20 @@ enum RW_MODE
 #define FILEMANAGER_PTR _app_instance_store->editor_config.file_manager
 #define AUDIO_PLAYER_PTR _app_instance_store->audio_player
 
-#define SHOW_SUCCESS_NOTIFICATION() \
-    FILEMANAGER_PTR->info_animation->set_text_and_run("DONE", true )
+#define SHOW_SUCCESS_NOTIFICATION() FILEMANAGER_PTR->info_animation->set_text_and_run("DONE", true)
 
-#define SHOW_ERROR_NOTIFICATION() \
-    FILEMANAGER_PTR->info_animation->set_text_and_run("ERROR", false )
+#define SHOW_ERROR_NOTIFICATION() FILEMANAGER_PTR->info_animation->set_text_and_run("ERROR", false)
 
-#define SHOW_CANCEL_NOTIFICATION() \
-    FILEMANAGER_PTR->info_animation->set_text_and_run("CANCEL", 2 )
+#define SHOW_CANCEL_NOTIFICATION() FILEMANAGER_PTR->info_animation->set_text_and_run("CANCEL", 2)
 
-#define SHOW_NOTIFICATION( success_or_fail_ ) \
+#define SHOW_NOTIFICATION(success_or_fail_)                                                        \
     success_or_fail_ ? SHOW_SUCCESS_NOTIFICATION() : SHOW_ERROR_NOTIFICATION()
 
-#define SHOW_CUSTOM_NOTIFICATION( message_, state_ ) \
-    FILEMANAGER_PTR->info_animation->set_text_and_run(message_, state_ )
+#define SHOW_CUSTOM_NOTIFICATION(message_, state_)                                                 \
+    FILEMANAGER_PTR->info_animation->set_text_and_run(message_, state_)
 
 class FingerDrag;
 //[/Headers]
-
-
 
 //==============================================================================
 /**
@@ -78,15 +73,16 @@ class FingerDrag;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorFileManager  : public UiEditor,
-                             public Timer,
-                             public TextEditor::Listener,
-public Button::Listener,
+class UiEditorFileManager : public UiEditor,
+                            public Timer,
+                            public TextEditor::Listener,
+                            public Button::Listener,
                             public ComboBox::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiEditorFileManager (AppInstanceStore* const app_instance_store_, bool write_mode_on_, VIEW_TYPE view_type_);
+    UiEditorFileManager(AppInstanceStore *const app_instance_store_, bool write_mode_on_,
+                        VIEW_TYPE view_type_);
     ~UiEditorFileManager();
 
     //==============================================================================
@@ -94,7 +90,7 @@ public:
     bool volatile should_refresh_all;
     CriticalSection lock;
 
-    AppInstanceStore*const _app_instance_store;
+    AppInstanceStore *const _app_instance_store;
     bool _is_in_write_mode;
     bool _was_a_reader_request;
 
@@ -104,10 +100,10 @@ public:
     void trigger_close();
     void on_close_clicked() override;
 
-    AudioRecorder* _audio_recorder;
+    AudioRecorder *_audio_recorder;
 
-    PresetItem* get_selected_item();
-    PresetItem* last_selected_item;
+    PresetItem *get_selected_item();
+    PresetItem *last_selected_item;
 
     void timerCallback() override;
 
@@ -117,30 +113,28 @@ public:
 
     uint8 force_info_focus;
     bool is_on_return_lost;
-    Array< TextButton* > before_focus_was_visible;
-    void textEditorReturnKeyPressed (TextEditor & te_) override;
-    void textEditorEscapeKeyPressed (TextEditor& te_) override;
-    void textEditorFocusLost (TextEditor& te_) override;
+    Array<TextButton *> before_focus_was_visible;
+    void textEditorReturnKeyPressed(TextEditor &te_) override;
+    void textEditorEscapeKeyPressed(TextEditor &te_) override;
+    void textEditorFocusLost(TextEditor &te_) override;
 
     bool ignore_text_editor_focus_lost;
     void perform_chancel_info();
-    void perform_write_info(const String& info_text_ );
-    void perform_confirm_write_info(const String& info_text_);
+    void perform_write_info(const String &info_text_);
+    void perform_confirm_write_info(const String &info_text_);
 
     VIEW_TYPE _view_type;
 
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
-    void comboBoxChanged (ComboBox* comboBoxThatHasChanged);
+    void buttonClicked(Button *buttonThatWasClicked);
+    void comboBoxChanged(ComboBox *comboBoxThatHasChanged);
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-public:
+  public:
     //[/UserVariables]
 
     //==============================================================================
@@ -172,12 +166,11 @@ public:
     ScopedPointer<TextButton> confirm_text_changes;
     ScopedPointer<TextButton> cancel_text_changes;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorFileManager)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorFileManager)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_FD2613C37E142430__
+#endif // __JUCE_HEADER_FD2613C37E142430__

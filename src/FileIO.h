@@ -15,109 +15,100 @@
 
 class FileIOBase
 {
-protected:
+  protected:
     File _file;
     String _name;
 
-protected:
+  protected:
     FileIOBase() {}
     ~FileIOBase() {}
 
-public:
-    void set_file( File file_to_load_ ) {
-        _file = file_to_load_;
-    }
+  public:
+    void set_file(File file_to_load_) { _file = file_to_load_; }
 
-    void set_dialog_name( const String& name_ ) {
-        _name = name_;
-    }
+    void set_dialog_name(const String &name_) { _name = name_; }
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FileIOBase)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FileIOBase)
 };
 
-template< class target_policy_class_t >
-class FileReader : public FileIOBase
+template <class target_policy_class_t> class FileReader : public FileIOBase
 {
-    target_policy_class_t*const policy;
-public:
-    FileReader( target_policy_class_t*const policy_ ) :
-        policy( policy_ )
+    target_policy_class_t *const policy;
+
+  public:
+    FileReader(target_policy_class_t *const policy_) : policy(policy_) { _name = "LOAD FILE"; }
+
+    void exec_and_set_to_selfmanagement()
     {
-        _name = "LOAD FILE";
-    }
-
-    void exec_and_set_to_selfmanagement() {
         bool native_dialog = true;
-#if JUCE_IOS  || JUCE_ANDROID || JUCE_LINUX
+#if JUCE_IOS || JUCE_ANDROID || JUCE_LINUX
         native_dialog = false;
 #endif
-        FileChooser fc( _name, _file, String(), native_dialog );
-        if ( fc.browseForFileToOpen() )
-            policy->target_policy_class_t::put_file_to_target( fc.getResult() );
+        FileChooser fc(_name, _file, String(), native_dialog);
+        if (fc.browseForFileToOpen())
+            policy->target_policy_class_t::put_file_to_target(fc.getResult());
 
         delete policy;
         delete this;
     }
-    void exec_and_set_to_selfmanagement_directory() {
+    void exec_and_set_to_selfmanagement_directory()
+    {
         bool native_dialog = true;
-#if JUCE_IOS  || JUCE_ANDROID || JUCE_LINUX
+#if JUCE_IOS || JUCE_ANDROID || JUCE_LINUX
         native_dialog = false;
 #endif
-        FileChooser fc( _name, _file, String(), native_dialog );
+        FileChooser fc(_name, _file, String(), native_dialog);
 
-        if ( fc.browseForDirectory() )
-            policy->target_policy_class_t::put_file_to_target( fc.getResult() );
+        if (fc.browseForDirectory())
+            policy->target_policy_class_t::put_file_to_target(fc.getResult());
 
         delete policy;
         delete this;
     }
 
-private:
-    FileReader(); // -> delete
+  private:
+    FileReader();    // -> delete
     ~FileReader() {} // private -> SELFKILLER!!!
 };
 
-template<class target_policy_class_t >
-class FileWriter : public FileIOBase
+template <class target_policy_class_t> class FileWriter : public FileIOBase
 {
-    target_policy_class_t*const policy;
+    target_policy_class_t *const policy;
 
-public:
-    FileWriter( target_policy_class_t*const policy_ ) :
-        policy( policy_ )
+  public:
+    FileWriter(target_policy_class_t *const policy_) : policy(policy_) { _name = "SAVE FILE"; }
+
+    void exec_and_set_to_selfmanagement()
     {
-        _name = "SAVE FILE";
-    }
-
-    void exec_and_set_to_selfmanagement() {
         bool native_dialog = true;
-#if JUCE_IOS  || JUCE_ANDROID || JUCE_LINUX
+#if JUCE_IOS || JUCE_ANDROID || JUCE_LINUX
         native_dialog = false;
 #endif
-        FileChooser fc( _name, _file, String(), native_dialog );
-        if( fc.browseForFileToSave( true ) )
-            policy->target_policy_class_t::fill_file_from_source( fc.getResult() );
+        FileChooser fc(_name, _file, String(), native_dialog);
+        if (fc.browseForFileToSave(true))
+            policy->target_policy_class_t::fill_file_from_source(fc.getResult());
 
         delete policy;
         delete this;
     }
-    void exec_and_set_to_selfmanagement_directory() {
+    void exec_and_set_to_selfmanagement_directory()
+    {
         bool native_dialog = true;
-#if JUCE_IOS  || JUCE_ANDROID || JUCE_LINUX
+#if JUCE_IOS || JUCE_ANDROID || JUCE_LINUX
         native_dialog = false;
 #endif
-        FileChooser fc(_name, _file, String(), native_dialog );
+        FileChooser fc(_name, _file, String(), native_dialog);
 
-        if( fc.browseForDirectory() )
-            policy->target_policy_class_t::fill_file_from_source( fc.getResult() );
+        if (fc.browseForDirectory())
+            policy->target_policy_class_t::fill_file_from_source(fc.getResult());
 
         delete policy;
         delete this;
     }
 
-private:
-    FileWriter(); // -> delete
+  private:
+    FileWriter();    // -> delete
     ~FileWriter() {} // private -> SELFKILLER!!!
 };
 
-#endif  // FILEIO_H_INCLUDED
+#endif // FILEIO_H_INCLUDED

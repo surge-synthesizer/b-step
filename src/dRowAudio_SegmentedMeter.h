@@ -41,36 +41,36 @@
 /**	A segmented graphical VU meter.
 
     This class is a very efficient way of creating meters as it will only repaint itself when
-	necessarry and does all its processing on a shared background thread.
+        necessarry and does all its processing on a shared background thread.
 
-	It is very customisable letting you set the number of each segments, how many decibels
-	each segment represents and the colours of the segments.
+        It is very customisable letting you set the number of each segments, how many decibels
+        each segment represents and the colours of the segments.
 
-	To use one, register it with a TimeSliceThread and then in your audio callback
-	push some values to it with copyValues(...).
+        To use one, register it with a TimeSliceThread and then in your audio callback
+        push some values to it with copyValues(...).
 
-	Eg. in your Component
-	@code
-		graphicalManager = new TimeSliceThread();
+        Eg. in your Component
+        @code
+                graphicalManager = new TimeSliceThread();
         graphicalManager->startThread (2);
-		addAndMakeVisible (meter = new SegmentedMeter());
-		graphicalManager->addTimeSliceClient (meter);
-	@endcode
+                addAndMakeVisible (meter = new SegmentedMeter());
+                graphicalManager->addTimeSliceClient (meter);
+        @endcode
 
-	and in your audioCallback
-	@code
-		if (currentMeter != nullptr) {
-			currentMeter->copyValues (outputChannelData[0], numSamples);
-		}
-	@endcode
+        and in your audioCallback
+        @code
+                if (currentMeter != nullptr) {
+                        currentMeter->copyValues (outputChannelData[0], numSamples);
+                }
+        @endcode
 
  */
-class SegmentedMeter :	public GraphicalComponent
+class SegmentedMeter : public GraphicalComponent
 {
-public:
+  public:
     //==============================================================================
     /**	Creates a SegmentedMeter.
-    	Initially this will do nothing as you need to register it with a
+        Initially this will do nothing as you need to register it with a
         TimeSliceThread then push some values to it with copyValues().
      */
     SegmentedMeter();
@@ -85,37 +85,27 @@ public:
 
     /**	Returns the total number of segments the meter has.
      */
-    int getTotalNumSegments()           {
-        return totalNumSegs;
-    }
+    int getTotalNumSegments() { return totalNumSegs; }
 
     /**	Returns the number of segments that represent the over level.
      */
-    int getNumOverSegments()            {
-        return numRedSeg;
-    }
+    int getNumOverSegments() { return numRedSeg; }
 
     /**	Returns the total number of segments that represent the warning level.
      */
-    int	getNumWarningSegments()         {
-        return numYellowSeg;
-    }
+    int getNumWarningSegments() { return numYellowSeg; }
 
     /**	Returns the total number of segments that represent the safe level.
      */
-    int	getNumSafeSegments()            {
-        return numGreenSeg;
-    }
+    int getNumSafeSegments() { return numGreenSeg; }
 
     /**	Returns the number of decibels each segment represents.
      */
-    float getNumDbPerSegment()          {
-        return decibelsPerSeg;
-    }
+    float getNumDbPerSegment() { return decibelsPerSeg; }
 
     /**	Sets the number of decibels each segment represents.
      */
-    void setNumDecibelsPerSeg (float numDecibelsPerSegment)
+    void setNumDecibelsPerSeg(float numDecibelsPerSegment)
     {
         decibelsPerSeg = numDecibelsPerSegment;
     }
@@ -133,7 +123,7 @@ public:
 
     //==============================================================================
     /**	Draws the meter. */
-    void paint (Graphics &g);
+    void paint(Graphics &g);
 
     /**	@internal
      */
@@ -145,20 +135,17 @@ public:
 
     /**	@internal
      */
-    void moved()
-    {
-        needsRepaint = true;
-    }
+    void moved() { needsRepaint = true; }
 
     /**	Processes the channel data for the value to display.
      */
     virtual void process();
 
     uint32 my_red, my_yellow, my_green;
-    
-private:
+
+  private:
     //==============================================================================
-    
+
     int numRedSeg, numYellowSeg, numGreenSeg, totalNumSegs;
     float decibelsPerSeg;
     StateVariable<int> numSegs;
@@ -170,7 +157,7 @@ private:
     Image onImage, offImage;
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SegmentedMeter);
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SegmentedMeter);
 };
 
 #endif //__DROWAUDIO_SEGMENTEDMETER_H__

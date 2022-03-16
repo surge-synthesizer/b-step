@@ -25,8 +25,6 @@
 #include "UIEditorToolbar.h"
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -35,45 +33,43 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiNotificationAnimation  : public Component,
-    public Timer
+class UiNotificationAnimation : public Component, public Timer
 {
-public:
+  public:
     //==============================================================================
-    UiNotificationAnimation ();
+    UiNotificationAnimation();
     ~UiNotificationAnimation();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-private:
+  private:
     int alpha;
     bool is_rising;
     Colour root_color;
     void timerCallback();
 
-public:
-    void set_text_and_run( const char* text_, int state_ /* 0=fail,1=ok,2=neutral*/ );
-    void set_text_and_run( String& text_, int state_ /* 0=fail,1=ok,2=neutral*/ );
+  public:
+    void set_text_and_run(const char *text_, int state_ /* 0=fail,1=ok,2=neutral*/);
+    void set_text_and_run(String &text_, int state_ /* 0=fail,1=ok,2=neutral*/);
 
-private:
+  private:
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
 
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
     ScopedPointer<Label> text;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiNotificationAnimation)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiNotificationAnimation)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_BCB71CADC7231BAE__
+#endif // __JUCE_HEADER_BCB71CADC7231BAE__

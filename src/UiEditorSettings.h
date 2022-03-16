@@ -28,8 +28,6 @@ class AppInstanceStore;
 class UiLabel;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -38,45 +36,46 @@ class UiLabel;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorSettings  : public UiEditor,
-    public Button::Listener,
-    public Slider::Listener,
-    public ComboBox::Listener
+class UiEditorSettings : public UiEditor,
+                         public Button::Listener,
+                         public Slider::Listener,
+                         public ComboBox::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiEditorSettings (AppInstanceStore* const app_instance_store_);
+    UiEditorSettings(AppInstanceStore *const app_instance_store_);
     ~UiEditorSettings();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
+    AppInstanceStore *const _app_instance_store;
 
     void fill_drop_downs();
-    void comboBoxMouseDown (ComboBox* comboBoxThatHasChanged);
+    void comboBoxMouseDown(ComboBox *comboBoxThatHasChanged);
 
-public:
+  public:
     void on_close_clicked() override;
-    void focus_midi_learn_in() {
+    void focus_midi_learn_in()
+    {
         cb_midi_learn_in_port->grabKeyboardFocus();
         cb_midi_learn_in_port->showPopup();
     }
-    void focus_master_out() {
+    void focus_master_out()
+    {
         cb_midi_out_port->grabKeyboardFocus();
         cb_midi_out_port->showPopup();
     }
-private:
+
+  private:
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
-    void sliderValueChanged (Slider* sliderThatWasMoved);
-    void comboBoxChanged (ComboBox* comboBoxThatHasChanged);
+    void buttonClicked(Button *buttonThatWasClicked);
+    void sliderValueChanged(Slider *sliderThatWasMoved);
+    void comboBoxChanged(ComboBox *comboBoxThatHasChanged);
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -141,12 +140,11 @@ private:
     ScopedPointer<TextButton> button_info_cc_in;
     ScopedPointer<TextButton> button_info_launchpad_in_1;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorSettings)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorSettings)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_D0A211EF20981AF4__
+#endif // __JUCE_HEADER_D0A211EF20981AF4__

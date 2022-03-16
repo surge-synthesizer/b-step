@@ -24,8 +24,6 @@
 #include "JuceHeader.h"
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -34,30 +32,27 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiTestArea  : public Component,
-    public Slider::Listener,
-    public Button::Listener
+class UiTestArea : public Component, public Slider::Listener, public Button::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiTestArea ();
+    UiTestArea();
     ~UiTestArea();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void sliderValueChanged (Slider* sliderThatWasMoved);
-    void buttonClicked (Button* buttonThatWasClicked);
+    void sliderValueChanged(Slider *sliderThatWasMoved);
+    void buttonClicked(Button *buttonThatWasClicked);
 
     // Binary resources:
-    static const char* fullscreen_png;
+    static const char *fullscreen_png;
     static const int fullscreen_pngSize;
 
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -73,12 +68,11 @@ private:
     ScopedPointer<TextButton> textButton7;
     Image cachedImage_fullscreen_png;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiTestArea)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiTestArea)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_8D76C0B9054580BE__
+#endif // __JUCE_HEADER_8D76C0B9054580BE__

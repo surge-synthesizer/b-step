@@ -29,98 +29,104 @@ static constexpr float original_h = 110;
 
 #include "UiEditorSynthLitePopup.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 void UiEditorSynthLitePopup::refresh()
 {
-    if( _midi_control )
+    if (_midi_control)
     {
-        if( ! combo_midi_listen_type->isMouseOverOrDragging() )
-            combo_midi_listen_type->setSelectedItemIndex( _midi_control->get_listen_type()+1, dontSendNotification );
-        if( ! combo_midi_number->isMouseOverOrDragging() )
-            combo_midi_number->setSelectedItemIndex( _midi_control->get_midi_number(), dontSendNotification );
-        if( ! combo_midi_channel->isMouseOverOrDragging() )
-            combo_midi_channel->setSelectedItemIndex( _midi_control->get_chnanel()-1, dontSendNotification );
+        if (!combo_midi_listen_type->isMouseOverOrDragging())
+            combo_midi_listen_type->setSelectedItemIndex(_midi_control->get_listen_type() + 1,
+                                                         dontSendNotification);
+        if (!combo_midi_number->isMouseOverOrDragging())
+            combo_midi_number->setSelectedItemIndex(_midi_control->get_midi_number(),
+                                                    dontSendNotification);
+        if (!combo_midi_channel->isMouseOverOrDragging())
+            combo_midi_channel->setSelectedItemIndex(_midi_control->get_chnanel() - 1,
+                                                     dontSendNotification);
     }
     else
     {
-        combo_midi_listen_type->setSelectedItemIndex( 0, dontSendNotification );
+        combo_midi_listen_type->setSelectedItemIndex(0, dontSendNotification);
         combo_midi_listen_type->setEnabled(false);
         combo_midi_number->setEnabled(false);
         combo_midi_channel->setEnabled(false);
     }
 }
 
-void UiEditorSynthLitePopup::set_element_to_show( Component*const comp_ ) {
-    Component* parent = comp_->getParentComponent();
+void UiEditorSynthLitePopup::set_element_to_show(Component *const comp_)
+{
+    Component *parent = comp_->getParentComponent();
     int x = comp_->getX();
     int y = comp_->getY();
-    while( parent ) {
-        if( parent->getParentComponent() ) { // IGNORES THE MAIN WINDOW
+    while (parent)
+    {
+        if (parent->getParentComponent())
+        { // IGNORES THE MAIN WINDOW
             x += parent->getX();
             y += parent->getY();
         }
         parent = parent->getParentComponent();
     }
-    setBounds( x-10, y-10, comp_->getWidth()+20, original_h );
+    setBounds(x - 10, y - 10, comp_->getWidth() + 20, original_h);
 }
 //[/MiscUserDefs]
 
 //==============================================================================
-UiEditorSynthLitePopup::UiEditorSynthLitePopup (UiEditorSynthLite*const parent_, MIDIControl* midi_control_)
-    : parent(parent_),_midi_control(midi_control_)
+UiEditorSynthLitePopup::UiEditorSynthLitePopup(UiEditorSynthLite *const parent_,
+                                               MIDIControl *midi_control_)
+    : parent(parent_), _midi_control(midi_control_)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    addAndMakeVisible (combo_midi_listen_type = new ComboBox (String()));
-    combo_midi_listen_type->setEditableText (false);
-    combo_midi_listen_type->setJustificationType (Justification::centredLeft);
-    combo_midi_listen_type->setTextWhenNothingSelected (TRANS("TYPE"));
-    combo_midi_listen_type->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    combo_midi_listen_type->addListener (this);
+    addAndMakeVisible(combo_midi_listen_type = new ComboBox(String()));
+    combo_midi_listen_type->setEditableText(false);
+    combo_midi_listen_type->setJustificationType(Justification::centredLeft);
+    combo_midi_listen_type->setTextWhenNothingSelected(TRANS("TYPE"));
+    combo_midi_listen_type->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    combo_midi_listen_type->addListener(this);
 
-    addAndMakeVisible (combo_midi_number = new ComboBox (String()));
-    combo_midi_number->setEditableText (false);
-    combo_midi_number->setJustificationType (Justification::centredLeft);
-    combo_midi_number->setTextWhenNothingSelected (TRANS("NR"));
-    combo_midi_number->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    combo_midi_number->addListener (this);
+    addAndMakeVisible(combo_midi_number = new ComboBox(String()));
+    combo_midi_number->setEditableText(false);
+    combo_midi_number->setJustificationType(Justification::centredLeft);
+    combo_midi_number->setTextWhenNothingSelected(TRANS("NR"));
+    combo_midi_number->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    combo_midi_number->addListener(this);
 
-    addAndMakeVisible (close = new TextButton (String()));
-    close->setButtonText (TRANS("ESC X"));
-    close->addListener (this);
-    close->setColour (TextButton::buttonColourId, Colours::red);
-    close->setColour (TextButton::buttonOnColourId, Colours::red);
-    close->setColour (TextButton::textColourOnId, Colours::black);
-    close->setColour (TextButton::textColourOffId, Colours::black);
+    addAndMakeVisible(close = new TextButton(String()));
+    close->setButtonText(TRANS("ESC X"));
+    close->addListener(this);
+    close->setColour(TextButton::buttonColourId, Colours::red);
+    close->setColour(TextButton::buttonOnColourId, Colours::red);
+    close->setColour(TextButton::textColourOnId, Colours::black);
+    close->setColour(TextButton::textColourOffId, Colours::black);
 
-    addAndMakeVisible (combo_midi_channel = new ComboBox (String()));
-    combo_midi_channel->setEditableText (false);
-    combo_midi_channel->setJustificationType (Justification::centredLeft);
-    combo_midi_channel->setTextWhenNothingSelected (TRANS("CH"));
-    combo_midi_channel->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    combo_midi_channel->addListener (this);
-
+    addAndMakeVisible(combo_midi_channel = new ComboBox(String()));
+    combo_midi_channel->setEditableText(false);
+    combo_midi_channel->setJustificationType(Justification::centredLeft);
+    combo_midi_channel->setTextWhenNothingSelected(TRANS("CH"));
+    combo_midi_channel->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    combo_midi_channel->addListener(this);
 
     //[UserPreSize]
-    combo_midi_listen_type->addItem( "N/A", 1 );
-    combo_midi_listen_type->addItem( "CC", 2 );
-    combo_midi_listen_type->addItem( "NOTE", 3 );
+    combo_midi_listen_type->addItem("N/A", 1);
+    combo_midi_listen_type->addItem("CC", 2);
+    combo_midi_listen_type->addItem("NOTE", 3);
 
-    for( int i = 1 ; i != 129 ; ++i ) {
-        combo_midi_number->addItem( String(i), i );
+    for (int i = 1; i != 129; ++i)
+    {
+        combo_midi_number->addItem(String(i), i);
     }
 
-    for( int i = 1 ; i != 17 ; ++i ) {
-        combo_midi_channel->addItem( String(i), i );
+    for (int i = 1; i != 17; ++i)
+    {
+        combo_midi_channel->addItem(String(i), i);
     }
 
     refresh();
     //[/UserPreSize]
 
-    setSize (80, 110);
-
+    setSize(80, 110);
 
     //[Constructor] You can add your own custom stuff here..
     //[/Constructor]
@@ -136,23 +142,22 @@ UiEditorSynthLitePopup::~UiEditorSynthLitePopup()
     close = nullptr;
     combo_midi_channel = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiEditorSynthLitePopup::paint (Graphics& g)
+void UiEditorSynthLitePopup::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
 #include "UiDynamicSizeStart.h"
     //[/UserPrePaint]
 
-    g.setColour (Colour (0x885f9ea0));
-    g.fillRoundedRectangle (1.0f, 10.0f, 80.0f, 100.0f, 10.000f);
+    g.setColour(Colour(0x885f9ea0));
+    g.fillRoundedRectangle(1.0f, 10.0f, 80.0f, 100.0f, 10.000f);
 
-    g.setColour (Colour (0x885f9ea0));
-    g.fillPath (internalPath1);
+    g.setColour(Colour(0x885f9ea0));
+    g.fillPath(internalPath1);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -163,14 +168,14 @@ void UiEditorSynthLitePopup::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    combo_midi_listen_type->setBounds (10, 20, 60, 20);
-    combo_midi_number->setBounds (10, 60, 60, 20);
-    close->setBounds (15, 85, 50, 20);
-    combo_midi_channel->setBounds (10, 40, 60, 20);
+    combo_midi_listen_type->setBounds(10, 20, 60, 20);
+    combo_midi_number->setBounds(10, 60, 60, 20);
+    close->setBounds(15, 85, 50, 20);
+    combo_midi_channel->setBounds(10, 40, 60, 20);
     internalPath1.clear();
-    internalPath1.startNewSubPath (40.0f, 0.0f);
-    internalPath1.lineTo (50.0f, 10.0f);
-    internalPath1.lineTo (30.0f, 10.0f);
+    internalPath1.startNewSubPath(40.0f, 0.0f);
+    internalPath1.lineTo(50.0f, 10.0f);
+    internalPath1.lineTo(30.0f, 10.0f);
     internalPath1.closeSubPath();
 
     //[UserResized] Add your own custom resize handling here..
@@ -178,7 +183,7 @@ void UiEditorSynthLitePopup::resized()
     //[/UserResized]
 }
 
-void UiEditorSynthLitePopup::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
+void UiEditorSynthLitePopup::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
 {
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]
@@ -186,27 +191,33 @@ void UiEditorSynthLitePopup::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     if (comboBoxThatHasChanged == combo_midi_listen_type)
     {
         //[UserComboBoxCode_combo_midi_listen_type] -- add your combo box handling code here..
-        if( _midi_control )
+        if (_midi_control)
         {
-            _midi_control->train( comboBoxThatHasChanged->getSelectedItemIndex()-1, _midi_control->get_midi_number(), _midi_control->get_chnanel(), _midi_control->get_is_ctrl_version_of_name() );
+            _midi_control->train(comboBoxThatHasChanged->getSelectedItemIndex() - 1,
+                                 _midi_control->get_midi_number(), _midi_control->get_chnanel(),
+                                 _midi_control->get_is_ctrl_version_of_name());
         }
         //[/UserComboBoxCode_combo_midi_listen_type]
     }
     else if (comboBoxThatHasChanged == combo_midi_number)
     {
         //[UserComboBoxCode_combo_midi_number] -- add your combo box handling code here..
-        if( _midi_control )
+        if (_midi_control)
         {
-            _midi_control->train( _midi_control->get_listen_type(), comboBoxThatHasChanged->getSelectedItemIndex(), _midi_control->get_chnanel(), _midi_control->get_is_ctrl_version_of_name() );
+            _midi_control->train(
+                _midi_control->get_listen_type(), comboBoxThatHasChanged->getSelectedItemIndex(),
+                _midi_control->get_chnanel(), _midi_control->get_is_ctrl_version_of_name());
         }
         //[/UserComboBoxCode_combo_midi_number]
     }
     else if (comboBoxThatHasChanged == combo_midi_channel)
     {
         //[UserComboBoxCode_combo_midi_channel] -- add your combo box handling code here..
-        if( _midi_control )
+        if (_midi_control)
         {
-            _midi_control->train( _midi_control->get_listen_type(), _midi_control->get_midi_number(), comboBoxThatHasChanged->getSelectedItemIndex()+1, _midi_control->get_is_ctrl_version_of_name() );
+            _midi_control->train(_midi_control->get_listen_type(), _midi_control->get_midi_number(),
+                                 comboBoxThatHasChanged->getSelectedItemIndex() + 1,
+                                 _midi_control->get_is_ctrl_version_of_name());
         }
         //[/UserComboBoxCode_combo_midi_channel]
     }
@@ -215,7 +226,7 @@ void UiEditorSynthLitePopup::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     //[/UsercomboBoxChanged_Post]
 }
 
-void UiEditorSynthLitePopup::buttonClicked (Button* buttonThatWasClicked)
+void UiEditorSynthLitePopup::buttonClicked(Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -233,26 +244,24 @@ void UiEditorSynthLitePopup::buttonClicked (Button* buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-bool UiEditorSynthLitePopup::keyPressed (const KeyPress& key)
+bool UiEditorSynthLitePopup::keyPressed(const KeyPress &key)
 {
     //[UserCode_keyPressed] -- Add your code here...
     bool success = false;
-    if( key == KeyPress::escapeKey )
+    if (key == KeyPress::escapeKey)
     {
         MIDIControlHandler::getInstance()->clear();
         parent->popup = nullptr;
 
         return true;
     }
-    return success;  // Return true if your handler uses this key event, or false to allow it to be passed-on.
+    return success; // Return true if your handler uses this key event, or false to allow it to be
+                    // passed-on.
     //[/UserCode_keyPressed]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -293,7 +302,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

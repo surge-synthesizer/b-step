@@ -13,8 +13,10 @@
 
 #include "App.h"
 
-struct DoYouKnow : public DeletedAtShutdown {
-    enum MESSAGES {
+struct DoYouKnow : public DeletedAtShutdown
+{
+    enum MESSAGES
+    {
         NOTHING = -1,
 
         ASSIGN_FILE_INFOS = 0,
@@ -26,37 +28,37 @@ struct DoYouKnow : public DeletedAtShutdown {
 
         USE_VST_INSTEAD_OF_AU
     };
-    juce_DeclareSingleton (DoYouKnow,false)
-private:
+    juce_DeclareSingleton(DoYouKnow, false) private :
 
-    // TODO EXPORT TO FILE
-    Array< MESSAGES > dont_show_agains;
+        // TODO EXPORT TO FILE
+        Array<MESSAGES> dont_show_agains;
     bool never_show_a_message;
 
     struct CharPair
     {
-        const char*const title;
-        const char*const message;
+        const char *const title;
+        const char *const message;
 
-        CharPair( const char*const title_, const char*const message_ ) : title(title_), message( message_ ) {}
+        CharPair(const char *const title_, const char *const message_)
+            : title(title_), message(message_)
+        {
+        }
     };
 
-    static CharPair get_message( MESSAGES id_ );
+    static CharPair get_message(MESSAGES id_);
 
     MESSAGES post_message;
 
-public:
+  public:
     DoYouKnow();
-    ~DoYouKnow() {
-        clearSingletonInstance();
-    }
-    bool show( MESSAGES id, bool force = false );
+    ~DoYouKnow() { clearSingletonInstance(); }
+    bool show(MESSAGES id, bool force = false);
 
-    void export_to(XmlElement& xml) const;
-    void import_from(const XmlElement& xml);
+    void export_to(XmlElement &xml) const;
+    void import_from(const XmlElement &xml);
     void import_by_default();
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DoYouKnow)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DoYouKnow)
 };
 
-#endif  // DOYOUKNOW_H_INCLUDED
+#endif // DOYOUKNOW_H_INCLUDED

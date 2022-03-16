@@ -24,58 +24,57 @@
 
 #include "UIEditorToolbar.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-UiEditor::UiEditor( String name )
-    : ResizableWindow( name, Colour(0xff000000), false ),
-      animate_lock(false),
-      _animate_mover(nullptr)
+UiEditor::UiEditor(String name)
+    : ResizableWindow(name, Colour(0xff000000), false), animate_lock(false), _animate_mover(nullptr)
 {
-    SESSION_ERROR_LOG( "BOOT::UiEditor::" + name +String("\n") );
+    SESSION_ERROR_LOG("BOOT::UiEditor::" + name + String("\n"));
 
     setOpaque(true);
-    setResizable (true, true);
+    setResizable(true, true);
 
-    SESSION_ERROR_LOG( "BOOT::UiEditor::" + name + "::DONE"+String("\n") );
+    SESSION_ERROR_LOG("BOOT::UiEditor::" + name + "::DONE" + String("\n"));
 }
 
 UiEditor::~UiEditor()
 {
-    SESSION_ERROR_LOG( "DOWN::UiEditor::" + getName() +String("\n") );
+    SESSION_ERROR_LOG("DOWN::UiEditor::" + getName() + String("\n"));
     animate_lock = true;
-    SESSION_ERROR_LOG( "DOWN::UiEditor::" + getName() + "::DONE" +String("\n") );
+    SESSION_ERROR_LOG("DOWN::UiEditor::" + getName() + "::DONE" + String("\n"));
 }
 
-void UiEditor::center_relative_and_make_visible( Component*const parent_, bool resize_, bool make_labels_dragable_ )
+void UiEditor::center_relative_and_make_visible(Component *const parent_, bool resize_,
+                                                bool make_labels_dragable_)
 {
-    if( make_labels_dragable_ )
+    if (make_labels_dragable_)
         make_childs_dragable();
 
     double scale;
-    if( parent_ )
+    if (parent_)
     {
         scale = 1.f / APPDEF_UIUserData::WINDOW_HEIGHT * parent_->getHeight();
 #if JUCE_IOS
         addToDesktop();
 #elif JUCE_ANDROID
-        addToDesktop( 0 , parent_);
+        addToDesktop(0, parent_);
 #endif
     }
     else
     {
-        uint16 desktop_height = Desktop::getInstance().getDisplays().getMainDisplay().userArea.getHeight();
+        uint16 desktop_height =
+            Desktop::getInstance().getDisplays().getMainDisplay().userArea.getHeight();
         scale = 1.f / APPDEF_UIUserData::WINDOW_HEIGHT_DESIGN * desktop_height;
         addToDesktop();
     }
 
-    if( ! resize_ )
+    if (!resize_)
         scale = 1;
 
-    if( getConstrainer() )
-        getConstrainer()->setFixedAspectRatio ( float(getWidth()) / getHeight() );
+    if (getConstrainer())
+        getConstrainer()->setFixedAspectRatio(float(getWidth()) / getHeight());
 #ifdef JUCE_IOS
     setUsingNativeTitleBar(true);
-    setResizable (false, false);
+    setResizable(false, false);
     setAlwaysOnTop(true);
 #else
     setUsingNativeTitleBar(false);
@@ -83,49 +82,50 @@ void UiEditor::center_relative_and_make_visible( Component*const parent_, bool r
 
     // check the heigh
     bool is_bigger_than_parent = true;
-    if( parent_ )
-        while( is_bigger_than_parent )
+    if (parent_)
+        while (is_bigger_than_parent)
         {
-            if( (getWidth() * scale < parent_->getWidth()) && (getHeight() * scale < parent_->getHeight()) )
+            if ((getWidth() * scale < parent_->getWidth()) &&
+                (getHeight() * scale < parent_->getHeight()))
                 is_bigger_than_parent = false;
             else
-                scale = scale-0.05;
+                scale = scale - 0.05;
         }
 
-
 #ifdef IS_MOBILE_APP
-    //enterModalState(true);
+        // enterModalState(true);
 #else
-    if( parent_ )
-        parent_->addChildComponent( this );
+    if (parent_)
+        parent_->addChildComponent(this);
     else
-#	if JUCE_MAC || JUCE_IOS
+#if JUCE_MAC || JUCE_IOS
         addToDesktop();
-#	else
-        addToDesktop( 0 , parent_);
-#	endif
+#else
+        addToDesktop(0, parent_);
 #endif
-    centreWithSize( getWidth() * scale, getHeight() * scale );
-    setContentComponentSize (getWidth(), getHeight());
+#endif
+    centreWithSize(getWidth() * scale, getHeight() * scale);
+    setContentComponentSize(getWidth(), getHeight());
     setVisible(true);
 }
 
-void UiEditor::restore_XY( Point<int>& XY_ )
+void UiEditor::restore_XY(Point<int> &XY_)
 {
-    if( XY_.getX() != -9999 && XY_.getY() != -9999 )
-        setTopLeftPosition( XY_ );
+    if (XY_.getX() != -9999 && XY_.getY() != -9999)
+        setTopLeftPosition(XY_);
 }
 void UiEditor::make_childs_dragable()
 {
-    Label* label = nullptr;
-    for( int i = 0 ; i != getNumChildComponents() ; ++i )
-        if( (label = dynamic_cast< Label* >( getChildComponent(i) )) )
-            label->setInterceptsMouseClicks(false,false);
+    Label *label = nullptr;
+    for (int i = 0; i != getNumChildComponents(); ++i)
+        if ((label = dynamic_cast<Label *>(getChildComponent(i))))
+            label->setInterceptsMouseClicks(false, false);
 }
 
-class AnimateMove : public Timer {
+class AnimateMove : public Timer
+{
     // BUG this will crash if the edior will closed
-    UiEditor*const _window_to_move;
+    UiEditor *const _window_to_move;
     const int _from_x;
     int _from_y;
     int _to_y;
@@ -137,41 +137,37 @@ class AnimateMove : public Timer {
 
     bool is_in_revers;
 
-    void timerCallback( ) override
+    void timerCallback() override
     {
         --_counter;
 
-        _current_step_y+=_by_step_y;
-        _window_to_move->setTopLeftPosition( _from_x, _from_y-_current_step_y );
+        _current_step_y += _by_step_y;
+        _window_to_move->setTopLeftPosition(_from_x, _from_y - _current_step_y);
 
-        if( _counter<1 )
+        if (_counter < 1)
         {
             stopTimer();
 
-            if( is_in_revers )
+            if (is_in_revers)
                 delete this;
         }
     }
-public:
-    AnimateMove( UiEditor*const window_to_move_, int y_to_move_ )
-        :_window_to_move( window_to_move_ ),
-         _from_x( window_to_move_->getX() ),
-         _from_y( window_to_move_->getY() ),_to_y( _from_y+y_to_move_ ),
 
-         _counter(40),
+  public:
+    AnimateMove(UiEditor *const window_to_move_, int y_to_move_)
+        : _window_to_move(window_to_move_), _from_x(window_to_move_->getX()),
+          _from_y(window_to_move_->getY()), _to_y(_from_y + y_to_move_),
 
-         _by_step_y( float(_from_y-_to_y)/_counter ),
-         _current_step_y(0),
+          _counter(40),
 
-         is_in_revers( false )
+          _by_step_y(float(_from_y - _to_y) / _counter), _current_step_y(0),
+
+          is_in_revers(false)
     {
         startTimer(3);
     }
 
-    ~AnimateMove()
-    {
-        _window_to_move->animate_lock = false;
-    }
+    ~AnimateMove() { _window_to_move->animate_lock = false; }
 
     void reverse_and_die()
     {
@@ -179,7 +175,7 @@ public:
         _from_y = _window_to_move->getY();
 
         _counter = 40;
-        _by_step_y = float(_from_y-_to_y)/_counter;
+        _by_step_y = float(_from_y - _to_y) / _counter;
 
         _current_step_y = 0;
 
@@ -188,15 +184,17 @@ public:
         startTimer(3);
     }
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AnimateMove)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AnimateMove)
 };
-void UiEditor::animate_move( int y_to_move_ ) {
+void UiEditor::animate_move(int y_to_move_)
+{
     animate_lock = true;
-    _animate_mover = new AnimateMove( this, y_to_move_ );
+    _animate_mover = new AnimateMove(this, y_to_move_);
 }
 
-void UiEditor::animate_move_back() {
-    if( _animate_mover )
+void UiEditor::animate_move_back()
+{
+    if (_animate_mover)
     {
         _animate_mover->reverse_and_die();
         _animate_mover = nullptr;
@@ -205,57 +203,51 @@ void UiEditor::animate_move_back() {
 //[/MiscUserDefs]
 
 //==============================================================================
-UiEditorToolbar::UiEditorToolbar (UiEditor*const owner_editor_, bool show_close, bool show_move, bool show_load_save)
+UiEditorToolbar::UiEditorToolbar(UiEditor *const owner_editor_, bool show_close, bool show_move,
+                                 bool show_load_save)
     : _owner_editor(owner_editor_)
 {
-    addAndMakeVisible (close = new ImageButton (String()));
-    close->addListener (this);
+    addAndMakeVisible(close = new ImageButton(String()));
+    close->addListener(this);
 
-    close->setImages (false, true, true,
-                      Image(), 0.000f, Colour (0x00000000),
-                      Image(), 0.000f, Colour (0x00000000),
-                      Image(), 0.000f, Colour (0x00000000));
-    addAndMakeVisible (load = new ImageButton (String()));
-    load->addListener (this);
+    close->setImages(false, true, true, Image(), 0.000f, Colour(0x00000000), Image(), 0.000f,
+                     Colour(0x00000000), Image(), 0.000f, Colour(0x00000000));
+    addAndMakeVisible(load = new ImageButton(String()));
+    load->addListener(this);
 
-    load->setImages (false, true, true,
-                     Image(), 0.000f, Colour (0x00000000),
-                     Image(), 0.000f, Colour (0x00000000),
-                     Image(), 0.000f, Colour (0x00000000));
-    addAndMakeVisible (save = new ImageButton (String()));
-    save->addListener (this);
+    load->setImages(false, true, true, Image(), 0.000f, Colour(0x00000000), Image(), 0.000f,
+                    Colour(0x00000000), Image(), 0.000f, Colour(0x00000000));
+    addAndMakeVisible(save = new ImageButton(String()));
+    save->addListener(this);
 
-    save->setImages (false, true, true,
-                     Image(), 0.000f, Colour (0x00000000),
-                     Image(), 0.000f, Colour (0x00000000),
-                     Image(), 0.000f, Colour (0x00000000));
-    drawable1 = Drawable::createFromImageData (load_svg, load_svgSize).release();
-    drawable2 = Drawable::createFromImageData (save_svg, save_svgSize).release();
-    drawable3 = Drawable::createFromImageData (move_svg, move_svgSize).release();
-    drawable4 = Drawable::createFromImageData (close_svg, close_svgSize).release();
+    save->setImages(false, true, true, Image(), 0.000f, Colour(0x00000000), Image(), 0.000f,
+                    Colour(0x00000000), Image(), 0.000f, Colour(0x00000000));
+    drawable1 = Drawable::createFromImageData(load_svg, load_svgSize).release();
+    drawable2 = Drawable::createFromImageData(save_svg, save_svgSize).release();
+    drawable3 = Drawable::createFromImageData(move_svg, move_svgSize).release();
+    drawable4 = Drawable::createFromImageData(close_svg, close_svgSize).release();
 
     //[UserPreSize]
-    if( ! show_close )
+    if (!show_close)
     {
         close->setVisible(false);
-        drawable4 = Drawable::createFromImageData (close_svg, 0).release();
+        drawable4 = Drawable::createFromImageData(close_svg, 0).release();
     }
-    if( ! show_move )
+    if (!show_move)
     {
-        drawable3 = Drawable::createFromImageData (move_svg, 0).release();
+        drawable3 = Drawable::createFromImageData(move_svg, 0).release();
     }
-    if( ! show_load_save )
+    if (!show_load_save)
     {
         load->setVisible(false);
         save->setVisible(false);
 
-        drawable1 = Drawable::createFromImageData (load_svg, 0).release();
-        drawable2 = Drawable::createFromImageData (save_svg, 0).release();
+        drawable1 = Drawable::createFromImageData(load_svg, 0).release();
+        drawable2 = Drawable::createFromImageData(save_svg, 0).release();
     }
     //[/UserPreSize]
 
-    setSize (50, 200);
-
+    setSize(50, 200);
 
     //[Constructor] You can add your own custom stuff here..
     setInterceptsMouseClicks(false, true);
@@ -275,40 +267,51 @@ UiEditorToolbar::~UiEditorToolbar()
     drawable3 = nullptr;
     drawable4 = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiEditorToolbar::paint (Graphics& g)
+void UiEditorToolbar::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.setColour (Colours::black);
-    //jassert (drawable1 != 0);
+    g.setColour(Colours::black);
+    // jassert (drawable1 != 0);
     if (drawable1 != 0)
-        drawable1->drawWithin (g, Rectangle<float> (proportionOfWidth (0.2000f), proportionOfHeight (0.6000f), proportionOfWidth (0.5000f), proportionOfHeight (0.1250f)),
-                               RectanglePlacement::centred, 1.000f);
+        drawable1->drawWithin(
+            g,
+            Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.6000f),
+                             proportionOfWidth(0.5000f), proportionOfHeight(0.1250f)),
+            RectanglePlacement::centred, 1.000f);
 
-    g.setColour (Colours::black);
-    //jassert (drawable2 != 0);
+    g.setColour(Colours::black);
+    // jassert (drawable2 != 0);
     if (drawable2 != 0)
-        drawable2->drawWithin (g, Rectangle<float> (proportionOfWidth (0.2000f), proportionOfHeight (0.7500f), proportionOfWidth (0.5000f), proportionOfHeight (0.1250f)),
-                               RectanglePlacement::centred, 1.000f);
+        drawable2->drawWithin(
+            g,
+            Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.7500f),
+                             proportionOfWidth(0.5000f), proportionOfHeight(0.1250f)),
+            RectanglePlacement::centred, 1.000f);
 
-    g.setColour (Colours::black);
-    //jassert (drawable3 != 0);
+    g.setColour(Colours::black);
+    // jassert (drawable3 != 0);
     if (drawable3 != 0)
-        drawable3->drawWithin (g, Rectangle<float> (proportionOfWidth (0.2000f), proportionOfHeight (0.3500f), proportionOfWidth (0.5000f), proportionOfHeight (0.1250f)),
-                               RectanglePlacement::centred, 1.000f);
+        drawable3->drawWithin(
+            g,
+            Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.3500f),
+                             proportionOfWidth(0.5000f), proportionOfHeight(0.1250f)),
+            RectanglePlacement::centred, 1.000f);
 
-    g.setColour (Colours::black);
-    //jassert (drawable4 != 0);
+    g.setColour(Colours::black);
+    // jassert (drawable4 != 0);
     if (drawable4 != 0)
-        drawable4->drawWithin (g, Rectangle<float> (proportionOfWidth (0.2000f), proportionOfHeight (0.0750f), proportionOfWidth (0.5000f), proportionOfHeight (0.1250f)),
-                               RectanglePlacement::centred, 1.000f);
+        drawable4->drawWithin(
+            g,
+            Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.0750f),
+                             proportionOfWidth(0.5000f), proportionOfHeight(0.1250f)),
+            RectanglePlacement::centred, 1.000f);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -319,14 +322,17 @@ void UiEditorToolbar::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    close->setBounds (proportionOfWidth (0.0400f), proportionOfHeight (0.0350f), proportionOfWidth (0.8000f), proportionOfHeight (0.2000f));
-    load->setBounds (proportionOfWidth (0.0400f), proportionOfHeight (0.5750f), proportionOfWidth (0.8000f), proportionOfHeight (0.1500f));
-    save->setBounds (proportionOfWidth (0.0400f), proportionOfHeight (0.7500f), proportionOfWidth (0.8000f), proportionOfHeight (0.1500f));
+    close->setBounds(proportionOfWidth(0.0400f), proportionOfHeight(0.0350f),
+                     proportionOfWidth(0.8000f), proportionOfHeight(0.2000f));
+    load->setBounds(proportionOfWidth(0.0400f), proportionOfHeight(0.5750f),
+                    proportionOfWidth(0.8000f), proportionOfHeight(0.1500f));
+    save->setBounds(proportionOfWidth(0.0400f), proportionOfHeight(0.7500f),
+                    proportionOfWidth(0.8000f), proportionOfHeight(0.1500f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
 
-void UiEditorToolbar::buttonClicked (Button* buttonThatWasClicked)
+void UiEditorToolbar::buttonClicked(Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -334,7 +340,7 @@ void UiEditorToolbar::buttonClicked (Button* buttonThatWasClicked)
     if (buttonThatWasClicked == close)
     {
         //[UserButtonCode_close] -- add your button handler code here..
-        if( ! _owner_editor->animate_lock )
+        if (!_owner_editor->animate_lock)
         {
             _owner_editor->on_close_clicked();
         }
@@ -357,11 +363,8 @@ void UiEditorToolbar::buttonClicked (Button* buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -408,179 +411,484 @@ END_JUCER_METADATA
 // Binary resources - be careful not to edit any of these sections!
 
 // JUCER_RESOURCE: load_svg, 2277, "../Images/load.svg"
-static const unsigned char resource_UiEditorToolbar_load_svg[] = { 60,63,120,109,108,32,118,101,114,115,105,111,110,61,34,49,46,48,34,32,101,110,99,111,100,105,110,103,61,34,85,84,70,45,56,34,32,115,116,
-        97,110,100,97,108,111,110,101,61,34,110,111,34,63,62,10,60,33,45,45,32,71,101,110,101,114,97,116,111,114,58,32,65,100,111,98,101,32,73,108,108,117,115,116,114,97,116,111,114,32,49,55,46,48,46,48,44,32,
-        83,86,71,32,69,120,112,111,114,116,32,80,108,117,103,45,73,110,32,46,32,83,86,71,32,86,101,114,115,105,111,110,58,32,54,46,48,48,32,66,117,105,108,100,32,48,41,32,32,45,45,62,10,10,60,115,118,103,10,32,
-        32,32,120,109,108,110,115,58,100,99,61,34,104,116,116,112,58,47,47,112,117,114,108,46,111,114,103,47,100,99,47,101,108,101,109,101,110,116,115,47,49,46,49,47,34,10,32,32,32,120,109,108,110,115,58,99,99,
-        61,34,104,116,116,112,58,47,47,99,114,101,97,116,105,118,101,99,111,109,109,111,110,115,46,111,114,103,47,110,115,35,34,10,32,32,32,120,109,108,110,115,58,114,100,102,61,34,104,116,116,112,58,47,47,119,
-        119,119,46,119,51,46,111,114,103,47,49,57,57,57,47,48,50,47,50,50,45,114,100,102,45,115,121,110,116,97,120,45,110,115,35,34,10,32,32,32,120,109,108,110,115,58,115,118,103,61,34,104,116,116,112,58,47,47,
-        119,119,119,46,119,51,46,111,114,103,47,50,48,48,48,47,115,118,103,34,10,32,32,32,120,109,108,110,115,61,34,104,116,116,112,58,47,47,119,119,119,46,119,51,46,111,114,103,47,50,48,48,48,47,115,118,103,
-        34,10,32,32,32,120,109,108,110,115,58,115,111,100,105,112,111,100,105,61,34,104,116,116,112,58,47,47,115,111,100,105,112,111,100,105,46,115,111,117,114,99,101,102,111,114,103,101,46,110,101,116,47,68,
-        84,68,47,115,111,100,105,112,111,100,105,45,48,46,100,116,100,34,10,32,32,32,120,109,108,110,115,58,105,110,107,115,99,97,112,101,61,34,104,116,116,112,58,47,47,119,119,119,46,105,110,107,115,99,97,112,
-        101,46,111,114,103,47,110,97,109,101,115,112,97,99,101,115,47,105,110,107,115,99,97,112,101,34,10,32,32,32,118,101,114,115,105,111,110,61,34,49,46,49,34,10,32,32,32,105,100,61,34,67,97,112,97,95,49,34,
-        10,32,32,32,120,61,34,48,112,120,34,10,32,32,32,121,61,34,48,112,120,34,10,32,32,32,119,105,100,116,104,61,34,54,52,112,120,34,10,32,32,32,104,101,105,103,104,116,61,34,54,52,112,120,34,10,32,32,32,118,
-        105,101,119,66,111,120,61,34,48,32,48,32,54,52,32,54,52,34,10,32,32,32,101,110,97,98,108,101,45,98,97,99,107,103,114,111,117,110,100,61,34,110,101,119,32,48,32,48,32,54,52,32,54,52,34,10,32,32,32,120,
-        109,108,58,115,112,97,99,101,61,34,112,114,101,115,101,114,118,101,34,10,32,32,32,105,110,107,115,99,97,112,101,58,118,101,114,115,105,111,110,61,34,48,46,52,56,46,52,32,114,57,57,51,57,34,10,32,32,32,
-        115,111,100,105,112,111,100,105,58,100,111,99,110,97,109,101,61,34,108,111,97,100,46,115,118,103,34,62,60,109,101,116,97,100,97,116,97,10,32,32,32,32,32,105,100,61,34,109,101,116,97,100,97,116,97,50,57,
-        57,57,34,62,60,114,100,102,58,82,68,70,62,60,99,99,58,87,111,114,107,10,32,32,32,32,32,32,32,32,32,114,100,102,58,97,98,111,117,116,61,34,34,62,60,100,99,58,102,111,114,109,97,116,62,105,109,97,103,101,
-        47,115,118,103,43,120,109,108,60,47,100,99,58,102,111,114,109,97,116,62,60,100,99,58,116,121,112,101,10,32,32,32,32,32,32,32,32,32,32,32,114,100,102,58,114,101,115,111,117,114,99,101,61,34,104,116,116,
-        112,58,47,47,112,117,114,108,46,111,114,103,47,100,99,47,100,99,109,105,116,121,112,101,47,83,116,105,108,108,73,109,97,103,101,34,32,47,62,60,47,99,99,58,87,111,114,107,62,60,47,114,100,102,58,82,68,
-        70,62,60,47,109,101,116,97,100,97,116,97,62,60,100,101,102,115,10,32,32,32,32,32,105,100,61,34,100,101,102,115,50,57,57,55,34,32,47,62,60,115,111,100,105,112,111,100,105,58,110,97,109,101,100,118,105,
-        101,119,10,32,32,32,32,32,112,97,103,101,99,111,108,111,114,61,34,35,102,102,102,102,102,102,34,10,32,32,32,32,32,98,111,114,100,101,114,99,111,108,111,114,61,34,35,54,54,54,54,54,54,34,10,32,32,32,32,
-        32,98,111,114,100,101,114,111,112,97,99,105,116,121,61,34,49,34,10,32,32,32,32,32,111,98,106,101,99,116,116,111,108,101,114,97,110,99,101,61,34,49,48,34,10,32,32,32,32,32,103,114,105,100,116,111,108,101,
-        114,97,110,99,101,61,34,49,48,34,10,32,32,32,32,32,103,117,105,100,101,116,111,108,101,114,97,110,99,101,61,34,49,48,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,112,97,103,101,111,112,97,99,
-        105,116,121,61,34,48,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,112,97,103,101,115,104,97,100,111,119,61,34,50,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,119,105,110,100,111,119,
-        45,119,105,100,116,104,61,34,55,52,55,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,119,105,110,100,111,119,45,104,101,105,103,104,116,61,34,52,56,48,34,10,32,32,32,32,32,105,100,61,34,110,97,
-        109,101,100,118,105,101,119,50,57,57,53,34,10,32,32,32,32,32,115,104,111,119,103,114,105,100,61,34,102,97,108,115,101,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,122,111,111,109,61,34,51,46,
-        54,56,55,53,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,99,120,61,34,51,50,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,99,121,61,34,51,50,34,10,32,32,32,32,32,105,110,107,115,99,97,
-        112,101,58,119,105,110,100,111,119,45,120,61,34,48,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,119,105,110,100,111,119,45,121,61,34,48,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,119,
-        105,110,100,111,119,45,109,97,120,105,109,105,122,101,100,61,34,48,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,99,117,114,114,101,110,116,45,108,97,121,101,114,61,34,67,97,112,97,95,49,34,32,
-        47,62,60,112,97,116,104,10,32,32,32,32,32,100,61,34,77,50,53,46,56,53,56,44,52,52,46,52,56,49,104,49,49,46,52,50,57,99,48,46,53,44,48,44,48,46,57,48,53,45,48,46,52,48,52,44,48,46,57,48,53,45,48,46,57,
-        48,52,118,45,57,46,57,53,56,104,49,48,46,56,54,51,99,48,46,53,44,48,44,48,46,54,51,55,45,48,46,51,48,51,44,48,46,51,48,53,45,48,46,54,55,56,76,51,50,46,50,50,57,44,49,51,46,53,57,49,32,32,99,45,48,46,
-        51,51,50,45,48,46,51,55,53,45,48,46,56,54,57,45,48,46,51,55,54,45,49,46,50,48,50,45,48,46,48,48,50,108,45,49,55,46,50,52,44,49,57,46,51,53,52,99,45,48,46,51,51,51,44,48,46,51,55,53,45,48,46,49,57,55,44,
-        48,46,54,55,55,44,48,46,51,48,51,44,48,46,54,55,55,104,49,48,46,56,54,51,118,57,46,57,53,56,32,32,67,50,52,46,57,53,51,44,52,52,46,48,55,55,44,50,53,46,51,53,56,44,52,52,46,52,56,49,44,50,53,46,56,53,
-        56,44,52,52,46,52,56,49,122,34,10,32,32,32,32,32,105,100,61,34,112,97,116,104,50,57,57,49,34,10,32,32,32,32,32,115,116,121,108,101,61,34,102,105,108,108,58,35,100,102,99,101,56,57,59,102,105,108,108,45,
-        111,112,97,99,105,116,121,58,49,34,32,47,62,60,112,97,116,104,10,32,32,32,32,32,100,61,34,77,53,52,46,56,52,44,49,52,46,56,52,54,104,45,55,46,50,49,53,99,45,50,46,49,52,57,44,48,45,51,46,56,57,51,44,49,
-        46,53,50,53,45,51,46,56,57,51,44,51,46,52,48,54,99,48,44,49,46,56,56,49,44,48,44,51,46,52,48,54,44,48,44,51,46,52,48,54,104,56,46,49,56,56,118,50,52,46,56,54,52,72,57,46,56,49,50,86,50,49,46,54,53,56,
-        104,57,46,54,48,50,118,45,51,46,52,48,54,32,32,99,48,45,49,46,56,56,49,45,49,46,55,52,51,45,51,46,52,48,54,45,51,46,56,57,51,45,51,46,52,48,54,72,54,46,56,57,51,67,52,46,55,52,51,44,49,52,46,56,52,54,
-        44,51,44,49,54,46,53,56,57,44,51,44,49,56,46,55,51,56,118,51,48,46,55,48,51,99,48,44,50,46,49,53,44,49,46,55,52,51,44,51,46,56,57,51,44,51,46,56,57,51,44,51,46,56,57,51,72,53,52,46,56,52,32,32,99,50,46,
-        49,52,57,44,48,44,51,46,56,57,51,45,49,46,55,52,50,44,51,46,56,57,51,45,51,46,56,57,51,86,49,56,46,55,51,56,67,53,56,46,55,51,50,44,49,54,46,53,56,57,44,53,54,46,57,56,57,44,49,52,46,56,52,54,44,53,52,
-        46,56,52,44,49,52,46,56,52,54,122,34,10,32,32,32,32,32,105,100,61,34,112,97,116,104,50,57,57,51,34,10,32,32,32,32,32,115,116,121,108,101,61,34,102,105,108,108,58,35,100,102,99,101,56,57,59,102,105,108,
-        108,45,111,112,97,99,105,116,121,58,49,34,32,47,62,60,47,115,118,103,62,0,0
-                                                                 };
+static const unsigned char resource_UiEditorToolbar_load_svg[] = {
+    60,  63,  120, 109, 108, 32,  118, 101, 114, 115, 105, 111, 110, 61,  34,  49,  46,  48,  34,
+    32,  101, 110, 99,  111, 100, 105, 110, 103, 61,  34,  85,  84,  70,  45,  56,  34,  32,  115,
+    116, 97,  110, 100, 97,  108, 111, 110, 101, 61,  34,  110, 111, 34,  63,  62,  10,  60,  33,
+    45,  45,  32,  71,  101, 110, 101, 114, 97,  116, 111, 114, 58,  32,  65,  100, 111, 98,  101,
+    32,  73,  108, 108, 117, 115, 116, 114, 97,  116, 111, 114, 32,  49,  55,  46,  48,  46,  48,
+    44,  32,  83,  86,  71,  32,  69,  120, 112, 111, 114, 116, 32,  80,  108, 117, 103, 45,  73,
+    110, 32,  46,  32,  83,  86,  71,  32,  86,  101, 114, 115, 105, 111, 110, 58,  32,  54,  46,
+    48,  48,  32,  66,  117, 105, 108, 100, 32,  48,  41,  32,  32,  45,  45,  62,  10,  10,  60,
+    115, 118, 103, 10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  100, 99,  61,  34,  104, 116,
+    116, 112, 58,  47,  47,  112, 117, 114, 108, 46,  111, 114, 103, 47,  100, 99,  47,  101, 108,
+    101, 109, 101, 110, 116, 115, 47,  49,  46,  49,  47,  34,  10,  32,  32,  32,  120, 109, 108,
+    110, 115, 58,  99,  99,  61,  34,  104, 116, 116, 112, 58,  47,  47,  99,  114, 101, 97,  116,
+    105, 118, 101, 99,  111, 109, 109, 111, 110, 115, 46,  111, 114, 103, 47,  110, 115, 35,  34,
+    10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  114, 100, 102, 61,  34,  104, 116, 116, 112,
+    58,  47,  47,  119, 119, 119, 46,  119, 51,  46,  111, 114, 103, 47,  49,  57,  57,  57,  47,
+    48,  50,  47,  50,  50,  45,  114, 100, 102, 45,  115, 121, 110, 116, 97,  120, 45,  110, 115,
+    35,  34,  10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  115, 118, 103, 61,  34,  104, 116,
+    116, 112, 58,  47,  47,  119, 119, 119, 46,  119, 51,  46,  111, 114, 103, 47,  50,  48,  48,
+    48,  47,  115, 118, 103, 34,  10,  32,  32,  32,  120, 109, 108, 110, 115, 61,  34,  104, 116,
+    116, 112, 58,  47,  47,  119, 119, 119, 46,  119, 51,  46,  111, 114, 103, 47,  50,  48,  48,
+    48,  47,  115, 118, 103, 34,  10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  115, 111, 100,
+    105, 112, 111, 100, 105, 61,  34,  104, 116, 116, 112, 58,  47,  47,  115, 111, 100, 105, 112,
+    111, 100, 105, 46,  115, 111, 117, 114, 99,  101, 102, 111, 114, 103, 101, 46,  110, 101, 116,
+    47,  68,  84,  68,  47,  115, 111, 100, 105, 112, 111, 100, 105, 45,  48,  46,  100, 116, 100,
+    34,  10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  105, 110, 107, 115, 99,  97,  112, 101,
+    61,  34,  104, 116, 116, 112, 58,  47,  47,  119, 119, 119, 46,  105, 110, 107, 115, 99,  97,
+    112, 101, 46,  111, 114, 103, 47,  110, 97,  109, 101, 115, 112, 97,  99,  101, 115, 47,  105,
+    110, 107, 115, 99,  97,  112, 101, 34,  10,  32,  32,  32,  118, 101, 114, 115, 105, 111, 110,
+    61,  34,  49,  46,  49,  34,  10,  32,  32,  32,  105, 100, 61,  34,  67,  97,  112, 97,  95,
+    49,  34,  10,  32,  32,  32,  120, 61,  34,  48,  112, 120, 34,  10,  32,  32,  32,  121, 61,
+    34,  48,  112, 120, 34,  10,  32,  32,  32,  119, 105, 100, 116, 104, 61,  34,  54,  52,  112,
+    120, 34,  10,  32,  32,  32,  104, 101, 105, 103, 104, 116, 61,  34,  54,  52,  112, 120, 34,
+    10,  32,  32,  32,  118, 105, 101, 119, 66,  111, 120, 61,  34,  48,  32,  48,  32,  54,  52,
+    32,  54,  52,  34,  10,  32,  32,  32,  101, 110, 97,  98,  108, 101, 45,  98,  97,  99,  107,
+    103, 114, 111, 117, 110, 100, 61,  34,  110, 101, 119, 32,  48,  32,  48,  32,  54,  52,  32,
+    54,  52,  34,  10,  32,  32,  32,  120, 109, 108, 58,  115, 112, 97,  99,  101, 61,  34,  112,
+    114, 101, 115, 101, 114, 118, 101, 34,  10,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112,
+    101, 58,  118, 101, 114, 115, 105, 111, 110, 61,  34,  48,  46,  52,  56,  46,  52,  32,  114,
+    57,  57,  51,  57,  34,  10,  32,  32,  32,  115, 111, 100, 105, 112, 111, 100, 105, 58,  100,
+    111, 99,  110, 97,  109, 101, 61,  34,  108, 111, 97,  100, 46,  115, 118, 103, 34,  62,  60,
+    109, 101, 116, 97,  100, 97,  116, 97,  10,  32,  32,  32,  32,  32,  105, 100, 61,  34,  109,
+    101, 116, 97,  100, 97,  116, 97,  50,  57,  57,  57,  34,  62,  60,  114, 100, 102, 58,  82,
+    68,  70,  62,  60,  99,  99,  58,  87,  111, 114, 107, 10,  32,  32,  32,  32,  32,  32,  32,
+    32,  32,  114, 100, 102, 58,  97,  98,  111, 117, 116, 61,  34,  34,  62,  60,  100, 99,  58,
+    102, 111, 114, 109, 97,  116, 62,  105, 109, 97,  103, 101, 47,  115, 118, 103, 43,  120, 109,
+    108, 60,  47,  100, 99,  58,  102, 111, 114, 109, 97,  116, 62,  60,  100, 99,  58,  116, 121,
+    112, 101, 10,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  114, 100, 102, 58,  114,
+    101, 115, 111, 117, 114, 99,  101, 61,  34,  104, 116, 116, 112, 58,  47,  47,  112, 117, 114,
+    108, 46,  111, 114, 103, 47,  100, 99,  47,  100, 99,  109, 105, 116, 121, 112, 101, 47,  83,
+    116, 105, 108, 108, 73,  109, 97,  103, 101, 34,  32,  47,  62,  60,  47,  99,  99,  58,  87,
+    111, 114, 107, 62,  60,  47,  114, 100, 102, 58,  82,  68,  70,  62,  60,  47,  109, 101, 116,
+    97,  100, 97,  116, 97,  62,  60,  100, 101, 102, 115, 10,  32,  32,  32,  32,  32,  105, 100,
+    61,  34,  100, 101, 102, 115, 50,  57,  57,  55,  34,  32,  47,  62,  60,  115, 111, 100, 105,
+    112, 111, 100, 105, 58,  110, 97,  109, 101, 100, 118, 105, 101, 119, 10,  32,  32,  32,  32,
+    32,  112, 97,  103, 101, 99,  111, 108, 111, 114, 61,  34,  35,  102, 102, 102, 102, 102, 102,
+    34,  10,  32,  32,  32,  32,  32,  98,  111, 114, 100, 101, 114, 99,  111, 108, 111, 114, 61,
+    34,  35,  54,  54,  54,  54,  54,  54,  34,  10,  32,  32,  32,  32,  32,  98,  111, 114, 100,
+    101, 114, 111, 112, 97,  99,  105, 116, 121, 61,  34,  49,  34,  10,  32,  32,  32,  32,  32,
+    111, 98,  106, 101, 99,  116, 116, 111, 108, 101, 114, 97,  110, 99,  101, 61,  34,  49,  48,
+    34,  10,  32,  32,  32,  32,  32,  103, 114, 105, 100, 116, 111, 108, 101, 114, 97,  110, 99,
+    101, 61,  34,  49,  48,  34,  10,  32,  32,  32,  32,  32,  103, 117, 105, 100, 101, 116, 111,
+    108, 101, 114, 97,  110, 99,  101, 61,  34,  49,  48,  34,  10,  32,  32,  32,  32,  32,  105,
+    110, 107, 115, 99,  97,  112, 101, 58,  112, 97,  103, 101, 111, 112, 97,  99,  105, 116, 121,
+    61,  34,  48,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101, 58,
+    112, 97,  103, 101, 115, 104, 97,  100, 111, 119, 61,  34,  50,  34,  10,  32,  32,  32,  32,
+    32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  119, 105, 110, 100, 111, 119, 45,  119, 105,
+    100, 116, 104, 61,  34,  55,  52,  55,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115,
+    99,  97,  112, 101, 58,  119, 105, 110, 100, 111, 119, 45,  104, 101, 105, 103, 104, 116, 61,
+    34,  52,  56,  48,  34,  10,  32,  32,  32,  32,  32,  105, 100, 61,  34,  110, 97,  109, 101,
+    100, 118, 105, 101, 119, 50,  57,  57,  53,  34,  10,  32,  32,  32,  32,  32,  115, 104, 111,
+    119, 103, 114, 105, 100, 61,  34,  102, 97,  108, 115, 101, 34,  10,  32,  32,  32,  32,  32,
+    105, 110, 107, 115, 99,  97,  112, 101, 58,  122, 111, 111, 109, 61,  34,  51,  46,  54,  56,
+    55,  53,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  99,
+    120, 61,  34,  51,  50,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112,
+    101, 58,  99,  121, 61,  34,  51,  50,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115,
+    99,  97,  112, 101, 58,  119, 105, 110, 100, 111, 119, 45,  120, 61,  34,  48,  34,  10,  32,
+    32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  119, 105, 110, 100, 111, 119,
+    45,  121, 61,  34,  48,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112,
+    101, 58,  119, 105, 110, 100, 111, 119, 45,  109, 97,  120, 105, 109, 105, 122, 101, 100, 61,
+    34,  48,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  99,
+    117, 114, 114, 101, 110, 116, 45,  108, 97,  121, 101, 114, 61,  34,  67,  97,  112, 97,  95,
+    49,  34,  32,  47,  62,  60,  112, 97,  116, 104, 10,  32,  32,  32,  32,  32,  100, 61,  34,
+    77,  50,  53,  46,  56,  53,  56,  44,  52,  52,  46,  52,  56,  49,  104, 49,  49,  46,  52,
+    50,  57,  99,  48,  46,  53,  44,  48,  44,  48,  46,  57,  48,  53,  45,  48,  46,  52,  48,
+    52,  44,  48,  46,  57,  48,  53,  45,  48,  46,  57,  48,  52,  118, 45,  57,  46,  57,  53,
+    56,  104, 49,  48,  46,  56,  54,  51,  99,  48,  46,  53,  44,  48,  44,  48,  46,  54,  51,
+    55,  45,  48,  46,  51,  48,  51,  44,  48,  46,  51,  48,  53,  45,  48,  46,  54,  55,  56,
+    76,  51,  50,  46,  50,  50,  57,  44,  49,  51,  46,  53,  57,  49,  32,  32,  99,  45,  48,
+    46,  51,  51,  50,  45,  48,  46,  51,  55,  53,  45,  48,  46,  56,  54,  57,  45,  48,  46,
+    51,  55,  54,  45,  49,  46,  50,  48,  50,  45,  48,  46,  48,  48,  50,  108, 45,  49,  55,
+    46,  50,  52,  44,  49,  57,  46,  51,  53,  52,  99,  45,  48,  46,  51,  51,  51,  44,  48,
+    46,  51,  55,  53,  45,  48,  46,  49,  57,  55,  44,  48,  46,  54,  55,  55,  44,  48,  46,
+    51,  48,  51,  44,  48,  46,  54,  55,  55,  104, 49,  48,  46,  56,  54,  51,  118, 57,  46,
+    57,  53,  56,  32,  32,  67,  50,  52,  46,  57,  53,  51,  44,  52,  52,  46,  48,  55,  55,
+    44,  50,  53,  46,  51,  53,  56,  44,  52,  52,  46,  52,  56,  49,  44,  50,  53,  46,  56,
+    53,  56,  44,  52,  52,  46,  52,  56,  49,  122, 34,  10,  32,  32,  32,  32,  32,  105, 100,
+    61,  34,  112, 97,  116, 104, 50,  57,  57,  49,  34,  10,  32,  32,  32,  32,  32,  115, 116,
+    121, 108, 101, 61,  34,  102, 105, 108, 108, 58,  35,  100, 102, 99,  101, 56,  57,  59,  102,
+    105, 108, 108, 45,  111, 112, 97,  99,  105, 116, 121, 58,  49,  34,  32,  47,  62,  60,  112,
+    97,  116, 104, 10,  32,  32,  32,  32,  32,  100, 61,  34,  77,  53,  52,  46,  56,  52,  44,
+    49,  52,  46,  56,  52,  54,  104, 45,  55,  46,  50,  49,  53,  99,  45,  50,  46,  49,  52,
+    57,  44,  48,  45,  51,  46,  56,  57,  51,  44,  49,  46,  53,  50,  53,  45,  51,  46,  56,
+    57,  51,  44,  51,  46,  52,  48,  54,  99,  48,  44,  49,  46,  56,  56,  49,  44,  48,  44,
+    51,  46,  52,  48,  54,  44,  48,  44,  51,  46,  52,  48,  54,  104, 56,  46,  49,  56,  56,
+    118, 50,  52,  46,  56,  54,  52,  72,  57,  46,  56,  49,  50,  86,  50,  49,  46,  54,  53,
+    56,  104, 57,  46,  54,  48,  50,  118, 45,  51,  46,  52,  48,  54,  32,  32,  99,  48,  45,
+    49,  46,  56,  56,  49,  45,  49,  46,  55,  52,  51,  45,  51,  46,  52,  48,  54,  45,  51,
+    46,  56,  57,  51,  45,  51,  46,  52,  48,  54,  72,  54,  46,  56,  57,  51,  67,  52,  46,
+    55,  52,  51,  44,  49,  52,  46,  56,  52,  54,  44,  51,  44,  49,  54,  46,  53,  56,  57,
+    44,  51,  44,  49,  56,  46,  55,  51,  56,  118, 51,  48,  46,  55,  48,  51,  99,  48,  44,
+    50,  46,  49,  53,  44,  49,  46,  55,  52,  51,  44,  51,  46,  56,  57,  51,  44,  51,  46,
+    56,  57,  51,  44,  51,  46,  56,  57,  51,  72,  53,  52,  46,  56,  52,  32,  32,  99,  50,
+    46,  49,  52,  57,  44,  48,  44,  51,  46,  56,  57,  51,  45,  49,  46,  55,  52,  50,  44,
+    51,  46,  56,  57,  51,  45,  51,  46,  56,  57,  51,  86,  49,  56,  46,  55,  51,  56,  67,
+    53,  56,  46,  55,  51,  50,  44,  49,  54,  46,  53,  56,  57,  44,  53,  54,  46,  57,  56,
+    57,  44,  49,  52,  46,  56,  52,  54,  44,  53,  52,  46,  56,  52,  44,  49,  52,  46,  56,
+    52,  54,  122, 34,  10,  32,  32,  32,  32,  32,  105, 100, 61,  34,  112, 97,  116, 104, 50,
+    57,  57,  51,  34,  10,  32,  32,  32,  32,  32,  115, 116, 121, 108, 101, 61,  34,  102, 105,
+    108, 108, 58,  35,  100, 102, 99,  101, 56,  57,  59,  102, 105, 108, 108, 45,  111, 112, 97,
+    99,  105, 116, 121, 58,  49,  34,  32,  47,  62,  60,  47,  115, 118, 103, 62,  0,   0};
 
-const char* UiEditorToolbar::load_svg = (const char*) resource_UiEditorToolbar_load_svg;
+const char *UiEditorToolbar::load_svg = (const char *)resource_UiEditorToolbar_load_svg;
 const int UiEditorToolbar::load_svgSize = 2277;
 
 // JUCER_RESOURCE: save_svg, 2278, "../Images/save.svg"
-static const unsigned char resource_UiEditorToolbar_save_svg[] = { 60,63,120,109,108,32,118,101,114,115,105,111,110,61,34,49,46,48,34,32,101,110,99,111,100,105,110,103,61,34,85,84,70,45,56,34,32,115,116,
-        97,110,100,97,108,111,110,101,61,34,110,111,34,63,62,10,60,33,45,45,32,71,101,110,101,114,97,116,111,114,58,32,65,100,111,98,101,32,73,108,108,117,115,116,114,97,116,111,114,32,49,55,46,48,46,48,44,32,
-        83,86,71,32,69,120,112,111,114,116,32,80,108,117,103,45,73,110,32,46,32,83,86,71,32,86,101,114,115,105,111,110,58,32,54,46,48,48,32,66,117,105,108,100,32,48,41,32,32,45,45,62,10,10,60,115,118,103,10,32,
-        32,32,120,109,108,110,115,58,100,99,61,34,104,116,116,112,58,47,47,112,117,114,108,46,111,114,103,47,100,99,47,101,108,101,109,101,110,116,115,47,49,46,49,47,34,10,32,32,32,120,109,108,110,115,58,99,99,
-        61,34,104,116,116,112,58,47,47,99,114,101,97,116,105,118,101,99,111,109,109,111,110,115,46,111,114,103,47,110,115,35,34,10,32,32,32,120,109,108,110,115,58,114,100,102,61,34,104,116,116,112,58,47,47,119,
-        119,119,46,119,51,46,111,114,103,47,49,57,57,57,47,48,50,47,50,50,45,114,100,102,45,115,121,110,116,97,120,45,110,115,35,34,10,32,32,32,120,109,108,110,115,58,115,118,103,61,34,104,116,116,112,58,47,47,
-        119,119,119,46,119,51,46,111,114,103,47,50,48,48,48,47,115,118,103,34,10,32,32,32,120,109,108,110,115,61,34,104,116,116,112,58,47,47,119,119,119,46,119,51,46,111,114,103,47,50,48,48,48,47,115,118,103,
-        34,10,32,32,32,120,109,108,110,115,58,115,111,100,105,112,111,100,105,61,34,104,116,116,112,58,47,47,115,111,100,105,112,111,100,105,46,115,111,117,114,99,101,102,111,114,103,101,46,110,101,116,47,68,
-        84,68,47,115,111,100,105,112,111,100,105,45,48,46,100,116,100,34,10,32,32,32,120,109,108,110,115,58,105,110,107,115,99,97,112,101,61,34,104,116,116,112,58,47,47,119,119,119,46,105,110,107,115,99,97,112,
-        101,46,111,114,103,47,110,97,109,101,115,112,97,99,101,115,47,105,110,107,115,99,97,112,101,34,10,32,32,32,118,101,114,115,105,111,110,61,34,49,46,49,34,10,32,32,32,105,100,61,34,67,97,112,97,95,49,34,
-        10,32,32,32,120,61,34,48,112,120,34,10,32,32,32,121,61,34,48,112,120,34,10,32,32,32,119,105,100,116,104,61,34,54,52,112,120,34,10,32,32,32,104,101,105,103,104,116,61,34,54,52,112,120,34,10,32,32,32,118,
-        105,101,119,66,111,120,61,34,48,32,48,32,54,52,32,54,52,34,10,32,32,32,101,110,97,98,108,101,45,98,97,99,107,103,114,111,117,110,100,61,34,110,101,119,32,48,32,48,32,54,52,32,54,52,34,10,32,32,32,120,
-        109,108,58,115,112,97,99,101,61,34,112,114,101,115,101,114,118,101,34,10,32,32,32,105,110,107,115,99,97,112,101,58,118,101,114,115,105,111,110,61,34,48,46,52,56,46,52,32,114,57,57,51,57,34,10,32,32,32,
-        115,111,100,105,112,111,100,105,58,100,111,99,110,97,109,101,61,34,115,97,118,101,46,115,118,103,34,62,60,109,101,116,97,100,97,116,97,10,32,32,32,32,32,105,100,61,34,109,101,116,97,100,97,116,97,51,49,
-        48,56,34,62,60,114,100,102,58,82,68,70,62,60,99,99,58,87,111,114,107,10,32,32,32,32,32,32,32,32,32,114,100,102,58,97,98,111,117,116,61,34,34,62,60,100,99,58,102,111,114,109,97,116,62,105,109,97,103,101,
-        47,115,118,103,43,120,109,108,60,47,100,99,58,102,111,114,109,97,116,62,60,100,99,58,116,121,112,101,10,32,32,32,32,32,32,32,32,32,32,32,114,100,102,58,114,101,115,111,117,114,99,101,61,34,104,116,116,
-        112,58,47,47,112,117,114,108,46,111,114,103,47,100,99,47,100,99,109,105,116,121,112,101,47,83,116,105,108,108,73,109,97,103,101,34,32,47,62,60,47,99,99,58,87,111,114,107,62,60,47,114,100,102,58,82,68,
-        70,62,60,47,109,101,116,97,100,97,116,97,62,60,100,101,102,115,10,32,32,32,32,32,105,100,61,34,100,101,102,115,51,49,48,54,34,32,47,62,60,115,111,100,105,112,111,100,105,58,110,97,109,101,100,118,105,
-        101,119,10,32,32,32,32,32,112,97,103,101,99,111,108,111,114,61,34,35,102,102,102,102,102,102,34,10,32,32,32,32,32,98,111,114,100,101,114,99,111,108,111,114,61,34,35,54,54,54,54,54,54,34,10,32,32,32,32,
-        32,98,111,114,100,101,114,111,112,97,99,105,116,121,61,34,49,34,10,32,32,32,32,32,111,98,106,101,99,116,116,111,108,101,114,97,110,99,101,61,34,49,48,34,10,32,32,32,32,32,103,114,105,100,116,111,108,101,
-        114,97,110,99,101,61,34,49,48,34,10,32,32,32,32,32,103,117,105,100,101,116,111,108,101,114,97,110,99,101,61,34,49,48,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,112,97,103,101,111,112,97,99,
-        105,116,121,61,34,48,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,112,97,103,101,115,104,97,100,111,119,61,34,50,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,119,105,110,100,111,119,
-        45,119,105,100,116,104,61,34,55,52,55,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,119,105,110,100,111,119,45,104,101,105,103,104,116,61,34,52,56,48,34,10,32,32,32,32,32,105,100,61,34,110,97,
-        109,101,100,118,105,101,119,51,49,48,52,34,10,32,32,32,32,32,115,104,111,119,103,114,105,100,61,34,102,97,108,115,101,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,122,111,111,109,61,34,51,46,
-        54,56,55,53,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,99,120,61,34,51,50,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,99,121,61,34,51,50,34,10,32,32,32,32,32,105,110,107,115,99,97,
-        112,101,58,119,105,110,100,111,119,45,120,61,34,48,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,119,105,110,100,111,119,45,121,61,34,48,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,119,
-        105,110,100,111,119,45,109,97,120,105,109,105,122,101,100,61,34,48,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,99,117,114,114,101,110,116,45,108,97,121,101,114,61,34,67,97,112,97,95,49,34,32,
-        47,62,60,112,97,116,104,10,32,32,32,32,32,100,61,34,77,51,55,46,55,51,44,49,49,46,56,54,51,72,50,54,46,51,48,50,99,45,48,46,53,44,48,45,48,46,57,48,53,44,48,46,52,48,52,45,48,46,57,48,53,44,48,46,57,48,
-        52,118,57,46,57,53,56,72,49,52,46,53,51,51,99,45,48,46,53,44,48,45,48,46,54,51,55,44,48,46,51,48,51,45,48,46,51,48,53,44,48,46,54,55,56,108,49,55,46,49,51,49,44,49,57,46,51,53,49,32,32,99,48,46,51,51,
-        50,44,48,46,51,55,53,44,48,46,56,55,44,48,46,51,55,54,44,49,46,50,48,50,44,48,46,48,48,50,108,49,55,46,50,52,45,49,57,46,51,53,52,99,48,46,51,51,51,45,48,46,51,55,53,44,48,46,49,57,55,45,48,46,54,55,55,
-        45,48,46,51,48,51,45,48,46,54,55,55,72,51,56,46,54,51,54,118,45,57,46,57,53,56,32,32,67,51,56,46,54,51,54,44,49,50,46,50,54,56,44,51,56,46,50,51,44,49,49,46,56,54,51,44,51,55,46,55,51,44,49,49,46,56,54,
-        51,122,34,10,32,32,32,32,32,105,100,61,34,112,97,116,104,51,49,48,48,34,10,32,32,32,32,32,115,116,121,108,101,61,34,102,105,108,108,58,35,100,102,99,101,56,57,59,102,105,108,108,45,111,112,97,99,105,116,
-        121,58,49,34,32,47,62,60,112,97,116,104,10,32,32,32,32,32,100,61,34,77,53,53,46,50,56,50,44,49,51,46,51,57,57,104,45,55,46,50,49,53,99,45,50,46,49,52,57,44,48,45,51,46,56,57,51,44,49,46,53,50,53,45,51,
-        46,56,57,51,44,51,46,52,48,54,99,48,44,49,46,56,56,49,44,48,44,51,46,52,48,54,44,48,44,51,46,52,48,54,104,56,46,49,56,56,118,50,52,46,56,54,52,72,49,48,46,50,53,53,86,50,48,46,50,49,50,104,57,46,54,48,
-        49,118,45,51,46,52,48,54,32,32,99,48,45,49,46,56,56,49,45,49,46,55,52,51,45,51,46,52,48,54,45,51,46,56,57,50,45,51,46,52,48,54,72,55,46,51,51,53,99,45,50,46,49,52,57,44,48,45,51,46,56,57,51,44,49,46,55,
-        52,51,45,51,46,56,57,51,44,51,46,56,57,51,118,51,48,46,55,48,51,99,48,44,50,46,49,53,44,49,46,55,52,51,44,51,46,56,57,51,44,51,46,56,57,51,44,51,46,56,57,51,104,52,55,46,57,52,55,32,32,99,50,46,49,52,
-        57,44,48,44,51,46,56,57,51,45,49,46,55,52,50,44,51,46,56,57,51,45,51,46,56,57,51,86,49,55,46,50,57,50,67,53,57,46,49,55,53,44,49,53,46,49,52,51,44,53,55,46,52,51,50,44,49,51,46,51,57,57,44,53,53,46,50,
-        56,50,44,49,51,46,51,57,57,122,34,10,32,32,32,32,32,105,100,61,34,112,97,116,104,51,49,48,50,34,10,32,32,32,32,32,115,116,121,108,101,61,34,102,105,108,108,58,35,100,102,99,101,56,57,59,102,105,108,108,
-        45,111,112,97,99,105,116,121,58,49,34,32,47,62,60,47,115,118,103,62,0,0
-                                                                 };
+static const unsigned char resource_UiEditorToolbar_save_svg[] = {
+    60,  63,  120, 109, 108, 32,  118, 101, 114, 115, 105, 111, 110, 61,  34,  49,  46,  48,  34,
+    32,  101, 110, 99,  111, 100, 105, 110, 103, 61,  34,  85,  84,  70,  45,  56,  34,  32,  115,
+    116, 97,  110, 100, 97,  108, 111, 110, 101, 61,  34,  110, 111, 34,  63,  62,  10,  60,  33,
+    45,  45,  32,  71,  101, 110, 101, 114, 97,  116, 111, 114, 58,  32,  65,  100, 111, 98,  101,
+    32,  73,  108, 108, 117, 115, 116, 114, 97,  116, 111, 114, 32,  49,  55,  46,  48,  46,  48,
+    44,  32,  83,  86,  71,  32,  69,  120, 112, 111, 114, 116, 32,  80,  108, 117, 103, 45,  73,
+    110, 32,  46,  32,  83,  86,  71,  32,  86,  101, 114, 115, 105, 111, 110, 58,  32,  54,  46,
+    48,  48,  32,  66,  117, 105, 108, 100, 32,  48,  41,  32,  32,  45,  45,  62,  10,  10,  60,
+    115, 118, 103, 10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  100, 99,  61,  34,  104, 116,
+    116, 112, 58,  47,  47,  112, 117, 114, 108, 46,  111, 114, 103, 47,  100, 99,  47,  101, 108,
+    101, 109, 101, 110, 116, 115, 47,  49,  46,  49,  47,  34,  10,  32,  32,  32,  120, 109, 108,
+    110, 115, 58,  99,  99,  61,  34,  104, 116, 116, 112, 58,  47,  47,  99,  114, 101, 97,  116,
+    105, 118, 101, 99,  111, 109, 109, 111, 110, 115, 46,  111, 114, 103, 47,  110, 115, 35,  34,
+    10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  114, 100, 102, 61,  34,  104, 116, 116, 112,
+    58,  47,  47,  119, 119, 119, 46,  119, 51,  46,  111, 114, 103, 47,  49,  57,  57,  57,  47,
+    48,  50,  47,  50,  50,  45,  114, 100, 102, 45,  115, 121, 110, 116, 97,  120, 45,  110, 115,
+    35,  34,  10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  115, 118, 103, 61,  34,  104, 116,
+    116, 112, 58,  47,  47,  119, 119, 119, 46,  119, 51,  46,  111, 114, 103, 47,  50,  48,  48,
+    48,  47,  115, 118, 103, 34,  10,  32,  32,  32,  120, 109, 108, 110, 115, 61,  34,  104, 116,
+    116, 112, 58,  47,  47,  119, 119, 119, 46,  119, 51,  46,  111, 114, 103, 47,  50,  48,  48,
+    48,  47,  115, 118, 103, 34,  10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  115, 111, 100,
+    105, 112, 111, 100, 105, 61,  34,  104, 116, 116, 112, 58,  47,  47,  115, 111, 100, 105, 112,
+    111, 100, 105, 46,  115, 111, 117, 114, 99,  101, 102, 111, 114, 103, 101, 46,  110, 101, 116,
+    47,  68,  84,  68,  47,  115, 111, 100, 105, 112, 111, 100, 105, 45,  48,  46,  100, 116, 100,
+    34,  10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  105, 110, 107, 115, 99,  97,  112, 101,
+    61,  34,  104, 116, 116, 112, 58,  47,  47,  119, 119, 119, 46,  105, 110, 107, 115, 99,  97,
+    112, 101, 46,  111, 114, 103, 47,  110, 97,  109, 101, 115, 112, 97,  99,  101, 115, 47,  105,
+    110, 107, 115, 99,  97,  112, 101, 34,  10,  32,  32,  32,  118, 101, 114, 115, 105, 111, 110,
+    61,  34,  49,  46,  49,  34,  10,  32,  32,  32,  105, 100, 61,  34,  67,  97,  112, 97,  95,
+    49,  34,  10,  32,  32,  32,  120, 61,  34,  48,  112, 120, 34,  10,  32,  32,  32,  121, 61,
+    34,  48,  112, 120, 34,  10,  32,  32,  32,  119, 105, 100, 116, 104, 61,  34,  54,  52,  112,
+    120, 34,  10,  32,  32,  32,  104, 101, 105, 103, 104, 116, 61,  34,  54,  52,  112, 120, 34,
+    10,  32,  32,  32,  118, 105, 101, 119, 66,  111, 120, 61,  34,  48,  32,  48,  32,  54,  52,
+    32,  54,  52,  34,  10,  32,  32,  32,  101, 110, 97,  98,  108, 101, 45,  98,  97,  99,  107,
+    103, 114, 111, 117, 110, 100, 61,  34,  110, 101, 119, 32,  48,  32,  48,  32,  54,  52,  32,
+    54,  52,  34,  10,  32,  32,  32,  120, 109, 108, 58,  115, 112, 97,  99,  101, 61,  34,  112,
+    114, 101, 115, 101, 114, 118, 101, 34,  10,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112,
+    101, 58,  118, 101, 114, 115, 105, 111, 110, 61,  34,  48,  46,  52,  56,  46,  52,  32,  114,
+    57,  57,  51,  57,  34,  10,  32,  32,  32,  115, 111, 100, 105, 112, 111, 100, 105, 58,  100,
+    111, 99,  110, 97,  109, 101, 61,  34,  115, 97,  118, 101, 46,  115, 118, 103, 34,  62,  60,
+    109, 101, 116, 97,  100, 97,  116, 97,  10,  32,  32,  32,  32,  32,  105, 100, 61,  34,  109,
+    101, 116, 97,  100, 97,  116, 97,  51,  49,  48,  56,  34,  62,  60,  114, 100, 102, 58,  82,
+    68,  70,  62,  60,  99,  99,  58,  87,  111, 114, 107, 10,  32,  32,  32,  32,  32,  32,  32,
+    32,  32,  114, 100, 102, 58,  97,  98,  111, 117, 116, 61,  34,  34,  62,  60,  100, 99,  58,
+    102, 111, 114, 109, 97,  116, 62,  105, 109, 97,  103, 101, 47,  115, 118, 103, 43,  120, 109,
+    108, 60,  47,  100, 99,  58,  102, 111, 114, 109, 97,  116, 62,  60,  100, 99,  58,  116, 121,
+    112, 101, 10,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  114, 100, 102, 58,  114,
+    101, 115, 111, 117, 114, 99,  101, 61,  34,  104, 116, 116, 112, 58,  47,  47,  112, 117, 114,
+    108, 46,  111, 114, 103, 47,  100, 99,  47,  100, 99,  109, 105, 116, 121, 112, 101, 47,  83,
+    116, 105, 108, 108, 73,  109, 97,  103, 101, 34,  32,  47,  62,  60,  47,  99,  99,  58,  87,
+    111, 114, 107, 62,  60,  47,  114, 100, 102, 58,  82,  68,  70,  62,  60,  47,  109, 101, 116,
+    97,  100, 97,  116, 97,  62,  60,  100, 101, 102, 115, 10,  32,  32,  32,  32,  32,  105, 100,
+    61,  34,  100, 101, 102, 115, 51,  49,  48,  54,  34,  32,  47,  62,  60,  115, 111, 100, 105,
+    112, 111, 100, 105, 58,  110, 97,  109, 101, 100, 118, 105, 101, 119, 10,  32,  32,  32,  32,
+    32,  112, 97,  103, 101, 99,  111, 108, 111, 114, 61,  34,  35,  102, 102, 102, 102, 102, 102,
+    34,  10,  32,  32,  32,  32,  32,  98,  111, 114, 100, 101, 114, 99,  111, 108, 111, 114, 61,
+    34,  35,  54,  54,  54,  54,  54,  54,  34,  10,  32,  32,  32,  32,  32,  98,  111, 114, 100,
+    101, 114, 111, 112, 97,  99,  105, 116, 121, 61,  34,  49,  34,  10,  32,  32,  32,  32,  32,
+    111, 98,  106, 101, 99,  116, 116, 111, 108, 101, 114, 97,  110, 99,  101, 61,  34,  49,  48,
+    34,  10,  32,  32,  32,  32,  32,  103, 114, 105, 100, 116, 111, 108, 101, 114, 97,  110, 99,
+    101, 61,  34,  49,  48,  34,  10,  32,  32,  32,  32,  32,  103, 117, 105, 100, 101, 116, 111,
+    108, 101, 114, 97,  110, 99,  101, 61,  34,  49,  48,  34,  10,  32,  32,  32,  32,  32,  105,
+    110, 107, 115, 99,  97,  112, 101, 58,  112, 97,  103, 101, 111, 112, 97,  99,  105, 116, 121,
+    61,  34,  48,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101, 58,
+    112, 97,  103, 101, 115, 104, 97,  100, 111, 119, 61,  34,  50,  34,  10,  32,  32,  32,  32,
+    32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  119, 105, 110, 100, 111, 119, 45,  119, 105,
+    100, 116, 104, 61,  34,  55,  52,  55,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115,
+    99,  97,  112, 101, 58,  119, 105, 110, 100, 111, 119, 45,  104, 101, 105, 103, 104, 116, 61,
+    34,  52,  56,  48,  34,  10,  32,  32,  32,  32,  32,  105, 100, 61,  34,  110, 97,  109, 101,
+    100, 118, 105, 101, 119, 51,  49,  48,  52,  34,  10,  32,  32,  32,  32,  32,  115, 104, 111,
+    119, 103, 114, 105, 100, 61,  34,  102, 97,  108, 115, 101, 34,  10,  32,  32,  32,  32,  32,
+    105, 110, 107, 115, 99,  97,  112, 101, 58,  122, 111, 111, 109, 61,  34,  51,  46,  54,  56,
+    55,  53,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  99,
+    120, 61,  34,  51,  50,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112,
+    101, 58,  99,  121, 61,  34,  51,  50,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115,
+    99,  97,  112, 101, 58,  119, 105, 110, 100, 111, 119, 45,  120, 61,  34,  48,  34,  10,  32,
+    32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  119, 105, 110, 100, 111, 119,
+    45,  121, 61,  34,  48,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112,
+    101, 58,  119, 105, 110, 100, 111, 119, 45,  109, 97,  120, 105, 109, 105, 122, 101, 100, 61,
+    34,  48,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  99,
+    117, 114, 114, 101, 110, 116, 45,  108, 97,  121, 101, 114, 61,  34,  67,  97,  112, 97,  95,
+    49,  34,  32,  47,  62,  60,  112, 97,  116, 104, 10,  32,  32,  32,  32,  32,  100, 61,  34,
+    77,  51,  55,  46,  55,  51,  44,  49,  49,  46,  56,  54,  51,  72,  50,  54,  46,  51,  48,
+    50,  99,  45,  48,  46,  53,  44,  48,  45,  48,  46,  57,  48,  53,  44,  48,  46,  52,  48,
+    52,  45,  48,  46,  57,  48,  53,  44,  48,  46,  57,  48,  52,  118, 57,  46,  57,  53,  56,
+    72,  49,  52,  46,  53,  51,  51,  99,  45,  48,  46,  53,  44,  48,  45,  48,  46,  54,  51,
+    55,  44,  48,  46,  51,  48,  51,  45,  48,  46,  51,  48,  53,  44,  48,  46,  54,  55,  56,
+    108, 49,  55,  46,  49,  51,  49,  44,  49,  57,  46,  51,  53,  49,  32,  32,  99,  48,  46,
+    51,  51,  50,  44,  48,  46,  51,  55,  53,  44,  48,  46,  56,  55,  44,  48,  46,  51,  55,
+    54,  44,  49,  46,  50,  48,  50,  44,  48,  46,  48,  48,  50,  108, 49,  55,  46,  50,  52,
+    45,  49,  57,  46,  51,  53,  52,  99,  48,  46,  51,  51,  51,  45,  48,  46,  51,  55,  53,
+    44,  48,  46,  49,  57,  55,  45,  48,  46,  54,  55,  55,  45,  48,  46,  51,  48,  51,  45,
+    48,  46,  54,  55,  55,  72,  51,  56,  46,  54,  51,  54,  118, 45,  57,  46,  57,  53,  56,
+    32,  32,  67,  51,  56,  46,  54,  51,  54,  44,  49,  50,  46,  50,  54,  56,  44,  51,  56,
+    46,  50,  51,  44,  49,  49,  46,  56,  54,  51,  44,  51,  55,  46,  55,  51,  44,  49,  49,
+    46,  56,  54,  51,  122, 34,  10,  32,  32,  32,  32,  32,  105, 100, 61,  34,  112, 97,  116,
+    104, 51,  49,  48,  48,  34,  10,  32,  32,  32,  32,  32,  115, 116, 121, 108, 101, 61,  34,
+    102, 105, 108, 108, 58,  35,  100, 102, 99,  101, 56,  57,  59,  102, 105, 108, 108, 45,  111,
+    112, 97,  99,  105, 116, 121, 58,  49,  34,  32,  47,  62,  60,  112, 97,  116, 104, 10,  32,
+    32,  32,  32,  32,  100, 61,  34,  77,  53,  53,  46,  50,  56,  50,  44,  49,  51,  46,  51,
+    57,  57,  104, 45,  55,  46,  50,  49,  53,  99,  45,  50,  46,  49,  52,  57,  44,  48,  45,
+    51,  46,  56,  57,  51,  44,  49,  46,  53,  50,  53,  45,  51,  46,  56,  57,  51,  44,  51,
+    46,  52,  48,  54,  99,  48,  44,  49,  46,  56,  56,  49,  44,  48,  44,  51,  46,  52,  48,
+    54,  44,  48,  44,  51,  46,  52,  48,  54,  104, 56,  46,  49,  56,  56,  118, 50,  52,  46,
+    56,  54,  52,  72,  49,  48,  46,  50,  53,  53,  86,  50,  48,  46,  50,  49,  50,  104, 57,
+    46,  54,  48,  49,  118, 45,  51,  46,  52,  48,  54,  32,  32,  99,  48,  45,  49,  46,  56,
+    56,  49,  45,  49,  46,  55,  52,  51,  45,  51,  46,  52,  48,  54,  45,  51,  46,  56,  57,
+    50,  45,  51,  46,  52,  48,  54,  72,  55,  46,  51,  51,  53,  99,  45,  50,  46,  49,  52,
+    57,  44,  48,  45,  51,  46,  56,  57,  51,  44,  49,  46,  55,  52,  51,  45,  51,  46,  56,
+    57,  51,  44,  51,  46,  56,  57,  51,  118, 51,  48,  46,  55,  48,  51,  99,  48,  44,  50,
+    46,  49,  53,  44,  49,  46,  55,  52,  51,  44,  51,  46,  56,  57,  51,  44,  51,  46,  56,
+    57,  51,  44,  51,  46,  56,  57,  51,  104, 52,  55,  46,  57,  52,  55,  32,  32,  99,  50,
+    46,  49,  52,  57,  44,  48,  44,  51,  46,  56,  57,  51,  45,  49,  46,  55,  52,  50,  44,
+    51,  46,  56,  57,  51,  45,  51,  46,  56,  57,  51,  86,  49,  55,  46,  50,  57,  50,  67,
+    53,  57,  46,  49,  55,  53,  44,  49,  53,  46,  49,  52,  51,  44,  53,  55,  46,  52,  51,
+    50,  44,  49,  51,  46,  51,  57,  57,  44,  53,  53,  46,  50,  56,  50,  44,  49,  51,  46,
+    51,  57,  57,  122, 34,  10,  32,  32,  32,  32,  32,  105, 100, 61,  34,  112, 97,  116, 104,
+    51,  49,  48,  50,  34,  10,  32,  32,  32,  32,  32,  115, 116, 121, 108, 101, 61,  34,  102,
+    105, 108, 108, 58,  35,  100, 102, 99,  101, 56,  57,  59,  102, 105, 108, 108, 45,  111, 112,
+    97,  99,  105, 116, 121, 58,  49,  34,  32,  47,  62,  60,  47,  115, 118, 103, 62,  0,   0};
 
-const char* UiEditorToolbar::save_svg = (const char*) resource_UiEditorToolbar_save_svg;
+const char *UiEditorToolbar::save_svg = (const char *)resource_UiEditorToolbar_save_svg;
 const int UiEditorToolbar::save_svgSize = 2278;
 
 // JUCER_RESOURCE: move_svg, 1980, "../Images/move.svg"
-static const unsigned char resource_UiEditorToolbar_move_svg[] = { 60,63,120,109,108,32,118,101,114,115,105,111,110,61,34,49,46,48,34,32,101,110,99,111,100,105,110,103,61,34,85,84,70,45,56,34,32,115,116,
-        97,110,100,97,108,111,110,101,61,34,110,111,34,63,62,10,60,33,45,45,32,71,101,110,101,114,97,116,111,114,58,32,65,100,111,98,101,32,73,108,108,117,115,116,114,97,116,111,114,32,49,54,46,48,46,52,44,32,
-        83,86,71,32,69,120,112,111,114,116,32,80,108,117,103,45,73,110,32,46,32,83,86,71,32,86,101,114,115,105,111,110,58,32,54,46,48,48,32,66,117,105,108,100,32,48,41,32,32,45,45,62,10,10,60,115,118,103,10,32,
-        32,32,120,109,108,110,115,58,100,99,61,34,104,116,116,112,58,47,47,112,117,114,108,46,111,114,103,47,100,99,47,101,108,101,109,101,110,116,115,47,49,46,49,47,34,10,32,32,32,120,109,108,110,115,58,99,99,
-        61,34,104,116,116,112,58,47,47,99,114,101,97,116,105,118,101,99,111,109,109,111,110,115,46,111,114,103,47,110,115,35,34,10,32,32,32,120,109,108,110,115,58,114,100,102,61,34,104,116,116,112,58,47,47,119,
-        119,119,46,119,51,46,111,114,103,47,49,57,57,57,47,48,50,47,50,50,45,114,100,102,45,115,121,110,116,97,120,45,110,115,35,34,10,32,32,32,120,109,108,110,115,58,115,118,103,61,34,104,116,116,112,58,47,47,
-        119,119,119,46,119,51,46,111,114,103,47,50,48,48,48,47,115,118,103,34,10,32,32,32,120,109,108,110,115,61,34,104,116,116,112,58,47,47,119,119,119,46,119,51,46,111,114,103,47,50,48,48,48,47,115,118,103,
-        34,10,32,32,32,120,109,108,110,115,58,115,111,100,105,112,111,100,105,61,34,104,116,116,112,58,47,47,115,111,100,105,112,111,100,105,46,115,111,117,114,99,101,102,111,114,103,101,46,110,101,116,47,68,
-        84,68,47,115,111,100,105,112,111,100,105,45,48,46,100,116,100,34,10,32,32,32,120,109,108,110,115,58,105,110,107,115,99,97,112,101,61,34,104,116,116,112,58,47,47,119,119,119,46,105,110,107,115,99,97,112,
-        101,46,111,114,103,47,110,97,109,101,115,112,97,99,101,115,47,105,110,107,115,99,97,112,101,34,10,32,32,32,118,101,114,115,105,111,110,61,34,49,46,49,34,10,32,32,32,105,100,61,34,67,97,112,97,95,49,34,
-        10,32,32,32,120,61,34,48,112,120,34,10,32,32,32,121,61,34,48,112,120,34,10,32,32,32,119,105,100,116,104,61,34,50,51,46,51,48,51,112,120,34,10,32,32,32,104,101,105,103,104,116,61,34,50,51,46,51,48,53,112,
-        120,34,10,32,32,32,118,105,101,119,66,111,120,61,34,48,32,48,32,50,51,46,51,48,51,32,50,51,46,51,48,53,34,10,32,32,32,101,110,97,98,108,101,45,98,97,99,107,103,114,111,117,110,100,61,34,110,101,119,32,
-        48,32,48,32,50,51,46,51,48,51,32,50,51,46,51,48,53,34,10,32,32,32,120,109,108,58,115,112,97,99,101,61,34,112,114,101,115,101,114,118,101,34,10,32,32,32,105,110,107,115,99,97,112,101,58,118,101,114,115,
-        105,111,110,61,34,48,46,52,56,46,52,32,114,57,57,51,57,34,10,32,32,32,115,111,100,105,112,111,100,105,58,100,111,99,110,97,109,101,61,34,109,111,118,101,46,115,118,103,34,62,60,109,101,116,97,100,97,116,
-        97,10,32,32,32,32,32,105,100,61,34,109,101,116,97,100,97,116,97,57,34,62,60,114,100,102,58,82,68,70,62,60,99,99,58,87,111,114,107,10,32,32,32,32,32,32,32,32,32,114,100,102,58,97,98,111,117,116,61,34,34,
-        62,60,100,99,58,102,111,114,109,97,116,62,105,109,97,103,101,47,115,118,103,43,120,109,108,60,47,100,99,58,102,111,114,109,97,116,62,60,100,99,58,116,121,112,101,10,32,32,32,32,32,32,32,32,32,32,32,114,
-        100,102,58,114,101,115,111,117,114,99,101,61,34,104,116,116,112,58,47,47,112,117,114,108,46,111,114,103,47,100,99,47,100,99,109,105,116,121,112,101,47,83,116,105,108,108,73,109,97,103,101,34,32,47,62,
-        60,47,99,99,58,87,111,114,107,62,60,47,114,100,102,58,82,68,70,62,60,47,109,101,116,97,100,97,116,97,62,60,100,101,102,115,10,32,32,32,32,32,105,100,61,34,100,101,102,115,55,34,32,47,62,60,115,111,100,
-        105,112,111,100,105,58,110,97,109,101,100,118,105,101,119,10,32,32,32,32,32,112,97,103,101,99,111,108,111,114,61,34,35,102,102,102,102,102,102,34,10,32,32,32,32,32,98,111,114,100,101,114,99,111,108,111,
-        114,61,34,35,54,54,54,54,54,54,34,10,32,32,32,32,32,98,111,114,100,101,114,111,112,97,99,105,116,121,61,34,49,34,10,32,32,32,32,32,111,98,106,101,99,116,116,111,108,101,114,97,110,99,101,61,34,49,48,34,
-        10,32,32,32,32,32,103,114,105,100,116,111,108,101,114,97,110,99,101,61,34,49,48,34,10,32,32,32,32,32,103,117,105,100,101,116,111,108,101,114,97,110,99,101,61,34,49,48,34,10,32,32,32,32,32,105,110,107,
-        115,99,97,112,101,58,112,97,103,101,111,112,97,99,105,116,121,61,34,48,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,112,97,103,101,115,104,97,100,111,119,61,34,50,34,10,32,32,32,32,32,105,110,
-        107,115,99,97,112,101,58,119,105,110,100,111,119,45,119,105,100,116,104,61,34,49,54,48,48,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,119,105,110,100,111,119,45,104,101,105,103,104,116,61,34,
-        56,53,51,34,10,32,32,32,32,32,105,100,61,34,110,97,109,101,100,118,105,101,119,53,34,10,32,32,32,32,32,115,104,111,119,103,114,105,100,61,34,102,97,108,115,101,34,10,32,32,32,32,32,105,110,107,115,99,
-        97,112,101,58,122,111,111,109,61,34,49,48,46,49,50,54,53,56,50,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,99,120,61,34,45,54,46,48,55,52,49,50,53,53,34,10,32,32,32,32,32,105,110,107,115,99,
-        97,112,101,58,99,121,61,34,49,49,46,54,53,50,53,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,119,105,110,100,111,119,45,120,61,34,45,50,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,119,
-        105,110,100,111,119,45,121,61,34,45,51,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,119,105,110,100,111,119,45,109,97,120,105,109,105,122,101,100,61,34,49,34,10,32,32,32,32,32,105,110,107,115,
-        99,97,112,101,58,99,117,114,114,101,110,116,45,108,97,121,101,114,61,34,67,97,112,97,95,49,34,32,47,62,60,112,111,108,121,103,111,110,10,32,32,32,32,32,112,111,105,110,116,115,61,34,50,51,46,51,48,51,
-        44,49,49,46,54,53,49,32,49,56,46,52,54,56,44,54,46,56,49,56,32,49,56,46,52,54,56,44,57,46,57,56,55,32,49,51,46,51,49,55,44,57,46,57,56,55,32,49,51,46,51,49,55,44,52,46,56,51,53,32,49,54,46,52,56,54,44,
-        52,46,56,51,53,32,49,49,46,54,53,49,44,48,32,54,46,56,49,53,44,52,46,56,51,53,32,32,32,57,46,57,56,55,44,52,46,56,51,53,32,57,46,57,56,55,44,57,46,57,56,55,32,52,46,56,51,53,44,57,46,57,56,55,32,52,46,
-        56,51,53,44,54,46,56,49,56,32,48,44,49,49,46,54,53,49,32,52,46,56,51,53,44,49,54,46,52,56,55,32,52,46,56,51,53,44,49,51,46,51,49,53,32,57,46,57,56,55,44,49,51,46,51,49,53,32,57,46,57,56,55,44,49,56,46,
-        52,55,49,32,54,46,56,49,53,44,49,56,46,52,55,49,32,32,32,49,49,46,54,53,49,44,50,51,46,51,48,52,32,49,54,46,52,56,54,44,49,56,46,52,55,49,32,49,51,46,51,49,55,44,49,56,46,52,55,49,32,49,51,46,51,49,55,
-        44,49,51,46,51,49,53,32,49,56,46,52,54,56,44,49,51,46,51,49,53,32,49,56,46,52,54,56,44,49,54,46,52,56,55,32,34,10,32,32,32,32,32,105,100,61,34,112,111,108,121,103,111,110,51,34,10,32,32,32,32,32,115,116,
-        121,108,101,61,34,102,105,108,108,58,35,100,102,99,101,56,57,59,102,105,108,108,45,111,112,97,99,105,116,121,58,49,34,32,47,62,60,47,115,118,103,62,0,0
-                                                                 };
+static const unsigned char resource_UiEditorToolbar_move_svg[] = {
+    60,  63,  120, 109, 108, 32,  118, 101, 114, 115, 105, 111, 110, 61,  34,  49,  46,  48,  34,
+    32,  101, 110, 99,  111, 100, 105, 110, 103, 61,  34,  85,  84,  70,  45,  56,  34,  32,  115,
+    116, 97,  110, 100, 97,  108, 111, 110, 101, 61,  34,  110, 111, 34,  63,  62,  10,  60,  33,
+    45,  45,  32,  71,  101, 110, 101, 114, 97,  116, 111, 114, 58,  32,  65,  100, 111, 98,  101,
+    32,  73,  108, 108, 117, 115, 116, 114, 97,  116, 111, 114, 32,  49,  54,  46,  48,  46,  52,
+    44,  32,  83,  86,  71,  32,  69,  120, 112, 111, 114, 116, 32,  80,  108, 117, 103, 45,  73,
+    110, 32,  46,  32,  83,  86,  71,  32,  86,  101, 114, 115, 105, 111, 110, 58,  32,  54,  46,
+    48,  48,  32,  66,  117, 105, 108, 100, 32,  48,  41,  32,  32,  45,  45,  62,  10,  10,  60,
+    115, 118, 103, 10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  100, 99,  61,  34,  104, 116,
+    116, 112, 58,  47,  47,  112, 117, 114, 108, 46,  111, 114, 103, 47,  100, 99,  47,  101, 108,
+    101, 109, 101, 110, 116, 115, 47,  49,  46,  49,  47,  34,  10,  32,  32,  32,  120, 109, 108,
+    110, 115, 58,  99,  99,  61,  34,  104, 116, 116, 112, 58,  47,  47,  99,  114, 101, 97,  116,
+    105, 118, 101, 99,  111, 109, 109, 111, 110, 115, 46,  111, 114, 103, 47,  110, 115, 35,  34,
+    10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  114, 100, 102, 61,  34,  104, 116, 116, 112,
+    58,  47,  47,  119, 119, 119, 46,  119, 51,  46,  111, 114, 103, 47,  49,  57,  57,  57,  47,
+    48,  50,  47,  50,  50,  45,  114, 100, 102, 45,  115, 121, 110, 116, 97,  120, 45,  110, 115,
+    35,  34,  10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  115, 118, 103, 61,  34,  104, 116,
+    116, 112, 58,  47,  47,  119, 119, 119, 46,  119, 51,  46,  111, 114, 103, 47,  50,  48,  48,
+    48,  47,  115, 118, 103, 34,  10,  32,  32,  32,  120, 109, 108, 110, 115, 61,  34,  104, 116,
+    116, 112, 58,  47,  47,  119, 119, 119, 46,  119, 51,  46,  111, 114, 103, 47,  50,  48,  48,
+    48,  47,  115, 118, 103, 34,  10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  115, 111, 100,
+    105, 112, 111, 100, 105, 61,  34,  104, 116, 116, 112, 58,  47,  47,  115, 111, 100, 105, 112,
+    111, 100, 105, 46,  115, 111, 117, 114, 99,  101, 102, 111, 114, 103, 101, 46,  110, 101, 116,
+    47,  68,  84,  68,  47,  115, 111, 100, 105, 112, 111, 100, 105, 45,  48,  46,  100, 116, 100,
+    34,  10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  105, 110, 107, 115, 99,  97,  112, 101,
+    61,  34,  104, 116, 116, 112, 58,  47,  47,  119, 119, 119, 46,  105, 110, 107, 115, 99,  97,
+    112, 101, 46,  111, 114, 103, 47,  110, 97,  109, 101, 115, 112, 97,  99,  101, 115, 47,  105,
+    110, 107, 115, 99,  97,  112, 101, 34,  10,  32,  32,  32,  118, 101, 114, 115, 105, 111, 110,
+    61,  34,  49,  46,  49,  34,  10,  32,  32,  32,  105, 100, 61,  34,  67,  97,  112, 97,  95,
+    49,  34,  10,  32,  32,  32,  120, 61,  34,  48,  112, 120, 34,  10,  32,  32,  32,  121, 61,
+    34,  48,  112, 120, 34,  10,  32,  32,  32,  119, 105, 100, 116, 104, 61,  34,  50,  51,  46,
+    51,  48,  51,  112, 120, 34,  10,  32,  32,  32,  104, 101, 105, 103, 104, 116, 61,  34,  50,
+    51,  46,  51,  48,  53,  112, 120, 34,  10,  32,  32,  32,  118, 105, 101, 119, 66,  111, 120,
+    61,  34,  48,  32,  48,  32,  50,  51,  46,  51,  48,  51,  32,  50,  51,  46,  51,  48,  53,
+    34,  10,  32,  32,  32,  101, 110, 97,  98,  108, 101, 45,  98,  97,  99,  107, 103, 114, 111,
+    117, 110, 100, 61,  34,  110, 101, 119, 32,  48,  32,  48,  32,  50,  51,  46,  51,  48,  51,
+    32,  50,  51,  46,  51,  48,  53,  34,  10,  32,  32,  32,  120, 109, 108, 58,  115, 112, 97,
+    99,  101, 61,  34,  112, 114, 101, 115, 101, 114, 118, 101, 34,  10,  32,  32,  32,  105, 110,
+    107, 115, 99,  97,  112, 101, 58,  118, 101, 114, 115, 105, 111, 110, 61,  34,  48,  46,  52,
+    56,  46,  52,  32,  114, 57,  57,  51,  57,  34,  10,  32,  32,  32,  115, 111, 100, 105, 112,
+    111, 100, 105, 58,  100, 111, 99,  110, 97,  109, 101, 61,  34,  109, 111, 118, 101, 46,  115,
+    118, 103, 34,  62,  60,  109, 101, 116, 97,  100, 97,  116, 97,  10,  32,  32,  32,  32,  32,
+    105, 100, 61,  34,  109, 101, 116, 97,  100, 97,  116, 97,  57,  34,  62,  60,  114, 100, 102,
+    58,  82,  68,  70,  62,  60,  99,  99,  58,  87,  111, 114, 107, 10,  32,  32,  32,  32,  32,
+    32,  32,  32,  32,  114, 100, 102, 58,  97,  98,  111, 117, 116, 61,  34,  34,  62,  60,  100,
+    99,  58,  102, 111, 114, 109, 97,  116, 62,  105, 109, 97,  103, 101, 47,  115, 118, 103, 43,
+    120, 109, 108, 60,  47,  100, 99,  58,  102, 111, 114, 109, 97,  116, 62,  60,  100, 99,  58,
+    116, 121, 112, 101, 10,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  114, 100, 102,
+    58,  114, 101, 115, 111, 117, 114, 99,  101, 61,  34,  104, 116, 116, 112, 58,  47,  47,  112,
+    117, 114, 108, 46,  111, 114, 103, 47,  100, 99,  47,  100, 99,  109, 105, 116, 121, 112, 101,
+    47,  83,  116, 105, 108, 108, 73,  109, 97,  103, 101, 34,  32,  47,  62,  60,  47,  99,  99,
+    58,  87,  111, 114, 107, 62,  60,  47,  114, 100, 102, 58,  82,  68,  70,  62,  60,  47,  109,
+    101, 116, 97,  100, 97,  116, 97,  62,  60,  100, 101, 102, 115, 10,  32,  32,  32,  32,  32,
+    105, 100, 61,  34,  100, 101, 102, 115, 55,  34,  32,  47,  62,  60,  115, 111, 100, 105, 112,
+    111, 100, 105, 58,  110, 97,  109, 101, 100, 118, 105, 101, 119, 10,  32,  32,  32,  32,  32,
+    112, 97,  103, 101, 99,  111, 108, 111, 114, 61,  34,  35,  102, 102, 102, 102, 102, 102, 34,
+    10,  32,  32,  32,  32,  32,  98,  111, 114, 100, 101, 114, 99,  111, 108, 111, 114, 61,  34,
+    35,  54,  54,  54,  54,  54,  54,  34,  10,  32,  32,  32,  32,  32,  98,  111, 114, 100, 101,
+    114, 111, 112, 97,  99,  105, 116, 121, 61,  34,  49,  34,  10,  32,  32,  32,  32,  32,  111,
+    98,  106, 101, 99,  116, 116, 111, 108, 101, 114, 97,  110, 99,  101, 61,  34,  49,  48,  34,
+    10,  32,  32,  32,  32,  32,  103, 114, 105, 100, 116, 111, 108, 101, 114, 97,  110, 99,  101,
+    61,  34,  49,  48,  34,  10,  32,  32,  32,  32,  32,  103, 117, 105, 100, 101, 116, 111, 108,
+    101, 114, 97,  110, 99,  101, 61,  34,  49,  48,  34,  10,  32,  32,  32,  32,  32,  105, 110,
+    107, 115, 99,  97,  112, 101, 58,  112, 97,  103, 101, 111, 112, 97,  99,  105, 116, 121, 61,
+    34,  48,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  112,
+    97,  103, 101, 115, 104, 97,  100, 111, 119, 61,  34,  50,  34,  10,  32,  32,  32,  32,  32,
+    105, 110, 107, 115, 99,  97,  112, 101, 58,  119, 105, 110, 100, 111, 119, 45,  119, 105, 100,
+    116, 104, 61,  34,  49,  54,  48,  48,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115,
+    99,  97,  112, 101, 58,  119, 105, 110, 100, 111, 119, 45,  104, 101, 105, 103, 104, 116, 61,
+    34,  56,  53,  51,  34,  10,  32,  32,  32,  32,  32,  105, 100, 61,  34,  110, 97,  109, 101,
+    100, 118, 105, 101, 119, 53,  34,  10,  32,  32,  32,  32,  32,  115, 104, 111, 119, 103, 114,
+    105, 100, 61,  34,  102, 97,  108, 115, 101, 34,  10,  32,  32,  32,  32,  32,  105, 110, 107,
+    115, 99,  97,  112, 101, 58,  122, 111, 111, 109, 61,  34,  49,  48,  46,  49,  50,  54,  53,
+    56,  50,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  99,
+    120, 61,  34,  45,  54,  46,  48,  55,  52,  49,  50,  53,  53,  34,  10,  32,  32,  32,  32,
+    32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  99,  121, 61,  34,  49,  49,  46,  54,  53,
+    50,  53,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  119,
+    105, 110, 100, 111, 119, 45,  120, 61,  34,  45,  50,  34,  10,  32,  32,  32,  32,  32,  105,
+    110, 107, 115, 99,  97,  112, 101, 58,  119, 105, 110, 100, 111, 119, 45,  121, 61,  34,  45,
+    51,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  119, 105,
+    110, 100, 111, 119, 45,  109, 97,  120, 105, 109, 105, 122, 101, 100, 61,  34,  49,  34,  10,
+    32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  99,  117, 114, 114, 101,
+    110, 116, 45,  108, 97,  121, 101, 114, 61,  34,  67,  97,  112, 97,  95,  49,  34,  32,  47,
+    62,  60,  112, 111, 108, 121, 103, 111, 110, 10,  32,  32,  32,  32,  32,  112, 111, 105, 110,
+    116, 115, 61,  34,  50,  51,  46,  51,  48,  51,  44,  49,  49,  46,  54,  53,  49,  32,  49,
+    56,  46,  52,  54,  56,  44,  54,  46,  56,  49,  56,  32,  49,  56,  46,  52,  54,  56,  44,
+    57,  46,  57,  56,  55,  32,  49,  51,  46,  51,  49,  55,  44,  57,  46,  57,  56,  55,  32,
+    49,  51,  46,  51,  49,  55,  44,  52,  46,  56,  51,  53,  32,  49,  54,  46,  52,  56,  54,
+    44,  52,  46,  56,  51,  53,  32,  49,  49,  46,  54,  53,  49,  44,  48,  32,  54,  46,  56,
+    49,  53,  44,  52,  46,  56,  51,  53,  32,  32,  32,  57,  46,  57,  56,  55,  44,  52,  46,
+    56,  51,  53,  32,  57,  46,  57,  56,  55,  44,  57,  46,  57,  56,  55,  32,  52,  46,  56,
+    51,  53,  44,  57,  46,  57,  56,  55,  32,  52,  46,  56,  51,  53,  44,  54,  46,  56,  49,
+    56,  32,  48,  44,  49,  49,  46,  54,  53,  49,  32,  52,  46,  56,  51,  53,  44,  49,  54,
+    46,  52,  56,  55,  32,  52,  46,  56,  51,  53,  44,  49,  51,  46,  51,  49,  53,  32,  57,
+    46,  57,  56,  55,  44,  49,  51,  46,  51,  49,  53,  32,  57,  46,  57,  56,  55,  44,  49,
+    56,  46,  52,  55,  49,  32,  54,  46,  56,  49,  53,  44,  49,  56,  46,  52,  55,  49,  32,
+    32,  32,  49,  49,  46,  54,  53,  49,  44,  50,  51,  46,  51,  48,  52,  32,  49,  54,  46,
+    52,  56,  54,  44,  49,  56,  46,  52,  55,  49,  32,  49,  51,  46,  51,  49,  55,  44,  49,
+    56,  46,  52,  55,  49,  32,  49,  51,  46,  51,  49,  55,  44,  49,  51,  46,  51,  49,  53,
+    32,  49,  56,  46,  52,  54,  56,  44,  49,  51,  46,  51,  49,  53,  32,  49,  56,  46,  52,
+    54,  56,  44,  49,  54,  46,  52,  56,  55,  32,  34,  10,  32,  32,  32,  32,  32,  105, 100,
+    61,  34,  112, 111, 108, 121, 103, 111, 110, 51,  34,  10,  32,  32,  32,  32,  32,  115, 116,
+    121, 108, 101, 61,  34,  102, 105, 108, 108, 58,  35,  100, 102, 99,  101, 56,  57,  59,  102,
+    105, 108, 108, 45,  111, 112, 97,  99,  105, 116, 121, 58,  49,  34,  32,  47,  62,  60,  47,
+    115, 118, 103, 62,  0,   0};
 
-const char* UiEditorToolbar::move_svg = (const char*) resource_UiEditorToolbar_move_svg;
+const char *UiEditorToolbar::move_svg = (const char *)resource_UiEditorToolbar_move_svg;
 const int UiEditorToolbar::move_svgSize = 1980;
 
 // JUCER_RESOURCE: close_svg, 2098, "../Images/close.svg"
-static const unsigned char resource_UiEditorToolbar_close_svg[] = { 60,63,120,109,108,32,118,101,114,115,105,111,110,61,34,49,46,48,34,32,101,110,99,111,100,105,110,103,61,34,85,84,70,45,56,34,32,115,
-        116,97,110,100,97,108,111,110,101,61,34,110,111,34,63,62,10,60,33,45,45,32,71,101,110,101,114,97,116,111,114,58,32,65,100,111,98,101,32,73,108,108,117,115,116,114,97,116,111,114,32,49,54,46,48,46,52,44,
-        32,83,86,71,32,69,120,112,111,114,116,32,80,108,117,103,45,73,110,32,46,32,83,86,71,32,86,101,114,115,105,111,110,58,32,54,46,48,48,32,66,117,105,108,100,32,48,41,32,32,45,45,62,10,10,60,115,118,103,10,
-        32,32,32,120,109,108,110,115,58,100,99,61,34,104,116,116,112,58,47,47,112,117,114,108,46,111,114,103,47,100,99,47,101,108,101,109,101,110,116,115,47,49,46,49,47,34,10,32,32,32,120,109,108,110,115,58,99,
-        99,61,34,104,116,116,112,58,47,47,99,114,101,97,116,105,118,101,99,111,109,109,111,110,115,46,111,114,103,47,110,115,35,34,10,32,32,32,120,109,108,110,115,58,114,100,102,61,34,104,116,116,112,58,47,47,
-        119,119,119,46,119,51,46,111,114,103,47,49,57,57,57,47,48,50,47,50,50,45,114,100,102,45,115,121,110,116,97,120,45,110,115,35,34,10,32,32,32,120,109,108,110,115,58,115,118,103,61,34,104,116,116,112,58,
-        47,47,119,119,119,46,119,51,46,111,114,103,47,50,48,48,48,47,115,118,103,34,10,32,32,32,120,109,108,110,115,61,34,104,116,116,112,58,47,47,119,119,119,46,119,51,46,111,114,103,47,50,48,48,48,47,115,118,
-        103,34,10,32,32,32,120,109,108,110,115,58,115,111,100,105,112,111,100,105,61,34,104,116,116,112,58,47,47,115,111,100,105,112,111,100,105,46,115,111,117,114,99,101,102,111,114,103,101,46,110,101,116,47,
-        68,84,68,47,115,111,100,105,112,111,100,105,45,48,46,100,116,100,34,10,32,32,32,120,109,108,110,115,58,105,110,107,115,99,97,112,101,61,34,104,116,116,112,58,47,47,119,119,119,46,105,110,107,115,99,97,
-        112,101,46,111,114,103,47,110,97,109,101,115,112,97,99,101,115,47,105,110,107,115,99,97,112,101,34,10,32,32,32,118,101,114,115,105,111,110,61,34,49,46,49,34,10,32,32,32,105,100,61,34,67,97,112,97,95,49,
-        34,10,32,32,32,120,61,34,48,112,120,34,10,32,32,32,121,61,34,48,112,120,34,10,32,32,32,119,105,100,116,104,61,34,49,54,112,120,34,10,32,32,32,104,101,105,103,104,116,61,34,49,54,112,120,34,10,32,32,32,
-        118,105,101,119,66,111,120,61,34,48,32,48,32,49,54,32,49,54,34,10,32,32,32,101,110,97,98,108,101,45,98,97,99,107,103,114,111,117,110,100,61,34,110,101,119,32,48,32,48,32,49,54,32,49,54,34,10,32,32,32,
-        120,109,108,58,115,112,97,99,101,61,34,112,114,101,115,101,114,118,101,34,10,32,32,32,105,110,107,115,99,97,112,101,58,118,101,114,115,105,111,110,61,34,48,46,52,56,46,52,32,114,57,57,51,57,34,10,32,32,
-        32,115,111,100,105,112,111,100,105,58,100,111,99,110,97,109,101,61,34,99,108,111,115,101,46,115,118,103,34,62,60,109,101,116,97,100,97,116,97,10,32,32,32,32,32,105,100,61,34,109,101,116,97,100,97,116,
-        97,57,34,62,60,114,100,102,58,82,68,70,62,60,99,99,58,87,111,114,107,10,32,32,32,32,32,32,32,32,32,114,100,102,58,97,98,111,117,116,61,34,34,62,60,100,99,58,102,111,114,109,97,116,62,105,109,97,103,101,
-        47,115,118,103,43,120,109,108,60,47,100,99,58,102,111,114,109,97,116,62,60,100,99,58,116,121,112,101,10,32,32,32,32,32,32,32,32,32,32,32,114,100,102,58,114,101,115,111,117,114,99,101,61,34,104,116,116,
-        112,58,47,47,112,117,114,108,46,111,114,103,47,100,99,47,100,99,109,105,116,121,112,101,47,83,116,105,108,108,73,109,97,103,101,34,32,47,62,60,47,99,99,58,87,111,114,107,62,60,47,114,100,102,58,82,68,
-        70,62,60,47,109,101,116,97,100,97,116,97,62,60,100,101,102,115,10,32,32,32,32,32,105,100,61,34,100,101,102,115,55,34,32,47,62,60,115,111,100,105,112,111,100,105,58,110,97,109,101,100,118,105,101,119,10,
-        32,32,32,32,32,112,97,103,101,99,111,108,111,114,61,34,35,102,102,102,102,102,102,34,10,32,32,32,32,32,98,111,114,100,101,114,99,111,108,111,114,61,34,35,54,54,54,54,54,54,34,10,32,32,32,32,32,98,111,
-        114,100,101,114,111,112,97,99,105,116,121,61,34,49,34,10,32,32,32,32,32,111,98,106,101,99,116,116,111,108,101,114,97,110,99,101,61,34,49,48,34,10,32,32,32,32,32,103,114,105,100,116,111,108,101,114,97,
-        110,99,101,61,34,49,48,34,10,32,32,32,32,32,103,117,105,100,101,116,111,108,101,114,97,110,99,101,61,34,49,48,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,112,97,103,101,111,112,97,99,105,116,
-        121,61,34,48,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,112,97,103,101,115,104,97,100,111,119,61,34,50,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,119,105,110,100,111,119,45,119,105,
-        100,116,104,61,34,49,54,48,48,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,119,105,110,100,111,119,45,104,101,105,103,104,116,61,34,56,53,51,34,10,32,32,32,32,32,105,100,61,34,110,97,109,101,
-        100,118,105,101,119,53,34,10,32,32,32,32,32,115,104,111,119,103,114,105,100,61,34,102,97,108,115,101,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,122,111,111,109,61,34,49,52,46,55,53,34,10,32,
-        32,32,32,32,105,110,107,115,99,97,112,101,58,99,120,61,34,45,52,46,49,54,57,52,57,49,53,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,99,121,61,34,56,34,10,32,32,32,32,32,105,110,107,115,99,97,
-        112,101,58,119,105,110,100,111,119,45,120,61,34,45,50,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,119,105,110,100,111,119,45,121,61,34,45,51,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,
-        58,119,105,110,100,111,119,45,109,97,120,105,109,105,122,101,100,61,34,49,34,10,32,32,32,32,32,105,110,107,115,99,97,112,101,58,99,117,114,114,101,110,116,45,108,97,121,101,114,61,34,67,97,112,97,95,49,
-        34,32,47,62,60,112,97,116,104,10,32,32,32,32,32,100,61,34,77,56,46,53,44,49,67,52,46,51,53,56,44,49,44,49,44,52,46,51,53,56,44,49,44,56,46,53,67,49,44,49,50,46,54,52,51,44,52,46,51,53,56,44,49,54,44,56,
-        46,53,44,49,54,99,52,46,49,52,51,44,48,44,55,46,53,45,51,46,51,53,55,44,55,46,53,45,55,46,53,67,49,54,44,52,46,51,53,56,44,49,50,46,54,52,51,44,49,44,56,46,53,44,49,122,32,77,49,49,46,57,55,53,44,53,46,
-        55,51,50,32,32,76,57,46,49,56,56,44,56,46,53,50,108,50,46,52,54,55,44,50,46,55,52,56,99,48,46,49,57,53,44,48,46,49,57,53,44,48,46,49,57,53,44,48,46,53,49,50,44,48,44,48,46,55,48,55,115,45,48,46,53,49,
-        50,44,48,46,49,57,53,45,48,46,55,48,55,44,48,76,56,46,52,56,49,44,57,46,50,50,55,108,45,50,46,55,52,57,44,50,46,55,52,56,32,32,99,45,48,46,49,57,53,44,48,46,49,57,53,45,48,46,53,49,50,44,48,46,49,57,53,
-        45,48,46,55,48,55,44,48,99,45,48,46,49,57,53,45,48,46,49,57,53,45,48,46,49,57,53,45,48,46,53,49,50,44,48,45,48,46,55,48,55,108,50,46,55,56,55,45,50,46,55,56,55,76,53,46,51,52,54,44,53,46,55,51,50,99,45,
-        48,46,49,57,53,45,48,46,49,57,53,45,48,46,49,57,53,45,48,46,53,49,50,44,48,45,48,46,55,48,55,32,32,99,48,46,49,57,53,45,48,46,49,57,53,44,48,46,53,49,50,45,48,46,49,57,53,44,48,46,55,48,55,44,48,76,56,
-        46,53,50,44,55,46,55,55,52,108,50,46,55,52,56,45,50,46,55,52,57,99,48,46,49,57,53,45,48,46,49,57,53,44,48,46,53,49,50,45,48,46,49,57,53,44,48,46,55,48,55,44,48,67,49,50,46,49,55,44,53,46,50,50,44,49,50,
-        46,49,55,44,53,46,53,51,55,44,49,49,46,57,55,53,44,53,46,55,51,50,122,34,10,32,32,32,32,32,105,100,61,34,112,97,116,104,51,34,10,32,32,32,32,32,115,116,121,108,101,61,34,102,105,108,108,58,35,100,102,
-        99,101,56,57,59,102,105,108,108,45,111,112,97,99,105,116,121,58,49,34,32,47,62,60,47,115,118,103,62,0,0
-                                                                  };
+static const unsigned char resource_UiEditorToolbar_close_svg[] = {
+    60,  63,  120, 109, 108, 32,  118, 101, 114, 115, 105, 111, 110, 61,  34,  49,  46,  48,  34,
+    32,  101, 110, 99,  111, 100, 105, 110, 103, 61,  34,  85,  84,  70,  45,  56,  34,  32,  115,
+    116, 97,  110, 100, 97,  108, 111, 110, 101, 61,  34,  110, 111, 34,  63,  62,  10,  60,  33,
+    45,  45,  32,  71,  101, 110, 101, 114, 97,  116, 111, 114, 58,  32,  65,  100, 111, 98,  101,
+    32,  73,  108, 108, 117, 115, 116, 114, 97,  116, 111, 114, 32,  49,  54,  46,  48,  46,  52,
+    44,  32,  83,  86,  71,  32,  69,  120, 112, 111, 114, 116, 32,  80,  108, 117, 103, 45,  73,
+    110, 32,  46,  32,  83,  86,  71,  32,  86,  101, 114, 115, 105, 111, 110, 58,  32,  54,  46,
+    48,  48,  32,  66,  117, 105, 108, 100, 32,  48,  41,  32,  32,  45,  45,  62,  10,  10,  60,
+    115, 118, 103, 10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  100, 99,  61,  34,  104, 116,
+    116, 112, 58,  47,  47,  112, 117, 114, 108, 46,  111, 114, 103, 47,  100, 99,  47,  101, 108,
+    101, 109, 101, 110, 116, 115, 47,  49,  46,  49,  47,  34,  10,  32,  32,  32,  120, 109, 108,
+    110, 115, 58,  99,  99,  61,  34,  104, 116, 116, 112, 58,  47,  47,  99,  114, 101, 97,  116,
+    105, 118, 101, 99,  111, 109, 109, 111, 110, 115, 46,  111, 114, 103, 47,  110, 115, 35,  34,
+    10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  114, 100, 102, 61,  34,  104, 116, 116, 112,
+    58,  47,  47,  119, 119, 119, 46,  119, 51,  46,  111, 114, 103, 47,  49,  57,  57,  57,  47,
+    48,  50,  47,  50,  50,  45,  114, 100, 102, 45,  115, 121, 110, 116, 97,  120, 45,  110, 115,
+    35,  34,  10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  115, 118, 103, 61,  34,  104, 116,
+    116, 112, 58,  47,  47,  119, 119, 119, 46,  119, 51,  46,  111, 114, 103, 47,  50,  48,  48,
+    48,  47,  115, 118, 103, 34,  10,  32,  32,  32,  120, 109, 108, 110, 115, 61,  34,  104, 116,
+    116, 112, 58,  47,  47,  119, 119, 119, 46,  119, 51,  46,  111, 114, 103, 47,  50,  48,  48,
+    48,  47,  115, 118, 103, 34,  10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  115, 111, 100,
+    105, 112, 111, 100, 105, 61,  34,  104, 116, 116, 112, 58,  47,  47,  115, 111, 100, 105, 112,
+    111, 100, 105, 46,  115, 111, 117, 114, 99,  101, 102, 111, 114, 103, 101, 46,  110, 101, 116,
+    47,  68,  84,  68,  47,  115, 111, 100, 105, 112, 111, 100, 105, 45,  48,  46,  100, 116, 100,
+    34,  10,  32,  32,  32,  120, 109, 108, 110, 115, 58,  105, 110, 107, 115, 99,  97,  112, 101,
+    61,  34,  104, 116, 116, 112, 58,  47,  47,  119, 119, 119, 46,  105, 110, 107, 115, 99,  97,
+    112, 101, 46,  111, 114, 103, 47,  110, 97,  109, 101, 115, 112, 97,  99,  101, 115, 47,  105,
+    110, 107, 115, 99,  97,  112, 101, 34,  10,  32,  32,  32,  118, 101, 114, 115, 105, 111, 110,
+    61,  34,  49,  46,  49,  34,  10,  32,  32,  32,  105, 100, 61,  34,  67,  97,  112, 97,  95,
+    49,  34,  10,  32,  32,  32,  120, 61,  34,  48,  112, 120, 34,  10,  32,  32,  32,  121, 61,
+    34,  48,  112, 120, 34,  10,  32,  32,  32,  119, 105, 100, 116, 104, 61,  34,  49,  54,  112,
+    120, 34,  10,  32,  32,  32,  104, 101, 105, 103, 104, 116, 61,  34,  49,  54,  112, 120, 34,
+    10,  32,  32,  32,  118, 105, 101, 119, 66,  111, 120, 61,  34,  48,  32,  48,  32,  49,  54,
+    32,  49,  54,  34,  10,  32,  32,  32,  101, 110, 97,  98,  108, 101, 45,  98,  97,  99,  107,
+    103, 114, 111, 117, 110, 100, 61,  34,  110, 101, 119, 32,  48,  32,  48,  32,  49,  54,  32,
+    49,  54,  34,  10,  32,  32,  32,  120, 109, 108, 58,  115, 112, 97,  99,  101, 61,  34,  112,
+    114, 101, 115, 101, 114, 118, 101, 34,  10,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112,
+    101, 58,  118, 101, 114, 115, 105, 111, 110, 61,  34,  48,  46,  52,  56,  46,  52,  32,  114,
+    57,  57,  51,  57,  34,  10,  32,  32,  32,  115, 111, 100, 105, 112, 111, 100, 105, 58,  100,
+    111, 99,  110, 97,  109, 101, 61,  34,  99,  108, 111, 115, 101, 46,  115, 118, 103, 34,  62,
+    60,  109, 101, 116, 97,  100, 97,  116, 97,  10,  32,  32,  32,  32,  32,  105, 100, 61,  34,
+    109, 101, 116, 97,  100, 97,  116, 97,  57,  34,  62,  60,  114, 100, 102, 58,  82,  68,  70,
+    62,  60,  99,  99,  58,  87,  111, 114, 107, 10,  32,  32,  32,  32,  32,  32,  32,  32,  32,
+    114, 100, 102, 58,  97,  98,  111, 117, 116, 61,  34,  34,  62,  60,  100, 99,  58,  102, 111,
+    114, 109, 97,  116, 62,  105, 109, 97,  103, 101, 47,  115, 118, 103, 43,  120, 109, 108, 60,
+    47,  100, 99,  58,  102, 111, 114, 109, 97,  116, 62,  60,  100, 99,  58,  116, 121, 112, 101,
+    10,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  114, 100, 102, 58,  114, 101, 115,
+    111, 117, 114, 99,  101, 61,  34,  104, 116, 116, 112, 58,  47,  47,  112, 117, 114, 108, 46,
+    111, 114, 103, 47,  100, 99,  47,  100, 99,  109, 105, 116, 121, 112, 101, 47,  83,  116, 105,
+    108, 108, 73,  109, 97,  103, 101, 34,  32,  47,  62,  60,  47,  99,  99,  58,  87,  111, 114,
+    107, 62,  60,  47,  114, 100, 102, 58,  82,  68,  70,  62,  60,  47,  109, 101, 116, 97,  100,
+    97,  116, 97,  62,  60,  100, 101, 102, 115, 10,  32,  32,  32,  32,  32,  105, 100, 61,  34,
+    100, 101, 102, 115, 55,  34,  32,  47,  62,  60,  115, 111, 100, 105, 112, 111, 100, 105, 58,
+    110, 97,  109, 101, 100, 118, 105, 101, 119, 10,  32,  32,  32,  32,  32,  112, 97,  103, 101,
+    99,  111, 108, 111, 114, 61,  34,  35,  102, 102, 102, 102, 102, 102, 34,  10,  32,  32,  32,
+    32,  32,  98,  111, 114, 100, 101, 114, 99,  111, 108, 111, 114, 61,  34,  35,  54,  54,  54,
+    54,  54,  54,  34,  10,  32,  32,  32,  32,  32,  98,  111, 114, 100, 101, 114, 111, 112, 97,
+    99,  105, 116, 121, 61,  34,  49,  34,  10,  32,  32,  32,  32,  32,  111, 98,  106, 101, 99,
+    116, 116, 111, 108, 101, 114, 97,  110, 99,  101, 61,  34,  49,  48,  34,  10,  32,  32,  32,
+    32,  32,  103, 114, 105, 100, 116, 111, 108, 101, 114, 97,  110, 99,  101, 61,  34,  49,  48,
+    34,  10,  32,  32,  32,  32,  32,  103, 117, 105, 100, 101, 116, 111, 108, 101, 114, 97,  110,
+    99,  101, 61,  34,  49,  48,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,
+    112, 101, 58,  112, 97,  103, 101, 111, 112, 97,  99,  105, 116, 121, 61,  34,  48,  34,  10,
+    32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  112, 97,  103, 101, 115,
+    104, 97,  100, 111, 119, 61,  34,  50,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115,
+    99,  97,  112, 101, 58,  119, 105, 110, 100, 111, 119, 45,  119, 105, 100, 116, 104, 61,  34,
+    49,  54,  48,  48,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101,
+    58,  119, 105, 110, 100, 111, 119, 45,  104, 101, 105, 103, 104, 116, 61,  34,  56,  53,  51,
+    34,  10,  32,  32,  32,  32,  32,  105, 100, 61,  34,  110, 97,  109, 101, 100, 118, 105, 101,
+    119, 53,  34,  10,  32,  32,  32,  32,  32,  115, 104, 111, 119, 103, 114, 105, 100, 61,  34,
+    102, 97,  108, 115, 101, 34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112,
+    101, 58,  122, 111, 111, 109, 61,  34,  49,  52,  46,  55,  53,  34,  10,  32,  32,  32,  32,
+    32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  99,  120, 61,  34,  45,  52,  46,  49,  54,
+    57,  52,  57,  49,  53,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112,
+    101, 58,  99,  121, 61,  34,  56,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,
+    97,  112, 101, 58,  119, 105, 110, 100, 111, 119, 45,  120, 61,  34,  45,  50,  34,  10,  32,
+    32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101, 58,  119, 105, 110, 100, 111, 119,
+    45,  121, 61,  34,  45,  51,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,
+    112, 101, 58,  119, 105, 110, 100, 111, 119, 45,  109, 97,  120, 105, 109, 105, 122, 101, 100,
+    61,  34,  49,  34,  10,  32,  32,  32,  32,  32,  105, 110, 107, 115, 99,  97,  112, 101, 58,
+    99,  117, 114, 114, 101, 110, 116, 45,  108, 97,  121, 101, 114, 61,  34,  67,  97,  112, 97,
+    95,  49,  34,  32,  47,  62,  60,  112, 97,  116, 104, 10,  32,  32,  32,  32,  32,  100, 61,
+    34,  77,  56,  46,  53,  44,  49,  67,  52,  46,  51,  53,  56,  44,  49,  44,  49,  44,  52,
+    46,  51,  53,  56,  44,  49,  44,  56,  46,  53,  67,  49,  44,  49,  50,  46,  54,  52,  51,
+    44,  52,  46,  51,  53,  56,  44,  49,  54,  44,  56,  46,  53,  44,  49,  54,  99,  52,  46,
+    49,  52,  51,  44,  48,  44,  55,  46,  53,  45,  51,  46,  51,  53,  55,  44,  55,  46,  53,
+    45,  55,  46,  53,  67,  49,  54,  44,  52,  46,  51,  53,  56,  44,  49,  50,  46,  54,  52,
+    51,  44,  49,  44,  56,  46,  53,  44,  49,  122, 32,  77,  49,  49,  46,  57,  55,  53,  44,
+    53,  46,  55,  51,  50,  32,  32,  76,  57,  46,  49,  56,  56,  44,  56,  46,  53,  50,  108,
+    50,  46,  52,  54,  55,  44,  50,  46,  55,  52,  56,  99,  48,  46,  49,  57,  53,  44,  48,
+    46,  49,  57,  53,  44,  48,  46,  49,  57,  53,  44,  48,  46,  53,  49,  50,  44,  48,  44,
+    48,  46,  55,  48,  55,  115, 45,  48,  46,  53,  49,  50,  44,  48,  46,  49,  57,  53,  45,
+    48,  46,  55,  48,  55,  44,  48,  76,  56,  46,  52,  56,  49,  44,  57,  46,  50,  50,  55,
+    108, 45,  50,  46,  55,  52,  57,  44,  50,  46,  55,  52,  56,  32,  32,  99,  45,  48,  46,
+    49,  57,  53,  44,  48,  46,  49,  57,  53,  45,  48,  46,  53,  49,  50,  44,  48,  46,  49,
+    57,  53,  45,  48,  46,  55,  48,  55,  44,  48,  99,  45,  48,  46,  49,  57,  53,  45,  48,
+    46,  49,  57,  53,  45,  48,  46,  49,  57,  53,  45,  48,  46,  53,  49,  50,  44,  48,  45,
+    48,  46,  55,  48,  55,  108, 50,  46,  55,  56,  55,  45,  50,  46,  55,  56,  55,  76,  53,
+    46,  51,  52,  54,  44,  53,  46,  55,  51,  50,  99,  45,  48,  46,  49,  57,  53,  45,  48,
+    46,  49,  57,  53,  45,  48,  46,  49,  57,  53,  45,  48,  46,  53,  49,  50,  44,  48,  45,
+    48,  46,  55,  48,  55,  32,  32,  99,  48,  46,  49,  57,  53,  45,  48,  46,  49,  57,  53,
+    44,  48,  46,  53,  49,  50,  45,  48,  46,  49,  57,  53,  44,  48,  46,  55,  48,  55,  44,
+    48,  76,  56,  46,  53,  50,  44,  55,  46,  55,  55,  52,  108, 50,  46,  55,  52,  56,  45,
+    50,  46,  55,  52,  57,  99,  48,  46,  49,  57,  53,  45,  48,  46,  49,  57,  53,  44,  48,
+    46,  53,  49,  50,  45,  48,  46,  49,  57,  53,  44,  48,  46,  55,  48,  55,  44,  48,  67,
+    49,  50,  46,  49,  55,  44,  53,  46,  50,  50,  44,  49,  50,  46,  49,  55,  44,  53,  46,
+    53,  51,  55,  44,  49,  49,  46,  57,  55,  53,  44,  53,  46,  55,  51,  50,  122, 34,  10,
+    32,  32,  32,  32,  32,  105, 100, 61,  34,  112, 97,  116, 104, 51,  34,  10,  32,  32,  32,
+    32,  32,  115, 116, 121, 108, 101, 61,  34,  102, 105, 108, 108, 58,  35,  100, 102, 99,  101,
+    56,  57,  59,  102, 105, 108, 108, 45,  111, 112, 97,  99,  105, 116, 121, 58,  49,  34,  32,
+    47,  62,  60,  47,  115, 118, 103, 62,  0,   0};
 
-const char* UiEditorToolbar::close_svg = (const char*) resource_UiEditorToolbar_close_svg;
+const char *UiEditorToolbar::close_svg = (const char *)resource_UiEditorToolbar_close_svg;
 const int UiEditorToolbar::close_svgSize = 2098;
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
-
-

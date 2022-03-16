@@ -26,8 +26,6 @@
 class UiDragPad;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -36,14 +34,14 @@ class UiDragPad;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorMorph  : public Component,
-                       public mono_UiRefreshable,
-                       public Button::Listener,
-                       public ComboBox::Listener
+class UiEditorMorph : public Component,
+                      public mono_UiRefreshable,
+                      public Button::Listener,
+                      public ComboBox::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiEditorMorph ();
+    UiEditorMorph();
     ~UiEditorMorph();
 
     //==============================================================================
@@ -52,18 +50,16 @@ public:
     const float original_h;
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
-    void comboBoxChanged (ComboBox* comboBoxThatHasChanged);
-    bool keyPressed (const KeyPress& key);
+    void buttonClicked(Button *buttonThatWasClicked);
+    void comboBoxChanged(ComboBox *comboBoxThatHasChanged);
+    bool keyPressed(const KeyPress &key);
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     void refresh() override;
-    Array< int > bank_start_indexs;
+    Array<int> bank_start_indexs;
     //[/UserVariables]
 
     //==============================================================================
@@ -191,12 +187,11 @@ private:
     Path internalPath1;
     Path internalPath2;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorMorph)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorMorph)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_AF78624DB5AE9BA__
+#endif // __JUCE_HEADER_AF78624DB5AE9BA__

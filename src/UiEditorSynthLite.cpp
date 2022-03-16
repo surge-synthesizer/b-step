@@ -24,7 +24,6 @@
 #include "UiLookAndFeel.h"
 #include "UiEditorSynthLitePopup.h"
 
-
 #include "dRowAudio_SegmentedMeter.h"
 
 #include "mono_AmpPainter.h"
@@ -39,45 +38,48 @@
 
 #include "UiEditorSynthLite.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 
-
 //==============================================================================
 //==============================================================================
 
-void UiEditorSynthLite::refresh() {
+void UiEditorSynthLite::refresh()
+{
     show_current_voice_data();
     resize_sequence_buttons();
     show_programs_and_select();
     show_ctrl_state();
 }
-void UiEditorSynthLite::show_programs_and_select() {
+void UiEditorSynthLite::show_programs_and_select()
+{
     const int current_bank = synth_data->get_current_bank();
     const int current_programm = synth_data->get_current_program();
-    if( current_bank != last_bank || current_programm != last_programm )
+    if (current_bank != last_bank || current_programm != last_programm)
     {
         last_bank = current_bank;
         last_programm = current_programm;
 
         combo_bank->clear(dontSendNotification);
-        combo_bank->addItemList(synth_data->get_banks(),1);
-        combo_bank->setSelectedId(synth_data->get_current_bank()+1,dontSendNotification);
+        combo_bank->addItemList(synth_data->get_banks(), 1);
+        combo_bank->setSelectedId(synth_data->get_current_bank() + 1, dontSendNotification);
 
         combo_programm->clear(dontSendNotification);
-        combo_programm->addItemList(synth_data->get_current_bank_programms(),1);
-        combo_programm->setSelectedItemIndex(synth_data->get_current_program(),dontSendNotification);
+        combo_programm->addItemList(synth_data->get_current_bank_programms(), 1);
+        combo_programm->setSelectedItemIndex(synth_data->get_current_program(),
+                                             dontSendNotification);
     }
 }
-void UiEditorSynthLite::show_ctrl_state() {
-    if( last_ctrl_mode != synth_data->ctrl )
+void UiEditorSynthLite::show_ctrl_state()
+{
+    if (last_ctrl_mode != synth_data->ctrl)
     {
         last_ctrl_mode = synth_data->ctrl;
-        for( int i = 0 ; i < getNumChildComponents() ; ++i )
+        for (int i = 0; i < getNumChildComponents(); ++i)
         {
-            if( mono_ModulationSlider* mod_slider = dynamic_cast< mono_ModulationSlider* >( getChildComponent(i) ) )
+            if (mono_ModulationSlider *mod_slider =
+                    dynamic_cast<mono_ModulationSlider *>(getChildComponent(i)))
             {
-                if( mod_slider->is_in_ctrl_view() != synth_data->ctrl )
+                if (mod_slider->is_in_ctrl_view() != synth_data->ctrl)
                 {
                     mod_slider->set_ctrl_view_mode(synth_data->ctrl);
                     mod_slider->show_view_mode();
@@ -86,821 +88,908 @@ void UiEditorSynthLite::show_ctrl_state() {
         }
     }
 }
-void UiEditorSynthLite::show_info_popup( Component* comp_, MIDIControl* midi_conrtrol_ ) {
+void UiEditorSynthLite::show_info_popup(Component *comp_, MIDIControl *midi_conrtrol_)
+{
     popup = nullptr;
-    if( MIDIControlHandler::getInstance()->is_learning() && midi_conrtrol_ )
+    if (MIDIControlHandler::getInstance()->is_learning() && midi_conrtrol_)
     {
-        addAndMakeVisible( popup = new UiEditorSynthLitePopup(this,midi_conrtrol_) );
-        popup->set_element_to_show( comp_ );
+        addAndMakeVisible(popup = new UiEditorSynthLitePopup(this, midi_conrtrol_));
+        popup->set_element_to_show(comp_);
     }
 }
 
 #define STANDARD_MULT 1000.0f
-void UiEditorSynthLite::show_current_voice_data() {
+void UiEditorSynthLite::show_current_voice_data()
+{
     ComponentColours colours = UiLookAndFeel::getInstance()->colours;
     Colour button_on = colours.button_on_colour;
     Colour button_off = colours.button_off_colour;
 
     // FILTER 1
     uint8 f_type = synth_data->filter_datas[0]->filter_type;
-    filter_type_6_1->setColour( TextButton::buttonColourId, f_type == LPF || f_type == LPF_2_PASS ? button_on : button_off );
-    filter_type_2_1->setColour( TextButton::buttonColourId, f_type == HPF || f_type == HIGH_2_PASS ? button_on : button_off );
-    filter_type_1_1->setColour( TextButton::buttonColourId, f_type == LPF_2_PASS || f_type == HIGH_2_PASS || f_type == MOOG_AND_LPF ? button_on : button_off );
-    filter_type_3_1->setColour( TextButton::buttonColourId, f_type == BPF ? button_on : button_off );
-    filter_type_5_1->setColour( TextButton::buttonColourId, f_type == PASS ? button_on : button_off );
+    filter_type_6_1->setColour(TextButton::buttonColourId,
+                               f_type == LPF || f_type == LPF_2_PASS ? button_on : button_off);
+    filter_type_2_1->setColour(TextButton::buttonColourId,
+                               f_type == HPF || f_type == HIGH_2_PASS ? button_on : button_off);
+    filter_type_1_1->setColour(
+        TextButton::buttonColourId,
+        f_type == LPF_2_PASS || f_type == HIGH_2_PASS || f_type == MOOG_AND_LPF ? button_on
+                                                                                : button_off);
+    filter_type_3_1->setColour(TextButton::buttonColourId, f_type == BPF ? button_on : button_off);
+    filter_type_5_1->setColour(TextButton::buttonColourId, f_type == PASS ? button_on : button_off);
 
     // FILTER 2
     f_type = synth_data->filter_datas[1]->filter_type;
-    filter_type_6_2->setColour( TextButton::buttonColourId, f_type == LPF || f_type == LPF_2_PASS ? button_on : button_off );
-    filter_type_2_2->setColour( TextButton::buttonColourId, f_type == HPF || f_type == HIGH_2_PASS ? button_on : button_off );
-    filter_type_1_2->setColour( TextButton::buttonColourId, f_type == LPF_2_PASS || f_type == HIGH_2_PASS || f_type == MOOG_AND_LPF ? button_on : button_off );
-    filter_type_3_2->setColour( TextButton::buttonColourId, f_type == BPF ? button_on : button_off );
-    filter_type_5_2->setColour( TextButton::buttonColourId, f_type == PASS ? button_on : button_off );
+    filter_type_6_2->setColour(TextButton::buttonColourId,
+                               f_type == LPF || f_type == LPF_2_PASS ? button_on : button_off);
+    filter_type_2_2->setColour(TextButton::buttonColourId,
+                               f_type == HPF || f_type == HIGH_2_PASS ? button_on : button_off);
+    filter_type_1_2->setColour(
+        TextButton::buttonColourId,
+        f_type == LPF_2_PASS || f_type == HIGH_2_PASS || f_type == MOOG_AND_LPF ? button_on
+                                                                                : button_off);
+    filter_type_3_2->setColour(TextButton::buttonColourId, f_type == BPF ? button_on : button_off);
+    filter_type_5_2->setColour(TextButton::buttonColourId, f_type == PASS ? button_on : button_off);
 
     // FILTER 3
     f_type = synth_data->filter_datas[2]->filter_type;
-    filter_type_6_3->setColour( TextButton::buttonColourId, f_type == LPF || f_type == LPF_2_PASS ? button_on : button_off );
-    filter_type_2_3->setColour( TextButton::buttonColourId, f_type == HPF || f_type == HIGH_2_PASS ? button_on : button_off );
-    filter_type_1_3->setColour( TextButton::buttonColourId, f_type == LPF_2_PASS || f_type == HIGH_2_PASS || f_type == MOOG_AND_LPF ? button_on : button_off );
-    filter_type_3_3->setColour( TextButton::buttonColourId, f_type == BPF ? button_on : button_off );
-    filter_type_5_3->setColour( TextButton::buttonColourId, f_type == PASS ? button_on : button_off );
+    filter_type_6_3->setColour(TextButton::buttonColourId,
+                               f_type == LPF || f_type == LPF_2_PASS ? button_on : button_off);
+    filter_type_2_3->setColour(TextButton::buttonColourId,
+                               f_type == HPF || f_type == HIGH_2_PASS ? button_on : button_off);
+    filter_type_1_3->setColour(
+        TextButton::buttonColourId,
+        f_type == LPF_2_PASS || f_type == HIGH_2_PASS || f_type == MOOG_AND_LPF ? button_on
+                                                                                : button_off);
+    filter_type_3_3->setColour(TextButton::buttonColourId, f_type == BPF ? button_on : button_off);
+    filter_type_5_3->setColour(TextButton::buttonColourId, f_type == PASS ? button_on : button_off);
 
     // SEQUENCE
-    MONOVoice* voice = reinterpret_cast< MONOVoice* >( _app_instance_store->audio_processor->synth.getVoice(0) );
-    button_sequence_1->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->step[0] ? button_on.darker( 1.0f-voice->get_arp_sequence_amp(0) ) : button_off );
-    button_sequence_2->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->step[1] ? button_on.darker( 1.0f-voice->get_arp_sequence_amp(1) ) : button_off );
-    button_sequence_3->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->step[2] ? button_on.darker( 1.0f-voice->get_arp_sequence_amp(2) ) : button_off );
-    button_sequence_4->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->step[3] ? button_on.darker( 1.0f-voice->get_arp_sequence_amp(3) ) : button_off );
-    button_sequence_5->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->step[4] ? button_on.darker( 1.0f-voice->get_arp_sequence_amp(4) ) : button_off );
-    button_sequence_6->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->step[5] ? button_on.darker( 1.0f-voice->get_arp_sequence_amp(5) ) : button_off );
-    button_sequence_7->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->step[6] ? button_on.darker( 1.0f-voice->get_arp_sequence_amp(6) ) : button_off );
-    button_sequence_8->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->step[7] ? button_on.darker( 1.0f-voice->get_arp_sequence_amp(7) ) : button_off );
-    button_sequence_9->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->step[8] ? button_on.darker( 1.0f-voice->get_arp_sequence_amp(8) ) : button_off );
-    button_sequence_10->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->step[9] ? button_on.darker( 1.0f-voice->get_arp_sequence_amp(9) ) : button_off );
-    button_sequence_11->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->step[10] ? button_on.darker( 1.0f-voice->get_arp_sequence_amp(10) ) : button_off );
-    button_sequence_12->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->step[11] ? button_on.darker( 1.0f-voice->get_arp_sequence_amp(11) ) : button_off );
-    button_sequence_13->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->step[12] ? button_on.darker( 1.0f-voice->get_arp_sequence_amp(12) ) : button_off );
-    button_sequence_14->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->step[13] ? button_on.darker( 1.0f-voice->get_arp_sequence_amp(13) ) : button_off );
-    button_sequence_15->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->step[14] ? button_on.darker( 1.0f-voice->get_arp_sequence_amp(14) ) : button_off );
-    button_sequence_16->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->step[15] ? button_on.darker( 1.0f-voice->get_arp_sequence_amp(15) ) : button_off );
+    MONOVoice *voice =
+        reinterpret_cast<MONOVoice *>(_app_instance_store->audio_processor->synth.getVoice(0));
+    button_sequence_1->setColour(TextButton::buttonColourId,
+                                 synth_data->arp_sequencer_data->step[0]
+                                     ? button_on.darker(1.0f - voice->get_arp_sequence_amp(0))
+                                     : button_off);
+    button_sequence_2->setColour(TextButton::buttonColourId,
+                                 synth_data->arp_sequencer_data->step[1]
+                                     ? button_on.darker(1.0f - voice->get_arp_sequence_amp(1))
+                                     : button_off);
+    button_sequence_3->setColour(TextButton::buttonColourId,
+                                 synth_data->arp_sequencer_data->step[2]
+                                     ? button_on.darker(1.0f - voice->get_arp_sequence_amp(2))
+                                     : button_off);
+    button_sequence_4->setColour(TextButton::buttonColourId,
+                                 synth_data->arp_sequencer_data->step[3]
+                                     ? button_on.darker(1.0f - voice->get_arp_sequence_amp(3))
+                                     : button_off);
+    button_sequence_5->setColour(TextButton::buttonColourId,
+                                 synth_data->arp_sequencer_data->step[4]
+                                     ? button_on.darker(1.0f - voice->get_arp_sequence_amp(4))
+                                     : button_off);
+    button_sequence_6->setColour(TextButton::buttonColourId,
+                                 synth_data->arp_sequencer_data->step[5]
+                                     ? button_on.darker(1.0f - voice->get_arp_sequence_amp(5))
+                                     : button_off);
+    button_sequence_7->setColour(TextButton::buttonColourId,
+                                 synth_data->arp_sequencer_data->step[6]
+                                     ? button_on.darker(1.0f - voice->get_arp_sequence_amp(6))
+                                     : button_off);
+    button_sequence_8->setColour(TextButton::buttonColourId,
+                                 synth_data->arp_sequencer_data->step[7]
+                                     ? button_on.darker(1.0f - voice->get_arp_sequence_amp(7))
+                                     : button_off);
+    button_sequence_9->setColour(TextButton::buttonColourId,
+                                 synth_data->arp_sequencer_data->step[8]
+                                     ? button_on.darker(1.0f - voice->get_arp_sequence_amp(8))
+                                     : button_off);
+    button_sequence_10->setColour(TextButton::buttonColourId,
+                                  synth_data->arp_sequencer_data->step[9]
+                                      ? button_on.darker(1.0f - voice->get_arp_sequence_amp(9))
+                                      : button_off);
+    button_sequence_11->setColour(TextButton::buttonColourId,
+                                  synth_data->arp_sequencer_data->step[10]
+                                      ? button_on.darker(1.0f - voice->get_arp_sequence_amp(10))
+                                      : button_off);
+    button_sequence_12->setColour(TextButton::buttonColourId,
+                                  synth_data->arp_sequencer_data->step[11]
+                                      ? button_on.darker(1.0f - voice->get_arp_sequence_amp(11))
+                                      : button_off);
+    button_sequence_13->setColour(TextButton::buttonColourId,
+                                  synth_data->arp_sequencer_data->step[12]
+                                      ? button_on.darker(1.0f - voice->get_arp_sequence_amp(12))
+                                      : button_off);
+    button_sequence_14->setColour(TextButton::buttonColourId,
+                                  synth_data->arp_sequencer_data->step[13]
+                                      ? button_on.darker(1.0f - voice->get_arp_sequence_amp(13))
+                                      : button_off);
+    button_sequence_15->setColour(TextButton::buttonColourId,
+                                  synth_data->arp_sequencer_data->step[14]
+                                      ? button_on.darker(1.0f - voice->get_arp_sequence_amp(14))
+                                      : button_off);
+    button_sequence_16->setColour(TextButton::buttonColourId,
+                                  synth_data->arp_sequencer_data->step[15]
+                                      ? button_on.darker(1.0f - voice->get_arp_sequence_amp(15))
+                                      : button_off);
 
-    button_arp_speed_XNORM->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->speed_multi == _XNORM ? button_on : button_off );
-    button_arp_speed_X2->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->speed_multi == _X2 ? button_on : button_off );
-    button_arp_speed_X3->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->speed_multi == _X3 ? button_on : button_off );
-    button_arp_speed_X4->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->speed_multi == _X4 ? button_on : button_off );
-    button_arp_speed_X05->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->speed_multi == _X05 ? button_on : button_off );
-    button_arp_speed_X025->setColour( TextButton::buttonColourId, synth_data->arp_sequencer_data->speed_multi == _X025 ? button_on : button_off );
+    button_arp_speed_XNORM->setColour(
+        TextButton::buttonColourId,
+        synth_data->arp_sequencer_data->speed_multi == _XNORM ? button_on : button_off);
+    button_arp_speed_X2->setColour(TextButton::buttonColourId,
+                                   synth_data->arp_sequencer_data->speed_multi == _X2 ? button_on
+                                                                                      : button_off);
+    button_arp_speed_X3->setColour(TextButton::buttonColourId,
+                                   synth_data->arp_sequencer_data->speed_multi == _X3 ? button_on
+                                                                                      : button_off);
+    button_arp_speed_X4->setColour(TextButton::buttonColourId,
+                                   synth_data->arp_sequencer_data->speed_multi == _X4 ? button_on
+                                                                                      : button_off);
+    button_arp_speed_X05->setColour(
+        TextButton::buttonColourId,
+        synth_data->arp_sequencer_data->speed_multi == _X05 ? button_on : button_off);
+    button_arp_speed_X025->setColour(
+        TextButton::buttonColourId,
+        synth_data->arp_sequencer_data->speed_multi == _X025 ? button_on : button_off);
 
     // MORPHERS
     {
-        sl_morhp_mix->setValue( synth_data->linear_morhp_state*1000, dontSendNotification );
+        sl_morhp_mix->setValue(synth_data->linear_morhp_state * 1000, dontSendNotification);
     }
 
     // MIDI LEARN
-    button_midi_learn->setColour( TextButton::buttonColourId, MIDIControlHandler::getInstance()->is_waiting_for_param() ? button_on : MIDIControlHandler::getInstance()->is_learning() ? Colours::red : button_off );
-    button_ctrl_toggle->setColour( TextButton::buttonColourId, synth_data->ctrl ? Colours::red : button_off );
+    button_midi_learn->setColour(TextButton::buttonColourId,
+                                 MIDIControlHandler::getInstance()->is_waiting_for_param()
+                                     ? button_on
+                                 : MIDIControlHandler::getInstance()->is_learning() ? Colours::red
+                                                                                    : button_off);
+    button_ctrl_toggle->setColour(TextButton::buttonColourId,
+                                  synth_data->ctrl ? Colours::red : button_off);
 
     // EDITORS
-    button_open_config->setColour( TextButton::buttonColourId, editor_settings ? Colours::lightblue : button_off );
-    button_open_midi_io_settings->setColour( TextButton::buttonColourId, editor_midiio ? Colours::lightblue : button_off );
-    button_open_morph->setColour( TextButton::buttonColourId, editor_morph ? Colours::lightblue:button_off );
-    button_open_oszi->setColour( TextButton::buttonColourId, MONOVoice::get_amp_painter() ? Colours::lightblue : button_off );
+    button_open_config->setColour(TextButton::buttonColourId,
+                                  editor_settings ? Colours::lightblue : button_off);
+    button_open_midi_io_settings->setColour(TextButton::buttonColourId,
+                                            editor_midiio ? Colours::lightblue : button_off);
+    button_open_morph->setColour(TextButton::buttonColourId,
+                                 editor_morph ? Colours::lightblue : button_off);
+    button_open_oszi->setColour(TextButton::buttonColourId,
+                                MONOVoice::get_amp_painter() ? Colours::lightblue : button_off);
 
-    button_values_toggle->setColour( TextButton::buttonColourId, UiLookAndFeel::getInstance()->show_values_always ? Colours::lightblue : button_off );
+    button_values_toggle->setColour(
+        TextButton::buttonColourId,
+        UiLookAndFeel::getInstance()->show_values_always ? Colours::lightblue : button_off);
 
-    if( popup )
+    if (popup)
         popup->refresh();
 }
 
-void UiEditorSynthLite::resize_sequence_buttons() {
-    const float width_factor = 1.0f/original_w*getWidth();
-    const float height_factor = 1.0f/original_h*getHeight();
+void UiEditorSynthLite::resize_sequence_buttons()
+{
+    const float width_factor = 1.0f / original_w * getWidth();
+    const float height_factor = 1.0f / original_h * getHeight();
     float shuffle = synth_data->arp_sequencer_data->shuffle * 0.8f * 60.0f * width_factor;
-    if( shuffle != last_shuffle )
+    if (shuffle != last_shuffle)
     {
         last_shuffle = shuffle;
-        for( int i = 0 ; i != sequence_buttons.size() ; ++i )
+        for (int i = 0; i != sequence_buttons.size(); ++i)
         {
-            TextButton* button = sequence_buttons[i];
-            if( i % 4 == 0 )
+            TextButton *button = sequence_buttons[i];
+            if (i % 4 == 0)
             {
-                button->setSize( 60.0f*width_factor+shuffle, 20.0f * height_factor );
+                button->setSize(60.0f * width_factor + shuffle, 20.0f * height_factor);
             }
-            else if( i % 2 == 0  )
-                button->setSize( 60.0f*width_factor+shuffle, 20.0f * height_factor );
+            else if (i % 2 == 0)
+                button->setSize(60.0f * width_factor + shuffle, 20.0f * height_factor);
             else
                 button->setBounds(
-                    float(sequence_buttons[i-1]->getX()+60.0f*width_factor+shuffle),
-                    float(button->getY()),
-                    60.0f*width_factor-shuffle,
-                    20.0f * height_factor );
+                    float(sequence_buttons[i - 1]->getX() + 60.0f * width_factor + shuffle),
+                    float(button->getY()), 60.0f * width_factor - shuffle, 20.0f * height_factor);
         }
     }
 }
 
-void UiEditorSynthLite::switch_finalizer_tab() {
-    //reverb
-    bool state_switch = eq_1->isVisible();
-    reverb_room->setVisible( state_switch );
-    reverb_width->setVisible( state_switch );
-    colour->setVisible( state_switch );
-    reverb_dry->setVisible( state_switch );
-    delay2->setVisible( state_switch );
-    chorus_modulation->setVisible( state_switch );
-    bypass->setVisible( state_switch );
-    label_effect_hider->setVisible( !state_switch );
-
-    //eg
-    eq_1->setVisible( !state_switch );
-    eq_2->setVisible( !state_switch );
-    eq_3->setVisible( !state_switch );
-    eq_4->setVisible( !state_switch );
-    eq_5->setVisible( !state_switch );
-    eq_6->setVisible( !state_switch );
-    eq_7->setVisible( !state_switch );
-    eq_8->setVisible( !state_switch );
-    eq_9->setVisible( !state_switch );
-
-    !state_switch ? effect_finalizer_switch->setButtonText ("E Q") : effect_finalizer_switch->setButtonText ("F X");
-}
-void UiEditorSynthLite::sliderClicked (Slider*s_)
+void UiEditorSynthLite::switch_finalizer_tab()
 {
-    if( MIDIControlHandler::getInstance()->is_waiting_for_param() || MIDIControlHandler::getInstance()->is_learning() )
+    // reverb
+    bool state_switch = eq_1->isVisible();
+    reverb_room->setVisible(state_switch);
+    reverb_width->setVisible(state_switch);
+    colour->setVisible(state_switch);
+    reverb_dry->setVisible(state_switch);
+    delay2->setVisible(state_switch);
+    chorus_modulation->setVisible(state_switch);
+    bypass->setVisible(state_switch);
+    label_effect_hider->setVisible(!state_switch);
+
+    // eg
+    eq_1->setVisible(!state_switch);
+    eq_2->setVisible(!state_switch);
+    eq_3->setVisible(!state_switch);
+    eq_4->setVisible(!state_switch);
+    eq_5->setVisible(!state_switch);
+    eq_6->setVisible(!state_switch);
+    eq_7->setVisible(!state_switch);
+    eq_8->setVisible(!state_switch);
+    eq_9->setVisible(!state_switch);
+
+    !state_switch ? effect_finalizer_switch->setButtonText("E Q")
+                  : effect_finalizer_switch->setButtonText("F X");
+}
+void UiEditorSynthLite::sliderClicked(Slider *s_)
+{
+    if (MIDIControlHandler::getInstance()->is_waiting_for_param() ||
+        MIDIControlHandler::getInstance()->is_learning())
         sliderValueChanged(s_);
 }
 //[/MiscUserDefs]
 
 //==============================================================================
-UiEditorSynthLite::UiEditorSynthLite ()
-    : AudioProcessorEditor(AppInstanceStore::getInstance()->audio_processor),_app_instance_store(AppInstanceStore::getInstance()),original_w(1430), original_h(1080)
+UiEditorSynthLite::UiEditorSynthLite()
+    : AudioProcessorEditor(AppInstanceStore::getInstance()->audio_processor),
+      _app_instance_store(AppInstanceStore::getInstance()), original_w(1430), original_h(1080)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    addAndMakeVisible (morpher_4 = new mono_ModulationSlider (new MorphSLConfig(3)));
+    addAndMakeVisible(morpher_4 = new mono_ModulationSlider(new MorphSLConfig(3)));
 
-    addAndMakeVisible (morpher_3 = new mono_ModulationSlider (new MorphSLConfig(2)));
+    addAndMakeVisible(morpher_3 = new mono_ModulationSlider(new MorphSLConfig(2)));
 
-    addAndMakeVisible (morpher_2 = new mono_ModulationSlider (new MorphSLConfig(1)));
+    addAndMakeVisible(morpher_2 = new mono_ModulationSlider(new MorphSLConfig(1)));
 
-    addAndMakeVisible (morpher_1 = new mono_ModulationSlider (new MorphSLConfig(0)));
+    addAndMakeVisible(morpher_1 = new mono_ModulationSlider(new MorphSLConfig(0)));
 
-    addAndMakeVisible (label_effect_hider = new Label (String(),
-                                                       String()));
-    label_effect_hider->setFont (Font (30.00f, Font::plain));
-    label_effect_hider->setJustificationType (Justification::centredLeft);
-    label_effect_hider->setEditable (false, false, false);
-    label_effect_hider->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_effect_hider->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_effect_hider->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_effect_hider = new Label(String(), String()));
+    label_effect_hider->setFont(Font(30.00f, Font::plain));
+    label_effect_hider->setJustificationType(Justification::centredLeft);
+    label_effect_hider->setEditable(false, false, false);
+    label_effect_hider->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_effect_hider->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_effect_hider->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (eq_9 = new mono_ModulationSlider (new EQSlConfig(8)));
+    addAndMakeVisible(eq_9 = new mono_ModulationSlider(new EQSlConfig(8)));
 
-    addAndMakeVisible (eq_8 = new mono_ModulationSlider (new EQSlConfig(7)));
+    addAndMakeVisible(eq_8 = new mono_ModulationSlider(new EQSlConfig(7)));
 
-    addAndMakeVisible (eq_7 = new mono_ModulationSlider (new EQSlConfig(6)));
+    addAndMakeVisible(eq_7 = new mono_ModulationSlider(new EQSlConfig(6)));
 
-    addAndMakeVisible (eq_6 = new mono_ModulationSlider (new EQSlConfig(5)));
+    addAndMakeVisible(eq_6 = new mono_ModulationSlider(new EQSlConfig(5)));
 
-    addAndMakeVisible (eq_5 = new mono_ModulationSlider (new EQSlConfig(4)));
+    addAndMakeVisible(eq_5 = new mono_ModulationSlider(new EQSlConfig(4)));
 
-    addAndMakeVisible (eq_4 = new mono_ModulationSlider (new EQSlConfig(3)));
+    addAndMakeVisible(eq_4 = new mono_ModulationSlider(new EQSlConfig(3)));
 
-    addAndMakeVisible (eq_3 = new mono_ModulationSlider (new EQSlConfig(2)));
+    addAndMakeVisible(eq_3 = new mono_ModulationSlider(new EQSlConfig(2)));
 
-    addAndMakeVisible (eq_2 = new mono_ModulationSlider (new EQSlConfig(1)));
+    addAndMakeVisible(eq_2 = new mono_ModulationSlider(new EQSlConfig(1)));
 
-    addAndMakeVisible (eq_1 = new mono_ModulationSlider (new EQSlConfig(0)));
+    addAndMakeVisible(eq_1 = new mono_ModulationSlider(new EQSlConfig(0)));
 
-    addAndMakeVisible (bypass = new mono_ModulationSlider (new BypassConfig()));
+    addAndMakeVisible(bypass = new mono_ModulationSlider(new BypassConfig()));
 
-    addAndMakeVisible (chorus_modulation = new mono_ModulationSlider (new CModSlConfig()));
+    addAndMakeVisible(chorus_modulation = new mono_ModulationSlider(new CModSlConfig()));
 
-    addAndMakeVisible (reverb_dry = new mono_ModulationSlider (new RDrySlConfig()));
+    addAndMakeVisible(reverb_dry = new mono_ModulationSlider(new RDrySlConfig()));
 
-    addAndMakeVisible (reverb_room = new mono_ModulationSlider (new RRoomSlConfig()));
+    addAndMakeVisible(reverb_room = new mono_ModulationSlider(new RRoomSlConfig()));
 
-    addAndMakeVisible (osc_wave_3 = new mono_ModulationSlider (new WAVESlConfig(2)));
+    addAndMakeVisible(osc_wave_3 = new mono_ModulationSlider(new WAVESlConfig(2)));
 
-    addAndMakeVisible (keyboard = new MidiKeyboardComponent (*_app_instance_store->audio_processor, MidiKeyboardComponent::horizontalKeyboard));
+    addAndMakeVisible(keyboard =
+                          new MidiKeyboardComponent(*_app_instance_store->audio_processor,
+                                                    MidiKeyboardComponent::horizontalKeyboard));
 
-    addAndMakeVisible (glide2 = new mono_ModulationSlider (new GlideConfig()));
+    addAndMakeVisible(glide2 = new mono_ModulationSlider(new GlideConfig()));
 
-    addAndMakeVisible (arp_step_16 = new mono_ModulationSlider (new ArpStepSlConfig(15)));
+    addAndMakeVisible(arp_step_16 = new mono_ModulationSlider(new ArpStepSlConfig(15)));
 
-    addAndMakeVisible (arp_step_15 = new mono_ModulationSlider (new ArpStepSlConfig(14)));
+    addAndMakeVisible(arp_step_15 = new mono_ModulationSlider(new ArpStepSlConfig(14)));
 
-    addAndMakeVisible (arp_step_14 = new mono_ModulationSlider (new ArpStepSlConfig(13)));
+    addAndMakeVisible(arp_step_14 = new mono_ModulationSlider(new ArpStepSlConfig(13)));
 
-    addAndMakeVisible (arp_step_13 = new mono_ModulationSlider (new ArpStepSlConfig(12)));
+    addAndMakeVisible(arp_step_13 = new mono_ModulationSlider(new ArpStepSlConfig(12)));
 
-    addAndMakeVisible (arp_step_12 = new mono_ModulationSlider (new ArpStepSlConfig(11)));
+    addAndMakeVisible(arp_step_12 = new mono_ModulationSlider(new ArpStepSlConfig(11)));
 
-    addAndMakeVisible (arp_step_11 = new mono_ModulationSlider (new ArpStepSlConfig(10)));
+    addAndMakeVisible(arp_step_11 = new mono_ModulationSlider(new ArpStepSlConfig(10)));
 
-    addAndMakeVisible (arp_step_10 = new mono_ModulationSlider (new ArpStepSlConfig(9)));
+    addAndMakeVisible(arp_step_10 = new mono_ModulationSlider(new ArpStepSlConfig(9)));
 
-    addAndMakeVisible (arp_step_9 = new mono_ModulationSlider (new ArpStepSlConfig(8)));
+    addAndMakeVisible(arp_step_9 = new mono_ModulationSlider(new ArpStepSlConfig(8)));
 
-    addAndMakeVisible (arp_step_8 = new mono_ModulationSlider (new ArpStepSlConfig(7)));
+    addAndMakeVisible(arp_step_8 = new mono_ModulationSlider(new ArpStepSlConfig(7)));
 
-    addAndMakeVisible (arp_step_7 = new mono_ModulationSlider (new ArpStepSlConfig(6)));
+    addAndMakeVisible(arp_step_7 = new mono_ModulationSlider(new ArpStepSlConfig(6)));
 
-    addAndMakeVisible (arp_step_6 = new mono_ModulationSlider (new ArpStepSlConfig(5)));
+    addAndMakeVisible(arp_step_6 = new mono_ModulationSlider(new ArpStepSlConfig(5)));
 
-    addAndMakeVisible (arp_step_5 = new mono_ModulationSlider (new ArpStepSlConfig(4)));
+    addAndMakeVisible(arp_step_5 = new mono_ModulationSlider(new ArpStepSlConfig(4)));
 
-    addAndMakeVisible (arp_step_4 = new mono_ModulationSlider (new ArpStepSlConfig(3)));
+    addAndMakeVisible(arp_step_4 = new mono_ModulationSlider(new ArpStepSlConfig(3)));
 
-    addAndMakeVisible (arp_step_3 = new mono_ModulationSlider (new ArpStepSlConfig(2)));
+    addAndMakeVisible(arp_step_3 = new mono_ModulationSlider(new ArpStepSlConfig(2)));
 
-    addAndMakeVisible (arp_step_2 = new mono_ModulationSlider (new ArpStepSlConfig(1)));
+    addAndMakeVisible(arp_step_2 = new mono_ModulationSlider(new ArpStepSlConfig(1)));
 
-    addAndMakeVisible (arp_step_1 = new mono_ModulationSlider (new ArpStepSlConfig(0)));
+    addAndMakeVisible(arp_step_1 = new mono_ModulationSlider(new ArpStepSlConfig(0)));
 
-    addAndMakeVisible (shuffle = new mono_ModulationSlider (new ShuffleConfig()));
+    addAndMakeVisible(shuffle = new mono_ModulationSlider(new ShuffleConfig()));
 
-    addAndMakeVisible (flt_sustain_4 = new mono_ModulationSlider (new SustainSlConfig(MAIN_ENV)));
+    addAndMakeVisible(flt_sustain_4 = new mono_ModulationSlider(new SustainSlConfig(MAIN_ENV)));
 
-    addAndMakeVisible (flt_decay_4 = new mono_ModulationSlider (new DecaySlConfig(MAIN_ENV)));
+    addAndMakeVisible(flt_decay_4 = new mono_ModulationSlider(new DecaySlConfig(MAIN_ENV)));
 
-    addAndMakeVisible (flt_attack_4 = new mono_ModulationSlider (new FAttackSlConfig(MAIN_ENV)));
+    addAndMakeVisible(flt_attack_4 = new mono_ModulationSlider(new FAttackSlConfig(MAIN_ENV)));
 
-    addAndMakeVisible (flt_release_3 = new mono_ModulationSlider (new FReleaseSlConfig(2)));
+    addAndMakeVisible(flt_release_3 = new mono_ModulationSlider(new FReleaseSlConfig(2)));
 
-    addAndMakeVisible (flt_sustain_time_3 = new mono_ModulationSlider (new FSustainTimeSlConfig(2)));
+    addAndMakeVisible(flt_sustain_time_3 = new mono_ModulationSlider(new FSustainTimeSlConfig(2)));
 
-    addAndMakeVisible (flt_sustain_3 = new mono_ModulationSlider (new FSustainSlConfig(2)));
+    addAndMakeVisible(flt_sustain_3 = new mono_ModulationSlider(new FSustainSlConfig(2)));
 
-    addAndMakeVisible (flt_decay_3 = new mono_ModulationSlider (new FDecaySlConfig(2)));
+    addAndMakeVisible(flt_decay_3 = new mono_ModulationSlider(new FDecaySlConfig(2)));
 
-    addAndMakeVisible (flt_attack_3 = new mono_ModulationSlider (new FAttackSlConfig(2)));
+    addAndMakeVisible(flt_attack_3 = new mono_ModulationSlider(new FAttackSlConfig(2)));
 
-    addAndMakeVisible (flt_release_2 = new mono_ModulationSlider (new FReleaseSlConfig(1)));
-
-    addAndMakeVisible (flt_sustain_time_2 = new mono_ModulationSlider (new FSustainTimeSlConfig(1)));
-
-    addAndMakeVisible (flt_sustain_2 = new mono_ModulationSlider (new FSustainSlConfig(1)));
-
-    addAndMakeVisible (flt_decay_2 = new mono_ModulationSlider (new FDecaySlConfig(1)));
-
-    addAndMakeVisible (flt_attack_2 = new mono_ModulationSlider (new FAttackSlConfig(1)));
-
-    addAndMakeVisible (flt_release_1 = new mono_ModulationSlider (new FReleaseSlConfig(0)));
-
-    addAndMakeVisible (flt_sustain_time_1 = new mono_ModulationSlider (new FSustainTimeSlConfig(0)));
-
-    addAndMakeVisible (flt_sustain_1 = new mono_ModulationSlider (new FSustainSlConfig(0)));
-
-    addAndMakeVisible (flt_decay_1 = new mono_ModulationSlider (new FDecaySlConfig(0)));
-
-    addAndMakeVisible (flt_attack_1 = new mono_ModulationSlider (new FAttackSlConfig(0)));
-
-    addAndMakeVisible (volume_master_meter = new SegmentedMeter());
-
-    addAndMakeVisible (label_monolisa = new Label (String(),
-                                                   TRANS("M O N I Q U E")));
-    label_monolisa->setFont (Font (30.00f, Font::plain));
-    label_monolisa->setJustificationType (Justification::centredRight);
-    label_monolisa->setEditable (false, false, false);
-    label_monolisa->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_monolisa->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_monolisa->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (filter_type_1_1 = new TextButton ("VOICE 1"));
-    filter_type_1_1->setButtonText (TRANS("- 2PASS"));
-    filter_type_1_1->addListener (this);
-    filter_type_1_1->setColour (TextButton::buttonColourId, Colours::black);
-    filter_type_1_1->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    filter_type_1_1->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (filter_type_2_1 = new TextButton ("VOICE 1"));
-    filter_type_2_1->setButtonText (TRANS("HP"));
-    filter_type_2_1->addListener (this);
-    filter_type_2_1->setColour (TextButton::buttonColourId, Colours::black);
-    filter_type_2_1->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    filter_type_2_1->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (filter_type_3_1 = new TextButton ("VOICE 1"));
-    filter_type_3_1->setButtonText (TRANS("BAND"));
-    filter_type_3_1->addListener (this);
-    filter_type_3_1->setColour (TextButton::buttonColourId, Colours::black);
-    filter_type_3_1->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    filter_type_3_1->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (filter_type_1_2 = new TextButton ("VOICE 1"));
-    filter_type_1_2->setButtonText (TRANS("- 2PASS"));
-    filter_type_1_2->addListener (this);
-    filter_type_1_2->setColour (TextButton::buttonColourId, Colours::black);
-    filter_type_1_2->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    filter_type_1_2->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (filter_type_2_2 = new TextButton ("VOICE 1"));
-    filter_type_2_2->setButtonText (TRANS("HP"));
-    filter_type_2_2->addListener (this);
-    filter_type_2_2->setColour (TextButton::buttonColourId, Colours::black);
-    filter_type_2_2->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    filter_type_2_2->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (filter_type_3_2 = new TextButton ("VOICE 1"));
-    filter_type_3_2->setButtonText (TRANS("BAND"));
-    filter_type_3_2->addListener (this);
-    filter_type_3_2->setColour (TextButton::buttonColourId, Colours::black);
-    filter_type_3_2->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    filter_type_3_2->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (filter_type_1_3 = new TextButton ("VOICE 1"));
-    filter_type_1_3->setButtonText (TRANS("- 2PASS"));
-    filter_type_1_3->addListener (this);
-    filter_type_1_3->setColour (TextButton::buttonColourId, Colours::black);
-    filter_type_1_3->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    filter_type_1_3->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (filter_type_2_3 = new TextButton ("VOICE 1"));
-    filter_type_2_3->setButtonText (TRANS("HP"));
-    filter_type_2_3->addListener (this);
-    filter_type_2_3->setColour (TextButton::buttonColourId, Colours::black);
-    filter_type_2_3->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    filter_type_2_3->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (filter_type_3_3 = new TextButton ("VOICE 1"));
-    filter_type_3_3->setButtonText (TRANS("BAND"));
-    filter_type_3_3->addListener (this);
-    filter_type_3_3->setColour (TextButton::buttonColourId, Colours::black);
-    filter_type_3_3->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    filter_type_3_3->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (filter_type_5_1 = new TextButton ("VOICE 1"));
-    filter_type_5_1->setButtonText (TRANS("PASS"));
-    filter_type_5_1->addListener (this);
-    filter_type_5_1->setColour (TextButton::buttonColourId, Colours::black);
-    filter_type_5_1->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    filter_type_5_1->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (filter_type_5_2 = new TextButton ("VOICE 1"));
-    filter_type_5_2->setButtonText (TRANS("PASS"));
-    filter_type_5_2->addListener (this);
-    filter_type_5_2->setColour (TextButton::buttonColourId, Colours::black);
-    filter_type_5_2->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    filter_type_5_2->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (filter_type_5_3 = new TextButton ("VOICE 1"));
-    filter_type_5_3->setButtonText (TRANS("PASS"));
-    filter_type_5_3->addListener (this);
-    filter_type_5_3->setColour (TextButton::buttonColourId, Colours::black);
-    filter_type_5_3->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    filter_type_5_3->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_sequence_2 = new TextButton (String()));
-    button_sequence_2->addListener (this);
-    button_sequence_2->setColour (TextButton::buttonColourId, Colours::black);
-    button_sequence_2->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_sequence_2->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_sequence_3 = new TextButton (String()));
-    button_sequence_3->addListener (this);
-    button_sequence_3->setColour (TextButton::buttonColourId, Colours::black);
-    button_sequence_3->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_sequence_3->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_sequence_4 = new TextButton (String()));
-    button_sequence_4->addListener (this);
-    button_sequence_4->setColour (TextButton::buttonColourId, Colours::black);
-    button_sequence_4->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_sequence_4->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_sequence_5 = new TextButton (String()));
-    button_sequence_5->addListener (this);
-    button_sequence_5->setColour (TextButton::buttonColourId, Colours::black);
-    button_sequence_5->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_sequence_5->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_sequence_6 = new TextButton (String()));
-    button_sequence_6->addListener (this);
-    button_sequence_6->setColour (TextButton::buttonColourId, Colours::black);
-    button_sequence_6->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_sequence_6->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_sequence_7 = new TextButton (String()));
-    button_sequence_7->addListener (this);
-    button_sequence_7->setColour (TextButton::buttonColourId, Colours::black);
-    button_sequence_7->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_sequence_7->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_sequence_8 = new TextButton (String()));
-    button_sequence_8->addListener (this);
-    button_sequence_8->setColour (TextButton::buttonColourId, Colours::black);
-    button_sequence_8->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_sequence_8->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_arp_speed_X2 = new TextButton (String()));
-    button_arp_speed_X2->setButtonText (TRANS("x2"));
-    button_arp_speed_X2->addListener (this);
-    button_arp_speed_X2->setColour (TextButton::buttonColourId, Colours::black);
-    button_arp_speed_X2->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_arp_speed_X2->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_arp_speed_X05 = new TextButton (String()));
-    button_arp_speed_X05->setButtonText (TRANS("/2"));
-    button_arp_speed_X05->addListener (this);
-    button_arp_speed_X05->setColour (TextButton::buttonColourId, Colours::black);
-    button_arp_speed_X05->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_arp_speed_X05->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_sequence_9 = new TextButton (String()));
-    button_sequence_9->addListener (this);
-    button_sequence_9->setColour (TextButton::buttonColourId, Colours::black);
-    button_sequence_9->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_sequence_9->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_sequence_10 = new TextButton (String()));
-    button_sequence_10->addListener (this);
-    button_sequence_10->setColour (TextButton::buttonColourId, Colours::black);
-    button_sequence_10->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_sequence_10->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_sequence_11 = new TextButton (String()));
-    button_sequence_11->addListener (this);
-    button_sequence_11->setColour (TextButton::buttonColourId, Colours::black);
-    button_sequence_11->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_sequence_11->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_sequence_12 = new TextButton (String()));
-    button_sequence_12->addListener (this);
-    button_sequence_12->setColour (TextButton::buttonColourId, Colours::black);
-    button_sequence_12->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_sequence_12->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_sequence_13 = new TextButton (String()));
-    button_sequence_13->addListener (this);
-    button_sequence_13->setColour (TextButton::buttonColourId, Colours::black);
-    button_sequence_13->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_sequence_13->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_sequence_14 = new TextButton (String()));
-    button_sequence_14->addListener (this);
-    button_sequence_14->setColour (TextButton::buttonColourId, Colours::black);
-    button_sequence_14->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_sequence_14->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_sequence_15 = new TextButton (String()));
-    button_sequence_15->addListener (this);
-    button_sequence_15->setColour (TextButton::buttonColourId, Colours::black);
-    button_sequence_15->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_sequence_15->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_sequence_16 = new TextButton (String()));
-    button_sequence_16->addListener (this);
-    button_sequence_16->setColour (TextButton::buttonColourId, Colours::black);
-    button_sequence_16->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_sequence_16->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_arp_speed_X3 = new TextButton (String()));
-    button_arp_speed_X3->setButtonText (TRANS("x3"));
-    button_arp_speed_X3->addListener (this);
-    button_arp_speed_X3->setColour (TextButton::buttonColourId, Colours::black);
-    button_arp_speed_X3->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_arp_speed_X3->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_arp_speed_X4 = new TextButton (String()));
-    button_arp_speed_X4->setButtonText (TRANS("x4"));
-    button_arp_speed_X4->addListener (this);
-    button_arp_speed_X4->setColour (TextButton::buttonColourId, Colours::black);
-    button_arp_speed_X4->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_arp_speed_X4->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_arp_speed_X025 = new TextButton (String()));
-    button_arp_speed_X025->setButtonText (TRANS("/4"));
-    button_arp_speed_X025->addListener (this);
-    button_arp_speed_X025->setColour (TextButton::buttonColourId, Colours::black);
-    button_arp_speed_X025->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_arp_speed_X025->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (combo_programm = new ComboBox (String()));
-    combo_programm->setEditableText (true);
-    combo_programm->setJustificationType (Justification::centredLeft);
-    combo_programm->setTextWhenNothingSelected (TRANS("SELECT PROGRAM"));
-    combo_programm->setTextWhenNoChoicesAvailable (TRANS("EMPTY BANK"));
-    combo_programm->addListener (this);
-
-    addAndMakeVisible (button_programm_left = new TextButton (String()));
-    button_programm_left->setButtonText (TRANS("<"));
-    button_programm_left->addListener (this);
-    button_programm_left->setColour (TextButton::buttonColourId, Colours::black);
-    button_programm_left->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_programm_left->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_programm_right = new TextButton (String()));
-    button_programm_right->setButtonText (TRANS(">"));
-    button_programm_right->addListener (this);
-    button_programm_right->setColour (TextButton::buttonColourId, Colours::black);
-    button_programm_right->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_programm_right->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_programm_replace = new TextButton (String()));
-    button_programm_replace->setButtonText (TRANS("REPLACE"));
-    button_programm_replace->addListener (this);
-    button_programm_replace->setColour (TextButton::buttonColourId, Colours::black);
-    button_programm_replace->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_programm_replace->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_programm_new = new TextButton (String()));
-    button_programm_new->setButtonText (TRANS("NEW"));
-    button_programm_new->addListener (this);
-    button_programm_new->setColour (TextButton::buttonColourId, Colours::black);
-    button_programm_new->setColour (TextButton::textColourOnId, Colour (0xffbcff00));
-    button_programm_new->setColour (TextButton::textColourOffId, Colour (0xffd0ff00));
-
-    addAndMakeVisible (button_open_oszi = new TextButton (String()));
-    button_open_oszi->setButtonText (TRANS("OSCI"));
-    button_open_oszi->addListener (this);
-    button_open_oszi->setColour (TextButton::buttonColourId, Colours::black);
-    button_open_oszi->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_open_oszi->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_open_midi_io_settings = new TextButton (String()));
-    button_open_midi_io_settings->setButtonText (TRANS("MIDI IO"));
-    button_open_midi_io_settings->addListener (this);
-    button_open_midi_io_settings->setColour (TextButton::buttonColourId, Colours::black);
-    button_open_midi_io_settings->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_open_midi_io_settings->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (combo_bank = new ComboBox (String()));
-    combo_bank->setEditableText (false);
-    combo_bank->setJustificationType (Justification::centredLeft);
-    combo_bank->setTextWhenNothingSelected (String());
-    combo_bank->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    combo_bank->addListener (this);
-
-    addAndMakeVisible (button_programm_load = new TextButton (String()));
-    button_programm_load->setButtonText (TRANS("LOAD"));
-    button_programm_load->addListener (this);
-    button_programm_load->setColour (TextButton::buttonColourId, Colours::black);
-    button_programm_load->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_programm_load->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (osc_1 = new mono_ModulationSlider (new OSCSlConfig(0)));
-
-    addAndMakeVisible (osc_2 = new mono_ModulationSlider (new OSCSlConfig(1)));
-
-    addAndMakeVisible (osc_3 = new mono_ModulationSlider (new OSCSlConfig(2)));
-
-    addAndMakeVisible (lfo_1 = new mono_ModulationSlider (new LFOSlConfig(0)));
-
-    addAndMakeVisible (flt_cutoff_1 = new mono_ModulationSlider (new FCutoffSLConfig(0)));
-
-    addAndMakeVisible (lfo_2 = new mono_ModulationSlider (new LFOSlConfig(1)));
-
-    addAndMakeVisible (lfo_3 = new mono_ModulationSlider (new LFOSlConfig(2)));
-
-    addAndMakeVisible (flt_cutoff_2 = new mono_ModulationSlider (new FCutoffSLConfig(1)));
-
-    addAndMakeVisible (flt_cutoff_3 = new mono_ModulationSlider (new FCutoffSLConfig(2)));
-
-    addAndMakeVisible (flt_input_1 = new mono_ModulationSlider (new InputSlConfig(0,0)));
-
-    addAndMakeVisible (flt_input_2 = new mono_ModulationSlider (new InputSlConfig(0,1)));
-
-    addAndMakeVisible (flt_input_3 = new mono_ModulationSlider (new InputSlConfig(0,2)));
-
-    addAndMakeVisible (flt_compressor_1 = new mono_ModulationSlider (new FCompressorSlConfig(0)));
-
-    addAndMakeVisible (flt_distortion_1 = new mono_ModulationSlider (new GForceSlConfig(0)));
-
-    addAndMakeVisible (flt_input_6 = new mono_ModulationSlider (new InputSlConfig(1,0)));
-
-    addAndMakeVisible (flt_input_7 = new mono_ModulationSlider (new InputSlConfig(1,1)));
-
-    addAndMakeVisible (flt_input_8 = new mono_ModulationSlider (new InputSlConfig(1,2)));
-
-    addAndMakeVisible (flt_compressor_2 = new mono_ModulationSlider (new FCompressorSlConfig(1)));
-
-    addAndMakeVisible (flt_input_11 = new mono_ModulationSlider (new InputSlConfig(2,0)));
-
-    addAndMakeVisible (flt_input_12 = new mono_ModulationSlider (new InputSlConfig(2,1)));
-
-    addAndMakeVisible (flt_input_13 = new mono_ModulationSlider (new InputSlConfig(2,2)));
-
-    addAndMakeVisible (flt_compressor_3 = new mono_ModulationSlider (new FCompressorSlConfig(2)));
-
-    addAndMakeVisible (flt_resonance_1 = new mono_ModulationSlider (new FResonanceSLConfig(0)));
-
-    addAndMakeVisible (flt_gain_1 = new mono_ModulationSlider (new FGainSLConfig(0)));
-
-    addAndMakeVisible (flt_resonance_2 = new mono_ModulationSlider (new FResonanceSLConfig(1)));
-
-    addAndMakeVisible (flt_gain_2 = new mono_ModulationSlider (new FGainSLConfig(1)));
-
-    addAndMakeVisible (flt_resonance_3 = new mono_ModulationSlider (new FResonanceSLConfig(2)));
-
-    addAndMakeVisible (flt_gain_3 = new mono_ModulationSlider (new FGainSLConfig(2)));
-
-    addAndMakeVisible (flt_volume_1 = new mono_ModulationSlider (new FVolumeSlConfig(0)));
-
-    addAndMakeVisible (flt_volume_2 = new mono_ModulationSlider (new FVolumeSlConfig(1)));
-
-    addAndMakeVisible (flt_volume_3 = new mono_ModulationSlider (new FVolumeSlConfig(2)));
-
-    addAndMakeVisible (adsr_lfo_mix = new mono_ModulationSlider (new EnvLfoSlConfig(0)));
-
-    addAndMakeVisible (lfo_opt_2 = new mono_ModulationSlider (new EnvLfoSlConfig(1)));
-
-    addAndMakeVisible (lfo_opt_3 = new mono_ModulationSlider (new EnvLfoSlConfig(2)));
-
-    addAndMakeVisible (button_sequence_1 = new TextButton (String()));
-    button_sequence_1->addListener (this);
-    button_sequence_1->setColour (TextButton::buttonColourId, Colours::black);
-    button_sequence_1->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_sequence_1->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (flt_release_4 = new mono_ModulationSlider (new ReleaseSlConfig(MAIN_ENV)));
-
-    addAndMakeVisible (delay2 = new mono_ModulationSlider (new DelaySlConfig()));
-
-    addAndMakeVisible (volume = new mono_ModulationSlider (new VolumeConfig()));
-
-    addAndMakeVisible (flt_distortion_2 = new mono_ModulationSlider (new GForceSlConfig(1)));
-
-    addAndMakeVisible (flt_distortion_3 = new mono_ModulationSlider (new GForceSlConfig(2)));
-
-    addAndMakeVisible (button_arp_speed_XNORM = new TextButton (String()));
-    button_arp_speed_XNORM->setButtonText (TRANS("x1"));
-    button_arp_speed_XNORM->addListener (this);
-    button_arp_speed_XNORM->setColour (TextButton::buttonColourId, Colours::black);
-    button_arp_speed_XNORM->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_arp_speed_XNORM->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (flt_attack_5 = new mono_ModulationSlider (new FMFreqSlConfig()));
-
-    addAndMakeVisible (flt_attack_6 = new mono_ModulationSlider (new FMAmountSlConfig()));
-
-    addAndMakeVisible (osc_wave_1 = new mono_ModulationSlider (new WAVESlConfig(0)));
-
-    addAndMakeVisible (osc_wave_2 = new mono_ModulationSlider (new WAVESlConfig(1)));
-
-    addAndMakeVisible (sl_morhp_mix = new Slider ("new slider"));
-    sl_morhp_mix->setRange (0, 3000, 0.01);
-    sl_morhp_mix->setSliderStyle (Slider::LinearHorizontal);
-    sl_morhp_mix->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
-    sl_morhp_mix->addListener (this);
-
-    addAndMakeVisible (button_programm_delete = new TextButton (String()));
-    button_programm_delete->setButtonText (TRANS("DELETE"));
-    button_programm_delete->addListener (this);
-    button_programm_delete->setColour (TextButton::buttonColourId, Colours::black);
-    button_programm_delete->setColour (TextButton::textColourOnId, Colours::red);
-    button_programm_delete->setColour (TextButton::textColourOffId, Colour (0xffff7900));
-
-    addAndMakeVisible (button_open_config = new TextButton (String()));
-    button_open_config->setButtonText (TRANS("CFG"));
-    button_open_config->addListener (this);
-    button_open_config->setColour (TextButton::buttonColourId, Colours::black);
-    button_open_config->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_open_config->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (filter_type_6_1 = new TextButton ("VOICE 1"));
-    filter_type_6_1->setButtonText (TRANS("LP"));
-    filter_type_6_1->addListener (this);
-    filter_type_6_1->setColour (TextButton::buttonColourId, Colours::black);
-    filter_type_6_1->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    filter_type_6_1->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (filter_type_6_2 = new TextButton ("VOICE 1"));
-    filter_type_6_2->setButtonText (TRANS("LP"));
-    filter_type_6_2->addListener (this);
-    filter_type_6_2->setColour (TextButton::buttonColourId, Colours::black);
-    filter_type_6_2->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    filter_type_6_2->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (filter_type_6_3 = new TextButton ("VOICE 1"));
-    filter_type_6_3->setButtonText (TRANS("LP"));
-    filter_type_6_3->addListener (this);
-    filter_type_6_3->setColour (TextButton::buttonColourId, Colours::black);
-    filter_type_6_3->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    filter_type_6_3->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (label_monolisa2 = new Label (String(),
-                                                    TRANS("M   O   N   O   P   L   U   G   S")));
-    label_monolisa2->setFont (Font (30.00f, Font::plain));
-    label_monolisa2->setJustificationType (Justification::centredRight);
-    label_monolisa2->setEditable (false, false, false);
-    label_monolisa2->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_monolisa2->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_monolisa2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (button_midi_learn = new TextButton (String()));
-    button_midi_learn->setButtonText (TRANS("LEARN"));
-    button_midi_learn->addListener (this);
-    button_midi_learn->setColour (TextButton::buttonColourId, Colours::black);
-    button_midi_learn->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_midi_learn->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_ctrl_toggle = new TextButton (String()));
-    button_ctrl_toggle->setButtonText (TRANS("SHIFT"));
-    button_ctrl_toggle->addListener (this);
-    button_ctrl_toggle->setColour (TextButton::buttonColourId, Colours::black);
-    button_ctrl_toggle->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_ctrl_toggle->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (colour = new mono_ModulationSlider (new FColourSlConfig()));
-
-    addAndMakeVisible (volume2 = new mono_ModulationSlider (new BPMSlConfig()));
-
-    addAndMakeVisible (button_open_morph = new TextButton (String()));
-    button_open_morph->setButtonText (TRANS("CFG"));
-    button_open_morph->addListener (this);
-    button_open_morph->setColour (TextButton::buttonColourId, Colours::black);
-    button_open_morph->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_open_morph->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (effect_finalizer_switch = new TextButton (String()));
-    effect_finalizer_switch->setButtonText (TRANS("F X"));
-    effect_finalizer_switch->addListener (this);
-    effect_finalizer_switch->setColour (TextButton::buttonColourId, Colours::black);
-    effect_finalizer_switch->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    effect_finalizer_switch->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (label_ui_headline2 = new Label (String(),
-                                                       TRANS("M-OSC")));
-    label_ui_headline2->setFont (Font (30.00f, Font::plain));
-    label_ui_headline2->setJustificationType (Justification::centred);
-    label_ui_headline2->setEditable (false, false, false);
-    label_ui_headline2->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_ui_headline2->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_ui_headline2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_ui_headline3 = new Label (String(),
-                                                       TRANS("M-FLT")));
-    label_ui_headline3->setFont (Font (30.00f, Font::plain));
-    label_ui_headline3->setJustificationType (Justification::centred);
-    label_ui_headline3->setEditable (false, false, false);
-    label_ui_headline3->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_ui_headline3->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_ui_headline3->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_ui_headline5 = new Label (String(),
-                                                       TRANS("M-FX")));
-    label_ui_headline5->setFont (Font (30.00f, Font::plain));
-    label_ui_headline5->setJustificationType (Justification::centred);
-    label_ui_headline5->setEditable (false, false, false);
-    label_ui_headline5->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_ui_headline5->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_ui_headline5->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_ui_headline6 = new Label (String(),
-                                                       TRANS("M-ARP")));
-    label_ui_headline6->setFont (Font (30.00f, Font::plain));
-    label_ui_headline6->setJustificationType (Justification::centred);
-    label_ui_headline6->setEditable (false, false, false);
-    label_ui_headline6->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_ui_headline6->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_ui_headline6->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (button_values_toggle = new TextButton (String()));
-    button_values_toggle->setButtonText (TRANS("VAL"));
-    button_values_toggle->addListener (this);
-    button_values_toggle->setColour (TextButton::buttonColourId, Colours::black);
-    button_values_toggle->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_values_toggle->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (reverb_width = new mono_ModulationSlider (new RWidthSlConfig()));
-
+    addAndMakeVisible(flt_release_2 = new mono_ModulationSlider(new FReleaseSlConfig(1)));
+
+    addAndMakeVisible(flt_sustain_time_2 = new mono_ModulationSlider(new FSustainTimeSlConfig(1)));
+
+    addAndMakeVisible(flt_sustain_2 = new mono_ModulationSlider(new FSustainSlConfig(1)));
+
+    addAndMakeVisible(flt_decay_2 = new mono_ModulationSlider(new FDecaySlConfig(1)));
+
+    addAndMakeVisible(flt_attack_2 = new mono_ModulationSlider(new FAttackSlConfig(1)));
+
+    addAndMakeVisible(flt_release_1 = new mono_ModulationSlider(new FReleaseSlConfig(0)));
+
+    addAndMakeVisible(flt_sustain_time_1 = new mono_ModulationSlider(new FSustainTimeSlConfig(0)));
+
+    addAndMakeVisible(flt_sustain_1 = new mono_ModulationSlider(new FSustainSlConfig(0)));
+
+    addAndMakeVisible(flt_decay_1 = new mono_ModulationSlider(new FDecaySlConfig(0)));
+
+    addAndMakeVisible(flt_attack_1 = new mono_ModulationSlider(new FAttackSlConfig(0)));
+
+    addAndMakeVisible(volume_master_meter = new SegmentedMeter());
+
+    addAndMakeVisible(label_monolisa = new Label(String(), TRANS("M O N I Q U E")));
+    label_monolisa->setFont(Font(30.00f, Font::plain));
+    label_monolisa->setJustificationType(Justification::centredRight);
+    label_monolisa->setEditable(false, false, false);
+    label_monolisa->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_monolisa->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_monolisa->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(filter_type_1_1 = new TextButton("VOICE 1"));
+    filter_type_1_1->setButtonText(TRANS("- 2PASS"));
+    filter_type_1_1->addListener(this);
+    filter_type_1_1->setColour(TextButton::buttonColourId, Colours::black);
+    filter_type_1_1->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    filter_type_1_1->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(filter_type_2_1 = new TextButton("VOICE 1"));
+    filter_type_2_1->setButtonText(TRANS("HP"));
+    filter_type_2_1->addListener(this);
+    filter_type_2_1->setColour(TextButton::buttonColourId, Colours::black);
+    filter_type_2_1->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    filter_type_2_1->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(filter_type_3_1 = new TextButton("VOICE 1"));
+    filter_type_3_1->setButtonText(TRANS("BAND"));
+    filter_type_3_1->addListener(this);
+    filter_type_3_1->setColour(TextButton::buttonColourId, Colours::black);
+    filter_type_3_1->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    filter_type_3_1->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(filter_type_1_2 = new TextButton("VOICE 1"));
+    filter_type_1_2->setButtonText(TRANS("- 2PASS"));
+    filter_type_1_2->addListener(this);
+    filter_type_1_2->setColour(TextButton::buttonColourId, Colours::black);
+    filter_type_1_2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    filter_type_1_2->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(filter_type_2_2 = new TextButton("VOICE 1"));
+    filter_type_2_2->setButtonText(TRANS("HP"));
+    filter_type_2_2->addListener(this);
+    filter_type_2_2->setColour(TextButton::buttonColourId, Colours::black);
+    filter_type_2_2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    filter_type_2_2->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(filter_type_3_2 = new TextButton("VOICE 1"));
+    filter_type_3_2->setButtonText(TRANS("BAND"));
+    filter_type_3_2->addListener(this);
+    filter_type_3_2->setColour(TextButton::buttonColourId, Colours::black);
+    filter_type_3_2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    filter_type_3_2->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(filter_type_1_3 = new TextButton("VOICE 1"));
+    filter_type_1_3->setButtonText(TRANS("- 2PASS"));
+    filter_type_1_3->addListener(this);
+    filter_type_1_3->setColour(TextButton::buttonColourId, Colours::black);
+    filter_type_1_3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    filter_type_1_3->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(filter_type_2_3 = new TextButton("VOICE 1"));
+    filter_type_2_3->setButtonText(TRANS("HP"));
+    filter_type_2_3->addListener(this);
+    filter_type_2_3->setColour(TextButton::buttonColourId, Colours::black);
+    filter_type_2_3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    filter_type_2_3->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(filter_type_3_3 = new TextButton("VOICE 1"));
+    filter_type_3_3->setButtonText(TRANS("BAND"));
+    filter_type_3_3->addListener(this);
+    filter_type_3_3->setColour(TextButton::buttonColourId, Colours::black);
+    filter_type_3_3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    filter_type_3_3->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(filter_type_5_1 = new TextButton("VOICE 1"));
+    filter_type_5_1->setButtonText(TRANS("PASS"));
+    filter_type_5_1->addListener(this);
+    filter_type_5_1->setColour(TextButton::buttonColourId, Colours::black);
+    filter_type_5_1->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    filter_type_5_1->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(filter_type_5_2 = new TextButton("VOICE 1"));
+    filter_type_5_2->setButtonText(TRANS("PASS"));
+    filter_type_5_2->addListener(this);
+    filter_type_5_2->setColour(TextButton::buttonColourId, Colours::black);
+    filter_type_5_2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    filter_type_5_2->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(filter_type_5_3 = new TextButton("VOICE 1"));
+    filter_type_5_3->setButtonText(TRANS("PASS"));
+    filter_type_5_3->addListener(this);
+    filter_type_5_3->setColour(TextButton::buttonColourId, Colours::black);
+    filter_type_5_3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    filter_type_5_3->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_sequence_2 = new TextButton(String()));
+    button_sequence_2->addListener(this);
+    button_sequence_2->setColour(TextButton::buttonColourId, Colours::black);
+    button_sequence_2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_sequence_2->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_sequence_3 = new TextButton(String()));
+    button_sequence_3->addListener(this);
+    button_sequence_3->setColour(TextButton::buttonColourId, Colours::black);
+    button_sequence_3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_sequence_3->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_sequence_4 = new TextButton(String()));
+    button_sequence_4->addListener(this);
+    button_sequence_4->setColour(TextButton::buttonColourId, Colours::black);
+    button_sequence_4->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_sequence_4->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_sequence_5 = new TextButton(String()));
+    button_sequence_5->addListener(this);
+    button_sequence_5->setColour(TextButton::buttonColourId, Colours::black);
+    button_sequence_5->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_sequence_5->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_sequence_6 = new TextButton(String()));
+    button_sequence_6->addListener(this);
+    button_sequence_6->setColour(TextButton::buttonColourId, Colours::black);
+    button_sequence_6->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_sequence_6->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_sequence_7 = new TextButton(String()));
+    button_sequence_7->addListener(this);
+    button_sequence_7->setColour(TextButton::buttonColourId, Colours::black);
+    button_sequence_7->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_sequence_7->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_sequence_8 = new TextButton(String()));
+    button_sequence_8->addListener(this);
+    button_sequence_8->setColour(TextButton::buttonColourId, Colours::black);
+    button_sequence_8->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_sequence_8->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_arp_speed_X2 = new TextButton(String()));
+    button_arp_speed_X2->setButtonText(TRANS("x2"));
+    button_arp_speed_X2->addListener(this);
+    button_arp_speed_X2->setColour(TextButton::buttonColourId, Colours::black);
+    button_arp_speed_X2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_arp_speed_X2->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_arp_speed_X05 = new TextButton(String()));
+    button_arp_speed_X05->setButtonText(TRANS("/2"));
+    button_arp_speed_X05->addListener(this);
+    button_arp_speed_X05->setColour(TextButton::buttonColourId, Colours::black);
+    button_arp_speed_X05->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_arp_speed_X05->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_sequence_9 = new TextButton(String()));
+    button_sequence_9->addListener(this);
+    button_sequence_9->setColour(TextButton::buttonColourId, Colours::black);
+    button_sequence_9->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_sequence_9->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_sequence_10 = new TextButton(String()));
+    button_sequence_10->addListener(this);
+    button_sequence_10->setColour(TextButton::buttonColourId, Colours::black);
+    button_sequence_10->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_sequence_10->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_sequence_11 = new TextButton(String()));
+    button_sequence_11->addListener(this);
+    button_sequence_11->setColour(TextButton::buttonColourId, Colours::black);
+    button_sequence_11->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_sequence_11->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_sequence_12 = new TextButton(String()));
+    button_sequence_12->addListener(this);
+    button_sequence_12->setColour(TextButton::buttonColourId, Colours::black);
+    button_sequence_12->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_sequence_12->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_sequence_13 = new TextButton(String()));
+    button_sequence_13->addListener(this);
+    button_sequence_13->setColour(TextButton::buttonColourId, Colours::black);
+    button_sequence_13->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_sequence_13->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_sequence_14 = new TextButton(String()));
+    button_sequence_14->addListener(this);
+    button_sequence_14->setColour(TextButton::buttonColourId, Colours::black);
+    button_sequence_14->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_sequence_14->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_sequence_15 = new TextButton(String()));
+    button_sequence_15->addListener(this);
+    button_sequence_15->setColour(TextButton::buttonColourId, Colours::black);
+    button_sequence_15->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_sequence_15->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_sequence_16 = new TextButton(String()));
+    button_sequence_16->addListener(this);
+    button_sequence_16->setColour(TextButton::buttonColourId, Colours::black);
+    button_sequence_16->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_sequence_16->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_arp_speed_X3 = new TextButton(String()));
+    button_arp_speed_X3->setButtonText(TRANS("x3"));
+    button_arp_speed_X3->addListener(this);
+    button_arp_speed_X3->setColour(TextButton::buttonColourId, Colours::black);
+    button_arp_speed_X3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_arp_speed_X3->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_arp_speed_X4 = new TextButton(String()));
+    button_arp_speed_X4->setButtonText(TRANS("x4"));
+    button_arp_speed_X4->addListener(this);
+    button_arp_speed_X4->setColour(TextButton::buttonColourId, Colours::black);
+    button_arp_speed_X4->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_arp_speed_X4->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_arp_speed_X025 = new TextButton(String()));
+    button_arp_speed_X025->setButtonText(TRANS("/4"));
+    button_arp_speed_X025->addListener(this);
+    button_arp_speed_X025->setColour(TextButton::buttonColourId, Colours::black);
+    button_arp_speed_X025->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_arp_speed_X025->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(combo_programm = new ComboBox(String()));
+    combo_programm->setEditableText(true);
+    combo_programm->setJustificationType(Justification::centredLeft);
+    combo_programm->setTextWhenNothingSelected(TRANS("SELECT PROGRAM"));
+    combo_programm->setTextWhenNoChoicesAvailable(TRANS("EMPTY BANK"));
+    combo_programm->addListener(this);
+
+    addAndMakeVisible(button_programm_left = new TextButton(String()));
+    button_programm_left->setButtonText(TRANS("<"));
+    button_programm_left->addListener(this);
+    button_programm_left->setColour(TextButton::buttonColourId, Colours::black);
+    button_programm_left->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_programm_left->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_programm_right = new TextButton(String()));
+    button_programm_right->setButtonText(TRANS(">"));
+    button_programm_right->addListener(this);
+    button_programm_right->setColour(TextButton::buttonColourId, Colours::black);
+    button_programm_right->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_programm_right->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_programm_replace = new TextButton(String()));
+    button_programm_replace->setButtonText(TRANS("REPLACE"));
+    button_programm_replace->addListener(this);
+    button_programm_replace->setColour(TextButton::buttonColourId, Colours::black);
+    button_programm_replace->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_programm_replace->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_programm_new = new TextButton(String()));
+    button_programm_new->setButtonText(TRANS("NEW"));
+    button_programm_new->addListener(this);
+    button_programm_new->setColour(TextButton::buttonColourId, Colours::black);
+    button_programm_new->setColour(TextButton::textColourOnId, Colour(0xffbcff00));
+    button_programm_new->setColour(TextButton::textColourOffId, Colour(0xffd0ff00));
+
+    addAndMakeVisible(button_open_oszi = new TextButton(String()));
+    button_open_oszi->setButtonText(TRANS("OSCI"));
+    button_open_oszi->addListener(this);
+    button_open_oszi->setColour(TextButton::buttonColourId, Colours::black);
+    button_open_oszi->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_open_oszi->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_open_midi_io_settings = new TextButton(String()));
+    button_open_midi_io_settings->setButtonText(TRANS("MIDI IO"));
+    button_open_midi_io_settings->addListener(this);
+    button_open_midi_io_settings->setColour(TextButton::buttonColourId, Colours::black);
+    button_open_midi_io_settings->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_open_midi_io_settings->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(combo_bank = new ComboBox(String()));
+    combo_bank->setEditableText(false);
+    combo_bank->setJustificationType(Justification::centredLeft);
+    combo_bank->setTextWhenNothingSelected(String());
+    combo_bank->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    combo_bank->addListener(this);
+
+    addAndMakeVisible(button_programm_load = new TextButton(String()));
+    button_programm_load->setButtonText(TRANS("LOAD"));
+    button_programm_load->addListener(this);
+    button_programm_load->setColour(TextButton::buttonColourId, Colours::black);
+    button_programm_load->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_programm_load->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(osc_1 = new mono_ModulationSlider(new OSCSlConfig(0)));
+
+    addAndMakeVisible(osc_2 = new mono_ModulationSlider(new OSCSlConfig(1)));
+
+    addAndMakeVisible(osc_3 = new mono_ModulationSlider(new OSCSlConfig(2)));
+
+    addAndMakeVisible(lfo_1 = new mono_ModulationSlider(new LFOSlConfig(0)));
+
+    addAndMakeVisible(flt_cutoff_1 = new mono_ModulationSlider(new FCutoffSLConfig(0)));
+
+    addAndMakeVisible(lfo_2 = new mono_ModulationSlider(new LFOSlConfig(1)));
+
+    addAndMakeVisible(lfo_3 = new mono_ModulationSlider(new LFOSlConfig(2)));
+
+    addAndMakeVisible(flt_cutoff_2 = new mono_ModulationSlider(new FCutoffSLConfig(1)));
+
+    addAndMakeVisible(flt_cutoff_3 = new mono_ModulationSlider(new FCutoffSLConfig(2)));
+
+    addAndMakeVisible(flt_input_1 = new mono_ModulationSlider(new InputSlConfig(0, 0)));
+
+    addAndMakeVisible(flt_input_2 = new mono_ModulationSlider(new InputSlConfig(0, 1)));
+
+    addAndMakeVisible(flt_input_3 = new mono_ModulationSlider(new InputSlConfig(0, 2)));
+
+    addAndMakeVisible(flt_compressor_1 = new mono_ModulationSlider(new FCompressorSlConfig(0)));
+
+    addAndMakeVisible(flt_distortion_1 = new mono_ModulationSlider(new GForceSlConfig(0)));
+
+    addAndMakeVisible(flt_input_6 = new mono_ModulationSlider(new InputSlConfig(1, 0)));
+
+    addAndMakeVisible(flt_input_7 = new mono_ModulationSlider(new InputSlConfig(1, 1)));
+
+    addAndMakeVisible(flt_input_8 = new mono_ModulationSlider(new InputSlConfig(1, 2)));
+
+    addAndMakeVisible(flt_compressor_2 = new mono_ModulationSlider(new FCompressorSlConfig(1)));
+
+    addAndMakeVisible(flt_input_11 = new mono_ModulationSlider(new InputSlConfig(2, 0)));
+
+    addAndMakeVisible(flt_input_12 = new mono_ModulationSlider(new InputSlConfig(2, 1)));
+
+    addAndMakeVisible(flt_input_13 = new mono_ModulationSlider(new InputSlConfig(2, 2)));
+
+    addAndMakeVisible(flt_compressor_3 = new mono_ModulationSlider(new FCompressorSlConfig(2)));
+
+    addAndMakeVisible(flt_resonance_1 = new mono_ModulationSlider(new FResonanceSLConfig(0)));
+
+    addAndMakeVisible(flt_gain_1 = new mono_ModulationSlider(new FGainSLConfig(0)));
+
+    addAndMakeVisible(flt_resonance_2 = new mono_ModulationSlider(new FResonanceSLConfig(1)));
+
+    addAndMakeVisible(flt_gain_2 = new mono_ModulationSlider(new FGainSLConfig(1)));
+
+    addAndMakeVisible(flt_resonance_3 = new mono_ModulationSlider(new FResonanceSLConfig(2)));
+
+    addAndMakeVisible(flt_gain_3 = new mono_ModulationSlider(new FGainSLConfig(2)));
+
+    addAndMakeVisible(flt_volume_1 = new mono_ModulationSlider(new FVolumeSlConfig(0)));
+
+    addAndMakeVisible(flt_volume_2 = new mono_ModulationSlider(new FVolumeSlConfig(1)));
+
+    addAndMakeVisible(flt_volume_3 = new mono_ModulationSlider(new FVolumeSlConfig(2)));
+
+    addAndMakeVisible(adsr_lfo_mix = new mono_ModulationSlider(new EnvLfoSlConfig(0)));
+
+    addAndMakeVisible(lfo_opt_2 = new mono_ModulationSlider(new EnvLfoSlConfig(1)));
+
+    addAndMakeVisible(lfo_opt_3 = new mono_ModulationSlider(new EnvLfoSlConfig(2)));
+
+    addAndMakeVisible(button_sequence_1 = new TextButton(String()));
+    button_sequence_1->addListener(this);
+    button_sequence_1->setColour(TextButton::buttonColourId, Colours::black);
+    button_sequence_1->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_sequence_1->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(flt_release_4 = new mono_ModulationSlider(new ReleaseSlConfig(MAIN_ENV)));
+
+    addAndMakeVisible(delay2 = new mono_ModulationSlider(new DelaySlConfig()));
+
+    addAndMakeVisible(volume = new mono_ModulationSlider(new VolumeConfig()));
+
+    addAndMakeVisible(flt_distortion_2 = new mono_ModulationSlider(new GForceSlConfig(1)));
+
+    addAndMakeVisible(flt_distortion_3 = new mono_ModulationSlider(new GForceSlConfig(2)));
+
+    addAndMakeVisible(button_arp_speed_XNORM = new TextButton(String()));
+    button_arp_speed_XNORM->setButtonText(TRANS("x1"));
+    button_arp_speed_XNORM->addListener(this);
+    button_arp_speed_XNORM->setColour(TextButton::buttonColourId, Colours::black);
+    button_arp_speed_XNORM->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_arp_speed_XNORM->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(flt_attack_5 = new mono_ModulationSlider(new FMFreqSlConfig()));
+
+    addAndMakeVisible(flt_attack_6 = new mono_ModulationSlider(new FMAmountSlConfig()));
+
+    addAndMakeVisible(osc_wave_1 = new mono_ModulationSlider(new WAVESlConfig(0)));
+
+    addAndMakeVisible(osc_wave_2 = new mono_ModulationSlider(new WAVESlConfig(1)));
+
+    addAndMakeVisible(sl_morhp_mix = new Slider("new slider"));
+    sl_morhp_mix->setRange(0, 3000, 0.01);
+    sl_morhp_mix->setSliderStyle(Slider::LinearHorizontal);
+    sl_morhp_mix->setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
+    sl_morhp_mix->addListener(this);
+
+    addAndMakeVisible(button_programm_delete = new TextButton(String()));
+    button_programm_delete->setButtonText(TRANS("DELETE"));
+    button_programm_delete->addListener(this);
+    button_programm_delete->setColour(TextButton::buttonColourId, Colours::black);
+    button_programm_delete->setColour(TextButton::textColourOnId, Colours::red);
+    button_programm_delete->setColour(TextButton::textColourOffId, Colour(0xffff7900));
+
+    addAndMakeVisible(button_open_config = new TextButton(String()));
+    button_open_config->setButtonText(TRANS("CFG"));
+    button_open_config->addListener(this);
+    button_open_config->setColour(TextButton::buttonColourId, Colours::black);
+    button_open_config->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_open_config->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(filter_type_6_1 = new TextButton("VOICE 1"));
+    filter_type_6_1->setButtonText(TRANS("LP"));
+    filter_type_6_1->addListener(this);
+    filter_type_6_1->setColour(TextButton::buttonColourId, Colours::black);
+    filter_type_6_1->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    filter_type_6_1->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(filter_type_6_2 = new TextButton("VOICE 1"));
+    filter_type_6_2->setButtonText(TRANS("LP"));
+    filter_type_6_2->addListener(this);
+    filter_type_6_2->setColour(TextButton::buttonColourId, Colours::black);
+    filter_type_6_2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    filter_type_6_2->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(filter_type_6_3 = new TextButton("VOICE 1"));
+    filter_type_6_3->setButtonText(TRANS("LP"));
+    filter_type_6_3->addListener(this);
+    filter_type_6_3->setColour(TextButton::buttonColourId, Colours::black);
+    filter_type_6_3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    filter_type_6_3->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(label_monolisa2 =
+                          new Label(String(), TRANS("M   O   N   O   P   L   U   G   S")));
+    label_monolisa2->setFont(Font(30.00f, Font::plain));
+    label_monolisa2->setJustificationType(Justification::centredRight);
+    label_monolisa2->setEditable(false, false, false);
+    label_monolisa2->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_monolisa2->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_monolisa2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(button_midi_learn = new TextButton(String()));
+    button_midi_learn->setButtonText(TRANS("LEARN"));
+    button_midi_learn->addListener(this);
+    button_midi_learn->setColour(TextButton::buttonColourId, Colours::black);
+    button_midi_learn->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_midi_learn->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_ctrl_toggle = new TextButton(String()));
+    button_ctrl_toggle->setButtonText(TRANS("SHIFT"));
+    button_ctrl_toggle->addListener(this);
+    button_ctrl_toggle->setColour(TextButton::buttonColourId, Colours::black);
+    button_ctrl_toggle->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_ctrl_toggle->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(colour = new mono_ModulationSlider(new FColourSlConfig()));
+
+    addAndMakeVisible(volume2 = new mono_ModulationSlider(new BPMSlConfig()));
+
+    addAndMakeVisible(button_open_morph = new TextButton(String()));
+    button_open_morph->setButtonText(TRANS("CFG"));
+    button_open_morph->addListener(this);
+    button_open_morph->setColour(TextButton::buttonColourId, Colours::black);
+    button_open_morph->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_open_morph->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(effect_finalizer_switch = new TextButton(String()));
+    effect_finalizer_switch->setButtonText(TRANS("F X"));
+    effect_finalizer_switch->addListener(this);
+    effect_finalizer_switch->setColour(TextButton::buttonColourId, Colours::black);
+    effect_finalizer_switch->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    effect_finalizer_switch->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(label_ui_headline2 = new Label(String(), TRANS("M-OSC")));
+    label_ui_headline2->setFont(Font(30.00f, Font::plain));
+    label_ui_headline2->setJustificationType(Justification::centred);
+    label_ui_headline2->setEditable(false, false, false);
+    label_ui_headline2->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_ui_headline2->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_ui_headline2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_ui_headline3 = new Label(String(), TRANS("M-FLT")));
+    label_ui_headline3->setFont(Font(30.00f, Font::plain));
+    label_ui_headline3->setJustificationType(Justification::centred);
+    label_ui_headline3->setEditable(false, false, false);
+    label_ui_headline3->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_ui_headline3->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_ui_headline3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_ui_headline5 = new Label(String(), TRANS("M-FX")));
+    label_ui_headline5->setFont(Font(30.00f, Font::plain));
+    label_ui_headline5->setJustificationType(Justification::centred);
+    label_ui_headline5->setEditable(false, false, false);
+    label_ui_headline5->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_ui_headline5->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_ui_headline5->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_ui_headline6 = new Label(String(), TRANS("M-ARP")));
+    label_ui_headline6->setFont(Font(30.00f, Font::plain));
+    label_ui_headline6->setJustificationType(Justification::centred);
+    label_ui_headline6->setEditable(false, false, false);
+    label_ui_headline6->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_ui_headline6->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_ui_headline6->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(button_values_toggle = new TextButton(String()));
+    button_values_toggle->setButtonText(TRANS("VAL"));
+    button_values_toggle->addListener(this);
+    button_values_toggle->setColour(TextButton::buttonColourId, Colours::black);
+    button_values_toggle->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_values_toggle->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(reverb_width = new mono_ModulationSlider(new RWidthSlConfig()));
 
     //[UserPreSize]
-    SET_SLIDER_STYLE(sl_morhp_mix,VALUE_SLIDER);
-    
+    SET_SLIDER_STYLE(sl_morhp_mix, VALUE_SLIDER);
+
     last_bank = -1;
     last_programm = -1;
     is_in_help_mode = false;
 
     peak_meter_thread = new TimeSliceThread("Monolisa-PeakThread");
-    peak_meter_thread->startThread (2);
-    peak_meter_thread->addTimeSliceClient (volume_master_meter);
+    peak_meter_thread->startThread(2);
+    peak_meter_thread->addTimeSliceClient(volume_master_meter);
     _app_instance_store->audio_processor->peak_meter = volume_master_meter;
 
-    voice = reinterpret_cast< MONOVoice* >( _app_instance_store->audio_processor->synth.getVoice(0) );
+    voice = reinterpret_cast<MONOVoice *>(_app_instance_store->audio_processor->synth.getVoice(0));
     synth_data = _app_instance_store->audio_processor->synth_data.get();
     last_ctrl_mode = synth_data->ctrl = false;
 
     last_shuffle = -1;
-    sequence_buttons.add( button_sequence_1 );
-    sequence_buttons.add( button_sequence_2 );
-    sequence_buttons.add( button_sequence_3 );
-    sequence_buttons.add( button_sequence_4 );
-    sequence_buttons.add( button_sequence_5 );
-    sequence_buttons.add( button_sequence_6 );
-    sequence_buttons.add( button_sequence_7 );
-    sequence_buttons.add( button_sequence_8 );
-    sequence_buttons.add( button_sequence_9 );
-    sequence_buttons.add( button_sequence_10 );
-    sequence_buttons.add( button_sequence_11 );
-    sequence_buttons.add( button_sequence_12 );
-    sequence_buttons.add( button_sequence_13 );
-    sequence_buttons.add( button_sequence_14 );
-    sequence_buttons.add( button_sequence_15 );
-    sequence_buttons.add( button_sequence_16 );
+    sequence_buttons.add(button_sequence_1);
+    sequence_buttons.add(button_sequence_2);
+    sequence_buttons.add(button_sequence_3);
+    sequence_buttons.add(button_sequence_4);
+    sequence_buttons.add(button_sequence_5);
+    sequence_buttons.add(button_sequence_6);
+    sequence_buttons.add(button_sequence_7);
+    sequence_buttons.add(button_sequence_8);
+    sequence_buttons.add(button_sequence_9);
+    sequence_buttons.add(button_sequence_10);
+    sequence_buttons.add(button_sequence_11);
+    sequence_buttons.add(button_sequence_12);
+    sequence_buttons.add(button_sequence_13);
+    sequence_buttons.add(button_sequence_14);
+    sequence_buttons.add(button_sequence_15);
+    sequence_buttons.add(button_sequence_16);
 
-    for( int i = 0 ; i != getNumChildComponents() ; ++i )
+    for (int i = 0; i != getNumChildComponents(); ++i)
     {
         getChildComponent(i)->setOpaque(true);
         getChildComponent(i)->setRepaintsOnMouseActivity(false);
@@ -924,45 +1013,43 @@ UiEditorSynthLite::UiEditorSynthLite ()
     button_open_midi_io_settings->setColour(TextButton::buttonColourId, button_off);
     effect_finalizer_switch->setColour(TextButton::buttonColourId, button_off);
 
-
     setOpaque(true);
 
     combo_programm->setEditableText(false);
 
-    if( false )
+    if (false)
     {
-    //[/UserPreSize]
+        //[/UserPreSize]
 
-    setSize (1430, 1080);
+        setSize(1430, 1080);
 
-
-    //[Constructor] You can add your own custom stuff here..
+        //[Constructor] You can add your own custom stuff here..
     }
-    addAndMakeVisible (resizer = new ResizableCornerComponent (this, &resizeLimits));
+    addAndMakeVisible(resizer = new ResizableCornerComponent(this, &resizeLimits));
 #ifdef IS_PLUGIN
-    //resizeLimits.setSizeLimits (1440.0f*0.7f, 1080.0f*0.7f, 1440*10, 1080*10);
-    //resizeLimits.setFixedAspectRatio( 1440.0f/1080.0f );
+    // resizeLimits.setSizeLimits (1440.0f*0.7f, 1080.0f*0.7f, 1440*10, 1080*10);
+    // resizeLimits.setFixedAspectRatio( 1440.0f/1080.0f );
 #else
     resizer->setVisible(false);
 #endif
-    //setSize (1440.0f*0.8f, 1080.0f*0.8f);
-    //setSize (1440.0f*0.95f, 1080.0f*0.95f);
-    //setSize (1280, 900);
-    //setBounds(0,0,1430.0f, 1080.0f);
-    //setSize (1430.0f, 1080.0f); // INTROJUCER SIZE
+    // setSize (1440.0f*0.8f, 1080.0f*0.8f);
+    // setSize (1440.0f*0.95f, 1080.0f*0.95f);
+    // setSize (1280, 900);
+    // setBounds(0,0,1430.0f, 1080.0f);
+    // setSize (1430.0f, 1080.0f); // INTROJUCER SIZE
 
-    setSize(original_w*0.8f, original_h*0.8f);
-    //setSize (1430.0f, 1080.0f); // INTROJUCER SIZE
+    setSize(original_w * 0.8f, original_h * 0.8f);
+    // setSize (1430.0f, 1080.0f); // INTROJUCER SIZE
 
     keyboard->setLowestVisibleKey(50);
-    keyboard->setAvailableRange( 0, 127 );
+    keyboard->setAvailableRange(0, 127);
     keyboard->setKeyWidth(45);
 
-    //setVisible(true);
+    // setVisible(true);
     AppInstanceStore::getInstance()->editor = this;
-    mono_UiRefresher::getInstance()->startTimer( UI_REFRESH_RATE );
+    mono_UiRefresher::getInstance()->startTimer(UI_REFRESH_RATE);
 
-    //UiLookAndFeel::getInstance()->colours.edit();
+    // UiLookAndFeel::getInstance()->colours.edit();
     //[/Constructor]
 }
 
@@ -976,9 +1063,9 @@ UiEditorSynthLite::~UiEditorSynthLite()
     AppInstanceStore::getInstance()->editor = nullptr;
     Thread::sleep(500); // to be sure we are no more in a update run
 
-    if( MONOVoice::get_amp_painter() )
+    if (MONOVoice::get_amp_painter())
     {
-        removeChildComponent( MONOVoice::get_amp_painter() );
+        removeChildComponent(MONOVoice::get_amp_painter());
         MONOVoice::kill_amp_painter();
     }
 
@@ -1150,428 +1237,427 @@ UiEditorSynthLite::~UiEditorSynthLite()
     button_values_toggle = nullptr;
     reverb_width = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiEditorSynthLite::paint (Graphics& g)
+void UiEditorSynthLite::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-    g.fillAll (Colour (0xff161616));
+    g.fillAll(Colour(0xff161616));
 #include "UiDynamicSizeStart.h"
     //[/UserPrePaint]
 
-    g.fillAll (Colour (0xff101010));
+    g.fillAll(Colour(0xff101010));
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (170.0f, 20.0f, 155.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(170.0f, 20.0f, 155.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xff101010));
-    g.fillRoundedRectangle (263.0f, 15.0f, 5.0f, 15.0f, 1.000f);
+    g.setColour(Colour(0xff101010));
+    g.fillRoundedRectangle(263.0f, 15.0f, 5.0f, 15.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (165.0f, 15.0f, 100.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(165.0f, 15.0f, 100.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xff101010));
-    g.fillRoundedRectangle (203.0f, 10.0f, 5.0f, 15.0f, 1.000f);
+    g.setColour(Colour(0xff101010));
+    g.fillRoundedRectangle(203.0f, 10.0f, 5.0f, 15.0f, 1.000f);
 
-    g.setColour (Colour (0xff161616));
-    g.fillRoundedRectangle (155.0f, 178.0f, 10.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xff161616));
+    g.fillRoundedRectangle(155.0f, 178.0f, 10.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1230.0f, 335.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1230.0f, 335.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1380.0f, 335.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1380.0f, 335.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1140.0f, 335.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1140.0f, 335.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1080.0f, 335.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1080.0f, 335.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1020.0f, 335.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1020.0f, 335.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (540.0f, 340.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(540.0f, 340.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (770.0f, 340.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(770.0f, 340.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (760.0f, 335.0f, 620.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(760.0f, 335.0f, 620.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (770.0f, 340.0f, 81.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(770.0f, 340.0f, 81.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (850.0f, 340.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(850.0f, 340.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (760.0f, 335.0f, 1.0f, 15.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(760.0f, 335.0f, 1.0f, 15.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (750.0f, 340.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(750.0f, 340.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (830.0f, 345.0f, 40.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(830.0f, 345.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (410.0f, 345.0f, 280.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(410.0f, 345.0f, 280.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (540.0f, 340.0f, 210.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(540.0f, 340.0f, 210.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (180.0f, 170.0f, 1230.0f, 2.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(180.0f, 170.0f, 1230.0f, 2.0f, 1.000f);
 
-    g.setColour (Colour (0xff101010));
-    g.fillRoundedRectangle (293.0f, 160.0f, 5.0f, 25.0f, 1.000f);
+    g.setColour(Colour(0xff101010));
+    g.fillRoundedRectangle(293.0f, 160.0f, 5.0f, 25.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (20.0f, 650.0f, 1320.0f, 2.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(20.0f, 650.0f, 1320.0f, 2.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (15.0f, 30.0f, 1.0f, 470.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(15.0f, 30.0f, 1.0f, 470.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (540.0f, 20.0f, 210.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(540.0f, 20.0f, 210.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (20.0f, 810.0f, 1060.0f, 2.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(20.0f, 810.0f, 1060.0f, 2.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (500.0f, 810.0f, 910.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(500.0f, 810.0f, 910.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (20.0f, 814.0f, 1020.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(20.0f, 814.0f, 1020.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (20.0f, 817.0f, 940.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(20.0f, 817.0f, 940.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (20.0f, 820.0f, 800.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(20.0f, 820.0f, 800.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (20.0f, 823.0f, 150.0f, 1.0f, 10.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(20.0f, 823.0f, 150.0f, 1.0f, 10.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (15.0f, 500.0f, 71.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(15.0f, 500.0f, 71.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (150.0f, 680.0f, 40.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(150.0f, 680.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (80.0f, 680.0f, 10.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(80.0f, 680.0f, 10.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (410.0f, 25.0f, 280.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(410.0f, 25.0f, 280.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (30.0f, 25.0f, 110.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(30.0f, 25.0f, 110.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (85.0f, 10.0f, 120.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(85.0f, 10.0f, 120.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (325.0f, 20.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(325.0f, 20.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (205.0f, 10.0f, 1.0f, 16.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(205.0f, 10.0f, 1.0f, 16.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (85.0f, 10.0f, 1.0f, 15.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(85.0f, 10.0f, 1.0f, 15.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (15.0f, 30.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(15.0f, 30.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (30.0f, 505.0f, 110.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(30.0f, 505.0f, 110.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (85.0f, 500.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(85.0f, 500.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (830.0f, 25.0f, 40.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(830.0f, 25.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (750.0f, 20.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(750.0f, 20.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (595.0f, 645.0f, 415.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(595.0f, 645.0f, 415.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (950.0f, 640.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(950.0f, 640.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (595.0f, 640.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(595.0f, 640.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1010.0f, 640.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1010.0f, 640.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (990.0f, 640.0f, 40.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(990.0f, 640.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (760.0f, 15.0f, 1.0f, 15.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(760.0f, 15.0f, 1.0f, 15.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (850.0f, 20.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(850.0f, 20.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (770.0f, 20.0f, 81.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(770.0f, 20.0f, 81.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (760.0f, 15.0f, 620.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(760.0f, 15.0f, 620.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (770.0f, 20.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(770.0f, 20.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (85.0f, 520.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(85.0f, 520.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (85.0f, 515.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(85.0f, 515.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1260.0f, 680.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1260.0f, 680.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1265.0f, 675.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1265.0f, 675.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (540.0f, 20.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(540.0f, 20.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1020.0f, 15.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1020.0f, 15.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1080.0f, 15.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1080.0f, 15.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1140.0f, 15.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1140.0f, 15.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1380.0f, 15.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1380.0f, 15.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (180.0f, 330.0f, 1230.0f, 2.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(180.0f, 330.0f, 1230.0f, 2.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (180.0f, 490.0f, 1230.0f, 2.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(180.0f, 490.0f, 1230.0f, 2.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1230.0f, 15.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1230.0f, 15.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (295.0f, 160.0f, 1.0f, 25.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(295.0f, 160.0f, 1.0f, 25.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (260.0f, 160.0f, 40.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(260.0f, 160.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xff101010));
-    g.fillRoundedRectangle (353.0f, 160.0f, 5.0f, 25.0f, 1.000f);
+    g.setColour(Colour(0xff101010));
+    g.fillRoundedRectangle(353.0f, 160.0f, 5.0f, 25.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (355.0f, 160.0f, 1.0f, 25.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(355.0f, 160.0f, 1.0f, 25.0f, 1.000f);
 
-    g.setColour (Colour (0xff101010));
-    g.fillRoundedRectangle (233.0f, 160.0f, 5.0f, 25.0f, 1.000f);
+    g.setColour(Colour(0xff101010));
+    g.fillRoundedRectangle(233.0f, 160.0f, 5.0f, 25.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (235.0f, 160.0f, 1.0f, 25.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(235.0f, 160.0f, 1.0f, 25.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (200.0f, 160.0f, 40.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(200.0f, 160.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (320.0f, 160.0f, 40.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(320.0f, 160.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xff101010));
-    g.fillRoundedRectangle (293.0f, 320.0f, 5.0f, 25.0f, 1.000f);
+    g.setColour(Colour(0xff101010));
+    g.fillRoundedRectangle(293.0f, 320.0f, 5.0f, 25.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (295.0f, 320.0f, 1.0f, 25.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(295.0f, 320.0f, 1.0f, 25.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (260.0f, 320.0f, 40.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(260.0f, 320.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xff101010));
-    g.fillRoundedRectangle (353.0f, 320.0f, 5.0f, 25.0f, 1.000f);
+    g.setColour(Colour(0xff101010));
+    g.fillRoundedRectangle(353.0f, 320.0f, 5.0f, 25.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (355.0f, 320.0f, 1.0f, 25.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(355.0f, 320.0f, 1.0f, 25.0f, 1.000f);
 
-    g.setColour (Colour (0xff101010));
-    g.fillRoundedRectangle (233.0f, 320.0f, 5.0f, 25.0f, 1.000f);
+    g.setColour(Colour(0xff101010));
+    g.fillRoundedRectangle(233.0f, 320.0f, 5.0f, 25.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (235.0f, 320.0f, 1.0f, 25.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(235.0f, 320.0f, 1.0f, 25.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (200.0f, 320.0f, 40.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(200.0f, 320.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (320.0f, 320.0f, 40.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(320.0f, 320.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1360.0f, 160.0f, 40.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1360.0f, 160.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1380.0f, 160.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1380.0f, 160.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xff101010));
-    g.fillRoundedRectangle (1288.0f, 320.0f, 5.0f, 30.0f, 1.000f);
+    g.setColour(Colour(0xff101010));
+    g.fillRoundedRectangle(1288.0f, 320.0f, 5.0f, 30.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1290.0f, 325.0f, 1.0f, 25.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1290.0f, 325.0f, 1.0f, 25.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1290.0f, 325.0f, 90.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1290.0f, 325.0f, 90.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1360.0f, 320.0f, 40.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1360.0f, 320.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1380.0f, 320.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1380.0f, 320.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (265.0f, 15.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(265.0f, 15.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (540.0f, 180.0f, 210.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(540.0f, 180.0f, 210.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (410.0f, 185.0f, 280.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(410.0f, 185.0f, 280.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (830.0f, 185.0f, 40.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(830.0f, 185.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (750.0f, 180.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(750.0f, 180.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (760.0f, 175.0f, 1.0f, 15.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(760.0f, 175.0f, 1.0f, 15.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (850.0f, 180.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(850.0f, 180.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (770.0f, 180.0f, 81.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(770.0f, 180.0f, 81.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (760.0f, 175.0f, 620.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(760.0f, 175.0f, 620.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (770.0f, 180.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(770.0f, 180.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (540.0f, 180.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(540.0f, 180.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1020.0f, 175.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1020.0f, 175.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1080.0f, 175.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1080.0f, 175.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1140.0f, 175.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1140.0f, 175.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1380.0f, 175.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1380.0f, 175.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1230.0f, 175.0f, 1.0f, 10.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1230.0f, 175.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour (Colour (0xff101010));
-    g.fillRoundedRectangle (1288.0f, 160.0f, 5.0f, 30.0f, 1.000f);
+    g.setColour(Colour(0xff101010));
+    g.fillRoundedRectangle(1288.0f, 160.0f, 5.0f, 30.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1290.0f, 165.0f, 1.0f, 25.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1290.0f, 165.0f, 1.0f, 25.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (1290.0f, 165.0f, 90.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(1290.0f, 165.0f, 90.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (30.0f, 185.0f, 110.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(30.0f, 185.0f, 110.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (85.0f, 180.0f, 80.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(85.0f, 180.0f, 80.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (85.0f, 180.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(85.0f, 180.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (165.0f, 15.0f, 1.0f, 166.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(165.0f, 15.0f, 1.0f, 166.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (30.0f, 345.0f, 110.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(30.0f, 345.0f, 110.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (85.0f, 340.0f, 85.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(85.0f, 340.0f, 85.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (85.0f, 340.0f, 1.0f, 5.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(85.0f, 340.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (170.0f, 20.0f, 1.0f, 321.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(170.0f, 20.0f, 1.0f, 321.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (15.0f, 190.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(15.0f, 190.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (15.0f, 30.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(15.0f, 30.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (15.0f, 160.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(15.0f, 160.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (15.0f, 320.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(15.0f, 320.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (15.0f, 350.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(15.0f, 350.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (15.0f, 480.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(15.0f, 480.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (915.0f, 255.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(915.0f, 255.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (915.0f, 205.0f, 1.0f, 51.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(915.0f, 205.0f, 1.0f, 51.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (915.0f, 230.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(915.0f, 230.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (915.0f, 205.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(915.0f, 205.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (915.0f, 95.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(915.0f, 95.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (915.0f, 45.0f, 1.0f, 51.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(915.0f, 45.0f, 1.0f, 51.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (915.0f, 70.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(915.0f, 70.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (915.0f, 45.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(915.0f, 45.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (915.0f, 415.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(915.0f, 415.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (915.0f, 365.0f, 1.0f, 51.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(915.0f, 365.0f, 1.0f, 51.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (915.0f, 390.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(915.0f, 390.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (915.0f, 365.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(915.0f, 365.0f, 5.0f, 1.0f, 1.000f);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -1582,180 +1668,181 @@ void UiEditorSynthLite::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    morpher_4->setBounds (1320 - 60, 510, 60, 130);
-    morpher_3->setBounds (1260 - 60, 510, 60, 130);
-    morpher_2->setBounds (1200 - 60, 510, 60, 130);
-    morpher_1->setBounds (1140 - 60, 510, 60, 130);
-    label_effect_hider->setBounds (1040 - 540, 648 - 15, 540, 15);
-    eq_9->setBounds (1040 - 60, 640 - 130, 60, 130);
-    eq_8->setBounds (980 - 60, 640 - 130, 60, 130);
-    eq_7->setBounds (920 - 60, 640 - 130, 60, 130);
-    eq_6->setBounds (860 - 60, 640 - 130, 60, 130);
-    eq_5->setBounds (800 - 60, 640 - 130, 60, 130);
-    eq_4->setBounds (740 - 60, 640 - 130, 60, 130);
-    eq_3->setBounds (680 - 60, 640 - 130, 60, 130);
-    eq_2->setBounds (620 - 60, 640 - 130, 60, 130);
-    eq_1->setBounds (560 - 60, 640 - 130, 60, 130);
-    bypass->setBounds (1040 - 60, 640 - 130, 60, 130);
-    chorus_modulation->setBounds (950 - 60, 640 - 130, 60, 130);
-    reverb_dry->setBounds (770 - 60, 640 - 130, 60, 130);
-    reverb_room->setBounds (650 - 60, 640 - 130, 60, 130);
-    osc_wave_3->setBounds (80 - 60, 480 - 130, 60, 130);
-    keyboard->setBounds (1428 - 1426, 1078 - 180, 1426, 180);
-    glide2->setBounds (150 - 60, 800 - 130, 60, 130);
-    arp_step_16->setBounds (1180 - 60, 800 - 130, 60, 130);
-    arp_step_15->setBounds (1120 - 60, 800 - 130, 60, 130);
-    arp_step_14->setBounds (1060 - 60, 800 - 130, 60, 130);
-    arp_step_13->setBounds (1000 - 60, 800 - 130, 60, 130);
-    arp_step_12->setBounds (930 - 60, 800 - 130, 60, 130);
-    arp_step_11->setBounds (870 - 60, 800 - 130, 60, 130);
-    arp_step_10->setBounds (810 - 60, 800 - 130, 60, 130);
-    arp_step_9->setBounds (750 - 60, 800 - 130, 60, 130);
-    arp_step_8->setBounds (680 - 60, 800 - 130, 60, 130);
-    arp_step_7->setBounds (620 - 60, 800 - 130, 60, 130);
-    arp_step_6->setBounds (560 - 60, 800 - 130, 60, 130);
-    arp_step_5->setBounds (500 - 60, 800 - 130, 60, 130);
-    arp_step_4->setBounds (430 - 60, 800 - 130, 60, 130);
-    arp_step_3->setBounds (370 - 60, 800 - 130, 60, 130);
-    arp_step_2->setBounds (310 - 60, 800 - 130, 60, 130);
-    arp_step_1->setBounds (250 - 60, 800 - 130, 60, 130);
-    shuffle->setBounds (80 - 60, 800 - 130, 60, 130);
-    flt_sustain_4->setBounds (370 - 60, 640 - 130, 60, 130);
-    flt_decay_4->setBounds (310 - 60, 640 - 130, 60, 130);
-    flt_attack_4->setBounds (250 - 60, 640 - 130, 60, 130);
-    flt_release_3->setBounds (700 - 60, 480 - 130, 60, 130);
-    flt_sustain_time_3->setBounds (640 - 60, 480 - 130, 60, 130);
-    flt_sustain_3->setBounds (580 - 60, 480 - 130, 60, 130);
-    flt_decay_3->setBounds (520 - 60, 480 - 130, 60, 130);
-    flt_attack_3->setBounds (460 - 60, 480 - 130, 60, 130);
-    flt_release_2->setBounds (700 - 60, 320 - 130, 60, 130);
-    flt_sustain_time_2->setBounds (640 - 60, 320 - 130, 60, 130);
-    flt_sustain_2->setBounds (580 - 60, 320 - 130, 60, 130);
-    flt_decay_2->setBounds (520 - 60, 320 - 130, 60, 130);
-    flt_attack_2->setBounds (460 - 60, 320 - 130, 60, 130);
-    flt_release_1->setBounds (700 - 60, 160 - 130, 60, 130);
-    flt_sustain_time_1->setBounds (640 - 60, 160 - 130, 60, 130);
-    flt_sustain_1->setBounds (580 - 60, 160 - 130, 60, 130);
-    flt_decay_1->setBounds (520 - 60, 160 - 130, 60, 130);
-    flt_attack_1->setBounds (460 - 60, 160 - 130, 60, 130);
-    volume_master_meter->setBounds (1340, 510, 10, 128);
-    label_monolisa->setBounds (1395 - 435, 910 - 110, 435, 110);
-    filter_type_1_1->setBounds (980 - 60, 82, 60, 24);
-    filter_type_2_1->setBounds (980 - 60, 57, 60, 25);
-    filter_type_3_1->setBounds (980 - 60, 106, 60, 25);
-    filter_type_1_2->setBounds (980 - 60, 242, 60, 24);
-    filter_type_2_2->setBounds (980 - 60, 217, 60, 25);
-    filter_type_3_2->setBounds (980 - 60, 291 - 25, 60, 25);
-    filter_type_1_3->setBounds (980 - 60, 426 - 24, 60, 24);
-    filter_type_2_3->setBounds (980 - 60, 377, 60, 25);
-    filter_type_3_3->setBounds (980 - 60, 426, 60, 25);
-    filter_type_5_1->setBounds (980 - 60, 131, 60, 27);
-    filter_type_5_2->setBounds (980 - 60, 291, 60, 27);
-    filter_type_5_3->setBounds (980 - 60, 451, 60, 27);
-    button_sequence_2->setBounds (310 - 60, 690 - 20, 60, 20);
-    button_sequence_3->setBounds (370 - 60, 690 - 20, 60, 20);
-    button_sequence_4->setBounds (430 - 60, 690 - 20, 60, 20);
-    button_sequence_5->setBounds (500 - 60, 690 - 20, 60, 20);
-    button_sequence_6->setBounds (560 - 60, 690 - 20, 60, 20);
-    button_sequence_7->setBounds (620 - 60, 690 - 20, 60, 20);
-    button_sequence_8->setBounds (680 - 60, 690 - 20, 60, 20);
-    button_arp_speed_X2->setBounds (1260 - 60, 760 - 20, 60, 20);
-    button_arp_speed_X05->setBounds (1260 - 60, 740 - 20, 60, 20);
-    button_sequence_9->setBounds (750 - 60, 690 - 20, 60, 20);
-    button_sequence_10->setBounds (810 - 60, 690 - 20, 60, 20);
-    button_sequence_11->setBounds (870 - 60, 690 - 20, 60, 20);
-    button_sequence_12->setBounds (930 - 60, 690 - 20, 60, 20);
-    button_sequence_13->setBounds (1000 - 60, 690 - 20, 60, 20);
-    button_sequence_14->setBounds (1060 - 60, 690 - 20, 60, 20);
-    button_sequence_15->setBounds (1120 - 60, 690 - 20, 60, 20);
-    button_sequence_16->setBounds (1180 - 60, 690 - 20, 60, 20);
-    button_arp_speed_X3->setBounds (1260 - 60, 780 - 20, 60, 20);
-    button_arp_speed_X4->setBounds (1260 - 60, 800 - 20, 60, 20);
-    button_arp_speed_X025->setBounds (1260 - 60, 720 - 20, 60, 20);
-    combo_programm->setBounds (620 - 310, 870 - 30, 310, 30);
-    button_programm_left->setBounds (250 - 60, 870 - 30, 60, 30);
-    button_programm_right->setBounds (680 - 60, 870 - 30, 60, 30);
-    button_programm_replace->setBounds (870 - 60, 870 - 30, 60, 30);
-    button_programm_new->setBounds (810 - 60, 870 - 30, 60, 30);
-    button_open_oszi->setBounds (1030 - 60, 870 - 30, 60, 30);
-    button_open_midi_io_settings->setBounds (70 - 50, 870 - 30, 50, 30);
-    combo_bank->setBounds (310 - 60, 870 - 30, 60, 30);
-    button_programm_load->setBounds (750 - 60, 870 - 30, 60, 30);
-    osc_1->setBounds (150 - 60, 160 - 130, 60, 130);
-    osc_2->setBounds (150 - 60, 320 - 130, 60, 130);
-    osc_3->setBounds (150 - 60, 480 - 130, 60, 130);
-    lfo_1->setBounds (880 - 60, 160 - 130, 60, 130);
-    flt_cutoff_1->setBounds (1050 - 60, 160 - 130, 60, 130);
-    lfo_2->setBounds (880 - 60, 320 - 130, 60, 130);
-    lfo_3->setBounds (880 - 60, 480 - 130, 60, 130);
-    flt_cutoff_2->setBounds (1050 - 60, 320 - 130, 60, 130);
-    flt_cutoff_3->setBounds (1050 - 60, 480 - 130, 60, 130);
-    flt_input_1->setBounds (250 - 60, 160 - 130, 60, 130);
-    flt_input_2->setBounds (310 - 60, 160 - 130, 60, 130);
-    flt_input_3->setBounds (370 - 60, 160 - 130, 60, 130);
-    flt_compressor_1->setBounds (1320 - 60, 160 - 130, 60, 130);
-    flt_distortion_1->setBounds (1260 - 60, 160 - 130, 60, 130);
-    flt_input_6->setBounds (250 - 60, 320 - 130, 60, 130);
-    flt_input_7->setBounds (310 - 60, 320 - 130, 60, 130);
-    flt_input_8->setBounds (370 - 60, 320 - 130, 60, 130);
-    flt_compressor_2->setBounds (1320 - 60, 320 - 130, 60, 130);
-    flt_input_11->setBounds (250 - 60, 480 - 130, 60, 130);
-    flt_input_12->setBounds (310 - 60, 480 - 130, 60, 130);
-    flt_input_13->setBounds (370 - 60, 480 - 130, 60, 130);
-    flt_compressor_3->setBounds (1320 - 60, 480 - 130, 60, 130);
-    flt_resonance_1->setBounds (1110 - 60, 160 - 130, 60, 130);
-    flt_gain_1->setBounds (1170 - 60, 160 - 130, 60, 130);
-    flt_resonance_2->setBounds (1110 - 60, 320 - 130, 60, 130);
-    flt_gain_2->setBounds (1170 - 60, 320 - 130, 60, 130);
-    flt_resonance_3->setBounds (1110 - 60, 480 - 130, 60, 130);
-    flt_gain_3->setBounds (1170 - 60, 480 - 130, 60, 130);
-    flt_volume_1->setBounds (1410 - 60, 160 - 130, 60, 130);
-    flt_volume_2->setBounds (1410 - 60, 320 - 130, 60, 130);
-    flt_volume_3->setBounds (1410 - 60, 480 - 130, 60, 130);
-    adsr_lfo_mix->setBounds (790 - 60, 160 - 130, 60, 130);
-    lfo_opt_2->setBounds (790 - 60, 320 - 130, 60, 130);
-    lfo_opt_3->setBounds (790 - 60, 480 - 130, 60, 130);
-    button_sequence_1->setBounds (250 - 60, 690 - 20, 60, 20);
-    flt_release_4->setBounds (430 - 60, 640 - 130, 60, 130);
-    delay2->setBounds (860 - 60, 640 - 130, 60, 130);
-    volume->setBounds (1410 - 60, 640 - 130, 60, 130);
-    flt_distortion_2->setBounds (1260 - 60, 320 - 130, 60, 130);
-    flt_distortion_3->setBounds (1260 - 60, 480 - 130, 60, 130);
-    button_arp_speed_XNORM->setBounds (1200, 670, 60, 27);
-    flt_attack_5->setBounds (80 - 60, 640 - 130, 60, 130);
-    flt_attack_6->setBounds (150 - 60, 640 - 130, 60, 130);
-    osc_wave_1->setBounds (80 - 60, 160 - 130, 60, 130);
-    osc_wave_2->setBounds (80 - 60, 320 - 130, 60, 130);
-    sl_morhp_mix->setBounds (1140, 605, 180, 33);
-    button_programm_delete->setBounds (930 - 60, 870 - 30, 60, 30);
-    button_open_config->setBounds (1090 - 60, 870 - 30, 60, 30);
-    filter_type_6_1->setBounds (980 - 60, 30, 60, 27);
-    filter_type_6_2->setBounds (980 - 60, 190, 60, 27);
-    filter_type_6_3->setBounds (980 - 60, 350, 60, 27);
-    label_monolisa2->setBounds (1395 - 435, 840 - 30, 435, 30);
-    button_midi_learn->setBounds (120 - 50, 870 - 30, 50, 30);
-    button_ctrl_toggle->setBounds (170 - 50, 870 - 30, 50, 30);
-    colour->setBounds (560 - 60, 640 - 130, 60, 130);
-    volume2->setBounds (1330 - 60, 800 - 130, 60, 130);
-    button_open_morph->setBounds (1140 - 60, 605, 60, 33);
-    effect_finalizer_switch->setBounds (495 - 25, 510, 25, 130);
-    label_ui_headline2->setBounds (1080, 506, 60, 35);
-    label_ui_headline3->setBounds (1140, 506, 60, 35);
-    label_ui_headline5->setBounds (1200, 506, 60, 35);
-    label_ui_headline6->setBounds (1260, 506, 60, 35);
-    button_values_toggle->setBounds (170 - 50, 900 - 30, 50, 30);
-    reverb_width->setBounds (710 - 60, 640 - 130, 60, 130);
+    morpher_4->setBounds(1320 - 60, 510, 60, 130);
+    morpher_3->setBounds(1260 - 60, 510, 60, 130);
+    morpher_2->setBounds(1200 - 60, 510, 60, 130);
+    morpher_1->setBounds(1140 - 60, 510, 60, 130);
+    label_effect_hider->setBounds(1040 - 540, 648 - 15, 540, 15);
+    eq_9->setBounds(1040 - 60, 640 - 130, 60, 130);
+    eq_8->setBounds(980 - 60, 640 - 130, 60, 130);
+    eq_7->setBounds(920 - 60, 640 - 130, 60, 130);
+    eq_6->setBounds(860 - 60, 640 - 130, 60, 130);
+    eq_5->setBounds(800 - 60, 640 - 130, 60, 130);
+    eq_4->setBounds(740 - 60, 640 - 130, 60, 130);
+    eq_3->setBounds(680 - 60, 640 - 130, 60, 130);
+    eq_2->setBounds(620 - 60, 640 - 130, 60, 130);
+    eq_1->setBounds(560 - 60, 640 - 130, 60, 130);
+    bypass->setBounds(1040 - 60, 640 - 130, 60, 130);
+    chorus_modulation->setBounds(950 - 60, 640 - 130, 60, 130);
+    reverb_dry->setBounds(770 - 60, 640 - 130, 60, 130);
+    reverb_room->setBounds(650 - 60, 640 - 130, 60, 130);
+    osc_wave_3->setBounds(80 - 60, 480 - 130, 60, 130);
+    keyboard->setBounds(1428 - 1426, 1078 - 180, 1426, 180);
+    glide2->setBounds(150 - 60, 800 - 130, 60, 130);
+    arp_step_16->setBounds(1180 - 60, 800 - 130, 60, 130);
+    arp_step_15->setBounds(1120 - 60, 800 - 130, 60, 130);
+    arp_step_14->setBounds(1060 - 60, 800 - 130, 60, 130);
+    arp_step_13->setBounds(1000 - 60, 800 - 130, 60, 130);
+    arp_step_12->setBounds(930 - 60, 800 - 130, 60, 130);
+    arp_step_11->setBounds(870 - 60, 800 - 130, 60, 130);
+    arp_step_10->setBounds(810 - 60, 800 - 130, 60, 130);
+    arp_step_9->setBounds(750 - 60, 800 - 130, 60, 130);
+    arp_step_8->setBounds(680 - 60, 800 - 130, 60, 130);
+    arp_step_7->setBounds(620 - 60, 800 - 130, 60, 130);
+    arp_step_6->setBounds(560 - 60, 800 - 130, 60, 130);
+    arp_step_5->setBounds(500 - 60, 800 - 130, 60, 130);
+    arp_step_4->setBounds(430 - 60, 800 - 130, 60, 130);
+    arp_step_3->setBounds(370 - 60, 800 - 130, 60, 130);
+    arp_step_2->setBounds(310 - 60, 800 - 130, 60, 130);
+    arp_step_1->setBounds(250 - 60, 800 - 130, 60, 130);
+    shuffle->setBounds(80 - 60, 800 - 130, 60, 130);
+    flt_sustain_4->setBounds(370 - 60, 640 - 130, 60, 130);
+    flt_decay_4->setBounds(310 - 60, 640 - 130, 60, 130);
+    flt_attack_4->setBounds(250 - 60, 640 - 130, 60, 130);
+    flt_release_3->setBounds(700 - 60, 480 - 130, 60, 130);
+    flt_sustain_time_3->setBounds(640 - 60, 480 - 130, 60, 130);
+    flt_sustain_3->setBounds(580 - 60, 480 - 130, 60, 130);
+    flt_decay_3->setBounds(520 - 60, 480 - 130, 60, 130);
+    flt_attack_3->setBounds(460 - 60, 480 - 130, 60, 130);
+    flt_release_2->setBounds(700 - 60, 320 - 130, 60, 130);
+    flt_sustain_time_2->setBounds(640 - 60, 320 - 130, 60, 130);
+    flt_sustain_2->setBounds(580 - 60, 320 - 130, 60, 130);
+    flt_decay_2->setBounds(520 - 60, 320 - 130, 60, 130);
+    flt_attack_2->setBounds(460 - 60, 320 - 130, 60, 130);
+    flt_release_1->setBounds(700 - 60, 160 - 130, 60, 130);
+    flt_sustain_time_1->setBounds(640 - 60, 160 - 130, 60, 130);
+    flt_sustain_1->setBounds(580 - 60, 160 - 130, 60, 130);
+    flt_decay_1->setBounds(520 - 60, 160 - 130, 60, 130);
+    flt_attack_1->setBounds(460 - 60, 160 - 130, 60, 130);
+    volume_master_meter->setBounds(1340, 510, 10, 128);
+    label_monolisa->setBounds(1395 - 435, 910 - 110, 435, 110);
+    filter_type_1_1->setBounds(980 - 60, 82, 60, 24);
+    filter_type_2_1->setBounds(980 - 60, 57, 60, 25);
+    filter_type_3_1->setBounds(980 - 60, 106, 60, 25);
+    filter_type_1_2->setBounds(980 - 60, 242, 60, 24);
+    filter_type_2_2->setBounds(980 - 60, 217, 60, 25);
+    filter_type_3_2->setBounds(980 - 60, 291 - 25, 60, 25);
+    filter_type_1_3->setBounds(980 - 60, 426 - 24, 60, 24);
+    filter_type_2_3->setBounds(980 - 60, 377, 60, 25);
+    filter_type_3_3->setBounds(980 - 60, 426, 60, 25);
+    filter_type_5_1->setBounds(980 - 60, 131, 60, 27);
+    filter_type_5_2->setBounds(980 - 60, 291, 60, 27);
+    filter_type_5_3->setBounds(980 - 60, 451, 60, 27);
+    button_sequence_2->setBounds(310 - 60, 690 - 20, 60, 20);
+    button_sequence_3->setBounds(370 - 60, 690 - 20, 60, 20);
+    button_sequence_4->setBounds(430 - 60, 690 - 20, 60, 20);
+    button_sequence_5->setBounds(500 - 60, 690 - 20, 60, 20);
+    button_sequence_6->setBounds(560 - 60, 690 - 20, 60, 20);
+    button_sequence_7->setBounds(620 - 60, 690 - 20, 60, 20);
+    button_sequence_8->setBounds(680 - 60, 690 - 20, 60, 20);
+    button_arp_speed_X2->setBounds(1260 - 60, 760 - 20, 60, 20);
+    button_arp_speed_X05->setBounds(1260 - 60, 740 - 20, 60, 20);
+    button_sequence_9->setBounds(750 - 60, 690 - 20, 60, 20);
+    button_sequence_10->setBounds(810 - 60, 690 - 20, 60, 20);
+    button_sequence_11->setBounds(870 - 60, 690 - 20, 60, 20);
+    button_sequence_12->setBounds(930 - 60, 690 - 20, 60, 20);
+    button_sequence_13->setBounds(1000 - 60, 690 - 20, 60, 20);
+    button_sequence_14->setBounds(1060 - 60, 690 - 20, 60, 20);
+    button_sequence_15->setBounds(1120 - 60, 690 - 20, 60, 20);
+    button_sequence_16->setBounds(1180 - 60, 690 - 20, 60, 20);
+    button_arp_speed_X3->setBounds(1260 - 60, 780 - 20, 60, 20);
+    button_arp_speed_X4->setBounds(1260 - 60, 800 - 20, 60, 20);
+    button_arp_speed_X025->setBounds(1260 - 60, 720 - 20, 60, 20);
+    combo_programm->setBounds(620 - 310, 870 - 30, 310, 30);
+    button_programm_left->setBounds(250 - 60, 870 - 30, 60, 30);
+    button_programm_right->setBounds(680 - 60, 870 - 30, 60, 30);
+    button_programm_replace->setBounds(870 - 60, 870 - 30, 60, 30);
+    button_programm_new->setBounds(810 - 60, 870 - 30, 60, 30);
+    button_open_oszi->setBounds(1030 - 60, 870 - 30, 60, 30);
+    button_open_midi_io_settings->setBounds(70 - 50, 870 - 30, 50, 30);
+    combo_bank->setBounds(310 - 60, 870 - 30, 60, 30);
+    button_programm_load->setBounds(750 - 60, 870 - 30, 60, 30);
+    osc_1->setBounds(150 - 60, 160 - 130, 60, 130);
+    osc_2->setBounds(150 - 60, 320 - 130, 60, 130);
+    osc_3->setBounds(150 - 60, 480 - 130, 60, 130);
+    lfo_1->setBounds(880 - 60, 160 - 130, 60, 130);
+    flt_cutoff_1->setBounds(1050 - 60, 160 - 130, 60, 130);
+    lfo_2->setBounds(880 - 60, 320 - 130, 60, 130);
+    lfo_3->setBounds(880 - 60, 480 - 130, 60, 130);
+    flt_cutoff_2->setBounds(1050 - 60, 320 - 130, 60, 130);
+    flt_cutoff_3->setBounds(1050 - 60, 480 - 130, 60, 130);
+    flt_input_1->setBounds(250 - 60, 160 - 130, 60, 130);
+    flt_input_2->setBounds(310 - 60, 160 - 130, 60, 130);
+    flt_input_3->setBounds(370 - 60, 160 - 130, 60, 130);
+    flt_compressor_1->setBounds(1320 - 60, 160 - 130, 60, 130);
+    flt_distortion_1->setBounds(1260 - 60, 160 - 130, 60, 130);
+    flt_input_6->setBounds(250 - 60, 320 - 130, 60, 130);
+    flt_input_7->setBounds(310 - 60, 320 - 130, 60, 130);
+    flt_input_8->setBounds(370 - 60, 320 - 130, 60, 130);
+    flt_compressor_2->setBounds(1320 - 60, 320 - 130, 60, 130);
+    flt_input_11->setBounds(250 - 60, 480 - 130, 60, 130);
+    flt_input_12->setBounds(310 - 60, 480 - 130, 60, 130);
+    flt_input_13->setBounds(370 - 60, 480 - 130, 60, 130);
+    flt_compressor_3->setBounds(1320 - 60, 480 - 130, 60, 130);
+    flt_resonance_1->setBounds(1110 - 60, 160 - 130, 60, 130);
+    flt_gain_1->setBounds(1170 - 60, 160 - 130, 60, 130);
+    flt_resonance_2->setBounds(1110 - 60, 320 - 130, 60, 130);
+    flt_gain_2->setBounds(1170 - 60, 320 - 130, 60, 130);
+    flt_resonance_3->setBounds(1110 - 60, 480 - 130, 60, 130);
+    flt_gain_3->setBounds(1170 - 60, 480 - 130, 60, 130);
+    flt_volume_1->setBounds(1410 - 60, 160 - 130, 60, 130);
+    flt_volume_2->setBounds(1410 - 60, 320 - 130, 60, 130);
+    flt_volume_3->setBounds(1410 - 60, 480 - 130, 60, 130);
+    adsr_lfo_mix->setBounds(790 - 60, 160 - 130, 60, 130);
+    lfo_opt_2->setBounds(790 - 60, 320 - 130, 60, 130);
+    lfo_opt_3->setBounds(790 - 60, 480 - 130, 60, 130);
+    button_sequence_1->setBounds(250 - 60, 690 - 20, 60, 20);
+    flt_release_4->setBounds(430 - 60, 640 - 130, 60, 130);
+    delay2->setBounds(860 - 60, 640 - 130, 60, 130);
+    volume->setBounds(1410 - 60, 640 - 130, 60, 130);
+    flt_distortion_2->setBounds(1260 - 60, 320 - 130, 60, 130);
+    flt_distortion_3->setBounds(1260 - 60, 480 - 130, 60, 130);
+    button_arp_speed_XNORM->setBounds(1200, 670, 60, 27);
+    flt_attack_5->setBounds(80 - 60, 640 - 130, 60, 130);
+    flt_attack_6->setBounds(150 - 60, 640 - 130, 60, 130);
+    osc_wave_1->setBounds(80 - 60, 160 - 130, 60, 130);
+    osc_wave_2->setBounds(80 - 60, 320 - 130, 60, 130);
+    sl_morhp_mix->setBounds(1140, 605, 180, 33);
+    button_programm_delete->setBounds(930 - 60, 870 - 30, 60, 30);
+    button_open_config->setBounds(1090 - 60, 870 - 30, 60, 30);
+    filter_type_6_1->setBounds(980 - 60, 30, 60, 27);
+    filter_type_6_2->setBounds(980 - 60, 190, 60, 27);
+    filter_type_6_3->setBounds(980 - 60, 350, 60, 27);
+    label_monolisa2->setBounds(1395 - 435, 840 - 30, 435, 30);
+    button_midi_learn->setBounds(120 - 50, 870 - 30, 50, 30);
+    button_ctrl_toggle->setBounds(170 - 50, 870 - 30, 50, 30);
+    colour->setBounds(560 - 60, 640 - 130, 60, 130);
+    volume2->setBounds(1330 - 60, 800 - 130, 60, 130);
+    button_open_morph->setBounds(1140 - 60, 605, 60, 33);
+    effect_finalizer_switch->setBounds(495 - 25, 510, 25, 130);
+    label_ui_headline2->setBounds(1080, 506, 60, 35);
+    label_ui_headline3->setBounds(1140, 506, 60, 35);
+    label_ui_headline5->setBounds(1200, 506, 60, 35);
+    label_ui_headline6->setBounds(1260, 506, 60, 35);
+    button_values_toggle->setBounds(170 - 50, 900 - 30, 50, 30);
+    reverb_width->setBounds(710 - 60, 640 - 130, 60, 130);
     //[UserResized] Add your own custom resize handling here..
-    if( resizer )
-        resizer->setBounds (original_w - 16, original_h - 16, 16, 16);
+    if (resizer)
+        resizer->setBounds(original_w - 16, original_h - 16, 16, 16);
 #include "UiDynamicSizeEnd.h"
 
-    if( MONOVoice::get_amp_painter() )
-        MONOVoice::get_amp_painter()->setBounds( keyboard->getX(), keyboard->getY(), keyboard->getWidth(), keyboard->getHeight() );
+    if (MONOVoice::get_amp_painter())
+        MONOVoice::get_amp_painter()->setBounds(keyboard->getX(), keyboard->getY(),
+                                                keyboard->getWidth(), keyboard->getHeight());
     //[/UserResized]
 }
 
-void UiEditorSynthLite::buttonClicked (Button* buttonThatWasClicked)
+void UiEditorSynthLite::buttonClicked(Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -1764,565 +1851,438 @@ void UiEditorSynthLite::buttonClicked (Button* buttonThatWasClicked)
     {
         //[UserButtonCode_filter_type_1_1] -- add your button handler code here..
         int flt_id = 0;
-        Array< Component* > buttons;
-        buttons.add( filter_type_1_1 );
-        buttons.add( filter_type_2_1 );
-        buttons.add( filter_type_3_1 );
-        //buttons.add( filter_bypass_1 );
-        buttons.add( filter_type_5_1 );
-        buttons.add( filter_type_6_1 );
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->filter_datas[flt_id]->filter_type,
-            buttons
-        )
+        Array<Component *> buttons;
+        buttons.add(filter_type_1_1);
+        buttons.add(filter_type_2_1);
+        buttons.add(filter_type_3_1);
+        // buttons.add( filter_bypass_1 );
+        buttons.add(filter_type_5_1);
+        buttons.add(filter_type_6_1);
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->filter_datas[flt_id]->filter_type,
+                                                    buttons)
         else
         {
             uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
-            if( current_filter_type == LPF_2_PASS ) {
+            if (current_filter_type == LPF_2_PASS)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = LPF;
             }
-            else if( current_filter_type == HIGH_2_PASS ) {
+            else if (current_filter_type == HIGH_2_PASS)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = HPF;
             }
-            else if( current_filter_type == LPF ) {
+            else if (current_filter_type == LPF)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = LPF_2_PASS;
             }
-            else if( current_filter_type == HPF ) {
+            else if (current_filter_type == HPF)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = HIGH_2_PASS;
             }
             else
                 synth_data->filter_datas[flt_id]->filter_type = LPF_2_PASS;
         }
-        show_info_popup( buttonThatWasClicked, synth_data->filter_datas[flt_id]->filter_type.midi_control );
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->filter_datas[flt_id]->filter_type.midi_control);
         //[/UserButtonCode_filter_type_1_1]
     }
     else if (buttonThatWasClicked == filter_type_2_1)
     {
         //[UserButtonCode_filter_type_2_1] -- add your button handler code here..
         int flt_id = 0;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->filter_datas[flt_id]->filter_type,
-            buttonThatWasClicked
-        )
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->filter_datas[flt_id]->filter_type,
+                                                    buttonThatWasClicked)
         else
         {
             uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
-            if( current_filter_type == HPF ) {
+            if (current_filter_type == HPF)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = HIGH_2_PASS;
             }
             else
                 synth_data->filter_datas[flt_id]->filter_type = HPF;
         }
-        show_info_popup( buttonThatWasClicked, synth_data->filter_datas[flt_id]->filter_type.midi_control );
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->filter_datas[flt_id]->filter_type.midi_control);
         //[/UserButtonCode_filter_type_2_1]
     }
     else if (buttonThatWasClicked == filter_type_3_1)
     {
         //[UserButtonCode_filter_type_3_1] -- add your button handler code here..
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->filter_datas[0]->filter_type,
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->filter_datas[0]->filter_type = BPF;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->filter_datas[0]->filter_type.midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->filter_datas[0]->filter_type,
+                                                    buttonThatWasClicked)
+        else { synth_data->filter_datas[0]->filter_type = BPF; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->filter_datas[0]->filter_type.midi_control);
         //[/UserButtonCode_filter_type_3_1]
     }
     else if (buttonThatWasClicked == filter_type_1_2)
     {
         //[UserButtonCode_filter_type_1_2] -- add your button handler code here..
         int flt_id = 1;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->filter_datas[flt_id]->filter_type,
-            buttonThatWasClicked
-        )
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->filter_datas[flt_id]->filter_type,
+                                                    buttonThatWasClicked)
         else
         {
             uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
-            if( current_filter_type == LPF_2_PASS ) {
+            if (current_filter_type == LPF_2_PASS)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = LPF;
             }
-            else if( current_filter_type == HIGH_2_PASS ) {
+            else if (current_filter_type == HIGH_2_PASS)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = HPF;
             }
-            else if( current_filter_type == LPF ) {
+            else if (current_filter_type == LPF)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = LPF_2_PASS;
             }
-            else if( current_filter_type == HPF ) {
+            else if (current_filter_type == HPF)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = HIGH_2_PASS;
             }
             else
                 synth_data->filter_datas[flt_id]->filter_type = LPF_2_PASS;
         }
-        show_info_popup( buttonThatWasClicked, synth_data->filter_datas[flt_id]->filter_type.midi_control );
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->filter_datas[flt_id]->filter_type.midi_control);
         //[/UserButtonCode_filter_type_1_2]
     }
     else if (buttonThatWasClicked == filter_type_2_2)
     {
         //[UserButtonCode_filter_type_2_2] -- add your button handler code here..
         int flt_id = 1;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->filter_datas[1]->filter_type,
-            buttonThatWasClicked
-        )
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->filter_datas[1]->filter_type,
+                                                    buttonThatWasClicked)
         else
         {
             uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
-            if( current_filter_type == HPF ) {
+            if (current_filter_type == HPF)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = HIGH_2_PASS;
             }
             else
                 synth_data->filter_datas[flt_id]->filter_type = HPF;
         }
-        show_info_popup( buttonThatWasClicked, synth_data->filter_datas[1]->filter_type.midi_control );
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->filter_datas[1]->filter_type.midi_control);
         //[/UserButtonCode_filter_type_2_2]
     }
     else if (buttonThatWasClicked == filter_type_3_2)
     {
         //[UserButtonCode_filter_type_3_2] -- add your button handler code here..
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->filter_datas[1]->filter_type,
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->filter_datas[1]->filter_type = BPF;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->filter_datas[1]->filter_type.midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->filter_datas[1]->filter_type,
+                                                    buttonThatWasClicked)
+        else { synth_data->filter_datas[1]->filter_type = BPF; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->filter_datas[1]->filter_type.midi_control);
         //[/UserButtonCode_filter_type_3_2]
     }
     else if (buttonThatWasClicked == filter_type_1_3)
     {
         //[UserButtonCode_filter_type_1_3] -- add your button handler code here..
         int flt_id = 2;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->filter_datas[flt_id]->filter_type,
-            buttonThatWasClicked
-        )
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->filter_datas[flt_id]->filter_type,
+                                                    buttonThatWasClicked)
         else
         {
             uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
-            if( current_filter_type == LPF_2_PASS ) {
+            if (current_filter_type == LPF_2_PASS)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = LPF;
             }
-            else if( current_filter_type == HIGH_2_PASS ) {
+            else if (current_filter_type == HIGH_2_PASS)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = HPF;
             }
-            else if( current_filter_type == LPF ) {
+            else if (current_filter_type == LPF)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = LPF_2_PASS;
             }
-            else if( current_filter_type == HPF ) {
+            else if (current_filter_type == HPF)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = HIGH_2_PASS;
             }
             else
                 synth_data->filter_datas[flt_id]->filter_type = LPF_2_PASS;
         }
-        show_info_popup( buttonThatWasClicked, synth_data->filter_datas[flt_id]->filter_type.midi_control );
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->filter_datas[flt_id]->filter_type.midi_control);
         //[/UserButtonCode_filter_type_1_3]
     }
     else if (buttonThatWasClicked == filter_type_2_3)
     {
         //[UserButtonCode_filter_type_2_3] -- add your button handler code here..
         int flt_id = 2;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->filter_datas[flt_id]->filter_type,
-            buttonThatWasClicked
-        )
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->filter_datas[flt_id]->filter_type,
+                                                    buttonThatWasClicked)
         else
         {
             uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
-            if( current_filter_type == HPF ) {
+            if (current_filter_type == HPF)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = HIGH_2_PASS;
             }
             else
                 synth_data->filter_datas[flt_id]->filter_type = HPF;
         }
-        show_info_popup( buttonThatWasClicked, synth_data->filter_datas[flt_id]->filter_type.midi_control );
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->filter_datas[flt_id]->filter_type.midi_control);
         //[/UserButtonCode_filter_type_2_3]
     }
     else if (buttonThatWasClicked == filter_type_3_3)
     {
         //[UserButtonCode_filter_type_3_3] -- add your button handler code here..
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->filter_datas[2]->filter_type,
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->filter_datas[2]->filter_type = BPF;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->filter_datas[2]->filter_type.midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->filter_datas[2]->filter_type,
+                                                    buttonThatWasClicked)
+        else { synth_data->filter_datas[2]->filter_type = BPF; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->filter_datas[2]->filter_type.midi_control);
         //[/UserButtonCode_filter_type_3_3]
     }
     else if (buttonThatWasClicked == filter_type_5_1)
     {
         //[UserButtonCode_filter_type_5_1] -- add your button handler code here..
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->filter_datas[0]->filter_type,
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->filter_datas[0]->filter_type = PASS;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->filter_datas[0]->filter_type.midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->filter_datas[0]->filter_type,
+                                                    buttonThatWasClicked)
+        else { synth_data->filter_datas[0]->filter_type = PASS; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->filter_datas[0]->filter_type.midi_control);
         //[/UserButtonCode_filter_type_5_1]
     }
     else if (buttonThatWasClicked == filter_type_5_2)
     {
         //[UserButtonCode_filter_type_5_2] -- add your button handler code here..
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->filter_datas[1]->filter_type,
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->filter_datas[1]->filter_type = PASS;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->filter_datas[1]->filter_type.midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->filter_datas[1]->filter_type,
+                                                    buttonThatWasClicked)
+        else { synth_data->filter_datas[1]->filter_type = PASS; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->filter_datas[1]->filter_type.midi_control);
         //[/UserButtonCode_filter_type_5_2]
     }
     else if (buttonThatWasClicked == filter_type_5_3)
     {
         //[UserButtonCode_filter_type_5_3] -- add your button handler code here..
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->filter_datas[2]->filter_type,
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->filter_datas[2]->filter_type = PASS;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->filter_datas[2]->filter_type.midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->filter_datas[2]->filter_type,
+                                                    buttonThatWasClicked)
+        else { synth_data->filter_datas[2]->filter_type = PASS; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->filter_datas[2]->filter_type.midi_control);
         //[/UserButtonCode_filter_type_5_3]
     }
     else if (buttonThatWasClicked == button_sequence_2)
     {
         //[UserButtonCode_button_sequence_2] -- add your button handler code here..
         int step_id = 1;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->step[step_id],
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->step[step_id]  ^= true;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->step[step_id].midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->step[step_id],
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->step[step_id] ^= true; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->step[step_id].midi_control);
         //[/UserButtonCode_button_sequence_2]
     }
     else if (buttonThatWasClicked == button_sequence_3)
     {
         //[UserButtonCode_button_sequence_3] -- add your button handler code here..
         int step_id = 2;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->step[step_id],
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->step[step_id]  ^= true;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->step[step_id].midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->step[step_id],
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->step[step_id] ^= true; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->step[step_id].midi_control);
         //[/UserButtonCode_button_sequence_3]
     }
     else if (buttonThatWasClicked == button_sequence_4)
     {
         //[UserButtonCode_button_sequence_4] -- add your button handler code here..
         int step_id = 3;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->step[step_id],
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->step[step_id]  ^= true;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->step[step_id].midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->step[step_id],
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->step[step_id] ^= true; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->step[step_id].midi_control);
         //[/UserButtonCode_button_sequence_4]
     }
     else if (buttonThatWasClicked == button_sequence_5)
     {
         //[UserButtonCode_button_sequence_5] -- add your button handler code here..
         int step_id = 4;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->step[step_id],
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->step[step_id]  ^= true;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->step[step_id].midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->step[step_id],
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->step[step_id] ^= true; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->step[step_id].midi_control);
         //[/UserButtonCode_button_sequence_5]
     }
     else if (buttonThatWasClicked == button_sequence_6)
     {
         //[UserButtonCode_button_sequence_6] -- add your button handler code here..
         int step_id = 5;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->step[step_id],
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->step[step_id]  ^= true;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->step[step_id].midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->step[step_id],
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->step[step_id] ^= true; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->step[step_id].midi_control);
         //[/UserButtonCode_button_sequence_6]
     }
     else if (buttonThatWasClicked == button_sequence_7)
     {
         //[UserButtonCode_button_sequence_7] -- add your button handler code here..
         int step_id = 6;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->step[step_id],
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->step[step_id]  ^= true;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->step[step_id].midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->step[step_id],
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->step[step_id] ^= true; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->step[step_id].midi_control);
         //[/UserButtonCode_button_sequence_7]
     }
     else if (buttonThatWasClicked == button_sequence_8)
     {
         //[UserButtonCode_button_sequence_8] -- add your button handler code here..
         int step_id = 7;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->step[step_id],
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->step[step_id]  ^= true;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->step[step_id].midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->step[step_id],
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->step[step_id] ^= true; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->step[step_id].midi_control);
         //[/UserButtonCode_button_sequence_8]
     }
     else if (buttonThatWasClicked == button_arp_speed_X2)
     {
         //[UserButtonCode_button_arp_speed_X2] -- add your button handler code here..
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->speed_multi,
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->speed_multi = _X2;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->speed_multi.midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->speed_multi,
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->speed_multi = _X2; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->speed_multi.midi_control);
         //[/UserButtonCode_button_arp_speed_X2]
     }
     else if (buttonThatWasClicked == button_arp_speed_X05)
     {
         //[UserButtonCode_button_arp_speed_X05] -- add your button handler code here..
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->speed_multi,
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->speed_multi = _X05;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->speed_multi.midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->speed_multi,
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->speed_multi = _X05; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->speed_multi.midi_control);
         //[/UserButtonCode_button_arp_speed_X05]
     }
     else if (buttonThatWasClicked == button_sequence_9)
     {
         //[UserButtonCode_button_sequence_9] -- add your button handler code here..
         int step_id = 8;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->step[step_id],
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->step[step_id]  ^= true;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->step[step_id].midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->step[step_id],
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->step[step_id] ^= true; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->step[step_id].midi_control);
         //[/UserButtonCode_button_sequence_9]
     }
     else if (buttonThatWasClicked == button_sequence_10)
     {
         //[UserButtonCode_button_sequence_10] -- add your button handler code here..
         int step_id = 9;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->step[step_id],
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->step[step_id]  ^= true;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->step[step_id].midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->step[step_id],
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->step[step_id] ^= true; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->step[step_id].midi_control);
         //[/UserButtonCode_button_sequence_10]
     }
     else if (buttonThatWasClicked == button_sequence_11)
     {
         //[UserButtonCode_button_sequence_11] -- add your button handler code here..
         int step_id = 10;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->step[step_id],
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->step[step_id]  ^= true;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->step[step_id].midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->step[step_id],
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->step[step_id] ^= true; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->step[step_id].midi_control);
         //[/UserButtonCode_button_sequence_11]
     }
     else if (buttonThatWasClicked == button_sequence_12)
     {
         //[UserButtonCode_button_sequence_12] -- add your button handler code here..
         int step_id = 11;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->step[step_id],
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->step[step_id]  ^= true;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->step[step_id].midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->step[step_id],
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->step[step_id] ^= true; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->step[step_id].midi_control);
         //[/UserButtonCode_button_sequence_12]
     }
     else if (buttonThatWasClicked == button_sequence_13)
     {
         //[UserButtonCode_button_sequence_13] -- add your button handler code here..
         int step_id = 12;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->step[step_id],
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->step[step_id]  ^= true;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->step[step_id].midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->step[step_id],
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->step[step_id] ^= true; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->step[step_id].midi_control);
         //[/UserButtonCode_button_sequence_13]
     }
     else if (buttonThatWasClicked == button_sequence_14)
     {
         //[UserButtonCode_button_sequence_14] -- add your button handler code here..
         int step_id = 13;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->step[step_id],
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->step[step_id]  ^= true;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->step[step_id].midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->step[step_id],
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->step[step_id] ^= true; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->step[step_id].midi_control);
         //[/UserButtonCode_button_sequence_14]
     }
     else if (buttonThatWasClicked == button_sequence_15)
     {
         //[UserButtonCode_button_sequence_15] -- add your button handler code here..
         int step_id = 14;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->step[step_id],
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->step[step_id]  ^= true;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->step[step_id].midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->step[step_id],
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->step[step_id] ^= true; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->step[step_id].midi_control);
         //[/UserButtonCode_button_sequence_15]
     }
     else if (buttonThatWasClicked == button_sequence_16)
     {
         //[UserButtonCode_button_sequence_16] -- add your button handler code here..
         int step_id = 15;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->step[step_id],
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->step[step_id]  ^= true;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->step[step_id].midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->step[step_id],
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->step[step_id] ^= true; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->step[step_id].midi_control);
         //[/UserButtonCode_button_sequence_16]
     }
     else if (buttonThatWasClicked == button_arp_speed_X3)
     {
         //[UserButtonCode_button_arp_speed_X3] -- add your button handler code here..
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->speed_multi,
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->speed_multi = _X3;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->speed_multi.midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->speed_multi,
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->speed_multi = _X3; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->speed_multi.midi_control);
         //[/UserButtonCode_button_arp_speed_X3]
     }
     else if (buttonThatWasClicked == button_arp_speed_X4)
     {
         //[UserButtonCode_button_arp_speed_X4] -- add your button handler code here..
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->speed_multi,
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->speed_multi = _X4;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->speed_multi.midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->speed_multi,
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->speed_multi = _X4; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->speed_multi.midi_control);
         //[/UserButtonCode_button_arp_speed_X4]
     }
     else if (buttonThatWasClicked == button_arp_speed_X025)
     {
         //[UserButtonCode_button_arp_speed_X025] -- add your button handler code here..
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->speed_multi,
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->speed_multi = _X025;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->speed_multi.midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->speed_multi,
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->speed_multi = _X025; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->speed_multi.midi_control);
         //[/UserButtonCode_button_arp_speed_X025]
     }
     else if (buttonThatWasClicked == button_programm_left)
@@ -2356,30 +2316,34 @@ void UiEditorSynthLite::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == button_open_oszi)
     {
         //[UserButtonCode_button_open_oszi] -- add your button handler code here..
-        if( MONOVoice::get_amp_painter() )
+        if (MONOVoice::get_amp_painter())
         {
-            removeChildComponent( MONOVoice::get_amp_painter() );
+            removeChildComponent(MONOVoice::get_amp_painter());
             MONOVoice::kill_amp_painter();
         }
         else
         {
             MONOVoice::create_amp_painter();
-            addAndMakeVisible( MONOVoice::get_amp_painter() );
-            MONOVoice::get_amp_painter()->setBounds( keyboard->getX(), keyboard->getY(), keyboard->getWidth(), keyboard->getHeight() );
+            addAndMakeVisible(MONOVoice::get_amp_painter());
+            MONOVoice::get_amp_painter()->setBounds(keyboard->getX(), keyboard->getY(),
+                                                    keyboard->getWidth(), keyboard->getHeight());
         }
         //[/UserButtonCode_button_open_oszi]
     }
     else if (buttonThatWasClicked == button_open_midi_io_settings)
     {
         //[UserButtonCode_button_open_midi_io_settings] -- add your button handler code here..
-        if( editor_midiio )
+        if (editor_midiio)
             editor_midiio = nullptr;
         else
         {
-            addAndMakeVisible( editor_midiio = new UiEditorMIDIIO( _app_instance_store->audio_processor ) );
-            float width_factor = 1.0f/original_w*getWidth();
-            float height_factor = 1.0f/original_h*getHeight();
-            editor_midiio->setBounds( 20*width_factor, 20*height_factor, editor_midiio->original_w*width_factor, editor_midiio->original_h*height_factor );
+            addAndMakeVisible(editor_midiio =
+                                  new UiEditorMIDIIO(_app_instance_store->audio_processor));
+            float width_factor = 1.0f / original_w * getWidth();
+            float height_factor = 1.0f / original_h * getHeight();
+            editor_midiio->setBounds(20 * width_factor, 20 * height_factor,
+                                     editor_midiio->original_w * width_factor,
+                                     editor_midiio->original_h * height_factor);
         }
         //[/UserButtonCode_button_open_midi_io_settings]
     }
@@ -2393,37 +2357,27 @@ void UiEditorSynthLite::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == button_sequence_1)
     {
         //[UserButtonCode_button_sequence_1] -- add your button handler code here..
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->step[0],
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->step[0] ^= true;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->step[0].midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->step[0],
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->step[0] ^= true; }
+        show_info_popup(buttonThatWasClicked, synth_data->arp_sequencer_data->step[0].midi_control);
         //[/UserButtonCode_button_sequence_1]
     }
     else if (buttonThatWasClicked == button_arp_speed_XNORM)
     {
         //[UserButtonCode_button_arp_speed_XNORM] -- add your button handler code here..
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->arp_sequencer_data->speed_multi,
-            buttonThatWasClicked
-        )
-        else
-        {
-            synth_data->arp_sequencer_data->speed_multi = _XNORM;
-        }
-        show_info_popup( buttonThatWasClicked, synth_data->arp_sequencer_data->speed_multi.midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->arp_sequencer_data->speed_multi,
+                                                    buttonThatWasClicked)
+        else { synth_data->arp_sequencer_data->speed_multi = _XNORM; }
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->arp_sequencer_data->speed_multi.midi_control);
         //[/UserButtonCode_button_arp_speed_XNORM]
     }
     else if (buttonThatWasClicked == button_programm_delete)
     {
         //[UserButtonCode_button_programm_delete] -- add your button handler code here..
-        if( synth_data->remove() ) {
+        if (synth_data->remove())
+        {
             last_programm = -1;
             show_programs_and_select();
         }
@@ -2434,9 +2388,9 @@ void UiEditorSynthLite::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == button_open_config)
     {
         //[UserButtonCode_button_open_config] -- add your button handler code here..
-        if( ! editor_settings )
+        if (!editor_settings)
         {
-            addAndMakeVisible( editor_settings = new UiEditorSettings() );
+            addAndMakeVisible(editor_settings = new UiEditorSettings());
         }
         else
             editor_settings = nullptr;
@@ -2446,63 +2400,60 @@ void UiEditorSynthLite::buttonClicked (Button* buttonThatWasClicked)
     {
         //[UserButtonCode_filter_type_6_1] -- add your button handler code here..
         int flt_id = 0;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->filter_datas[flt_id]->filter_type,
-            buttonThatWasClicked
-        )
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->filter_datas[flt_id]->filter_type,
+                                                    buttonThatWasClicked)
         else
         {
             uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
-            if( current_filter_type == LPF ) {
+            if (current_filter_type == LPF)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = LPF_2_PASS;
             }
             else
                 synth_data->filter_datas[flt_id]->filter_type = LPF;
         }
-        show_info_popup( buttonThatWasClicked, synth_data->filter_datas[flt_id]->filter_type.midi_control );
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->filter_datas[flt_id]->filter_type.midi_control);
         //[/UserButtonCode_filter_type_6_1]
     }
     else if (buttonThatWasClicked == filter_type_6_2)
     {
         //[UserButtonCode_filter_type_6_2] -- add your button handler code here..
         int flt_id = 1;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->filter_datas[flt_id]->filter_type,
-            buttonThatWasClicked
-        )
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->filter_datas[flt_id]->filter_type,
+                                                    buttonThatWasClicked)
         else
         {
             uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
-            if( current_filter_type == LPF ) {
+            if (current_filter_type == LPF)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = LPF_2_PASS;
             }
             else
                 synth_data->filter_datas[flt_id]->filter_type = LPF;
         }
-        show_info_popup( buttonThatWasClicked, synth_data->filter_datas[flt_id]->filter_type.midi_control );
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->filter_datas[flt_id]->filter_type.midi_control);
         //[/UserButtonCode_filter_type_6_2]
     }
     else if (buttonThatWasClicked == filter_type_6_3)
     {
         //[UserButtonCode_filter_type_6_3] -- add your button handler code here..
         int flt_id = 2;
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->filter_datas[flt_id]->filter_type,
-            buttonThatWasClicked
-        )
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->filter_datas[flt_id]->filter_type,
+                                                    buttonThatWasClicked)
         else
         {
             uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
-            if( current_filter_type == LPF ) {
+            if (current_filter_type == LPF)
+            {
                 synth_data->filter_datas[flt_id]->filter_type = LPF_2_PASS;
             }
             else
                 synth_data->filter_datas[flt_id]->filter_type = LPF;
         }
-        show_info_popup( buttonThatWasClicked, synth_data->filter_datas[flt_id]->filter_type.midi_control );
+        show_info_popup(buttonThatWasClicked,
+                        synth_data->filter_datas[flt_id]->filter_type.midi_control);
         //[/UserButtonCode_filter_type_6_3]
     }
     else if (buttonThatWasClicked == button_midi_learn)
@@ -2515,28 +2466,26 @@ void UiEditorSynthLite::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == button_ctrl_toggle)
     {
         //[UserButtonCode_button_ctrl_toggle] -- add your button handler code here..
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->ctrl,
-            buttonThatWasClicked
-        )
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->ctrl, buttonThatWasClicked)
         else
         {
             synth_data->ctrl ^= true;
             show_ctrl_state();
         }
-        show_info_popup( buttonThatWasClicked, synth_data->ctrl.midi_control );
+        show_info_popup(buttonThatWasClicked, synth_data->ctrl.midi_control);
         //[/UserButtonCode_button_ctrl_toggle]
     }
     else if (buttonThatWasClicked == button_open_morph)
     {
         //[UserButtonCode_button_open_morph] -- add your button handler code here..
-        if( ! editor_morph )
+        if (!editor_morph)
         {
-            addAndMakeVisible( editor_morph = new UiEditorMorph() );
-            float width_factor = 1.0f/original_w*getWidth();
-            float height_factor = 1.0f/original_h*getHeight();
-            editor_morph->setBounds( 990.0f*width_factor, 28.0f*height_factor, editor_morph->original_w*width_factor, editor_morph->original_h*height_factor );
+            addAndMakeVisible(editor_morph = new UiEditorMorph());
+            float width_factor = 1.0f / original_w * getWidth();
+            float height_factor = 1.0f / original_h * getHeight();
+            editor_morph->setBounds(990.0f * width_factor, 28.0f * height_factor,
+                                    editor_morph->original_w * width_factor,
+                                    editor_morph->original_h * height_factor);
         }
         else
             editor_morph = nullptr;
@@ -2559,7 +2508,7 @@ void UiEditorSynthLite::buttonClicked (Button* buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiEditorSynthLite::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
+void UiEditorSynthLite::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
 {
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]
@@ -2571,15 +2520,15 @@ void UiEditorSynthLite::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
 
         String new_name = combo_programm->getText();
         String old_name = combo_programm->getItemText(combo_programm->getSelectedItemIndex());
-        if( old_name != new_name && combo_programm->getSelectedItemIndex() == -1 )
+        if (old_name != new_name && combo_programm->getSelectedItemIndex() == -1)
         {
             synth_data->create_new();
-            synth_data->rename( new_name );
+            synth_data->rename(new_name);
             show_programs_and_select();
         }
         else
         {
-            synth_data->set_current_program( combo_programm->getSelectedItemIndex() );
+            synth_data->set_current_program(combo_programm->getSelectedItemIndex());
             synth_data->load();
         }
         //[/UserComboBoxCode_combo_programm]
@@ -2587,7 +2536,7 @@ void UiEditorSynthLite::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     else if (comboBoxThatHasChanged == combo_bank)
     {
         //[UserComboBoxCode_combo_bank] -- add your combo box handling code here..
-        synth_data->set_current_bank( combo_bank->getSelectedItemIndex() );
+        synth_data->set_current_bank(combo_bank->getSelectedItemIndex());
         show_programs_and_select();
         //[/UserComboBoxCode_combo_bank]
     }
@@ -2596,7 +2545,7 @@ void UiEditorSynthLite::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     //[/UsercomboBoxChanged_Post]
 }
 
-void UiEditorSynthLite::sliderValueChanged (Slider* sliderThatWasMoved)
+void UiEditorSynthLite::sliderValueChanged(Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
@@ -2604,16 +2553,10 @@ void UiEditorSynthLite::sliderValueChanged (Slider* sliderThatWasMoved)
     if (sliderThatWasMoved == sl_morhp_mix)
     {
         //[UserSliderCode_sl_morhp_mix] -- add your slider handling code here..
-        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT
-        (
-            &synth_data->linear_morhp_state,
-            sliderThatWasMoved
-        )
-        else
-        {
-            synth_data->linear_morhp_state = sl_morhp_mix->getValue()/1000;
-        }
-        show_info_popup( sliderThatWasMoved, synth_data->linear_morhp_state.midi_control );
+        IF_MIDI_LEARN__HANDLE__AND_UPDATE_COMPONENT(&synth_data->linear_morhp_state,
+                                                    sliderThatWasMoved)
+        else { synth_data->linear_morhp_state = sl_morhp_mix->getValue() / 1000; }
+        show_info_popup(sliderThatWasMoved, synth_data->linear_morhp_state.midi_control);
         //[/UserSliderCode_sl_morhp_mix]
     }
 
@@ -2621,11 +2564,11 @@ void UiEditorSynthLite::sliderValueChanged (Slider* sliderThatWasMoved)
     //[/UsersliderValueChanged_Post]
 }
 
-bool UiEditorSynthLite::keyPressed (const KeyPress& key)
+bool UiEditorSynthLite::keyPressed(const KeyPress &key)
 {
     //[UserCode_keyPressed] -- Add your code here...
     bool success = false;
-    if( key == KeyPress::escapeKey )
+    if (key == KeyPress::escapeKey)
     {
         MIDIControlHandler::getInstance()->clear();
 
@@ -2636,34 +2579,33 @@ bool UiEditorSynthLite::keyPressed (const KeyPress& key)
         editor_settings = nullptr;
         popup = nullptr;
 
-        if( MONOVoice::get_amp_painter() )
+        if (MONOVoice::get_amp_painter())
         {
-            removeChildComponent( MONOVoice::get_amp_painter() );
+            removeChildComponent(MONOVoice::get_amp_painter());
             MONOVoice::kill_amp_painter();
         }
         success = true;
     }
-    return success;  // Return true if your handler uses this key event, or false to allow it to be passed-on.
+    return success; // Return true if your handler uses this key event, or false to allow it to be
+                    // passed-on.
     //[/UserCode_keyPressed]
 }
 
-void UiEditorSynthLite::modifierKeysChanged (const ModifierKeys& modifiers)
+void UiEditorSynthLite::modifierKeysChanged(const ModifierKeys &modifiers)
 {
     //[UserCode_modifierKeysChanged] -- Add your code here...
-    if( ! combo_programm->isTextEditable() ) {
+    if (!combo_programm->isTextEditable())
+    {
         synth_data->ctrl = modifiers.isShiftDown();
         show_ctrl_state();
     }
-    //else
-    //    Component::modifierKeysChanged( modifiers );
+    // else
+    //     Component::modifierKeysChanged( modifiers );
     //[/UserCode_modifierKeysChanged]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -3382,7 +3324,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

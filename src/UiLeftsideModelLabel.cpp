@@ -23,39 +23,35 @@
 
 #include "UiLeftsideModelLabel.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-void UiLeftsideModelLabel::set_text( const String& text_ )
-{
-    _text = text_;
-}
+void UiLeftsideModelLabel::set_text(const String &text_) { _text = text_; }
 
-void UiLeftsideModelLabel::on_style_set( AppStyle*const style_ )
+void UiLeftsideModelLabel::on_style_set(AppStyle *const style_)
 {
-    if( _style )
+    if (_style)
     {
-        setOpaque( style_->is_opaque() );
+        setOpaque(style_->is_opaque());
     }
 
-    model->set_style( style_ );
+    model->set_style(style_);
 }
 
-void UiLeftsideModelLabel::refresh_ui( Array< Component* >& components_to_repaint_ )
+void UiLeftsideModelLabel::refresh_ui(Array<Component *> &components_to_repaint_)
 {
-    model->get_components_to_repaint( components_to_repaint_ );
+    model->get_components_to_repaint(components_to_repaint_);
 }
 
-void UiLeftsideModelLabel::get_controllers_for_paint_popup( Array< MONO_Controller* >& controllers_with_popup_ )
+void UiLeftsideModelLabel::get_controllers_for_paint_popup(
+    Array<MONO_Controller *> &controllers_with_popup_)
 {
-    model->get_controllers_for_paint_popup( controllers_with_popup_ );
+    model->get_controllers_for_paint_popup(controllers_with_popup_);
 }
 //[/MiscUserDefs]
 
 //==============================================================================
-UiLeftsideModelLabel::UiLeftsideModelLabel ()
+UiLeftsideModelLabel::UiLeftsideModelLabel()
 {
-    addAndMakeVisible (model = new ModelBase());
-
+    addAndMakeVisible(model = new ModelBase());
 
     //[UserPreSize]
     _style = nullptr;
@@ -63,8 +59,7 @@ UiLeftsideModelLabel::UiLeftsideModelLabel ()
 #ifdef DO_NEVER_DEFINE_THIS
     //[/UserPreSize]
 
-    setSize (170, 50);
-
+    setSize(170, 50);
 
     //[Constructor] You can add your own custom stuff here..
 #endif
@@ -78,23 +73,23 @@ UiLeftsideModelLabel::~UiLeftsideModelLabel()
 
     model = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiLeftsideModelLabel::paint (Graphics& g)
+void UiLeftsideModelLabel::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-    if( _style )
-        if( _style->is_opaque() )
+    if (_style)
+        if (_style->is_opaque())
             g.fillAll(Colour(_style->get_foreground_color()));
-    AppStyle::paint_outline_label( g, *this, _text, _style, Justification::left, 0.3235f, 0.1000f, 0.6177f, 0.8000f );
+    AppStyle::paint_outline_label(g, *this, _text, _style, Justification::left, 0.3235f, 0.1000f,
+                                  0.6177f, 0.8000f);
     return;
     //[/UserPrePaint]
 
-    g.fillAll (Colours::white);
+    g.fillAll(Colours::white);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -102,16 +97,14 @@ void UiLeftsideModelLabel::paint (Graphics& g)
 
 void UiLeftsideModelLabel::resized()
 {
-    model->setBounds (proportionOfWidth (0.0588f), proportionOfHeight (0.1000f), proportionOfWidth (0.2353f), proportionOfHeight (0.8000f));
+    model->setBounds(proportionOfWidth(0.0588f), proportionOfHeight(0.1000f),
+                     proportionOfWidth(0.2353f), proportionOfHeight(0.8000f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -135,7 +128,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

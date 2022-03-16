@@ -25,8 +25,6 @@
 class ComponentColours;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -35,28 +33,26 @@ class ComponentColours;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorColourStyler  : public Component,
-    public Timer,
-    public Button::Listener
+class UiEditorColourStyler : public Component, public Timer, public Button::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiEditorColourStyler (ComponentColours* const colours_);
+    UiEditorColourStyler(ComponentColours *const colours_);
     ~UiEditorColourStyler();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    ComponentColours*const _colours;
-    Colour* editable_colour;
+    ComponentColours *const _colours;
+    Colour *editable_colour;
 
     void timerCallback();
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
+    void buttonClicked(Button *buttonThatWasClicked);
 
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -80,10 +76,10 @@ private:
     ScopedPointer<TextButton> col_11;
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorColourStyler)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorColourStyler)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_1EE5576E0584BFD0__
+#endif // __JUCE_HEADER_1EE5576E0584BFD0__

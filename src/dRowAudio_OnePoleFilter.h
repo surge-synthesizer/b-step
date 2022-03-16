@@ -19,11 +19,11 @@
   copies or substantial portions of the Software.
 
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 
   ==============================================================================
@@ -37,57 +37,54 @@
 //==============================================================================
 /**
     One-Pole Filter.
- 
-	This is a simple filter that uses only one pole. As such it is very
-	computationaly efficient especially if used to process a buffer of samples.
-	It has a slope of -6dB/octave.
+
+        This is a simple filter that uses only one pole. As such it is very
+        computationaly efficient especially if used to process a buffer of samples.
+        It has a slope of -6dB/octave.
  */
 class OnePoleFilter
 {
-public:
+  public:
     //==============================================================================
-	/**	Create an unititialised filter.
-		This will not perform any filtering yet, call a make... method
-		to turn it into that particular type of filter.
-	 */
-	OnePoleFilter() noexcept;
-	
-	/** Destructor.
+    /**	Create an unititialised filter.
+            This will not perform any filtering yet, call a make... method
+            to turn it into that particular type of filter.
      */
-	~OnePoleFilter() noexcept;
-	
-	/**	Process a number of samples in one go.
-		This is the most effecient method of filtering.
-		Note that the samples passed to it actually get changed.
-	 */
-	void processSamples (float* const samples,
-						 const int numSamples) noexcept;
-	
-	/**	Process a single sample.
-		Less efficient method but leaves the sample unchanged,
-		returning a filtered copy of it.
-	 */
-	inline float processSingleSample (const float sampleToProcess) noexcept
-	{
-		return y1 = (b0 * sampleToProcess) + (a1 * y1);
-	}
-	
-	/**	Turns the filter into a Low-pass.
-	 */
-	void makeLowPass (const double sampleRate,
-					  const double frequency) noexcept;
-	/**	Turns the filter into a High-pass.
-	 */
-	void makeHighPass (const double sampleRate,
-					   const double frequency) noexcept;
+    OnePoleFilter() noexcept;
 
-private:
+    /** Destructor.
+     */
+    ~OnePoleFilter() noexcept;
+
+    /**	Process a number of samples in one go.
+            This is the most effecient method of filtering.
+            Note that the samples passed to it actually get changed.
+     */
+    void processSamples(float *const samples, const int numSamples) noexcept;
+
+    /**	Process a single sample.
+            Less efficient method but leaves the sample unchanged,
+            returning a filtered copy of it.
+     */
+    inline float processSingleSample(const float sampleToProcess) noexcept
+    {
+        return y1 = (b0 * sampleToProcess) + (a1 * y1);
+    }
+
+    /**	Turns the filter into a Low-pass.
+     */
+    void makeLowPass(const double sampleRate, const double frequency) noexcept;
+    /**	Turns the filter into a High-pass.
+     */
+    void makeHighPass(const double sampleRate, const double frequency) noexcept;
+
+  private:
     //==============================================================================
-	CriticalSection lock;
-	float y1, b0, a1;
-	
+    CriticalSection lock;
+    float y1, b0, a1;
+
     //==============================================================================
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OnePoleFilter);
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OnePoleFilter);
 };
 
 #endif // __DROWAUDIO_ONEPOLEFILTER_H__

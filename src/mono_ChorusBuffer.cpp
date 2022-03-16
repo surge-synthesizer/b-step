@@ -25,21 +25,22 @@ Chorus::Chorus()
 
 Chorus::~Chorus()
 {
-    delete [] buffer[0];
-    delete [] buffer[1];
+    delete[] buffer[0];
+    delete[] buffer[1];
 }
 
-void Chorus::sample_rate_changed( double ) noexcept {
-    buffer_size = sample_rate/10;
-    if( buffer[0] )
+void Chorus::sample_rate_changed(double) noexcept
+{
+    buffer_size = sample_rate / 10;
+    if (buffer[0])
         delete[] buffer[0];
-    if( buffer[1] )
+    if (buffer[1])
         delete[] buffer[1];
     buffer[0] = new float[buffer_size];
     buffer[1] = new float[buffer_size];
-    for( int i = 0 ; i != buffer_size ; ++i ) {
+    for (int i = 0; i != buffer_size; ++i)
+    {
         buffer[0][i] = 0;
         buffer[1][i] = 0;
     }
 };
-

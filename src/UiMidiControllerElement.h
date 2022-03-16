@@ -24,8 +24,6 @@
 #include "App.h"
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -34,29 +32,27 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class NewComponent  : public Component,
-    public Slider::Listener,
-    public ComboBox::Listener,
-    public Button::Listener
+class NewComponent : public Component,
+                     public Slider::Listener,
+                     public ComboBox::Listener,
+                     public Button::Listener
 {
-public:
+  public:
     //==============================================================================
-    NewComponent ();
+    NewComponent();
     ~NewComponent();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void sliderValueChanged (Slider* sliderThatWasMoved);
-    void comboBoxChanged (ComboBox* comboBoxThatHasChanged);
-    void buttonClicked (Button* buttonThatWasClicked);
+    void sliderValueChanged(Slider *sliderThatWasMoved);
+    void comboBoxChanged(ComboBox *comboBoxThatHasChanged);
+    void buttonClicked(Button *buttonThatWasClicked);
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -69,12 +65,11 @@ private:
     ScopedPointer<TextButton> textButton2;
     ScopedPointer<ComboBox> comboBox4;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NewComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(NewComponent)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_7652F95A41A347E0__
+#endif // __JUCE_HEADER_7652F95A41A347E0__

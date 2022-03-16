@@ -32,17 +32,18 @@ struct ProcessorUserData
 
     appdeff_t::demo_first_time_t demo_first_time;
 
-public:
+  public:
     Parameters parameter_list;
 
-public:
-    void export_to(XmlElement& xml) const;
-    void import_from(const XmlElement& xml);
+  public:
+    void export_to(XmlElement &xml) const;
+    void import_from(const XmlElement &xml);
     void import_by_default();
-public:
+
+  public:
     ProcessorUserData();
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProcessorUserData)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProcessorUserData)
 };
 
 // ************************************************************************************************
@@ -65,19 +66,18 @@ struct MIDIUserData
     appdeff_t::learn_channel_out_t learn_channel_out;
     appdeff_t::learn_channel_in_t learn_channel_in;
 
-public:
+  public:
     Parameters parameter_list;
 
-public:
-    void export_to(XmlElement& xml) const;
-    void import_from(const XmlElement& xml);
+  public:
+    void export_to(XmlElement &xml) const;
+    void import_from(const XmlElement &xml);
     void import_by_default();
 
-
-public:
+  public:
     MIDIUserData();
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MIDIUserData)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MIDIUserData)
 };
 
 // ************************************************************************************************
@@ -102,77 +102,67 @@ struct Pattern
     appdeff_t::swing_velocity_offset_t swing_velocity_offset;
     appdeff_t::swing_duration_offset_t swing_duration_offset;
 
-    PodParameterBase& master_string_octave( uint8 id_ )
+    PodParameterBase &master_string_octave(uint8 id_)
     {
-        switch( id_ )
+        switch (id_)
         {
-        case 0 :
+        case 0:
             return string_offset_g;
-        case 1 :
+        case 1:
             return string_offset_d;
-        case 2 :
+        case 2:
             return string_offset_a;
-        default :
+        default:
             return string_offset_e;
         }
     }
-    const PodParameterBase& master_string_octave_c( uint8 id_ ) const
+    const PodParameterBase &master_string_octave_c(uint8 id_) const
     {
-        switch( id_ )
+        switch (id_)
         {
-        case 0 :
+        case 0:
             return string_offset_g;
-        case 1 :
+        case 1:
             return string_offset_d;
-        case 2 :
+        case 2:
             return string_offset_a;
-        default :
+        default:
             return string_offset_e;
         }
     }
 
-private:
-    OwnedArray< Bar > _bars;
-    OwnedArray< ChordSet > _chord_sets;
+  private:
+    OwnedArray<Bar> _bars;
+    OwnedArray<ChordSet> _chord_sets;
 
-public:
-    inline Bar& bar ( uint8 bar_id_ ) const {
-        return *_bars.getUnchecked( bar_id_ );
-    }
+  public:
+    inline Bar &bar(uint8 bar_id_) const { return *_bars.getUnchecked(bar_id_); }
 
-    inline ChordSet& selected_chordset () const {
-        return *_chord_sets.getUnchecked( chord_type );
-    }
-    inline ChordSet& chordset ( uint8 id ) const {
-        return *_chord_sets.getUnchecked( id );
-    }
+    inline ChordSet &selected_chordset() const { return *_chord_sets.getUnchecked(chord_type); }
+    inline ChordSet &chordset(uint8 id) const { return *_chord_sets.getUnchecked(id); }
 
-public:
+  public:
     Parameters parameter_list;
 
-public:
-    void export_to(XmlElement& xml) const;
-    void import_from(const XmlElement& xml);
+  public:
+    void export_to(XmlElement &xml) const;
+    void import_from(const XmlElement &xml);
     void import_by_default();
 
     /// 1.2 importer
-    void import_from_2_0( const XmlElement& xml_ );
-    void import_from_1_2(const XmlElement& xml);
-public:
-    Pattern();
+    void import_from_2_0(const XmlElement &xml_);
+    void import_from_1_2(const XmlElement &xml);
 
+  public:
+    Pattern();
 
     int8 _remote_tune;
     int8 _remote_tune_center;
 
-    inline int8 get_remote_offset() const {
-        return ((_remote_tune_center-_remote_tune)*-1);
-    }
-    inline void set_remote_offset( uint8 midi_note_value_ ) {
-        _remote_tune = midi_note_value_;
-    }
+    inline int8 get_remote_offset() const { return ((_remote_tune_center - _remote_tune) * -1); }
+    inline void set_remote_offset(uint8 midi_note_value_) { _remote_tune = midi_note_value_; }
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pattern)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Pattern)
 };
 
 // ************************************************************************************************
@@ -185,27 +175,25 @@ struct ChordSet
 
     typedef APPDEF_ChordSet appdeff_t;
 
-private:
-    OwnedArray< Chord > _chords;
+  private:
+    OwnedArray<Chord> _chords;
 
-public:
-    inline Chord& chord ( uint8 chord_id_ ) const
-    {
-        return *_chords.getUnchecked( chord_id_ );
-    }
+  public:
+    inline Chord &chord(uint8 chord_id_) const { return *_chords.getUnchecked(chord_id_); }
 
-public:
-    void export_to( XmlElement& xml_, bool with_id_ ) const;
-    void import_from( const XmlElement& xml_, bool with_id_ );
-    void import_by_default( bool with_id_ );
+  public:
+    void export_to(XmlElement &xml_, bool with_id_) const;
+    void import_from(const XmlElement &xml_, bool with_id_);
+    void import_by_default(bool with_id_);
 
     /// 1.2 importer
-    void import_from_1_2(const XmlElement& xml );
-    void import_from_1_2_snapshot(const XmlElement& xml );
-public:
-    ChordSet( uint8 chordset_id_ );
+    void import_from_1_2(const XmlElement &xml);
+    void import_from_1_2_snapshot(const XmlElement &xml);
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChordSet)
+  public:
+    ChordSet(uint8 chordset_id_);
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ChordSet)
 };
 
 // ************************************************************************************************
@@ -224,40 +212,41 @@ struct Chord
     appdeff_t::offset_e_t offset_e;
     appdeff_t::offset_all_t offset_all;
 
-public:
-    inline PodParameterBase& get_string_offset( uint8 barstring_id_ )
+  public:
+    inline PodParameterBase &get_string_offset(uint8 barstring_id_)
     {
-        switch( barstring_id_ )
+        switch (barstring_id_)
         {
-        case 0 :
+        case 0:
             return offset_g;
-        case 1 :
+        case 1:
             return offset_d;
-        case 2 :
+        case 2:
             return offset_a;
-        case 3 :
+        case 3:
             return offset_e;
-        default :
-            jassert( false );
+        default:
+            jassert(false);
             return offset_g;
         }
     }
 
-public:
+  public:
     Parameters parameter_list;
 
-    void export_to( XmlElement& xml_ ) const;
-    void import_from( const XmlElement& xml_ );
+    void export_to(XmlElement &xml_) const;
+    void import_from(const XmlElement &xml_);
     void import_by_default();
 
     /// 1.2 importer
-    void import_from_1_2(const XmlElement& xml);
-    void import_from_1_2_snapshot(const XmlElement& xml);
-private:
-    friend class ChordSet;
-    Chord( uint8 chordset_id_, uint8 chord_id_ );
+    void import_from_1_2(const XmlElement &xml);
+    void import_from_1_2_snapshot(const XmlElement &xml);
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Chord)
+  private:
+    friend class ChordSet;
+    Chord(uint8 chordset_id_, uint8 chord_id_);
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Chord)
 };
 
 // ************************************************************************************************
@@ -284,41 +273,39 @@ struct Bar
     appdeff_t::play_random_t random_playback;
     appdeff_t::group_t group;
 
-private:
-    OwnedArray< BarStep > _barsteps;
-    OwnedArray< Barstring > _barstrings;
-    OwnedArray< BarCCSet > _cc_sets;
+  private:
+    OwnedArray<BarStep> _barsteps;
+    OwnedArray<Barstring> _barstrings;
+    OwnedArray<BarCCSet> _cc_sets;
 
-public:
-    inline BarStep& barstep ( uint8 step_id_ ) const {
-        return *_barsteps.getUnchecked( step_id_ );
+  public:
+    inline BarStep &barstep(uint8 step_id_) const { return *_barsteps.getUnchecked(step_id_); }
+
+    inline Barstring &barstring(uint8 barstring_id_) const
+    {
+        return *_barstrings.getUnchecked(barstring_id_);
     }
 
-    inline Barstring& barstring ( uint8 barstring_id_ ) const {
-        return *_barstrings.getUnchecked( barstring_id_ );
-    }
+    inline BarCCSet &cc_set(uint8 cc_id_) const { return *_cc_sets.getUnchecked(cc_id_); }
 
-    inline BarCCSet& cc_set ( uint8 cc_id_ ) const {
-        return *_cc_sets.getUnchecked( cc_id_ );
-    }
+  public:
+    Bar &operator=(const Bar &);
 
-public:
-    Bar& operator=( const Bar& );
-
-public:
+  public:
     Parameters parameter_list;
 
-public:
-    void export_to(XmlElement& xml_, bool with_id_ ) const;
-    void import_from(const XmlElement& xml_, bool with_id_ );
-    void import_by_default( bool with_id_ );
+  public:
+    void export_to(XmlElement &xml_, bool with_id_) const;
+    void import_from(const XmlElement &xml_, bool with_id_);
+    void import_by_default(bool with_id_);
 
     /// 1.2 importer
-    void import_from_1_2(const XmlElement& xml, String& parent_prefix_ );
-public:
-    Bar ( uint8 bar_id_ );
+    void import_from_1_2(const XmlElement &xml, String &parent_prefix_);
 
-    JUCE_LEAK_DETECTOR (Bar)
+  public:
+    Bar(uint8 bar_id_);
+
+    JUCE_LEAK_DETECTOR(Bar)
 };
 
 // ************************************************************************************************
@@ -332,20 +319,21 @@ struct BarCCSet
 
     appdeff_t::cc_type_t cc_type;
 
-public:
-    BarCCSet& operator=( const BarCCSet& );
+  public:
+    BarCCSet &operator=(const BarCCSet &);
 
-public:
+  public:
     Parameters parameter_list;
 
-public:
-    void export_to(XmlElement& xml_) const;
-    void import_from(const XmlElement& xml_);
+  public:
+    void export_to(XmlElement &xml_) const;
+    void import_from(const XmlElement &xml_);
     void import_by_default();
-public:
-    BarCCSet( uint8 bar_id_ );
 
-    JUCE_LEAK_DETECTOR (BarCCSet)
+  public:
+    BarCCSet(uint8 bar_id_);
+
+    JUCE_LEAK_DETECTOR(BarCCSet)
 };
 
 // ************************************************************************************************
@@ -384,29 +372,31 @@ struct BarStep
     appdeff_t::pos_reset_point_t pos_reset_point;
     appdeff_t::pos_force_to_absolute_step_t pos_force_to_absolute_step;
 
-private:
-    OwnedArray< BarStepCCVals > _cc_vals;
+  private:
+    OwnedArray<BarStepCCVals> _cc_vals;
 
-public:
-    inline BarStepCCVals& cc_val ( uint8 cc_val_id_ ) const {
-        return *_cc_vals.getUnchecked( cc_val_id_ );
+  public:
+    inline BarStepCCVals &cc_val(uint8 cc_val_id_) const
+    {
+        return *_cc_vals.getUnchecked(cc_val_id_);
     }
 
-public:
+  public:
     Parameters parameter_list;
 
-public:
-    void export_to(XmlElement& xml_) const;
-    void import_from(const XmlElement& xml_);
+  public:
+    void export_to(XmlElement &xml_) const;
+    void import_from(const XmlElement &xml_);
     void import_by_default();
 
     /// 1.2 importer
-    void import_from_1_2(const XmlElement& xml, String& parent_prefix_ );
-public:
-    BarStep( uint8 step_id_ );
-    BarStep& operator=( const BarStep& );
+    void import_from_1_2(const XmlElement &xml, String &parent_prefix_);
 
-    JUCE_LEAK_DETECTOR (BarStep)
+  public:
+    BarStep(uint8 step_id_);
+    BarStep &operator=(const BarStep &);
+
+    JUCE_LEAK_DETECTOR(BarStep)
 };
 
 // ************************************************************************************************
@@ -421,20 +411,21 @@ struct BarStepCCVals
     appdeff_t::value_t value;
     appdeff_t::enable_t enable;
 
-public:
+  public:
     Parameters parameter_list;
 
-public:
-    BarStepCCVals& operator=( const BarStepCCVals& );
+  public:
+    BarStepCCVals &operator=(const BarStepCCVals &);
 
-public:
-    void export_to(XmlElement& xml_) const;
-    void import_from(const XmlElement& xml_);
+  public:
+    void export_to(XmlElement &xml_) const;
+    void import_from(const XmlElement &xml_);
     void import_by_default();
-public:
-    BarStepCCVals( uint8 step_id_, uint8 column_id_ );
 
-    JUCE_LEAK_DETECTOR (BarStepCCVals)
+  public:
+    BarStepCCVals(uint8 step_id_, uint8 column_id_);
+
+    JUCE_LEAK_DETECTOR(BarStepCCVals)
 };
 
 // ************************************************************************************************
@@ -449,31 +440,30 @@ struct Barstring
 
     appdeff_t::octave_offset_t octave_offset;
 
-private:
-    OwnedArray< Step > _steps;
+  private:
+    OwnedArray<Step> _steps;
 
-public:
-    inline Step& step ( uint8 step_id_ ) const {
-        return *_steps.getUnchecked( step_id_ );
-    }
+  public:
+    inline Step &step(uint8 step_id_) const { return *_steps.getUnchecked(step_id_); }
 
-public:
+  public:
     Parameters parameter_list;
 
-public:
-    Barstring& operator=( const Barstring& );
+  public:
+    Barstring &operator=(const Barstring &);
 
-public:
-    void export_to(XmlElement& xml_) const;
-    void import_from(const XmlElement& xml_);
+  public:
+    void export_to(XmlElement &xml_) const;
+    void import_from(const XmlElement &xml_);
     void import_by_default();
 
     /// 1.2 importer
-    void import_from_1_2(const XmlElement& xml, String& parent_prefix_ );
-public:
-    Barstring ( uint8 id_ );
+    void import_from_1_2(const XmlElement &xml, String &parent_prefix_);
 
-    JUCE_LEAK_DETECTOR (Barstring)
+  public:
+    Barstring(uint8 id_);
+
+    JUCE_LEAK_DETECTOR(Barstring)
 };
 
 // ************************************************************************************************
@@ -487,23 +477,24 @@ struct Step
 
     appdeff_t::is_mute_t is_mute;
 
-public:
+  public:
     Parameters parameter_list;
 
-public:
-    Step& operator= ( const Step& );
+  public:
+    Step &operator=(const Step &);
 
-public:
-    void export_to(XmlElement& xml_) const;
-    void import_from(const XmlElement& xml_);
+  public:
+    void export_to(XmlElement &xml_) const;
+    void import_from(const XmlElement &xml_);
     void import_by_default();
 
     /// 1.2 importer
-    void import_from_1_2(const XmlElement& xml, String& parent_prefix_ );
-public:
-    Step( uint8 string_id, uint8 id_ );
+    void import_from_1_2(const XmlElement &xml, String &parent_prefix_);
 
-    JUCE_LEAK_DETECTOR (Step)
+  public:
+    Step(uint8 string_id, uint8 id_);
+
+    JUCE_LEAK_DETECTOR(Step)
 };
 
 // ************************************************************************************************
@@ -521,17 +512,18 @@ struct UIUserData
     appdeff_t::current_chord_view_t current_chord_view;
     appdeff_t::autoplay_sample_audio_t autoplay_sample_audio;
 
-public:
+  public:
     Parameters parameter_list;
 
-public:
-    void export_to(XmlElement& xml_) const;
-    void import_from(const XmlElement& xml_);
+  public:
+    void export_to(XmlElement &xml_) const;
+    void import_from(const XmlElement &xml_);
     void import_by_default();
-public:
+
+  public:
     UIUserData();
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UIUserData)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UIUserData)
 };
 
 // ************************************************************************************************
@@ -559,17 +551,18 @@ struct UIBarClipboardSettings
 
     String stored_bar_source_ident;
 
-public:
+  public:
     Parameters parameter_list;
 
-public:
-    void export_to(XmlElement& xml_) const;
-    void import_from(const XmlElement& xml_);
+  public:
+    void export_to(XmlElement &xml_) const;
+    void import_from(const XmlElement &xml_);
     void import_by_default();
-public:
-    UIBarClipboardSettings( uint8 clipboard_id_ );
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UIBarClipboardSettings)
+  public:
+    UIBarClipboardSettings(uint8 clipboard_id_);
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UIBarClipboardSettings)
 };
 
-#endif  // COREDATASTRUCTURE_H_INCLUDED
+#endif // COREDATASTRUCTURE_H_INCLUDED

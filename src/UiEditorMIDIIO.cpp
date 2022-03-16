@@ -25,31 +25,35 @@
 
 #include "UiEditorMIDIIO.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 void UiEditorMIDIIO::refresh()
 {
-    for( int i = 0 ; i < getNumChildComponents() ; ++i )
+    for (int i = 0; i < getNumChildComponents(); ++i)
     {
-        if( ComboBox*combo_box = dynamic_cast< ComboBox*>( getChildComponent(i) ) )
+        if (ComboBox *combo_box = dynamic_cast<ComboBox *>(getChildComponent(i)))
         {
             // PORTS
-            if( combo_box->getTextWhenNoChoicesAvailable() == "NO DEVICE CONNECTED" )
+            if (combo_box->getTextWhenNoChoicesAvailable() == "NO DEVICE CONNECTED")
             {
-                combo_box->clear( dontSendNotification );
-                combo_box->addItemList( _audio_device_manager->get_available_ports( combo_box->getName() ), 2 );
-                combo_box->setText( _audio_device_manager->get_selected_device_name( combo_box->getName() ), dontSendNotification );
-                if( _audio_device_manager->is_port_open( combo_box->getName() ) ) {
+                combo_box->clear(dontSendNotification);
+                combo_box->addItemList(
+                    _audio_device_manager->get_available_ports(combo_box->getName()), 2);
+                combo_box->setText(
+                    _audio_device_manager->get_selected_device_name(combo_box->getName()),
+                    dontSendNotification);
+                if (_audio_device_manager->is_port_open(combo_box->getName()))
+                {
                     // TODO change colour
                 }
             }
 
             // CHANNELS
-            else if( combo_box->getTextWhenNoChoicesAvailable() == "OMNI" )
+            else if (combo_box->getTextWhenNoChoicesAvailable() == "OMNI")
             {
-                combo_box->clear( dontSendNotification );
-                for( int i = 0+1 ; i != 16+1 ; ++i ) {
-                    combo_box->addItem( String( i ) , i );
+                combo_box->clear(dontSendNotification);
+                for (int i = 0 + 1; i != 16 + 1; ++i)
+                {
+                    combo_box->addItem(String(i), i);
                 }
             }
 
@@ -60,492 +64,466 @@ void UiEditorMIDIIO::refresh()
 //[/MiscUserDefs]
 
 //==============================================================================
-UiEditorMIDIIO::UiEditorMIDIIO (mono_AudioDeviceManager*const audio_device_manager_)
+UiEditorMIDIIO::UiEditorMIDIIO(mono_AudioDeviceManager *const audio_device_manager_)
     : _audio_device_manager(audio_device_manager_), original_w(1040), original_h(500)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    addAndMakeVisible (label_7 = new Label (String(),
-                                            TRANS("RECEIVE CC:")));
-    label_7->setFont (Font (30.00f, Font::plain));
-    label_7->setJustificationType (Justification::centredLeft);
-    label_7->setEditable (false, false, false);
-    label_7->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_7->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_7->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (combo_input_main = new ComboBox ("RECIEVE_MIDI_MAIN"));
-    combo_input_main->setEditableText (false);
-    combo_input_main->setJustificationType (Justification::centredLeft);
-    combo_input_main->setTextWhenNothingSelected (TRANS("SELECT A DEVICE"));
-    combo_input_main->setTextWhenNoChoicesAvailable (TRANS("NO DEVICE CONNECTED"));
-    combo_input_main->addListener (this);
-
-    addAndMakeVisible (combo_input_main_channel = new ComboBox (String()));
-    combo_input_main_channel->setEditableText (false);
-    combo_input_main_channel->setJustificationType (Justification::centredLeft);
-    combo_input_main_channel->setTextWhenNothingSelected (TRANS("CH"));
-    combo_input_main_channel->setTextWhenNoChoicesAvailable (TRANS("OMNI"));
-    combo_input_main_channel->addListener (this);
-
-    addAndMakeVisible (label_1 = new Label (String(),
-                                            TRANS("PORT")));
-    label_1->setFont (Font (30.00f, Font::plain));
-    label_1->setJustificationType (Justification::centred);
-    label_1->setEditable (false, false, false);
-    label_1->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_1->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_1->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_3 = new Label (String(),
-                                            TRANS("INPUT:")));
-    label_3->setFont (Font (30.00f, Font::plain));
-    label_3->setJustificationType (Justification::centredLeft);
-    label_3->setEditable (false, false, false);
-    label_3->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_3->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_3->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_input_main_thru = new ToggleButton (String()));
-    toggle_input_main_thru->addListener (this);
-
-    addAndMakeVisible (label_4 = new Label (String(),
-                                            TRANS("THRU:")));
-    label_4->setFont (Font (30.00f, Font::plain));
-    label_4->setJustificationType (Justification::centredLeft);
-    label_4->setEditable (false, false, false);
-    label_4->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_4->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_4->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_5 = new Label (String(),
-                                            TRANS("THRU:")));
-    label_5->setFont (Font (30.00f, Font::plain));
-    label_5->setJustificationType (Justification::centredLeft);
-    label_5->setEditable (false, false, false);
-    label_5->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_5->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_5->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (combo_output_thru = new ComboBox ("SEND_MIDI_THRU"));
-    combo_output_thru->setEditableText (false);
-    combo_output_thru->setJustificationType (Justification::centredLeft);
-    combo_output_thru->setTextWhenNothingSelected (TRANS("SELECT A DEVICE"));
-    combo_output_thru->setTextWhenNoChoicesAvailable (TRANS("NO DEVICE CONNECTED"));
-    combo_output_thru->addListener (this);
-
-    addAndMakeVisible (label_6 = new Label (String(),
-                                            TRANS("CC IN:")));
-    label_6->setFont (Font (30.00f, Font::plain));
-    label_6->setJustificationType (Justification::centredLeft);
-    label_6->setEditable (false, false, false);
-    label_6->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_6->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_6->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (combo_input_cc = new ComboBox ("RECIEVE_CC"));
-    combo_input_cc->setEditableText (false);
-    combo_input_cc->setJustificationType (Justification::centredLeft);
-    combo_input_cc->setTextWhenNothingSelected (TRANS("SELECT A DEVICE"));
-    combo_input_cc->setTextWhenNoChoicesAvailable (TRANS("NO DEVICE CONNECTED"));
-    combo_input_cc->addListener (this);
-
-    addAndMakeVisible (toggle_input_main_cc = new ToggleButton (String()));
-    toggle_input_main_cc->addListener (this);
-
-    addAndMakeVisible (toggle_input_cc_thru = new ToggleButton (String()));
-    toggle_input_cc_thru->addListener (this);
-
-    addAndMakeVisible (label_8 = new Label (String(),
-                                            TRANS("THRU:")));
-    label_8->setFont (Font (30.00f, Font::plain));
-    label_8->setJustificationType (Justification::centredLeft);
-    label_8->setEditable (false, false, false);
-    label_8->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_8->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_8->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_9 = new Label (String(),
-                                            TRANS("CC FB (OUT):")));
-    label_9->setFont (Font (30.00f, Font::plain));
-    label_9->setJustificationType (Justification::centredLeft);
-    label_9->setEditable (false, false, false);
-    label_9->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_9->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_9->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (combo_output_cc = new ComboBox ("SEND_MIDI_CC_FEEDBACK"));
-    combo_output_cc->setEditableText (false);
-    combo_output_cc->setJustificationType (Justification::centredLeft);
-    combo_output_cc->setTextWhenNothingSelected (TRANS("SELECT A DEVICE"));
-    combo_output_cc->setTextWhenNoChoicesAvailable (TRANS("NO DEVICE CONNECTED"));
-    combo_output_cc->addListener (this);
-
-    addAndMakeVisible (toggle_output_cc_mute = new ToggleButton (String()));
-    toggle_output_cc_mute->addListener (this);
-
-    addAndMakeVisible (toggle_output_thru_mute = new ToggleButton (String()));
-    toggle_output_thru_mute->addListener (this);
-
-    addAndMakeVisible (label_11 = new Label (String(),
-                                             TRANS("LFO 1:")));
-    label_11->setFont (Font (30.00f, Font::plain));
-    label_11->setJustificationType (Justification::centredLeft);
-    label_11->setEditable (false, false, false);
-    label_11->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_11->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_11->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (combo_output_lfo_1 = new ComboBox ("SEND_MIDI_LFO_1"));
-    combo_output_lfo_1->setEditableText (false);
-    combo_output_lfo_1->setJustificationType (Justification::centredLeft);
-    combo_output_lfo_1->setTextWhenNothingSelected (TRANS("SELECT A DEVICE"));
-    combo_output_lfo_1->setTextWhenNoChoicesAvailable (TRANS("NO DEVICE CONNECTED"));
-    combo_output_lfo_1->addListener (this);
-
-    addAndMakeVisible (combo_output_lfo_channel_1 = new ComboBox (String()));
-    combo_output_lfo_channel_1->setEditableText (false);
-    combo_output_lfo_channel_1->setJustificationType (Justification::centredLeft);
-    combo_output_lfo_channel_1->setTextWhenNothingSelected (TRANS("CH"));
-    combo_output_lfo_channel_1->setTextWhenNoChoicesAvailable (TRANS("OMNI"));
-    combo_output_lfo_channel_1->addListener (this);
-
-    addAndMakeVisible (label_12 = new Label (String(),
-                                             TRANS("CC-NR")));
-    label_12->setFont (Font (30.00f, Font::plain));
-    label_12->setJustificationType (Justification::centred);
-    label_12->setEditable (false, false, false);
-    label_12->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_12->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_12->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_output_lfo_mute_1 = new ToggleButton (String()));
-    toggle_output_lfo_mute_1->addListener (this);
-
-    addAndMakeVisible (combo_output_lfo_number_1 = new ComboBox (String()));
-    combo_output_lfo_number_1->setEditableText (false);
-    combo_output_lfo_number_1->setJustificationType (Justification::centredLeft);
-    combo_output_lfo_number_1->setTextWhenNothingSelected (TRANS("T"));
-    combo_output_lfo_number_1->setTextWhenNoChoicesAvailable (TRANS("EMPTY BANK"));
-    combo_output_lfo_number_1->addListener (this);
-
-    addAndMakeVisible (label_15 = new Label (String(),
-                                             TRANS("LFO 2:")));
-    label_15->setFont (Font (30.00f, Font::plain));
-    label_15->setJustificationType (Justification::centredLeft);
-    label_15->setEditable (false, false, false);
-    label_15->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_15->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_15->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (combo_output_lfo_2 = new ComboBox ("SEND_MIDI_LFO_2"));
-    combo_output_lfo_2->setEditableText (false);
-    combo_output_lfo_2->setJustificationType (Justification::centredLeft);
-    combo_output_lfo_2->setTextWhenNothingSelected (TRANS("SELECT A DEVICE"));
-    combo_output_lfo_2->setTextWhenNoChoicesAvailable (TRANS("NO DEVICE CONNECTED"));
-    combo_output_lfo_2->addListener (this);
-
-    addAndMakeVisible (combo_output_lfo_channel_2 = new ComboBox (String()));
-    combo_output_lfo_channel_2->setEditableText (false);
-    combo_output_lfo_channel_2->setJustificationType (Justification::centredLeft);
-    combo_output_lfo_channel_2->setTextWhenNothingSelected (TRANS("CH"));
-    combo_output_lfo_channel_2->setTextWhenNoChoicesAvailable (TRANS("OMNI"));
-    combo_output_lfo_channel_2->addListener (this);
-
-    addAndMakeVisible (toggle_output_lfo_mute_2 = new ToggleButton (String()));
-    toggle_output_lfo_mute_2->addListener (this);
-
-    addAndMakeVisible (combo_output_lfo_number_2 = new ComboBox (String()));
-    combo_output_lfo_number_2->setEditableText (false);
-    combo_output_lfo_number_2->setJustificationType (Justification::centredLeft);
-    combo_output_lfo_number_2->setTextWhenNothingSelected (TRANS("NR"));
-    combo_output_lfo_number_2->setTextWhenNoChoicesAvailable (TRANS("EMPTY BANK"));
-    combo_output_lfo_number_2->addListener (this);
-
-    addAndMakeVisible (label_16 = new Label (String(),
-                                             TRANS("LFO 3:")));
-    label_16->setFont (Font (30.00f, Font::plain));
-    label_16->setJustificationType (Justification::centredLeft);
-    label_16->setEditable (false, false, false);
-    label_16->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_16->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_16->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (combo_output_lfo_3 = new ComboBox ("SEND_MIDI_LFO_3"));
-    combo_output_lfo_3->setEditableText (false);
-    combo_output_lfo_3->setJustificationType (Justification::centredLeft);
-    combo_output_lfo_3->setTextWhenNothingSelected (TRANS("SELECT A DEVICE"));
-    combo_output_lfo_3->setTextWhenNoChoicesAvailable (TRANS("NO DEVICE CONNECTED"));
-    combo_output_lfo_3->addListener (this);
-
-    addAndMakeVisible (combo_output_lfo_channel_3 = new ComboBox (String()));
-    combo_output_lfo_channel_3->setEditableText (false);
-    combo_output_lfo_channel_3->setJustificationType (Justification::centredLeft);
-    combo_output_lfo_channel_3->setTextWhenNothingSelected (TRANS("CH"));
-    combo_output_lfo_channel_3->setTextWhenNoChoicesAvailable (TRANS("OMNI"));
-    combo_output_lfo_channel_3->addListener (this);
-
-    addAndMakeVisible (toggle_output_lfo_mute_3 = new ToggleButton (String()));
-    toggle_output_lfo_mute_3->addListener (this);
-
-    addAndMakeVisible (combo_output_lfo_number_3 = new ComboBox (String()));
-    combo_output_lfo_number_3->setEditableText (false);
-    combo_output_lfo_number_3->setJustificationType (Justification::centredLeft);
-    combo_output_lfo_number_3->setTextWhenNothingSelected (TRANS("NR"));
-    combo_output_lfo_number_3->setTextWhenNoChoicesAvailable (TRANS("EMPTY BANK"));
-    combo_output_lfo_number_3->addListener (this);
-
-    addAndMakeVisible (toggle_output_lfo_mute_5 = new ToggleButton (String()));
-    toggle_output_lfo_mute_5->addListener (this);
-
-    addAndMakeVisible (label_19 = new Label (String(),
-                                             TRANS("F-ADSR 1:")));
-    label_19->setFont (Font (30.00f, Font::plain));
-    label_19->setJustificationType (Justification::centredLeft);
-    label_19->setEditable (false, false, false);
-    label_19->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_19->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_19->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (combo_output_adsr_1 = new ComboBox ("SEND_MIDI_F_ADSR_1"));
-    combo_output_adsr_1->setEditableText (false);
-    combo_output_adsr_1->setJustificationType (Justification::centredLeft);
-    combo_output_adsr_1->setTextWhenNothingSelected (TRANS("SELECT A DEVICE"));
-    combo_output_adsr_1->setTextWhenNoChoicesAvailable (TRANS("NO DEVICE CONNECTED"));
-    combo_output_adsr_1->addListener (this);
-
-    addAndMakeVisible (combo_output_adsr_channel_1 = new ComboBox (String()));
-    combo_output_adsr_channel_1->setEditableText (false);
-    combo_output_adsr_channel_1->setJustificationType (Justification::centredLeft);
-    combo_output_adsr_channel_1->setTextWhenNothingSelected (TRANS("CH"));
-    combo_output_adsr_channel_1->setTextWhenNoChoicesAvailable (TRANS("OMNI"));
-    combo_output_adsr_channel_1->addListener (this);
-
-    addAndMakeVisible (toggle_output_adsr_mute_1 = new ToggleButton (String()));
-    toggle_output_adsr_mute_1->addListener (this);
-
-    addAndMakeVisible (combo_output_adsr_number_1 = new ComboBox (String()));
-    combo_output_adsr_number_1->setEditableText (false);
-    combo_output_adsr_number_1->setJustificationType (Justification::centredLeft);
-    combo_output_adsr_number_1->setTextWhenNothingSelected (TRANS("NR"));
-    combo_output_adsr_number_1->setTextWhenNoChoicesAvailable (TRANS("EMPTY BANK"));
-    combo_output_adsr_number_1->addListener (this);
-
-    addAndMakeVisible (label_20 = new Label (String(),
-                                             TRANS("F-ADSR 2:")));
-    label_20->setFont (Font (30.00f, Font::plain));
-    label_20->setJustificationType (Justification::centredLeft);
-    label_20->setEditable (false, false, false);
-    label_20->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_20->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_20->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (combo_output_adsr_2 = new ComboBox ("SEND_MIDI_F_ADSR_2"));
-    combo_output_adsr_2->setEditableText (false);
-    combo_output_adsr_2->setJustificationType (Justification::centredLeft);
-    combo_output_adsr_2->setTextWhenNothingSelected (TRANS("SELECT A DEVICE"));
-    combo_output_adsr_2->setTextWhenNoChoicesAvailable (TRANS("NO DEVICE CONNECTED"));
-    combo_output_adsr_2->addListener (this);
-
-    addAndMakeVisible (combo_output_adsr_channel_2 = new ComboBox (String()));
-    combo_output_adsr_channel_2->setEditableText (false);
-    combo_output_adsr_channel_2->setJustificationType (Justification::centredLeft);
-    combo_output_adsr_channel_2->setTextWhenNothingSelected (TRANS("CH"));
-    combo_output_adsr_channel_2->setTextWhenNoChoicesAvailable (TRANS("OMNI"));
-    combo_output_adsr_channel_2->addListener (this);
-
-    addAndMakeVisible (toggle_output_adsr_mute_2 = new ToggleButton (String()));
-    toggle_output_adsr_mute_2->addListener (this);
-
-    addAndMakeVisible (combo_output_adsr_number_2 = new ComboBox (String()));
-    combo_output_adsr_number_2->setEditableText (false);
-    combo_output_adsr_number_2->setJustificationType (Justification::centredLeft);
-    combo_output_adsr_number_2->setTextWhenNothingSelected (TRANS("NR"));
-    combo_output_adsr_number_2->setTextWhenNoChoicesAvailable (TRANS("EMPTY BANK"));
-    combo_output_adsr_number_2->addListener (this);
-
-    addAndMakeVisible (label_21 = new Label (String(),
-                                             TRANS("F-ADSR 2:")));
-    label_21->setFont (Font (30.00f, Font::plain));
-    label_21->setJustificationType (Justification::centredLeft);
-    label_21->setEditable (false, false, false);
-    label_21->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_21->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_21->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (combo_output_adsr_3 = new ComboBox ("SEND_MIDI_F_ADSR_3"));
-    combo_output_adsr_3->setEditableText (false);
-    combo_output_adsr_3->setJustificationType (Justification::centredLeft);
-    combo_output_adsr_3->setTextWhenNothingSelected (TRANS("SELECT A DEVICE"));
-    combo_output_adsr_3->setTextWhenNoChoicesAvailable (TRANS("NO DEVICE CONNECTED"));
-    combo_output_adsr_3->addListener (this);
-
-    addAndMakeVisible (combo_output_adsr_channel_3 = new ComboBox (String()));
-    combo_output_adsr_channel_3->setEditableText (false);
-    combo_output_adsr_channel_3->setJustificationType (Justification::centredLeft);
-    combo_output_adsr_channel_3->setTextWhenNothingSelected (TRANS("CH"));
-    combo_output_adsr_channel_3->setTextWhenNoChoicesAvailable (TRANS("OMNI"));
-    combo_output_adsr_channel_3->addListener (this);
-
-    addAndMakeVisible (toggle_output_adsr_mute_3 = new ToggleButton (String()));
-    toggle_output_adsr_mute_3->addListener (this);
-
-    addAndMakeVisible (combo_output_adsr_number_3 = new ComboBox (String()));
-    combo_output_adsr_number_3->setEditableText (false);
-    combo_output_adsr_number_3->setJustificationType (Justification::centredLeft);
-    combo_output_adsr_number_3->setTextWhenNothingSelected (TRANS("NR"));
-    combo_output_adsr_number_3->setTextWhenNoChoicesAvailable (TRANS("EMPTY BANK"));
-    combo_output_adsr_number_3->addListener (this);
-
-    addAndMakeVisible (label_22 = new Label (String(),
-                                             TRANS("ADSR:")));
-    label_22->setFont (Font (30.00f, Font::plain));
-    label_22->setJustificationType (Justification::centredLeft);
-    label_22->setEditable (false, false, false);
-    label_22->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_22->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_22->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (combo_output_adsr_4 = new ComboBox ("SEND_MIDI_ADSR"));
-    combo_output_adsr_4->setEditableText (false);
-    combo_output_adsr_4->setJustificationType (Justification::centredLeft);
-    combo_output_adsr_4->setTextWhenNothingSelected (TRANS("SELECT A DEVICE"));
-    combo_output_adsr_4->setTextWhenNoChoicesAvailable (TRANS("NO DEVICE CONNECTED"));
-    combo_output_adsr_4->addListener (this);
-
-    addAndMakeVisible (combo_output_adsr_channel_4 = new ComboBox (String()));
-    combo_output_adsr_channel_4->setEditableText (false);
-    combo_output_adsr_channel_4->setJustificationType (Justification::centredLeft);
-    combo_output_adsr_channel_4->setTextWhenNothingSelected (TRANS("CH"));
-    combo_output_adsr_channel_4->setTextWhenNoChoicesAvailable (TRANS("OMNI"));
-    combo_output_adsr_channel_4->addListener (this);
-
-    addAndMakeVisible (toggle_output_adsr_mute_4 = new ToggleButton (String()));
-    toggle_output_adsr_mute_4->addListener (this);
-
-    addAndMakeVisible (combo_output_adsr_number_4 = new ComboBox (String()));
-    combo_output_adsr_number_4->setEditableText (false);
-    combo_output_adsr_number_4->setJustificationType (Justification::centredLeft);
-    combo_output_adsr_number_4->setTextWhenNothingSelected (TRANS("NR"));
-    combo_output_adsr_number_4->setTextWhenNoChoicesAvailable (TRANS("EMPTY BANK"));
-    combo_output_adsr_number_4->addListener (this);
-
-    addAndMakeVisible (label_23 = new Label (String(),
-                                             TRANS("CLOCK:")));
-    label_23->setFont (Font (30.00f, Font::plain));
-    label_23->setJustificationType (Justification::centredLeft);
-    label_23->setEditable (false, false, false);
-    label_23->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_23->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_23->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (combo_output_clock = new ComboBox ("SEND_MIDI_CLOCK"));
-    combo_output_clock->setEditableText (false);
-    combo_output_clock->setJustificationType (Justification::centredLeft);
-    combo_output_clock->setTextWhenNothingSelected (TRANS("SELECT A DEVICE"));
-    combo_output_clock->setTextWhenNoChoicesAvailable (TRANS("NO DEVICE CONNECTED"));
-    combo_output_clock->addListener (this);
-
-    addAndMakeVisible (toggle_output_clock_mute = new ToggleButton (String()));
-    toggle_output_clock_mute->addListener (this);
-
-    addAndMakeVisible (label_32 = new Label (String(),
-                                             TRANS("INPUT:")));
-    label_32->setFont (Font (30.00f, Font::plain));
-    label_32->setJustificationType (Justification::centredLeft);
-    label_32->setEditable (false, false, false);
-    label_32->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_32->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_32->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_33 = new Label (String(),
-                                             TRANS("OUTPUT:")));
-    label_33->setFont (Font (30.00f, Font::plain));
-    label_33->setJustificationType (Justification::centredLeft);
-    label_33->setEditable (false, false, false);
-    label_33->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_33->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_33->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_34 = new Label (String(),
-                                             TRANS("PORT")));
-    label_34->setFont (Font (30.00f, Font::plain));
-    label_34->setJustificationType (Justification::centred);
-    label_34->setEditable (false, false, false);
-    label_34->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_34->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_34->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_35 = new Label (String(),
-                                             TRANS("CH")));
-    label_35->setFont (Font (30.00f, Font::plain));
-    label_35->setJustificationType (Justification::centred);
-    label_35->setEditable (false, false, false);
-    label_35->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_35->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_35->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_13 = new Label (String(),
-                                             TRANS("MUTE")));
-    label_13->setFont (Font (30.00f, Font::plain));
-    label_13->setJustificationType (Justification::centredLeft);
-    label_13->setEditable (false, false, false);
-    label_13->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_13->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_13->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (close = new TextButton (String()));
-    close->setButtonText (TRANS("ESC X"));
-    close->addListener (this);
-    close->setColour (TextButton::buttonColourId, Colours::red);
-    close->setColour (TextButton::buttonOnColourId, Colours::red);
-    close->setColour (TextButton::textColourOnId, Colours::black);
-    close->setColour (TextButton::textColourOffId, Colours::black);
-
-    addAndMakeVisible (label_38 = new Label (String(),
-                                             TRANS("CC INPUT PICKUP OFFSET")));
-    label_38->setFont (Font (15.00f, Font::plain));
-    label_38->setJustificationType (Justification::centred);
-    label_38->setEditable (false, false, false);
-    label_38->setColour (Label::textColourId, Colours::yellow);
-    label_38->setColour (TextEditor::textColourId, Colours::black);
-    label_38->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (slider_midi_pickup = new Slider ("0"));
-    slider_midi_pickup->setRange (0, 1000, 1);
-    slider_midi_pickup->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    slider_midi_pickup->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
-    slider_midi_pickup->setColour (Slider::rotarySliderFillColourId, Colours::yellow);
-    slider_midi_pickup->setColour (Slider::rotarySliderOutlineColourId, Colour (0xff161616));
-    slider_midi_pickup->setColour (Slider::textBoxTextColourId, Colours::yellow);
-    slider_midi_pickup->setColour (Slider::textBoxBackgroundColourId, Colour (0xff161616));
-    slider_midi_pickup->addListener (this);
-
-    addAndMakeVisible (button_midi_learn = new TextButton (String()));
-    button_midi_learn->setButtonText (TRANS("REFRESH"));
-    button_midi_learn->addListener (this);
-    button_midi_learn->setColour (TextButton::buttonColourId, Colours::black);
-    button_midi_learn->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_midi_learn->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (label_17 = new Label (String(),
-                                             TRANS("MUTE")));
-    label_17->setFont (Font (30.00f, Font::plain));
-    label_17->setJustificationType (Justification::centredLeft);
-    label_17->setEditable (false, false, false);
-    label_17->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_17->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_17->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
+    addAndMakeVisible(label_7 = new Label(String(), TRANS("RECEIVE CC:")));
+    label_7->setFont(Font(30.00f, Font::plain));
+    label_7->setJustificationType(Justification::centredLeft);
+    label_7->setEditable(false, false, false);
+    label_7->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_7->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_7->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(combo_input_main = new ComboBox("RECIEVE_MIDI_MAIN"));
+    combo_input_main->setEditableText(false);
+    combo_input_main->setJustificationType(Justification::centredLeft);
+    combo_input_main->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
+    combo_input_main->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
+    combo_input_main->addListener(this);
+
+    addAndMakeVisible(combo_input_main_channel = new ComboBox(String()));
+    combo_input_main_channel->setEditableText(false);
+    combo_input_main_channel->setJustificationType(Justification::centredLeft);
+    combo_input_main_channel->setTextWhenNothingSelected(TRANS("CH"));
+    combo_input_main_channel->setTextWhenNoChoicesAvailable(TRANS("OMNI"));
+    combo_input_main_channel->addListener(this);
+
+    addAndMakeVisible(label_1 = new Label(String(), TRANS("PORT")));
+    label_1->setFont(Font(30.00f, Font::plain));
+    label_1->setJustificationType(Justification::centred);
+    label_1->setEditable(false, false, false);
+    label_1->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_1->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_1->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_3 = new Label(String(), TRANS("INPUT:")));
+    label_3->setFont(Font(30.00f, Font::plain));
+    label_3->setJustificationType(Justification::centredLeft);
+    label_3->setEditable(false, false, false);
+    label_3->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_3->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_input_main_thru = new ToggleButton(String()));
+    toggle_input_main_thru->addListener(this);
+
+    addAndMakeVisible(label_4 = new Label(String(), TRANS("THRU:")));
+    label_4->setFont(Font(30.00f, Font::plain));
+    label_4->setJustificationType(Justification::centredLeft);
+    label_4->setEditable(false, false, false);
+    label_4->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_4->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_4->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_5 = new Label(String(), TRANS("THRU:")));
+    label_5->setFont(Font(30.00f, Font::plain));
+    label_5->setJustificationType(Justification::centredLeft);
+    label_5->setEditable(false, false, false);
+    label_5->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_5->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_5->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(combo_output_thru = new ComboBox("SEND_MIDI_THRU"));
+    combo_output_thru->setEditableText(false);
+    combo_output_thru->setJustificationType(Justification::centredLeft);
+    combo_output_thru->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
+    combo_output_thru->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
+    combo_output_thru->addListener(this);
+
+    addAndMakeVisible(label_6 = new Label(String(), TRANS("CC IN:")));
+    label_6->setFont(Font(30.00f, Font::plain));
+    label_6->setJustificationType(Justification::centredLeft);
+    label_6->setEditable(false, false, false);
+    label_6->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_6->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_6->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(combo_input_cc = new ComboBox("RECIEVE_CC"));
+    combo_input_cc->setEditableText(false);
+    combo_input_cc->setJustificationType(Justification::centredLeft);
+    combo_input_cc->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
+    combo_input_cc->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
+    combo_input_cc->addListener(this);
+
+    addAndMakeVisible(toggle_input_main_cc = new ToggleButton(String()));
+    toggle_input_main_cc->addListener(this);
+
+    addAndMakeVisible(toggle_input_cc_thru = new ToggleButton(String()));
+    toggle_input_cc_thru->addListener(this);
+
+    addAndMakeVisible(label_8 = new Label(String(), TRANS("THRU:")));
+    label_8->setFont(Font(30.00f, Font::plain));
+    label_8->setJustificationType(Justification::centredLeft);
+    label_8->setEditable(false, false, false);
+    label_8->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_8->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_8->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_9 = new Label(String(), TRANS("CC FB (OUT):")));
+    label_9->setFont(Font(30.00f, Font::plain));
+    label_9->setJustificationType(Justification::centredLeft);
+    label_9->setEditable(false, false, false);
+    label_9->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_9->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_9->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(combo_output_cc = new ComboBox("SEND_MIDI_CC_FEEDBACK"));
+    combo_output_cc->setEditableText(false);
+    combo_output_cc->setJustificationType(Justification::centredLeft);
+    combo_output_cc->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
+    combo_output_cc->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
+    combo_output_cc->addListener(this);
+
+    addAndMakeVisible(toggle_output_cc_mute = new ToggleButton(String()));
+    toggle_output_cc_mute->addListener(this);
+
+    addAndMakeVisible(toggle_output_thru_mute = new ToggleButton(String()));
+    toggle_output_thru_mute->addListener(this);
+
+    addAndMakeVisible(label_11 = new Label(String(), TRANS("LFO 1:")));
+    label_11->setFont(Font(30.00f, Font::plain));
+    label_11->setJustificationType(Justification::centredLeft);
+    label_11->setEditable(false, false, false);
+    label_11->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_11->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_11->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(combo_output_lfo_1 = new ComboBox("SEND_MIDI_LFO_1"));
+    combo_output_lfo_1->setEditableText(false);
+    combo_output_lfo_1->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_1->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
+    combo_output_lfo_1->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
+    combo_output_lfo_1->addListener(this);
+
+    addAndMakeVisible(combo_output_lfo_channel_1 = new ComboBox(String()));
+    combo_output_lfo_channel_1->setEditableText(false);
+    combo_output_lfo_channel_1->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_channel_1->setTextWhenNothingSelected(TRANS("CH"));
+    combo_output_lfo_channel_1->setTextWhenNoChoicesAvailable(TRANS("OMNI"));
+    combo_output_lfo_channel_1->addListener(this);
+
+    addAndMakeVisible(label_12 = new Label(String(), TRANS("CC-NR")));
+    label_12->setFont(Font(30.00f, Font::plain));
+    label_12->setJustificationType(Justification::centred);
+    label_12->setEditable(false, false, false);
+    label_12->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_12->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_12->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_output_lfo_mute_1 = new ToggleButton(String()));
+    toggle_output_lfo_mute_1->addListener(this);
+
+    addAndMakeVisible(combo_output_lfo_number_1 = new ComboBox(String()));
+    combo_output_lfo_number_1->setEditableText(false);
+    combo_output_lfo_number_1->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_number_1->setTextWhenNothingSelected(TRANS("T"));
+    combo_output_lfo_number_1->setTextWhenNoChoicesAvailable(TRANS("EMPTY BANK"));
+    combo_output_lfo_number_1->addListener(this);
+
+    addAndMakeVisible(label_15 = new Label(String(), TRANS("LFO 2:")));
+    label_15->setFont(Font(30.00f, Font::plain));
+    label_15->setJustificationType(Justification::centredLeft);
+    label_15->setEditable(false, false, false);
+    label_15->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_15->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_15->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(combo_output_lfo_2 = new ComboBox("SEND_MIDI_LFO_2"));
+    combo_output_lfo_2->setEditableText(false);
+    combo_output_lfo_2->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_2->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
+    combo_output_lfo_2->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
+    combo_output_lfo_2->addListener(this);
+
+    addAndMakeVisible(combo_output_lfo_channel_2 = new ComboBox(String()));
+    combo_output_lfo_channel_2->setEditableText(false);
+    combo_output_lfo_channel_2->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_channel_2->setTextWhenNothingSelected(TRANS("CH"));
+    combo_output_lfo_channel_2->setTextWhenNoChoicesAvailable(TRANS("OMNI"));
+    combo_output_lfo_channel_2->addListener(this);
+
+    addAndMakeVisible(toggle_output_lfo_mute_2 = new ToggleButton(String()));
+    toggle_output_lfo_mute_2->addListener(this);
+
+    addAndMakeVisible(combo_output_lfo_number_2 = new ComboBox(String()));
+    combo_output_lfo_number_2->setEditableText(false);
+    combo_output_lfo_number_2->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_number_2->setTextWhenNothingSelected(TRANS("NR"));
+    combo_output_lfo_number_2->setTextWhenNoChoicesAvailable(TRANS("EMPTY BANK"));
+    combo_output_lfo_number_2->addListener(this);
+
+    addAndMakeVisible(label_16 = new Label(String(), TRANS("LFO 3:")));
+    label_16->setFont(Font(30.00f, Font::plain));
+    label_16->setJustificationType(Justification::centredLeft);
+    label_16->setEditable(false, false, false);
+    label_16->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_16->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_16->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(combo_output_lfo_3 = new ComboBox("SEND_MIDI_LFO_3"));
+    combo_output_lfo_3->setEditableText(false);
+    combo_output_lfo_3->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_3->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
+    combo_output_lfo_3->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
+    combo_output_lfo_3->addListener(this);
+
+    addAndMakeVisible(combo_output_lfo_channel_3 = new ComboBox(String()));
+    combo_output_lfo_channel_3->setEditableText(false);
+    combo_output_lfo_channel_3->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_channel_3->setTextWhenNothingSelected(TRANS("CH"));
+    combo_output_lfo_channel_3->setTextWhenNoChoicesAvailable(TRANS("OMNI"));
+    combo_output_lfo_channel_3->addListener(this);
+
+    addAndMakeVisible(toggle_output_lfo_mute_3 = new ToggleButton(String()));
+    toggle_output_lfo_mute_3->addListener(this);
+
+    addAndMakeVisible(combo_output_lfo_number_3 = new ComboBox(String()));
+    combo_output_lfo_number_3->setEditableText(false);
+    combo_output_lfo_number_3->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_number_3->setTextWhenNothingSelected(TRANS("NR"));
+    combo_output_lfo_number_3->setTextWhenNoChoicesAvailable(TRANS("EMPTY BANK"));
+    combo_output_lfo_number_3->addListener(this);
+
+    addAndMakeVisible(toggle_output_lfo_mute_5 = new ToggleButton(String()));
+    toggle_output_lfo_mute_5->addListener(this);
+
+    addAndMakeVisible(label_19 = new Label(String(), TRANS("F-ADSR 1:")));
+    label_19->setFont(Font(30.00f, Font::plain));
+    label_19->setJustificationType(Justification::centredLeft);
+    label_19->setEditable(false, false, false);
+    label_19->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_19->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_19->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(combo_output_adsr_1 = new ComboBox("SEND_MIDI_F_ADSR_1"));
+    combo_output_adsr_1->setEditableText(false);
+    combo_output_adsr_1->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_1->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
+    combo_output_adsr_1->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
+    combo_output_adsr_1->addListener(this);
+
+    addAndMakeVisible(combo_output_adsr_channel_1 = new ComboBox(String()));
+    combo_output_adsr_channel_1->setEditableText(false);
+    combo_output_adsr_channel_1->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_channel_1->setTextWhenNothingSelected(TRANS("CH"));
+    combo_output_adsr_channel_1->setTextWhenNoChoicesAvailable(TRANS("OMNI"));
+    combo_output_adsr_channel_1->addListener(this);
+
+    addAndMakeVisible(toggle_output_adsr_mute_1 = new ToggleButton(String()));
+    toggle_output_adsr_mute_1->addListener(this);
+
+    addAndMakeVisible(combo_output_adsr_number_1 = new ComboBox(String()));
+    combo_output_adsr_number_1->setEditableText(false);
+    combo_output_adsr_number_1->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_number_1->setTextWhenNothingSelected(TRANS("NR"));
+    combo_output_adsr_number_1->setTextWhenNoChoicesAvailable(TRANS("EMPTY BANK"));
+    combo_output_adsr_number_1->addListener(this);
+
+    addAndMakeVisible(label_20 = new Label(String(), TRANS("F-ADSR 2:")));
+    label_20->setFont(Font(30.00f, Font::plain));
+    label_20->setJustificationType(Justification::centredLeft);
+    label_20->setEditable(false, false, false);
+    label_20->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_20->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_20->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(combo_output_adsr_2 = new ComboBox("SEND_MIDI_F_ADSR_2"));
+    combo_output_adsr_2->setEditableText(false);
+    combo_output_adsr_2->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_2->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
+    combo_output_adsr_2->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
+    combo_output_adsr_2->addListener(this);
+
+    addAndMakeVisible(combo_output_adsr_channel_2 = new ComboBox(String()));
+    combo_output_adsr_channel_2->setEditableText(false);
+    combo_output_adsr_channel_2->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_channel_2->setTextWhenNothingSelected(TRANS("CH"));
+    combo_output_adsr_channel_2->setTextWhenNoChoicesAvailable(TRANS("OMNI"));
+    combo_output_adsr_channel_2->addListener(this);
+
+    addAndMakeVisible(toggle_output_adsr_mute_2 = new ToggleButton(String()));
+    toggle_output_adsr_mute_2->addListener(this);
+
+    addAndMakeVisible(combo_output_adsr_number_2 = new ComboBox(String()));
+    combo_output_adsr_number_2->setEditableText(false);
+    combo_output_adsr_number_2->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_number_2->setTextWhenNothingSelected(TRANS("NR"));
+    combo_output_adsr_number_2->setTextWhenNoChoicesAvailable(TRANS("EMPTY BANK"));
+    combo_output_adsr_number_2->addListener(this);
+
+    addAndMakeVisible(label_21 = new Label(String(), TRANS("F-ADSR 2:")));
+    label_21->setFont(Font(30.00f, Font::plain));
+    label_21->setJustificationType(Justification::centredLeft);
+    label_21->setEditable(false, false, false);
+    label_21->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_21->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_21->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(combo_output_adsr_3 = new ComboBox("SEND_MIDI_F_ADSR_3"));
+    combo_output_adsr_3->setEditableText(false);
+    combo_output_adsr_3->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_3->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
+    combo_output_adsr_3->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
+    combo_output_adsr_3->addListener(this);
+
+    addAndMakeVisible(combo_output_adsr_channel_3 = new ComboBox(String()));
+    combo_output_adsr_channel_3->setEditableText(false);
+    combo_output_adsr_channel_3->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_channel_3->setTextWhenNothingSelected(TRANS("CH"));
+    combo_output_adsr_channel_3->setTextWhenNoChoicesAvailable(TRANS("OMNI"));
+    combo_output_adsr_channel_3->addListener(this);
+
+    addAndMakeVisible(toggle_output_adsr_mute_3 = new ToggleButton(String()));
+    toggle_output_adsr_mute_3->addListener(this);
+
+    addAndMakeVisible(combo_output_adsr_number_3 = new ComboBox(String()));
+    combo_output_adsr_number_3->setEditableText(false);
+    combo_output_adsr_number_3->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_number_3->setTextWhenNothingSelected(TRANS("NR"));
+    combo_output_adsr_number_3->setTextWhenNoChoicesAvailable(TRANS("EMPTY BANK"));
+    combo_output_adsr_number_3->addListener(this);
+
+    addAndMakeVisible(label_22 = new Label(String(), TRANS("ADSR:")));
+    label_22->setFont(Font(30.00f, Font::plain));
+    label_22->setJustificationType(Justification::centredLeft);
+    label_22->setEditable(false, false, false);
+    label_22->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_22->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_22->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(combo_output_adsr_4 = new ComboBox("SEND_MIDI_ADSR"));
+    combo_output_adsr_4->setEditableText(false);
+    combo_output_adsr_4->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_4->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
+    combo_output_adsr_4->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
+    combo_output_adsr_4->addListener(this);
+
+    addAndMakeVisible(combo_output_adsr_channel_4 = new ComboBox(String()));
+    combo_output_adsr_channel_4->setEditableText(false);
+    combo_output_adsr_channel_4->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_channel_4->setTextWhenNothingSelected(TRANS("CH"));
+    combo_output_adsr_channel_4->setTextWhenNoChoicesAvailable(TRANS("OMNI"));
+    combo_output_adsr_channel_4->addListener(this);
+
+    addAndMakeVisible(toggle_output_adsr_mute_4 = new ToggleButton(String()));
+    toggle_output_adsr_mute_4->addListener(this);
+
+    addAndMakeVisible(combo_output_adsr_number_4 = new ComboBox(String()));
+    combo_output_adsr_number_4->setEditableText(false);
+    combo_output_adsr_number_4->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_number_4->setTextWhenNothingSelected(TRANS("NR"));
+    combo_output_adsr_number_4->setTextWhenNoChoicesAvailable(TRANS("EMPTY BANK"));
+    combo_output_adsr_number_4->addListener(this);
+
+    addAndMakeVisible(label_23 = new Label(String(), TRANS("CLOCK:")));
+    label_23->setFont(Font(30.00f, Font::plain));
+    label_23->setJustificationType(Justification::centredLeft);
+    label_23->setEditable(false, false, false);
+    label_23->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_23->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_23->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(combo_output_clock = new ComboBox("SEND_MIDI_CLOCK"));
+    combo_output_clock->setEditableText(false);
+    combo_output_clock->setJustificationType(Justification::centredLeft);
+    combo_output_clock->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
+    combo_output_clock->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
+    combo_output_clock->addListener(this);
+
+    addAndMakeVisible(toggle_output_clock_mute = new ToggleButton(String()));
+    toggle_output_clock_mute->addListener(this);
+
+    addAndMakeVisible(label_32 = new Label(String(), TRANS("INPUT:")));
+    label_32->setFont(Font(30.00f, Font::plain));
+    label_32->setJustificationType(Justification::centredLeft);
+    label_32->setEditable(false, false, false);
+    label_32->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_32->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_32->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_33 = new Label(String(), TRANS("OUTPUT:")));
+    label_33->setFont(Font(30.00f, Font::plain));
+    label_33->setJustificationType(Justification::centredLeft);
+    label_33->setEditable(false, false, false);
+    label_33->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_33->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_33->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_34 = new Label(String(), TRANS("PORT")));
+    label_34->setFont(Font(30.00f, Font::plain));
+    label_34->setJustificationType(Justification::centred);
+    label_34->setEditable(false, false, false);
+    label_34->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_34->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_34->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_35 = new Label(String(), TRANS("CH")));
+    label_35->setFont(Font(30.00f, Font::plain));
+    label_35->setJustificationType(Justification::centred);
+    label_35->setEditable(false, false, false);
+    label_35->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_35->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_35->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_13 = new Label(String(), TRANS("MUTE")));
+    label_13->setFont(Font(30.00f, Font::plain));
+    label_13->setJustificationType(Justification::centredLeft);
+    label_13->setEditable(false, false, false);
+    label_13->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_13->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_13->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(close = new TextButton(String()));
+    close->setButtonText(TRANS("ESC X"));
+    close->addListener(this);
+    close->setColour(TextButton::buttonColourId, Colours::red);
+    close->setColour(TextButton::buttonOnColourId, Colours::red);
+    close->setColour(TextButton::textColourOnId, Colours::black);
+    close->setColour(TextButton::textColourOffId, Colours::black);
+
+    addAndMakeVisible(label_38 = new Label(String(), TRANS("CC INPUT PICKUP OFFSET")));
+    label_38->setFont(Font(15.00f, Font::plain));
+    label_38->setJustificationType(Justification::centred);
+    label_38->setEditable(false, false, false);
+    label_38->setColour(Label::textColourId, Colours::yellow);
+    label_38->setColour(TextEditor::textColourId, Colours::black);
+    label_38->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(slider_midi_pickup = new Slider("0"));
+    slider_midi_pickup->setRange(0, 1000, 1);
+    slider_midi_pickup->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    slider_midi_pickup->setTextBoxStyle(Slider::TextBoxBelow, false, 80, 20);
+    slider_midi_pickup->setColour(Slider::rotarySliderFillColourId, Colours::yellow);
+    slider_midi_pickup->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff161616));
+    slider_midi_pickup->setColour(Slider::textBoxTextColourId, Colours::yellow);
+    slider_midi_pickup->setColour(Slider::textBoxBackgroundColourId, Colour(0xff161616));
+    slider_midi_pickup->addListener(this);
+
+    addAndMakeVisible(button_midi_learn = new TextButton(String()));
+    button_midi_learn->setButtonText(TRANS("REFRESH"));
+    button_midi_learn->addListener(this);
+    button_midi_learn->setColour(TextButton::buttonColourId, Colours::black);
+    button_midi_learn->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_midi_learn->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(label_17 = new Label(String(), TRANS("MUTE")));
+    label_17->setFont(Font(30.00f, Font::plain));
+    label_17->setJustificationType(Justification::centredLeft);
+    label_17->setEditable(false, false, false);
+    label_17->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_17->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_17->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
     //[UserPreSize]
-    slider_midi_pickup->setValue( DATA(synth_data).midi_pickup_offset*1000, dontSendNotification );
+    slider_midi_pickup->setValue(DATA(synth_data).midi_pickup_offset * 1000, dontSendNotification);
     refresh();
     //[/UserPreSize]
 
-    setSize (1040, 500);
-
+    setSize(1040, 500);
 
     //[Constructor] You can add your own custom stuff here..
     //[/Constructor]
@@ -625,34 +603,33 @@ UiEditorMIDIIO::~UiEditorMIDIIO()
     button_midi_learn = nullptr;
     label_17 = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiEditorMIDIIO::paint (Graphics& g)
+void UiEditorMIDIIO::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
 #include "UiDynamicSizeStart.h"
     //[/UserPrePaint]
 
-    g.fillAll (Colours::black);
+    g.fillAll(Colours::black);
 
-    g.setColour (Colour (0xffff3b00));
-    g.drawRect (0, 0, 1040, 500, 2);
+    g.setColour(Colour(0xffff3b00));
+    g.drawRect(0, 0, 1040, 500, 2);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (20.0f, 118.0f, 570.0f, 4.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(20.0f, 118.0f, 570.0f, 4.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (20.0f, 54.0f, 1000.0f, 2.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(20.0f, 54.0f, 1000.0f, 2.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (610.0f, 305.0f, 410.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(610.0f, 305.0f, 410.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (610.0f, 158.0f, 410.0f, 4.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(610.0f, 158.0f, 410.0f, 4.0f, 1.000f);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -663,80 +640,80 @@ void UiEditorMIDIIO::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    label_7->setBounds (530 - 90, 100 - 30, 90, 30);
-    combo_input_main->setBounds (240 - 130, 100 - 30, 130, 30);
-    combo_input_main_channel->setBounds (310 - 60, 100 - 30, 60, 30);
-    label_1->setBounds (240 - 130, 50 - 30, 130, 30);
-    label_3->setBounds (20, 100 - 30, 80, 30);
-    toggle_input_main_thru->setBounds (400, 70, 30, 30);
-    label_4->setBounds (390 - 60, 100 - 30, 60, 30);
-    label_5->setBounds (620, 100 - 30, 80, 30);
-    combo_output_thru->setBounds (840 - 130, 100 - 30, 130, 30);
-    label_6->setBounds (100 - 80, 170 - 30, 80, 30);
-    combo_input_cc->setBounds (240 - 130, 170 - 30, 130, 30);
-    toggle_input_main_cc->setBounds (540, 70, 30, 30);
-    toggle_input_cc_thru->setBounds (400, 140, 30, 30);
-    label_8->setBounds (390 - 60, 170 - 30, 60, 30);
-    label_9->setBounds (100 - 80, 210 - 30, 80, 30);
-    combo_output_cc->setBounds (240 - 130, 210 - 30, 130, 30);
-    toggle_output_cc_mute->setBounds (540, 180, 30, 30);
-    toggle_output_thru_mute->setBounds (990, 70, 30, 30);
-    label_11->setBounds (700 - 80, 210 - 30, 80, 30);
-    combo_output_lfo_1->setBounds (840 - 130, 210 - 30, 130, 30);
-    combo_output_lfo_channel_1->setBounds (910 - 60, 210 - 30, 60, 30);
-    label_12->setBounds (980 - 60, 50 - 30, 60, 30);
-    toggle_output_lfo_mute_1->setBounds (990, 180, 30, 30);
-    combo_output_lfo_number_1->setBounds (980 - 60, 210 - 30, 60, 30);
-    label_15->setBounds (700 - 80, 250 - 30, 80, 30);
-    combo_output_lfo_2->setBounds (840 - 130, 250 - 30, 130, 30);
-    combo_output_lfo_channel_2->setBounds (910 - 60, 250 - 30, 60, 30);
-    toggle_output_lfo_mute_2->setBounds (990, 220, 30, 30);
-    combo_output_lfo_number_2->setBounds (980 - 60, 250 - 30, 60, 30);
-    label_16->setBounds (700 - 80, 290 - 30, 80, 30);
-    combo_output_lfo_3->setBounds (840 - 130, 290 - 30, 130, 30);
-    combo_output_lfo_channel_3->setBounds (910 - 60, 290 - 30, 60, 30);
-    toggle_output_lfo_mute_3->setBounds (990, 260, 30, 30);
-    combo_output_lfo_number_3->setBounds (980 - 60, 290 - 30, 60, 30);
-    toggle_output_lfo_mute_5->setBounds (990, 180, 30, 30);
-    label_19->setBounds (700 - 80, 350 - 30, 80, 30);
-    combo_output_adsr_1->setBounds (840 - 130, 350 - 30, 130, 30);
-    combo_output_adsr_channel_1->setBounds (910 - 60, 350 - 30, 60, 30);
-    toggle_output_adsr_mute_1->setBounds (990, 321, 30, 30);
-    combo_output_adsr_number_1->setBounds (980 - 60, 351 - 30, 60, 30);
-    label_20->setBounds (700 - 80, 390 - 30, 80, 30);
-    combo_output_adsr_2->setBounds (840 - 130, 390 - 30, 130, 30);
-    combo_output_adsr_channel_2->setBounds (910 - 60, 390 - 30, 60, 30);
-    toggle_output_adsr_mute_2->setBounds (990, 360, 30, 30);
-    combo_output_adsr_number_2->setBounds (980 - 60, 390 - 30, 60, 30);
-    label_21->setBounds (700 - 80, 430 - 30, 80, 30);
-    combo_output_adsr_3->setBounds (840 - 130, 430 - 30, 130, 30);
-    combo_output_adsr_channel_3->setBounds (910 - 60, 430 - 30, 60, 30);
-    toggle_output_adsr_mute_3->setBounds (990, 400, 30, 30);
-    combo_output_adsr_number_3->setBounds (980 - 60, 430 - 30, 60, 30);
-    label_22->setBounds (700 - 80, 470 - 30, 80, 30);
-    combo_output_adsr_4->setBounds (840 - 130, 470 - 30, 130, 30);
-    combo_output_adsr_channel_4->setBounds (910 - 60, 470 - 30, 60, 30);
-    toggle_output_adsr_mute_4->setBounds (990, 440, 30, 30);
-    combo_output_adsr_number_4->setBounds (980 - 60, 470 - 30, 60, 30);
-    label_23->setBounds (700 - 80, 140 - 30, 80, 30);
-    combo_output_clock->setBounds (840 - 130, 140 - 30, 130, 30);
-    toggle_output_clock_mute->setBounds (990, 110, 30, 30);
-    label_32->setBounds (150 - 130, 50 - 30, 130, 30);
-    label_33->setBounds (750 - 130, 50 - 30, 130, 30);
-    label_34->setBounds (840 - 130, 50 - 30, 130, 30);
-    label_35->setBounds (910 - 60, 50 - 30, 60, 30);
-    label_13->setBounds (1040 - 50, 50 - 30, 50, 30);
-    close->setBounds (1035 - 45, 5, 45, 20);
-    label_38->setBounds (120 - 100, 330 - 30, 100, 30);
-    slider_midi_pickup->setBounds (40, 300 - 70, 60, 70);
-    button_midi_learn->setBounds (310 - 60, 210 - 30, 60, 30);
-    label_17->setBounds (530 - 50, 210 - 30, 50, 30);
+    label_7->setBounds(530 - 90, 100 - 30, 90, 30);
+    combo_input_main->setBounds(240 - 130, 100 - 30, 130, 30);
+    combo_input_main_channel->setBounds(310 - 60, 100 - 30, 60, 30);
+    label_1->setBounds(240 - 130, 50 - 30, 130, 30);
+    label_3->setBounds(20, 100 - 30, 80, 30);
+    toggle_input_main_thru->setBounds(400, 70, 30, 30);
+    label_4->setBounds(390 - 60, 100 - 30, 60, 30);
+    label_5->setBounds(620, 100 - 30, 80, 30);
+    combo_output_thru->setBounds(840 - 130, 100 - 30, 130, 30);
+    label_6->setBounds(100 - 80, 170 - 30, 80, 30);
+    combo_input_cc->setBounds(240 - 130, 170 - 30, 130, 30);
+    toggle_input_main_cc->setBounds(540, 70, 30, 30);
+    toggle_input_cc_thru->setBounds(400, 140, 30, 30);
+    label_8->setBounds(390 - 60, 170 - 30, 60, 30);
+    label_9->setBounds(100 - 80, 210 - 30, 80, 30);
+    combo_output_cc->setBounds(240 - 130, 210 - 30, 130, 30);
+    toggle_output_cc_mute->setBounds(540, 180, 30, 30);
+    toggle_output_thru_mute->setBounds(990, 70, 30, 30);
+    label_11->setBounds(700 - 80, 210 - 30, 80, 30);
+    combo_output_lfo_1->setBounds(840 - 130, 210 - 30, 130, 30);
+    combo_output_lfo_channel_1->setBounds(910 - 60, 210 - 30, 60, 30);
+    label_12->setBounds(980 - 60, 50 - 30, 60, 30);
+    toggle_output_lfo_mute_1->setBounds(990, 180, 30, 30);
+    combo_output_lfo_number_1->setBounds(980 - 60, 210 - 30, 60, 30);
+    label_15->setBounds(700 - 80, 250 - 30, 80, 30);
+    combo_output_lfo_2->setBounds(840 - 130, 250 - 30, 130, 30);
+    combo_output_lfo_channel_2->setBounds(910 - 60, 250 - 30, 60, 30);
+    toggle_output_lfo_mute_2->setBounds(990, 220, 30, 30);
+    combo_output_lfo_number_2->setBounds(980 - 60, 250 - 30, 60, 30);
+    label_16->setBounds(700 - 80, 290 - 30, 80, 30);
+    combo_output_lfo_3->setBounds(840 - 130, 290 - 30, 130, 30);
+    combo_output_lfo_channel_3->setBounds(910 - 60, 290 - 30, 60, 30);
+    toggle_output_lfo_mute_3->setBounds(990, 260, 30, 30);
+    combo_output_lfo_number_3->setBounds(980 - 60, 290 - 30, 60, 30);
+    toggle_output_lfo_mute_5->setBounds(990, 180, 30, 30);
+    label_19->setBounds(700 - 80, 350 - 30, 80, 30);
+    combo_output_adsr_1->setBounds(840 - 130, 350 - 30, 130, 30);
+    combo_output_adsr_channel_1->setBounds(910 - 60, 350 - 30, 60, 30);
+    toggle_output_adsr_mute_1->setBounds(990, 321, 30, 30);
+    combo_output_adsr_number_1->setBounds(980 - 60, 351 - 30, 60, 30);
+    label_20->setBounds(700 - 80, 390 - 30, 80, 30);
+    combo_output_adsr_2->setBounds(840 - 130, 390 - 30, 130, 30);
+    combo_output_adsr_channel_2->setBounds(910 - 60, 390 - 30, 60, 30);
+    toggle_output_adsr_mute_2->setBounds(990, 360, 30, 30);
+    combo_output_adsr_number_2->setBounds(980 - 60, 390 - 30, 60, 30);
+    label_21->setBounds(700 - 80, 430 - 30, 80, 30);
+    combo_output_adsr_3->setBounds(840 - 130, 430 - 30, 130, 30);
+    combo_output_adsr_channel_3->setBounds(910 - 60, 430 - 30, 60, 30);
+    toggle_output_adsr_mute_3->setBounds(990, 400, 30, 30);
+    combo_output_adsr_number_3->setBounds(980 - 60, 430 - 30, 60, 30);
+    label_22->setBounds(700 - 80, 470 - 30, 80, 30);
+    combo_output_adsr_4->setBounds(840 - 130, 470 - 30, 130, 30);
+    combo_output_adsr_channel_4->setBounds(910 - 60, 470 - 30, 60, 30);
+    toggle_output_adsr_mute_4->setBounds(990, 440, 30, 30);
+    combo_output_adsr_number_4->setBounds(980 - 60, 470 - 30, 60, 30);
+    label_23->setBounds(700 - 80, 140 - 30, 80, 30);
+    combo_output_clock->setBounds(840 - 130, 140 - 30, 130, 30);
+    toggle_output_clock_mute->setBounds(990, 110, 30, 30);
+    label_32->setBounds(150 - 130, 50 - 30, 130, 30);
+    label_33->setBounds(750 - 130, 50 - 30, 130, 30);
+    label_34->setBounds(840 - 130, 50 - 30, 130, 30);
+    label_35->setBounds(910 - 60, 50 - 30, 60, 30);
+    label_13->setBounds(1040 - 50, 50 - 30, 50, 30);
+    close->setBounds(1035 - 45, 5, 45, 20);
+    label_38->setBounds(120 - 100, 330 - 30, 100, 30);
+    slider_midi_pickup->setBounds(40, 300 - 70, 60, 70);
+    button_midi_learn->setBounds(310 - 60, 210 - 30, 60, 30);
+    label_17->setBounds(530 - 50, 210 - 30, 50, 30);
     //[UserResized] Add your own custom resize handling here..
 #include "UiDynamicSizeEnd.h"
     //[/UserResized]
 }
 
-void UiEditorMIDIIO::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
+void UiEditorMIDIIO::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
 {
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]
@@ -744,7 +721,8 @@ void UiEditorMIDIIO::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     if (comboBoxThatHasChanged == combo_input_main)
     {
         //[UserComboBoxCode_combo_input_main] -- add your combo box handling code here..
-        _audio_device_manager->open_port( comboBoxThatHasChanged->getName(), comboBoxThatHasChanged->getText() );
+        _audio_device_manager->open_port(comboBoxThatHasChanged->getName(),
+                                         comboBoxThatHasChanged->getText());
         //[/UserComboBoxCode_combo_input_main]
     }
     else if (comboBoxThatHasChanged == combo_input_main_channel)
@@ -755,25 +733,29 @@ void UiEditorMIDIIO::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     else if (comboBoxThatHasChanged == combo_output_thru)
     {
         //[UserComboBoxCode_combo_output_thru] -- add your combo box handling code here..
-        _audio_device_manager->open_port( comboBoxThatHasChanged->getName(), comboBoxThatHasChanged->getText() );
+        _audio_device_manager->open_port(comboBoxThatHasChanged->getName(),
+                                         comboBoxThatHasChanged->getText());
         //[/UserComboBoxCode_combo_output_thru]
     }
     else if (comboBoxThatHasChanged == combo_input_cc)
     {
         //[UserComboBoxCode_combo_input_cc] -- add your combo box handling code here..
-        _audio_device_manager->open_port( comboBoxThatHasChanged->getName(), comboBoxThatHasChanged->getText() );
+        _audio_device_manager->open_port(comboBoxThatHasChanged->getName(),
+                                         comboBoxThatHasChanged->getText());
         //[/UserComboBoxCode_combo_input_cc]
     }
     else if (comboBoxThatHasChanged == combo_output_cc)
     {
         //[UserComboBoxCode_combo_output_cc] -- add your combo box handling code here..
-        _audio_device_manager->open_port( comboBoxThatHasChanged->getName(), comboBoxThatHasChanged->getText() );
+        _audio_device_manager->open_port(comboBoxThatHasChanged->getName(),
+                                         comboBoxThatHasChanged->getText());
         //[/UserComboBoxCode_combo_output_cc]
     }
     else if (comboBoxThatHasChanged == combo_output_lfo_1)
     {
         //[UserComboBoxCode_combo_output_lfo_1] -- add your combo box handling code here..
-        _audio_device_manager->open_port( comboBoxThatHasChanged->getName(), comboBoxThatHasChanged->getText() );
+        _audio_device_manager->open_port(comboBoxThatHasChanged->getName(),
+                                         comboBoxThatHasChanged->getText());
         //[/UserComboBoxCode_combo_output_lfo_1]
     }
     else if (comboBoxThatHasChanged == combo_output_lfo_channel_1)
@@ -789,7 +771,8 @@ void UiEditorMIDIIO::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     else if (comboBoxThatHasChanged == combo_output_lfo_2)
     {
         //[UserComboBoxCode_combo_output_lfo_2] -- add your combo box handling code here..
-        _audio_device_manager->open_port( comboBoxThatHasChanged->getName(), comboBoxThatHasChanged->getText() );
+        _audio_device_manager->open_port(comboBoxThatHasChanged->getName(),
+                                         comboBoxThatHasChanged->getText());
         //[/UserComboBoxCode_combo_output_lfo_2]
     }
     else if (comboBoxThatHasChanged == combo_output_lfo_channel_2)
@@ -805,7 +788,8 @@ void UiEditorMIDIIO::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     else if (comboBoxThatHasChanged == combo_output_lfo_3)
     {
         //[UserComboBoxCode_combo_output_lfo_3] -- add your combo box handling code here..
-        _audio_device_manager->open_port( comboBoxThatHasChanged->getName(), comboBoxThatHasChanged->getText() );
+        _audio_device_manager->open_port(comboBoxThatHasChanged->getName(),
+                                         comboBoxThatHasChanged->getText());
         //[/UserComboBoxCode_combo_output_lfo_3]
     }
     else if (comboBoxThatHasChanged == combo_output_lfo_channel_3)
@@ -821,7 +805,8 @@ void UiEditorMIDIIO::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     else if (comboBoxThatHasChanged == combo_output_adsr_1)
     {
         //[UserComboBoxCode_combo_output_adsr_1] -- add your combo box handling code here..
-        _audio_device_manager->open_port( comboBoxThatHasChanged->getName(), comboBoxThatHasChanged->getText() );
+        _audio_device_manager->open_port(comboBoxThatHasChanged->getName(),
+                                         comboBoxThatHasChanged->getText());
         //[/UserComboBoxCode_combo_output_adsr_1]
     }
     else if (comboBoxThatHasChanged == combo_output_adsr_channel_1)
@@ -837,7 +822,8 @@ void UiEditorMIDIIO::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     else if (comboBoxThatHasChanged == combo_output_adsr_2)
     {
         //[UserComboBoxCode_combo_output_adsr_2] -- add your combo box handling code here..
-        _audio_device_manager->open_port( comboBoxThatHasChanged->getName(), comboBoxThatHasChanged->getText() );
+        _audio_device_manager->open_port(comboBoxThatHasChanged->getName(),
+                                         comboBoxThatHasChanged->getText());
         //[/UserComboBoxCode_combo_output_adsr_2]
     }
     else if (comboBoxThatHasChanged == combo_output_adsr_channel_2)
@@ -853,7 +839,8 @@ void UiEditorMIDIIO::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     else if (comboBoxThatHasChanged == combo_output_adsr_3)
     {
         //[UserComboBoxCode_combo_output_adsr_3] -- add your combo box handling code here..
-        _audio_device_manager->open_port( comboBoxThatHasChanged->getName(), comboBoxThatHasChanged->getText() );
+        _audio_device_manager->open_port(comboBoxThatHasChanged->getName(),
+                                         comboBoxThatHasChanged->getText());
         //[/UserComboBoxCode_combo_output_adsr_3]
     }
     else if (comboBoxThatHasChanged == combo_output_adsr_channel_3)
@@ -870,7 +857,8 @@ void UiEditorMIDIIO::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     {
         //[UserComboBoxCode_combo_output_adsr_4] -- add your combo box handling code here..
 
-        _audio_device_manager->open_port( comboBoxThatHasChanged->getName(), comboBoxThatHasChanged->getText() );
+        _audio_device_manager->open_port(comboBoxThatHasChanged->getName(),
+                                         comboBoxThatHasChanged->getText());
         //[/UserComboBoxCode_combo_output_adsr_4]
     }
     else if (comboBoxThatHasChanged == combo_output_adsr_channel_4)
@@ -886,7 +874,8 @@ void UiEditorMIDIIO::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     else if (comboBoxThatHasChanged == combo_output_clock)
     {
         //[UserComboBoxCode_combo_output_clock] -- add your combo box handling code here..
-        _audio_device_manager->open_port( comboBoxThatHasChanged->getName(), comboBoxThatHasChanged->getText() );
+        _audio_device_manager->open_port(comboBoxThatHasChanged->getName(),
+                                         comboBoxThatHasChanged->getText());
         //[/UserComboBoxCode_combo_output_clock]
     }
 
@@ -895,7 +884,7 @@ void UiEditorMIDIIO::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     //[/UsercomboBoxChanged_Post]
 }
 
-void UiEditorMIDIIO::buttonClicked (Button* buttonThatWasClicked)
+void UiEditorMIDIIO::buttonClicked(Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -989,7 +978,7 @@ void UiEditorMIDIIO::buttonClicked (Button* buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiEditorMIDIIO::sliderValueChanged (Slider* sliderThatWasMoved)
+void UiEditorMIDIIO::sliderValueChanged(Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
@@ -997,7 +986,7 @@ void UiEditorMIDIIO::sliderValueChanged (Slider* sliderThatWasMoved)
     if (sliderThatWasMoved == slider_midi_pickup)
     {
         //[UserSliderCode_slider_midi_pickup] -- add your slider handling code here..
-        DATA(synth_data).midi_pickup_offset = slider_midi_pickup->getValue()/1000;
+        DATA(synth_data).midi_pickup_offset = slider_midi_pickup->getValue() / 1000;
         //[/UserSliderCode_slider_midi_pickup]
     }
 
@@ -1005,11 +994,11 @@ void UiEditorMIDIIO::sliderValueChanged (Slider* sliderThatWasMoved)
     //[/UsersliderValueChanged_Post]
 }
 
-bool UiEditorMIDIIO::keyPressed (const KeyPress& key)
+bool UiEditorMIDIIO::keyPressed(const KeyPress &key)
 {
     //[UserCode_keyPressed] -- Add your code here...
     bool success = false;
-    if( key == KeyPress::escapeKey )
+    if (key == KeyPress::escapeKey)
     {
         AppInstanceStore::getInstance()->editor->editor_midiio = nullptr;
         return true;
@@ -1018,11 +1007,8 @@ bool UiEditorMIDIIO::keyPressed (const KeyPress& key)
     //[/UserCode_keyPressed]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -1323,7 +1309,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

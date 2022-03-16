@@ -26,8 +26,6 @@
 class mono_AudioDeviceManager;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -36,14 +34,14 @@ class mono_AudioDeviceManager;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorMIDIIO  : public Component,
-                        public ComboBox::Listener,
-                        public Button::Listener,
-                        public Slider::Listener
+class UiEditorMIDIIO : public Component,
+                       public ComboBox::Listener,
+                       public Button::Listener,
+                       public Slider::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiEditorMIDIIO (mono_AudioDeviceManager*const audio_device_manager_);
+    UiEditorMIDIIO(mono_AudioDeviceManager *const audio_device_manager_);
     ~UiEditorMIDIIO();
 
     //==============================================================================
@@ -54,18 +52,16 @@ public:
     const float original_h;
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void comboBoxChanged (ComboBox* comboBoxThatHasChanged);
-    void buttonClicked (Button* buttonThatWasClicked);
-    void sliderValueChanged (Slider* sliderThatWasMoved);
-    bool keyPressed (const KeyPress& key);
+    void comboBoxChanged(ComboBox *comboBoxThatHasChanged);
+    void buttonClicked(Button *buttonThatWasClicked);
+    void sliderValueChanged(Slider *sliderThatWasMoved);
+    bool keyPressed(const KeyPress &key);
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    mono_AudioDeviceManager* _audio_device_manager;
+    mono_AudioDeviceManager *_audio_device_manager;
     //[/UserVariables]
 
     //==============================================================================
@@ -138,12 +134,11 @@ private:
     ScopedPointer<TextButton> button_midi_learn;
     ScopedPointer<Label> label_17;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorMIDIIO)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorMIDIIO)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_25ABB3D6E01A1620__
+#endif // __JUCE_HEADER_25ABB3D6E01A1620__

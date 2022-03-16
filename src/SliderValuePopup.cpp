@@ -24,30 +24,27 @@
 
 #include "SliderValuePopup.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-void SliderValuePopup::set_text( String& text_ )
+void SliderValuePopup::set_text(String &text_)
 {
-    if( _text.compare(text_) != 0 )
+    if (_text.compare(text_) != 0)
     {
-        if( text_ == HAS_NO_TEXT_VALUE )
+        if (text_ == HAS_NO_TEXT_VALUE)
             _text = "";
         else
             _text = text_;
-        repaint(0,0,getWidth(),getHeight());
+        repaint(0, 0, getWidth(), getHeight());
     }
 }
 //[/MiscUserDefs]
 
 //==============================================================================
-SliderValuePopup::SliderValuePopup (const ModelBase*const model_)
-    : _model( model_ )
+SliderValuePopup::SliderValuePopup(const ModelBase *const model_) : _model(model_)
 {
     //[UserPreSize]
     //[/UserPreSize]
 
-    setSize (60, 40);
-
+    setSize(60, 40);
 
     //[Constructor] You can add your own custom stuff here..
 #ifdef JUCE_IOS
@@ -61,41 +58,43 @@ SliderValuePopup::~SliderValuePopup()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
-
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void SliderValuePopup::paint (Graphics& g)
+void SliderValuePopup::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-    g.setColour (Colour (0xff111111));
-    g.fillRoundedRectangle (1.0f, 1.0f, static_cast<float> (getWidth() - 2), static_cast<float> (getHeight() - 2), 5.000f);
+    g.setColour(Colour(0xff111111));
+    g.fillRoundedRectangle(1.0f, 1.0f, static_cast<float>(getWidth() - 2),
+                           static_cast<float>(getHeight() - 2), 5.000f);
 
-    if( _model )
-        if( _model->get_style() )
-            g.setColour (Colour(_model->get_style()->get_font_color()));
+    if (_model)
+        if (_model->get_style())
+            g.setColour(Colour(_model->get_style()->get_font_color()));
 
-    g.drawRoundedRectangle (1.0f, 1.0f, static_cast<float> (getWidth() - 2), static_cast<float> (getHeight() - 2), 5.000f, 2.000f);
+    g.drawRoundedRectangle(1.0f, 1.0f, static_cast<float>(getWidth() - 2),
+                           static_cast<float>(getHeight() - 2), 5.000f, 2.000f);
 
-    AppStyle::paint_outline_label( g, *this, _text, _model->get_style(), Justification::centred, 0.0588f, 0.1000f, 0.8824f, 0.8000f );
+    AppStyle::paint_outline_label(g, *this, _text, _model->get_style(), Justification::centred,
+                                  0.0588f, 0.1000f, 0.8824f, 0.8000f);
 
     return;
     //[/UserPrePaint]
 
-    g.setColour (Colour (0xff111111));
-    g.fillRoundedRectangle (1.0f, 1.0f, static_cast<float> (getWidth() - 2), static_cast<float> (getHeight() - 2), 5.000f);
+    g.setColour(Colour(0xff111111));
+    g.fillRoundedRectangle(1.0f, 1.0f, static_cast<float>(getWidth() - 2),
+                           static_cast<float>(getHeight() - 2), 5.000f);
 
-    g.setColour (Colours::yellow);
-    g.drawRoundedRectangle (1.0f, 1.0f, static_cast<float> (getWidth() - 2), static_cast<float> (getHeight() - 2), 5.000f, 2.000f);
+    g.setColour(Colours::yellow);
+    g.drawRoundedRectangle(1.0f, 1.0f, static_cast<float>(getWidth() - 2),
+                           static_cast<float>(getHeight() - 2), 5.000f, 2.000f);
 
-    g.setColour (Colours::yellow);
-    g.setFont (Font (22.00f, Font::bold));
-    g.drawText (TRANS("XXX"),
-                0, 0, proportionOfWidth (1.0000f), proportionOfHeight (1.0000f),
-                Justification::centred, true);
+    g.setColour(Colours::yellow);
+    g.setFont(Font(22.00f, Font::bold));
+    g.drawText(TRANS("XXX"), 0, 0, proportionOfWidth(1.0000f), proportionOfHeight(1.0000f),
+               Justification::centred, true);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -110,11 +109,8 @@ void SliderValuePopup::resized()
     //[/UserResized]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -141,7 +137,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

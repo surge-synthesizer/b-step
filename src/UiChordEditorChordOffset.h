@@ -28,8 +28,6 @@ class UiLabel;
 class AppInstanceStore;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -38,28 +36,26 @@ class AppInstanceStore;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiChordEditorChordOffset  : public Component
+class UiChordEditorChordOffset : public Component
 {
-public:
+  public:
     //==============================================================================
-    UiChordEditorChordOffset (AppInstanceStore* const app_instance_store_,uint8 chord_id_);
+    UiChordEditorChordOffset(AppInstanceStore *const app_instance_store_, uint8 chord_id_);
     ~UiChordEditorChordOffset();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
+    AppInstanceStore *const _app_instance_store;
 
-    void refresh_ui( Array< Component* >& components_to_repaint_ );
+    void refresh_ui(Array<Component *> &components_to_repaint_);
     int8 last_refreshed_offset_value;
     bool is_your_value_changed_since_last_request();
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -67,12 +63,11 @@ private:
     ScopedPointer<UiLabel> label;
     ScopedPointer<ModelBase> slider;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiChordEditorChordOffset)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiChordEditorChordOffset)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_49E9D35AC14A2530__
+#endif // __JUCE_HEADER_49E9D35AC14A2530__

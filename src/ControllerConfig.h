@@ -31,52 +31,52 @@ class MONO_UIButtonController : public MONO_Controller
     // --------------------------------------------------------------------------------------------
     // IDENTING
 
-    const char* get_controller_type_ident() const override
+    const char *get_controller_type_ident() const override
     {
-        PodParameterBase*const param = get_parameter();
-        if( param )
+        PodParameterBase *const param = get_parameter();
+        if (param)
             return param->get_param_unique_ident();
 
         return nullptr;
     }
 
-    virtual const String& get_controller_name() const override
+    virtual const String &get_controller_name() const override
     {
-        PodParameterBase*const param = get_parameter();
-        if( param )
+        PodParameterBase *const param = get_parameter();
+        if (param)
             return param->name();
 
         return _no_conroller;
     }
 
-    virtual UI_VIEW_TYPES get_view_type() {
-        return UI_VIEW_TYPES::UI_BUTTON;
-    }
+    virtual UI_VIEW_TYPES get_view_type() { return UI_VIEW_TYPES::UI_BUTTON; }
 
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // SET VALUE HANDLING
-    virtual void on_clicked_top() override {
-        PodParameterBase* param = get_parameter();
-        if( param )
+    virtual void on_clicked_top() override
+    {
+        PodParameterBase *param = get_parameter();
+        if (param)
         {
 #ifndef IS_REMOTE_CONTROLLER
             param->invert();
 #else
-            param->set_remote_value( param->value() == 1 ? 0 : 1 );
+            param->set_remote_value(param->value() == 1 ? 0 : 1);
 #endif
         }
     }
 
-    virtual void on_value_changed( int v_ ) override {
-        PodParameterBase* param = get_parameter();
-        if( param )
+    virtual void on_value_changed(int v_) override
+    {
+        PodParameterBase *param = get_parameter();
+        if (param)
         {
 #ifndef IS_REMOTE_CONTROLLER
-            param->set_value( v_ );
+            param->set_value(v_);
 #else
-            param->set_remote_value( v_ );
+            param->set_remote_value(v_);
 #endif
         }
     }
@@ -85,7 +85,7 @@ class MONO_UIButtonController : public MONO_Controller
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // GET VALUE HANDLING
-protected:
+  protected:
     enum STATES
     {
         OFF_1 = false,
@@ -93,45 +93,41 @@ protected:
         OFF_2,
         ON_2
     };
-private:
-    virtual unsigned int get_current_state() const {
-        PodParameterBase* param = get_parameter();
-        if( param )
+
+  private:
+    virtual unsigned int get_current_state() const
+    {
+        PodParameterBase *param = get_parameter();
+        if (param)
             return param->value();
 
         return STATES::OFF_1;
     }
 
     // Override this if you have more than two states
-    virtual int get_range_max() override {
-        return true;
-    }
-    virtual int get_range_min() override {
-        return false;
-    }
+    virtual int get_range_max() override { return true; }
+    virtual int get_range_min() override { return false; }
 
-    virtual int get_value() const override {
-        return get_current_state();
-    }
+    virtual int get_value() const override { return get_current_state(); }
 
     virtual uint32 get_current_color() const override
     {
-        if( _model )
+        if (_model)
         {
             unsigned int state_value = get_current_state();
 
             // USER DEFINED IMPL
-            switch( state_value )
+            switch (state_value)
             {
-            case STATES::OFF_1 :
+            case STATES::OFF_1:
                 return _model->get_style()->get_state_off_1_color();
-            case STATES::ON_1 :
+            case STATES::ON_1:
                 return _model->get_style()->get_state_on_1_color();
-            case STATES::OFF_2 :
+            case STATES::OFF_2:
                 return _model->get_style()->get_state_off_2_color();
-            case STATES::ON_2 :
+            case STATES::ON_2:
                 return _model->get_style()->get_state_on_2_color();
-            default :
+            default:
                 return 0x00000000;
             }
         }
@@ -142,44 +138,43 @@ private:
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // RUBBER HANDLING
-    virtual bool are_you_rubberable() override {
-        return true;
-    }
+    virtual bool are_you_rubberable() override { return true; }
 
     virtual void rubber_droped() override
     {
-        PodParameterBase* param = get_parameter();
-        if( param )
-            param->set_value( param->default_value() );
+        PodParameterBase *param = get_parameter();
+        if (param)
+            param->set_value(param->default_value());
     }
 
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // UI FEEDBACK
-    bool is_click_blocked() override {
+    bool is_click_blocked() override
+    {
         return _app_instance_store->midi_in_map.is_in_learning_mode() && is_learnable();
     }
-    void handle_blocked_click() override {
-        _app_instance_store->midi_in_map.set_learning( this );
-    }
+    void handle_blocked_click() override { _app_instance_store->midi_in_map.set_learning(this); }
 
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // MIDI FEEDBACK
-    MIDI_HANDLE_TYPES get_midi_handling_type() const override {
+    MIDI_HANDLE_TYPES get_midi_handling_type() const override
+    {
         return MIDI_HANDLE_TYPES::BUTTON_TOGGLE;
     };
 
-protected:
+  protected:
     MONO_UIButtonController(); // -> delete
 
-    MONO_UIButtonController( AppInstanceStore* const app_instance_store_ )
-        : MONO_Controller( app_instance_store_ )
-    {}
+    MONO_UIButtonController(AppInstanceStore *const app_instance_store_)
+        : MONO_Controller(app_instance_store_)
+    {
+    }
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MONO_UIButtonController)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MONO_UIButtonController)
 };
 
 // ************************************************************************************************
@@ -187,12 +182,12 @@ protected:
 // ************************************************************************************************
 class MONO_UISliderController : public MONO_Controller
 {
-    AppInstanceStore* const _app_instance_store;
+    AppInstanceStore *const _app_instance_store;
 
-    virtual const String& get_controller_name() const override
+    virtual const String &get_controller_name() const override
     {
-        PodParameterBase*const param = get_parameter();
-        if( param )
+        PodParameterBase *const param = get_parameter();
+        if (param)
             return param->name();
 
         return _no_conroller;
@@ -202,14 +197,12 @@ class MONO_UISliderController : public MONO_Controller
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // IDENTING
-    virtual UI_VIEW_TYPES get_view_type() {
-        return UI_VIEW_TYPES::UI_SLIDER;
-    }
+    virtual UI_VIEW_TYPES get_view_type() { return UI_VIEW_TYPES::UI_SLIDER; }
 
-    const char* get_controller_type_ident() const override
+    const char *get_controller_type_ident() const override
     {
-        PodParameterBase*const param = get_parameter();
-        if( param )
+        PodParameterBase *const param = get_parameter();
+        if (param)
             return param->get_param_unique_ident();
 
         return nullptr;
@@ -219,21 +212,24 @@ class MONO_UISliderController : public MONO_Controller
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // VIEW EVENT HANDLING
-    void on_mouse_down( const MouseEvent& ) override {
-        if( _app_instance_store->midi_in_map.is_in_learning_mode() && is_learnable() )
+    void on_mouse_down(const MouseEvent &) override
+    {
+        if (_app_instance_store->midi_in_map.is_in_learning_mode() && is_learnable())
         {
-            _app_instance_store->midi_in_map.set_learning( this );
+            _app_instance_store->midi_in_map.set_learning(this);
         }
         else
             _app_instance_store->editor_config.slider_controller_is_down = this;
     }
 
-    void on_mouse_up ( const MouseEvent& ) override {
-        if( _app_instance_store->editor_config.slider_controller_is_down == this )
+    void on_mouse_up(const MouseEvent &) override
+    {
+        if (_app_instance_store->editor_config.slider_controller_is_down == this)
             _app_instance_store->editor_config.slider_controller_is_down = nullptr;
     }
 
-    virtual void get_label_text_top( String& string_ ) const override {
+    virtual void get_label_text_top(String &string_) const override
+    {
         string_ = String(get_value());
     };
 
@@ -241,29 +237,33 @@ class MONO_UISliderController : public MONO_Controller
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // SET VALUE HANDLING
-    virtual void on_value_changed( int v_ ) override {
-        PodParameterBase* param = get_parameter();
-        if( param )
+    virtual void on_value_changed(int v_) override
+    {
+        PodParameterBase *param = get_parameter();
+        if (param)
         {
 #ifndef IS_REMOTE_CONTROLLER
-            param->set_value( v_ );
+            param->set_value(v_);
 #else
-            param->set_remote_value( v_ );
+            param->set_remote_value(v_);
 #endif
         }
     }
 
-    virtual bool do_you_need_a_text_popup() {
-        MultidragSource*const multidrag_source = _app_instance_store->editor_config.multidrag_source;
-        if( multidrag_source )
+    virtual bool do_you_need_a_text_popup()
+    {
+        MultidragSource *const multidrag_source =
+            _app_instance_store->editor_config.multidrag_source;
+        if (multidrag_source)
         {
-            if( _app_instance_store->editor_config.multidrag_source->controller_type_ident == get_controller_type_ident() )
+            if (_app_instance_store->editor_config.multidrag_source->controller_type_ident ==
+                get_controller_type_ident())
             {
                 return true;
             }
         }
 
-        if( _app_instance_store->editor_config.slider_controller_is_down == this )
+        if (_app_instance_store->editor_config.slider_controller_is_down == this)
         {
             return true;
         }
@@ -275,24 +275,27 @@ class MONO_UISliderController : public MONO_Controller
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // GET VALUE HANDLING
-    virtual int get_value() const override {
-        PodParameterBase* param = get_parameter();
-        if( param )
+    virtual int get_value() const override
+    {
+        PodParameterBase *param = get_parameter();
+        if (param)
             return param->value();
 
         return 0;
     }
 
-    virtual int get_range_max() override {
-        PodParameterBase* param = get_parameter();
-        if( param )
+    virtual int get_range_max() override
+    {
+        PodParameterBase *param = get_parameter();
+        if (param)
             return param->max_value();
 
         return 0;
     }
-    virtual int get_range_min() override {
-        PodParameterBase* param = get_parameter();
-        if( param )
+    virtual int get_range_min() override
+    {
+        PodParameterBase *param = get_parameter();
+        if (param)
             return param->min_value();
 
         return 0;
@@ -300,10 +303,10 @@ class MONO_UISliderController : public MONO_Controller
 
     virtual uint32 get_current_color() const override
     {
-        if( _model )
+        if (_model)
         {
-            const AppStyle*const style = _model->get_style();
-            if( style )
+            const AppStyle *const style = _model->get_style();
+            if (style)
                 return _model->get_style()->get_font_color();
         }
 
@@ -314,43 +317,40 @@ class MONO_UISliderController : public MONO_Controller
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // RUBBER HANDLING
-    virtual bool are_you_rubberable() override
-    {
-        return true;
-    }
+    virtual bool are_you_rubberable() override { return true; }
 
     virtual void rubber_droped() override
     {
-        PodParameterBase* param = get_parameter();
-        if( param )
-            param->set_value( param->default_value() );
+        PodParameterBase *param = get_parameter();
+        if (param)
+            param->set_value(param->default_value());
     }
 
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // VIEW SETUP
-    void setup_view( void*const top_level_impl_ ) override
+    void setup_view(void *const top_level_impl_) override
     {
-        setup_slider( reinterpret_cast< UISlider*const >( top_level_impl_ ) );
+        setup_slider(reinterpret_cast<UISlider *const>(top_level_impl_));
     }
 
     // DEFAULT SETUP FOR B_STEP
-    /* virtual */ void setup_slider( UISlider*const slider_ )
+    /* virtual */ void setup_slider(UISlider *const slider_)
     {
-        slider_->setRange( get_range_min(), get_range_max(), 1 );
-        slider_->setTextBoxStyle (Slider::NoTextBox, false, 0, 0);
-        slider_->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-        if( get_range_max() > 350 )
+        slider_->setRange(get_range_min(), get_range_max(), 1);
+        slider_->setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+        slider_->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+        if (get_range_max() > 350)
         {
-            slider_->setDragSensitivity( 1550 );
+            slider_->setDragSensitivity(1550);
         }
-        else if( get_range_max() > 50 )
+        else if (get_range_max() > 50)
         {
-            slider_->setDragSensitivity( 250 );
+            slider_->setDragSensitivity(250);
         }
         else
-            slider_->setDragSensitivity( 200 );
+            slider_->setDragSensitivity(200);
     }
 
     // --------------------------------------------------------------------------------------------
@@ -358,17 +358,18 @@ class MONO_UISliderController : public MONO_Controller
     // --------------------------------------------------------------------------------------------
 
     // MIDI FEEDBACK
-    MIDI_HANDLE_TYPES get_midi_handling_type() const override {
+    MIDI_HANDLE_TYPES get_midi_handling_type() const override
+    {
         return MIDI_HANDLE_TYPES::PERCENTAGE_VALUE;
     };
 
-protected:
-    MONO_UISliderController( AppInstanceStore* const app_instance_store_ )
-        : MONO_Controller( app_instance_store_ ),
-          _app_instance_store( app_instance_store_ )
-    {}
+  protected:
+    MONO_UISliderController(AppInstanceStore *const app_instance_store_)
+        : MONO_Controller(app_instance_store_), _app_instance_store(app_instance_store_)
+    {
+    }
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MONO_UISliderController)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MONO_UISliderController)
 };
 
 #endif

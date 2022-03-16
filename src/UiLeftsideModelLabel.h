@@ -26,8 +26,6 @@
 #include "UiColumnWrapper.h"
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -36,49 +34,44 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiLeftsideModelLabel  : public SubeditorBase
+class UiLeftsideModelLabel : public SubeditorBase
 {
-public:
+  public:
     //==============================================================================
-    UiLeftsideModelLabel ();
+    UiLeftsideModelLabel();
     ~UiLeftsideModelLabel();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-private:
+  private:
     String _text;
-public:
-    void set_text( const String& text_ );
-    void on_style_set( AppStyle*const style_ ) override;
 
+  public:
+    void set_text(const String &text_);
+    void on_style_set(AppStyle *const style_) override;
 
-    void set_controller( MONO_Controller*const controller_ )
-    {
-        model->set_controller( controller_ );
-    }
+    void set_controller(MONO_Controller *const controller_) { model->set_controller(controller_); }
 
-    void refresh_ui( Array< Component* >& components_to_repaint_ ) override;
-    void get_controllers_for_paint_popup( Array< MONO_Controller* >& controllers_with_popup_ ) override;
+    void refresh_ui(Array<Component *> &components_to_repaint_) override;
+    void
+    get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_with_popup_) override;
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
     ScopedPointer<ModelBase> model;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiLeftsideModelLabel)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiLeftsideModelLabel)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_3F6EA32C251175BE__
+#endif // __JUCE_HEADER_3F6EA32C251175BE__

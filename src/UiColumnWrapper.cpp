@@ -24,82 +24,77 @@
 
 #include "UiColumnWrapper.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-void UiColumnWrapper::set_leftside_subeditor( SubeditorBase*const leftside_editor_ )
+void UiColumnWrapper::set_leftside_subeditor(SubeditorBase *const leftside_editor_)
 {
-    if( leftside_subeditor.get() )
+    if (leftside_subeditor.get())
     {
-        leftside_editor_->setBounds( leftside_subeditor->getX(),
-                                     leftside_subeditor->getY(),
-                                     leftside_subeditor->getWidth(),
-                                     leftside_subeditor->getHeight() );
+        leftside_editor_->setBounds(leftside_subeditor->getX(), leftside_subeditor->getY(),
+                                    leftside_subeditor->getWidth(),
+                                    leftside_subeditor->getHeight());
     }
 
-    addAndMakeVisible( leftside_subeditor = leftside_editor_ );
+    addAndMakeVisible(leftside_subeditor = leftside_editor_);
 }
-void UiColumnWrapper::set_colum_editor( UiColumn16*const column_editor_ )
+void UiColumnWrapper::set_colum_editor(UiColumn16 *const column_editor_)
 {
-    if( column_editor.get() )
+    if (column_editor.get())
     {
-        column_editor_->setBounds( column_editor->getX(),
-                                   column_editor->getY(),
-                                   column_editor->getWidth(),
-                                   column_editor->getHeight() );
+        column_editor_->setBounds(column_editor->getX(), column_editor->getY(),
+                                  column_editor->getWidth(), column_editor->getHeight());
     }
 
-    addAndMakeVisible( column_editor = column_editor_ );
+    addAndMakeVisible(column_editor = column_editor_);
 }
 
-void UiColumnWrapper::refresh_ui( Array< Component* >& components_to_repaint_ )
+void UiColumnWrapper::refresh_ui(Array<Component *> &components_to_repaint_)
 {
-    if( column_editor )
-        column_editor->refresh_ui( components_to_repaint_ );
-    if( leftside_subeditor )
-        leftside_subeditor->refresh_ui( components_to_repaint_ );
+    if (column_editor)
+        column_editor->refresh_ui(components_to_repaint_);
+    if (leftside_subeditor)
+        leftside_subeditor->refresh_ui(components_to_repaint_);
 }
 
-void UiColumnWrapper::get_controllers_for_paint_popup( Array< MONO_Controller* >& controllers_with_popup_ )
+void UiColumnWrapper::get_controllers_for_paint_popup(
+    Array<MONO_Controller *> &controllers_with_popup_)
 {
-    if( column_editor )
-        column_editor->get_controllers_for_paint_popup( controllers_with_popup_ );
-    if( leftside_subeditor )
-        leftside_subeditor->get_controllers_for_paint_popup( controllers_with_popup_ );
+    if (column_editor)
+        column_editor->get_controllers_for_paint_popup(controllers_with_popup_);
+    if (leftside_subeditor)
+        leftside_subeditor->get_controllers_for_paint_popup(controllers_with_popup_);
 }
 
-void UiColumnWrapper::set_style( AppStyle*const style_ )
+void UiColumnWrapper::set_style(AppStyle *const style_)
 {
-    if( _style != style_ )
+    if (_style != style_)
     {
         _style = style_;
 
-        if( _style )
-            setOpaque( _style->is_wrapper_opaque() );
+        if (_style)
+            setOpaque(_style->is_wrapper_opaque());
     }
 
-    if( leftside_subeditor )
-        leftside_subeditor->set_style( _style );
-    if( column_editor )
-        column_editor->set_style( _style );
+    if (leftside_subeditor)
+        leftside_subeditor->set_style(_style);
+    if (column_editor)
+        column_editor->set_style(_style);
 }
 
 //[/MiscUserDefs]
 
 //==============================================================================
-UiColumnWrapper::UiColumnWrapper ()
+UiColumnWrapper::UiColumnWrapper()
 {
-    addAndMakeVisible (leftside_subeditor = new SubeditorBase());
+    addAndMakeVisible(leftside_subeditor = new SubeditorBase());
 
-    addAndMakeVisible (column_editor = new UiColumn16());
-
+    addAndMakeVisible(column_editor = new UiColumn16());
 
     //[UserPreSize]
     _style = nullptr;
 #ifdef DO_NEVER_DEFINE_THIS
     //[/UserPreSize]
 
-    setSize (985, 50);
-
+    setSize(985, 50);
 
     //[Constructor] You can add your own custom stuff here..
 #endif // DO_NEVER_DEFINE_THIS
@@ -114,22 +109,21 @@ UiColumnWrapper::~UiColumnWrapper()
     leftside_subeditor = nullptr;
     column_editor = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiColumnWrapper::paint (Graphics& g)
+void UiColumnWrapper::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-    if( _style )
-        if( _style->is_wrapper_opaque() )
-            g.fillAll (Colour( _style->get_foreground_color() ) );
+    if (_style)
+        if (_style->is_wrapper_opaque())
+            g.fillAll(Colour(_style->get_foreground_color()));
     return;
     //[/UserPrePaint]
 
-    g.fillAll (Colours::white);
+    g.fillAll(Colours::white);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -140,17 +134,15 @@ void UiColumnWrapper::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    leftside_subeditor->setBounds (0, 0, proportionOfWidth (0.1726f), proportionOfHeight (1.0000f));
-    column_editor->setBounds (proportionOfWidth (0.1726f), 0, proportionOfWidth (0.8274f), proportionOfHeight (1.0000f));
+    leftside_subeditor->setBounds(0, 0, proportionOfWidth(0.1726f), proportionOfHeight(1.0000f));
+    column_editor->setBounds(proportionOfWidth(0.1726f), 0, proportionOfWidth(0.8274f),
+                             proportionOfHeight(1.0000f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -177,7 +169,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

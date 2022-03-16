@@ -24,38 +24,36 @@
 
 #include "UiLeftsideCC.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-void UiLeftsideCC::on_style_set( AppStyle*const )
+void UiLeftsideCC::on_style_set(AppStyle *const)
 {
-    if( _style )
+    if (_style)
     {
-        setOpaque( _style->is_opaque() );
+        setOpaque(_style->is_opaque());
     }
 
-    cc_type->set_style( _style );
-    cc_label->set_style( _style );
+    cc_type->set_style(_style);
+    cc_label->set_style(_style);
 }
-void UiLeftsideCC::refresh_ui( Array< Component* >& components_to_repaint_ )
+void UiLeftsideCC::refresh_ui(Array<Component *> &components_to_repaint_)
 {
     cc_type->get_components_to_repaint(components_to_repaint_);
-    
-    if( cc_label->is_repaint_required() )
+
+    if (cc_label->is_repaint_required())
         components_to_repaint_.add(cc_label);
-        
-    const MONO_Controller*constroller = cc_type->get_controller();
-    if( constroller )
-        cc_label->set_text(String("CC ")+String(constroller->get_value()));
+
+    const MONO_Controller *constroller = cc_type->get_controller();
+    if (constroller)
+        cc_label->set_text(String("CC ") + String(constroller->get_value()));
 }
 //[/MiscUserDefs]
 
 //==============================================================================
-UiLeftsideCC::UiLeftsideCC ()
+UiLeftsideCC::UiLeftsideCC()
 {
-    addAndMakeVisible (cc_type = new ModelBase());
+    addAndMakeVisible(cc_type = new ModelBase());
 
-    addAndMakeVisible (cc_label = new UiLabel());
-
+    addAndMakeVisible(cc_label = new UiLabel());
 
     //[UserPreSize]
     _style = nullptr;
@@ -63,8 +61,7 @@ UiLeftsideCC::UiLeftsideCC ()
 #ifdef DO_NEVER_DEFINE_THIS
     //[/UserPreSize]
 
-    setSize (170, 50);
-
+    setSize(170, 50);
 
     //[Constructor] You can add your own custom stuff here..
 #endif
@@ -79,24 +76,22 @@ UiLeftsideCC::~UiLeftsideCC()
     cc_type = nullptr;
     cc_label = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiLeftsideCC::paint (Graphics& g)
+void UiLeftsideCC::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-    if( _style )
-        if( _style->is_wrapper_opaque() )
-            g.fillAll (Colour( _style->get_foreground_color() ) );
+    if (_style)
+        if (_style->is_wrapper_opaque())
+            g.fillAll(Colour(_style->get_foreground_color()));
 
-    
     return;
     //[/UserPrePaint]
 
-    g.fillAll (Colours::white);
+    g.fillAll(Colours::white);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -104,17 +99,16 @@ void UiLeftsideCC::paint (Graphics& g)
 
 void UiLeftsideCC::resized()
 {
-    cc_type->setBounds (proportionOfWidth (0.0588f), proportionOfHeight (0.1000f), proportionOfWidth (0.2353f), proportionOfHeight (0.8000f));
-    cc_label->setBounds (proportionOfWidth (0.3529f), proportionOfHeight (0.1000f), proportionOfWidth (0.5882f), proportionOfHeight (0.8000f));
+    cc_type->setBounds(proportionOfWidth(0.0588f), proportionOfHeight(0.1000f),
+                       proportionOfWidth(0.2353f), proportionOfHeight(0.8000f));
+    cc_label->setBounds(proportionOfWidth(0.3529f), proportionOfHeight(0.1000f),
+                        proportionOfWidth(0.5882f), proportionOfHeight(0.8000f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -141,7 +135,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

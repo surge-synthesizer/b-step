@@ -31,36 +31,36 @@ class UiEditor : public ResizableWindow
     friend class UiEditorToolbar;
     virtual void on_load_clicked() {}
     virtual void on_save_clicked() {}
-public:
+
+  public:
     virtual void on_close_clicked() {}
-private:
-    void closeButtonPressed() { /*override only in standaline*/
+
+  private:
+    void closeButtonPressed()
+    { /*override only in standaline*/
         on_close_clicked();
     }
 
     friend class AnimateMove;
     volatile bool animate_lock;
-    AnimateMove* _animate_mover;
+    AnimateMove *_animate_mover;
 
-protected:
+  protected:
     UiEditor(String name = "B-Info");
     ~UiEditor();
 
-    void center_relative_and_make_visible( Component*const parent_ = nullptr, bool resize_ = true, bool make_labels_dragable_ = true );
-    void restore_XY( Point<int>& XY_ );
+    void center_relative_and_make_visible(Component *const parent_ = nullptr, bool resize_ = true,
+                                          bool make_labels_dragable_ = true);
+    void restore_XY(Point<int> &XY_);
     void make_childs_dragable();
 
-    bool canModalEventBeSentToComponent(const Component*) override {
-        return true;
-    }
+    bool canModalEventBeSentToComponent(const Component *) override { return true; }
 
-public:
-    void animate_move( int y_to_move_ );
+  public:
+    void animate_move(int y_to_move_);
     void animate_move_back();
 };
 //[/Headers]
-
-
 
 //==============================================================================
 /**
@@ -70,35 +70,34 @@ public:
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorToolbar  : public Component,
-public Button::Listener
+class UiEditorToolbar : public Component, public Button::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiEditorToolbar (UiEditor*const owner_editor_, bool show_close = true, bool show_move = true, bool show_load_save = true);
+    UiEditorToolbar(UiEditor *const owner_editor_, bool show_close = true, bool show_move = true,
+                    bool show_load_save = true);
     ~UiEditorToolbar();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    UiEditor*const _owner_editor;
+    UiEditor *const _owner_editor;
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
+    void buttonClicked(Button *buttonThatWasClicked);
 
     // Binary resources:
-    static const char* load_svg;
+    static const char *load_svg;
     static const int load_svgSize;
-    static const char* save_svg;
+    static const char *save_svg;
     static const int save_svgSize;
-    static const char* move_svg;
+    static const char *move_svg;
     static const int move_svgSize;
-    static const char* close_svg;
+    static const char *close_svg;
     static const int close_svgSize;
 
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -111,13 +110,11 @@ private:
     ScopedPointer<Drawable> drawable3;
     ScopedPointer<Drawable> drawable4;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorToolbar)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorToolbar)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_77F0CE91B2F32968__
-
+#endif // __JUCE_HEADER_77F0CE91B2F32968__

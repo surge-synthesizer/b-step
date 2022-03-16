@@ -22,19 +22,18 @@
 
 #include "UiNotificationAnimation.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 void UiNotificationAnimation::timerCallback()
 {
-    if( alpha >= 255 )
+    if (alpha >= 255)
         is_rising = false;
 
-    if( is_rising )
+    if (is_rising)
         alpha += 5;
     else
         alpha -= 5;
 
-    if( alpha <= 0 )
+    if (alpha <= 0)
     {
         stopTimer();
         text->setColour(Label::textColourId, root_color.withAlpha(uint8(0)));
@@ -43,13 +42,14 @@ void UiNotificationAnimation::timerCallback()
         text->setColour(Label::textColourId, root_color.withAlpha(uint8(alpha)));
 }
 
-void UiNotificationAnimation::set_text_and_run( const char* text_, int state_ /* 0=fail,1=ok,2=neutral*/ )
+void UiNotificationAnimation::set_text_and_run(const char *text_,
+                                               int state_ /* 0=fail,1=ok,2=neutral*/)
 {
-    String text( text_ );
-    set_text_and_run( text, state_ );
+    String text(text_);
+    set_text_and_run(text, state_);
 }
 
-void UiNotificationAnimation::set_text_and_run( String& text_, int state_ /* 0=fail,1=ok,2=neutral*/ )
+void UiNotificationAnimation::set_text_and_run(String &text_, int state_ /* 0=fail,1=ok,2=neutral*/)
 {
     stopTimer();
 
@@ -58,37 +58,34 @@ void UiNotificationAnimation::set_text_and_run( String& text_, int state_ /* 0=f
 
     MessageManagerLock mmLock;
 
-    root_color = state_ ? ( state_ == 1 ? Colours::chartreuse : Colours::blue ) : Colours::red;
-    text->setColour (Label::textColourId, root_color.withAlpha(uint8(0)));
-    text->setText( text_, dontSendNotification );
+    root_color = state_ ? (state_ == 1 ? Colours::chartreuse : Colours::blue) : Colours::red;
+    text->setColour(Label::textColourId, root_color.withAlpha(uint8(0)));
+    text->setText(text_, dontSendNotification);
 
     startTimer(15);
 }
 //[/MiscUserDefs]
 
 //==============================================================================
-UiNotificationAnimation::UiNotificationAnimation ()
+UiNotificationAnimation::UiNotificationAnimation()
 {
-    addAndMakeVisible (text = new Label (String(),
-                                         TRANS("OK")));
-    text->setFont (Font ("Oswald", 230.00f, Font::bold));
-    text->setJustificationType (Justification::centred);
-    text->setEditable (false, false, false);
-    text->setColour (Label::textColourId, Colours::chartreuse);
-    text->setColour (TextEditor::textColourId, Colour (0x00000000));
-    text->setColour (TextEditor::backgroundColourId, Colour (0xff161616));
-    text->setColour (TextEditor::highlightColourId, Colour (0x001111ee));
-
+    addAndMakeVisible(text = new Label(String(), TRANS("OK")));
+    text->setFont(Font("Oswald", 230.00f, Font::bold));
+    text->setJustificationType(Justification::centred);
+    text->setEditable(false, false, false);
+    text->setColour(Label::textColourId, Colours::chartreuse);
+    text->setColour(TextEditor::textColourId, Colour(0x00000000));
+    text->setColour(TextEditor::backgroundColourId, Colour(0xff161616));
+    text->setColour(TextEditor::highlightColourId, Colour(0x001111ee));
 
     //[UserPreSize]
-    text->setColour(Label::textColourId, Colour (0x00000000));
+    text->setColour(Label::textColourId, Colour(0x00000000));
     //[/UserPreSize]
 
-    setSize (400, 200);
-
+    setSize(400, 200);
 
     //[Constructor] You can add your own custom stuff here..
-    setInterceptsMouseClicks(false,false);
+    setInterceptsMouseClicks(false, false);
     //[/Constructor]
 }
 
@@ -100,13 +97,12 @@ UiNotificationAnimation::~UiNotificationAnimation()
 
     text = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiNotificationAnimation::paint (Graphics& g)
+void UiNotificationAnimation::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
@@ -120,16 +116,13 @@ void UiNotificationAnimation::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    text->setBounds (0, 0, proportionOfWidth (1.0000f), proportionOfHeight (1.0000f));
+    text->setBounds(0, 0, proportionOfWidth(1.0000f), proportionOfHeight(1.0000f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -156,7 +149,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

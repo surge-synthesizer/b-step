@@ -27,8 +27,6 @@
 class AppInstanceStore;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -37,36 +35,33 @@ class AppInstanceStore;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorKeyboard  : public UiEditor
+class UiEditorKeyboard : public UiEditor
 {
-public:
+  public:
     //==============================================================================
-    UiEditorKeyboard (AppInstanceStore* const app_instance_store_);
+    UiEditorKeyboard(AppInstanceStore *const app_instance_store_);
     ~UiEditorKeyboard();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore* const _app_instance_store;
+    AppInstanceStore *const _app_instance_store;
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
     ScopedPointer<MidiKeyboardComponent> keyboard;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorKeyboard)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorKeyboard)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_D69BC9044BC344F4__
+#endif // __JUCE_HEADER_D69BC9044BC344F4__

@@ -26,8 +26,6 @@
 #include "UiColumnWrapper.h"
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -36,40 +34,36 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiLeftsideLabelModel  : public SubeditorBase,
-                              public Button::Listener
+class UiLeftsideLabelModel : public SubeditorBase, public Button::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiLeftsideLabelModel (AppInstanceStore*const app_insteance_store_);
+    UiLeftsideLabelModel(AppInstanceStore *const app_insteance_store_);
     ~UiLeftsideLabelModel();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-private:
-    AppInstanceStore*const _app_insteance_store;
+  private:
+    AppInstanceStore *const _app_insteance_store;
     String _text;
     String _last_painted_text;
-public:
-    void set_text( const String& text_ ) override;
-    void on_style_set( AppStyle*const style_ ) override;
 
-    void set_controller( MONO_Controller*const controller_ )
-    {
-        model->set_controller( controller_ );
-    }
+  public:
+    void set_text(const String &text_) override;
+    void on_style_set(AppStyle *const style_) override;
 
-    void refresh_ui( Array< Component* >& components_to_repaint_ ) override;
-    void get_controllers_for_paint_popup( Array< MONO_Controller* >& controllers_with_popup_ ) override;
+    void set_controller(MONO_Controller *const controller_) { model->set_controller(controller_); }
+
+    void refresh_ui(Array<Component *> &components_to_repaint_) override;
+    void
+    get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_with_popup_) override;
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
+    void buttonClicked(Button *buttonThatWasClicked);
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -77,12 +71,11 @@ private:
     ScopedPointer<ImageButton> bg_button;
     ScopedPointer<ModelBase> model;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiLeftsideLabelModel)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiLeftsideLabelModel)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_EE082E2DCA75D936__
+#endif // __JUCE_HEADER_EE082E2DCA75D936__

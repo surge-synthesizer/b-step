@@ -25,28 +25,26 @@
 
 #include "UiLeftsideStartStopPause.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-void UiLeftsideStartStopPause::refresh_ui( Array< Component* >& components_to_repaint_ )
+void UiLeftsideStartStopPause::refresh_ui(Array<Component *> &components_to_repaint_)
 {
-    button_play->get_components_to_repaint( components_to_repaint_ );
-    button_pause->get_components_to_repaint( components_to_repaint_ );
-    button_stop->get_components_to_repaint( components_to_repaint_ );
+    button_play->get_components_to_repaint(components_to_repaint_);
+    button_pause->get_components_to_repaint(components_to_repaint_);
+    button_stop->get_components_to_repaint(components_to_repaint_);
 }
 //[/MiscUserDefs]
 
 //==============================================================================
-UiLeftsideStartStopPause::UiLeftsideStartStopPause ()
+UiLeftsideStartStopPause::UiLeftsideStartStopPause()
 {
-    addAndMakeVisible (button_play = new ModelBase());
+    addAndMakeVisible(button_play = new ModelBase());
 
-    addAndMakeVisible (button_pause = new ModelBase());
+    addAndMakeVisible(button_pause = new ModelBase());
 
-    addAndMakeVisible (button_stop = new ModelBase());
-
+    addAndMakeVisible(button_stop = new ModelBase());
 
     //[UserPreSize]
     _style = nullptr;
@@ -54,8 +52,7 @@ UiLeftsideStartStopPause::UiLeftsideStartStopPause ()
 #ifdef DO_NEVER_DEFINE_THIS
     //[/UserPreSize]
 
-    setSize (170, 50);
-
+    setSize(170, 50);
 
     //[Constructor] You can add your own custom stuff here..
 #endif
@@ -71,19 +68,18 @@ UiLeftsideStartStopPause::~UiLeftsideStartStopPause()
     button_pause = nullptr;
     button_stop = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiLeftsideStartStopPause::paint (Graphics& g)
+void UiLeftsideStartStopPause::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     return;
     //[/UserPrePaint]
 
-    g.fillAll (Colours::white);
+    g.fillAll(Colours::white);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -91,18 +87,18 @@ void UiLeftsideStartStopPause::paint (Graphics& g)
 
 void UiLeftsideStartStopPause::resized()
 {
-    button_play->setBounds (0, proportionOfHeight (0.1000f), proportionOfWidth (0.2353f), proportionOfHeight (0.8000f));
-    button_pause->setBounds (proportionOfWidth (0.2647f), proportionOfHeight (0.1000f), proportionOfWidth (0.2353f), proportionOfHeight (0.8000f));
-    button_stop->setBounds (proportionOfWidth (0.5294f), proportionOfHeight (0.1000f), proportionOfWidth (0.2353f), proportionOfHeight (0.8000f));
+    button_play->setBounds(0, proportionOfHeight(0.1000f), proportionOfWidth(0.2353f),
+                           proportionOfHeight(0.8000f));
+    button_pause->setBounds(proportionOfWidth(0.2647f), proportionOfHeight(0.1000f),
+                            proportionOfWidth(0.2353f), proportionOfHeight(0.8000f));
+    button_stop->setBounds(proportionOfWidth(0.5294f), proportionOfHeight(0.1000f),
+                           proportionOfWidth(0.2353f), proportionOfHeight(0.8000f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -132,7 +128,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

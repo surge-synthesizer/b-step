@@ -26,7 +26,6 @@
 
 #include "UiTextImExport.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 void UiTextImExport::timerCallback()
 {
@@ -36,7 +35,7 @@ void UiTextImExport::timerCallback()
     send_mail->setEnabled(has_text);
     send_mail_to_monoplugs->setEnabled(has_text);
 
-    if( ! _listener->_is_importer )
+    if (!_listener->_is_importer)
         copy_past->setEnabled(has_text);
 }
 
@@ -49,134 +48,152 @@ void UiTextImExport::on_close_clicked()
 //[/MiscUserDefs]
 
 //==============================================================================
-UiTextImExport::UiTextImExport (AppInstanceStore*const app_instance_store_, UiTextImExportListener*const listener_)
+UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
+                               UiTextImExportListener *const listener_)
     : _app_instance_store(app_instance_store_), _listener(listener_)
 {
-    addAndMakeVisible (titel = new Label (String(),
-                                          TRANS("B-DATA-IMPORTER")));
-    titel->setFont (Font ("Oswald", 25.00f, Font::plain));
-    titel->setJustificationType (Justification::centred);
-    titel->setEditable (false, false, false);
-    titel->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    titel->setColour (TextEditor::textColourId, Colours::black);
-    titel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(titel = new Label(String(), TRANS("B-DATA-IMPORTER")));
+    titel->setFont(Font("Oswald", 25.00f, Font::plain));
+    titel->setJustificationType(Justification::centred);
+    titel->setEditable(false, false, false);
+    titel->setColour(Label::textColourId,
+                     Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    titel->setColour(TextEditor::textColourId, Colours::black);
+    titel->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (ok = new TextButton (String()));
-    ok->setExplicitFocusOrder (2);
-    ok->setButtonText (TRANS("IMPORT"));
-    ok->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight | Button::ConnectedOnTop | Button::ConnectedOnBottom);
-    ok->addListener (this);
-    ok->setColour (TextButton::buttonColourId, Colours::black);
-    ok->setColour (TextButton::buttonOnColourId, Colour (0x004444ff));
-    ok->setColour (TextButton::textColourOnId, Colours::chartreuse);
-    ok->setColour (TextButton::textColourOffId, Colours::chartreuse);
+    addAndMakeVisible(ok = new TextButton(String()));
+    ok->setExplicitFocusOrder(2);
+    ok->setButtonText(TRANS("IMPORT"));
+    ok->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
+                          Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    ok->addListener(this);
+    ok->setColour(TextButton::buttonColourId, Colours::black);
+    ok->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
+    ok->setColour(TextButton::textColourOnId, Colours::chartreuse);
+    ok->setColour(TextButton::textColourOffId, Colours::chartreuse);
 
-    addAndMakeVisible (cancel = new TextButton (String()));
-    cancel->setExplicitFocusOrder (3);
-    cancel->setButtonText (TRANS("CANCEL"));
-    cancel->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight | Button::ConnectedOnTop | Button::ConnectedOnBottom);
-    cancel->addListener (this);
-    cancel->setColour (TextButton::buttonColourId, Colours::black);
-    cancel->setColour (TextButton::buttonOnColourId, Colour (0x004444ff));
-    cancel->setColour (TextButton::textColourOnId, Colours::red);
-    cancel->setColour (TextButton::textColourOffId, Colours::red);
+    addAndMakeVisible(cancel = new TextButton(String()));
+    cancel->setExplicitFocusOrder(3);
+    cancel->setButtonText(TRANS("CANCEL"));
+    cancel->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
+                              Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    cancel->addListener(this);
+    cancel->setColour(TextButton::buttonColourId, Colours::black);
+    cancel->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
+    cancel->setColour(TextButton::textColourOnId, Colours::red);
+    cancel->setColour(TextButton::textColourOffId, Colours::red);
 
-    addAndMakeVisible (text = new TextEditor (String()));
-    text->setMultiLine (true);
-    text->setReturnKeyStartsNewLine (false);
-    text->setReadOnly (false);
-    text->setScrollbarsShown (true);
-    text->setCaretVisible (true);
-    text->setPopupMenuEnabled (true);
-    text->setColour (TextEditor::textColourId, Colours::aqua);
-    text->setColour (TextEditor::backgroundColourId, Colour (0x00ffffff));
-    text->setColour (TextEditor::outlineColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    text->setColour (TextEditor::shadowColourId, Colour (0x00000000));
-    text->setText (String());
+    addAndMakeVisible(text = new TextEditor(String()));
+    text->setMultiLine(true);
+    text->setReturnKeyStartsNewLine(false);
+    text->setReadOnly(false);
+    text->setScrollbarsShown(true);
+    text->setCaretVisible(true);
+    text->setPopupMenuEnabled(true);
+    text->setColour(TextEditor::textColourId, Colours::aqua);
+    text->setColour(TextEditor::backgroundColourId, Colour(0x00ffffff));
+    text->setColour(TextEditor::outlineColourId,
+                    Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    text->setColour(TextEditor::shadowColourId, Colour(0x00000000));
+    text->setText(String());
 
-    addAndMakeVisible (copy_past = new TextButton (String()));
-    copy_past->setExplicitFocusOrder (2);
-    copy_past->setButtonText (TRANS("COPY"));
-    copy_past->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight | Button::ConnectedOnTop | Button::ConnectedOnBottom);
-    copy_past->addListener (this);
-    copy_past->setColour (TextButton::buttonColourId, Colours::black);
-    copy_past->setColour (TextButton::buttonOnColourId, Colour (0x004444ff));
-    copy_past->setColour (TextButton::textColourOnId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    copy_past->setColour (TextButton::textColourOffId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    addAndMakeVisible(copy_past = new TextButton(String()));
+    copy_past->setExplicitFocusOrder(2);
+    copy_past->setButtonText(TRANS("COPY"));
+    copy_past->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
+                                 Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    copy_past->addListener(this);
+    copy_past->setColour(TextButton::buttonColourId, Colours::black);
+    copy_past->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
+    copy_past->setColour(TextButton::textColourOnId,
+                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    copy_past->setColour(TextButton::textColourOffId,
+                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible (note = new Label (String(),
-                                         String()));
-    note->setFont (Font (15.00f, Font::plain));
-    note->setJustificationType (Justification::centredLeft);
-    note->setEditable (false, false, false);
-    note->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    note->setColour (TextEditor::textColourId, Colours::black);
-    note->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(note = new Label(String(), String()));
+    note->setFont(Font(15.00f, Font::plain));
+    note->setJustificationType(Justification::centredLeft);
+    note->setEditable(false, false, false);
+    note->setColour(Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    note->setColour(TextEditor::textColourId, Colours::black);
+    note->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (description = new Label (String(),
-            TRANS("\n")));
-    description->setFont (Font (15.00f, Font::plain));
-    description->setJustificationType (Justification::centredLeft);
-    description->setEditable (false, false, false);
-    description->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    description->setColour (TextEditor::textColourId, Colours::black);
-    description->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(description = new Label(String(), TRANS("\n")));
+    description->setFont(Font(15.00f, Font::plain));
+    description->setJustificationType(Justification::centredLeft);
+    description->setEditable(false, false, false);
+    description->setColour(Label::textColourId,
+                           Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    description->setColour(TextEditor::textColourId, Colours::black);
+    description->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (send_mail = new TextButton (String()));
-    send_mail->setExplicitFocusOrder (3);
-    send_mail->setButtonText (TRANS("SEND AS MAIL"));
-    send_mail->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight | Button::ConnectedOnTop | Button::ConnectedOnBottom);
-    send_mail->addListener (this);
-    send_mail->setColour (TextButton::buttonColourId, Colours::black);
-    send_mail->setColour (TextButton::buttonOnColourId, Colour (0x004444ff));
-    send_mail->setColour (TextButton::textColourOnId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    send_mail->setColour (TextButton::textColourOffId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    addAndMakeVisible(send_mail = new TextButton(String()));
+    send_mail->setExplicitFocusOrder(3);
+    send_mail->setButtonText(TRANS("SEND AS MAIL"));
+    send_mail->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
+                                 Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    send_mail->addListener(this);
+    send_mail->setColour(TextButton::buttonColourId, Colours::black);
+    send_mail->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
+    send_mail->setColour(TextButton::textColourOnId,
+                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    send_mail->setColour(TextButton::textColourOffId,
+                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible (send_mail_to_monoplugs = new TextButton (String()));
-    send_mail_to_monoplugs->setExplicitFocusOrder (3);
-    send_mail_to_monoplugs->setButtonText (TRANS("SEND AS MAIL TO MONOPLUGS AND SHARE IT ON THE ONLINE REPOSITORY"));
-    send_mail_to_monoplugs->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight | Button::ConnectedOnTop | Button::ConnectedOnBottom);
-    send_mail_to_monoplugs->addListener (this);
-    send_mail_to_monoplugs->setColour (TextButton::buttonColourId, Colours::black);
-    send_mail_to_monoplugs->setColour (TextButton::buttonOnColourId, Colour (0x004444ff));
-    send_mail_to_monoplugs->setColour (TextButton::textColourOnId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    send_mail_to_monoplugs->setColour (TextButton::textColourOffId, Colour (0xffff7000));
+    addAndMakeVisible(send_mail_to_monoplugs = new TextButton(String()));
+    send_mail_to_monoplugs->setExplicitFocusOrder(3);
+    send_mail_to_monoplugs->setButtonText(
+        TRANS("SEND AS MAIL TO MONOPLUGS AND SHARE IT ON THE ONLINE REPOSITORY"));
+    send_mail_to_monoplugs->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
+                                              Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    send_mail_to_monoplugs->addListener(this);
+    send_mail_to_monoplugs->setColour(TextButton::buttonColourId, Colours::black);
+    send_mail_to_monoplugs->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
+    send_mail_to_monoplugs->setColour(TextButton::textColourOnId,
+                                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    send_mail_to_monoplugs->setColour(TextButton::textColourOffId, Colour(0xffff7000));
 
-    addAndMakeVisible (button_info = new TextButton (String()));
-    button_info->setButtonText (TRANS("?"));
-    button_info->addListener (this);
-
+    addAndMakeVisible(button_info = new TextButton(String()));
+    button_info->setButtonText(TRANS("?"));
+    button_info->addListener(this);
 
     //[UserPreSize]
     _app_instance_store->editor_config.im_exporter_editor = this;
 
-    titel->setText(_listener->_title,dontSendNotification);
-    text->setText(_listener->_data,dontSendNotification);
+    titel->setText(_listener->_title, dontSendNotification);
+    text->setText(_listener->_data, dontSendNotification);
 
-    if( _listener->_is_importer )
+    if (_listener->_is_importer)
     {
-        copy_past->setButtonText( "PASTE" );
-        note->setText( "NOTE: an import does overwrite your current work - store it before importing!", dontSendNotification );
-        description->setText( "Copy any B-Step export from your mail (or where ever) and paste it here to import it.", dontSendNotification );
+        copy_past->setButtonText("PASTE");
+        note->setText(
+            "NOTE: an import does overwrite your current work - store it before importing!",
+            dontSendNotification);
+        description->setText(
+            "Copy any B-Step export from your mail (or where ever) and paste it here to import it.",
+            dontSendNotification);
         send_mail->setVisible(false);
     }
     else
     {
-        copy_past->setButtonText( "COPY" );
-        text->setText( _listener->_data, dontSendNotification );
-        cancel->setButtonText( "CLOSE" );
+        copy_past->setButtonText("COPY");
+        text->setText(_listener->_data, dontSendNotification);
+        cancel->setButtonText("CLOSE");
         ok->setVisible(false);
-        note->setText( "NOTE: to export your current work you MUST save it to file before exporting!", dontSendNotification );
-        description->setText( "Copy the text below and paste it in your mail body or where ever you want.", dontSendNotification );
+        note->setText(
+            "NOTE: to export your current work you MUST save it to file before exporting!",
+            dontSendNotification);
+        description->setText(
+            "Copy the text below and paste it in your mail body or where ever you want.",
+            dontSendNotification);
     }
     //
     //[/UserPreSize]
 
-    setSize (440, 600);
-
+    setSize(440, 600);
 
     //[Constructor] You can add your own custom stuff here..
-    center_relative_and_make_visible( reinterpret_cast< Component* >( _app_instance_store->editor ) );
+    center_relative_and_make_visible(reinterpret_cast<Component *>(_app_instance_store->editor));
 
     text->setWantsKeyboardFocus(false);
 
@@ -200,24 +217,23 @@ UiTextImExport::~UiTextImExport()
     send_mail_to_monoplugs = nullptr;
     button_info = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiTextImExport::paint (Graphics& g)
+void UiTextImExport::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll (Colours::white);
+    g.fillAll(Colours::white);
 
-    g.setColour (Colour (0xff161616));
-    g.fillRect (0, 0, getWidth() - 0, getHeight() - 0);
+    g.setColour(Colour(0xff161616));
+    g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.drawRect (0, 0, getWidth() - 0, getHeight() - 0, 2);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
     //[UserPaint] Add your own custom painting code here..
     ResizableWindow::moved();
@@ -229,22 +245,37 @@ void UiTextImExport::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    titel->setBounds (proportionOfWidth (0.0455f), proportionOfHeight (0.0167f), proportionOfWidth (0.9091f), proportionOfHeight (0.0667f));
-    ok->setBounds (proportionOfWidth (0.7273f) - proportionOfWidth (0.2045f), proportionOfHeight (0.9083f) - proportionOfHeight (0.0417f), proportionOfWidth (0.2045f), proportionOfHeight (0.0417f));
-    cancel->setBounds (proportionOfWidth (0.9546f) - proportionOfWidth (0.2045f), proportionOfHeight (0.9083f) - proportionOfHeight (0.0417f), proportionOfWidth (0.2045f), proportionOfHeight (0.0417f));
-    text->setBounds (proportionOfWidth (0.0455f), proportionOfHeight (0.1333f), proportionOfWidth (0.9091f), proportionOfHeight (0.6833f));
-    copy_past->setBounds (proportionOfWidth (0.1818f) - proportionOfWidth (0.1364f), proportionOfHeight (0.9083f) - proportionOfHeight (0.0417f), proportionOfWidth (0.1364f), proportionOfHeight (0.0417f));
-    note->setBounds (proportionOfWidth (0.0455f), proportionOfHeight (0.8167f), proportionOfWidth (0.9091f), proportionOfHeight (0.0500f));
-    description->setBounds (proportionOfWidth (0.0455f), proportionOfHeight (0.0833f), proportionOfWidth (0.9091f), proportionOfHeight (0.0500f));
-    send_mail->setBounds (proportionOfWidth (0.4546f) - proportionOfWidth (0.2500f), proportionOfHeight (0.9083f) - proportionOfHeight (0.0417f), proportionOfWidth (0.2500f), proportionOfHeight (0.0417f));
-    send_mail_to_monoplugs->setBounds (proportionOfWidth (0.9546f) - proportionOfWidth (0.9091f), proportionOfHeight (0.9750f) - proportionOfHeight (0.0417f), proportionOfWidth (0.9091f), proportionOfHeight (0.0417f));
-    button_info->setBounds (proportionOfWidth (0.8864f), proportionOfHeight (0.0250f), proportionOfWidth (0.0682f), proportionOfHeight (0.0500f));
+    titel->setBounds(proportionOfWidth(0.0455f), proportionOfHeight(0.0167f),
+                     proportionOfWidth(0.9091f), proportionOfHeight(0.0667f));
+    ok->setBounds(proportionOfWidth(0.7273f) - proportionOfWidth(0.2045f),
+                  proportionOfHeight(0.9083f) - proportionOfHeight(0.0417f),
+                  proportionOfWidth(0.2045f), proportionOfHeight(0.0417f));
+    cancel->setBounds(proportionOfWidth(0.9546f) - proportionOfWidth(0.2045f),
+                      proportionOfHeight(0.9083f) - proportionOfHeight(0.0417f),
+                      proportionOfWidth(0.2045f), proportionOfHeight(0.0417f));
+    text->setBounds(proportionOfWidth(0.0455f), proportionOfHeight(0.1333f),
+                    proportionOfWidth(0.9091f), proportionOfHeight(0.6833f));
+    copy_past->setBounds(proportionOfWidth(0.1818f) - proportionOfWidth(0.1364f),
+                         proportionOfHeight(0.9083f) - proportionOfHeight(0.0417f),
+                         proportionOfWidth(0.1364f), proportionOfHeight(0.0417f));
+    note->setBounds(proportionOfWidth(0.0455f), proportionOfHeight(0.8167f),
+                    proportionOfWidth(0.9091f), proportionOfHeight(0.0500f));
+    description->setBounds(proportionOfWidth(0.0455f), proportionOfHeight(0.0833f),
+                           proportionOfWidth(0.9091f), proportionOfHeight(0.0500f));
+    send_mail->setBounds(proportionOfWidth(0.4546f) - proportionOfWidth(0.2500f),
+                         proportionOfHeight(0.9083f) - proportionOfHeight(0.0417f),
+                         proportionOfWidth(0.2500f), proportionOfHeight(0.0417f));
+    send_mail_to_monoplugs->setBounds(proportionOfWidth(0.9546f) - proportionOfWidth(0.9091f),
+                                      proportionOfHeight(0.9750f) - proportionOfHeight(0.0417f),
+                                      proportionOfWidth(0.9091f), proportionOfHeight(0.0417f));
+    button_info->setBounds(proportionOfWidth(0.8864f), proportionOfHeight(0.0250f),
+                           proportionOfWidth(0.0682f), proportionOfHeight(0.0500f));
     //[UserResized] Add your own custom resize handling here..
     ResizableWindow::resized();
     //[/UserResized]
 }
 
-void UiTextImExport::buttonClicked (Button* buttonThatWasClicked)
+void UiTextImExport::buttonClicked(Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -255,7 +286,7 @@ void UiTextImExport::buttonClicked (Button* buttonThatWasClicked)
         _listener->_data = text->getText();
         bool success = false;
         _listener->perform_ok(success);
-        if( success )
+        if (success)
         {
             stopTimer();
             _app_instance_store->editor_config.file_manager = nullptr;
@@ -274,47 +305,51 @@ void UiTextImExport::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == copy_past)
     {
         //[UserButtonCode_copy_past] -- add your button handler code here..
-        if( _listener->_is_importer )
+        if (_listener->_is_importer)
         {
-            String data_received = SystemClipboard::getTextFromClipboard().replaceCharacters("#", "<");
+            String data_received =
+                SystemClipboard::getTextFromClipboard().replaceCharacters("#", "<");
             _listener->_data = data_received;
-            text->setText( _listener->_data );
+            text->setText(_listener->_data);
         }
         else
         {
             String data_to_send = (_listener->_data.replaceCharacters("<", "#"));
-            SystemClipboard::copyTextToClipboard( data_to_send );
+            SystemClipboard::copyTextToClipboard(data_to_send);
         }
         //[/UserButtonCode_copy_past]
     }
     else if (buttonThatWasClicked == send_mail)
     {
         //[UserButtonCode_send_mail] -- add your button handler code here..
-        String data_to_send = (_listener->_is_importer ? text->getText().replaceCharacters("<", "#") : _listener->_data.replaceCharacters("<", "#"));
-        URL(String("mailto:yourmail?body=")+data_to_send).launchInDefaultBrowser();
+        String data_to_send =
+            (_listener->_is_importer ? text->getText().replaceCharacters("<", "#")
+                                     : _listener->_data.replaceCharacters("<", "#"));
+        URL(String("mailto:yourmail?body=") + data_to_send).launchInDefaultBrowser();
         //[/UserButtonCode_send_mail]
     }
     else if (buttonThatWasClicked == send_mail_to_monoplugs)
     {
         //[UserButtonCode_send_mail_to_monoplugs] -- add your button handler code here..
-        String data_to_send = (_listener->_is_importer ? text->getText().replaceCharacters("<", "#") : _listener->_data.replaceCharacters("<", "#"));
+        String data_to_send =
+            (_listener->_is_importer ? text->getText().replaceCharacters("<", "#")
+                                     : _listener->_data.replaceCharacters("<", "#"));
 
         URL(String(
-                String("mailto:share@monoplugs.com?body=")+
-                String("THANKS FOR SHARING YOUR WORK!\n")+
-                String("IF YOU LIKE YOU CAN ADD SOME ADDITIONAL INFO LIKE YOUR ARTIST NAME,\n")+
-                String("WEBPAGE ETC, WHICH WE CAN PUBLISH WITH YOUR PROJECT OR FILE.\n\n")+
-                String("ADD YOUR INFO HERE: \n\n")+
-                String("------------------------\n\n")+
-                String("TO GIVE US AN IDEA HOW IT CAN SOUND, YOU CAN ATTACH AN AUDIO SAMPLE FILE.\n\n")+
-                String("------------------------\n\n")+
-                String("WE WILL SEND YOU A MAIL WHEN YOUR FILE IS AVAILABLE ON THE REPOSITORY.\n")+
-                String("THANK YOU!\n\n")+
-                String("------------------------\n")+
-                String("------------------------\n")+
-                String("------------------------\n\n")+
-                String("YOUR EXPORTED DATA:\n")
-            )+data_to_send).launchInDefaultBrowser();
+                String("mailto:share@monoplugs.com?body=") +
+                String("THANKS FOR SHARING YOUR WORK!\n") +
+                String("IF YOU LIKE YOU CAN ADD SOME ADDITIONAL INFO LIKE YOUR ARTIST NAME,\n") +
+                String("WEBPAGE ETC, WHICH WE CAN PUBLISH WITH YOUR PROJECT OR FILE.\n\n") +
+                String("ADD YOUR INFO HERE: \n\n") + String("------------------------\n\n") +
+                String("TO GIVE US AN IDEA HOW IT CAN SOUND, YOU CAN ATTACH AN AUDIO SAMPLE "
+                       "FILE.\n\n") +
+                String("------------------------\n\n") +
+                String("WE WILL SEND YOU A MAIL WHEN YOUR FILE IS AVAILABLE ON THE REPOSITORY.\n") +
+                String("THANK YOU!\n\n") + String("------------------------\n") +
+                String("------------------------\n") + String("------------------------\n\n") +
+                String("YOUR EXPORTED DATA:\n")) +
+            data_to_send)
+            .launchInDefaultBrowser();
 
         std::cout << data_to_send << std::endl;
         //[/UserButtonCode_send_mail_to_monoplugs]
@@ -322,10 +357,11 @@ void UiTextImExport::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == button_info)
     {
         //[UserButtonCode_button_info] -- add your button handler code here..
-        if(! _app_instance_store->editor_config.manual_editor )
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView( _app_instance_store );
+        if (!_app_instance_store->editor_config.manual_editor)
+            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
 
-        _app_instance_store->editor_config.manual_editor->try_open_url( MANUAL_URL+"advanced-users/import-export" );
+        _app_instance_store->editor_config.manual_editor->try_open_url(
+            MANUAL_URL + "advanced-users/import-export");
         //[/UserButtonCode_button_info]
     }
 
@@ -333,11 +369,8 @@ void UiTextImExport::buttonClicked (Button* buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -406,7 +439,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

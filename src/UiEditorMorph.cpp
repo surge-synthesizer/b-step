@@ -27,751 +27,807 @@
 
 #include "UiEditorMorph.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 void UiEditorMorph::refresh()
 {
     // MORPH 1
     {
-        const Array< int >& selections_1 = DATA( synth_data ).get_active_morph_selections( 0 );
-        toggle_all_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ALL), dontSendNotification );
-        toggle_main_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::MAIN), dontSendNotification );
-        toggle_filters_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FILTERS), dontSendNotification );
-        toggle_filter_1_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_1), dontSendNotification );
-        toggle_filter_2_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_2), dontSendNotification );
-        toggle_filter_3_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_3), dontSendNotification );
-        toggle_oscs_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::OSCS), dontSendNotification );
-        toggle_osc_1_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_1), dontSendNotification );
-        toggle_osc_2_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_2), dontSendNotification );
-        toggle_osc_3_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_3), dontSendNotification );
-        toggle_fm_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FM), dontSendNotification );
-        toggle_effects_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FX), dontSendNotification );
-        toggle_arp_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ARP), dontSendNotification );
-        toggle_arp_notes_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE), dontSendNotification );
-        toggle_arp_velocity_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY), dontSendNotification );
-        toggle_arp_glide_shuffle_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE), dontSendNotification );
-        toggle_arp_switchs_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS), dontSendNotification );
-        toggle_eq_1->setToggleState( selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::EQ), dontSendNotification );
+        const Array<int> &selections_1 = DATA(synth_data).get_active_morph_selections(0);
+        toggle_all_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ALL),
+                                     dontSendNotification);
+        toggle_main_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::MAIN),
+                                      dontSendNotification);
+        toggle_filters_1->setToggleState(
+            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FILTERS), dontSendNotification);
+        toggle_filter_1_1->setToggleState(
+            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_1), dontSendNotification);
+        toggle_filter_2_1->setToggleState(
+            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_2), dontSendNotification);
+        toggle_filter_3_1->setToggleState(
+            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_3), dontSendNotification);
+        toggle_oscs_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::OSCS),
+                                      dontSendNotification);
+        toggle_osc_1_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_1),
+                                       dontSendNotification);
+        toggle_osc_2_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_2),
+                                       dontSendNotification);
+        toggle_osc_3_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_3),
+                                       dontSendNotification);
+        toggle_fm_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FM),
+                                    dontSendNotification);
+        toggle_effects_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FX),
+                                         dontSendNotification);
+        toggle_arp_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ARP),
+                                     dontSendNotification);
+        toggle_arp_notes_1->setToggleState(
+            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE), dontSendNotification);
+        toggle_arp_velocity_1->setToggleState(
+            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY),
+            dontSendNotification);
+        toggle_arp_glide_shuffle_1->setToggleState(
+            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE),
+            dontSendNotification);
+        toggle_arp_switchs_1->setToggleState(
+            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS),
+            dontSendNotification);
+        toggle_eq_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::EQ),
+                                    dontSendNotification);
     }
 
     // MORPH 2
     {
-        const Array< int >& selections_2 = DATA( synth_data ).get_active_morph_selections( 1 );
-        toggle_all_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ALL), dontSendNotification );
-        toggle_main_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::MAIN), dontSendNotification );
-        toggle_filters_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FILTERS), dontSendNotification );
-        toggle_filter_1_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_1), dontSendNotification );
-        toggle_filter_2_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_2), dontSendNotification );
-        toggle_filter_3_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_3), dontSendNotification );
-        toggle_oscs_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::OSCS), dontSendNotification );
-        toggle_osc_1_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_1), dontSendNotification );
-        toggle_osc_2_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_2), dontSendNotification );
-        toggle_osc_3_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_3), dontSendNotification );
-        toggle_fm_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FM), dontSendNotification );
-        toggle_effects_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FX), dontSendNotification );
-        toggle_arp_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ARP), dontSendNotification );
-        toggle_arp_notes_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE), dontSendNotification );
-        toggle_arp_velocity_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY), dontSendNotification );
-        toggle_arp_glide_shuffle_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE), dontSendNotification );
-        toggle_arp_switchs_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS), dontSendNotification );
-        toggle_eq_2->setToggleState( selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::EQ), dontSendNotification );
+        const Array<int> &selections_2 = DATA(synth_data).get_active_morph_selections(1);
+        toggle_all_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ALL),
+                                     dontSendNotification);
+        toggle_main_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::MAIN),
+                                      dontSendNotification);
+        toggle_filters_2->setToggleState(
+            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FILTERS), dontSendNotification);
+        toggle_filter_1_2->setToggleState(
+            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_1), dontSendNotification);
+        toggle_filter_2_2->setToggleState(
+            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_2), dontSendNotification);
+        toggle_filter_3_2->setToggleState(
+            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_3), dontSendNotification);
+        toggle_oscs_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::OSCS),
+                                      dontSendNotification);
+        toggle_osc_1_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_1),
+                                       dontSendNotification);
+        toggle_osc_2_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_2),
+                                       dontSendNotification);
+        toggle_osc_3_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_3),
+                                       dontSendNotification);
+        toggle_fm_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FM),
+                                    dontSendNotification);
+        toggle_effects_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FX),
+                                         dontSendNotification);
+        toggle_arp_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ARP),
+                                     dontSendNotification);
+        toggle_arp_notes_2->setToggleState(
+            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE), dontSendNotification);
+        toggle_arp_velocity_2->setToggleState(
+            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY),
+            dontSendNotification);
+        toggle_arp_glide_shuffle_2->setToggleState(
+            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE),
+            dontSendNotification);
+        toggle_arp_switchs_2->setToggleState(
+            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS),
+            dontSendNotification);
+        toggle_eq_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::EQ),
+                                    dontSendNotification);
     }
 
     // MORPH 3
     {
-        const Array< int >& selections_3 = DATA( synth_data ).get_active_morph_selections( 2 );
-        toggle_all_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ALL), dontSendNotification );
-        toggle_main_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::MAIN), dontSendNotification );
-        toggle_filters_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FILTERS), dontSendNotification );
-        toggle_filter_1_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_1), dontSendNotification );
-        toggle_filter_2_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_2), dontSendNotification );
-        toggle_filter_3_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_3), dontSendNotification );
-        toggle_oscs_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::OSCS), dontSendNotification );
-        toggle_osc_1_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_1), dontSendNotification );
-        toggle_osc_2_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_2), dontSendNotification );
-        toggle_osc_3_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_3), dontSendNotification );
-        toggle_fm_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FM), dontSendNotification );
-        toggle_effects_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FX), dontSendNotification );
-        toggle_arp_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ARP), dontSendNotification );
-        toggle_arp_notes_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE), dontSendNotification );
-        toggle_arp_velocity_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY), dontSendNotification );
-        toggle_arp_glide_shuffle_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE), dontSendNotification );
-        toggle_arp_switchs_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS), dontSendNotification );
-        toggle_eq_3->setToggleState( selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::EQ), dontSendNotification );
+        const Array<int> &selections_3 = DATA(synth_data).get_active_morph_selections(2);
+        toggle_all_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ALL),
+                                     dontSendNotification);
+        toggle_main_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::MAIN),
+                                      dontSendNotification);
+        toggle_filters_3->setToggleState(
+            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FILTERS), dontSendNotification);
+        toggle_filter_1_3->setToggleState(
+            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_1), dontSendNotification);
+        toggle_filter_2_3->setToggleState(
+            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_2), dontSendNotification);
+        toggle_filter_3_3->setToggleState(
+            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_3), dontSendNotification);
+        toggle_oscs_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::OSCS),
+                                      dontSendNotification);
+        toggle_osc_1_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_1),
+                                       dontSendNotification);
+        toggle_osc_2_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_2),
+                                       dontSendNotification);
+        toggle_osc_3_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_3),
+                                       dontSendNotification);
+        toggle_fm_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FM),
+                                    dontSendNotification);
+        toggle_effects_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FX),
+                                         dontSendNotification);
+        toggle_arp_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ARP),
+                                     dontSendNotification);
+        toggle_arp_notes_3->setToggleState(
+            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE), dontSendNotification);
+        toggle_arp_velocity_3->setToggleState(
+            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY),
+            dontSendNotification);
+        toggle_arp_glide_shuffle_3->setToggleState(
+            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE),
+            dontSendNotification);
+        toggle_arp_switchs_3->setToggleState(
+            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS),
+            dontSendNotification);
+        toggle_eq_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::EQ),
+                                    dontSendNotification);
     }
 
     // MORPH 4
     {
-        const Array< int >& selections_4 = DATA( synth_data ).get_active_morph_selections( 3 );
-        toggle_all_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ALL), dontSendNotification );
-        toggle_main_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::MAIN), dontSendNotification );
-        toggle_filters_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FILTERS), dontSendNotification );
-        toggle_filter_1_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_1), dontSendNotification );
-        toggle_filter_2_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_2), dontSendNotification );
-        toggle_filter_3_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_3), dontSendNotification );
-        toggle_oscs_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::OSCS), dontSendNotification );
-        toggle_osc_1_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_1), dontSendNotification );
-        toggle_osc_2_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_2), dontSendNotification );
-        toggle_osc_3_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_3), dontSendNotification );
-        toggle_fm_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FM), dontSendNotification );
-        toggle_effects_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FX), dontSendNotification );
-        toggle_arp_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ARP), dontSendNotification );
-        toggle_arp_notes_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE), dontSendNotification );
-        toggle_arp_velocity_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY), dontSendNotification );
-        toggle_arp_glide_shuffle_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE), dontSendNotification );
-        toggle_arp_switchs_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS), dontSendNotification );
-        toggle_eq_4->setToggleState( selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::EQ), dontSendNotification );
+        const Array<int> &selections_4 = DATA(synth_data).get_active_morph_selections(3);
+        toggle_all_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ALL),
+                                     dontSendNotification);
+        toggle_main_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::MAIN),
+                                      dontSendNotification);
+        toggle_filters_4->setToggleState(
+            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FILTERS), dontSendNotification);
+        toggle_filter_1_4->setToggleState(
+            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_1), dontSendNotification);
+        toggle_filter_2_4->setToggleState(
+            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_2), dontSendNotification);
+        toggle_filter_3_4->setToggleState(
+            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_3), dontSendNotification);
+        toggle_oscs_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::OSCS),
+                                      dontSendNotification);
+        toggle_osc_1_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_1),
+                                       dontSendNotification);
+        toggle_osc_2_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_2),
+                                       dontSendNotification);
+        toggle_osc_3_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_3),
+                                       dontSendNotification);
+        toggle_fm_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FM),
+                                    dontSendNotification);
+        toggle_effects_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FX),
+                                         dontSendNotification);
+        toggle_arp_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ARP),
+                                     dontSendNotification);
+        toggle_arp_notes_4->setToggleState(
+            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE), dontSendNotification);
+        toggle_arp_velocity_4->setToggleState(
+            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY),
+            dontSendNotification);
+        toggle_arp_glide_shuffle_4->setToggleState(
+            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE),
+            dontSendNotification);
+        toggle_arp_switchs_4->setToggleState(
+            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS),
+            dontSendNotification);
+        toggle_eq_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::EQ),
+                                    dontSendNotification);
     }
 }
 //[/MiscUserDefs]
 
 //==============================================================================
-UiEditorMorph::UiEditorMorph ()
-    : original_w(350), original_h(720)
+UiEditorMorph::UiEditorMorph() : original_w(350), original_h(720)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    addAndMakeVisible (hit_area_3 = new Component());
-
-    addAndMakeVisible (hit_area_1 = new Component());
-
-    addAndMakeVisible (hit_area_2 = new Component());
-
-    addAndMakeVisible (hit_area_through = new Component());
-
-    addAndMakeVisible (label_g_1 = new Label (String(),
-                                              TRANS("MORPH 1")));
-    label_g_1->setFont (Font (30.00f, Font::plain));
-    label_g_1->setJustificationType (Justification::centred);
-    label_g_1->setEditable (false, false, false);
-    label_g_1->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_g_1->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_g_1->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_1 = new Label (String(),
-                                            TRANS("ALL")));
-    label_1->setFont (Font (30.00f, Font::plain));
-    label_1->setJustificationType (Justification::centredRight);
-    label_1->setEditable (false, false, false);
-    label_1->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_1->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_1->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_2 = new Label (String(),
-                                            TRANS("FILTERS")));
-    label_2->setFont (Font (30.00f, Font::plain));
-    label_2->setJustificationType (Justification::centredRight);
-    label_2->setEditable (false, false, false);
-    label_2->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_2->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_all_1 = new ToggleButton (String()));
-    toggle_all_1->addListener (this);
-
-    addAndMakeVisible (label_3 = new Label (String(),
-                                            TRANS("F1")));
-    label_3->setFont (Font (30.00f, Font::plain));
-    label_3->setJustificationType (Justification::centredRight);
-    label_3->setEditable (false, false, false);
-    label_3->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_3->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_3->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_filters_1 = new ToggleButton (String()));
-    toggle_filters_1->addListener (this);
-
-    addAndMakeVisible (toggle_filter_1_1 = new ToggleButton (String()));
-    toggle_filter_1_1->addListener (this);
-
-    addAndMakeVisible (label_4 = new Label (String(),
-                                            TRANS("F2")));
-    label_4->setFont (Font (30.00f, Font::plain));
-    label_4->setJustificationType (Justification::centredRight);
-    label_4->setEditable (false, false, false);
-    label_4->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_4->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_4->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_filter_2_1 = new ToggleButton (String()));
-    toggle_filter_2_1->addListener (this);
-
-    addAndMakeVisible (label_5 = new Label (String(),
-                                            TRANS("F3")));
-    label_5->setFont (Font (30.00f, Font::plain));
-    label_5->setJustificationType (Justification::centredRight);
-    label_5->setEditable (false, false, false);
-    label_5->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_5->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_5->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_filter_3_1 = new ToggleButton (String()));
-    toggle_filter_3_1->addListener (this);
-
-    addAndMakeVisible (label_6 = new Label (String(),
-                                            TRANS("OSC\'s")));
-    label_6->setFont (Font (30.00f, Font::plain));
-    label_6->setJustificationType (Justification::centredRight);
-    label_6->setEditable (false, false, false);
-    label_6->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_6->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_6->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_7 = new Label (String(),
-                                            TRANS("O1")));
-    label_7->setFont (Font (30.00f, Font::plain));
-    label_7->setJustificationType (Justification::centredRight);
-    label_7->setEditable (false, false, false);
-    label_7->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_7->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_7->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_oscs_1 = new ToggleButton (String()));
-    toggle_oscs_1->addListener (this);
-
-    addAndMakeVisible (toggle_osc_1_1 = new ToggleButton (String()));
-    toggle_osc_1_1->addListener (this);
-
-    addAndMakeVisible (label_8 = new Label (String(),
-                                            TRANS("O2")));
-    label_8->setFont (Font (30.00f, Font::plain));
-    label_8->setJustificationType (Justification::centredRight);
-    label_8->setEditable (false, false, false);
-    label_8->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_8->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_8->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_osc_2_1 = new ToggleButton (String()));
-    toggle_osc_2_1->addListener (this);
-
-    addAndMakeVisible (label_9 = new Label (String(),
-                                            TRANS("O3")));
-    label_9->setFont (Font (30.00f, Font::plain));
-    label_9->setJustificationType (Justification::centredRight);
-    label_9->setEditable (false, false, false);
-    label_9->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_9->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_9->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_osc_3_1 = new ToggleButton (String()));
-    toggle_osc_3_1->addListener (this);
-
-    addAndMakeVisible (label_10 = new Label (String(),
-                                             TRANS("FM")));
-    label_10->setFont (Font (30.00f, Font::plain));
-    label_10->setJustificationType (Justification::centredRight);
-    label_10->setEditable (false, false, false);
-    label_10->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_10->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_10->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_fm_1 = new ToggleButton (String()));
-    toggle_fm_1->addListener (this);
-
-    addAndMakeVisible (label_11 = new Label (String(),
-                                             TRANS("FX")));
-    label_11->setFont (Font (30.00f, Font::plain));
-    label_11->setJustificationType (Justification::centredRight);
-    label_11->setEditable (false, false, false);
-    label_11->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_11->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_11->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_effects_1 = new ToggleButton (String()));
-    toggle_effects_1->addListener (this);
-
-    addAndMakeVisible (label_15 = new Label (String(),
-                                             TRANS("ARP")));
-    label_15->setFont (Font (30.00f, Font::plain));
-    label_15->setJustificationType (Justification::centredRight);
-    label_15->setEditable (false, false, false);
-    label_15->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_15->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_15->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_arp_1 = new ToggleButton (String()));
-    toggle_arp_1->addListener (this);
-
-    addAndMakeVisible (label_16 = new Label (String(),
-                                             TRANS("TUNE")));
-    label_16->setFont (Font (30.00f, Font::plain));
-    label_16->setJustificationType (Justification::centredRight);
-    label_16->setEditable (false, false, false);
-    label_16->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_16->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_16->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_arp_notes_1 = new ToggleButton (String()));
-    toggle_arp_notes_1->addListener (this);
-
-    addAndMakeVisible (label_17 = new Label (String(),
-                                             TRANS("VELOCITY")));
-    label_17->setFont (Font (30.00f, Font::plain));
-    label_17->setJustificationType (Justification::centredRight);
-    label_17->setEditable (false, false, false);
-    label_17->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_17->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_17->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_arp_velocity_1 = new ToggleButton (String()));
-    toggle_arp_velocity_1->addListener (this);
-
-    addAndMakeVisible (label_18 = new Label (String(),
-                                             TRANS("GLIDE/SHFL")));
-    label_18->setFont (Font (30.00f, Font::plain));
-    label_18->setJustificationType (Justification::centredRight);
-    label_18->setEditable (false, false, false);
-    label_18->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_18->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_18->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_arp_glide_shuffle_1 = new ToggleButton (String()));
-    toggle_arp_glide_shuffle_1->addListener (this);
-
-    addAndMakeVisible (label_20 = new Label (String(),
-                                             TRANS("EQ")));
-    label_20->setFont (Font (30.00f, Font::plain));
-    label_20->setJustificationType (Justification::centredRight);
-    label_20->setEditable (false, false, false);
-    label_20->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_20->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_20->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_eq_1 = new ToggleButton (String()));
-    toggle_eq_1->addListener (this);
-
-    addAndMakeVisible (label_g_2 = new Label (String(),
-                                              TRANS("MORPH 2")));
-    label_g_2->setFont (Font (30.00f, Font::plain));
-    label_g_2->setJustificationType (Justification::centred);
-    label_g_2->setEditable (false, false, false);
-    label_g_2->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_g_2->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_g_2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_g_3 = new Label (String(),
-                                              TRANS("MORPH 3")));
-    label_g_3->setFont (Font (30.00f, Font::plain));
-    label_g_3->setJustificationType (Justification::centred);
-    label_g_3->setEditable (false, false, false);
-    label_g_3->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_g_3->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_g_3->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_g_4 = new Label (String(),
-                                              TRANS("MORPH 4")));
-    label_g_4->setFont (Font (30.00f, Font::plain));
-    label_g_4->setJustificationType (Justification::centred);
-    label_g_4->setEditable (false, false, false);
-    label_g_4->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_g_4->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_g_4->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (combo_morph_group_1 = new ComboBox (String()));
-    combo_morph_group_1->setEditableText (true);
-    combo_morph_group_1->setJustificationType (Justification::centredLeft);
-    combo_morph_group_1->setTextWhenNothingSelected (TRANS("PRESET"));
-    combo_morph_group_1->setTextWhenNoChoicesAvailable (TRANS("-"));
-    combo_morph_group_1->addListener (this);
-
-    addAndMakeVisible (combo_morph_group_2 = new ComboBox (String()));
-    combo_morph_group_2->setEditableText (true);
-    combo_morph_group_2->setJustificationType (Justification::centredLeft);
-    combo_morph_group_2->setTextWhenNothingSelected (TRANS("PRESET"));
-    combo_morph_group_2->setTextWhenNoChoicesAvailable (TRANS("-"));
-    combo_morph_group_2->addListener (this);
-
-    addAndMakeVisible (combo_morph_group_3 = new ComboBox (String()));
-    combo_morph_group_3->setEditableText (true);
-    combo_morph_group_3->setJustificationType (Justification::centredLeft);
-    combo_morph_group_3->setTextWhenNothingSelected (TRANS("PRESET"));
-    combo_morph_group_3->setTextWhenNoChoicesAvailable (TRANS("-"));
-    combo_morph_group_3->addListener (this);
-
-    addAndMakeVisible (combo_morph_group_4 = new ComboBox (String()));
-    combo_morph_group_4->setEditableText (true);
-    combo_morph_group_4->setJustificationType (Justification::centredLeft);
-    combo_morph_group_4->setTextWhenNothingSelected (TRANS("PRESET"));
-    combo_morph_group_4->setTextWhenNoChoicesAvailable (TRANS("-"));
-    combo_morph_group_4->addListener (this);
-
-    addAndMakeVisible (combo_morph_group_5 = new ComboBox (String()));
-    combo_morph_group_5->setEditableText (true);
-    combo_morph_group_5->setJustificationType (Justification::centredLeft);
-    combo_morph_group_5->setTextWhenNothingSelected (TRANS("PRESET"));
-    combo_morph_group_5->setTextWhenNoChoicesAvailable (TRANS("-"));
-    combo_morph_group_5->addListener (this);
-
-    addAndMakeVisible (combo_morph_group_6 = new ComboBox (String()));
-    combo_morph_group_6->setEditableText (true);
-    combo_morph_group_6->setJustificationType (Justification::centredLeft);
-    combo_morph_group_6->setTextWhenNothingSelected (TRANS("PRESET"));
-    combo_morph_group_6->setTextWhenNoChoicesAvailable (TRANS("-"));
-    combo_morph_group_6->addListener (this);
-
-    addAndMakeVisible (combo_morph_group_7 = new ComboBox (String()));
-    combo_morph_group_7->setEditableText (true);
-    combo_morph_group_7->setJustificationType (Justification::centredLeft);
-    combo_morph_group_7->setTextWhenNothingSelected (TRANS("PRESET"));
-    combo_morph_group_7->setTextWhenNoChoicesAvailable (TRANS("-"));
-    combo_morph_group_7->addListener (this);
-
-    addAndMakeVisible (combo_morph_group_8 = new ComboBox (String()));
-    combo_morph_group_8->setEditableText (true);
-    combo_morph_group_8->setJustificationType (Justification::centredLeft);
-    combo_morph_group_8->setTextWhenNothingSelected (TRANS("PRESET"));
-    combo_morph_group_8->setTextWhenNoChoicesAvailable (TRANS("-"));
-    combo_morph_group_8->addListener (this);
-
-    addAndMakeVisible (label_19 = new Label (String(),
-                                             TRANS("LOAD LEFT")));
-    label_19->setFont (Font (30.00f, Font::plain));
-    label_19->setJustificationType (Justification::centredLeft);
-    label_19->setEditable (false, false, false);
-    label_19->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_19->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_19->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (label_21 = new Label (String(),
-                                             TRANS("LOAD RIGHT")));
-    label_21->setFont (Font (30.00f, Font::plain));
-    label_21->setJustificationType (Justification::centredLeft);
-    label_21->setEditable (false, false, false);
-    label_21->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_21->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_21->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_all_2 = new ToggleButton (String()));
-    toggle_all_2->addListener (this);
-
-    addAndMakeVisible (toggle_filters_2 = new ToggleButton (String()));
-    toggle_filters_2->addListener (this);
-
-    addAndMakeVisible (toggle_filter_1_2 = new ToggleButton (String()));
-    toggle_filter_1_2->addListener (this);
-
-    addAndMakeVisible (toggle_filter_2_2 = new ToggleButton (String()));
-    toggle_filter_2_2->addListener (this);
-
-    addAndMakeVisible (toggle_filter_3_2 = new ToggleButton (String()));
-    toggle_filter_3_2->addListener (this);
-
-    addAndMakeVisible (toggle_oscs_2 = new ToggleButton (String()));
-    toggle_oscs_2->addListener (this);
-
-    addAndMakeVisible (toggle_osc_1_2 = new ToggleButton (String()));
-    toggle_osc_1_2->addListener (this);
-
-    addAndMakeVisible (toggle_osc_2_2 = new ToggleButton (String()));
-    toggle_osc_2_2->addListener (this);
-
-    addAndMakeVisible (toggle_osc_3_2 = new ToggleButton (String()));
-    toggle_osc_3_2->addListener (this);
-
-    addAndMakeVisible (toggle_fm_2 = new ToggleButton (String()));
-    toggle_fm_2->addListener (this);
-
-    addAndMakeVisible (toggle_effects_2 = new ToggleButton (String()));
-    toggle_effects_2->addListener (this);
-
-    addAndMakeVisible (toggle_arp_2 = new ToggleButton (String()));
-    toggle_arp_2->addListener (this);
-
-    addAndMakeVisible (toggle_arp_notes_2 = new ToggleButton (String()));
-    toggle_arp_notes_2->addListener (this);
-
-    addAndMakeVisible (toggle_arp_velocity_2 = new ToggleButton (String()));
-    toggle_arp_velocity_2->addListener (this);
-
-    addAndMakeVisible (toggle_arp_glide_shuffle_2 = new ToggleButton (String()));
-    toggle_arp_glide_shuffle_2->addListener (this);
-
-    addAndMakeVisible (toggle_eq_2 = new ToggleButton (String()));
-    toggle_eq_2->addListener (this);
-
-    addAndMakeVisible (toggle_all_3 = new ToggleButton (String()));
-    toggle_all_3->addListener (this);
-
-    addAndMakeVisible (toggle_filters_3 = new ToggleButton (String()));
-    toggle_filters_3->addListener (this);
-
-    addAndMakeVisible (toggle_filter_1_3 = new ToggleButton (String()));
-    toggle_filter_1_3->addListener (this);
-
-    addAndMakeVisible (toggle_filter_2_3 = new ToggleButton (String()));
-    toggle_filter_2_3->addListener (this);
-
-    addAndMakeVisible (toggle_filter_3_3 = new ToggleButton (String()));
-    toggle_filter_3_3->addListener (this);
-
-    addAndMakeVisible (toggle_oscs_3 = new ToggleButton (String()));
-    toggle_oscs_3->addListener (this);
-
-    addAndMakeVisible (toggle_osc_1_3 = new ToggleButton (String()));
-    toggle_osc_1_3->addListener (this);
-
-    addAndMakeVisible (toggle_osc_2_3 = new ToggleButton (String()));
-    toggle_osc_2_3->addListener (this);
-
-    addAndMakeVisible (toggle_osc_3_3 = new ToggleButton (String()));
-    toggle_osc_3_3->addListener (this);
-
-    addAndMakeVisible (toggle_fm_3 = new ToggleButton (String()));
-    toggle_fm_3->addListener (this);
-
-    addAndMakeVisible (toggle_effects_3 = new ToggleButton (String()));
-    toggle_effects_3->addListener (this);
-
-    addAndMakeVisible (toggle_arp_3 = new ToggleButton (String()));
-    toggle_arp_3->addListener (this);
-
-    addAndMakeVisible (toggle_arp_notes_3 = new ToggleButton (String()));
-    toggle_arp_notes_3->addListener (this);
-
-    addAndMakeVisible (toggle_arp_velocity_3 = new ToggleButton (String()));
-    toggle_arp_velocity_3->addListener (this);
-
-    addAndMakeVisible (toggle_arp_glide_shuffle_3 = new ToggleButton (String()));
-    toggle_arp_glide_shuffle_3->addListener (this);
-
-    addAndMakeVisible (toggle_eq_3 = new ToggleButton (String()));
-    toggle_eq_3->addListener (this);
-
-    addAndMakeVisible (toggle_all_4 = new ToggleButton (String()));
-    toggle_all_4->addListener (this);
-
-    addAndMakeVisible (toggle_filters_4 = new ToggleButton (String()));
-    toggle_filters_4->addListener (this);
-
-    addAndMakeVisible (toggle_filter_1_4 = new ToggleButton (String()));
-    toggle_filter_1_4->addListener (this);
-
-    addAndMakeVisible (toggle_filter_2_4 = new ToggleButton (String()));
-    toggle_filter_2_4->addListener (this);
-
-    addAndMakeVisible (toggle_filter_3_4 = new ToggleButton (String()));
-    toggle_filter_3_4->addListener (this);
-
-    addAndMakeVisible (toggle_oscs_4 = new ToggleButton (String()));
-    toggle_oscs_4->addListener (this);
-
-    addAndMakeVisible (toggle_osc_1_4 = new ToggleButton (String()));
-    toggle_osc_1_4->addListener (this);
-
-    addAndMakeVisible (toggle_osc_2_4 = new ToggleButton (String()));
-    toggle_osc_2_4->addListener (this);
-
-    addAndMakeVisible (toggle_osc_3_4 = new ToggleButton (String()));
-    toggle_osc_3_4->addListener (this);
-
-    addAndMakeVisible (toggle_fm_4 = new ToggleButton (String()));
-    toggle_fm_4->addListener (this);
-
-    addAndMakeVisible (toggle_effects_4 = new ToggleButton (String()));
-    toggle_effects_4->addListener (this);
-
-    addAndMakeVisible (toggle_arp_4 = new ToggleButton (String()));
-    toggle_arp_4->addListener (this);
-
-    addAndMakeVisible (toggle_arp_notes_4 = new ToggleButton (String()));
-    toggle_arp_notes_4->addListener (this);
-
-    addAndMakeVisible (toggle_arp_velocity_4 = new ToggleButton (String()));
-    toggle_arp_velocity_4->addListener (this);
-
-    addAndMakeVisible (toggle_arp_glide_shuffle_4 = new ToggleButton (String()));
-    toggle_arp_glide_shuffle_4->addListener (this);
-
-    addAndMakeVisible (toggle_eq_4 = new ToggleButton (String()));
-    toggle_eq_4->addListener (this);
-
-    addAndMakeVisible (label_12 = new Label (String(),
-                                             TRANS("MAIN")));
-    label_12->setFont (Font (30.00f, Font::plain));
-    label_12->setJustificationType (Justification::centredRight);
-    label_12->setEditable (false, false, false);
-    label_12->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_12->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_12->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_main_1 = new ToggleButton (String()));
-    toggle_main_1->addListener (this);
-
-    addAndMakeVisible (toggle_main_2 = new ToggleButton (String()));
-    toggle_main_2->addListener (this);
-
-    addAndMakeVisible (toggle_main_3 = new ToggleButton (String()));
-    toggle_main_3->addListener (this);
-
-    addAndMakeVisible (toggle_main_4 = new ToggleButton (String()));
-    toggle_main_4->addListener (this);
-
-    addAndMakeVisible (label_13 = new Label (String(),
-                                             TRANS("SET LEFT")));
-    label_13->setFont (Font (30.00f, Font::plain));
-    label_13->setJustificationType (Justification::centredLeft);
-    label_13->setEditable (false, false, false);
-    label_13->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_13->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_13->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (button_set_left_1 = new TextButton (String()));
-    button_set_left_1->setButtonText (TRANS("CURRENT"));
-    button_set_left_1->addListener (this);
-    button_set_left_1->setColour (TextButton::buttonColourId, Colours::black);
-    button_set_left_1->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_set_left_1->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_set_left_2 = new TextButton (String()));
-    button_set_left_2->setButtonText (TRANS("CURRENT"));
-    button_set_left_2->addListener (this);
-    button_set_left_2->setColour (TextButton::buttonColourId, Colours::black);
-    button_set_left_2->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_set_left_2->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_set_left_3 = new TextButton (String()));
-    button_set_left_3->setButtonText (TRANS("CURRENT"));
-    button_set_left_3->addListener (this);
-    button_set_left_3->setColour (TextButton::buttonColourId, Colours::black);
-    button_set_left_3->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_set_left_3->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_set_left_4 = new TextButton (String()));
-    button_set_left_4->setButtonText (TRANS("CURRENT"));
-    button_set_left_4->addListener (this);
-    button_set_left_4->setColour (TextButton::buttonColourId, Colours::black);
-    button_set_left_4->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_set_left_4->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (label_14 = new Label (String(),
-                                             TRANS("SET RIGHT")));
-    label_14->setFont (Font (30.00f, Font::plain));
-    label_14->setJustificationType (Justification::centredLeft);
-    label_14->setEditable (false, false, false);
-    label_14->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_14->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_14->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (button_set_right_1 = new TextButton (String()));
-    button_set_right_1->setButtonText (TRANS("CURRENT"));
-    button_set_right_1->addListener (this);
-    button_set_right_1->setColour (TextButton::buttonColourId, Colours::black);
-    button_set_right_1->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_set_right_1->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_set_right_2 = new TextButton (String()));
-    button_set_right_2->setButtonText (TRANS("CURRENT"));
-    button_set_right_2->addListener (this);
-    button_set_right_2->setColour (TextButton::buttonColourId, Colours::black);
-    button_set_right_2->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_set_right_2->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_set_right_3 = new TextButton (String()));
-    button_set_right_3->setButtonText (TRANS("CURRENT"));
-    button_set_right_3->addListener (this);
-    button_set_right_3->setColour (TextButton::buttonColourId, Colours::black);
-    button_set_right_3->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_set_right_3->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_set_right_4 = new TextButton (String()));
-    button_set_right_4->setButtonText (TRANS("CURRENT"));
-    button_set_right_4->addListener (this);
-    button_set_right_4->setColour (TextButton::buttonColourId, Colours::black);
-    button_set_right_4->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_set_right_4->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (button_set_all_from_current = new TextButton (String()));
-    button_set_all_from_current->setButtonText (TRANS("SET ALL TO CURRENT"));
-    button_set_all_from_current->addListener (this);
-    button_set_all_from_current->setColour (TextButton::buttonColourId, Colours::black);
-    button_set_all_from_current->setColour (TextButton::textColourOnId, Colour (0xffff3b00));
-    button_set_all_from_current->setColour (TextButton::textColourOffId, Colours::yellow);
-
-    addAndMakeVisible (track_pad = new UiDragPad());
-
-    addAndMakeVisible (label_23 = new Label (String(),
-                                             TRANS("SWITCHS")));
-    label_23->setFont (Font (30.00f, Font::plain));
-    label_23->setJustificationType (Justification::centredRight);
-    label_23->setEditable (false, false, false);
-    label_23->setColour (Label::textColourId, Colour (0xffff3b00));
-    label_23->setColour (TextEditor::textColourId, Colour (0xffff3b00));
-    label_23->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (toggle_arp_switchs_1 = new ToggleButton (String()));
-    toggle_arp_switchs_1->addListener (this);
-
-    addAndMakeVisible (toggle_arp_switchs_2 = new ToggleButton (String()));
-    toggle_arp_switchs_2->addListener (this);
-
-    addAndMakeVisible (toggle_arp_switchs_3 = new ToggleButton (String()));
-    toggle_arp_switchs_3->addListener (this);
-
-    addAndMakeVisible (toggle_arp_switchs_4 = new ToggleButton (String()));
-    toggle_arp_switchs_4->addListener (this);
-
-    addAndMakeVisible (close = new TextButton (String()));
-    close->setButtonText (TRANS("ESC X"));
-    close->addListener (this);
-    close->setColour (TextButton::buttonColourId, Colours::red);
-    close->setColour (TextButton::buttonOnColourId, Colours::red);
-    close->setColour (TextButton::textColourOnId, Colours::black);
-    close->setColour (TextButton::textColourOffId, Colours::black);
-
+    addAndMakeVisible(hit_area_3 = new Component());
+
+    addAndMakeVisible(hit_area_1 = new Component());
+
+    addAndMakeVisible(hit_area_2 = new Component());
+
+    addAndMakeVisible(hit_area_through = new Component());
+
+    addAndMakeVisible(label_g_1 = new Label(String(), TRANS("MORPH 1")));
+    label_g_1->setFont(Font(30.00f, Font::plain));
+    label_g_1->setJustificationType(Justification::centred);
+    label_g_1->setEditable(false, false, false);
+    label_g_1->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_g_1->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_g_1->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_1 = new Label(String(), TRANS("ALL")));
+    label_1->setFont(Font(30.00f, Font::plain));
+    label_1->setJustificationType(Justification::centredRight);
+    label_1->setEditable(false, false, false);
+    label_1->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_1->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_1->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_2 = new Label(String(), TRANS("FILTERS")));
+    label_2->setFont(Font(30.00f, Font::plain));
+    label_2->setJustificationType(Justification::centredRight);
+    label_2->setEditable(false, false, false);
+    label_2->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_2->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_all_1 = new ToggleButton(String()));
+    toggle_all_1->addListener(this);
+
+    addAndMakeVisible(label_3 = new Label(String(), TRANS("F1")));
+    label_3->setFont(Font(30.00f, Font::plain));
+    label_3->setJustificationType(Justification::centredRight);
+    label_3->setEditable(false, false, false);
+    label_3->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_3->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_filters_1 = new ToggleButton(String()));
+    toggle_filters_1->addListener(this);
+
+    addAndMakeVisible(toggle_filter_1_1 = new ToggleButton(String()));
+    toggle_filter_1_1->addListener(this);
+
+    addAndMakeVisible(label_4 = new Label(String(), TRANS("F2")));
+    label_4->setFont(Font(30.00f, Font::plain));
+    label_4->setJustificationType(Justification::centredRight);
+    label_4->setEditable(false, false, false);
+    label_4->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_4->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_4->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_filter_2_1 = new ToggleButton(String()));
+    toggle_filter_2_1->addListener(this);
+
+    addAndMakeVisible(label_5 = new Label(String(), TRANS("F3")));
+    label_5->setFont(Font(30.00f, Font::plain));
+    label_5->setJustificationType(Justification::centredRight);
+    label_5->setEditable(false, false, false);
+    label_5->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_5->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_5->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_filter_3_1 = new ToggleButton(String()));
+    toggle_filter_3_1->addListener(this);
+
+    addAndMakeVisible(label_6 = new Label(String(), TRANS("OSC\'s")));
+    label_6->setFont(Font(30.00f, Font::plain));
+    label_6->setJustificationType(Justification::centredRight);
+    label_6->setEditable(false, false, false);
+    label_6->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_6->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_6->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_7 = new Label(String(), TRANS("O1")));
+    label_7->setFont(Font(30.00f, Font::plain));
+    label_7->setJustificationType(Justification::centredRight);
+    label_7->setEditable(false, false, false);
+    label_7->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_7->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_7->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_oscs_1 = new ToggleButton(String()));
+    toggle_oscs_1->addListener(this);
+
+    addAndMakeVisible(toggle_osc_1_1 = new ToggleButton(String()));
+    toggle_osc_1_1->addListener(this);
+
+    addAndMakeVisible(label_8 = new Label(String(), TRANS("O2")));
+    label_8->setFont(Font(30.00f, Font::plain));
+    label_8->setJustificationType(Justification::centredRight);
+    label_8->setEditable(false, false, false);
+    label_8->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_8->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_8->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_osc_2_1 = new ToggleButton(String()));
+    toggle_osc_2_1->addListener(this);
+
+    addAndMakeVisible(label_9 = new Label(String(), TRANS("O3")));
+    label_9->setFont(Font(30.00f, Font::plain));
+    label_9->setJustificationType(Justification::centredRight);
+    label_9->setEditable(false, false, false);
+    label_9->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_9->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_9->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_osc_3_1 = new ToggleButton(String()));
+    toggle_osc_3_1->addListener(this);
+
+    addAndMakeVisible(label_10 = new Label(String(), TRANS("FM")));
+    label_10->setFont(Font(30.00f, Font::plain));
+    label_10->setJustificationType(Justification::centredRight);
+    label_10->setEditable(false, false, false);
+    label_10->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_10->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_10->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_fm_1 = new ToggleButton(String()));
+    toggle_fm_1->addListener(this);
+
+    addAndMakeVisible(label_11 = new Label(String(), TRANS("FX")));
+    label_11->setFont(Font(30.00f, Font::plain));
+    label_11->setJustificationType(Justification::centredRight);
+    label_11->setEditable(false, false, false);
+    label_11->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_11->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_11->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_effects_1 = new ToggleButton(String()));
+    toggle_effects_1->addListener(this);
+
+    addAndMakeVisible(label_15 = new Label(String(), TRANS("ARP")));
+    label_15->setFont(Font(30.00f, Font::plain));
+    label_15->setJustificationType(Justification::centredRight);
+    label_15->setEditable(false, false, false);
+    label_15->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_15->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_15->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_arp_1 = new ToggleButton(String()));
+    toggle_arp_1->addListener(this);
+
+    addAndMakeVisible(label_16 = new Label(String(), TRANS("TUNE")));
+    label_16->setFont(Font(30.00f, Font::plain));
+    label_16->setJustificationType(Justification::centredRight);
+    label_16->setEditable(false, false, false);
+    label_16->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_16->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_16->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_arp_notes_1 = new ToggleButton(String()));
+    toggle_arp_notes_1->addListener(this);
+
+    addAndMakeVisible(label_17 = new Label(String(), TRANS("VELOCITY")));
+    label_17->setFont(Font(30.00f, Font::plain));
+    label_17->setJustificationType(Justification::centredRight);
+    label_17->setEditable(false, false, false);
+    label_17->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_17->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_17->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_arp_velocity_1 = new ToggleButton(String()));
+    toggle_arp_velocity_1->addListener(this);
+
+    addAndMakeVisible(label_18 = new Label(String(), TRANS("GLIDE/SHFL")));
+    label_18->setFont(Font(30.00f, Font::plain));
+    label_18->setJustificationType(Justification::centredRight);
+    label_18->setEditable(false, false, false);
+    label_18->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_18->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_18->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_arp_glide_shuffle_1 = new ToggleButton(String()));
+    toggle_arp_glide_shuffle_1->addListener(this);
+
+    addAndMakeVisible(label_20 = new Label(String(), TRANS("EQ")));
+    label_20->setFont(Font(30.00f, Font::plain));
+    label_20->setJustificationType(Justification::centredRight);
+    label_20->setEditable(false, false, false);
+    label_20->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_20->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_20->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_eq_1 = new ToggleButton(String()));
+    toggle_eq_1->addListener(this);
+
+    addAndMakeVisible(label_g_2 = new Label(String(), TRANS("MORPH 2")));
+    label_g_2->setFont(Font(30.00f, Font::plain));
+    label_g_2->setJustificationType(Justification::centred);
+    label_g_2->setEditable(false, false, false);
+    label_g_2->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_g_2->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_g_2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_g_3 = new Label(String(), TRANS("MORPH 3")));
+    label_g_3->setFont(Font(30.00f, Font::plain));
+    label_g_3->setJustificationType(Justification::centred);
+    label_g_3->setEditable(false, false, false);
+    label_g_3->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_g_3->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_g_3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_g_4 = new Label(String(), TRANS("MORPH 4")));
+    label_g_4->setFont(Font(30.00f, Font::plain));
+    label_g_4->setJustificationType(Justification::centred);
+    label_g_4->setEditable(false, false, false);
+    label_g_4->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_g_4->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_g_4->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(combo_morph_group_1 = new ComboBox(String()));
+    combo_morph_group_1->setEditableText(true);
+    combo_morph_group_1->setJustificationType(Justification::centredLeft);
+    combo_morph_group_1->setTextWhenNothingSelected(TRANS("PRESET"));
+    combo_morph_group_1->setTextWhenNoChoicesAvailable(TRANS("-"));
+    combo_morph_group_1->addListener(this);
+
+    addAndMakeVisible(combo_morph_group_2 = new ComboBox(String()));
+    combo_morph_group_2->setEditableText(true);
+    combo_morph_group_2->setJustificationType(Justification::centredLeft);
+    combo_morph_group_2->setTextWhenNothingSelected(TRANS("PRESET"));
+    combo_morph_group_2->setTextWhenNoChoicesAvailable(TRANS("-"));
+    combo_morph_group_2->addListener(this);
+
+    addAndMakeVisible(combo_morph_group_3 = new ComboBox(String()));
+    combo_morph_group_3->setEditableText(true);
+    combo_morph_group_3->setJustificationType(Justification::centredLeft);
+    combo_morph_group_3->setTextWhenNothingSelected(TRANS("PRESET"));
+    combo_morph_group_3->setTextWhenNoChoicesAvailable(TRANS("-"));
+    combo_morph_group_3->addListener(this);
+
+    addAndMakeVisible(combo_morph_group_4 = new ComboBox(String()));
+    combo_morph_group_4->setEditableText(true);
+    combo_morph_group_4->setJustificationType(Justification::centredLeft);
+    combo_morph_group_4->setTextWhenNothingSelected(TRANS("PRESET"));
+    combo_morph_group_4->setTextWhenNoChoicesAvailable(TRANS("-"));
+    combo_morph_group_4->addListener(this);
+
+    addAndMakeVisible(combo_morph_group_5 = new ComboBox(String()));
+    combo_morph_group_5->setEditableText(true);
+    combo_morph_group_5->setJustificationType(Justification::centredLeft);
+    combo_morph_group_5->setTextWhenNothingSelected(TRANS("PRESET"));
+    combo_morph_group_5->setTextWhenNoChoicesAvailable(TRANS("-"));
+    combo_morph_group_5->addListener(this);
+
+    addAndMakeVisible(combo_morph_group_6 = new ComboBox(String()));
+    combo_morph_group_6->setEditableText(true);
+    combo_morph_group_6->setJustificationType(Justification::centredLeft);
+    combo_morph_group_6->setTextWhenNothingSelected(TRANS("PRESET"));
+    combo_morph_group_6->setTextWhenNoChoicesAvailable(TRANS("-"));
+    combo_morph_group_6->addListener(this);
+
+    addAndMakeVisible(combo_morph_group_7 = new ComboBox(String()));
+    combo_morph_group_7->setEditableText(true);
+    combo_morph_group_7->setJustificationType(Justification::centredLeft);
+    combo_morph_group_7->setTextWhenNothingSelected(TRANS("PRESET"));
+    combo_morph_group_7->setTextWhenNoChoicesAvailable(TRANS("-"));
+    combo_morph_group_7->addListener(this);
+
+    addAndMakeVisible(combo_morph_group_8 = new ComboBox(String()));
+    combo_morph_group_8->setEditableText(true);
+    combo_morph_group_8->setJustificationType(Justification::centredLeft);
+    combo_morph_group_8->setTextWhenNothingSelected(TRANS("PRESET"));
+    combo_morph_group_8->setTextWhenNoChoicesAvailable(TRANS("-"));
+    combo_morph_group_8->addListener(this);
+
+    addAndMakeVisible(label_19 = new Label(String(), TRANS("LOAD LEFT")));
+    label_19->setFont(Font(30.00f, Font::plain));
+    label_19->setJustificationType(Justification::centredLeft);
+    label_19->setEditable(false, false, false);
+    label_19->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_19->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_19->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(label_21 = new Label(String(), TRANS("LOAD RIGHT")));
+    label_21->setFont(Font(30.00f, Font::plain));
+    label_21->setJustificationType(Justification::centredLeft);
+    label_21->setEditable(false, false, false);
+    label_21->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_21->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_21->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_all_2 = new ToggleButton(String()));
+    toggle_all_2->addListener(this);
+
+    addAndMakeVisible(toggle_filters_2 = new ToggleButton(String()));
+    toggle_filters_2->addListener(this);
+
+    addAndMakeVisible(toggle_filter_1_2 = new ToggleButton(String()));
+    toggle_filter_1_2->addListener(this);
+
+    addAndMakeVisible(toggle_filter_2_2 = new ToggleButton(String()));
+    toggle_filter_2_2->addListener(this);
+
+    addAndMakeVisible(toggle_filter_3_2 = new ToggleButton(String()));
+    toggle_filter_3_2->addListener(this);
+
+    addAndMakeVisible(toggle_oscs_2 = new ToggleButton(String()));
+    toggle_oscs_2->addListener(this);
+
+    addAndMakeVisible(toggle_osc_1_2 = new ToggleButton(String()));
+    toggle_osc_1_2->addListener(this);
+
+    addAndMakeVisible(toggle_osc_2_2 = new ToggleButton(String()));
+    toggle_osc_2_2->addListener(this);
+
+    addAndMakeVisible(toggle_osc_3_2 = new ToggleButton(String()));
+    toggle_osc_3_2->addListener(this);
+
+    addAndMakeVisible(toggle_fm_2 = new ToggleButton(String()));
+    toggle_fm_2->addListener(this);
+
+    addAndMakeVisible(toggle_effects_2 = new ToggleButton(String()));
+    toggle_effects_2->addListener(this);
+
+    addAndMakeVisible(toggle_arp_2 = new ToggleButton(String()));
+    toggle_arp_2->addListener(this);
+
+    addAndMakeVisible(toggle_arp_notes_2 = new ToggleButton(String()));
+    toggle_arp_notes_2->addListener(this);
+
+    addAndMakeVisible(toggle_arp_velocity_2 = new ToggleButton(String()));
+    toggle_arp_velocity_2->addListener(this);
+
+    addAndMakeVisible(toggle_arp_glide_shuffle_2 = new ToggleButton(String()));
+    toggle_arp_glide_shuffle_2->addListener(this);
+
+    addAndMakeVisible(toggle_eq_2 = new ToggleButton(String()));
+    toggle_eq_2->addListener(this);
+
+    addAndMakeVisible(toggle_all_3 = new ToggleButton(String()));
+    toggle_all_3->addListener(this);
+
+    addAndMakeVisible(toggle_filters_3 = new ToggleButton(String()));
+    toggle_filters_3->addListener(this);
+
+    addAndMakeVisible(toggle_filter_1_3 = new ToggleButton(String()));
+    toggle_filter_1_3->addListener(this);
+
+    addAndMakeVisible(toggle_filter_2_3 = new ToggleButton(String()));
+    toggle_filter_2_3->addListener(this);
+
+    addAndMakeVisible(toggle_filter_3_3 = new ToggleButton(String()));
+    toggle_filter_3_3->addListener(this);
+
+    addAndMakeVisible(toggle_oscs_3 = new ToggleButton(String()));
+    toggle_oscs_3->addListener(this);
+
+    addAndMakeVisible(toggle_osc_1_3 = new ToggleButton(String()));
+    toggle_osc_1_3->addListener(this);
+
+    addAndMakeVisible(toggle_osc_2_3 = new ToggleButton(String()));
+    toggle_osc_2_3->addListener(this);
+
+    addAndMakeVisible(toggle_osc_3_3 = new ToggleButton(String()));
+    toggle_osc_3_3->addListener(this);
+
+    addAndMakeVisible(toggle_fm_3 = new ToggleButton(String()));
+    toggle_fm_3->addListener(this);
+
+    addAndMakeVisible(toggle_effects_3 = new ToggleButton(String()));
+    toggle_effects_3->addListener(this);
+
+    addAndMakeVisible(toggle_arp_3 = new ToggleButton(String()));
+    toggle_arp_3->addListener(this);
+
+    addAndMakeVisible(toggle_arp_notes_3 = new ToggleButton(String()));
+    toggle_arp_notes_3->addListener(this);
+
+    addAndMakeVisible(toggle_arp_velocity_3 = new ToggleButton(String()));
+    toggle_arp_velocity_3->addListener(this);
+
+    addAndMakeVisible(toggle_arp_glide_shuffle_3 = new ToggleButton(String()));
+    toggle_arp_glide_shuffle_3->addListener(this);
+
+    addAndMakeVisible(toggle_eq_3 = new ToggleButton(String()));
+    toggle_eq_3->addListener(this);
+
+    addAndMakeVisible(toggle_all_4 = new ToggleButton(String()));
+    toggle_all_4->addListener(this);
+
+    addAndMakeVisible(toggle_filters_4 = new ToggleButton(String()));
+    toggle_filters_4->addListener(this);
+
+    addAndMakeVisible(toggle_filter_1_4 = new ToggleButton(String()));
+    toggle_filter_1_4->addListener(this);
+
+    addAndMakeVisible(toggle_filter_2_4 = new ToggleButton(String()));
+    toggle_filter_2_4->addListener(this);
+
+    addAndMakeVisible(toggle_filter_3_4 = new ToggleButton(String()));
+    toggle_filter_3_4->addListener(this);
+
+    addAndMakeVisible(toggle_oscs_4 = new ToggleButton(String()));
+    toggle_oscs_4->addListener(this);
+
+    addAndMakeVisible(toggle_osc_1_4 = new ToggleButton(String()));
+    toggle_osc_1_4->addListener(this);
+
+    addAndMakeVisible(toggle_osc_2_4 = new ToggleButton(String()));
+    toggle_osc_2_4->addListener(this);
+
+    addAndMakeVisible(toggle_osc_3_4 = new ToggleButton(String()));
+    toggle_osc_3_4->addListener(this);
+
+    addAndMakeVisible(toggle_fm_4 = new ToggleButton(String()));
+    toggle_fm_4->addListener(this);
+
+    addAndMakeVisible(toggle_effects_4 = new ToggleButton(String()));
+    toggle_effects_4->addListener(this);
+
+    addAndMakeVisible(toggle_arp_4 = new ToggleButton(String()));
+    toggle_arp_4->addListener(this);
+
+    addAndMakeVisible(toggle_arp_notes_4 = new ToggleButton(String()));
+    toggle_arp_notes_4->addListener(this);
+
+    addAndMakeVisible(toggle_arp_velocity_4 = new ToggleButton(String()));
+    toggle_arp_velocity_4->addListener(this);
+
+    addAndMakeVisible(toggle_arp_glide_shuffle_4 = new ToggleButton(String()));
+    toggle_arp_glide_shuffle_4->addListener(this);
+
+    addAndMakeVisible(toggle_eq_4 = new ToggleButton(String()));
+    toggle_eq_4->addListener(this);
+
+    addAndMakeVisible(label_12 = new Label(String(), TRANS("MAIN")));
+    label_12->setFont(Font(30.00f, Font::plain));
+    label_12->setJustificationType(Justification::centredRight);
+    label_12->setEditable(false, false, false);
+    label_12->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_12->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_12->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_main_1 = new ToggleButton(String()));
+    toggle_main_1->addListener(this);
+
+    addAndMakeVisible(toggle_main_2 = new ToggleButton(String()));
+    toggle_main_2->addListener(this);
+
+    addAndMakeVisible(toggle_main_3 = new ToggleButton(String()));
+    toggle_main_3->addListener(this);
+
+    addAndMakeVisible(toggle_main_4 = new ToggleButton(String()));
+    toggle_main_4->addListener(this);
+
+    addAndMakeVisible(label_13 = new Label(String(), TRANS("SET LEFT")));
+    label_13->setFont(Font(30.00f, Font::plain));
+    label_13->setJustificationType(Justification::centredLeft);
+    label_13->setEditable(false, false, false);
+    label_13->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_13->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_13->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(button_set_left_1 = new TextButton(String()));
+    button_set_left_1->setButtonText(TRANS("CURRENT"));
+    button_set_left_1->addListener(this);
+    button_set_left_1->setColour(TextButton::buttonColourId, Colours::black);
+    button_set_left_1->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_set_left_1->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_set_left_2 = new TextButton(String()));
+    button_set_left_2->setButtonText(TRANS("CURRENT"));
+    button_set_left_2->addListener(this);
+    button_set_left_2->setColour(TextButton::buttonColourId, Colours::black);
+    button_set_left_2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_set_left_2->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_set_left_3 = new TextButton(String()));
+    button_set_left_3->setButtonText(TRANS("CURRENT"));
+    button_set_left_3->addListener(this);
+    button_set_left_3->setColour(TextButton::buttonColourId, Colours::black);
+    button_set_left_3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_set_left_3->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_set_left_4 = new TextButton(String()));
+    button_set_left_4->setButtonText(TRANS("CURRENT"));
+    button_set_left_4->addListener(this);
+    button_set_left_4->setColour(TextButton::buttonColourId, Colours::black);
+    button_set_left_4->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_set_left_4->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(label_14 = new Label(String(), TRANS("SET RIGHT")));
+    label_14->setFont(Font(30.00f, Font::plain));
+    label_14->setJustificationType(Justification::centredLeft);
+    label_14->setEditable(false, false, false);
+    label_14->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_14->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_14->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(button_set_right_1 = new TextButton(String()));
+    button_set_right_1->setButtonText(TRANS("CURRENT"));
+    button_set_right_1->addListener(this);
+    button_set_right_1->setColour(TextButton::buttonColourId, Colours::black);
+    button_set_right_1->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_set_right_1->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_set_right_2 = new TextButton(String()));
+    button_set_right_2->setButtonText(TRANS("CURRENT"));
+    button_set_right_2->addListener(this);
+    button_set_right_2->setColour(TextButton::buttonColourId, Colours::black);
+    button_set_right_2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_set_right_2->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_set_right_3 = new TextButton(String()));
+    button_set_right_3->setButtonText(TRANS("CURRENT"));
+    button_set_right_3->addListener(this);
+    button_set_right_3->setColour(TextButton::buttonColourId, Colours::black);
+    button_set_right_3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_set_right_3->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_set_right_4 = new TextButton(String()));
+    button_set_right_4->setButtonText(TRANS("CURRENT"));
+    button_set_right_4->addListener(this);
+    button_set_right_4->setColour(TextButton::buttonColourId, Colours::black);
+    button_set_right_4->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_set_right_4->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(button_set_all_from_current = new TextButton(String()));
+    button_set_all_from_current->setButtonText(TRANS("SET ALL TO CURRENT"));
+    button_set_all_from_current->addListener(this);
+    button_set_all_from_current->setColour(TextButton::buttonColourId, Colours::black);
+    button_set_all_from_current->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
+    button_set_all_from_current->setColour(TextButton::textColourOffId, Colours::yellow);
+
+    addAndMakeVisible(track_pad = new UiDragPad());
+
+    addAndMakeVisible(label_23 = new Label(String(), TRANS("SWITCHS")));
+    label_23->setFont(Font(30.00f, Font::plain));
+    label_23->setJustificationType(Justification::centredRight);
+    label_23->setEditable(false, false, false);
+    label_23->setColour(Label::textColourId, Colour(0xffff3b00));
+    label_23->setColour(TextEditor::textColourId, Colour(0xffff3b00));
+    label_23->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    addAndMakeVisible(toggle_arp_switchs_1 = new ToggleButton(String()));
+    toggle_arp_switchs_1->addListener(this);
+
+    addAndMakeVisible(toggle_arp_switchs_2 = new ToggleButton(String()));
+    toggle_arp_switchs_2->addListener(this);
+
+    addAndMakeVisible(toggle_arp_switchs_3 = new ToggleButton(String()));
+    toggle_arp_switchs_3->addListener(this);
+
+    addAndMakeVisible(toggle_arp_switchs_4 = new ToggleButton(String()));
+    toggle_arp_switchs_4->addListener(this);
+
+    addAndMakeVisible(close = new TextButton(String()));
+    close->setButtonText(TRANS("ESC X"));
+    close->addListener(this);
+    close->setColour(TextButton::buttonColourId, Colours::red);
+    close->setColour(TextButton::buttonOnColourId, Colours::red);
+    close->setColour(TextButton::textColourOnId, Colours::black);
+    close->setColour(TextButton::textColourOffId, Colours::black);
 
     //[UserPreSize]
-    this->setInterceptsMouseClicks( false, true );
-    hit_area_through->setInterceptsMouseClicks( false, false );
+    this->setInterceptsMouseClicks(false, true);
+    hit_area_through->setInterceptsMouseClicks(false, false);
 
     Colour button_off = UiLookAndFeel::getInstance()->colours.button_off_colour;
-    button_set_left_1->setColour( TextButton::buttonColourId, button_off );
-    button_set_left_2->setColour( TextButton::buttonColourId, button_off );
-    button_set_left_3->setColour( TextButton::buttonColourId, button_off );
-    button_set_left_4->setColour( TextButton::buttonColourId, button_off );
-    button_set_right_1->setColour( TextButton::buttonColourId, button_off );
-    button_set_right_2->setColour( TextButton::buttonColourId, button_off );
-    button_set_right_3->setColour( TextButton::buttonColourId, button_off );
-    button_set_right_4->setColour( TextButton::buttonColourId, button_off );
-    button_set_all_from_current->setColour( TextButton::buttonColourId, button_off );
+    button_set_left_1->setColour(TextButton::buttonColourId, button_off);
+    button_set_left_2->setColour(TextButton::buttonColourId, button_off);
+    button_set_left_3->setColour(TextButton::buttonColourId, button_off);
+    button_set_left_4->setColour(TextButton::buttonColourId, button_off);
+    button_set_right_1->setColour(TextButton::buttonColourId, button_off);
+    button_set_right_2->setColour(TextButton::buttonColourId, button_off);
+    button_set_right_3->setColour(TextButton::buttonColourId, button_off);
+    button_set_right_4->setColour(TextButton::buttonColourId, button_off);
+    button_set_all_from_current->setColour(TextButton::buttonColourId, button_off);
 
-    Array< ComboBox* > morph_combos;
-    morph_combos.add( combo_morph_group_1 );
-    morph_combos.add( combo_morph_group_2 );
-    morph_combos.add( combo_morph_group_3 );
-    morph_combos.add( combo_morph_group_4 );
-    morph_combos.add( combo_morph_group_5 );
-    morph_combos.add( combo_morph_group_6 );
-    morph_combos.add( combo_morph_group_7 );
-    morph_combos.add( combo_morph_group_8 );
-    for( int i = 0 ; i != morph_combos.size() ; ++i ) {
-        ComboBox* box = morph_combos.getUnchecked(i);
-        for( int bank_id = 0 ; bank_id != 4 ; ++bank_id )
+    Array<ComboBox *> morph_combos;
+    morph_combos.add(combo_morph_group_1);
+    morph_combos.add(combo_morph_group_2);
+    morph_combos.add(combo_morph_group_3);
+    morph_combos.add(combo_morph_group_4);
+    morph_combos.add(combo_morph_group_5);
+    morph_combos.add(combo_morph_group_6);
+    morph_combos.add(combo_morph_group_7);
+    morph_combos.add(combo_morph_group_8);
+    for (int i = 0; i != morph_combos.size(); ++i)
+    {
+        ComboBox *box = morph_combos.getUnchecked(i);
+        for (int bank_id = 0; bank_id != 4; ++bank_id)
         {
             String bank = bank_id == 0 ? "A" : bank_id == 1 ? "B" : bank_id == 2 ? "C" : "D";
-            if( i > 3 )
-                box->addSectionHeading(String("Load programm to LEFT from bank: ")+bank);
+            if (i > 3)
+                box->addSectionHeading(String("Load programm to LEFT from bank: ") + bank);
             else
-                box->addSectionHeading(String("Load programm to RIGHT from bank: ")+bank);
-            StringArray morph_program_names( DATA( synth_data ).get_programms( bank_id ) );
+                box->addSectionHeading(String("Load programm to RIGHT from bank: ") + bank);
+            StringArray morph_program_names(DATA(synth_data).get_programms(bank_id));
 
-            int start_index = box->getNumItems()+1;
-            box->addItemList( morph_program_names, start_index );
+            int start_index = box->getNumItems() + 1;
+            box->addItemList(morph_program_names, start_index);
 
-            if( i == 0 )
-                bank_start_indexs.add( start_index );
+            if (i == 0)
+                bank_start_indexs.add(start_index);
         }
 
-        box->setSelectedItemIndex(0,dontSendNotification);
+        box->setSelectedItemIndex(0, dontSendNotification);
     }
 
-    for( int i = 0 ; i < getNumChildComponents() ; ++i ) {
+    for (int i = 0; i < getNumChildComponents(); ++i)
+    {
         getChildComponent(i)->setPaintingIsUnclipped(true);
     }
     //[/UserPreSize]
 
-    setSize (350, 720);
-
+    setSize(350, 720);
 
     //[Constructor] You can add your own custom stuff here..
     //[/Constructor]
@@ -904,296 +960,296 @@ UiEditorMorph::~UiEditorMorph()
     toggle_arp_switchs_4 = nullptr;
     close = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiEditorMorph::paint (Graphics& g)
+void UiEditorMorph::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
 #include "UiDynamicSizeStart.h"
     //[/UserPrePaint]
 
-    g.setColour (Colours::black);
-    g.fillRect (0, 0, 350, 480);
+    g.setColour(Colours::black);
+    g.fillRect(0, 0, 350, 480);
 
-    g.setColour (Colours::black);
-    g.fillRect (50, 720 - 110, 300, 110);
+    g.setColour(Colours::black);
+    g.fillRect(50, 720 - 110, 300, 110);
 
-    g.setColour (Colours::black);
-    g.fillRect (0, 720 - 260, 80, 260);
+    g.setColour(Colours::black);
+    g.fillRect(0, 720 - 260, 80, 260);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (106.0f, 40.0f, 1.0f, 273.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(106.0f, 40.0f, 1.0f, 273.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (106.0f, 173.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(106.0f, 173.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (106.0f, 193.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(106.0f, 193.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (106.0f, 93.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(106.0f, 93.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (106.0f, 273.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(106.0f, 273.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (106.0f, 293.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(106.0f, 293.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (106.0f, 313.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(106.0f, 313.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (116.0f, 100.0f, 1.0f, 54.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(116.0f, 100.0f, 1.0f, 54.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (116.0f, 113.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(116.0f, 113.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (116.0f, 133.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(116.0f, 133.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (116.0f, 153.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(116.0f, 153.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (116.0f, 200.0f, 1.0f, 54.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(116.0f, 200.0f, 1.0f, 54.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (116.0f, 233.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(116.0f, 233.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (116.0f, 253.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(116.0f, 253.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (116.0f, 213.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(116.0f, 213.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (115.0f, 320.0f, 1.0f, 74.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(115.0f, 320.0f, 1.0f, 74.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (116.0f, 353.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(116.0f, 353.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (116.0f, 373.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(116.0f, 373.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (116.0f, 333.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(116.0f, 333.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (80.0f, 40.0f, 50.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(80.0f, 40.0f, 50.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (166.0f, 40.0f, 1.0f, 273.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(166.0f, 40.0f, 1.0f, 273.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (166.0f, 173.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(166.0f, 173.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (166.0f, 193.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(166.0f, 193.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (166.0f, 93.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(166.0f, 93.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (166.0f, 273.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(166.0f, 273.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (166.0f, 293.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(166.0f, 293.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (166.0f, 313.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(166.0f, 313.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (176.0f, 100.0f, 1.0f, 54.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(176.0f, 100.0f, 1.0f, 54.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (176.0f, 113.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(176.0f, 113.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (176.0f, 133.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(176.0f, 133.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (176.0f, 153.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(176.0f, 153.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (176.0f, 200.0f, 1.0f, 54.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(176.0f, 200.0f, 1.0f, 54.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (176.0f, 233.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(176.0f, 233.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (176.0f, 253.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(176.0f, 253.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (176.0f, 213.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(176.0f, 213.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (175.0f, 320.0f, 1.0f, 74.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(175.0f, 320.0f, 1.0f, 74.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (176.0f, 353.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(176.0f, 353.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (176.0f, 373.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(176.0f, 373.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (176.0f, 333.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(176.0f, 333.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (140.0f, 40.0f, 50.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(140.0f, 40.0f, 50.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (226.0f, 40.0f, 1.0f, 273.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(226.0f, 40.0f, 1.0f, 273.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (226.0f, 173.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(226.0f, 173.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (226.0f, 193.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(226.0f, 193.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (226.0f, 93.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(226.0f, 93.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (226.0f, 273.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(226.0f, 273.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (226.0f, 293.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(226.0f, 293.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (226.0f, 313.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(226.0f, 313.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (236.0f, 100.0f, 1.0f, 54.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(236.0f, 100.0f, 1.0f, 54.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (236.0f, 113.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(236.0f, 113.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (236.0f, 133.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(236.0f, 133.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (236.0f, 153.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(236.0f, 153.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (236.0f, 200.0f, 1.0f, 54.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(236.0f, 200.0f, 1.0f, 54.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (236.0f, 233.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(236.0f, 233.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (236.0f, 253.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(236.0f, 253.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (236.0f, 213.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(236.0f, 213.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (235.0f, 320.0f, 1.0f, 74.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(235.0f, 320.0f, 1.0f, 74.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (236.0f, 353.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(236.0f, 353.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (236.0f, 373.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(236.0f, 373.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (236.0f, 333.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(236.0f, 333.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (200.0f, 40.0f, 50.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(200.0f, 40.0f, 50.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (286.0f, 40.0f, 1.0f, 273.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(286.0f, 40.0f, 1.0f, 273.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (286.0f, 173.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(286.0f, 173.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (286.0f, 193.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(286.0f, 193.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (286.0f, 93.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(286.0f, 93.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (286.0f, 273.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(286.0f, 273.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (286.0f, 293.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(286.0f, 293.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (286.0f, 313.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(286.0f, 313.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (296.0f, 100.0f, 1.0f, 54.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(296.0f, 100.0f, 1.0f, 54.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (296.0f, 113.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(296.0f, 113.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (296.0f, 133.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(296.0f, 133.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (296.0f, 153.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(296.0f, 153.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (296.0f, 200.0f, 1.0f, 54.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(296.0f, 200.0f, 1.0f, 54.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (296.0f, 233.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(296.0f, 233.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (296.0f, 253.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(296.0f, 253.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (296.0f, 213.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(296.0f, 213.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (295.0f, 320.0f, 1.0f, 74.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(295.0f, 320.0f, 1.0f, 74.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (296.0f, 353.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(296.0f, 353.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (296.0f, 373.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(296.0f, 373.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (296.0f, 333.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(296.0f, 333.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (260.0f, 40.0f, 50.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(260.0f, 40.0f, 50.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (106.0f, 73.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(106.0f, 73.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (166.0f, 73.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(166.0f, 73.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (226.0f, 73.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(226.0f, 73.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (286.0f, 73.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(286.0f, 73.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (116.0f, 393.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(116.0f, 393.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (176.0f, 393.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(176.0f, 393.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (236.0f, 393.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(236.0f, 393.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.fillRoundedRectangle (296.0f, 393.0f, 5.0f, 1.0f, 1.000f);
+    g.setColour(Colour(0xffff3b00));
+    g.fillRoundedRectangle(296.0f, 393.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour (Colour (0xffff3b00));
-    g.strokePath (internalPath1, PathStrokeType (1.000f, PathStrokeType::mitered, PathStrokeType::rounded));
+    g.setColour(Colour(0xffff3b00));
+    g.strokePath(internalPath1,
+                 PathStrokeType(1.000f, PathStrokeType::mitered, PathStrokeType::rounded));
 
-    g.setColour (Colour (0xffff3b00));
-    g.strokePath (internalPath2, PathStrokeType (2.000f));
+    g.setColour(Colour(0xffff3b00));
+    g.strokePath(internalPath2, PathStrokeType(2.000f));
 
     //[UserPaint] Add your own custom painting code here..
 
@@ -1205,147 +1261,147 @@ void UiEditorMorph::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    hit_area_3->setBounds (80, 610, 270, 110);
-    hit_area_1->setBounds (0, 0, 350, 480);
-    hit_area_2->setBounds (0, 480, 80, 220);
-    hit_area_through->setBounds (80, 480, 270, 130);
-    label_g_1->setBounds (75, 10, 60, 30);
-    label_1->setBounds (0, 70 - 30, 50, 30);
-    label_2->setBounds (20, 210 - 30, 50, 30);
-    toggle_all_1->setBounds (100, 45, 30, 20);
-    label_3->setBounds (40, 230 - 30, 50, 30);
-    toggle_filters_1->setBounds (110, 185, 30, 20);
-    toggle_filter_1_1->setBounds (120, 205, 30, 20);
-    label_4->setBounds (40, 250 - 30, 50, 30);
-    toggle_filter_2_1->setBounds (120, 225, 30, 20);
-    label_5->setBounds (40, 270 - 30, 50, 30);
-    toggle_filter_3_1->setBounds (120, 245, 30, 20);
-    label_6->setBounds (20, 110 - 30, 50, 30);
-    label_7->setBounds (40, 130 - 30, 50, 30);
-    toggle_oscs_1->setBounds (110, 85, 30, 20);
-    toggle_osc_1_1->setBounds (120, 105, 30, 20);
-    label_8->setBounds (40, 150 - 30, 50, 30);
-    toggle_osc_2_1->setBounds (120, 125, 29, 20);
-    label_9->setBounds (40, 170 - 30, 50, 30);
-    toggle_osc_3_1->setBounds (120, 145, 30, 20);
-    label_10->setBounds (20, 190 - 30, 50, 30);
-    toggle_fm_1->setBounds (110, 165, 30, 20);
-    label_11->setBounds (20, 310 - 30, 50, 30);
-    toggle_effects_1->setBounds (110, 285, 30, 20);
-    label_15->setBounds (20, 330 - 30, 50, 30);
-    toggle_arp_1->setBounds (110, 305, 30, 20);
-    label_16->setBounds (40, 350 - 30, 50, 30);
-    toggle_arp_notes_1->setBounds (120, 325, 30, 20);
-    label_17->setBounds (40, 370 - 30, 50, 30);
-    toggle_arp_velocity_1->setBounds (120, 345, 30, 20);
-    label_18->setBounds (40, 390 - 30, 50, 30);
-    toggle_arp_glide_shuffle_1->setBounds (120, 365, 30, 20);
-    label_20->setBounds (20, 290 - 30, 50, 30);
-    toggle_eq_1->setBounds (110, 265, 33, 20);
-    label_g_2->setBounds (135, 10, 60, 30);
-    label_g_3->setBounds (195, 10, 60, 30);
-    label_g_4->setBounds (255, 10, 60, 30);
-    combo_morph_group_1->setBounds (150 - 60, 646 - 26, 60, 26);
-    combo_morph_group_2->setBounds (210 - 60, 646 - 26, 60, 26);
-    combo_morph_group_3->setBounds (270 - 60, 646 - 26, 60, 26);
-    combo_morph_group_4->setBounds (330 - 60, 646 - 26, 60, 26);
-    combo_morph_group_5->setBounds (150 - 60, 469 - 26, 60, 26);
-    combo_morph_group_6->setBounds (210 - 60, 469 - 26, 60, 26);
-    combo_morph_group_7->setBounds (270 - 60, 469 - 26, 60, 26);
-    combo_morph_group_8->setBounds (330 - 60, 469 - 26, 60, 26);
-    label_19->setBounds (20, 472 - 29, 70, 29);
-    label_21->setBounds (20, 649 - 29, 70, 29);
-    toggle_all_2->setBounds (160, 45, 30, 20);
-    toggle_filters_2->setBounds (170, 185, 30, 20);
-    toggle_filter_1_2->setBounds (180, 205, 30, 20);
-    toggle_filter_2_2->setBounds (180, 225, 30, 20);
-    toggle_filter_3_2->setBounds (180, 245, 30, 20);
-    toggle_oscs_2->setBounds (170, 85, 30, 20);
-    toggle_osc_1_2->setBounds (180, 105, 30, 20);
-    toggle_osc_2_2->setBounds (180, 125, 29, 20);
-    toggle_osc_3_2->setBounds (180, 145, 30, 20);
-    toggle_fm_2->setBounds (170, 165, 30, 20);
-    toggle_effects_2->setBounds (170, 285, 30, 20);
-    toggle_arp_2->setBounds (170, 305, 30, 20);
-    toggle_arp_notes_2->setBounds (180, 325, 30, 20);
-    toggle_arp_velocity_2->setBounds (180, 345, 30, 20);
-    toggle_arp_glide_shuffle_2->setBounds (180, 365, 30, 20);
-    toggle_eq_2->setBounds (170, 265, 33, 20);
-    toggle_all_3->setBounds (220, 45, 30, 20);
-    toggle_filters_3->setBounds (230, 185, 30, 20);
-    toggle_filter_1_3->setBounds (240, 205, 30, 20);
-    toggle_filter_2_3->setBounds (240, 225, 30, 20);
-    toggle_filter_3_3->setBounds (240, 245, 30, 20);
-    toggle_oscs_3->setBounds (230, 85, 30, 20);
-    toggle_osc_1_3->setBounds (240, 105, 30, 20);
-    toggle_osc_2_3->setBounds (240, 125, 29, 20);
-    toggle_osc_3_3->setBounds (240, 145, 30, 20);
-    toggle_fm_3->setBounds (230, 165, 30, 20);
-    toggle_effects_3->setBounds (230, 285, 30, 20);
-    toggle_arp_3->setBounds (230, 305, 30, 20);
-    toggle_arp_notes_3->setBounds (240, 325, 30, 20);
-    toggle_arp_velocity_3->setBounds (240, 345, 30, 20);
-    toggle_arp_glide_shuffle_3->setBounds (240, 365, 30, 20);
-    toggle_eq_3->setBounds (230, 265, 33, 20);
-    toggle_all_4->setBounds (280, 45, 30, 20);
-    toggle_filters_4->setBounds (290, 185, 30, 20);
-    toggle_filter_1_4->setBounds (300, 205, 30, 20);
-    toggle_filter_2_4->setBounds (300, 225, 30, 20);
-    toggle_filter_3_4->setBounds (300, 245, 30, 20);
-    toggle_oscs_4->setBounds (290, 85, 30, 20);
-    toggle_osc_1_4->setBounds (300, 105, 30, 20);
-    toggle_osc_2_4->setBounds (300, 125, 29, 20);
-    toggle_osc_3_4->setBounds (300, 145, 30, 20);
-    toggle_fm_4->setBounds (290, 165, 30, 20);
-    toggle_effects_4->setBounds (290, 285, 30, 20);
-    toggle_arp_4->setBounds (290, 305, 30, 20);
-    toggle_arp_notes_4->setBounds (300, 325, 30, 20);
-    toggle_arp_velocity_4->setBounds (300, 345, 30, 20);
-    toggle_arp_glide_shuffle_4->setBounds (300, 365, 30, 20);
-    toggle_eq_4->setBounds (290, 265, 33, 20);
-    label_12->setBounds (20, 90 - 30, 50, 30);
-    toggle_main_1->setBounds (110, 65, 30, 20);
-    toggle_main_2->setBounds (170, 65, 30, 20);
-    toggle_main_3->setBounds (230, 65, 30, 20);
-    toggle_main_4->setBounds (290, 65, 30, 20);
-    label_13->setBounds (20, 410, 70, 30);
-    button_set_left_1->setBounds (150 - 60, 413, 60, 27);
-    button_set_left_2->setBounds (210 - 60, 440 - 27, 60, 27);
-    button_set_left_3->setBounds (270 - 60, 440 - 27, 60, 27);
-    button_set_left_4->setBounds (330 - 60, 440 - 27, 60, 27);
-    label_14->setBounds (20, 646, 70, 30);
-    button_set_right_1->setBounds (90, 649, 60, 27);
-    button_set_right_2->setBounds (150, 649, 60, 27);
-    button_set_right_3->setBounds (210, 649, 60, 27);
-    button_set_right_4->setBounds (270, 649, 60, 27);
-    button_set_all_from_current->setBounds (90, 680, 240, 27);
-    track_pad->setBounds (5, 475, 70, 140);
-    label_23->setBounds (40, 410 - 30, 50, 30);
-    toggle_arp_switchs_1->setBounds (120, 385, 30, 20);
-    toggle_arp_switchs_2->setBounds (180, 385, 30, 20);
-    toggle_arp_switchs_3->setBounds (240, 385, 30, 20);
-    toggle_arp_switchs_4->setBounds (300, 385, 30, 20);
-    close->setBounds (345 - 45, 5, 45, 20);
+    hit_area_3->setBounds(80, 610, 270, 110);
+    hit_area_1->setBounds(0, 0, 350, 480);
+    hit_area_2->setBounds(0, 480, 80, 220);
+    hit_area_through->setBounds(80, 480, 270, 130);
+    label_g_1->setBounds(75, 10, 60, 30);
+    label_1->setBounds(0, 70 - 30, 50, 30);
+    label_2->setBounds(20, 210 - 30, 50, 30);
+    toggle_all_1->setBounds(100, 45, 30, 20);
+    label_3->setBounds(40, 230 - 30, 50, 30);
+    toggle_filters_1->setBounds(110, 185, 30, 20);
+    toggle_filter_1_1->setBounds(120, 205, 30, 20);
+    label_4->setBounds(40, 250 - 30, 50, 30);
+    toggle_filter_2_1->setBounds(120, 225, 30, 20);
+    label_5->setBounds(40, 270 - 30, 50, 30);
+    toggle_filter_3_1->setBounds(120, 245, 30, 20);
+    label_6->setBounds(20, 110 - 30, 50, 30);
+    label_7->setBounds(40, 130 - 30, 50, 30);
+    toggle_oscs_1->setBounds(110, 85, 30, 20);
+    toggle_osc_1_1->setBounds(120, 105, 30, 20);
+    label_8->setBounds(40, 150 - 30, 50, 30);
+    toggle_osc_2_1->setBounds(120, 125, 29, 20);
+    label_9->setBounds(40, 170 - 30, 50, 30);
+    toggle_osc_3_1->setBounds(120, 145, 30, 20);
+    label_10->setBounds(20, 190 - 30, 50, 30);
+    toggle_fm_1->setBounds(110, 165, 30, 20);
+    label_11->setBounds(20, 310 - 30, 50, 30);
+    toggle_effects_1->setBounds(110, 285, 30, 20);
+    label_15->setBounds(20, 330 - 30, 50, 30);
+    toggle_arp_1->setBounds(110, 305, 30, 20);
+    label_16->setBounds(40, 350 - 30, 50, 30);
+    toggle_arp_notes_1->setBounds(120, 325, 30, 20);
+    label_17->setBounds(40, 370 - 30, 50, 30);
+    toggle_arp_velocity_1->setBounds(120, 345, 30, 20);
+    label_18->setBounds(40, 390 - 30, 50, 30);
+    toggle_arp_glide_shuffle_1->setBounds(120, 365, 30, 20);
+    label_20->setBounds(20, 290 - 30, 50, 30);
+    toggle_eq_1->setBounds(110, 265, 33, 20);
+    label_g_2->setBounds(135, 10, 60, 30);
+    label_g_3->setBounds(195, 10, 60, 30);
+    label_g_4->setBounds(255, 10, 60, 30);
+    combo_morph_group_1->setBounds(150 - 60, 646 - 26, 60, 26);
+    combo_morph_group_2->setBounds(210 - 60, 646 - 26, 60, 26);
+    combo_morph_group_3->setBounds(270 - 60, 646 - 26, 60, 26);
+    combo_morph_group_4->setBounds(330 - 60, 646 - 26, 60, 26);
+    combo_morph_group_5->setBounds(150 - 60, 469 - 26, 60, 26);
+    combo_morph_group_6->setBounds(210 - 60, 469 - 26, 60, 26);
+    combo_morph_group_7->setBounds(270 - 60, 469 - 26, 60, 26);
+    combo_morph_group_8->setBounds(330 - 60, 469 - 26, 60, 26);
+    label_19->setBounds(20, 472 - 29, 70, 29);
+    label_21->setBounds(20, 649 - 29, 70, 29);
+    toggle_all_2->setBounds(160, 45, 30, 20);
+    toggle_filters_2->setBounds(170, 185, 30, 20);
+    toggle_filter_1_2->setBounds(180, 205, 30, 20);
+    toggle_filter_2_2->setBounds(180, 225, 30, 20);
+    toggle_filter_3_2->setBounds(180, 245, 30, 20);
+    toggle_oscs_2->setBounds(170, 85, 30, 20);
+    toggle_osc_1_2->setBounds(180, 105, 30, 20);
+    toggle_osc_2_2->setBounds(180, 125, 29, 20);
+    toggle_osc_3_2->setBounds(180, 145, 30, 20);
+    toggle_fm_2->setBounds(170, 165, 30, 20);
+    toggle_effects_2->setBounds(170, 285, 30, 20);
+    toggle_arp_2->setBounds(170, 305, 30, 20);
+    toggle_arp_notes_2->setBounds(180, 325, 30, 20);
+    toggle_arp_velocity_2->setBounds(180, 345, 30, 20);
+    toggle_arp_glide_shuffle_2->setBounds(180, 365, 30, 20);
+    toggle_eq_2->setBounds(170, 265, 33, 20);
+    toggle_all_3->setBounds(220, 45, 30, 20);
+    toggle_filters_3->setBounds(230, 185, 30, 20);
+    toggle_filter_1_3->setBounds(240, 205, 30, 20);
+    toggle_filter_2_3->setBounds(240, 225, 30, 20);
+    toggle_filter_3_3->setBounds(240, 245, 30, 20);
+    toggle_oscs_3->setBounds(230, 85, 30, 20);
+    toggle_osc_1_3->setBounds(240, 105, 30, 20);
+    toggle_osc_2_3->setBounds(240, 125, 29, 20);
+    toggle_osc_3_3->setBounds(240, 145, 30, 20);
+    toggle_fm_3->setBounds(230, 165, 30, 20);
+    toggle_effects_3->setBounds(230, 285, 30, 20);
+    toggle_arp_3->setBounds(230, 305, 30, 20);
+    toggle_arp_notes_3->setBounds(240, 325, 30, 20);
+    toggle_arp_velocity_3->setBounds(240, 345, 30, 20);
+    toggle_arp_glide_shuffle_3->setBounds(240, 365, 30, 20);
+    toggle_eq_3->setBounds(230, 265, 33, 20);
+    toggle_all_4->setBounds(280, 45, 30, 20);
+    toggle_filters_4->setBounds(290, 185, 30, 20);
+    toggle_filter_1_4->setBounds(300, 205, 30, 20);
+    toggle_filter_2_4->setBounds(300, 225, 30, 20);
+    toggle_filter_3_4->setBounds(300, 245, 30, 20);
+    toggle_oscs_4->setBounds(290, 85, 30, 20);
+    toggle_osc_1_4->setBounds(300, 105, 30, 20);
+    toggle_osc_2_4->setBounds(300, 125, 29, 20);
+    toggle_osc_3_4->setBounds(300, 145, 30, 20);
+    toggle_fm_4->setBounds(290, 165, 30, 20);
+    toggle_effects_4->setBounds(290, 285, 30, 20);
+    toggle_arp_4->setBounds(290, 305, 30, 20);
+    toggle_arp_notes_4->setBounds(300, 325, 30, 20);
+    toggle_arp_velocity_4->setBounds(300, 345, 30, 20);
+    toggle_arp_glide_shuffle_4->setBounds(300, 365, 30, 20);
+    toggle_eq_4->setBounds(290, 265, 33, 20);
+    label_12->setBounds(20, 90 - 30, 50, 30);
+    toggle_main_1->setBounds(110, 65, 30, 20);
+    toggle_main_2->setBounds(170, 65, 30, 20);
+    toggle_main_3->setBounds(230, 65, 30, 20);
+    toggle_main_4->setBounds(290, 65, 30, 20);
+    label_13->setBounds(20, 410, 70, 30);
+    button_set_left_1->setBounds(150 - 60, 413, 60, 27);
+    button_set_left_2->setBounds(210 - 60, 440 - 27, 60, 27);
+    button_set_left_3->setBounds(270 - 60, 440 - 27, 60, 27);
+    button_set_left_4->setBounds(330 - 60, 440 - 27, 60, 27);
+    label_14->setBounds(20, 646, 70, 30);
+    button_set_right_1->setBounds(90, 649, 60, 27);
+    button_set_right_2->setBounds(150, 649, 60, 27);
+    button_set_right_3->setBounds(210, 649, 60, 27);
+    button_set_right_4->setBounds(270, 649, 60, 27);
+    button_set_all_from_current->setBounds(90, 680, 240, 27);
+    track_pad->setBounds(5, 475, 70, 140);
+    label_23->setBounds(40, 410 - 30, 50, 30);
+    toggle_arp_switchs_1->setBounds(120, 385, 30, 20);
+    toggle_arp_switchs_2->setBounds(180, 385, 30, 20);
+    toggle_arp_switchs_3->setBounds(240, 385, 30, 20);
+    toggle_arp_switchs_4->setBounds(300, 385, 30, 20);
+    close->setBounds(345 - 45, 5, 45, 20);
     internalPath1.clear();
-    internalPath1.startNewSubPath (350.0f, 610.0f);
-    internalPath1.lineTo (80.0f, 610.0f);
-    internalPath1.lineTo (80.0f, 480.0f);
-    internalPath1.lineTo (350.0f, 480.0f);
+    internalPath1.startNewSubPath(350.0f, 610.0f);
+    internalPath1.lineTo(80.0f, 610.0f);
+    internalPath1.lineTo(80.0f, 480.0f);
+    internalPath1.lineTo(350.0f, 480.0f);
 
     internalPath2.clear();
-    internalPath2.startNewSubPath (350.0f, 610.0f);
-    internalPath2.lineTo (350.0f, 720.0f);
-    internalPath2.lineTo (0.0f, 720.0f);
-    internalPath2.lineTo (0.0f, 0.0f);
-    internalPath2.lineTo (350.0f, 0.0f);
-    internalPath2.lineTo (350.0f, 480.0f);
+    internalPath2.startNewSubPath(350.0f, 610.0f);
+    internalPath2.lineTo(350.0f, 720.0f);
+    internalPath2.lineTo(0.0f, 720.0f);
+    internalPath2.lineTo(0.0f, 0.0f);
+    internalPath2.lineTo(350.0f, 0.0f);
+    internalPath2.lineTo(350.0f, 480.0f);
 
     //[UserResized] Add your own custom resize handling here..
 #include "UiDynamicSizeEnd.h"
     //[/UserResized]
 }
 
-void UiEditorMorph::buttonClicked (Button* buttonThatWasClicked)
+void UiEditorMorph::buttonClicked(Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -1353,494 +1409,498 @@ void UiEditorMorph::buttonClicked (Button* buttonThatWasClicked)
     if (buttonThatWasClicked == toggle_all_1)
     {
         //[UserButtonCode_toggle_all_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::ALL );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::ALL);
         //[/UserButtonCode_toggle_all_1]
     }
     else if (buttonThatWasClicked == toggle_filters_1)
     {
         //[UserButtonCode_toggle_filters_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::FILTERS );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::FILTERS);
         //[/UserButtonCode_toggle_filters_1]
     }
     else if (buttonThatWasClicked == toggle_filter_1_1)
     {
         //[UserButtonCode_toggle_filter_1_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::FILTER_1 );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::FILTER_1);
         //[/UserButtonCode_toggle_filter_1_1]
     }
     else if (buttonThatWasClicked == toggle_filter_2_1)
     {
         //[UserButtonCode_toggle_filter_2_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::FILTER_2 );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::FILTER_2);
         //[/UserButtonCode_toggle_filter_2_1]
     }
     else if (buttonThatWasClicked == toggle_filter_3_1)
     {
         //[UserButtonCode_toggle_filter_3_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::FILTER_3 );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::FILTER_3);
         //[/UserButtonCode_toggle_filter_3_1]
     }
     else if (buttonThatWasClicked == toggle_oscs_1)
     {
         //[UserButtonCode_toggle_oscs_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::OSCS );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::OSCS);
         //[/UserButtonCode_toggle_oscs_1]
     }
     else if (buttonThatWasClicked == toggle_osc_1_1)
     {
         //[UserButtonCode_toggle_osc_1_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::OSC_1 );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::OSC_1);
         //[/UserButtonCode_toggle_osc_1_1]
     }
     else if (buttonThatWasClicked == toggle_osc_2_1)
     {
         //[UserButtonCode_toggle_osc_2_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::OSC_2 );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::OSC_2);
         //[/UserButtonCode_toggle_osc_2_1]
     }
     else if (buttonThatWasClicked == toggle_osc_3_1)
     {
         //[UserButtonCode_toggle_osc_3_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::OSC_3 );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::OSC_3);
         //[/UserButtonCode_toggle_osc_3_1]
     }
     else if (buttonThatWasClicked == toggle_fm_1)
     {
         //[UserButtonCode_toggle_fm_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::FM );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::FM);
         //[/UserButtonCode_toggle_fm_1]
     }
     else if (buttonThatWasClicked == toggle_effects_1)
     {
         //[UserButtonCode_toggle_effects_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::FX );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::FX);
         //[/UserButtonCode_toggle_effects_1]
     }
     else if (buttonThatWasClicked == toggle_arp_1)
     {
         //[UserButtonCode_toggle_arp_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::ARP );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::ARP);
         //[/UserButtonCode_toggle_arp_1]
     }
     else if (buttonThatWasClicked == toggle_arp_notes_1)
     {
         //[UserButtonCode_toggle_arp_notes_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE);
         //[/UserButtonCode_toggle_arp_notes_1]
     }
     else if (buttonThatWasClicked == toggle_arp_velocity_1)
     {
         //[UserButtonCode_toggle_arp_velocity_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY);
         //[/UserButtonCode_toggle_arp_velocity_1]
     }
     else if (buttonThatWasClicked == toggle_arp_glide_shuffle_1)
     {
         //[UserButtonCode_toggle_arp_glide_shuffle_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE );
+        DATA(synth_data)
+            .activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE);
         //[/UserButtonCode_toggle_arp_glide_shuffle_1]
     }
     else if (buttonThatWasClicked == toggle_eq_1)
     {
         //[UserButtonCode_toggle_eq_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::EQ );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::EQ);
         //[/UserButtonCode_toggle_eq_1]
     }
     else if (buttonThatWasClicked == toggle_all_2)
     {
         //[UserButtonCode_toggle_all_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::ALL );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::ALL);
         //[/UserButtonCode_toggle_all_2]
     }
     else if (buttonThatWasClicked == toggle_filters_2)
     {
         //[UserButtonCode_toggle_filters_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::FILTERS );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::FILTERS);
         //[/UserButtonCode_toggle_filters_2]
     }
     else if (buttonThatWasClicked == toggle_filter_1_2)
     {
         //[UserButtonCode_toggle_filter_1_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::FILTER_1 );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::FILTER_1);
         //[/UserButtonCode_toggle_filter_1_2]
     }
     else if (buttonThatWasClicked == toggle_filter_2_2)
     {
         //[UserButtonCode_toggle_filter_2_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::FILTER_2 );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::FILTER_2);
         //[/UserButtonCode_toggle_filter_2_2]
     }
     else if (buttonThatWasClicked == toggle_filter_3_2)
     {
         //[UserButtonCode_toggle_filter_3_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::FILTER_3 );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::FILTER_3);
         //[/UserButtonCode_toggle_filter_3_2]
     }
     else if (buttonThatWasClicked == toggle_oscs_2)
     {
         //[UserButtonCode_toggle_oscs_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::OSCS );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::OSCS);
         //[/UserButtonCode_toggle_oscs_2]
     }
     else if (buttonThatWasClicked == toggle_osc_1_2)
     {
         //[UserButtonCode_toggle_osc_1_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::OSC_1 );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::OSC_1);
         //[/UserButtonCode_toggle_osc_1_2]
     }
     else if (buttonThatWasClicked == toggle_osc_2_2)
     {
         //[UserButtonCode_toggle_osc_2_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::OSC_2 );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::OSC_2);
         //[/UserButtonCode_toggle_osc_2_2]
     }
     else if (buttonThatWasClicked == toggle_osc_3_2)
     {
         //[UserButtonCode_toggle_osc_3_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::OSC_3 );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::OSC_3);
         //[/UserButtonCode_toggle_osc_3_2]
     }
     else if (buttonThatWasClicked == toggle_fm_2)
     {
         //[UserButtonCode_toggle_fm_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::FM );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::FM);
         //[/UserButtonCode_toggle_fm_2]
     }
     else if (buttonThatWasClicked == toggle_effects_2)
     {
         //[UserButtonCode_toggle_effects_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::FX );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::FX);
         //[/UserButtonCode_toggle_effects_2]
     }
     else if (buttonThatWasClicked == toggle_arp_2)
     {
         //[UserButtonCode_toggle_arp_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::ARP );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::ARP);
         //[/UserButtonCode_toggle_arp_2]
     }
     else if (buttonThatWasClicked == toggle_arp_notes_2)
     {
         //[UserButtonCode_toggle_arp_notes_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE);
         //[/UserButtonCode_toggle_arp_notes_2]
     }
     else if (buttonThatWasClicked == toggle_arp_velocity_2)
     {
         //[UserButtonCode_toggle_arp_velocity_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY);
         //[/UserButtonCode_toggle_arp_velocity_2]
     }
     else if (buttonThatWasClicked == toggle_arp_glide_shuffle_2)
     {
         //[UserButtonCode_toggle_arp_glide_shuffle_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE );
+        DATA(synth_data)
+            .activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE);
         //[/UserButtonCode_toggle_arp_glide_shuffle_2]
     }
     else if (buttonThatWasClicked == toggle_eq_2)
     {
         //[UserButtonCode_toggle_eq_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::EQ );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::EQ);
         //[/UserButtonCode_toggle_eq_2]
     }
     else if (buttonThatWasClicked == toggle_all_3)
     {
         //[UserButtonCode_toggle_all_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::ALL );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::ALL);
         //[/UserButtonCode_toggle_all_3]
     }
     else if (buttonThatWasClicked == toggle_filters_3)
     {
         //[UserButtonCode_toggle_filters_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::FILTERS );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::FILTERS);
         //[/UserButtonCode_toggle_filters_3]
     }
     else if (buttonThatWasClicked == toggle_filter_1_3)
     {
         //[UserButtonCode_toggle_filter_1_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::FILTER_1 );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::FILTER_1);
         //[/UserButtonCode_toggle_filter_1_3]
     }
     else if (buttonThatWasClicked == toggle_filter_2_3)
     {
         //[UserButtonCode_toggle_filter_2_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::FILTER_2 );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::FILTER_2);
         //[/UserButtonCode_toggle_filter_2_3]
     }
     else if (buttonThatWasClicked == toggle_filter_3_3)
     {
         //[UserButtonCode_toggle_filter_3_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::FILTER_3 );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::FILTER_3);
         //[/UserButtonCode_toggle_filter_3_3]
     }
     else if (buttonThatWasClicked == toggle_oscs_3)
     {
         //[UserButtonCode_toggle_oscs_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::OSCS );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::OSCS);
         //[/UserButtonCode_toggle_oscs_3]
     }
     else if (buttonThatWasClicked == toggle_osc_1_3)
     {
         //[UserButtonCode_toggle_osc_1_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::OSC_1 );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::OSC_1);
         //[/UserButtonCode_toggle_osc_1_3]
     }
     else if (buttonThatWasClicked == toggle_osc_2_3)
     {
         //[UserButtonCode_toggle_osc_2_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::OSC_2 );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::OSC_2);
         //[/UserButtonCode_toggle_osc_2_3]
     }
     else if (buttonThatWasClicked == toggle_osc_3_3)
     {
         //[UserButtonCode_toggle_osc_3_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::OSC_3 );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::OSC_3);
         //[/UserButtonCode_toggle_osc_3_3]
     }
     else if (buttonThatWasClicked == toggle_fm_3)
     {
         //[UserButtonCode_toggle_fm_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::FM );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::FM);
         //[/UserButtonCode_toggle_fm_3]
     }
     else if (buttonThatWasClicked == toggle_effects_3)
     {
         //[UserButtonCode_toggle_effects_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::FX );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::FX);
         //[/UserButtonCode_toggle_effects_3]
     }
     else if (buttonThatWasClicked == toggle_arp_3)
     {
         //[UserButtonCode_toggle_arp_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::ARP );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::ARP);
         //[/UserButtonCode_toggle_arp_3]
     }
     else if (buttonThatWasClicked == toggle_arp_notes_3)
     {
         //[UserButtonCode_toggle_arp_notes_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE);
         //[/UserButtonCode_toggle_arp_notes_3]
     }
     else if (buttonThatWasClicked == toggle_arp_velocity_3)
     {
         //[UserButtonCode_toggle_arp_velocity_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY);
         //[/UserButtonCode_toggle_arp_velocity_3]
     }
     else if (buttonThatWasClicked == toggle_arp_glide_shuffle_3)
     {
         //[UserButtonCode_toggle_arp_glide_shuffle_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE );
+        DATA(synth_data)
+            .activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE);
         //[/UserButtonCode_toggle_arp_glide_shuffle_3]
     }
     else if (buttonThatWasClicked == toggle_eq_3)
     {
         //[UserButtonCode_toggle_eq_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::EQ );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::EQ);
         //[/UserButtonCode_toggle_eq_3]
     }
     else if (buttonThatWasClicked == toggle_all_4)
     {
         //[UserButtonCode_toggle_all_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::ALL );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::ALL);
         //[/UserButtonCode_toggle_all_4]
     }
     else if (buttonThatWasClicked == toggle_filters_4)
     {
         //[UserButtonCode_toggle_filters_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::FILTERS );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::FILTERS);
         //[/UserButtonCode_toggle_filters_4]
     }
     else if (buttonThatWasClicked == toggle_filter_1_4)
     {
         //[UserButtonCode_toggle_filter_1_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::FILTER_1 );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::FILTER_1);
         //[/UserButtonCode_toggle_filter_1_4]
     }
     else if (buttonThatWasClicked == toggle_filter_2_4)
     {
         //[UserButtonCode_toggle_filter_2_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::FILTER_2 );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::FILTER_2);
         //[/UserButtonCode_toggle_filter_2_4]
     }
     else if (buttonThatWasClicked == toggle_filter_3_4)
     {
         //[UserButtonCode_toggle_filter_3_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::FILTER_3 );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::FILTER_3);
         //[/UserButtonCode_toggle_filter_3_4]
     }
     else if (buttonThatWasClicked == toggle_oscs_4)
     {
         //[UserButtonCode_toggle_oscs_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::OSCS );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::OSCS);
         //[/UserButtonCode_toggle_oscs_4]
     }
     else if (buttonThatWasClicked == toggle_osc_1_4)
     {
         //[UserButtonCode_toggle_osc_1_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::OSC_1 );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::OSC_1);
         //[/UserButtonCode_toggle_osc_1_4]
     }
     else if (buttonThatWasClicked == toggle_osc_2_4)
     {
         //[UserButtonCode_toggle_osc_2_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::OSC_2 );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::OSC_2);
         //[/UserButtonCode_toggle_osc_2_4]
     }
     else if (buttonThatWasClicked == toggle_osc_3_4)
     {
         //[UserButtonCode_toggle_osc_3_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::OSC_3 );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::OSC_3);
         //[/UserButtonCode_toggle_osc_3_4]
     }
     else if (buttonThatWasClicked == toggle_fm_4)
     {
         //[UserButtonCode_toggle_fm_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::FM );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::FM);
         //[/UserButtonCode_toggle_fm_4]
     }
     else if (buttonThatWasClicked == toggle_effects_4)
     {
         //[UserButtonCode_toggle_effects_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::FX );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::FX);
         //[/UserButtonCode_toggle_effects_4]
     }
     else if (buttonThatWasClicked == toggle_arp_4)
     {
         //[UserButtonCode_toggle_arp_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::ARP );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::ARP);
         //[/UserButtonCode_toggle_arp_4]
     }
     else if (buttonThatWasClicked == toggle_arp_notes_4)
     {
         //[UserButtonCode_toggle_arp_notes_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE);
         //[/UserButtonCode_toggle_arp_notes_4]
     }
     else if (buttonThatWasClicked == toggle_arp_velocity_4)
     {
         //[UserButtonCode_toggle_arp_velocity_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY);
         //[/UserButtonCode_toggle_arp_velocity_4]
     }
     else if (buttonThatWasClicked == toggle_arp_glide_shuffle_4)
     {
         //[UserButtonCode_toggle_arp_glide_shuffle_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE );
+        DATA(synth_data)
+            .activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE);
         //[/UserButtonCode_toggle_arp_glide_shuffle_4]
     }
     else if (buttonThatWasClicked == toggle_eq_4)
     {
         //[UserButtonCode_toggle_eq_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::EQ );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::EQ);
         //[/UserButtonCode_toggle_eq_4]
     }
     else if (buttonThatWasClicked == toggle_main_1)
     {
         //[UserButtonCode_toggle_main_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::MAIN );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::MAIN);
         //[/UserButtonCode_toggle_main_1]
     }
     else if (buttonThatWasClicked == toggle_main_2)
     {
         //[UserButtonCode_toggle_main_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::MAIN );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::MAIN);
         //[/UserButtonCode_toggle_main_2]
     }
     else if (buttonThatWasClicked == toggle_main_3)
     {
         //[UserButtonCode_toggle_main_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::MAIN );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::MAIN);
         //[/UserButtonCode_toggle_main_3]
     }
     else if (buttonThatWasClicked == toggle_main_4)
     {
         //[UserButtonCode_toggle_main_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::MAIN );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::MAIN);
         //[/UserButtonCode_toggle_main_4]
     }
     else if (buttonThatWasClicked == button_set_left_1)
     {
         //[UserButtonCode_button_set_left_1] -- add your button handler code here..
-        DATA( synth_data ).update_left_morph_source( 0 );
+        DATA(synth_data).update_left_morph_source(0);
         //[/UserButtonCode_button_set_left_1]
     }
     else if (buttonThatWasClicked == button_set_left_2)
     {
         //[UserButtonCode_button_set_left_2] -- add your button handler code here..
-        DATA( synth_data ).update_left_morph_source( 1 );
+        DATA(synth_data).update_left_morph_source(1);
         //[/UserButtonCode_button_set_left_2]
     }
     else if (buttonThatWasClicked == button_set_left_3)
     {
         //[UserButtonCode_button_set_left_3] -- add your button handler code here..
-        DATA( synth_data ).update_left_morph_source( 2 );
+        DATA(synth_data).update_left_morph_source(2);
         //[/UserButtonCode_button_set_left_3]
     }
     else if (buttonThatWasClicked == button_set_left_4)
     {
         //[UserButtonCode_button_set_left_4] -- add your button handler code here..
-        DATA( synth_data ).update_left_morph_source( 3 );
+        DATA(synth_data).update_left_morph_source(3);
         //[/UserButtonCode_button_set_left_4]
     }
     else if (buttonThatWasClicked == button_set_right_1)
     {
         //[UserButtonCode_button_set_right_1] -- add your button handler code here..
-        DATA( synth_data ).update_right_morph_source( 0 );
+        DATA(synth_data).update_right_morph_source(0);
         //[/UserButtonCode_button_set_right_1]
     }
     else if (buttonThatWasClicked == button_set_right_2)
     {
         //[UserButtonCode_button_set_right_2] -- add your button handler code here..
-        DATA( synth_data ).update_right_morph_source( 1 );
+        DATA(synth_data).update_right_morph_source(1);
         //[/UserButtonCode_button_set_right_2]
     }
     else if (buttonThatWasClicked == button_set_right_3)
     {
         //[UserButtonCode_button_set_right_3] -- add your button handler code here..
-        DATA( synth_data ).update_right_morph_source( 2 );
+        DATA(synth_data).update_right_morph_source(2);
         //[/UserButtonCode_button_set_right_3]
     }
     else if (buttonThatWasClicked == button_set_right_4)
     {
         //[UserButtonCode_button_set_right_4] -- add your button handler code here..
-        DATA( synth_data ).update_right_morph_source( 3 );
+        DATA(synth_data).update_right_morph_source(3);
         //[/UserButtonCode_button_set_right_4]
     }
     else if (buttonThatWasClicked == button_set_all_from_current)
     {
         //[UserButtonCode_button_set_all_from_current] -- add your button handler code here..
-        DATA( synth_data ).update_left_morph_source( 0 );
-        DATA( synth_data ).update_left_morph_source( 1 );
-        DATA( synth_data ).update_left_morph_source( 2 );
-        DATA( synth_data ).update_left_morph_source( 3 );
-        DATA( synth_data ).update_right_morph_source( 0 );
-        DATA( synth_data ).update_right_morph_source( 1 );
-        DATA( synth_data ).update_right_morph_source( 2 );
-        DATA( synth_data ).update_right_morph_source( 3 );
+        DATA(synth_data).update_left_morph_source(0);
+        DATA(synth_data).update_left_morph_source(1);
+        DATA(synth_data).update_left_morph_source(2);
+        DATA(synth_data).update_left_morph_source(3);
+        DATA(synth_data).update_right_morph_source(0);
+        DATA(synth_data).update_right_morph_source(1);
+        DATA(synth_data).update_right_morph_source(2);
+        DATA(synth_data).update_right_morph_source(3);
         //[/UserButtonCode_button_set_all_from_current]
     }
     else if (buttonThatWasClicked == toggle_arp_switchs_1)
     {
         //[UserButtonCode_toggle_arp_switchs_1] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 0, SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS );
+        DATA(synth_data).activate_morph_selection(0, SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS);
         //[/UserButtonCode_toggle_arp_switchs_1]
     }
     else if (buttonThatWasClicked == toggle_arp_switchs_2)
     {
         //[UserButtonCode_toggle_arp_switchs_2] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 1, SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS );
+        DATA(synth_data).activate_morph_selection(1, SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS);
         //[/UserButtonCode_toggle_arp_switchs_2]
     }
     else if (buttonThatWasClicked == toggle_arp_switchs_3)
     {
         //[UserButtonCode_toggle_arp_switchs_3] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 2, SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS );
+        DATA(synth_data).activate_morph_selection(2, SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS);
         //[/UserButtonCode_toggle_arp_switchs_3]
     }
     else if (buttonThatWasClicked == toggle_arp_switchs_4)
     {
         //[UserButtonCode_toggle_arp_switchs_4] -- add your button handler code here..
-        DATA( synth_data ).activate_morph_selection( 3, SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS );
+        DATA(synth_data).activate_morph_selection(3, SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS);
         //[/UserButtonCode_toggle_arp_switchs_4]
     }
     else if (buttonThatWasClicked == close)
@@ -1856,15 +1916,15 @@ void UiEditorMorph::buttonClicked (Button* buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiEditorMorph::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
+void UiEditorMorph::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
 {
     //[UsercomboBoxChanged_Pre]
     int bank;
-    if( comboBoxThatHasChanged->getSelectedId() < bank_start_indexs[1] )
+    if (comboBoxThatHasChanged->getSelectedId() < bank_start_indexs[1])
         bank = 0;
-    else if( comboBoxThatHasChanged->getSelectedId() < bank_start_indexs[2] )
+    else if (comboBoxThatHasChanged->getSelectedId() < bank_start_indexs[2])
         bank = 1;
-    else if( comboBoxThatHasChanged->getSelectedId() < bank_start_indexs[3] )
+    else if (comboBoxThatHasChanged->getSelectedId() < bank_start_indexs[3])
         bank = 2;
     else
         bank = 3;
@@ -1873,49 +1933,65 @@ void UiEditorMorph::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     if (comboBoxThatHasChanged == combo_morph_group_1)
     {
         //[UserComboBoxCode_combo_morph_group_1] -- add your combo box handling code here..
-        DATA( synth_data ).try_to_load_programm_to_right_side( 0, bank, comboBoxThatHasChanged->getSelectedId()-bank_start_indexs[bank] );
+        DATA(synth_data)
+            .try_to_load_programm_to_right_side(
+                0, bank, comboBoxThatHasChanged->getSelectedId() - bank_start_indexs[bank]);
         //[/UserComboBoxCode_combo_morph_group_1]
     }
     else if (comboBoxThatHasChanged == combo_morph_group_2)
     {
         //[UserComboBoxCode_combo_morph_group_2] -- add your combo box handling code here..
-        DATA( synth_data ).try_to_load_programm_to_right_side( 1, bank, comboBoxThatHasChanged->getSelectedId()-bank_start_indexs[bank] );
+        DATA(synth_data)
+            .try_to_load_programm_to_right_side(
+                1, bank, comboBoxThatHasChanged->getSelectedId() - bank_start_indexs[bank]);
         //[/UserComboBoxCode_combo_morph_group_2]
     }
     else if (comboBoxThatHasChanged == combo_morph_group_3)
     {
         //[UserComboBoxCode_combo_morph_group_3] -- add your combo box handling code here..
-        DATA( synth_data ).try_to_load_programm_to_right_side( 2, bank, comboBoxThatHasChanged->getSelectedId()-bank_start_indexs[bank] );
+        DATA(synth_data)
+            .try_to_load_programm_to_right_side(
+                2, bank, comboBoxThatHasChanged->getSelectedId() - bank_start_indexs[bank]);
         //[/UserComboBoxCode_combo_morph_group_3]
     }
     else if (comboBoxThatHasChanged == combo_morph_group_4)
     {
         //[UserComboBoxCode_combo_morph_group_4] -- add your combo box handling code here..
-        DATA( synth_data ).try_to_load_programm_to_right_side( 3, bank, comboBoxThatHasChanged->getSelectedId()-bank_start_indexs[bank] );
+        DATA(synth_data)
+            .try_to_load_programm_to_right_side(
+                3, bank, comboBoxThatHasChanged->getSelectedId() - bank_start_indexs[bank]);
         //[/UserComboBoxCode_combo_morph_group_4]
     }
     else if (comboBoxThatHasChanged == combo_morph_group_5)
     {
         //[UserComboBoxCode_combo_morph_group_5] -- add your combo box handling code here..
-        DATA( synth_data ).try_to_load_programm_to_left_side( 0, bank, comboBoxThatHasChanged->getSelectedId()-bank_start_indexs[bank] );
+        DATA(synth_data)
+            .try_to_load_programm_to_left_side(
+                0, bank, comboBoxThatHasChanged->getSelectedId() - bank_start_indexs[bank]);
         //[/UserComboBoxCode_combo_morph_group_5]
     }
     else if (comboBoxThatHasChanged == combo_morph_group_6)
     {
         //[UserComboBoxCode_combo_morph_group_6] -- add your combo box handling code here..
-        DATA( synth_data ).try_to_load_programm_to_left_side( 1, bank, comboBoxThatHasChanged->getSelectedId()-bank_start_indexs[bank] );
+        DATA(synth_data)
+            .try_to_load_programm_to_left_side(
+                1, bank, comboBoxThatHasChanged->getSelectedId() - bank_start_indexs[bank]);
         //[/UserComboBoxCode_combo_morph_group_6]
     }
     else if (comboBoxThatHasChanged == combo_morph_group_7)
     {
         //[UserComboBoxCode_combo_morph_group_7] -- add your combo box handling code here..
-        DATA( synth_data ).try_to_load_programm_to_left_side( 2, bank, comboBoxThatHasChanged->getSelectedId()-bank_start_indexs[bank] );
+        DATA(synth_data)
+            .try_to_load_programm_to_left_side(
+                2, bank, comboBoxThatHasChanged->getSelectedId() - bank_start_indexs[bank]);
         //[/UserComboBoxCode_combo_morph_group_7]
     }
     else if (comboBoxThatHasChanged == combo_morph_group_8)
     {
         //[UserComboBoxCode_combo_morph_group_8] -- add your combo box handling code here..
-        DATA( synth_data ).try_to_load_programm_to_left_side( 3, bank, comboBoxThatHasChanged->getSelectedId()-bank_start_indexs[bank] );
+        DATA(synth_data)
+            .try_to_load_programm_to_left_side(
+                3, bank, comboBoxThatHasChanged->getSelectedId() - bank_start_indexs[bank]);
         //[/UserComboBoxCode_combo_morph_group_8]
     }
 
@@ -1924,11 +2000,11 @@ void UiEditorMorph::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     //[/UsercomboBoxChanged_Post]
 }
 
-bool UiEditorMorph::keyPressed (const KeyPress& key)
+bool UiEditorMorph::keyPressed(const KeyPress &key)
 {
     //[UserCode_keyPressed] -- Add your code here...
     bool success = false;
-    if( key == KeyPress::escapeKey )
+    if (key == KeyPress::escapeKey)
     {
         AppInstanceStore::getInstance()->editor->editor_morph = nullptr;
         return true;
@@ -1937,11 +2013,8 @@ bool UiEditorMorph::keyPressed (const KeyPress& key)
     //[/UserCode_keyPressed]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -2484,7 +2557,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

@@ -26,64 +26,55 @@
 
 #include "UiChordEditorChordOffset.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 class ControllerChordOffset : public MONO_UISliderController
 {
-    AppInstanceStore*const _app_instance_store;
+    AppInstanceStore *const _app_instance_store;
     const uint8 _chord_id;
-    UiLabel*const _label;
+    UiLabel *const _label;
 
-    ChordSet& selected_chordset() const {
-        return _app_instance_store->pattern.selected_chordset();
-    }
+    ChordSet &selected_chordset() const { return _app_instance_store->pattern.selected_chordset(); }
 
     IS_NOT_MIDI_LEARNABLE
 
-public:
-    int get_value() const override {
-        return selected_chordset().chord( _chord_id ).offset_all;
-    }
-private:
+  public:
+    int get_value() const override { return selected_chordset().chord(_chord_id).offset_all; }
 
-    void on_value_changed ( int v_ ) override {
-        selected_chordset().chord( _chord_id ).offset_all = v_;
-        _label->set_text( String( selected_chordset().chord( _chord_id ).offset_all ) );
-    }
-
-    int get_range_max() override {
-        return selected_chordset().chord( _chord_id ).offset_all.MAX;
-    }
-
-    int get_range_min() override {
-        return selected_chordset().chord( _chord_id ).offset_all.MIN;
-    }
-
-public:
-    ControllerChordOffset ( AppInstanceStore*const app_instance_store_, uint8 chord_id_, UiLabel*const label_ )
-        : MONO_UISliderController ( app_instance_store_ ),
-          _app_instance_store( app_instance_store_ ),
-          _chord_id( chord_id_ ),
-          _label( label_ )
+  private:
+    void on_value_changed(int v_) override
     {
-        _label->set_text( String( selected_chordset().chord( _chord_id ).offset_all ) );
+        selected_chordset().chord(_chord_id).offset_all = v_;
+        _label->set_text(String(selected_chordset().chord(_chord_id).offset_all));
     }
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ControllerChordOffset)
+    int get_range_max() override { return selected_chordset().chord(_chord_id).offset_all.MAX; }
+
+    int get_range_min() override { return selected_chordset().chord(_chord_id).offset_all.MIN; }
+
+  public:
+    ControllerChordOffset(AppInstanceStore *const app_instance_store_, uint8 chord_id_,
+                          UiLabel *const label_)
+        : MONO_UISliderController(app_instance_store_), _app_instance_store(app_instance_store_),
+          _chord_id(chord_id_), _label(label_)
+    {
+        _label->set_text(String(selected_chordset().chord(_chord_id).offset_all));
+    }
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ControllerChordOffset)
 };
 
-void UiChordEditorChordOffset::refresh_ui( Array< Component* >& components_to_repaint_ )
+void UiChordEditorChordOffset::refresh_ui(Array<Component *> &components_to_repaint_)
 {
-    slider->get_components_to_repaint( components_to_repaint_ );
+    slider->get_components_to_repaint(components_to_repaint_);
 
-    if( is_your_value_changed_since_last_request() )
-        label->set_text( String(slider->get_controller()->get_value()) );
+    if (is_your_value_changed_since_last_request())
+        label->set_text(String(slider->get_controller()->get_value()));
 }
 
 bool UiChordEditorChordOffset::is_your_value_changed_since_last_request()
 {
     int current_offset_value = slider->get_controller()->get_value();
-    if( last_refreshed_offset_value != current_offset_value )
+    if (last_refreshed_offset_value != current_offset_value)
     {
         last_refreshed_offset_value = current_offset_value;
         return true;
@@ -94,21 +85,22 @@ bool UiChordEditorChordOffset::is_your_value_changed_since_last_request()
 //[/MiscUserDefs]
 
 //==============================================================================
-UiChordEditorChordOffset::UiChordEditorChordOffset (AppInstanceStore* const app_instance_store_,uint8 chord_id_)
+UiChordEditorChordOffset::UiChordEditorChordOffset(AppInstanceStore *const app_instance_store_,
+                                                   uint8 chord_id_)
     : _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible (label = new UiLabel ("E",_app_instance_store->style_popup_editor_octave));
+    addAndMakeVisible(label = new UiLabel("E", _app_instance_store->style_popup_editor_octave));
 
-    addAndMakeVisible (slider = new ModelBase (new ControllerChordOffset(_app_instance_store,chord_id_,label),_app_instance_store->style_popup_editor_octave));
-
+    addAndMakeVisible(
+        slider = new ModelBase(new ControllerChordOffset(_app_instance_store, chord_id_, label),
+                               _app_instance_store->style_popup_editor_octave));
 
     //[UserPreSize]
     last_refreshed_offset_value = 99;
     setOpaque(true);
     //[/UserPreSize]
 
-    setSize (80, 40);
-
+    setSize(80, 40);
 
     //[Constructor] You can add your own custom stuff here..
     //[/Constructor]
@@ -117,7 +109,7 @@ UiChordEditorChordOffset::UiChordEditorChordOffset (AppInstanceStore* const app_
 UiChordEditorChordOffset::~UiChordEditorChordOffset()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
-    MONO_Controller* tmp_ctlr = const_cast< MONO_Controller* >( slider->get_controller() );
+    MONO_Controller *tmp_ctlr = const_cast<MONO_Controller *>(slider->get_controller());
     slider->set_controller(nullptr);
     delete tmp_ctlr;
     //[/Destructor_pre]
@@ -125,20 +117,19 @@ UiChordEditorChordOffset::~UiChordEditorChordOffset()
     label = nullptr;
     slider = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiChordEditorChordOffset::paint (Graphics& g)
+void UiChordEditorChordOffset::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-    g.fillAll (Colour (_app_instance_store->style_popup_editor->get_background_color()));
+    g.fillAll(Colour(_app_instance_store->style_popup_editor->get_background_color()));
     return;
     //[/UserPrePaint]
 
-    g.fillAll (Colour (0xff161616));
+    g.fillAll(Colour(0xff161616));
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -146,17 +137,15 @@ void UiChordEditorChordOffset::paint (Graphics& g)
 
 void UiChordEditorChordOffset::resized()
 {
-    label->setBounds (getWidth() - proportionOfWidth (0.5000f), 0, proportionOfWidth (0.5000f), proportionOfHeight (1.0000f));
-    slider->setBounds (0, 0, proportionOfWidth (0.5000f), proportionOfHeight (1.0000f));
+    label->setBounds(getWidth() - proportionOfWidth(0.5000f), 0, proportionOfWidth(0.5000f),
+                     proportionOfHeight(1.0000f));
+    slider->setBounds(0, 0, proportionOfWidth(0.5000f), proportionOfHeight(1.0000f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -183,7 +172,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

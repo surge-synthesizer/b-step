@@ -25,54 +25,49 @@
 
 #include "UiLeftsideLabelModel.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-void UiLeftsideLabelModel::set_text( const String& text_ )
-{
-    _text = text_;
-}
+void UiLeftsideLabelModel::set_text(const String &text_) { _text = text_; }
 
-void UiLeftsideLabelModel::on_style_set( AppStyle*const style_ )
+void UiLeftsideLabelModel::on_style_set(AppStyle *const style_)
 {
-    if( _style )
+    if (_style)
     {
-        setOpaque( style_->is_opaque() );
+        setOpaque(style_->is_opaque());
     }
 
-    model->set_style( style_ );
+    model->set_style(style_);
 }
 
-void UiLeftsideLabelModel::refresh_ui( Array< Component* >& components_to_repaint_ )
+void UiLeftsideLabelModel::refresh_ui(Array<Component *> &components_to_repaint_)
 {
     model->get_components_to_repaint(components_to_repaint_);
 
-    if( _text != _last_painted_text )
+    if (_text != _last_painted_text)
     {
-        components_to_repaint_.add( this );
+        components_to_repaint_.add(this);
         _last_painted_text = _text;
     }
 }
 
-void UiLeftsideLabelModel::get_controllers_for_paint_popup( Array< MONO_Controller* >& controllers_with_popup_ )
+void UiLeftsideLabelModel::get_controllers_for_paint_popup(
+    Array<MONO_Controller *> &controllers_with_popup_)
 {
-    model->get_controllers_for_paint_popup( controllers_with_popup_ );
+    model->get_controllers_for_paint_popup(controllers_with_popup_);
 }
 //[/MiscUserDefs]
 
 //==============================================================================
-UiLeftsideLabelModel::UiLeftsideLabelModel (AppInstanceStore*const app_insteance_store_)
+UiLeftsideLabelModel::UiLeftsideLabelModel(AppInstanceStore *const app_insteance_store_)
     : _app_insteance_store(app_insteance_store_)
 {
-    addAndMakeVisible (bg_button = new ImageButton (String()));
-    bg_button->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight | Button::ConnectedOnTop | Button::ConnectedOnBottom);
-    bg_button->addListener (this);
+    addAndMakeVisible(bg_button = new ImageButton(String()));
+    bg_button->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
+                                 Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    bg_button->addListener(this);
 
-    bg_button->setImages (false, true, true,
-                          Image(), 1.000f, Colour (0x00000000),
-                          Image(), 1.000f, Colour (0x00000000),
-                          Image(), 1.000f, Colour (0x00000000));
-    addAndMakeVisible (model = new ModelBase());
-
+    bg_button->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000), Image(), 1.000f,
+                         Colour(0x00000000), Image(), 1.000f, Colour(0x00000000));
+    addAndMakeVisible(model = new ModelBase());
 
     //[UserPreSize]
     _style = nullptr;
@@ -80,8 +75,7 @@ UiLeftsideLabelModel::UiLeftsideLabelModel (AppInstanceStore*const app_insteance
 #ifdef DO_NEVER_DEFINE_THIS
     //[/UserPreSize]
 
-    setSize (170, 50);
-
+    setSize(170, 50);
 
     //[Constructor] You can add your own custom stuff here..
 #endif
@@ -97,25 +91,24 @@ UiLeftsideLabelModel::~UiLeftsideLabelModel()
     bg_button = nullptr;
     model = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiLeftsideLabelModel::paint (Graphics& g)
+void UiLeftsideLabelModel::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-    if( _style )
+    if (_style)
         g.fillAll(Colour(_style->get_foreground_color()));
-         //g.fillAll(Colour(0xffffffff));
+    // g.fillAll(Colour(0xffffffff));
 
-
-    AppStyle::paint_outline_label( g, *this, _text, _style, Justification::centred, 0.0588f, 0.1000f, 0.6177f, 0.8000f );
+    AppStyle::paint_outline_label(g, *this, _text, _style, Justification::centred, 0.0588f, 0.1000f,
+                                  0.6177f, 0.8000f);
     return;
     //[/UserPrePaint]
 
-    g.fillAll (Colours::white);
+    g.fillAll(Colours::white);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -126,13 +119,14 @@ void UiLeftsideLabelModel::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    bg_button->setBounds (0, 0, 168, 48);
-    model->setBounds (proportionOfWidth (0.7059f), proportionOfHeight (0.1000f), proportionOfWidth (0.2353f), proportionOfHeight (0.8000f));
+    bg_button->setBounds(0, 0, 168, 48);
+    model->setBounds(proportionOfWidth(0.7059f), proportionOfHeight(0.1000f),
+                     proportionOfWidth(0.2353f), proportionOfHeight(0.8000f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
 
-void UiLeftsideLabelModel::buttonClicked (Button* buttonThatWasClicked)
+void UiLeftsideLabelModel::buttonClicked(Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -148,11 +142,8 @@ void UiLeftsideLabelModel::buttonClicked (Button* buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -182,7 +173,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

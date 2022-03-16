@@ -28,8 +28,6 @@ class AppInstanceStore;
 class UiLabel;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -38,32 +36,28 @@ class UiLabel;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorSetup  : public UiEditor,
-                      public Button::Listener,
-                      public Slider::Listener
+class UiEditorSetup : public UiEditor, public Button::Listener, public Slider::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiEditorSetup (AppInstanceStore* const app_instance_store_);
+    UiEditorSetup(AppInstanceStore *const app_instance_store_);
     ~UiEditorSetup();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
+    AppInstanceStore *const _app_instance_store;
 
     void on_close_clicked() override;
 
     void refresh_ui();
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
-    void sliderValueChanged (Slider* sliderThatWasMoved);
+    void buttonClicked(Button *buttonThatWasClicked);
+    void sliderValueChanged(Slider *sliderThatWasMoved);
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -88,12 +82,11 @@ private:
     ScopedPointer<ToggleButton> tb_turn_mousewheel_on_off;
     ScopedPointer<TextButton> info_playback_modes;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorSetup)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorSetup)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_212FF4A38918099C__
+#endif // __JUCE_HEADER_212FF4A38918099C__

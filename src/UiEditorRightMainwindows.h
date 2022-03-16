@@ -31,8 +31,6 @@ class GstepAudioProcessorEditor;
 class UiLabel;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -41,36 +39,34 @@ class UiLabel;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorRightMainwindows  : public MoveEvent2ChildsComponent
+class UiEditorRightMainwindows : public MoveEvent2ChildsComponent
 {
-public:
+  public:
     //==============================================================================
-    UiEditorRightMainwindows (AppInstanceStore*const app_instance_store_, GstepAudioProcessorEditor*const main_window_);
+    UiEditorRightMainwindows(AppInstanceStore *const app_instance_store_,
+                             GstepAudioProcessorEditor *const main_window_);
     ~UiEditorRightMainwindows();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
-    GstepAudioProcessorEditor*const _main_window;
+    AppInstanceStore *const _app_instance_store;
+    GstepAudioProcessorEditor *const _main_window;
 
-    Array< ModelBase* > _models;
-    Array< UiLabel* > _labels;
+    Array<ModelBase *> _models;
+    Array<UiLabel *> _labels;
 
-public:
-    void refresh_ui( Array< Component* >& components_to_repaint_ );
-    void get_controllers_for_paint_popup( Array< MONO_Controller* >& controllers_that_need_a_popup );
-private:
-    virtual const Array< ModelBase* >& get_event_receiveable_models() {
-        return _models;
-    }
+  public:
+    void refresh_ui(Array<Component *> &components_to_repaint_);
+    void get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_that_need_a_popup);
+
+  private:
+    virtual const Array<ModelBase *> &get_event_receiveable_models() { return _models; }
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -106,12 +102,11 @@ private:
     ScopedPointer<UiLabel> lbl_version3;
     ScopedPointer<UiLabel> lbl_version4;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorRightMainwindows)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorRightMainwindows)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_3D71D75A5B27009E__
+#endif // __JUCE_HEADER_3D71D75A5B27009E__

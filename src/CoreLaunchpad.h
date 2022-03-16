@@ -47,11 +47,13 @@ class Launchpad : public MIDIInListener
     // --------------------------------------------------------------------------------------------
 
     //// PROPERTIES
-private:
-    AppInstanceStore*const _app_instance_store;
-public:
+  private:
+    AppInstanceStore *const _app_instance_store;
+
+  public:
     uint8 id;
-private:
+
+  private:
     uint8 _current_scroll_offset; // on wich row we are?
 
     enum CONSTS
@@ -61,7 +63,7 @@ private:
     };
 
     // PARAMETER
-public:
+  public:
     enum
     {
         I_CHANNEL_IN = 0,
@@ -70,13 +72,13 @@ public:
         I_IS_ENABLE
     };
 
-public:
-    PodParameter< 1, 1, 16, I_CHANNEL_IN > channel_in;
-    PodParameter< 1, 1, 16, I_CHANNEL_IN > channel_out;
-    PodParameter< LAUNCHPAD_MODE_SESSION, LAUNCHPAD_MODE_USER_1, LAUNCHPAD_MODE_USER_2, I_MODE > mode;
+  public:
+    PodParameter<1, 1, 16, I_CHANNEL_IN> channel_in;
+    PodParameter<1, 1, 16, I_CHANNEL_IN> channel_out;
+    PodParameter<LAUNCHPAD_MODE_SESSION, LAUNCHPAD_MODE_USER_1, LAUNCHPAD_MODE_USER_2, I_MODE> mode;
 
     // CHILDS
-private:
+  private:
     // ************************************************************************************************
     class Button
     {
@@ -85,7 +87,7 @@ private:
         // --------------------------------------------------------------------------------------------
 
         // PROPERTIES
-    public:
+      public:
         int8 cache_launchpad_controller_value;
         MidiMessage message;
         bool is_pressed;
@@ -95,63 +97,56 @@ private:
         // --------------------------------------------------------------------------------------------
 
         //// CTORS
-    public:
-        Button( uint8 hard_button_note_number_, int8 );
+      public:
+        Button(uint8 hard_button_note_number_, int8);
     };
 
     // ************************************************************************************************
     struct ButtonRight : public Button
     {
         bool is_pressed;
-        ButtonRight( uint8 hard_button_note_number_, int8 );
+        ButtonRight(uint8 hard_button_note_number_, int8);
     };
 
     // ************************************************************************************************
     struct ButtonTop : public Button
     {
-        ButtonTop( uint8 hard_button_note_number_, int8 );
+        ButtonTop(uint8 hard_button_note_number_, int8);
     };
 
-    void process_colormessage_for_button(
-        uint8 color_,
-        uint8 channel_,
-        Launchpad::Button& button_,
-        Array< MidiMessage* >& messages_,
-        bool force_ = false );
+    void process_colormessage_for_button(uint8 color_, uint8 channel_, Launchpad::Button &button_,
+                                         Array<MidiMessage *> &messages_, bool force_ = false);
 
-    void process_colormessage_CC_for_button(
-        uint8 color_,
-        uint8 channel_,
-        Launchpad::Button& button_,
-        Array< MidiMessage* >& messages_,
-        bool force_ = false );
+    void process_colormessage_CC_for_button(uint8 color_, uint8 channel_,
+                                            Launchpad::Button &button_,
+                                            Array<MidiMessage *> &messages_, bool force_ = false);
 
-    Array< Array< Button > > _buttons;
-    Array< ButtonRight > _buttons_right;
-    Array< ButtonTop > _buttons_top;
+    Array<Array<Button>> _buttons;
+    Array<ButtonRight> _buttons_right;
+    Array<ButtonTop> _buttons_top;
 
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
 
     //// CTORS
-public:
-    Launchpad( AppInstanceStore*const app_instance_store_, uint8 launchpad_id_ );
-    EMPTY_D_CTOR_OUT_WRITE( Launchpad );
+  public:
+    Launchpad(AppInstanceStore *const app_instance_store_, uint8 launchpad_id_);
+    EMPTY_D_CTOR_OUT_WRITE(Launchpad);
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
 
     //// INTERFACE
-public:
-    void get_updates( Array< MidiMessage* >& );
+  public:
+    void get_updates(Array<MidiMessage *> &);
 
     void refresh_all_buttons();
-    void all_buttons_off( Array< MidiMessage* >& );
+    void all_buttons_off(Array<MidiMessage *> &);
 
-    void process( const MidiMessage& message_ ) override;
+    void process(const MidiMessage &message_) override;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Launchpad)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Launchpad)
 };
 
-#endif  // CORELAUNCHPAD_H_INCLUDED
+#endif // CORELAUNCHPAD_H_INCLUDED

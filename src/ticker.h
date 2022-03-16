@@ -36,26 +36,26 @@ class TickLoop
     // --------------------------------------------------------------------------------------------
 
     // Properties
-    Ticker*const _ticker;
+    Ticker *const _ticker;
 
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
-public:
+  public:
     struct MyTimer : public HighResolutionTimer
     {
-        Ticker*const _ticker;
+        Ticker *const _ticker;
         void hiResTimerCallback() override;
-        MyTimer(Ticker*const ticker_);
+        MyTimer(Ticker *const ticker_);
 
-        EMPTY_D_CTOR_OUT_WRITE( MyTimer );
+        EMPTY_D_CTOR_OUT_WRITE(MyTimer);
 
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR ( MyTimer )
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MyTimer)
     };
 
     MyTimer active_timer;
 
-public:
+  public:
     void stop();
     void start();
 
@@ -64,19 +64,14 @@ public:
     // --------------------------------------------------------------------------------------------
 
     // CTORS
-private:
+  private:
     TickLoop(); // -> delete
 
-public:
-    TickLoop(Ticker*const ticker_)
-        : _ticker( ticker_ ),
-          active_timer( ticker_ )
-    {
-        BOOT(TickLoop);
-    }
+  public:
+    TickLoop(Ticker *const ticker_) : _ticker(ticker_), active_timer(ticker_) { BOOT(TickLoop); }
     ~TickLoop();
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR ( TickLoop )
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TickLoop)
 };
 
 // ************************************************************************************************
@@ -94,33 +89,33 @@ class Ticker
 
     struct Executer : public Thread
     {
-        Ticker*const _ticker;
+        Ticker *const _ticker;
         void run() override;
-        Executer(Ticker*const ticker_);
+        Executer(Ticker *const ticker_);
     };
     Executer precalculator;
 
     virtual void on_tick() = 0;
     virtual void on_tick_precalculate() = 0;
 
-public:
+  public:
     void exec_event_loop();
     void break_event_loop();
     bool is_executing();
 
-    void set_tick_interval_in_usec ( int64 usec_per_tick_ );
+    void set_tick_interval_in_usec(int64 usec_per_tick_);
 
     Ticker();
     virtual ~Ticker();
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Ticker)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Ticker)
 };
 
-inline int bpm_to_microsec ( float bpm_ ) noexcept
+inline int bpm_to_microsec(float bpm_) noexcept
 {
-    float microsec_per_clock = 60000000.f/(24.f * bpm_);
-    return floor( microsec_per_clock + 0.5 );
+    float microsec_per_clock = 60000000.f / (24.f * bpm_);
+    return floor(microsec_per_clock + 0.5);
 }
 
 #endif

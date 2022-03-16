@@ -23,49 +23,47 @@
 
 #include "UiFileView.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-void UiFileView::set_label_text(const String& label_text_)
+void UiFileView::set_label_text(const String &label_text_)
 {
-    label->setText( label_text_, dontSendNotification );
+    label->setText(label_text_, dontSendNotification);
 }
 //[/MiscUserDefs]
 
 //==============================================================================
-UiFileView::UiFileView ()
+UiFileView::UiFileView()
 {
-    addAndMakeVisible (label = new TextEditor (String()));
-    label->setMultiLine (false);
-    label->setReturnKeyStartsNewLine (false);
-    label->setReadOnly (false);
-    label->setScrollbarsShown (false);
-    label->setCaretVisible (true);
-    label->setPopupMenuEnabled (false);
-    label->setColour (TextEditor::textColourId, Colour (0x00f0f8ff));
-    label->setColour (TextEditor::backgroundColourId, Colour (0xff161616));
-    label->setColour (TextEditor::highlightColourId, Colours::yellow);
-    label->setColour (TextEditor::outlineColourId, Colour (0x00ff3b00));
-    label->setColour (TextEditor::shadowColourId, Colour (0x00ff0000));
-    label->setColour (CaretComponent::caretColourId, Colours::aqua);
-    label->setText (String());
+    addAndMakeVisible(label = new TextEditor(String()));
+    label->setMultiLine(false);
+    label->setReturnKeyStartsNewLine(false);
+    label->setReadOnly(false);
+    label->setScrollbarsShown(false);
+    label->setCaretVisible(true);
+    label->setPopupMenuEnabled(false);
+    label->setColour(TextEditor::textColourId, Colour(0x00f0f8ff));
+    label->setColour(TextEditor::backgroundColourId, Colour(0xff161616));
+    label->setColour(TextEditor::highlightColourId, Colours::yellow);
+    label->setColour(TextEditor::outlineColourId, Colour(0x00ff3b00));
+    label->setColour(TextEditor::shadowColourId, Colour(0x00ff0000));
+    label->setColour(CaretComponent::caretColourId, Colours::aqua);
+    label->setText(String());
 
-    addAndMakeVisible (imageButton = new ImageButton (String()));
-    imageButton->addListener (this);
+    addAndMakeVisible(imageButton = new ImageButton(String()));
+    imageButton->addListener(this);
 
-    imageButton->setImages (false, true, true,
-                            Image(), 1.000f, Colour (0x00000000),
-                            Image(), 1.000f, Colour (0x00000000),
-                            Image(), 1.000f, Colour (0x00000000));
-    addAndMakeVisible (player_slider = new Slider (String()));
-    player_slider->setRange (0, 10, 0);
-    player_slider->setSliderStyle (Slider::LinearHorizontal);
-    player_slider->setTextBoxStyle (Slider::NoTextBox, false, 30, 20);
-    player_slider->setColour (Slider::thumbColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    player_slider->setColour (Slider::textBoxTextColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    player_slider->setColour (Slider::textBoxBackgroundColourId, Colour (0x00ffffff));
-    player_slider->setColour (Slider::textBoxOutlineColourId, Colour (0x00808080));
-    player_slider->addListener (this);
-
+    imageButton->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000), Image(), 1.000f,
+                           Colour(0x00000000), Image(), 1.000f, Colour(0x00000000));
+    addAndMakeVisible(player_slider = new Slider(String()));
+    player_slider->setRange(0, 10, 0);
+    player_slider->setSliderStyle(Slider::LinearHorizontal);
+    player_slider->setTextBoxStyle(Slider::NoTextBox, false, 30, 20);
+    player_slider->setColour(Slider::thumbColourId,
+                             Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    player_slider->setColour(Slider::textBoxTextColourId,
+                             Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    player_slider->setColour(Slider::textBoxBackgroundColourId, Colour(0x00ffffff));
+    player_slider->setColour(Slider::textBoxOutlineColourId, Colour(0x00808080));
+    player_slider->addListener(this);
 
     //[UserPreSize]
     label_offset = 0;
@@ -73,16 +71,16 @@ UiFileView::UiFileView ()
     _listener = nullptr;
 
     player_slider->setVisible(false);
-    player_slider->setColour (Slider::thumbColourId, Colour (0xff313131));
+    player_slider->setColour(Slider::thumbColourId, Colour(0xff313131));
 
-    UiLookAndFeel*my_look_and_feel = dynamic_cast< UiLookAndFeel* >( &LookAndFeel::getDefaultLookAndFeel() );
-    if( my_look_and_feel )
-        label->setFont( my_look_and_feel->defaultFont );
+    UiLookAndFeel *my_look_and_feel =
+        dynamic_cast<UiLookAndFeel *>(&LookAndFeel::getDefaultLookAndFeel());
+    if (my_look_and_feel)
+        label->setFont(my_look_and_feel->defaultFont);
 
     //[/UserPreSize]
 
-    setSize (200, 30);
-
+    setSize(200, 30);
 
     //[Constructor] You can add your own custom stuff here..
     //[/Constructor]
@@ -94,7 +92,7 @@ UiFileView::~UiFileView()
     _listener = nullptr;
 
     // TODO BUG CRASHE!!
-    if( _owner )
+    if (_owner)
         _owner->on_view_delete(this);
     //[/Destructor_pre]
 
@@ -102,13 +100,12 @@ UiFileView::~UiFileView()
     imageButton = nullptr;
     player_slider = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiFileView::paint (Graphics& g)
+void UiFileView::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
@@ -122,18 +119,19 @@ void UiFileView::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    label->setBounds (0, 0, proportionOfWidth (1.0000f), proportionOfHeight (1.0000f));
-    imageButton->setBounds (0, 0, proportionOfWidth (1.0000f), proportionOfHeight (1.0000f));
-    player_slider->setBounds (proportionOfWidth (0.9500f) - 78, 0, 78, proportionOfHeight (1.0000f));
+    label->setBounds(0, 0, proportionOfWidth(1.0000f), proportionOfHeight(1.0000f));
+    imageButton->setBounds(0, 0, proportionOfWidth(1.0000f), proportionOfHeight(1.0000f));
+    player_slider->setBounds(proportionOfWidth(0.9500f) - 78, 0, 78, proportionOfHeight(1.0000f));
     //[UserResized] Add your own custom resize handling here..
 
-    label->setBounds (0+label_offset, proportionOfHeight (0.1000f), proportionOfWidth (1.0000f), proportionOfHeight (0.8000f));
+    label->setBounds(0 + label_offset, proportionOfHeight(0.1000f), proportionOfWidth(1.0000f),
+                     proportionOfHeight(0.8000f));
 
-    label->applyFontToAllText( label->getFont().withHeight(0.7 * getHeight()) );
+    label->applyFontToAllText(label->getFont().withHeight(0.7 * getHeight()));
     //[/UserResized]
 }
 
-void UiFileView::buttonClicked (Button* buttonThatWasClicked)
+void UiFileView::buttonClicked(Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -148,7 +146,7 @@ void UiFileView::buttonClicked (Button* buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiFileView::sliderValueChanged (Slider* sliderThatWasMoved)
+void UiFileView::sliderValueChanged(Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
@@ -163,11 +161,8 @@ void UiFileView::sliderValueChanged (Slider* sliderThatWasMoved)
     //[/UsersliderValueChanged_Post]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -204,7 +199,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

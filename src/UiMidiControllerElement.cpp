@@ -22,65 +22,62 @@
 
 #include "UiMidiControllerElement.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 //[/MiscUserDefs]
 
 //==============================================================================
-NewComponent::NewComponent ()
+NewComponent::NewComponent()
 {
-    addAndMakeVisible (slider = new Slider ("new slider"));
-    slider->setRange (0, 10, 0);
-    slider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    slider->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
-    slider->setColour (Slider::thumbColourId, Colours::yellow);
-    slider->setColour (Slider::rotarySliderFillColourId, Colours::yellow);
-    slider->setColour (Slider::rotarySliderOutlineColourId, Colours::yellow);
-    slider->setColour (Slider::textBoxTextColourId, Colours::white);
-    slider->addListener (this);
+    addAndMakeVisible(slider = new Slider("new slider"));
+    slider->setRange(0, 10, 0);
+    slider->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    slider->setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
+    slider->setColour(Slider::thumbColourId, Colours::yellow);
+    slider->setColour(Slider::rotarySliderFillColourId, Colours::yellow);
+    slider->setColour(Slider::rotarySliderOutlineColourId, Colours::yellow);
+    slider->setColour(Slider::textBoxTextColourId, Colours::white);
+    slider->addListener(this);
 
-    addAndMakeVisible (comboBox = new ComboBox ("new combo box"));
-    comboBox->setEditableText (false);
-    comboBox->setJustificationType (Justification::centredLeft);
-    comboBox->setTextWhenNothingSelected (TRANS("target"));
-    comboBox->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    comboBox->addListener (this);
+    addAndMakeVisible(comboBox = new ComboBox("new combo box"));
+    comboBox->setEditableText(false);
+    comboBox->setJustificationType(Justification::centredLeft);
+    comboBox->setTextWhenNothingSelected(TRANS("target"));
+    comboBox->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    comboBox->addListener(this);
 
-    addAndMakeVisible (comboBox2 = new ComboBox ("new combo box"));
-    comboBox2->setEditableText (false);
-    comboBox2->setJustificationType (Justification::centredLeft);
-    comboBox2->setTextWhenNothingSelected (TRANS("button or rotary"));
-    comboBox2->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    comboBox2->addListener (this);
+    addAndMakeVisible(comboBox2 = new ComboBox("new combo box"));
+    comboBox2->setEditableText(false);
+    comboBox2->setJustificationType(Justification::centredLeft);
+    comboBox2->setTextWhenNothingSelected(TRANS("button or rotary"));
+    comboBox2->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    comboBox2->addListener(this);
 
-    addAndMakeVisible (comboBox3 = new ComboBox ("new combo box"));
-    comboBox3->setEditableText (false);
-    comboBox3->setJustificationType (Justification::centredLeft);
-    comboBox3->setTextWhenNothingSelected (TRANS("feedback def file"));
-    comboBox3->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    comboBox3->addListener (this);
+    addAndMakeVisible(comboBox3 = new ComboBox("new combo box"));
+    comboBox3->setEditableText(false);
+    comboBox3->setJustificationType(Justification::centredLeft);
+    comboBox3->setTextWhenNothingSelected(TRANS("feedback def file"));
+    comboBox3->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    comboBox3->addListener(this);
 
-    addAndMakeVisible (textButton = new TextButton (""));
-    textButton->setButtonText (TRANS("copy"));
-    textButton->addListener (this);
+    addAndMakeVisible(textButton = new TextButton(""));
+    textButton->setButtonText(TRANS("copy"));
+    textButton->addListener(this);
 
-    addAndMakeVisible (textButton2 = new TextButton (""));
-    textButton2->setButtonText (TRANS("paste"));
-    textButton2->addListener (this);
+    addAndMakeVisible(textButton2 = new TextButton(""));
+    textButton2->setButtonText(TRANS("paste"));
+    textButton2->addListener(this);
 
-    addAndMakeVisible (comboBox4 = new ComboBox ("new combo box"));
-    comboBox4->setEditableText (false);
-    comboBox4->setJustificationType (Justification::centredLeft);
-    comboBox4->setTextWhenNothingSelected (TRANS("id"));
-    comboBox4->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    comboBox4->addListener (this);
-
+    addAndMakeVisible(comboBox4 = new ComboBox("new combo box"));
+    comboBox4->setEditableText(false);
+    comboBox4->setJustificationType(Justification::centredLeft);
+    comboBox4->setTextWhenNothingSelected(TRANS("id"));
+    comboBox4->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    comboBox4->addListener(this);
 
     //[UserPreSize]
     //[/UserPreSize]
 
-    setSize (200, 200);
-
+    setSize(200, 200);
 
     //[Constructor] You can add your own custom stuff here..
     //[/Constructor]
@@ -99,18 +96,17 @@ NewComponent::~NewComponent()
     textButton2 = nullptr;
     comboBox4 = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void NewComponent::paint (Graphics& g)
+void NewComponent::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll (Colours::black);
+    g.fillAll(Colours::black);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -118,18 +114,18 @@ void NewComponent::paint (Graphics& g)
 
 void NewComponent::resized()
 {
-    slider->setBounds (20, 20, 80, 56);
-    comboBox->setBounds (20, 90, 110, 24);
-    comboBox2->setBounds (20, 120, 160, 24);
-    comboBox3->setBounds (20, 150, 160, 24);
-    textButton->setBounds (110, 20, 70, 24);
-    textButton2->setBounds (110, 50, 70, 24);
-    comboBox4->setBounds (140, 90, 40, 24);
+    slider->setBounds(20, 20, 80, 56);
+    comboBox->setBounds(20, 90, 110, 24);
+    comboBox2->setBounds(20, 120, 160, 24);
+    comboBox3->setBounds(20, 150, 160, 24);
+    textButton->setBounds(110, 20, 70, 24);
+    textButton2->setBounds(110, 50, 70, 24);
+    comboBox4->setBounds(140, 90, 40, 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
 
-void NewComponent::sliderValueChanged (Slider* sliderThatWasMoved)
+void NewComponent::sliderValueChanged(Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
@@ -144,7 +140,7 @@ void NewComponent::sliderValueChanged (Slider* sliderThatWasMoved)
     //[/UsersliderValueChanged_Post]
 }
 
-void NewComponent::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
+void NewComponent::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
 {
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]
@@ -174,7 +170,7 @@ void NewComponent::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     //[/UsercomboBoxChanged_Post]
 }
 
-void NewComponent::buttonClicked (Button* buttonThatWasClicked)
+void NewComponent::buttonClicked(Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -194,11 +190,8 @@ void NewComponent::buttonClicked (Button* buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -244,7 +237,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

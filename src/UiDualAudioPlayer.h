@@ -31,33 +31,27 @@ class UiDualAudioMessageListener : public Slider::Listener
 {
     friend class UiDualAudioMessage;
 
-private:
+  private:
     virtual void on_ok() = 0;
     virtual void on_chancel() = 0;
 
-    virtual const File& get_new_audio_file() = 0;
-    virtual const File& get_old_audio_file() = 0;
+    virtual const File &get_new_audio_file() = 0;
+    virtual const File &get_old_audio_file() = 0;
 
-    void sliderValueChanged (Slider* sliderThatWasMoved) {}
+    void sliderValueChanged(Slider *sliderThatWasMoved) {}
 
-protected:
+  protected:
     virtual ~UiDualAudioMessageListener() {}
 
-private:
-    void perform_ok() {
-        on_ok(), delete this;
-    }
-    void perform_chancel() {
-        on_chancel(), delete this;
-    }
+  private:
+    void perform_ok() { on_ok(), delete this; }
+    void perform_chancel() { on_chancel(), delete this; }
 
-    JUCE_LEAK_DETECTOR ( UiDualAudioMessageListener )
+    JUCE_LEAK_DETECTOR(UiDualAudioMessageListener)
 };
 
 class AppInstanceStore;
 //[/Headers]
-
-
 
 //==============================================================================
 /**
@@ -67,35 +61,35 @@ class AppInstanceStore;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiDualAudioMessage  : public UiEditor,
-    public Button::Listener,
-    public Slider::Listener,
-    public Timer
+class UiDualAudioMessage : public UiEditor,
+                           public Button::Listener,
+                           public Slider::Listener,
+                           public Timer
 {
-public:
+  public:
     //==============================================================================
-    UiDualAudioMessage (AppInstanceStore*app_instance_store_, UiDualAudioMessageListener*const listener_, const String& project_name_, AudioPlayer*const audio_player_);
+    UiDualAudioMessage(AppInstanceStore *app_instance_store_,
+                       UiDualAudioMessageListener *const listener_, const String &project_name_,
+                       AudioPlayer *const audio_player_);
     ~UiDualAudioMessage();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
-    UiDualAudioMessageListener*const _listener;
-    AudioPlayer*const _audio_player;
+    AppInstanceStore *const _app_instance_store;
+    UiDualAudioMessageListener *const _listener;
+    AudioPlayer *const _audio_player;
 
-    Slider* _playing_thumb;
+    Slider *_playing_thumb;
 
     void timerCallback() override;
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
-    void sliderValueChanged (Slider* sliderThatWasMoved);
+    void buttonClicked(Button *buttonThatWasClicked);
+    void sliderValueChanged(Slider *sliderThatWasMoved);
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -115,12 +109,11 @@ private:
     ScopedPointer<Label> old_info_1;
     ScopedPointer<UiEditorToolbar> toolbar;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiDualAudioMessage)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiDualAudioMessage)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_790B6713A7D96C36__
+#endif // __JUCE_HEADER_790B6713A7D96C36__

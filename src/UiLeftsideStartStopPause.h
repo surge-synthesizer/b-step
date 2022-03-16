@@ -26,8 +26,6 @@
 #include "UiColumnWrapper.h"
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -36,44 +34,42 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiLeftsideStartStopPause  : public SubeditorBase
+class UiLeftsideStartStopPause : public SubeditorBase
 {
-public:
+  public:
     //==============================================================================
-    UiLeftsideStartStopPause ();
+    UiLeftsideStartStopPause();
     ~UiLeftsideStartStopPause();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-public:
-    void set_controllers( MONO_Controller*start_, MONO_Controller*pause_, MONO_Controller*stop_ )
+  public:
+    void set_controllers(MONO_Controller *start_, MONO_Controller *pause_, MONO_Controller *stop_)
     {
-        button_play->set_controller( start_ );
-        button_pause->set_controller( pause_ );
-        button_stop->set_controller( stop_ );
+        button_play->set_controller(start_);
+        button_pause->set_controller(pause_);
+        button_stop->set_controller(stop_);
     }
-    void init_styles( AppInstanceStore*const store_ )
+    void init_styles(AppInstanceStore *const store_)
     {
 #ifndef B_STEP_STANDALONE
-        button_play->set_style( store_->style_global_area_stop );
-        button_pause->set_style( store_->style_global_area_stop );
-        button_stop->set_style( store_->style_global_area_stop );
+        button_play->set_style(store_->style_global_area_stop);
+        button_pause->set_style(store_->style_global_area_stop);
+        button_stop->set_style(store_->style_global_area_stop);
 #else
-        button_play->set_style( store_->style_global_area_chord );
-        button_pause->set_style( store_->style_global_area_octave );
-        button_stop->set_style( store_->style_global_area_stop );
+        button_play->set_style(store_->style_global_area_chord);
+        button_pause->set_style(store_->style_global_area_octave);
+        button_stop->set_style(store_->style_global_area_stop);
 #endif
     }
 
-    void refresh_ui( Array< Component* >& components_to_repaint_ ) override;
+    void refresh_ui(Array<Component *> &components_to_repaint_) override;
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -82,12 +78,11 @@ private:
     ScopedPointer<ModelBase> button_pause;
     ScopedPointer<ModelBase> button_stop;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiLeftsideStartStopPause)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiLeftsideStartStopPause)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_F22A8E5894AEDD70__
+#endif // __JUCE_HEADER_F22A8E5894AEDD70__

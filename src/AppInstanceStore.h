@@ -3,9 +3,9 @@
 
 // JUCE
 #ifdef B_STEP_STANDALONE
-#	include "../../b-step-standalone/JuceLibraryCode/JuceHeader.h"
+#include "../../b-step-standalone/JuceLibraryCode/JuceHeader.h"
 #else
-#	include "../JuceLibraryCode/JuceHeader.h"
+#include "../JuceLibraryCode/JuceHeader.h"
 #endif
 
 // ************************************************************************************************
@@ -21,7 +21,7 @@ struct Controllers
         ScopedPointer<MONO_Controller> octave;
         ScopedPointer<MONO_Controller> note;
         ScopedPointer<MONO_Controller> chord;
-        const OwnedArray< MONO_Controller > string_octaves;
+        const OwnedArray<MONO_Controller> string_octaves;
 
         ScopedPointer<MONO_Controller> play;
         ScopedPointer<MONO_Controller> pause;
@@ -43,102 +43,102 @@ struct Controllers
         ScopedPointer<MONO_Controller> layers_6;
         ScopedPointer<MONO_Controller> layers_7;
 
-        ForPattern( AppInstanceStore*const store_ );
+        ForPattern(AppInstanceStore *const store_);
         //==============================================================================
-        JUCE_LEAK_DETECTOR (ForPattern)
+        JUCE_LEAK_DETECTOR(ForPattern)
     };
 
     struct ForBar
     {
-        const OwnedArray< MONO_Controller > selects;
-        const OwnedArray< MONO_Controller > chain_mutes;
-        const OwnedArray< MONO_Controller > solos;
-        const OwnedArray< MONO_Controller > octaves;
-        const OwnedArray< MONO_Controller > chords;
-        const OwnedArray< MONO_Controller > repeats;
-        const OwnedArray< MONO_Controller > bar_steps_shift;
+        const OwnedArray<MONO_Controller> selects;
+        const OwnedArray<MONO_Controller> chain_mutes;
+        const OwnedArray<MONO_Controller> solos;
+        const OwnedArray<MONO_Controller> octaves;
+        const OwnedArray<MONO_Controller> chords;
+        const OwnedArray<MONO_Controller> repeats;
+        const OwnedArray<MONO_Controller> bar_steps_shift;
 
-        const OwnedArray< MONO_Controller > step_lights;
-        const OwnedArray< MONO_Controller > step_velocity;
-        const OwnedArray< MONO_Controller > step_duration;
-        const OwnedArray< MONO_Controller > step_skip;
-        const OwnedArray< MONO_Controller > step_mute;
-        const OwnedArray< MONO_Controller > step_probability;
-        const OwnedArray< MONO_Controller > step_delay;
-        const OwnedArray< MONO_Controller > step_copy;
-        const OwnedArray< MONO_Controller > step_reset2default;
+        const OwnedArray<MONO_Controller> step_lights;
+        const OwnedArray<MONO_Controller> step_velocity;
+        const OwnedArray<MONO_Controller> step_duration;
+        const OwnedArray<MONO_Controller> step_skip;
+        const OwnedArray<MONO_Controller> step_mute;
+        const OwnedArray<MONO_Controller> step_probability;
+        const OwnedArray<MONO_Controller> step_delay;
+        const OwnedArray<MONO_Controller> step_copy;
+        const OwnedArray<MONO_Controller> step_reset2default;
 
-        const OwnedArray< MONO_Controller > repeat_note_upNdown;
-        const OwnedArray< MONO_Controller > repeat_is_used;
-        const OwnedArray< MONO_Controller > repeat_note_offset;
-        const OwnedArray< MONO_Controller > repeat_velocity_offset;
-        const OwnedArray< MONO_Controller > repeat_duration_offset;
-        const OwnedArray< MONO_Controller > repeat_distance;
-        const OwnedArray< MONO_Controller > repeats_repeats;
-        const OwnedArray< MONO_Controller > repeats_roll;
-        const OwnedArray< MONO_Controller > repeats_distance_offset;
-        const OwnedArray< MONO_Controller > repeats_probability;
-        const OwnedArray< MONO_Controller > repeats_force_chord_notes;
+        const OwnedArray<MONO_Controller> repeat_note_upNdown;
+        const OwnedArray<MONO_Controller> repeat_is_used;
+        const OwnedArray<MONO_Controller> repeat_note_offset;
+        const OwnedArray<MONO_Controller> repeat_velocity_offset;
+        const OwnedArray<MONO_Controller> repeat_duration_offset;
+        const OwnedArray<MONO_Controller> repeat_distance;
+        const OwnedArray<MONO_Controller> repeats_repeats;
+        const OwnedArray<MONO_Controller> repeats_roll;
+        const OwnedArray<MONO_Controller> repeats_distance_offset;
+        const OwnedArray<MONO_Controller> repeats_probability;
+        const OwnedArray<MONO_Controller> repeats_force_chord_notes;
 
-        const OwnedArray< MONO_Controller > pos_entry_point;
-        const OwnedArray< MONO_Controller > pos_reset_point;
-        const OwnedArray< MONO_Controller > pos_force_absolute_step;
+        const OwnedArray<MONO_Controller> pos_entry_point;
+        const OwnedArray<MONO_Controller> pos_reset_point;
+        const OwnedArray<MONO_Controller> pos_force_absolute_step;
 
-        const OwnedArray< MONO_Controller > step_octave_offset;
-        const OwnedArray< MONO_Controller > step_chord_id;
-        const OwnedArray< MONO_Controller > step_use_chord;
+        const OwnedArray<MONO_Controller> step_octave_offset;
+        const OwnedArray<MONO_Controller> step_chord_id;
+        const OwnedArray<MONO_Controller> step_use_chord;
 
-        const OwnedArray< MONO_Controller > song_resets;
-        const OwnedArray< MONO_Controller > song_entrys;
-        const OwnedArray< MONO_Controller > skips;
-        const OwnedArray< MONO_Controller > mutes;
-        const OwnedArray< MONO_Controller > play_reverses;
-        const OwnedArray< MONO_Controller > play_randoms;
-        const OwnedArray< MONO_Controller > trigger_point;
+        const OwnedArray<MONO_Controller> song_resets;
+        const OwnedArray<MONO_Controller> song_entrys;
+        const OwnedArray<MONO_Controller> skips;
+        const OwnedArray<MONO_Controller> mutes;
+        const OwnedArray<MONO_Controller> play_reverses;
+        const OwnedArray<MONO_Controller> play_randoms;
+        const OwnedArray<MONO_Controller> trigger_point;
 
         ScopedPointer<MONO_Controller> bar_cc_type_0;
         ScopedPointer<MONO_Controller> bar_cc_type_1;
         ScopedPointer<MONO_Controller> bar_cc_type_2;
-        const OwnedArray< MONO_Controller > barstep_cc_vals_0;
-        const OwnedArray< MONO_Controller > barstep_cc_vals_1;
-        const OwnedArray< MONO_Controller > barstep_cc_vals_2;
-        const OwnedArray< MONO_Controller > barstep_cc_enabl_0;
-        const OwnedArray< MONO_Controller > barstep_cc_enabl_1;
-        const OwnedArray< MONO_Controller > barstep_cc_enabl_2;
+        const OwnedArray<MONO_Controller> barstep_cc_vals_0;
+        const OwnedArray<MONO_Controller> barstep_cc_vals_1;
+        const OwnedArray<MONO_Controller> barstep_cc_vals_2;
+        const OwnedArray<MONO_Controller> barstep_cc_enabl_0;
+        const OwnedArray<MONO_Controller> barstep_cc_enabl_1;
+        const OwnedArray<MONO_Controller> barstep_cc_enabl_2;
 
         struct ForBarstring
         {
             ScopedPointer<MONO_Controller> octave;
             struct ForStep
             {
-                const OwnedArray< MONO_Controller > mutes;
+                const OwnedArray<MONO_Controller> mutes;
 
-                ForStep( AppInstanceStore*const store_, uint8 barstring_id_ );
+                ForStep(AppInstanceStore *const store_, uint8 barstring_id_);
                 //==============================================================================
-                JUCE_LEAK_DETECTOR (ForStep)
+                JUCE_LEAK_DETECTOR(ForStep)
             };
             const ForStep step;
 
-            ForBarstring( AppInstanceStore*const store_, uint8 barstring_id_ );
+            ForBarstring(AppInstanceStore *const store_, uint8 barstring_id_);
             //==============================================================================
-            JUCE_LEAK_DETECTOR (ForBarstring)
+            JUCE_LEAK_DETECTOR(ForBarstring)
         };
 
-        const OwnedArray< ForBarstring > barstring;
+        const OwnedArray<ForBarstring> barstring;
 
-        ForBar( AppInstanceStore*const store_ );
+        ForBar(AppInstanceStore *const store_);
         //==============================================================================
-        JUCE_LEAK_DETECTOR (ForBar)
+        JUCE_LEAK_DETECTOR(ForBar)
     };
 
-public:
+  public:
     const ForPattern pattern;
     const ForBar bar;
 
-    Controllers( AppInstanceStore*const store_ );
+    Controllers(AppInstanceStore *const store_);
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Controllers)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Controllers)
 };
 
 #include "MIDICC.h"
@@ -178,56 +178,55 @@ class AudioRecorder;
  */
 struct AppInstanceStore
 {
-    UiLookAndFeel* init_dummy;
+    UiLookAndFeel *init_dummy;
     int runtimes;
-    Array< MONO_Controller* > midi_mappable_controllers;
-    
-private:
+    Array<MONO_Controller *> midi_mappable_controllers;
+
+  private:
     // TODO PRIVATE
     StringArray layer_names_1;
-    Array< AppStyle* > layer_styles_1;
-    Array< Array<MONO_Controller*> > layer_1;
+    Array<AppStyle *> layer_styles_1;
+    Array<Array<MONO_Controller *>> layer_1;
     StringArray layer_names_2;
-    Array< AppStyle* > layer_styles_2;
-    Array< Array<MONO_Controller*> > layer_2;
+    Array<AppStyle *> layer_styles_2;
+    Array<Array<MONO_Controller *>> layer_2;
     StringArray layer_names_3;
-    Array< AppStyle* > layer_styles_3;
-    Array< Array<MONO_Controller*> > layer_3;
+    Array<AppStyle *> layer_styles_3;
+    Array<Array<MONO_Controller *>> layer_3;
     StringArray layer_names_4;
-    Array< AppStyle* > layer_styles_4;
-    Array< Array<MONO_Controller*> > layer_4;
+    Array<AppStyle *> layer_styles_4;
+    Array<Array<MONO_Controller *>> layer_4;
     StringArray layer_names_5;
-    Array< AppStyle* > layer_styles_5;
-    Array< Array<MONO_Controller*> > layer_5;
+    Array<AppStyle *> layer_styles_5;
+    Array<Array<MONO_Controller *>> layer_5;
     StringArray layer_names_6;
-    Array< AppStyle* > layer_styles_6;
-    Array< Array<MONO_Controller*> > layer_6;
+    Array<AppStyle *> layer_styles_6;
+    Array<Array<MONO_Controller *>> layer_6;
     StringArray layer_names_7;
-    Array< AppStyle* > layer_styles_7;
-    Array< Array<MONO_Controller*> > layer_7;
+    Array<AppStyle *> layer_styles_7;
+    Array<Array<MONO_Controller *>> layer_7;
 
-public:
-
+  public:
     //// CORE
-    GstepAudioProcessorEditor* editor;
-    GstepAudioProcessor* audio_processor;
-    AudioPlayer* audio_player;
-    AudioRecorder* audio_recorder;
-    MIDIInToControllerMap& midi_in_map;		// init before all users that use the map ;-)
-    Pattern& pattern; 				// init before sequencer
-    Sequencer& sequencer;			// init before start processBlock and UI
-    EditorConfig& editor_config;		// init before ui
-    Launchpad& launchpad_1;
-    Launchpad& launchpad_2;
-    MidiIOHandler& midi_io_handler;
-    const OwnedArray< BarCopyClipboard > bar_copy_clipboards;
-    Array< Array< Array< MONO_Controller* > > > layer_controller; // TODO const
-    Array< Array< AppStyle* > > layer_styles; // TODO const
-    Array< StringArray > layer_names; // TODO const
+    GstepAudioProcessorEditor *editor;
+    GstepAudioProcessor *audio_processor;
+    AudioPlayer *audio_player;
+    AudioRecorder *audio_recorder;
+    MIDIInToControllerMap &midi_in_map; // init before all users that use the map ;-)
+    Pattern &pattern;                   // init before sequencer
+    Sequencer &sequencer;               // init before start processBlock and UI
+    EditorConfig &editor_config;        // init before ui
+    Launchpad &launchpad_1;
+    Launchpad &launchpad_2;
+    MidiIOHandler &midi_io_handler;
+    const OwnedArray<BarCopyClipboard> bar_copy_clipboards;
+    Array<Array<Array<MONO_Controller *>>> layer_controller; // TODO const
+    Array<Array<AppStyle *>> layer_styles;                   // TODO const
+    Array<StringArray> layer_names;                          // TODO const
 
     Controllers controller;
     const MIDICC midi_cc;
-    DoYouKnow& do_you_know;
+    DoYouKnow &do_you_know;
 
     //// STYLES
     Typeface::Ptr subway_typeface;
@@ -280,74 +279,72 @@ public:
     ScopedPointer<AppStyle> const style_popup_editor_run;
     ScopedPointer<AppStyle> const style_popup_editor_skip;
 
-    Array< AppStyle* > styles;
+    Array<AppStyle *> styles;
 
-    String write( const XmlElement& xml_, const File& xml_doc ) const;
-    String read_error( const XmlElement*const xml_, const char*const should_version_ );
-    String read_error_not_exist( const File& file_ );
+    String write(const XmlElement &xml_, const File &xml_doc) const;
+    String read_error(const XmlElement *const xml_, const char *const should_version_);
+    String read_error_not_exist(const File &file_);
     String read_error_hard();
 
-    String load_b_step_xml( XmlElement& xml );
+    String load_b_step_xml(XmlElement &xml);
 
     String save_default_files();
     String load_default_files();
 
     String save_standalone();
     String load_standalone();
-    String save_plugin( XmlElement& xml );
-    String load_plugin( const XmlElement& xml );
+    String save_plugin(XmlElement &xml);
+    String load_plugin(const XmlElement &xml);
 
-    String save_midi_map( const File& ) const;
-    String load_midi_map( const File& );
-    String load_midi_map( const XmlElement* xml );
+    String save_midi_map(const File &) const;
+    String load_midi_map(const File &);
+    String load_midi_map(const XmlElement *xml);
 
     String current_project_backup;
     File last_loaded_project;
-    String save_project( XmlElement& xml_ ) const;
-    String load_project( const XmlElement& xml_ );
+    String save_project(XmlElement &xml_) const;
+    String load_project(const XmlElement &xml_);
     void update_loaded_project_cache();
     bool is_project_changed() const;
 
-    String save_project( const File& ) const;
-    String load_project( const File& );
+    String save_project(const File &) const;
+    String load_project(const File &);
 
-    String save_setup( const File& ) const;
-    String save_setup( XmlElement& xml ) const;
-    String load_setup( const File& );
-    String load_setup( const XmlElement* xml );
+    String save_setup(const File &) const;
+    String save_setup(XmlElement &xml) const;
+    String load_setup(const File &);
+    String load_setup(const XmlElement *xml);
 
-    String save_snapshot( const File&, const Bar& ) const;
-    String load_snapshot( const File&, Bar& );
-    String save_snapshot( const File& ) const;
-    String load_snapshot( const File& );
-    String load_snapshot( XmlElement& xml_);
-    String load_snapshot( XmlElement& xml_, Bar& bar_ );
+    String save_snapshot(const File &, const Bar &) const;
+    String load_snapshot(const File &, Bar &);
+    String save_snapshot(const File &) const;
+    String load_snapshot(const File &);
+    String load_snapshot(XmlElement &xml_);
+    String load_snapshot(XmlElement &xml_, Bar &bar_);
 
-    String save_chordset( XmlElement& xml_ ) const;
-    String load_chordset( const XmlElement& xml_ );
-    String save_chordset( const File& ) const;
-    String load_chordset( const File& );
+    String save_chordset(XmlElement &xml_) const;
+    String load_chordset(const XmlElement &xml_);
+    String save_chordset(const File &) const;
+    String load_chordset(const File &);
 
-    String save_colour_theme( XmlElement& xml_ ) const;
+    String save_colour_theme(XmlElement &xml_) const;
     String save_default_colour_theme() const;
-    String save_colour_theme( const File& ) const;
-    String load_colour_theme( const XmlElement& xml_ );
-    String load_colour_theme( const File& );
+    String save_colour_theme(const File &) const;
+    String load_colour_theme(const XmlElement &xml_);
+    String load_colour_theme(const File &);
 
-    String save_defines( const File& ) const;
-    String load_defines( const File& );
+    String save_defines(const File &) const;
+    String load_defines(const File &);
 
-    String save_global( const File& ) const;
-    String load_global( const File& );
+    String save_global(const File &) const;
+    String load_global(const File &);
 
-private:
-    friend class GstepAudioProcessor;	// OUR MASTER INSTANCE
-    AppInstanceStore( GstepAudioProcessor*const audio_processor_ );
+  private:
+    friend class GstepAudioProcessor; // OUR MASTER INSTANCE
+    AppInstanceStore(GstepAudioProcessor *const audio_processor_);
     ~AppInstanceStore();
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AppInstanceStore)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AppInstanceStore)
 };
 
 #endif // APP_INSTANCE_STORE_INCLUDED
-
-

@@ -25,8 +25,6 @@
 class ModelBase;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -35,39 +33,37 @@ class ModelBase;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class SliderValuePopup  : public Component
+class SliderValuePopup : public Component
 {
-public:
+  public:
     //==============================================================================
-    SliderValuePopup (const ModelBase*const model_);
+    SliderValuePopup(const ModelBase *const model_);
     ~SliderValuePopup();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-private:
+  private:
     String _text;
-    const ModelBase*const _model;
-public:
-    void set_text( String& value_ );
+    const ModelBase *const _model;
+
+  public:
+    void set_text(String &value_);
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SliderValuePopup)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SliderValuePopup)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_D1021F64E2F7918__
+#endif // __JUCE_HEADER_D1021F64E2F7918__

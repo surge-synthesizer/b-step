@@ -28,8 +28,6 @@ class AppInstanceStore;
 class UiLabel;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -38,50 +36,51 @@ class UiLabel;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorMidiLearn  : public UiEditor,
-                          public Button::Listener,
-                          public ComboBox::Listener
+class UiEditorMidiLearn : public UiEditor, public Button::Listener, public ComboBox::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiEditorMidiLearn (AppInstanceStore* const app_instance_store_);
+    UiEditorMidiLearn(AppInstanceStore *const app_instance_store_);
     ~UiEditorMidiLearn();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
+    AppInstanceStore *const _app_instance_store;
 
     void refresh_ui();
 
-private:
-    MONO_Controller* _last_controller;
+  private:
+    MONO_Controller *_last_controller;
     int _last_change_counter;
     int _current_channel;
     int _current_type;
     int _current_number;
 
     void load_select_midi_learn_mode();
-public:
+
+  public:
     void load_assignments();
-private:
+
+  private:
     void on_load_clicked() override;
     void on_save_clicked() override;
-public:
+
+  public:
     void on_close_clicked() override;
-private:
+
+  private:
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
-    void comboBoxChanged (ComboBox* comboBoxThatHasChanged);
+    void buttonClicked(Button *buttonThatWasClicked);
+    void comboBoxChanged(ComboBox *comboBoxThatHasChanged);
 
     // Binary resources:
-    static const char* trash_svg;
+    static const char *trash_svg;
     static const int trash_svgSize;
 
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -98,12 +97,11 @@ private:
     ScopedPointer<Label> label;
     ScopedPointer<Drawable> drawable1;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorMidiLearn)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorMidiLearn)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_66A24595D6F5B79C__
+#endif // __JUCE_HEADER_66A24595D6F5B79C__

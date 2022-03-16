@@ -31,29 +31,29 @@ class UiTextImExportListener
 
     const String _title;
     bool _is_importer;
-protected:
+
+  protected:
     String _data;
 
-private:
+  private:
     virtual bool on_ok() = 0;
-    virtual void on_chancel() {};
+    virtual void on_chancel(){};
 
-protected:
-    UiTextImExportListener( const String& title_, const String& default_text_, bool is_importer_ )
-        :
-        _title(title_),
-        _is_importer( is_importer_ ),
-        _data(default_text_) {
+  protected:
+    UiTextImExportListener(const String &title_, const String &default_text_, bool is_importer_)
+        : _title(title_), _is_importer(is_importer_), _data(default_text_)
+    {
     }
 
     virtual ~UiTextImExportListener() {}
 
-private:
+  private:
     UiTextImExportListener();
 
     // returns false if the editor should be keep opend
-    void perform_ok( bool& success_ ) {
-        if( on_ok() )
+    void perform_ok(bool &success_)
+    {
+        if (on_ok())
         {
             success_ = true;
             delete this;
@@ -63,16 +63,15 @@ private:
         success_ = false;
     }
     // returns false if the editor should be keep opend
-    void perform_chancel() {
+    void perform_chancel()
+    {
         on_chancel();
         delete this;
     }
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiTextImExportListener)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiTextImExportListener)
 };
 //[/Headers]
-
-
 
 //==============================================================================
 /**
@@ -82,31 +81,28 @@ private:
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiTextImExport  : public UiEditor,
-    public Timer,
-                       public Button::Listener
+class UiTextImExport : public UiEditor, public Timer, public Button::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiTextImExport (AppInstanceStore*const app_instance_store_, UiTextImExportListener*const listener_);
+    UiTextImExport(AppInstanceStore *const app_instance_store_,
+                   UiTextImExportListener *const listener_);
     ~UiTextImExport();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
-    UiTextImExportListener*const _listener;
+    AppInstanceStore *const _app_instance_store;
+    UiTextImExportListener *const _listener;
 
     void timerCallback() override;
     void on_close_clicked();
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
+    void buttonClicked(Button *buttonThatWasClicked);
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -122,12 +118,11 @@ private:
     ScopedPointer<TextButton> send_mail_to_monoplugs;
     ScopedPointer<TextButton> button_info;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiTextImExport)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiTextImExport)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_F99A763C4421110E__
+#endif // __JUCE_HEADER_F99A763C4421110E__

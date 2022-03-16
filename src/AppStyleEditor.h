@@ -26,8 +26,6 @@
 class AppInstanceStore;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -36,20 +34,20 @@ class AppInstanceStore;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorAppStyler  : public UiEditor,
-                           public Timer,
+class UiEditorAppStyler : public UiEditor,
+                          public Timer,
                           public Button::Listener,
                           public Label::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiEditorAppStyler (AppInstanceStore* const app_instance_store_);
+    UiEditorAppStyler(AppInstanceStore *const app_instance_store_);
     ~UiEditorAppStyler();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
-    uint32* target_color;
+    AppInstanceStore *const _app_instance_store;
+    uint32 *target_color;
     uint32 last_col_refresh;
 
     void timerCallback();
@@ -59,14 +57,12 @@ public:
     void on_save_clicked() override;
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
-    void labelTextChanged (Label* labelThatHasChanged);
+    void buttonClicked(Button *buttonThatWasClicked);
+    void labelTextChanged(Label *labelThatHasChanged);
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -111,12 +107,11 @@ private:
     ScopedPointer<TextButton> rand2;
     ScopedPointer<TextButton> style_6;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorAppStyler)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorAppStyler)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_D5B3C42D114CD2F2__
+#endif // __JUCE_HEADER_D5B3C42D114CD2F2__

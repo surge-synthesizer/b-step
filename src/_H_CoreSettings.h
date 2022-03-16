@@ -15,4 +15,4 @@
 #include "CHORDS.h"
 #include "MIDICC.h"
 
-#endif  // _H_CORESETTINGS_H_INCLUDED
+#endif // _H_CORESETTINGS_H_INCLUDED

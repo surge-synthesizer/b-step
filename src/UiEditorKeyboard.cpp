@@ -23,29 +23,28 @@
 
 #include "UiEditorKeyboard.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 //[/MiscUserDefs]
 
 //==============================================================================
-UiEditorKeyboard::UiEditorKeyboard (AppInstanceStore* const app_instance_store_)
-    : UiEditor("B-MIDI-Keyboard"),_app_instance_store(app_instance_store_)
+UiEditorKeyboard::UiEditorKeyboard(AppInstanceStore *const app_instance_store_)
+    : UiEditor("B-MIDI-Keyboard"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible (keyboard = new MidiKeyboardComponent (*_app_instance_store->audio_processor, MidiKeyboardComponent::horizontalKeyboard));
-
+    addAndMakeVisible(keyboard =
+                          new MidiKeyboardComponent(*_app_instance_store->audio_processor,
+                                                    MidiKeyboardComponent::horizontalKeyboard));
 
     //[UserPreSize]
 
     //[/UserPreSize]
 
-    setSize (1280, 200);
-
+    setSize(1280, 200);
 
     //[Constructor] You can add your own custom stuff here..
-    //keyboard->setKeyWidth(getWidth()/25);
-    //keyboard->setKeyWidth(getWidth()/128);
+    // keyboard->setKeyWidth(getWidth()/25);
+    // keyboard->setKeyWidth(getWidth()/128);
     keyboard->setLowestVisibleKey(0);
-    keyboard->setAvailableRange( 0, 127 );
+    keyboard->setAvailableRange(0, 127);
     //[/Constructor]
 }
 
@@ -56,24 +55,23 @@ UiEditorKeyboard::~UiEditorKeyboard()
 
     keyboard = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiEditorKeyboard::paint (Graphics& g)
+void UiEditorKeyboard::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll (Colour (0xff161616));
+    g.fillAll(Colour(0xff161616));
 
-    g.setColour (Colour (0xff161616));
-    g.fillRect (0, 0, getWidth() - 0, getHeight() - 0);
+    g.setColour(Colour(0xff161616));
+    g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.drawRect (0, 0, getWidth() - 0, getHeight() - 0, 2);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
     //[UserPaint] Add your own custom painting code here..
     ResizableWindow::moved();
@@ -85,18 +83,15 @@ void UiEditorKeyboard::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    keyboard->setBounds (2, 2, getWidth() - 4, getHeight() - 4);
+    keyboard->setBounds(2, 2, getWidth() - 4, getHeight() - 4);
     //[UserResized] Add your own custom resize handling here..
-    keyboard->setKeyWidth(float(getWidth())/( float(128/12)*7.5 ));
+    keyboard->setKeyWidth(float(getWidth()) / (float(128 / 12) * 7.5));
     ResizableWindow::resized();
     //[/UserResized]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -123,7 +118,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

@@ -29,8 +29,6 @@ class UiChordEditorStringOffset;
 class UiChordEditorChordOffset;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -39,19 +37,17 @@ class UiChordEditorChordOffset;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorChords  : public UiEditor,
-                       public Button::Listener,
-                       public ComboBox::Listener
+class UiEditorChords : public UiEditor, public Button::Listener, public ComboBox::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiEditorChords (AppInstanceStore* const app_instance_store_);
+    UiEditorChords(AppInstanceStore *const app_instance_store_);
     ~UiEditorChords();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-private:
-    AppInstanceStore*const _app_instance_store;
+  private:
+    AppInstanceStore *const _app_instance_store;
 
     unsigned int last_pattern_note_offset;
     unsigned int last_running_chord_id;
@@ -59,37 +55,39 @@ private:
     unsigned int last_tune_offset;
     uint8 _selected_preset_chord;
 
-public:
-    void refresh_ui( Array< Component* >& components_to_repaint_ );
-    void get_controllers_for_paint_popup( Array< MONO_Controller* >& controllers_that_need_a_popup );
-private:
+  public:
+    void refresh_ui(Array<Component *> &components_to_repaint_);
+    void get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_that_need_a_popup);
+
+  private:
     void set_selected_barchord_color();
-    void set_preset_button_text( TextButton*const button_, uint8 button_id_ ) const;
-private:
-    Array< UiChordEditorStringOffset* > _ui_string_offset_0;
-    Array< UiChordEditorStringOffset* > _ui_string_offset_1;
-    Array< UiChordEditorStringOffset* > _ui_string_offset_2;
-    Array< UiChordEditorStringOffset* > _ui_string_offset_3;
-    Array< UiChordEditorStringOffset* > _ui_string_offset_4;
-    Array< UiChordEditorStringOffset* > _ui_string_offset_5;
-    Array< Array< UiChordEditorStringOffset* > > _ui_chords;
-    Array< UiChordEditorChordOffset* > _ui_chord_offset;
+    void set_preset_button_text(TextButton *const button_, uint8 button_id_) const;
+
+  private:
+    Array<UiChordEditorStringOffset *> _ui_string_offset_0;
+    Array<UiChordEditorStringOffset *> _ui_string_offset_1;
+    Array<UiChordEditorStringOffset *> _ui_string_offset_2;
+    Array<UiChordEditorStringOffset *> _ui_string_offset_3;
+    Array<UiChordEditorStringOffset *> _ui_string_offset_4;
+    Array<UiChordEditorStringOffset *> _ui_string_offset_5;
+    Array<Array<UiChordEditorStringOffset *>> _ui_chords;
+    Array<UiChordEditorChordOffset *> _ui_chord_offset;
 
     void on_load_clicked() override;
     void on_save_clicked() override;
-public:
+
+  public:
     void on_close_clicked() override;
-private:
+
+  private:
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
-    void comboBoxChanged (ComboBox* comboBoxThatHasChanged);
+    void buttonClicked(Button *buttonThatWasClicked);
+    void comboBoxChanged(ComboBox *comboBoxThatHasChanged);
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -171,12 +169,11 @@ private:
     Path internalPath6;
     Path internalPath7;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiEditorChords)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorChords)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_ED17D1895ABF80B0__
+#endif // __JUCE_HEADER_ED17D1895ABF80B0__

@@ -17,4 +17,4 @@
 
 #include "UI_Tools.h"
 
-#endif  // _H_UIELEMENTS_H_INCLUDED
+#endif // _H_UIELEMENTS_H_INCLUDED

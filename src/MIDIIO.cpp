@@ -12,53 +12,53 @@
 #include "MIDILearn.h"
 #include "CoreLaunchpad.h"
 
-MidiIOHandler::MidiIOHandler(AppInstanceStore*const app_instance_store_)
-    : _app_instance_store( app_instance_store_ ),
-      midi_in( app_instance_store_, NULL ),
-      midi_learn_in( app_instance_store_, &_app_instance_store->midi_in_map ),
-      midi_learn_out( app_instance_store_ ),
-      pad_1_in( app_instance_store_, &_app_instance_store->launchpad_1 ),
-      pad_1_out( app_instance_store_ ),
-      pad_2_in( app_instance_store_, &_app_instance_store->launchpad_2 ),
-      pad_2_out( app_instance_store_ )
+MidiIOHandler::MidiIOHandler(AppInstanceStore *const app_instance_store_)
+    : _app_instance_store(app_instance_store_), midi_in(app_instance_store_, NULL),
+      midi_learn_in(app_instance_store_, &_app_instance_store->midi_in_map),
+      midi_learn_out(app_instance_store_),
+      pad_1_in(app_instance_store_, &_app_instance_store->launchpad_1),
+      pad_1_out(app_instance_store_),
+      pad_2_in(app_instance_store_, &_app_instance_store->launchpad_2),
+      pad_2_out(app_instance_store_)
 {
     BOOT(MidiIOHandler);
 
-    midi_outs.add( new MidiOutputObject(app_instance_store_) );
-    midi_outs.add( new MidiOutputObject(app_instance_store_) );
-    midi_outs.add( new MidiOutputObject(app_instance_store_) );
-    midi_outs.add( new MidiOutputObject(app_instance_store_) );
-    midi_outs.add( new MidiOutputObject(app_instance_store_) );
+    midi_outs.add(new MidiOutputObject(app_instance_store_));
+    midi_outs.add(new MidiOutputObject(app_instance_store_));
+    midi_outs.add(new MidiOutputObject(app_instance_store_));
+    midi_outs.add(new MidiOutputObject(app_instance_store_));
+    midi_outs.add(new MidiOutputObject(app_instance_store_));
 
     midi_outs.minimiseStorageOverheads();
 
 #ifndef B_STEP_STANDALONE
-    midi_in.set_port_name( DISABLED_PORT, 0 );
-    midi_outs.getUnchecked(0)->set_port_name( IN_HOST_MIDI_HANDLING, 0 );
-    midi_outs.getUnchecked(1)->set_port_name( USE_MASTER_OUT, 0 );
-    midi_outs.getUnchecked(2)->set_port_name( USE_MASTER_OUT, 0 );
-    midi_outs.getUnchecked(3)->set_port_name( USE_MASTER_OUT, 0 );
-    midi_outs.getUnchecked(4)->set_port_name( DISABLED_PORT, 0 );
+    midi_in.set_port_name(DISABLED_PORT, 0);
+    midi_outs.getUnchecked(0)->set_port_name(IN_HOST_MIDI_HANDLING, 0);
+    midi_outs.getUnchecked(1)->set_port_name(USE_MASTER_OUT, 0);
+    midi_outs.getUnchecked(2)->set_port_name(USE_MASTER_OUT, 0);
+    midi_outs.getUnchecked(3)->set_port_name(USE_MASTER_OUT, 0);
+    midi_outs.getUnchecked(4)->set_port_name(DISABLED_PORT, 0);
 #else
-#	if JUCE_MAC || JUCE_LINUX || JUCE_IOS || RASPBERRY
-    midi_outs.getUnchecked(0)->set_port_name( VIRTUAL_PORT, 0 );
-    midi_in.set_port_name( VIRTUAL_PORT, 0 );
-#	endif
-    midi_outs.getUnchecked(1)->set_port_name( USE_MASTER_OUT, 0 );
-    midi_outs.getUnchecked(2)->set_port_name( USE_MASTER_OUT, 0 );
-    midi_outs.getUnchecked(3)->set_port_name( USE_MASTER_OUT, 0 );
+#if JUCE_MAC || JUCE_LINUX || JUCE_IOS || RASPBERRY
+    midi_outs.getUnchecked(0)->set_port_name(VIRTUAL_PORT, 0);
+    midi_in.set_port_name(VIRTUAL_PORT, 0);
+#endif
+    midi_outs.getUnchecked(1)->set_port_name(USE_MASTER_OUT, 0);
+    midi_outs.getUnchecked(2)->set_port_name(USE_MASTER_OUT, 0);
+    midi_outs.getUnchecked(3)->set_port_name(USE_MASTER_OUT, 0);
 #endif
 }
 
-template<class port_type>
-static inline void store_port( const String& prefix_, XmlElement& xml, port_type& port_, bool standalone_mod = true )
+template <class port_type>
+static inline void store_port(const String &prefix_, XmlElement &xml, port_type &port_,
+                              bool standalone_mod = true)
 {
-    xml.setAttribute ( prefix_ + String ( "-name" ), port_.port_name() );
+    xml.setAttribute(prefix_ + String("-name"), port_.port_name());
 
-    xml.setAttribute ( prefix_ + String ( "-index" ), port_.get_dev_index() );
+    xml.setAttribute(prefix_ + String("-index"), port_.get_dev_index());
 }
 
-void MidiIOHandler::save_to ( XmlElement& xml ) const
+void MidiIOHandler::save_to(XmlElement &xml) const
 {
 #ifdef B_STEP_STANDALONE
     bool standalone_mod = true;
@@ -66,102 +66,111 @@ void MidiIOHandler::save_to ( XmlElement& xml ) const
     bool standalone_mod = false;
 #endif
 
-    store_port( String("MIDI-IN-PORT"), xml, midi_in, standalone_mod );
-    store_port( String("MIDI-OUT-PORT"), xml, *midi_outs.getUnchecked(0), standalone_mod );
-    store_port( String("MIDI-OUT-PORT-G2"), xml, *midi_outs.getUnchecked(1), standalone_mod );
-    store_port( String("MIDI-OUT-PORT-G3"), xml, *midi_outs.getUnchecked(2), standalone_mod );
-    store_port( String("MIDI-OUT-PORT-G4"), xml, *midi_outs.getUnchecked(3), standalone_mod );
-    store_port( String("MIDI-OUT-PORT-B"), xml, *midi_outs.getUnchecked(4), standalone_mod );
+    store_port(String("MIDI-IN-PORT"), xml, midi_in, standalone_mod);
+    store_port(String("MIDI-OUT-PORT"), xml, *midi_outs.getUnchecked(0), standalone_mod);
+    store_port(String("MIDI-OUT-PORT-G2"), xml, *midi_outs.getUnchecked(1), standalone_mod);
+    store_port(String("MIDI-OUT-PORT-G3"), xml, *midi_outs.getUnchecked(2), standalone_mod);
+    store_port(String("MIDI-OUT-PORT-G4"), xml, *midi_outs.getUnchecked(3), standalone_mod);
+    store_port(String("MIDI-OUT-PORT-B"), xml, *midi_outs.getUnchecked(4), standalone_mod);
 
-    store_port( String("MIDI-CC-IN-PORT"), xml, midi_learn_in );
-    store_port( String("MIDI-CC-OUT-PORT"), xml, midi_learn_out );
+    store_port(String("MIDI-CC-IN-PORT"), xml, midi_learn_in);
+    store_port(String("MIDI-CC-OUT-PORT"), xml, midi_learn_out);
 
-    store_port( String("MIDI-PAD1-IN-PORT"), xml, pad_1_in );
-    store_port( String("MIDI-PAD1-OUT-PORT"), xml, pad_1_out );
+    store_port(String("MIDI-PAD1-IN-PORT"), xml, pad_1_in);
+    store_port(String("MIDI-PAD1-OUT-PORT"), xml, pad_1_out);
 
-    store_port( String("MIDI-PAD2-IN-PORT"), xml, pad_2_in );
-    store_port( String("MIDI-PAD2-OUT-PORT"), xml, pad_2_out );
+    store_port(String("MIDI-PAD2-IN-PORT"), xml, pad_2_in);
+    store_port(String("MIDI-PAD2-OUT-PORT"), xml, pad_2_out);
 }
 
 #define DISABLED_PORT_1_2 "port disabled"
 #define IN_HOST_MIDI_HANDLING_1_2 "in-host MIDI handling"
 #define VIRTUAL_PORT_1_2 "create virtual port"
 #define UNSET "unset"
-template<class port_type>
-static inline void open_load_port( const String& prefix_, const XmlElement& xml, port_type& port_, GstepAudioProcessorEditor*const editor, int try_at_index_if_changed_ = 0 )
+template <class port_type>
+static inline void open_load_port(const String &prefix_, const XmlElement &xml, port_type &port_,
+                                  GstepAudioProcessorEditor *const editor,
+                                  int try_at_index_if_changed_ = 0)
 {
-    String port_name = xml.getStringAttribute ( prefix_ + String ( "-name" ), String(UNSET));
+    String port_name = xml.getStringAttribute(prefix_ + String("-name"), String(UNSET));
     /// 1.2 IMPORT
     {
-        if( port_name == IN_HOST_MIDI_HANDLING_1_2 )
+        if (port_name == IN_HOST_MIDI_HANDLING_1_2)
             port_name = IN_HOST_MIDI_HANDLING;
-        else if( port_name == DISABLED_PORT_1_2 )
+        else if (port_name == DISABLED_PORT_1_2)
             port_name = DISABLED_PORT;
-        else if( port_name == VIRTUAL_PORT_1_2 )
+        else if (port_name == VIRTUAL_PORT_1_2)
             port_name = VIRTUAL_PORT;
     }
 
 #ifdef B_STEP_STANDALONE
-    if(port_name == IN_HOST_MIDI_HANDLING )
+    if (port_name == IN_HOST_MIDI_HANDLING)
         return;
 #endif
 
-    int last_port_index = xml.getIntAttribute ( prefix_ + String ( "-index" ), -1 );
-    bool is_index_unchanged = port_type::is_device_at_index_available( port_name, last_port_index );
+    int last_port_index = xml.getIntAttribute(prefix_ + String("-index"), -1);
+    bool is_index_unchanged = port_type::is_device_at_index_available(port_name, last_port_index);
 
     // Open the old port, nothing is chnaged
-    if( port_name == IN_HOST_MIDI_HANDLING )
+    if (port_name == IN_HOST_MIDI_HANDLING)
     {
-        port_.set_port_name( port_name, -1 );
+        port_.set_port_name(port_name, -1);
         port_.open_port();
     }
 
-    else if( port_name != UNSET )
+    else if (port_name != UNSET)
     {
-        if( is_index_unchanged )
+        if (is_index_unchanged)
         {
-            port_.set_port_name( port_name, last_port_index );
+            port_.set_port_name(port_name, last_port_index);
             port_.open_port();
         }
         else
         {
             // try to find a new index and open at the new place
-            int new_dev_index = port_type::get_port_index_at_Nth_index( port_name, try_at_index_if_changed_ );
-            if( new_dev_index != -1 )
+            int new_dev_index =
+                port_type::get_port_index_at_Nth_index(port_name, try_at_index_if_changed_);
+            if (new_dev_index != -1)
             {
-                port_.set_port_name( port_name, new_dev_index );
+                port_.set_port_name(port_name, new_dev_index);
                 port_.open_port();
             }
             else
             {
-                port_.set_port_name( port_name, -1 );
+                port_.set_port_name(port_name, -1);
 
-                MIDI_ERROR_LOG( "Error restore MIDI Port: " + prefix_ + port_name + " is no more connected? \n" );
+                MIDI_ERROR_LOG("Error restore MIDI Port: " + prefix_ + port_name +
+                               " is no more connected? \n");
             }
         }
     }
 }
 
-void MidiIOHandler::load_from ( const XmlElement& xml )
+void MidiIOHandler::load_from(const XmlElement &xml)
 {
-    open_load_port( String("MIDI-IN-PORT"), xml, midi_in, _app_instance_store->editor );
-    open_load_port( String("MIDI-OUT-PORT"), xml, *midi_outs.getUnchecked(0), _app_instance_store->editor );
-    open_load_port( String("MIDI-OUT-PORT-G2"), xml, *midi_outs.getUnchecked(1), _app_instance_store->editor );
-    open_load_port( String("MIDI-OUT-PORT-G3"), xml, *midi_outs.getUnchecked(2), _app_instance_store->editor );
-    open_load_port( String("MIDI-OUT-PORT-G4"), xml, *midi_outs.getUnchecked(3), _app_instance_store->editor );
-    open_load_port( String("MIDI-OUT-PORT-B"), xml, *midi_outs.getUnchecked(4), _app_instance_store->editor );
+    open_load_port(String("MIDI-IN-PORT"), xml, midi_in, _app_instance_store->editor);
+    open_load_port(String("MIDI-OUT-PORT"), xml, *midi_outs.getUnchecked(0),
+                   _app_instance_store->editor);
+    open_load_port(String("MIDI-OUT-PORT-G2"), xml, *midi_outs.getUnchecked(1),
+                   _app_instance_store->editor);
+    open_load_port(String("MIDI-OUT-PORT-G3"), xml, *midi_outs.getUnchecked(2),
+                   _app_instance_store->editor);
+    open_load_port(String("MIDI-OUT-PORT-G4"), xml, *midi_outs.getUnchecked(3),
+                   _app_instance_store->editor);
+    open_load_port(String("MIDI-OUT-PORT-B"), xml, *midi_outs.getUnchecked(4),
+                   _app_instance_store->editor);
 
-    open_load_port( String("MIDI-CC-IN-PORT"), xml, midi_learn_in, _app_instance_store->editor );
-    open_load_port( String("MIDI-CC-OUT-PORT"), xml, midi_learn_out, _app_instance_store->editor );
+    open_load_port(String("MIDI-CC-IN-PORT"), xml, midi_learn_in, _app_instance_store->editor);
+    open_load_port(String("MIDI-CC-OUT-PORT"), xml, midi_learn_out, _app_instance_store->editor);
 
-    open_load_port( String("MIDI-PAD1-IN-PORT"), xml, pad_1_in, _app_instance_store->editor );
-    open_load_port( String("MIDI-PAD1-OUT-PORT"), xml, pad_1_out, _app_instance_store->editor );
+    open_load_port(String("MIDI-PAD1-IN-PORT"), xml, pad_1_in, _app_instance_store->editor);
+    open_load_port(String("MIDI-PAD1-OUT-PORT"), xml, pad_1_out, _app_instance_store->editor);
 
-    open_load_port( String("MIDI-PAD2-IN-PORT"), xml, pad_2_in, _app_instance_store->editor, 1 );
-    open_load_port( String("MIDI-PAD2-OUT-PORT"), xml, pad_2_out, _app_instance_store->editor, 1 );
+    open_load_port(String("MIDI-PAD2-IN-PORT"), xml, pad_2_in, _app_instance_store->editor, 1);
+    open_load_port(String("MIDI-PAD2-OUT-PORT"), xml, pad_2_out, _app_instance_store->editor, 1);
 }
 
-void MidiIOHandler::load_from_1_2( const XmlElement& xml )
+void MidiIOHandler::load_from_1_2(const XmlElement &xml)
 {
     // OLD FORMAT
     // midi-in-port-name="port disabled"
@@ -198,34 +207,36 @@ void MidiIOHandler::load_from_1_2( const XmlElement& xml )
     // midi-pad2-out-port-inhost="0"
 
 #ifdef B_STEP_STANDALONE
-    open_load_port( String("midi-in-port"), xml, midi_in, _app_instance_store->editor );
-    open_load_port( String("midi-out-port"), xml, *midi_outs.getUnchecked(0), _app_instance_store->editor );
-    //open_load_port( String("MIDI-OUT-PORT-G2"), xml, *midi_outs.getUnchecked(1) );
-    //open_load_port( String("MIDI-OUT-PORT-G3"), xml, *midi_outs.getUnchecked(2) );
-    //open_load_port( String("MIDI-OUT-PORT-G4"), xml, *midi_outs.getUnchecked(3) );
+    open_load_port(String("midi-in-port"), xml, midi_in, _app_instance_store->editor);
+    open_load_port(String("midi-out-port"), xml, *midi_outs.getUnchecked(0),
+                   _app_instance_store->editor);
+    // open_load_port( String("MIDI-OUT-PORT-G2"), xml, *midi_outs.getUnchecked(1) );
+    // open_load_port( String("MIDI-OUT-PORT-G3"), xml, *midi_outs.getUnchecked(2) );
+    // open_load_port( String("MIDI-OUT-PORT-G4"), xml, *midi_outs.getUnchecked(3) );
 #else
-    midi_in.set_port_name( DISABLED_PORT, 0 );
-    midi_outs.getUnchecked(0)->set_port_name( IN_HOST_MIDI_HANDLING , 0 );
-    midi_outs.getUnchecked(1)->set_port_name( IN_HOST_MIDI_HANDLING, 0 );
-    midi_outs.getUnchecked(2)->set_port_name( IN_HOST_MIDI_HANDLING, 0 );
-    midi_outs.getUnchecked(3)->set_port_name( IN_HOST_MIDI_HANDLING, 0 );
-    midi_outs.getUnchecked(4)->set_port_name( DISABLED_PORT, 0 );
+    midi_in.set_port_name(DISABLED_PORT, 0);
+    midi_outs.getUnchecked(0)->set_port_name(IN_HOST_MIDI_HANDLING, 0);
+    midi_outs.getUnchecked(1)->set_port_name(IN_HOST_MIDI_HANDLING, 0);
+    midi_outs.getUnchecked(2)->set_port_name(IN_HOST_MIDI_HANDLING, 0);
+    midi_outs.getUnchecked(3)->set_port_name(IN_HOST_MIDI_HANDLING, 0);
+    midi_outs.getUnchecked(4)->set_port_name(DISABLED_PORT, 0);
 
-    midi_in.set_standalone_portname( xml.getStringAttribute ( "midi-in-port-name", String(DISABLED_PORT)) );
-    midi_outs.getUnchecked(0)->set_standalone_portname( xml.getStringAttribute ( "midi-out-port-name", String(DISABLED_PORT)) );
-    midi_outs.getUnchecked(1)->set_standalone_portname( DISABLED_PORT );
-    midi_outs.getUnchecked(2)->set_standalone_portname( DISABLED_PORT );
-    midi_outs.getUnchecked(3)->set_standalone_portname( DISABLED_PORT );
-    midi_outs.getUnchecked(4)->set_standalone_portname( DISABLED_PORT );
+    midi_in.set_standalone_portname(
+        xml.getStringAttribute("midi-in-port-name", String(DISABLED_PORT)));
+    midi_outs.getUnchecked(0)->set_standalone_portname(
+        xml.getStringAttribute("midi-out-port-name", String(DISABLED_PORT)));
+    midi_outs.getUnchecked(1)->set_standalone_portname(DISABLED_PORT);
+    midi_outs.getUnchecked(2)->set_standalone_portname(DISABLED_PORT);
+    midi_outs.getUnchecked(3)->set_standalone_portname(DISABLED_PORT);
+    midi_outs.getUnchecked(4)->set_standalone_portname(DISABLED_PORT);
 #endif
 
-    open_load_port( String("midi-learn-in-port"), xml, midi_learn_in, _app_instance_store->editor );
-    open_load_port( String("midi-learn-out-port"), xml, midi_learn_out, _app_instance_store->editor );
+    open_load_port(String("midi-learn-in-port"), xml, midi_learn_in, _app_instance_store->editor);
+    open_load_port(String("midi-learn-out-port"), xml, midi_learn_out, _app_instance_store->editor);
 
-    open_load_port( String("midi-pad1-in-port"), xml, pad_1_in, _app_instance_store->editor );
-    open_load_port( String("midi-pad1-out-port"), xml, pad_1_out, _app_instance_store->editor );
+    open_load_port(String("midi-pad1-in-port"), xml, pad_1_in, _app_instance_store->editor);
+    open_load_port(String("midi-pad1-out-port"), xml, pad_1_out, _app_instance_store->editor);
 
-    open_load_port( String("midi-pad2-in-port"), xml, pad_2_in, _app_instance_store->editor, 1 );
-    open_load_port( String("midi-pad2-out-port"), xml, pad_2_out, _app_instance_store->editor, 1 );
+    open_load_port(String("midi-pad2-in-port"), xml, pad_2_in, _app_instance_store->editor, 1);
+    open_load_port(String("midi-pad2-out-port"), xml, pad_2_out, _app_instance_store->editor, 1);
 }
-

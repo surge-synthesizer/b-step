@@ -25,8 +25,6 @@
 #include "UIEditorToolbar.h"
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -35,31 +33,29 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiQuestionIsYourFriend  : public UiEditor,
-                               public Button::Listener
+class UiQuestionIsYourFriend : public UiEditor, public Button::Listener
 {
-public:
+  public:
     //==============================================================================
-    UiQuestionIsYourFriend (AppInstanceStore* const app_instance_store_);
+    UiQuestionIsYourFriend(AppInstanceStore *const app_instance_store_);
     ~UiQuestionIsYourFriend();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
+    AppInstanceStore *const _app_instance_store;
 
     void on_close_clicked() override;
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
+    void buttonClicked(Button *buttonThatWasClicked);
 
     // Binary resources:
-    static const char* question_svg;
+    static const char *question_svg;
     static const int question_svgSize;
 
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -69,12 +65,11 @@ private:
     ScopedPointer<TextEditor> textEditor;
     ScopedPointer<Drawable> drawable1;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiQuestionIsYourFriend)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiQuestionIsYourFriend)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_7E5BDFC8AB7B8312__
+#endif // __JUCE_HEADER_7E5BDFC8AB7B8312__

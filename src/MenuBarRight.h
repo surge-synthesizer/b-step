@@ -31,8 +31,6 @@ class UIQuestion;
 class UIClipboard;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -41,62 +39,61 @@ class UIClipboard;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class MenuBarRight  : public Component,
-                     public Button::Listener
+class MenuBarRight : public Component, public Button::Listener
 {
-public:
+  public:
     //==============================================================================
-    MenuBarRight (AppInstanceStore*const app_instance_store_, GstepAudioProcessorEditor*const main_window_);
+    MenuBarRight(AppInstanceStore *const app_instance_store_,
+                 GstepAudioProcessorEditor *const main_window_);
     ~MenuBarRight();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    AppInstanceStore*const _app_instance_store;
-    GstepAudioProcessorEditor*const _main_window;
+    AppInstanceStore *const _app_instance_store;
+    GstepAudioProcessorEditor *const _main_window;
 
-    void mouseDown( const MouseEvent& e_ ) override;
+    void mouseDown(const MouseEvent &e_) override;
 
     int32 last_painted_colour;
-    Array< Drawable* > drawables;
+    Array<Drawable *> drawables;
 
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
 
     // UI REFRESH
-public:
-    void refresh_ui( Array< Component* >& components_to_repaint_ );
+  public:
+    void refresh_ui(Array<Component *> &components_to_repaint_);
 
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
+    void buttonClicked(Button *buttonThatWasClicked);
 
     // Binary resources:
-    static const char* load_svg;
+    static const char *load_svg;
     static const int load_svgSize;
-    static const char* save_svg;
+    static const char *save_svg;
     static const int save_svgSize;
-    static const char* learn_svg;
+    static const char *learn_svg;
     static const int learn_svgSize;
-    static const char* info_svg;
+    static const char *info_svg;
     static const int info_svgSize;
-    static const char* panic_svg;
+    static const char *panic_svg;
     static const int panic_svgSize;
-    static const char* settings_svg;
+    static const char *settings_svg;
     static const int settings_svgSize;
-    static const char* drag_svg;
+    static const char *drag_svg;
     static const int drag_svgSize;
-    static const char* connection_svg;
+    static const char *connection_svg;
     static const int connection_svgSize;
-    static const char* trash_svg;
+    static const char *trash_svg;
     static const int trash_svgSize;
-    static const char* paint_svg;
+    static const char *paint_svg;
     static const int paint_svgSize;
 
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -132,12 +129,11 @@ private:
     ScopedPointer<Drawable> drawable14;
     ScopedPointer<Drawable> drawable15;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MenuBarRight)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MenuBarRight)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_B1D3D35915111CF0__
+#endif // __JUCE_HEADER_B1D3D35915111CF0__

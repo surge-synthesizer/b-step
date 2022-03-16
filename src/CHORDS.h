@@ -32,101 +32,101 @@ enum CHORD_AT_E_TUNE
     G_MINOR
 };
 
-static inline Array< int8 > get_chord( CHORD_AT_E_TUNE chord_ident_ )
+static inline Array<int8> get_chord(CHORD_AT_E_TUNE chord_ident_)
 {
-    Array< int8 > chord_offsets;
-    switch( chord_ident_ )
+    Array<int8> chord_offsets;
+    switch (chord_ident_)
     {
     case A_MAJOR:
-        chord_offsets.add( 2 ); // g
-        chord_offsets.add( 2 );
-        chord_offsets.add( 4 );
-        chord_offsets.add( 5 );
+        chord_offsets.add(2); // g
+        chord_offsets.add(2);
+        chord_offsets.add(4);
+        chord_offsets.add(5);
         break;
     case B_MAJOR:
-        chord_offsets.add( 4 ); // g
-        chord_offsets.add( 1 );
-        chord_offsets.add( 2 );
-        chord_offsets.add( 2 );
+        chord_offsets.add(4); // g
+        chord_offsets.add(1);
+        chord_offsets.add(2);
+        chord_offsets.add(2);
         break;
     case C_MAJOR:
-        chord_offsets.add( 0 ); // g
-        chord_offsets.add( 2 );
-        chord_offsets.add( 3 );
-        chord_offsets.add( 3 );
+        chord_offsets.add(0); // g
+        chord_offsets.add(2);
+        chord_offsets.add(3);
+        chord_offsets.add(3);
         break;
     case D_MAJOR:
-        chord_offsets.add( 2 ); // g
-        chord_offsets.add( 0 );
-        chord_offsets.add( 0 );
-        chord_offsets.add( 2 );
+        chord_offsets.add(2); // g
+        chord_offsets.add(0);
+        chord_offsets.add(0);
+        chord_offsets.add(2);
         break;
     case E_MAJOR:
-        chord_offsets.add( 1 ); // g
-        chord_offsets.add( 2 );
-        chord_offsets.add( 2 );
-        chord_offsets.add( 0 );
+        chord_offsets.add(1); // g
+        chord_offsets.add(2);
+        chord_offsets.add(2);
+        chord_offsets.add(0);
         break;
     case F_MAJOR:
-        chord_offsets.add( 2 ); // g
-        chord_offsets.add( 3 );
-        chord_offsets.add( 3 );
-        chord_offsets.add( 1 );
+        chord_offsets.add(2); // g
+        chord_offsets.add(3);
+        chord_offsets.add(3);
+        chord_offsets.add(1);
         break;
     case G_MAJOR:
-        chord_offsets.add( 0 ); // g
-        chord_offsets.add( 0 );
-        chord_offsets.add( 2 );
-        chord_offsets.add( 3 );
+        chord_offsets.add(0); // g
+        chord_offsets.add(0);
+        chord_offsets.add(2);
+        chord_offsets.add(3);
         break;
 
     case A_MINOR:
-        chord_offsets.add( 2 ); // g
-        chord_offsets.add( 2 );
-        chord_offsets.add( 3 );
-        chord_offsets.add( 5 );
+        chord_offsets.add(2); // g
+        chord_offsets.add(2);
+        chord_offsets.add(3);
+        chord_offsets.add(5);
         break;
     case B_MINOR:
-        chord_offsets.add( 4 ); // g
-        chord_offsets.add( 0 );
-        chord_offsets.add( 2 );
-        chord_offsets.add( 2 );
+        chord_offsets.add(4); // g
+        chord_offsets.add(0);
+        chord_offsets.add(2);
+        chord_offsets.add(2);
         break;
     case C_MINOR:
-        chord_offsets.add( 0 ); // g
-        chord_offsets.add( 1 );
-        chord_offsets.add( 3 );
-        chord_offsets.add( 3 );
+        chord_offsets.add(0); // g
+        chord_offsets.add(1);
+        chord_offsets.add(3);
+        chord_offsets.add(3);
         break;
     case D_MINOR:
-        chord_offsets.add( 2 ); // g
-        chord_offsets.add( 0 );
-        chord_offsets.add( 0 );
-        chord_offsets.add( 1 );
+        chord_offsets.add(2); // g
+        chord_offsets.add(0);
+        chord_offsets.add(0);
+        chord_offsets.add(1);
         break;
     case E_MINOR:
-        chord_offsets.add( 0 ); // g
-        chord_offsets.add( 2 );
-        chord_offsets.add( 2 );
-        chord_offsets.add( 0 );
+        chord_offsets.add(0); // g
+        chord_offsets.add(2);
+        chord_offsets.add(2);
+        chord_offsets.add(0);
         break;
     case F_MINOR:
-        chord_offsets.add( 1 ); // g
-        chord_offsets.add( 3 );
-        chord_offsets.add( 3 );
-        chord_offsets.add( 1 );
+        chord_offsets.add(1); // g
+        chord_offsets.add(3);
+        chord_offsets.add(3);
+        chord_offsets.add(1);
         break;
     case G_MINOR:
-        chord_offsets.add( 0 ); // g
-        chord_offsets.add( 0 );
-        chord_offsets.add( 1 );
-        chord_offsets.add( 3 );
+        chord_offsets.add(0); // g
+        chord_offsets.add(0);
+        chord_offsets.add(1);
+        chord_offsets.add(3);
         break;
-    default :
-        chord_offsets.add( 0 ); // g
-        chord_offsets.add( 0 );
-        chord_offsets.add( 0 );
-        chord_offsets.add( 0 );
+    default:
+        chord_offsets.add(0); // g
+        chord_offsets.add(0);
+        chord_offsets.add(0);
+        chord_offsets.add(0);
     };
 
     return std::move(chord_offsets);

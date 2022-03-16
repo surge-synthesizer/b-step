@@ -32,26 +32,25 @@
 
 #include "UiEditorSettings.h"
 
-
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 // ORG SIZE 1140X700
 
-
-template<class port_type>
-static inline void add_set_midi_port( ComboBox*const cb_, const String& port_name_, int at_index_, const port_type& port_ )
+template <class port_type>
+static inline void add_set_midi_port(ComboBox *const cb_, const String &port_name_, int at_index_,
+                                     const port_type &port_)
 {
-    cb_->addItem( port_name_, at_index_ );
-    if( port_name_.compare( port_.port_name() ) == 0 )
+    cb_->addItem(port_name_, at_index_);
+    if (port_name_.compare(port_.port_name()) == 0)
     {
-        cb_->setSelectedId( at_index_, NotificationType::dontSendNotification );
+        cb_->setSelectedId(at_index_, NotificationType::dontSendNotification);
 
-        if( ! port_.is_open() )
+        if (!port_.is_open())
         {
-            cb_->setColour( ComboBox::ColourIds::textColourId, Colour (0xffff0000) );
+            cb_->setColour(ComboBox::ColourIds::textColourId, Colour(0xffff0000));
         }
         else
         {
-            cb_->setColour( ComboBox::ColourIds::textColourId, Colours::greenyellow );
+            cb_->setColour(ComboBox::ColourIds::textColourId, Colours::greenyellow);
         }
     }
 }
@@ -71,86 +70,129 @@ void UiEditorSettings::fill_drop_downs()
     cb_midi_learn_in_port->clear(NotificationType::dontSendNotification);
     cb_midi_learn_out_port->clear(NotificationType::dontSendNotification);
 
-
-    cb_midi_pad_out_1->setColour( ComboBox::ColourIds::textColourId, Colour (0xffffffff) );
-    cb_midi_pad_out_2->setColour( ComboBox::ColourIds::textColourId, Colour (0xffffffff) );
-    cb_midi_out_port->setColour( ComboBox::ColourIds::textColourId, Colour (0xffffffff) );
-    cb_midi_out_port_string_g->setColour( ComboBox::ColourIds::textColourId, Colour (0xffffffff) );
-    cb_midi_out_port_string_d->setColour( ComboBox::ColourIds::textColourId, Colour (0xffffffff) );
-    cb_midi_out_port_string_a->setColour( ComboBox::ColourIds::textColourId, Colour (0xffffffff) );
-    cb_midi_out_port_b->setColour( ComboBox::ColourIds::textColourId, Colour (0xffffffff) );
-    cb_midi_pad_in_1->setColour( ComboBox::ColourIds::textColourId, Colour (0xffffffff) );
-    cb_midi_pad_in_2->setColour( ComboBox::ColourIds::textColourId, Colour (0xffffffff) );
-    cb_midi_in_port->setColour( ComboBox::ColourIds::textColourId, Colour (0xffffffff) );
-    cb_midi_learn_in_port->setColour( ComboBox::ColourIds::textColourId, Colour (0xffffffff) );
-    cb_midi_learn_out_port->setColour( ComboBox::ColourIds::textColourId, Colour (0xffffffff) );
+    cb_midi_pad_out_1->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
+    cb_midi_pad_out_2->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
+    cb_midi_out_port->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
+    cb_midi_out_port_string_g->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
+    cb_midi_out_port_string_d->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
+    cb_midi_out_port_string_a->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
+    cb_midi_out_port_b->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
+    cb_midi_pad_in_1->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
+    cb_midi_pad_in_2->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
+    cb_midi_in_port->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
+    cb_midi_learn_in_port->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
+    cb_midi_learn_out_port->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
 
     // OUTPUTS
     StringArray all_devs = MidiOutput::getDevices();
     int index = 1;
-    add_set_midi_port( cb_midi_pad_out_1, DISABLED_PORT, index, _app_instance_store->midi_io_handler.pad_1_out );
-    add_set_midi_port( cb_midi_pad_out_2, DISABLED_PORT, index, _app_instance_store->midi_io_handler.pad_2_out );
-    add_set_midi_port( cb_midi_out_port, DISABLED_PORT, index, _app_instance_store->midi_io_handler.get_out_port(0) );
-    add_set_midi_port( cb_midi_out_port_string_g, USE_MASTER_OUT, index, _app_instance_store->midi_io_handler.get_out_port(1) );
-    add_set_midi_port( cb_midi_out_port_string_d, USE_MASTER_OUT, index, _app_instance_store->midi_io_handler.get_out_port(2) );
-    add_set_midi_port( cb_midi_out_port_string_a, USE_MASTER_OUT, index, _app_instance_store->midi_io_handler.get_out_port(3) );
-    add_set_midi_port( cb_midi_out_port_b, DISABLED_PORT, index, _app_instance_store->midi_io_handler.get_out_port(4) );
-    add_set_midi_port( cb_midi_learn_out_port, DISABLED_PORT, index, _app_instance_store->midi_io_handler.midi_learn_out );
+    add_set_midi_port(cb_midi_pad_out_1, DISABLED_PORT, index,
+                      _app_instance_store->midi_io_handler.pad_1_out);
+    add_set_midi_port(cb_midi_pad_out_2, DISABLED_PORT, index,
+                      _app_instance_store->midi_io_handler.pad_2_out);
+    add_set_midi_port(cb_midi_out_port, DISABLED_PORT, index,
+                      _app_instance_store->midi_io_handler.get_out_port(0));
+    add_set_midi_port(cb_midi_out_port_string_g, USE_MASTER_OUT, index,
+                      _app_instance_store->midi_io_handler.get_out_port(1));
+    add_set_midi_port(cb_midi_out_port_string_d, USE_MASTER_OUT, index,
+                      _app_instance_store->midi_io_handler.get_out_port(2));
+    add_set_midi_port(cb_midi_out_port_string_a, USE_MASTER_OUT, index,
+                      _app_instance_store->midi_io_handler.get_out_port(3));
+    add_set_midi_port(cb_midi_out_port_b, DISABLED_PORT, index,
+                      _app_instance_store->midi_io_handler.get_out_port(4));
+    add_set_midi_port(cb_midi_learn_out_port, DISABLED_PORT, index,
+                      _app_instance_store->midi_io_handler.midi_learn_out);
     index++;
     int i = 0;
-    for( ; i < all_devs.size(); i++)
+    for (; i < all_devs.size(); i++)
     {
-        add_set_midi_port( cb_midi_pad_out_1, all_devs[ i ], i+index, _app_instance_store->midi_io_handler.pad_1_out );
-        add_set_midi_port( cb_midi_pad_out_2, all_devs[ i ], i+index, _app_instance_store->midi_io_handler.pad_2_out );
-        add_set_midi_port( cb_midi_out_port, all_devs[ i ], i+index, _app_instance_store->midi_io_handler.get_out_port(0) );
-        add_set_midi_port( cb_midi_out_port_string_g, all_devs[ i ], i+index, _app_instance_store->midi_io_handler.get_out_port(1) );
-        add_set_midi_port( cb_midi_out_port_string_d, all_devs[ i ], i+index, _app_instance_store->midi_io_handler.get_out_port(2) );
-        add_set_midi_port( cb_midi_out_port_string_a, all_devs[ i ], i+index, _app_instance_store->midi_io_handler.get_out_port(3) );
-        add_set_midi_port( cb_midi_out_port_b, all_devs[ i ], i+index, _app_instance_store->midi_io_handler.get_out_port(4) );
-        add_set_midi_port( cb_midi_learn_out_port, all_devs[ i ], i+index, _app_instance_store->midi_io_handler.midi_learn_out );
+        add_set_midi_port(cb_midi_pad_out_1, all_devs[i], i + index,
+                          _app_instance_store->midi_io_handler.pad_1_out);
+        add_set_midi_port(cb_midi_pad_out_2, all_devs[i], i + index,
+                          _app_instance_store->midi_io_handler.pad_2_out);
+        add_set_midi_port(cb_midi_out_port, all_devs[i], i + index,
+                          _app_instance_store->midi_io_handler.get_out_port(0));
+        add_set_midi_port(cb_midi_out_port_string_g, all_devs[i], i + index,
+                          _app_instance_store->midi_io_handler.get_out_port(1));
+        add_set_midi_port(cb_midi_out_port_string_d, all_devs[i], i + index,
+                          _app_instance_store->midi_io_handler.get_out_port(2));
+        add_set_midi_port(cb_midi_out_port_string_a, all_devs[i], i + index,
+                          _app_instance_store->midi_io_handler.get_out_port(3));
+        add_set_midi_port(cb_midi_out_port_b, all_devs[i], i + index,
+                          _app_instance_store->midi_io_handler.get_out_port(4));
+        add_set_midi_port(cb_midi_learn_out_port, all_devs[i], i + index,
+                          _app_instance_store->midi_io_handler.midi_learn_out);
     }
 #ifndef B_STEP_STANDALONE
-    add_set_midi_port( cb_midi_pad_out_1, IN_HOST_MIDI_HANDLING, i+index, _app_instance_store->midi_io_handler.pad_1_out );
-    add_set_midi_port( cb_midi_pad_out_2, IN_HOST_MIDI_HANDLING, i+index, _app_instance_store->midi_io_handler.pad_2_out );
-    add_set_midi_port( cb_midi_out_port, IN_HOST_MIDI_HANDLING, i+index, _app_instance_store->midi_io_handler.get_out_port(0) );
-    add_set_midi_port( cb_midi_out_port_string_g, IN_HOST_MIDI_HANDLING, i+index, _app_instance_store->midi_io_handler.get_out_port(1) );
-    add_set_midi_port( cb_midi_out_port_string_d, IN_HOST_MIDI_HANDLING, i+index, _app_instance_store->midi_io_handler.get_out_port(2) );
-    add_set_midi_port( cb_midi_out_port_string_a, IN_HOST_MIDI_HANDLING, i+index, _app_instance_store->midi_io_handler.get_out_port(3) );
-    add_set_midi_port( cb_midi_out_port_b, IN_HOST_MIDI_HANDLING, i+index, _app_instance_store->midi_io_handler.get_out_port(4) );
-    add_set_midi_port( cb_midi_learn_out_port, IN_HOST_MIDI_HANDLING, i+index, _app_instance_store->midi_io_handler.midi_learn_out );
+    add_set_midi_port(cb_midi_pad_out_1, IN_HOST_MIDI_HANDLING, i + index,
+                      _app_instance_store->midi_io_handler.pad_1_out);
+    add_set_midi_port(cb_midi_pad_out_2, IN_HOST_MIDI_HANDLING, i + index,
+                      _app_instance_store->midi_io_handler.pad_2_out);
+    add_set_midi_port(cb_midi_out_port, IN_HOST_MIDI_HANDLING, i + index,
+                      _app_instance_store->midi_io_handler.get_out_port(0));
+    add_set_midi_port(cb_midi_out_port_string_g, IN_HOST_MIDI_HANDLING, i + index,
+                      _app_instance_store->midi_io_handler.get_out_port(1));
+    add_set_midi_port(cb_midi_out_port_string_d, IN_HOST_MIDI_HANDLING, i + index,
+                      _app_instance_store->midi_io_handler.get_out_port(2));
+    add_set_midi_port(cb_midi_out_port_string_a, IN_HOST_MIDI_HANDLING, i + index,
+                      _app_instance_store->midi_io_handler.get_out_port(3));
+    add_set_midi_port(cb_midi_out_port_b, IN_HOST_MIDI_HANDLING, i + index,
+                      _app_instance_store->midi_io_handler.get_out_port(4));
+    add_set_midi_port(cb_midi_learn_out_port, IN_HOST_MIDI_HANDLING, i + index,
+                      _app_instance_store->midi_io_handler.midi_learn_out);
 #elif JUCE_LINUX || JUCE_MAC || JUCE_IOS || RASPBERRY
-    add_set_midi_port( cb_midi_out_port, VIRTUAL_PORT, i+index, _app_instance_store->midi_io_handler.get_out_port(0) );
-    add_set_midi_port( cb_midi_out_port_string_g, VIRTUAL_PORT, i+index, _app_instance_store->midi_io_handler.get_out_port(1) );
-    add_set_midi_port( cb_midi_out_port_string_d, VIRTUAL_PORT, i+index, _app_instance_store->midi_io_handler.get_out_port(2) );
-    add_set_midi_port( cb_midi_out_port_string_a, VIRTUAL_PORT, i+index, _app_instance_store->midi_io_handler.get_out_port(3) );
-    add_set_midi_port( cb_midi_out_port_b, VIRTUAL_PORT, i+index, _app_instance_store->midi_io_handler.get_out_port(4) );
-    add_set_midi_port( cb_midi_learn_out_port, VIRTUAL_PORT, i+index, _app_instance_store->midi_io_handler.midi_learn_out );
+    add_set_midi_port(cb_midi_out_port, VIRTUAL_PORT, i + index,
+                      _app_instance_store->midi_io_handler.get_out_port(0));
+    add_set_midi_port(cb_midi_out_port_string_g, VIRTUAL_PORT, i + index,
+                      _app_instance_store->midi_io_handler.get_out_port(1));
+    add_set_midi_port(cb_midi_out_port_string_d, VIRTUAL_PORT, i + index,
+                      _app_instance_store->midi_io_handler.get_out_port(2));
+    add_set_midi_port(cb_midi_out_port_string_a, VIRTUAL_PORT, i + index,
+                      _app_instance_store->midi_io_handler.get_out_port(3));
+    add_set_midi_port(cb_midi_out_port_b, VIRTUAL_PORT, i + index,
+                      _app_instance_store->midi_io_handler.get_out_port(4));
+    add_set_midi_port(cb_midi_learn_out_port, VIRTUAL_PORT, i + index,
+                      _app_instance_store->midi_io_handler.midi_learn_out);
 #endif
 
     // INPUTS
     StringArray all_indevs = MidiInput::getDevices();
     index = 1;
-    add_set_midi_port( cb_midi_pad_in_1, DISABLED_PORT, index, _app_instance_store->midi_io_handler.pad_1_in );
-    add_set_midi_port( cb_midi_pad_in_2, DISABLED_PORT, index, _app_instance_store->midi_io_handler.pad_2_in );
-    add_set_midi_port( cb_midi_in_port, DISABLED_PORT, index, _app_instance_store->midi_io_handler.midi_in );
-    add_set_midi_port( cb_midi_learn_in_port, DISABLED_PORT, index, _app_instance_store->midi_io_handler.midi_learn_in );
+    add_set_midi_port(cb_midi_pad_in_1, DISABLED_PORT, index,
+                      _app_instance_store->midi_io_handler.pad_1_in);
+    add_set_midi_port(cb_midi_pad_in_2, DISABLED_PORT, index,
+                      _app_instance_store->midi_io_handler.pad_2_in);
+    add_set_midi_port(cb_midi_in_port, DISABLED_PORT, index,
+                      _app_instance_store->midi_io_handler.midi_in);
+    add_set_midi_port(cb_midi_learn_in_port, DISABLED_PORT, index,
+                      _app_instance_store->midi_io_handler.midi_learn_in);
     index++;
     i = 0;
-    for(; i < all_indevs.size(); i++)
+    for (; i < all_indevs.size(); i++)
     {
-        add_set_midi_port( cb_midi_pad_in_1, all_indevs[ i ], i+index, _app_instance_store->midi_io_handler.pad_1_in );
-        add_set_midi_port( cb_midi_pad_in_2, all_indevs[ i ], i+index, _app_instance_store->midi_io_handler.pad_2_in );
-        add_set_midi_port( cb_midi_in_port, all_indevs[ i ], i+index, _app_instance_store->midi_io_handler.midi_in );
-        add_set_midi_port( cb_midi_learn_in_port, all_indevs[ i ], i+index, _app_instance_store->midi_io_handler.midi_learn_in );
+        add_set_midi_port(cb_midi_pad_in_1, all_indevs[i], i + index,
+                          _app_instance_store->midi_io_handler.pad_1_in);
+        add_set_midi_port(cb_midi_pad_in_2, all_indevs[i], i + index,
+                          _app_instance_store->midi_io_handler.pad_2_in);
+        add_set_midi_port(cb_midi_in_port, all_indevs[i], i + index,
+                          _app_instance_store->midi_io_handler.midi_in);
+        add_set_midi_port(cb_midi_learn_in_port, all_indevs[i], i + index,
+                          _app_instance_store->midi_io_handler.midi_learn_in);
     }
 #ifndef B_STEP_STANDALONE
-    add_set_midi_port( cb_midi_pad_in_1, IN_HOST_MIDI_HANDLING, i+index, _app_instance_store->midi_io_handler.pad_1_in );
-    add_set_midi_port( cb_midi_pad_in_2, IN_HOST_MIDI_HANDLING, i+index, _app_instance_store->midi_io_handler.pad_2_in );
-    add_set_midi_port( cb_midi_in_port, IN_HOST_MIDI_HANDLING, i+index, _app_instance_store->midi_io_handler.midi_in );
-    add_set_midi_port( cb_midi_learn_in_port, IN_HOST_MIDI_HANDLING, i+index, _app_instance_store->midi_io_handler.midi_learn_in );
+    add_set_midi_port(cb_midi_pad_in_1, IN_HOST_MIDI_HANDLING, i + index,
+                      _app_instance_store->midi_io_handler.pad_1_in);
+    add_set_midi_port(cb_midi_pad_in_2, IN_HOST_MIDI_HANDLING, i + index,
+                      _app_instance_store->midi_io_handler.pad_2_in);
+    add_set_midi_port(cb_midi_in_port, IN_HOST_MIDI_HANDLING, i + index,
+                      _app_instance_store->midi_io_handler.midi_in);
+    add_set_midi_port(cb_midi_learn_in_port, IN_HOST_MIDI_HANDLING, i + index,
+                      _app_instance_store->midi_io_handler.midi_learn_in);
 #elif JUCE_LINUX || JUCE_MAC || JUCE_IOS || RASPBERRY
-    add_set_midi_port( cb_midi_in_port, VIRTUAL_PORT, i+index, _app_instance_store->midi_io_handler.midi_in );
-    add_set_midi_port( cb_midi_learn_in_port, VIRTUAL_PORT, i+index, _app_instance_store->midi_io_handler.midi_learn_in );
+    add_set_midi_port(cb_midi_in_port, VIRTUAL_PORT, i + index,
+                      _app_instance_store->midi_io_handler.midi_in);
+    add_set_midi_port(cb_midi_learn_in_port, VIRTUAL_PORT, i + index,
+                      _app_instance_store->midi_io_handler.midi_learn_in);
 #endif
 }
 
@@ -159,488 +201,501 @@ void UiEditorSettings::on_close_clicked()
     _app_instance_store->editor_config.editor_settings = nullptr;
 }
 
-void UiEditorSettings::comboBoxMouseDown (ComboBox*)
-{
-    fill_drop_downs();
-}
+void UiEditorSettings::comboBoxMouseDown(ComboBox *) { fill_drop_downs(); }
 //[/MiscUserDefs]
 
 //==============================================================================
-UiEditorSettings::UiEditorSettings (AppInstanceStore* const app_instance_store_)
-    : UiEditor("B-IO-Settings"),_app_instance_store(app_instance_store_)
+UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
+    : UiEditor("B-IO-Settings"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible (label_latency_ms = new Label (String(),
-            TRANS("Latency +/- ms")));
-    label_latency_ms->setFont (Font (15.00f, Font::plain));
-    label_latency_ms->setJustificationType (Justification::centredRight);
-    label_latency_ms->setEditable (false, false, false);
-    label_latency_ms->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_latency_ms->setColour (TextEditor::textColourId, Colours::black);
-    label_latency_ms->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_latency_ms = new Label(String(), TRANS("Latency +/- ms")));
+    label_latency_ms->setFont(Font(15.00f, Font::plain));
+    label_latency_ms->setJustificationType(Justification::centredRight);
+    label_latency_ms->setEditable(false, false, false);
+    label_latency_ms->setColour(Label::textColourId,
+                                Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_latency_ms->setColour(TextEditor::textColourId, Colours::black);
+    label_latency_ms->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (lbl_clock_thru = new Label (String(),
-            TRANS("Sync Thru (Clock, Start...)")));
-    lbl_clock_thru->setFont (Font (15.00f, Font::plain));
-    lbl_clock_thru->setJustificationType (Justification::centredLeft);
-    lbl_clock_thru->setEditable (false, false, false);
-    lbl_clock_thru->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    lbl_clock_thru->setColour (TextEditor::textColourId, Colours::black);
-    lbl_clock_thru->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(lbl_clock_thru = new Label(String(), TRANS("Sync Thru (Clock, Start...)")));
+    lbl_clock_thru->setFont(Font(15.00f, Font::plain));
+    lbl_clock_thru->setJustificationType(Justification::centredLeft);
+    lbl_clock_thru->setEditable(false, false, false);
+    lbl_clock_thru->setColour(Label::textColourId,
+                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    lbl_clock_thru->setColour(TextEditor::textColourId, Colours::black);
+    lbl_clock_thru->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (tb_clock_thru = new ToggleButton (String()));
-    tb_clock_thru->setExplicitFocusOrder (2);
-    tb_clock_thru->addListener (this);
+    addAndMakeVisible(tb_clock_thru = new ToggleButton(String()));
+    tb_clock_thru->setExplicitFocusOrder(2);
+    tb_clock_thru->addListener(this);
 
-    addAndMakeVisible (label_latency_clocks = new Label (String(),
-            TRANS("Latency +1/96")));
-    label_latency_clocks->setFont (Font (15.00f, Font::plain));
-    label_latency_clocks->setJustificationType (Justification::centredRight);
-    label_latency_clocks->setEditable (false, false, false);
-    label_latency_clocks->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_latency_clocks->setColour (TextEditor::textColourId, Colours::black);
-    label_latency_clocks->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_latency_clocks = new Label(String(), TRANS("Latency +1/96")));
+    label_latency_clocks->setFont(Font(15.00f, Font::plain));
+    label_latency_clocks->setJustificationType(Justification::centredRight);
+    label_latency_clocks->setEditable(false, false, false);
+    label_latency_clocks->setColour(Label::textColourId,
+                                    Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_latency_clocks->setColour(TextEditor::textColourId, Colours::black);
+    label_latency_clocks->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (label_midi_thru = new Label (String(),
-            TRANS("MIDI Thru")));
-    label_midi_thru->setFont (Font (15.00f, Font::plain));
-    label_midi_thru->setJustificationType (Justification::centredLeft);
-    label_midi_thru->setEditable (false, false, false);
-    label_midi_thru->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_thru->setColour (TextEditor::textColourId, Colours::black);
-    label_midi_thru->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_midi_thru = new Label(String(), TRANS("MIDI Thru")));
+    label_midi_thru->setFont(Font(15.00f, Font::plain));
+    label_midi_thru->setJustificationType(Justification::centredLeft);
+    label_midi_thru->setEditable(false, false, false);
+    label_midi_thru->setColour(Label::textColourId,
+                               Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_thru->setColour(TextEditor::textColourId, Colours::black);
+    label_midi_thru->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (tb_midi_thru_enable = new ToggleButton (String()));
-    tb_midi_thru_enable->setExplicitFocusOrder (2);
-    tb_midi_thru_enable->addListener (this);
+    addAndMakeVisible(tb_midi_thru_enable = new ToggleButton(String()));
+    tb_midi_thru_enable->setExplicitFocusOrder(2);
+    tb_midi_thru_enable->addListener(this);
 
-    addAndMakeVisible (sl_latency_ms = new Slider (String()));
-    sl_latency_ms->setExplicitFocusOrder (1);
-    sl_latency_ms->setRange (0, 400, 1);
-    sl_latency_ms->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    sl_latency_ms->setTextBoxStyle (Slider::TextBoxRight, false, 40, 100);
-    sl_latency_ms->setColour (Slider::thumbColourId, Colour (0x00000000));
-    sl_latency_ms->setColour (Slider::trackColourId, Colour (0x00000000));
-    sl_latency_ms->setColour (Slider::rotarySliderFillColourId, Colours::cornsilk);
-    sl_latency_ms->setColour (Slider::rotarySliderOutlineColourId, Colour (0xff272727));
-    sl_latency_ms->addListener (this);
+    addAndMakeVisible(sl_latency_ms = new Slider(String()));
+    sl_latency_ms->setExplicitFocusOrder(1);
+    sl_latency_ms->setRange(0, 400, 1);
+    sl_latency_ms->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    sl_latency_ms->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
+    sl_latency_ms->setColour(Slider::thumbColourId, Colour(0x00000000));
+    sl_latency_ms->setColour(Slider::trackColourId, Colour(0x00000000));
+    sl_latency_ms->setColour(Slider::rotarySliderFillColourId, Colours::cornsilk);
+    sl_latency_ms->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_latency_ms->addListener(this);
 
-    addAndMakeVisible (sl_latency_clocks = new Slider (String()));
-    sl_latency_clocks->setExplicitFocusOrder (1);
-    sl_latency_clocks->setRange (-5, 5, 1);
-    sl_latency_clocks->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    sl_latency_clocks->setTextBoxStyle (Slider::TextBoxRight, false, 40, 100);
-    sl_latency_clocks->setColour (Slider::thumbColourId, Colour (0x00000000));
-    sl_latency_clocks->setColour (Slider::trackColourId, Colour (0x00000000));
-    sl_latency_clocks->setColour (Slider::rotarySliderFillColourId, Colours::cornsilk);
-    sl_latency_clocks->setColour (Slider::rotarySliderOutlineColourId, Colour (0xff272727));
-    sl_latency_clocks->addListener (this);
+    addAndMakeVisible(sl_latency_clocks = new Slider(String()));
+    sl_latency_clocks->setExplicitFocusOrder(1);
+    sl_latency_clocks->setRange(-5, 5, 1);
+    sl_latency_clocks->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    sl_latency_clocks->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
+    sl_latency_clocks->setColour(Slider::thumbColourId, Colour(0x00000000));
+    sl_latency_clocks->setColour(Slider::trackColourId, Colour(0x00000000));
+    sl_latency_clocks->setColour(Slider::rotarySliderFillColourId, Colours::cornsilk);
+    sl_latency_clocks->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_latency_clocks->addListener(this);
 
-    addAndMakeVisible (label_midi_learn_headline = new Label (String(),
-            TRANS("MIDI LEARN (CC, NOTES)")));
-    label_midi_learn_headline->setFont (Font (15.00f, Font::plain));
-    label_midi_learn_headline->setJustificationType (Justification::centred);
-    label_midi_learn_headline->setEditable (false, false, false);
-    label_midi_learn_headline->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_learn_headline->setColour (TextEditor::textColourId, Colours::black);
-    label_midi_learn_headline->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_midi_learn_headline =
+                          new Label(String(), TRANS("MIDI LEARN (CC, NOTES)")));
+    label_midi_learn_headline->setFont(Font(15.00f, Font::plain));
+    label_midi_learn_headline->setJustificationType(Justification::centred);
+    label_midi_learn_headline->setEditable(false, false, false);
+    label_midi_learn_headline->setColour(Label::textColourId,
+                                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_learn_headline->setColour(TextEditor::textColourId, Colours::black);
+    label_midi_learn_headline->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (toolbar = new UiEditorToolbar (this, true, true, false));
+    addAndMakeVisible(toolbar = new UiEditorToolbar(this, true, true, false));
 
-    addAndMakeVisible (label_midi_io_port_per_track = new Label (String(),
-            TRANS("MIDI OUT FOR SEQUENCE# 2, 3 & 4")));
-    label_midi_io_port_per_track->setFont (Font (15.00f, Font::plain));
-    label_midi_io_port_per_track->setJustificationType (Justification::centred);
-    label_midi_io_port_per_track->setEditable (false, false, false);
-    label_midi_io_port_per_track->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_io_port_per_track->setColour (TextEditor::textColourId, Colours::black);
-    label_midi_io_port_per_track->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_midi_io_port_per_track =
+                          new Label(String(), TRANS("MIDI OUT FOR SEQUENCE# 2, 3 & 4")));
+    label_midi_io_port_per_track->setFont(Font(15.00f, Font::plain));
+    label_midi_io_port_per_track->setJustificationType(Justification::centred);
+    label_midi_io_port_per_track->setEditable(false, false, false);
+    label_midi_io_port_per_track->setColour(
+        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_io_port_per_track->setColour(TextEditor::textColourId, Colours::black);
+    label_midi_io_port_per_track->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (sl_midi_out_channel = new Slider (String()));
-    sl_midi_out_channel->setExplicitFocusOrder (1);
-    sl_midi_out_channel->setRange (1, 16, 1);
-    sl_midi_out_channel->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_out_channel->setTextBoxStyle (Slider::TextBoxRight, false, 40, 100);
-    sl_midi_out_channel->setColour (Slider::thumbColourId, Colour (0x00000000));
-    sl_midi_out_channel->setColour (Slider::trackColourId, Colour (0x00000000));
-    sl_midi_out_channel->setColour (Slider::rotarySliderFillColourId, Colours::aqua);
-    sl_midi_out_channel->setColour (Slider::rotarySliderOutlineColourId, Colour (0xff272727));
-    sl_midi_out_channel->addListener (this);
+    addAndMakeVisible(sl_midi_out_channel = new Slider(String()));
+    sl_midi_out_channel->setExplicitFocusOrder(1);
+    sl_midi_out_channel->setRange(1, 16, 1);
+    sl_midi_out_channel->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_out_channel->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
+    sl_midi_out_channel->setColour(Slider::thumbColourId, Colour(0x00000000));
+    sl_midi_out_channel->setColour(Slider::trackColourId, Colour(0x00000000));
+    sl_midi_out_channel->setColour(Slider::rotarySliderFillColourId, Colours::aqua);
+    sl_midi_out_channel->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_midi_out_channel->addListener(this);
 
-    addAndMakeVisible (sl_midi_in_channel_pad_1 = new Slider (String()));
-    sl_midi_in_channel_pad_1->setExplicitFocusOrder (6);
-    sl_midi_in_channel_pad_1->setRange (1, 16, 1);
-    sl_midi_in_channel_pad_1->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_in_channel_pad_1->setTextBoxStyle (Slider::TextBoxRight, false, 40, 100);
-    sl_midi_in_channel_pad_1->setColour (Slider::thumbColourId, Colour (0x00000000));
-    sl_midi_in_channel_pad_1->setColour (Slider::trackColourId, Colour (0x00000000));
-    sl_midi_in_channel_pad_1->setColour (Slider::rotarySliderFillColourId, Colours::chartreuse);
-    sl_midi_in_channel_pad_1->setColour (Slider::rotarySliderOutlineColourId, Colour (0xff272727));
-    sl_midi_in_channel_pad_1->addListener (this);
+    addAndMakeVisible(sl_midi_in_channel_pad_1 = new Slider(String()));
+    sl_midi_in_channel_pad_1->setExplicitFocusOrder(6);
+    sl_midi_in_channel_pad_1->setRange(1, 16, 1);
+    sl_midi_in_channel_pad_1->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_in_channel_pad_1->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
+    sl_midi_in_channel_pad_1->setColour(Slider::thumbColourId, Colour(0x00000000));
+    sl_midi_in_channel_pad_1->setColour(Slider::trackColourId, Colour(0x00000000));
+    sl_midi_in_channel_pad_1->setColour(Slider::rotarySliderFillColourId, Colours::chartreuse);
+    sl_midi_in_channel_pad_1->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_midi_in_channel_pad_1->addListener(this);
 
-    addAndMakeVisible (sl_midi_out_channel_pad_1 = new Slider (String()));
-    sl_midi_out_channel_pad_1->setExplicitFocusOrder (7);
-    sl_midi_out_channel_pad_1->setRange (1, 16, 1);
-    sl_midi_out_channel_pad_1->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_out_channel_pad_1->setTextBoxStyle (Slider::TextBoxRight, false, 40, 100);
-    sl_midi_out_channel_pad_1->setColour (Slider::thumbColourId, Colour (0x00ff0000));
-    sl_midi_out_channel_pad_1->setColour (Slider::trackColourId, Colour (0x00000000));
-    sl_midi_out_channel_pad_1->setColour (Slider::rotarySliderFillColourId, Colours::aqua);
-    sl_midi_out_channel_pad_1->setColour (Slider::rotarySliderOutlineColourId, Colour (0xff272727));
-    sl_midi_out_channel_pad_1->addListener (this);
+    addAndMakeVisible(sl_midi_out_channel_pad_1 = new Slider(String()));
+    sl_midi_out_channel_pad_1->setExplicitFocusOrder(7);
+    sl_midi_out_channel_pad_1->setRange(1, 16, 1);
+    sl_midi_out_channel_pad_1->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_out_channel_pad_1->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
+    sl_midi_out_channel_pad_1->setColour(Slider::thumbColourId, Colour(0x00ff0000));
+    sl_midi_out_channel_pad_1->setColour(Slider::trackColourId, Colour(0x00000000));
+    sl_midi_out_channel_pad_1->setColour(Slider::rotarySliderFillColourId, Colours::aqua);
+    sl_midi_out_channel_pad_1->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_midi_out_channel_pad_1->addListener(this);
 
-    addAndMakeVisible (sl_midi_in_channel_pad_2 = new Slider (String()));
-    sl_midi_in_channel_pad_2->setExplicitFocusOrder (10);
-    sl_midi_in_channel_pad_2->setRange (1, 16, 1);
-    sl_midi_in_channel_pad_2->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_in_channel_pad_2->setTextBoxStyle (Slider::TextBoxRight, false, 40, 100);
-    sl_midi_in_channel_pad_2->setColour (Slider::thumbColourId, Colour (0x00000000));
-    sl_midi_in_channel_pad_2->setColour (Slider::trackColourId, Colour (0x00000000));
-    sl_midi_in_channel_pad_2->setColour (Slider::rotarySliderFillColourId, Colours::chartreuse);
-    sl_midi_in_channel_pad_2->setColour (Slider::rotarySliderOutlineColourId, Colour (0xff272727));
-    sl_midi_in_channel_pad_2->addListener (this);
+    addAndMakeVisible(sl_midi_in_channel_pad_2 = new Slider(String()));
+    sl_midi_in_channel_pad_2->setExplicitFocusOrder(10);
+    sl_midi_in_channel_pad_2->setRange(1, 16, 1);
+    sl_midi_in_channel_pad_2->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_in_channel_pad_2->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
+    sl_midi_in_channel_pad_2->setColour(Slider::thumbColourId, Colour(0x00000000));
+    sl_midi_in_channel_pad_2->setColour(Slider::trackColourId, Colour(0x00000000));
+    sl_midi_in_channel_pad_2->setColour(Slider::rotarySliderFillColourId, Colours::chartreuse);
+    sl_midi_in_channel_pad_2->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_midi_in_channel_pad_2->addListener(this);
 
-    addAndMakeVisible (sl_midi_out_channel_pad_2 = new Slider (String()));
-    sl_midi_out_channel_pad_2->setExplicitFocusOrder (11);
-    sl_midi_out_channel_pad_2->setRange (1, 16, 1);
-    sl_midi_out_channel_pad_2->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_out_channel_pad_2->setTextBoxStyle (Slider::TextBoxRight, false, 40, 100);
-    sl_midi_out_channel_pad_2->setColour (Slider::thumbColourId, Colour (0x00ff0000));
-    sl_midi_out_channel_pad_2->setColour (Slider::trackColourId, Colour (0x00000000));
-    sl_midi_out_channel_pad_2->setColour (Slider::rotarySliderFillColourId, Colours::aqua);
-    sl_midi_out_channel_pad_2->setColour (Slider::rotarySliderOutlineColourId, Colour (0xff272727));
-    sl_midi_out_channel_pad_2->addListener (this);
+    addAndMakeVisible(sl_midi_out_channel_pad_2 = new Slider(String()));
+    sl_midi_out_channel_pad_2->setExplicitFocusOrder(11);
+    sl_midi_out_channel_pad_2->setRange(1, 16, 1);
+    sl_midi_out_channel_pad_2->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_out_channel_pad_2->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
+    sl_midi_out_channel_pad_2->setColour(Slider::thumbColourId, Colour(0x00ff0000));
+    sl_midi_out_channel_pad_2->setColour(Slider::trackColourId, Colour(0x00000000));
+    sl_midi_out_channel_pad_2->setColour(Slider::rotarySliderFillColourId, Colours::aqua);
+    sl_midi_out_channel_pad_2->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_midi_out_channel_pad_2->addListener(this);
 
-    addAndMakeVisible (pb_refresh_pad_1 = new TextButton (String()));
-    pb_refresh_pad_1->setExplicitFocusOrder (8);
-    pb_refresh_pad_1->setButtonText (TRANS("Refresh Launchpad 1 (MIDI OUT)"));
-    pb_refresh_pad_1->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight | Button::ConnectedOnTop | Button::ConnectedOnBottom);
-    pb_refresh_pad_1->addListener (this);
+    addAndMakeVisible(pb_refresh_pad_1 = new TextButton(String()));
+    pb_refresh_pad_1->setExplicitFocusOrder(8);
+    pb_refresh_pad_1->setButtonText(TRANS("Refresh Launchpad 1 (MIDI OUT)"));
+    pb_refresh_pad_1->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
+                                        Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    pb_refresh_pad_1->addListener(this);
 
-    addAndMakeVisible (pb_refresh_pad_2 = new TextButton (String()));
-    pb_refresh_pad_2->setExplicitFocusOrder (12);
-    pb_refresh_pad_2->setButtonText (TRANS("Refresh Launchpad 2 (MIDI OUT)"));
-    pb_refresh_pad_2->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight | Button::ConnectedOnBottom);
-    pb_refresh_pad_2->addListener (this);
+    addAndMakeVisible(pb_refresh_pad_2 = new TextButton(String()));
+    pb_refresh_pad_2->setExplicitFocusOrder(12);
+    pb_refresh_pad_2->setButtonText(TRANS("Refresh Launchpad 2 (MIDI OUT)"));
+    pb_refresh_pad_2->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
+                                        Button::ConnectedOnBottom);
+    pb_refresh_pad_2->addListener(this);
 
-    addAndMakeVisible (cb_midi_pad_in_1 = new ComboBox (String()));
-    cb_midi_pad_in_1->setEditableText (false);
-    cb_midi_pad_in_1->setJustificationType (Justification::centredLeft);
-    cb_midi_pad_in_1->setTextWhenNothingSelected (TRANS("Error: device removed?"));
-    cb_midi_pad_in_1->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    cb_midi_pad_in_1->addListener (this);
+    addAndMakeVisible(cb_midi_pad_in_1 = new ComboBox(String()));
+    cb_midi_pad_in_1->setEditableText(false);
+    cb_midi_pad_in_1->setJustificationType(Justification::centredLeft);
+    cb_midi_pad_in_1->setTextWhenNothingSelected(TRANS("Error: device removed?"));
+    cb_midi_pad_in_1->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    cb_midi_pad_in_1->addListener(this);
 
-    addAndMakeVisible (cb_midi_pad_out_1 = new ComboBox (String()));
-    cb_midi_pad_out_1->setEditableText (false);
-    cb_midi_pad_out_1->setJustificationType (Justification::centredLeft);
-    cb_midi_pad_out_1->setTextWhenNothingSelected (TRANS("Error: device removed?"));
-    cb_midi_pad_out_1->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    cb_midi_pad_out_1->addListener (this);
+    addAndMakeVisible(cb_midi_pad_out_1 = new ComboBox(String()));
+    cb_midi_pad_out_1->setEditableText(false);
+    cb_midi_pad_out_1->setJustificationType(Justification::centredLeft);
+    cb_midi_pad_out_1->setTextWhenNothingSelected(TRANS("Error: device removed?"));
+    cb_midi_pad_out_1->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    cb_midi_pad_out_1->addListener(this);
 
-    addAndMakeVisible (cb_midi_pad_in_2 = new ComboBox (String()));
-    cb_midi_pad_in_2->setEditableText (false);
-    cb_midi_pad_in_2->setJustificationType (Justification::centredLeft);
-    cb_midi_pad_in_2->setTextWhenNothingSelected (TRANS("Error: device removed?"));
-    cb_midi_pad_in_2->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    cb_midi_pad_in_2->addListener (this);
+    addAndMakeVisible(cb_midi_pad_in_2 = new ComboBox(String()));
+    cb_midi_pad_in_2->setEditableText(false);
+    cb_midi_pad_in_2->setJustificationType(Justification::centredLeft);
+    cb_midi_pad_in_2->setTextWhenNothingSelected(TRANS("Error: device removed?"));
+    cb_midi_pad_in_2->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    cb_midi_pad_in_2->addListener(this);
 
-    addAndMakeVisible (cb_midi_pad_out_2 = new ComboBox (String()));
-    cb_midi_pad_out_2->setEditableText (false);
-    cb_midi_pad_out_2->setJustificationType (Justification::centredLeft);
-    cb_midi_pad_out_2->setTextWhenNothingSelected (TRANS("Error: device removed?"));
-    cb_midi_pad_out_2->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    cb_midi_pad_out_2->addListener (this);
+    addAndMakeVisible(cb_midi_pad_out_2 = new ComboBox(String()));
+    cb_midi_pad_out_2->setEditableText(false);
+    cb_midi_pad_out_2->setJustificationType(Justification::centredLeft);
+    cb_midi_pad_out_2->setTextWhenNothingSelected(TRANS("Error: device removed?"));
+    cb_midi_pad_out_2->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    cb_midi_pad_out_2->addListener(this);
 
-    addAndMakeVisible (cb_midi_in_port = new ComboBox (String()));
-    cb_midi_in_port->setEditableText (false);
-    cb_midi_in_port->setJustificationType (Justification::centredLeft);
-    cb_midi_in_port->setTextWhenNothingSelected (TRANS("Error: device removed?"));
-    cb_midi_in_port->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    cb_midi_in_port->addListener (this);
+    addAndMakeVisible(cb_midi_in_port = new ComboBox(String()));
+    cb_midi_in_port->setEditableText(false);
+    cb_midi_in_port->setJustificationType(Justification::centredLeft);
+    cb_midi_in_port->setTextWhenNothingSelected(TRANS("Error: device removed?"));
+    cb_midi_in_port->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    cb_midi_in_port->addListener(this);
 
-    addAndMakeVisible (cb_midi_out_port = new ComboBox (String()));
-    cb_midi_out_port->setEditableText (false);
-    cb_midi_out_port->setJustificationType (Justification::centredLeft);
-    cb_midi_out_port->setTextWhenNothingSelected (TRANS("Error: device removed?"));
-    cb_midi_out_port->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    cb_midi_out_port->addListener (this);
+    addAndMakeVisible(cb_midi_out_port = new ComboBox(String()));
+    cb_midi_out_port->setEditableText(false);
+    cb_midi_out_port->setJustificationType(Justification::centredLeft);
+    cb_midi_out_port->setTextWhenNothingSelected(TRANS("Error: device removed?"));
+    cb_midi_out_port->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    cb_midi_out_port->addListener(this);
 
-    addAndMakeVisible (sl_midi_in_channel = new Slider (String()));
-    sl_midi_in_channel->setExplicitFocusOrder (1);
-    sl_midi_in_channel->setRange (1, 16, 1);
-    sl_midi_in_channel->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_in_channel->setTextBoxStyle (Slider::TextBoxRight, false, 40, 100);
-    sl_midi_in_channel->setColour (Slider::thumbColourId, Colour (0x00000000));
-    sl_midi_in_channel->setColour (Slider::trackColourId, Colour (0x00000000));
-    sl_midi_in_channel->setColour (Slider::rotarySliderFillColourId, Colours::chartreuse);
-    sl_midi_in_channel->setColour (Slider::rotarySliderOutlineColourId, Colour (0xff272727));
-    sl_midi_in_channel->addListener (this);
+    addAndMakeVisible(sl_midi_in_channel = new Slider(String()));
+    sl_midi_in_channel->setExplicitFocusOrder(1);
+    sl_midi_in_channel->setRange(1, 16, 1);
+    sl_midi_in_channel->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_in_channel->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
+    sl_midi_in_channel->setColour(Slider::thumbColourId, Colour(0x00000000));
+    sl_midi_in_channel->setColour(Slider::trackColourId, Colour(0x00000000));
+    sl_midi_in_channel->setColour(Slider::rotarySliderFillColourId, Colours::chartreuse);
+    sl_midi_in_channel->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_midi_in_channel->addListener(this);
 
-    addAndMakeVisible (cb_midi_learn_in_port = new ComboBox (String()));
-    cb_midi_learn_in_port->setEditableText (false);
-    cb_midi_learn_in_port->setJustificationType (Justification::centredLeft);
-    cb_midi_learn_in_port->setTextWhenNothingSelected (TRANS("Error: device removed?"));
-    cb_midi_learn_in_port->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    cb_midi_learn_in_port->addListener (this);
+    addAndMakeVisible(cb_midi_learn_in_port = new ComboBox(String()));
+    cb_midi_learn_in_port->setEditableText(false);
+    cb_midi_learn_in_port->setJustificationType(Justification::centredLeft);
+    cb_midi_learn_in_port->setTextWhenNothingSelected(TRANS("Error: device removed?"));
+    cb_midi_learn_in_port->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    cb_midi_learn_in_port->addListener(this);
 
-    addAndMakeVisible (cb_midi_learn_out_port = new ComboBox (String()));
-    cb_midi_learn_out_port->setEditableText (false);
-    cb_midi_learn_out_port->setJustificationType (Justification::centredLeft);
-    cb_midi_learn_out_port->setTextWhenNothingSelected (TRANS("Error: device removed?"));
-    cb_midi_learn_out_port->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    cb_midi_learn_out_port->addListener (this);
+    addAndMakeVisible(cb_midi_learn_out_port = new ComboBox(String()));
+    cb_midi_learn_out_port->setEditableText(false);
+    cb_midi_learn_out_port->setJustificationType(Justification::centredLeft);
+    cb_midi_learn_out_port->setTextWhenNothingSelected(TRANS("Error: device removed?"));
+    cb_midi_learn_out_port->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    cb_midi_learn_out_port->addListener(this);
 
-    addAndMakeVisible (pb_refresh_feedback = new TextButton (String()));
-    pb_refresh_feedback->setExplicitFocusOrder (8);
-    pb_refresh_feedback->setButtonText (TRANS("Refresh Feedback (MIDI OUT)"));
-    pb_refresh_feedback->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight | Button::ConnectedOnTop | Button::ConnectedOnBottom);
-    pb_refresh_feedback->addListener (this);
+    addAndMakeVisible(pb_refresh_feedback = new TextButton(String()));
+    pb_refresh_feedback->setExplicitFocusOrder(8);
+    pb_refresh_feedback->setButtonText(TRANS("Refresh Feedback (MIDI OUT)"));
+    pb_refresh_feedback->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
+                                           Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    pb_refresh_feedback->addListener(this);
 
-    addAndMakeVisible (label_midi_in_port = new Label (String(),
-            TRANS("Receive Port (Slave)")));
-    label_midi_in_port->setFont (Font (15.00f, Font::plain));
-    label_midi_in_port->setJustificationType (Justification::centredRight);
-    label_midi_in_port->setEditable (false, false, false);
-    label_midi_in_port->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_in_port->setColour (TextEditor::textColourId, Colours::black);
-    label_midi_in_port->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_midi_in_port = new Label(String(), TRANS("Receive Port (Slave)")));
+    label_midi_in_port->setFont(Font(15.00f, Font::plain));
+    label_midi_in_port->setJustificationType(Justification::centredRight);
+    label_midi_in_port->setEditable(false, false, false);
+    label_midi_in_port->setColour(Label::textColourId,
+                                  Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_in_port->setColour(TextEditor::textColourId, Colours::black);
+    label_midi_in_port->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (label_midi_out = new Label (String(),
-            TRANS("Master Out (to Synth) Ch/Port")));
-    label_midi_out->setFont (Font (15.00f, Font::plain));
-    label_midi_out->setJustificationType (Justification::centredRight);
-    label_midi_out->setEditable (false, false, false);
-    label_midi_out->setColour (Label::textColourId, Colours::yellow);
-    label_midi_out->setColour (TextEditor::textColourId, Colours::black);
-    label_midi_out->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_midi_out = new Label(String(), TRANS("Master Out (to Synth) Ch/Port")));
+    label_midi_out->setFont(Font(15.00f, Font::plain));
+    label_midi_out->setJustificationType(Justification::centredRight);
+    label_midi_out->setEditable(false, false, false);
+    label_midi_out->setColour(Label::textColourId, Colours::yellow);
+    label_midi_out->setColour(TextEditor::textColourId, Colours::black);
+    label_midi_out->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (label_master_slave_headline = new Label (String(),
-            TRANS("MIDI OUT (Notes, Sync)")));
-    label_master_slave_headline->setFont (Font (15.00f, Font::plain));
-    label_master_slave_headline->setJustificationType (Justification::centred);
-    label_master_slave_headline->setEditable (false, false, false);
-    label_master_slave_headline->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_master_slave_headline->setColour (TextEditor::textColourId, Colours::black);
-    label_master_slave_headline->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_master_slave_headline =
+                          new Label(String(), TRANS("MIDI OUT (Notes, Sync)")));
+    label_master_slave_headline->setFont(Font(15.00f, Font::plain));
+    label_master_slave_headline->setJustificationType(Justification::centred);
+    label_master_slave_headline->setEditable(false, false, false);
+    label_master_slave_headline->setColour(
+        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_master_slave_headline->setColour(TextEditor::textColourId, Colours::black);
+    label_master_slave_headline->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (label_midi_learn_in = new Label (String(),
-            TRANS("Receive Port (IN)")));
-    label_midi_learn_in->setFont (Font (15.00f, Font::plain));
-    label_midi_learn_in->setJustificationType (Justification::centredRight);
-    label_midi_learn_in->setEditable (false, false, false);
-    label_midi_learn_in->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_learn_in->setColour (TextEditor::textColourId, Colours::black);
-    label_midi_learn_in->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_midi_learn_in = new Label(String(), TRANS("Receive Port (IN)")));
+    label_midi_learn_in->setFont(Font(15.00f, Font::plain));
+    label_midi_learn_in->setJustificationType(Justification::centredRight);
+    label_midi_learn_in->setEditable(false, false, false);
+    label_midi_learn_in->setColour(Label::textColourId,
+                                   Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_learn_in->setColour(TextEditor::textColourId, Colours::black);
+    label_midi_learn_in->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (label_midi_learn_out = new Label (String(),
-            TRANS("Feedback Port (OUT)")));
-    label_midi_learn_out->setFont (Font (15.00f, Font::plain));
-    label_midi_learn_out->setJustificationType (Justification::centredRight);
-    label_midi_learn_out->setEditable (false, false, false);
-    label_midi_learn_out->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_learn_out->setColour (TextEditor::textColourId, Colours::black);
-    label_midi_learn_out->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_midi_learn_out = new Label(String(), TRANS("Feedback Port (OUT)")));
+    label_midi_learn_out->setFont(Font(15.00f, Font::plain));
+    label_midi_learn_out->setJustificationType(Justification::centredRight);
+    label_midi_learn_out->setEditable(false, false, false);
+    label_midi_learn_out->setColour(Label::textColourId,
+                                    Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_learn_out->setColour(TextEditor::textColourId, Colours::black);
+    label_midi_learn_out->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (label_launchpad_1_headline = new Label (String(),
-            TRANS("NOVATION LAUNCHPAD 1")));
-    label_launchpad_1_headline->setFont (Font (15.00f, Font::plain));
-    label_launchpad_1_headline->setJustificationType (Justification::centred);
-    label_launchpad_1_headline->setEditable (false, false, false);
-    label_launchpad_1_headline->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_launchpad_1_headline->setColour (TextEditor::textColourId, Colours::black);
-    label_launchpad_1_headline->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_launchpad_1_headline =
+                          new Label(String(), TRANS("NOVATION LAUNCHPAD 1")));
+    label_launchpad_1_headline->setFont(Font(15.00f, Font::plain));
+    label_launchpad_1_headline->setJustificationType(Justification::centred);
+    label_launchpad_1_headline->setEditable(false, false, false);
+    label_launchpad_1_headline->setColour(
+        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_launchpad_1_headline->setColour(TextEditor::textColourId, Colours::black);
+    label_launchpad_1_headline->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (label_midi_launchpad_1_in = new Label (String(),
-            TRANS("Receive Port (IN)")));
-    label_midi_launchpad_1_in->setFont (Font (15.00f, Font::plain));
-    label_midi_launchpad_1_in->setJustificationType (Justification::centredRight);
-    label_midi_launchpad_1_in->setEditable (false, false, false);
-    label_midi_launchpad_1_in->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_launchpad_1_in->setColour (TextEditor::textColourId, Colours::black);
-    label_midi_launchpad_1_in->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_midi_launchpad_1_in = new Label(String(), TRANS("Receive Port (IN)")));
+    label_midi_launchpad_1_in->setFont(Font(15.00f, Font::plain));
+    label_midi_launchpad_1_in->setJustificationType(Justification::centredRight);
+    label_midi_launchpad_1_in->setEditable(false, false, false);
+    label_midi_launchpad_1_in->setColour(Label::textColourId,
+                                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_launchpad_1_in->setColour(TextEditor::textColourId, Colours::black);
+    label_midi_launchpad_1_in->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (label_midi_launchpad_1_out = new Label (String(),
-            TRANS("Feedback Port (OUT)")));
-    label_midi_launchpad_1_out->setFont (Font (15.00f, Font::plain));
-    label_midi_launchpad_1_out->setJustificationType (Justification::centredRight);
-    label_midi_launchpad_1_out->setEditable (false, false, false);
-    label_midi_launchpad_1_out->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_launchpad_1_out->setColour (TextEditor::textColourId, Colours::black);
-    label_midi_launchpad_1_out->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_midi_launchpad_1_out =
+                          new Label(String(), TRANS("Feedback Port (OUT)")));
+    label_midi_launchpad_1_out->setFont(Font(15.00f, Font::plain));
+    label_midi_launchpad_1_out->setJustificationType(Justification::centredRight);
+    label_midi_launchpad_1_out->setEditable(false, false, false);
+    label_midi_launchpad_1_out->setColour(
+        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_launchpad_1_out->setColour(TextEditor::textColourId, Colours::black);
+    label_midi_launchpad_1_out->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (label_launchpad_2_headline = new Label (String(),
-            TRANS("NOVATION LAUNCHPAD 2")));
-    label_launchpad_2_headline->setFont (Font (15.00f, Font::plain));
-    label_launchpad_2_headline->setJustificationType (Justification::centred);
-    label_launchpad_2_headline->setEditable (false, false, false);
-    label_launchpad_2_headline->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_launchpad_2_headline->setColour (TextEditor::textColourId, Colours::black);
-    label_launchpad_2_headline->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_launchpad_2_headline =
+                          new Label(String(), TRANS("NOVATION LAUNCHPAD 2")));
+    label_launchpad_2_headline->setFont(Font(15.00f, Font::plain));
+    label_launchpad_2_headline->setJustificationType(Justification::centred);
+    label_launchpad_2_headline->setEditable(false, false, false);
+    label_launchpad_2_headline->setColour(
+        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_launchpad_2_headline->setColour(TextEditor::textColourId, Colours::black);
+    label_launchpad_2_headline->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (label_midi_launchpad_2_in = new Label (String(),
-            TRANS("Receive Port (IN)")));
-    label_midi_launchpad_2_in->setFont (Font (15.00f, Font::plain));
-    label_midi_launchpad_2_in->setJustificationType (Justification::centredRight);
-    label_midi_launchpad_2_in->setEditable (false, false, false);
-    label_midi_launchpad_2_in->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_launchpad_2_in->setColour (TextEditor::textColourId, Colours::black);
-    label_midi_launchpad_2_in->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_midi_launchpad_2_in = new Label(String(), TRANS("Receive Port (IN)")));
+    label_midi_launchpad_2_in->setFont(Font(15.00f, Font::plain));
+    label_midi_launchpad_2_in->setJustificationType(Justification::centredRight);
+    label_midi_launchpad_2_in->setEditable(false, false, false);
+    label_midi_launchpad_2_in->setColour(Label::textColourId,
+                                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_launchpad_2_in->setColour(TextEditor::textColourId, Colours::black);
+    label_midi_launchpad_2_in->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (label_midi_launchpad_2_out = new Label (String(),
-            TRANS("Feedback Port (OUT)")));
-    label_midi_launchpad_2_out->setFont (Font (15.00f, Font::plain));
-    label_midi_launchpad_2_out->setJustificationType (Justification::centredRight);
-    label_midi_launchpad_2_out->setEditable (false, false, false);
-    label_midi_launchpad_2_out->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_launchpad_2_out->setColour (TextEditor::textColourId, Colours::black);
-    label_midi_launchpad_2_out->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_midi_launchpad_2_out =
+                          new Label(String(), TRANS("Feedback Port (OUT)")));
+    label_midi_launchpad_2_out->setFont(Font(15.00f, Font::plain));
+    label_midi_launchpad_2_out->setJustificationType(Justification::centredRight);
+    label_midi_launchpad_2_out->setEditable(false, false, false);
+    label_midi_launchpad_2_out->setColour(
+        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_launchpad_2_out->setColour(TextEditor::textColourId, Colours::black);
+    label_midi_launchpad_2_out->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (cb_midi_out_port_string_g = new ComboBox (String()));
-    cb_midi_out_port_string_g->setEditableText (false);
-    cb_midi_out_port_string_g->setJustificationType (Justification::centredLeft);
-    cb_midi_out_port_string_g->setTextWhenNothingSelected (TRANS("Use Master Output"));
-    cb_midi_out_port_string_g->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    cb_midi_out_port_string_g->addListener (this);
+    addAndMakeVisible(cb_midi_out_port_string_g = new ComboBox(String()));
+    cb_midi_out_port_string_g->setEditableText(false);
+    cb_midi_out_port_string_g->setJustificationType(Justification::centredLeft);
+    cb_midi_out_port_string_g->setTextWhenNothingSelected(TRANS("Use Master Output"));
+    cb_midi_out_port_string_g->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    cb_midi_out_port_string_g->addListener(this);
 
-    addAndMakeVisible (sl_midi_out_channel_string_g = new Slider (String()));
-    sl_midi_out_channel_string_g->setExplicitFocusOrder (1);
-    sl_midi_out_channel_string_g->setRange (1, 16, 1);
-    sl_midi_out_channel_string_g->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_out_channel_string_g->setTextBoxStyle (Slider::TextBoxRight, false, 40, 100);
-    sl_midi_out_channel_string_g->setColour (Slider::thumbColourId, Colour (0x00000000));
-    sl_midi_out_channel_string_g->setColour (Slider::trackColourId, Colour (0x00000000));
-    sl_midi_out_channel_string_g->setColour (Slider::rotarySliderFillColourId, Colours::aqua);
-    sl_midi_out_channel_string_g->setColour (Slider::rotarySliderOutlineColourId, Colour (0xff272727));
-    sl_midi_out_channel_string_g->addListener (this);
+    addAndMakeVisible(sl_midi_out_channel_string_g = new Slider(String()));
+    sl_midi_out_channel_string_g->setExplicitFocusOrder(1);
+    sl_midi_out_channel_string_g->setRange(1, 16, 1);
+    sl_midi_out_channel_string_g->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_out_channel_string_g->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
+    sl_midi_out_channel_string_g->setColour(Slider::thumbColourId, Colour(0x00000000));
+    sl_midi_out_channel_string_g->setColour(Slider::trackColourId, Colour(0x00000000));
+    sl_midi_out_channel_string_g->setColour(Slider::rotarySliderFillColourId, Colours::aqua);
+    sl_midi_out_channel_string_g->setColour(Slider::rotarySliderOutlineColourId,
+                                            Colour(0xff272727));
+    sl_midi_out_channel_string_g->addListener(this);
 
-    addAndMakeVisible (label_midi_out_string_g = new Label (String(),
-            TRANS("Output (to Synth) Group 2")));
-    label_midi_out_string_g->setFont (Font (15.00f, Font::plain));
-    label_midi_out_string_g->setJustificationType (Justification::centredRight);
-    label_midi_out_string_g->setEditable (false, false, false);
-    label_midi_out_string_g->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_out_string_g->setColour (TextEditor::textColourId, Colours::black);
-    label_midi_out_string_g->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_midi_out_string_g =
+                          new Label(String(), TRANS("Output (to Synth) Group 2")));
+    label_midi_out_string_g->setFont(Font(15.00f, Font::plain));
+    label_midi_out_string_g->setJustificationType(Justification::centredRight);
+    label_midi_out_string_g->setEditable(false, false, false);
+    label_midi_out_string_g->setColour(Label::textColourId,
+                                       Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_out_string_g->setColour(TextEditor::textColourId, Colours::black);
+    label_midi_out_string_g->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (cb_midi_out_port_string_d = new ComboBox (String()));
-    cb_midi_out_port_string_d->setEditableText (false);
-    cb_midi_out_port_string_d->setJustificationType (Justification::centredLeft);
-    cb_midi_out_port_string_d->setTextWhenNothingSelected (TRANS("Use Master Output"));
-    cb_midi_out_port_string_d->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    cb_midi_out_port_string_d->addListener (this);
+    addAndMakeVisible(cb_midi_out_port_string_d = new ComboBox(String()));
+    cb_midi_out_port_string_d->setEditableText(false);
+    cb_midi_out_port_string_d->setJustificationType(Justification::centredLeft);
+    cb_midi_out_port_string_d->setTextWhenNothingSelected(TRANS("Use Master Output"));
+    cb_midi_out_port_string_d->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    cb_midi_out_port_string_d->addListener(this);
 
-    addAndMakeVisible (sl_midi_out_channel_string_d = new Slider (String()));
-    sl_midi_out_channel_string_d->setExplicitFocusOrder (1);
-    sl_midi_out_channel_string_d->setRange (1, 16, 1);
-    sl_midi_out_channel_string_d->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_out_channel_string_d->setTextBoxStyle (Slider::TextBoxRight, false, 40, 100);
-    sl_midi_out_channel_string_d->setColour (Slider::thumbColourId, Colour (0x00000000));
-    sl_midi_out_channel_string_d->setColour (Slider::trackColourId, Colour (0x00000000));
-    sl_midi_out_channel_string_d->setColour (Slider::rotarySliderFillColourId, Colours::aqua);
-    sl_midi_out_channel_string_d->setColour (Slider::rotarySliderOutlineColourId, Colour (0xff272727));
-    sl_midi_out_channel_string_d->addListener (this);
+    addAndMakeVisible(sl_midi_out_channel_string_d = new Slider(String()));
+    sl_midi_out_channel_string_d->setExplicitFocusOrder(1);
+    sl_midi_out_channel_string_d->setRange(1, 16, 1);
+    sl_midi_out_channel_string_d->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_out_channel_string_d->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
+    sl_midi_out_channel_string_d->setColour(Slider::thumbColourId, Colour(0x00000000));
+    sl_midi_out_channel_string_d->setColour(Slider::trackColourId, Colour(0x00000000));
+    sl_midi_out_channel_string_d->setColour(Slider::rotarySliderFillColourId, Colours::aqua);
+    sl_midi_out_channel_string_d->setColour(Slider::rotarySliderOutlineColourId,
+                                            Colour(0xff272727));
+    sl_midi_out_channel_string_d->addListener(this);
 
-    addAndMakeVisible (label_midi_out_string_d = new Label (String(),
-            TRANS("Output (to Synth) Group 3")));
-    label_midi_out_string_d->setFont (Font (15.00f, Font::plain));
-    label_midi_out_string_d->setJustificationType (Justification::centredRight);
-    label_midi_out_string_d->setEditable (false, false, false);
-    label_midi_out_string_d->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_out_string_d->setColour (TextEditor::textColourId, Colours::black);
-    label_midi_out_string_d->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_midi_out_string_d =
+                          new Label(String(), TRANS("Output (to Synth) Group 3")));
+    label_midi_out_string_d->setFont(Font(15.00f, Font::plain));
+    label_midi_out_string_d->setJustificationType(Justification::centredRight);
+    label_midi_out_string_d->setEditable(false, false, false);
+    label_midi_out_string_d->setColour(Label::textColourId,
+                                       Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_out_string_d->setColour(TextEditor::textColourId, Colours::black);
+    label_midi_out_string_d->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (cb_midi_out_port_string_a = new ComboBox (String()));
-    cb_midi_out_port_string_a->setEditableText (false);
-    cb_midi_out_port_string_a->setJustificationType (Justification::centredLeft);
-    cb_midi_out_port_string_a->setTextWhenNothingSelected (TRANS("Use Master Output"));
-    cb_midi_out_port_string_a->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    cb_midi_out_port_string_a->addListener (this);
+    addAndMakeVisible(cb_midi_out_port_string_a = new ComboBox(String()));
+    cb_midi_out_port_string_a->setEditableText(false);
+    cb_midi_out_port_string_a->setJustificationType(Justification::centredLeft);
+    cb_midi_out_port_string_a->setTextWhenNothingSelected(TRANS("Use Master Output"));
+    cb_midi_out_port_string_a->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    cb_midi_out_port_string_a->addListener(this);
 
-    addAndMakeVisible (sl_midi_out_channel_string_a = new Slider (String()));
-    sl_midi_out_channel_string_a->setExplicitFocusOrder (1);
-    sl_midi_out_channel_string_a->setRange (1, 16, 1);
-    sl_midi_out_channel_string_a->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_out_channel_string_a->setTextBoxStyle (Slider::TextBoxRight, false, 40, 100);
-    sl_midi_out_channel_string_a->setColour (Slider::thumbColourId, Colour (0x00000000));
-    sl_midi_out_channel_string_a->setColour (Slider::trackColourId, Colour (0x00000000));
-    sl_midi_out_channel_string_a->setColour (Slider::rotarySliderFillColourId, Colours::aqua);
-    sl_midi_out_channel_string_a->setColour (Slider::rotarySliderOutlineColourId, Colour (0xff272727));
-    sl_midi_out_channel_string_a->addListener (this);
+    addAndMakeVisible(sl_midi_out_channel_string_a = new Slider(String()));
+    sl_midi_out_channel_string_a->setExplicitFocusOrder(1);
+    sl_midi_out_channel_string_a->setRange(1, 16, 1);
+    sl_midi_out_channel_string_a->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_out_channel_string_a->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
+    sl_midi_out_channel_string_a->setColour(Slider::thumbColourId, Colour(0x00000000));
+    sl_midi_out_channel_string_a->setColour(Slider::trackColourId, Colour(0x00000000));
+    sl_midi_out_channel_string_a->setColour(Slider::rotarySliderFillColourId, Colours::aqua);
+    sl_midi_out_channel_string_a->setColour(Slider::rotarySliderOutlineColourId,
+                                            Colour(0xff272727));
+    sl_midi_out_channel_string_a->addListener(this);
 
-    addAndMakeVisible (label_midi_out_string_a = new Label (String(),
-            TRANS("Output (to Synth) Group 4")));
-    label_midi_out_string_a->setFont (Font (15.00f, Font::plain));
-    label_midi_out_string_a->setJustificationType (Justification::centredRight);
-    label_midi_out_string_a->setEditable (false, false, false);
-    label_midi_out_string_a->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_out_string_a->setColour (TextEditor::textColourId, Colours::black);
-    label_midi_out_string_a->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_midi_out_string_a =
+                          new Label(String(), TRANS("Output (to Synth) Group 4")));
+    label_midi_out_string_a->setFont(Font(15.00f, Font::plain));
+    label_midi_out_string_a->setJustificationType(Justification::centredRight);
+    label_midi_out_string_a->setEditable(false, false, false);
+    label_midi_out_string_a->setColour(Label::textColourId,
+                                       Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_out_string_a->setColour(TextEditor::textColourId, Colours::black);
+    label_midi_out_string_a->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (pb_refresh_all = new TextButton (String()));
-    pb_refresh_all->setExplicitFocusOrder (12);
-    pb_refresh_all->setButtonText (TRANS("Refresh All"));
-    pb_refresh_all->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight | Button::ConnectedOnBottom);
-    pb_refresh_all->addListener (this);
+    addAndMakeVisible(pb_refresh_all = new TextButton(String()));
+    pb_refresh_all->setExplicitFocusOrder(12);
+    pb_refresh_all->setButtonText(TRANS("Refresh All"));
+    pb_refresh_all->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
+                                      Button::ConnectedOnBottom);
+    pb_refresh_all->addListener(this);
 
-    addAndMakeVisible (cb_midi_out_port_b = new ComboBox (String()));
-    cb_midi_out_port_b->setEditableText (false);
-    cb_midi_out_port_b->setJustificationType (Justification::centredLeft);
-    cb_midi_out_port_b->setTextWhenNothingSelected (TRANS("Error: device removed?"));
-    cb_midi_out_port_b->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    cb_midi_out_port_b->addListener (this);
+    addAndMakeVisible(cb_midi_out_port_b = new ComboBox(String()));
+    cb_midi_out_port_b->setEditableText(false);
+    cb_midi_out_port_b->setJustificationType(Justification::centredLeft);
+    cb_midi_out_port_b->setTextWhenNothingSelected(TRANS("Error: device removed?"));
+    cb_midi_out_port_b->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    cb_midi_out_port_b->addListener(this);
 
-    addAndMakeVisible (sl_midi_out_channel_b = new Slider (String()));
-    sl_midi_out_channel_b->setExplicitFocusOrder (1);
-    sl_midi_out_channel_b->setRange (1, 16, 1);
-    sl_midi_out_channel_b->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_out_channel_b->setTextBoxStyle (Slider::TextBoxRight, false, 40, 100);
-    sl_midi_out_channel_b->setColour (Slider::thumbColourId, Colour (0x00000000));
-    sl_midi_out_channel_b->setColour (Slider::trackColourId, Colour (0x00000000));
-    sl_midi_out_channel_b->setColour (Slider::rotarySliderFillColourId, Colours::aqua);
-    sl_midi_out_channel_b->setColour (Slider::rotarySliderOutlineColourId, Colour (0xff272727));
-    sl_midi_out_channel_b->addListener (this);
+    addAndMakeVisible(sl_midi_out_channel_b = new Slider(String()));
+    sl_midi_out_channel_b->setExplicitFocusOrder(1);
+    sl_midi_out_channel_b->setRange(1, 16, 1);
+    sl_midi_out_channel_b->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_out_channel_b->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
+    sl_midi_out_channel_b->setColour(Slider::thumbColourId, Colour(0x00000000));
+    sl_midi_out_channel_b->setColour(Slider::trackColourId, Colour(0x00000000));
+    sl_midi_out_channel_b->setColour(Slider::rotarySliderFillColourId, Colours::aqua);
+    sl_midi_out_channel_b->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_midi_out_channel_b->addListener(this);
 
-    addAndMakeVisible (label_midi_in_port_b = new Label (String(),
-            TRANS("Second Out")));
-    label_midi_in_port_b->setFont (Font (15.00f, Font::plain));
-    label_midi_in_port_b->setJustificationType (Justification::centredRight);
-    label_midi_in_port_b->setEditable (false, false, false);
-    label_midi_in_port_b->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_in_port_b->setColour (TextEditor::textColourId, Colours::black);
-    label_midi_in_port_b->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_midi_in_port_b = new Label(String(), TRANS("Second Out")));
+    label_midi_in_port_b->setFont(Font(15.00f, Font::plain));
+    label_midi_in_port_b->setJustificationType(Justification::centredRight);
+    label_midi_in_port_b->setEditable(false, false, false);
+    label_midi_in_port_b->setColour(Label::textColourId,
+                                    Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_in_port_b->setColour(TextEditor::textColourId, Colours::black);
+    label_midi_in_port_b->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (label_master_slave_headline2 = new Label (String(),
-            TRANS("MIDI IN (Slave, Thru)")));
-    label_master_slave_headline2->setFont (Font (15.00f, Font::plain));
-    label_master_slave_headline2->setJustificationType (Justification::centred);
-    label_master_slave_headline2->setEditable (false, false, false);
-    label_master_slave_headline2->setColour (Label::textColourId, Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_master_slave_headline2->setColour (TextEditor::textColourId, Colours::black);
-    label_master_slave_headline2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible(label_master_slave_headline2 =
+                          new Label(String(), TRANS("MIDI IN (Slave, Thru)")));
+    label_master_slave_headline2->setFont(Font(15.00f, Font::plain));
+    label_master_slave_headline2->setJustificationType(Justification::centred);
+    label_master_slave_headline2->setEditable(false, false, false);
+    label_master_slave_headline2->setColour(
+        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_master_slave_headline2->setColour(TextEditor::textColourId, Colours::black);
+    label_master_slave_headline2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (button_info_master_out = new TextButton (String()));
-    button_info_master_out->setButtonText (TRANS("?"));
-    button_info_master_out->addListener (this);
+    addAndMakeVisible(button_info_master_out = new TextButton(String()));
+    button_info_master_out->setButtonText(TRANS("?"));
+    button_info_master_out->addListener(this);
 
-    addAndMakeVisible (button_info_master_input = new TextButton (String()));
-    button_info_master_input->setButtonText (TRANS("?"));
-    button_info_master_input->addListener (this);
+    addAndMakeVisible(button_info_master_input = new TextButton(String()));
+    button_info_master_input->setButtonText(TRANS("?"));
+    button_info_master_input->addListener(this);
 
-    addAndMakeVisible (button_info_midi_thru = new TextButton (String()));
-    button_info_midi_thru->setButtonText (TRANS("?"));
-    button_info_midi_thru->addListener (this);
+    addAndMakeVisible(button_info_midi_thru = new TextButton(String()));
+    button_info_midi_thru->setButtonText(TRANS("?"));
+    button_info_midi_thru->addListener(this);
 
-    addAndMakeVisible (button_info_sequence_out = new TextButton (String()));
-    button_info_sequence_out->setButtonText (TRANS("?"));
-    button_info_sequence_out->addListener (this);
+    addAndMakeVisible(button_info_sequence_out = new TextButton(String()));
+    button_info_sequence_out->setButtonText(TRANS("?"));
+    button_info_sequence_out->addListener(this);
 
-    addAndMakeVisible (button_info_cc_in = new TextButton (String()));
-    button_info_cc_in->setButtonText (TRANS("?"));
-    button_info_cc_in->addListener (this);
+    addAndMakeVisible(button_info_cc_in = new TextButton(String()));
+    button_info_cc_in->setButtonText(TRANS("?"));
+    button_info_cc_in->addListener(this);
 
-    addAndMakeVisible (button_info_launchpad_in_1 = new TextButton (String()));
-    button_info_launchpad_in_1->setButtonText (TRANS("?"));
-    button_info_launchpad_in_1->addListener (this);
-
+    addAndMakeVisible(button_info_launchpad_in_1 = new TextButton(String()));
+    button_info_launchpad_in_1->setButtonText(TRANS("?"));
+    button_info_launchpad_in_1->addListener(this);
 
     //[UserPreSize]
     sl_midi_in_channel->setVisible(false);
@@ -660,7 +715,7 @@ UiEditorSettings::UiEditorSettings (AppInstanceStore* const app_instance_store_)
     sl_midi_in_channel->setEnabled(false);
 
     // TODO, set an other style
-    lbl_clock_thru->setColour (Label::textColourId, Colour (0xff515151));
+    lbl_clock_thru->setColour(Label::textColourId, Colour(0xff515151));
 
     tb_clock_thru->setVisible(false);
     tb_midi_thru_enable->setVisible(false);
@@ -673,42 +728,58 @@ UiEditorSettings::UiEditorSettings (AppInstanceStore* const app_instance_store_)
     label_latency_ms->setVisible(false);
 #endif
 
-    sl_midi_out_channel->setValue( _app_instance_store->audio_processor->channel_out, NotificationType::dontSendNotification );
-    sl_midi_out_channel_b->setValue( _app_instance_store->audio_processor->channel_out_b, NotificationType::dontSendNotification );
-    sl_midi_out_channel_string_g->setValue( _app_instance_store->audio_processor->channel_out_group_2, NotificationType::dontSendNotification );
-    sl_midi_out_channel_string_d->setValue( _app_instance_store->audio_processor->channel_out_group_3, NotificationType::dontSendNotification );
-    sl_midi_out_channel_string_a->setValue( _app_instance_store->audio_processor->channel_out_group_4, NotificationType::dontSendNotification );
-    sl_midi_in_channel->setValue( _app_instance_store->audio_processor->channel_in, NotificationType::dontSendNotification );
+    sl_midi_out_channel->setValue(_app_instance_store->audio_processor->channel_out,
+                                  NotificationType::dontSendNotification);
+    sl_midi_out_channel_b->setValue(_app_instance_store->audio_processor->channel_out_b,
+                                    NotificationType::dontSendNotification);
+    sl_midi_out_channel_string_g->setValue(
+        _app_instance_store->audio_processor->channel_out_group_2,
+        NotificationType::dontSendNotification);
+    sl_midi_out_channel_string_d->setValue(
+        _app_instance_store->audio_processor->channel_out_group_3,
+        NotificationType::dontSendNotification);
+    sl_midi_out_channel_string_a->setValue(
+        _app_instance_store->audio_processor->channel_out_group_4,
+        NotificationType::dontSendNotification);
+    sl_midi_in_channel->setValue(_app_instance_store->audio_processor->channel_in,
+                                 NotificationType::dontSendNotification);
 
-    //sl_midi_learn_channel
-    sl_midi_in_channel_pad_1->setValue( _app_instance_store->launchpad_1.channel_in, NotificationType::dontSendNotification );
-    sl_midi_out_channel_pad_1->setValue( _app_instance_store->launchpad_1.channel_out, NotificationType::dontSendNotification );
-    sl_midi_in_channel_pad_2->setValue( _app_instance_store->launchpad_2.channel_in, NotificationType::dontSendNotification );
-    sl_midi_out_channel_pad_2->setValue( _app_instance_store->launchpad_2.channel_out, NotificationType::dontSendNotification );
-    tb_midi_thru_enable->setToggleState( _app_instance_store->audio_processor->midi_thru, NotificationType::dontSendNotification );
+    // sl_midi_learn_channel
+    sl_midi_in_channel_pad_1->setValue(_app_instance_store->launchpad_1.channel_in,
+                                       NotificationType::dontSendNotification);
+    sl_midi_out_channel_pad_1->setValue(_app_instance_store->launchpad_1.channel_out,
+                                        NotificationType::dontSendNotification);
+    sl_midi_in_channel_pad_2->setValue(_app_instance_store->launchpad_2.channel_in,
+                                       NotificationType::dontSendNotification);
+    sl_midi_out_channel_pad_2->setValue(_app_instance_store->launchpad_2.channel_out,
+                                        NotificationType::dontSendNotification);
+    tb_midi_thru_enable->setToggleState(_app_instance_store->audio_processor->midi_thru,
+                                        NotificationType::dontSendNotification);
 
-    tb_clock_thru->setToggleState( _app_instance_store->audio_processor->sync_thru, NotificationType::dontSendNotification );
+    tb_clock_thru->setToggleState(_app_instance_store->audio_processor->sync_thru,
+                                  NotificationType::dontSendNotification);
 
-    sl_latency_clocks->setValue( _app_instance_store->audio_processor->latency_corretion_clocks, NotificationType::dontSendNotification );
-    sl_latency_ms->setValue( _app_instance_store->audio_processor->latency_corretion_ms, NotificationType::dontSendNotification );
+    sl_latency_clocks->setValue(_app_instance_store->audio_processor->latency_corretion_clocks,
+                                NotificationType::dontSendNotification);
+    sl_latency_ms->setValue(_app_instance_store->audio_processor->latency_corretion_ms,
+                            NotificationType::dontSendNotification);
 
     fill_drop_downs();
 
     //[/UserPreSize]
 
-    setSize (1140, 700);
-
+    setSize(1140, 700);
 
     //[Constructor] You can add your own custom stuff here..
-    center_relative_and_make_visible( _app_instance_store->editor );
-    restore_XY( _app_instance_store->editor_config.XY_editor_settings );
+    center_relative_and_make_visible(_app_instance_store->editor);
+    restore_XY(_app_instance_store->editor_config.XY_editor_settings);
     //[/Constructor]
 }
 
 UiEditorSettings::~UiEditorSettings()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
-    _app_instance_store->editor_config.XY_editor_settings = Point<int>(getX(),getY());
+    _app_instance_store->editor_config.XY_editor_settings = Point<int>(getX(), getY());
     //[/Destructor_pre]
 
     label_latency_ms = nullptr;
@@ -771,40 +842,51 @@ UiEditorSettings::~UiEditorSettings()
     button_info_cc_in = nullptr;
     button_info_launchpad_in_1 = nullptr;
 
-
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
 
 //==============================================================================
-void UiEditorSettings::paint (Graphics& g)
+void UiEditorSettings::paint(Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.setColour (Colour (0xff161616));
-    g.fillRect (0, 0, getWidth() - 0, getHeight() - 0);
+    g.setColour(Colour(0xff161616));
+    g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.drawRect (0, 0, getWidth() - 0, getHeight() - 0, 2);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.fillRoundedRectangle (static_cast<float> (proportionOfWidth (0.0175f)), static_cast<float> (proportionOfHeight (0.4286f)), static_cast<float> (proportionOfWidth (0.4649f)), 1.0f, 10.000f);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.0175f)),
+                           static_cast<float>(proportionOfHeight(0.4286f)),
+                           static_cast<float>(proportionOfWidth(0.4649f)), 1.0f, 10.000f);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.fillRoundedRectangle (static_cast<float> (proportionOfWidth (0.5000f)), static_cast<float> (proportionOfHeight (0.0286f)), 1.0f, static_cast<float> (proportionOfHeight (0.8571f)), 10.000f);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.5000f)),
+                           static_cast<float>(proportionOfHeight(0.0286f)), 1.0f,
+                           static_cast<float>(proportionOfHeight(0.8571f)), 10.000f);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.fillRoundedRectangle (static_cast<float> (proportionOfWidth (0.5175f)), static_cast<float> (proportionOfHeight (0.3000f)), static_cast<float> (proportionOfWidth (0.4649f)), 1.0f, 10.000f);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.5175f)),
+                           static_cast<float>(proportionOfHeight(0.3000f)),
+                           static_cast<float>(proportionOfWidth(0.4649f)), 1.0f, 10.000f);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.fillRoundedRectangle (static_cast<float> (proportionOfWidth (0.0175f)), static_cast<float> (proportionOfHeight (0.5857f)), static_cast<float> (proportionOfWidth (0.4649f)), 1.0f, 10.000f);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.0175f)),
+                           static_cast<float>(proportionOfHeight(0.5857f)),
+                           static_cast<float>(proportionOfWidth(0.4649f)), 1.0f, 10.000f);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.fillRoundedRectangle (static_cast<float> (proportionOfWidth (0.5175f)), static_cast<float> (proportionOfHeight (0.6000f)), static_cast<float> (proportionOfWidth (0.4649f)), 1.0f, 10.000f);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.5175f)),
+                           static_cast<float>(proportionOfHeight(0.6000f)),
+                           static_cast<float>(proportionOfWidth(0.4649f)), 1.0f, 10.000f);
 
-    g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    g.fillRoundedRectangle (static_cast<float> (proportionOfWidth (0.0175f)), static_cast<float> (proportionOfHeight (0.2414f)), static_cast<float> (proportionOfWidth (0.4649f)), 1.0f, 10.000f);
+    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.0175f)),
+                           static_cast<float>(proportionOfHeight(0.2414f)),
+                           static_cast<float>(proportionOfWidth(0.4649f)), 1.0f, 10.000f);
 
     //[UserPaint] Add your own custom painting code here..
     ResizableWindow::moved();
@@ -816,71 +898,135 @@ void UiEditorSettings::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    label_latency_ms->setBounds (proportionOfWidth (0.0175f), proportionOfHeight (0.4571f), proportionOfWidth (0.1491f), proportionOfHeight (0.0429f));
-    lbl_clock_thru->setBounds (proportionOfWidth (0.0351f), proportionOfHeight (0.4571f), proportionOfWidth (0.1316f), proportionOfHeight (0.0429f));
-    tb_clock_thru->setBounds (proportionOfWidth (0.0175f), proportionOfHeight (0.4571f), proportionOfWidth (0.1842f), proportionOfHeight (0.0429f));
-    label_latency_clocks->setBounds (proportionOfWidth (0.0175f), proportionOfHeight (0.5286f), proportionOfWidth (0.1491f), proportionOfHeight (0.0429f));
-    label_midi_thru->setBounds (proportionOfWidth (0.0351f), proportionOfHeight (0.5286f), proportionOfWidth (0.1316f), proportionOfHeight (0.0429f));
-    tb_midi_thru_enable->setBounds (proportionOfWidth (0.0175f), proportionOfHeight (0.5286f), proportionOfWidth (0.1842f), proportionOfHeight (0.0429f));
-    sl_latency_ms->setBounds (proportionOfWidth (0.1667f), proportionOfHeight (0.4571f), proportionOfWidth (0.0702f), proportionOfHeight (0.0429f));
-    sl_latency_clocks->setBounds (proportionOfWidth (0.1667f), proportionOfHeight (0.5286f), proportionOfWidth (0.0702f), proportionOfHeight (0.0429f));
-    label_midi_learn_headline->setBounds (proportionOfWidth (0.5526f), proportionOfHeight (0.0286f), proportionOfWidth (0.3947f), proportionOfHeight (0.0571f));
-    toolbar->setBounds (getWidth() - proportionOfWidth (0.0439f), 0, proportionOfWidth (0.0439f), proportionOfHeight (0.2857f));
-    label_midi_io_port_per_track->setBounds (proportionOfWidth (0.0526f), proportionOfHeight (0.6143f), proportionOfWidth (0.3947f), proportionOfHeight (0.0571f));
-    sl_midi_out_channel->setBounds (proportionOfWidth (0.2026f), proportionOfHeight (0.1143f), proportionOfWidth (0.0702f), proportionOfHeight (0.0429f));
-    sl_midi_in_channel_pad_1->setBounds (proportionOfWidth (0.6983f), proportionOfHeight (0.4143f), proportionOfWidth (0.0702f), proportionOfHeight (0.0429f));
-    sl_midi_out_channel_pad_1->setBounds (proportionOfWidth (0.6983f), proportionOfHeight (0.4714f), proportionOfWidth (0.0702f), proportionOfHeight (0.0429f));
-    sl_midi_in_channel_pad_2->setBounds (proportionOfWidth (0.6983f), proportionOfHeight (0.7000f), proportionOfWidth (0.0702f), proportionOfHeight (0.0429f));
-    sl_midi_out_channel_pad_2->setBounds (proportionOfWidth (0.6983f), proportionOfHeight (0.7571f), proportionOfWidth (0.0702f), proportionOfHeight (0.0429f));
-    pb_refresh_pad_1->setBounds (proportionOfWidth (0.5175f), proportionOfHeight (0.5286f), proportionOfWidth (0.4298f), proportionOfHeight (0.0457f));
-    pb_refresh_pad_2->setBounds (proportionOfWidth (0.5175f), proportionOfHeight (0.8143f), proportionOfWidth (0.4298f), proportionOfHeight (0.0457f));
-    cb_midi_pad_in_1->setBounds (proportionOfWidth (0.7719f), proportionOfHeight (0.4143f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    cb_midi_pad_out_1->setBounds (proportionOfWidth (0.7719f), proportionOfHeight (0.4714f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    cb_midi_pad_in_2->setBounds (proportionOfWidth (0.7719f), proportionOfHeight (0.7000f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    cb_midi_pad_out_2->setBounds (proportionOfWidth (0.7719f), proportionOfHeight (0.7571f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    cb_midi_in_port->setBounds (proportionOfWidth (0.2754f), proportionOfHeight (0.3571f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    cb_midi_out_port->setBounds (proportionOfWidth (0.2754f), proportionOfHeight (0.1143f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    sl_midi_in_channel->setBounds (proportionOfWidth (0.2026f), proportionOfHeight (0.3571f), proportionOfWidth (0.0702f), proportionOfHeight (0.0429f));
-    cb_midi_learn_in_port->setBounds (proportionOfWidth (0.7018f), proportionOfHeight (0.1143f), proportionOfWidth (0.2456f), proportionOfHeight (0.0429f));
-    cb_midi_learn_out_port->setBounds (proportionOfWidth (0.7018f), proportionOfHeight (0.1714f), proportionOfWidth (0.2456f), proportionOfHeight (0.0429f));
-    pb_refresh_feedback->setBounds (proportionOfWidth (0.5175f), proportionOfHeight (0.2286f), proportionOfWidth (0.4298f), proportionOfHeight (0.0429f));
-    label_midi_in_port->setBounds (proportionOfWidth (0.0175f), proportionOfHeight (0.3571f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    label_midi_out->setBounds (proportionOfWidth (0.0175f), proportionOfHeight (0.1143f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    label_master_slave_headline->setBounds (proportionOfWidth (0.0526f), proportionOfHeight (0.0286f), proportionOfWidth (0.3947f), proportionOfHeight (0.0571f));
-    label_midi_learn_in->setBounds (proportionOfWidth (0.5175f), proportionOfHeight (0.1143f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    label_midi_learn_out->setBounds (proportionOfWidth (0.5175f), proportionOfHeight (0.1714f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    label_launchpad_1_headline->setBounds (proportionOfWidth (0.5526f), proportionOfHeight (0.3286f), proportionOfWidth (0.3947f), proportionOfHeight (0.0571f));
-    label_midi_launchpad_1_in->setBounds (proportionOfWidth (0.5175f), proportionOfHeight (0.4143f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    label_midi_launchpad_1_out->setBounds (proportionOfWidth (0.5175f), proportionOfHeight (0.4714f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    label_launchpad_2_headline->setBounds (proportionOfWidth (0.5526f), proportionOfHeight (0.6286f), proportionOfWidth (0.3947f), proportionOfHeight (0.0571f));
-    label_midi_launchpad_2_in->setBounds (proportionOfWidth (0.5175f), proportionOfHeight (0.7000f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    label_midi_launchpad_2_out->setBounds (proportionOfWidth (0.5175f), proportionOfHeight (0.7571f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    cb_midi_out_port_string_g->setBounds (proportionOfWidth (0.2754f), proportionOfHeight (0.7014f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    sl_midi_out_channel_string_g->setBounds (proportionOfWidth (0.2026f), proportionOfHeight (0.7014f), proportionOfWidth (0.0702f), proportionOfHeight (0.0429f));
-    label_midi_out_string_g->setBounds (proportionOfWidth (0.0184f), proportionOfHeight (0.7014f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    cb_midi_out_port_string_d->setBounds (proportionOfWidth (0.2754f), proportionOfHeight (0.7571f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    sl_midi_out_channel_string_d->setBounds (proportionOfWidth (0.2018f), proportionOfHeight (0.7571f), proportionOfWidth (0.0702f), proportionOfHeight (0.0429f));
-    label_midi_out_string_d->setBounds (proportionOfWidth (0.0175f), proportionOfHeight (0.7571f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    cb_midi_out_port_string_a->setBounds (proportionOfWidth (0.2754f), proportionOfHeight (0.8143f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    sl_midi_out_channel_string_a->setBounds (proportionOfWidth (0.2018f), proportionOfHeight (0.8143f), proportionOfWidth (0.0702f), proportionOfHeight (0.0429f));
-    label_midi_out_string_a->setBounds (proportionOfWidth (0.0175f), proportionOfHeight (0.8143f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    pb_refresh_all->setBounds (proportionOfWidth (0.0175f), proportionOfHeight (0.9143f), proportionOfWidth (0.9649f), proportionOfHeight (0.0457f));
-    cb_midi_out_port_b->setBounds (proportionOfWidth (0.2754f), proportionOfHeight (0.1714f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    sl_midi_out_channel_b->setBounds (proportionOfWidth (0.2026f), proportionOfHeight (0.1714f), proportionOfWidth (0.0702f), proportionOfHeight (0.0429f));
-    label_midi_in_port_b->setBounds (proportionOfWidth (0.0175f), proportionOfHeight (0.1714f), proportionOfWidth (0.1754f), proportionOfHeight (0.0429f));
-    label_master_slave_headline2->setBounds (proportionOfWidth (0.0526f), proportionOfHeight (0.2714f), proportionOfWidth (0.3947f), proportionOfHeight (0.0571f));
-    button_info_master_out->setBounds (proportionOfWidth (0.4561f), proportionOfHeight (0.0357f), proportionOfWidth (0.0263f), proportionOfHeight (0.0429f));
-    button_info_master_input->setBounds (proportionOfWidth (0.4561f), proportionOfHeight (0.2714f), proportionOfWidth (0.0263f), proportionOfHeight (0.0429f));
-    button_info_midi_thru->setBounds (proportionOfWidth (0.4561f), proportionOfHeight (0.4571f), proportionOfWidth (0.0263f), proportionOfHeight (0.0429f));
-    button_info_sequence_out->setBounds (proportionOfWidth (0.4561f), proportionOfHeight (0.6214f), proportionOfWidth (0.0263f), proportionOfHeight (0.0429f));
-    button_info_cc_in->setBounds (proportionOfWidth (0.5175f), proportionOfHeight (0.0357f), proportionOfWidth (0.0263f), proportionOfHeight (0.0429f));
-    button_info_launchpad_in_1->setBounds (proportionOfWidth (0.5175f), proportionOfHeight (0.3286f), proportionOfWidth (0.0263f), proportionOfHeight (0.0429f));
+    label_latency_ms->setBounds(proportionOfWidth(0.0175f), proportionOfHeight(0.4571f),
+                                proportionOfWidth(0.1491f), proportionOfHeight(0.0429f));
+    lbl_clock_thru->setBounds(proportionOfWidth(0.0351f), proportionOfHeight(0.4571f),
+                              proportionOfWidth(0.1316f), proportionOfHeight(0.0429f));
+    tb_clock_thru->setBounds(proportionOfWidth(0.0175f), proportionOfHeight(0.4571f),
+                             proportionOfWidth(0.1842f), proportionOfHeight(0.0429f));
+    label_latency_clocks->setBounds(proportionOfWidth(0.0175f), proportionOfHeight(0.5286f),
+                                    proportionOfWidth(0.1491f), proportionOfHeight(0.0429f));
+    label_midi_thru->setBounds(proportionOfWidth(0.0351f), proportionOfHeight(0.5286f),
+                               proportionOfWidth(0.1316f), proportionOfHeight(0.0429f));
+    tb_midi_thru_enable->setBounds(proportionOfWidth(0.0175f), proportionOfHeight(0.5286f),
+                                   proportionOfWidth(0.1842f), proportionOfHeight(0.0429f));
+    sl_latency_ms->setBounds(proportionOfWidth(0.1667f), proportionOfHeight(0.4571f),
+                             proportionOfWidth(0.0702f), proportionOfHeight(0.0429f));
+    sl_latency_clocks->setBounds(proportionOfWidth(0.1667f), proportionOfHeight(0.5286f),
+                                 proportionOfWidth(0.0702f), proportionOfHeight(0.0429f));
+    label_midi_learn_headline->setBounds(proportionOfWidth(0.5526f), proportionOfHeight(0.0286f),
+                                         proportionOfWidth(0.3947f), proportionOfHeight(0.0571f));
+    toolbar->setBounds(getWidth() - proportionOfWidth(0.0439f), 0, proportionOfWidth(0.0439f),
+                       proportionOfHeight(0.2857f));
+    label_midi_io_port_per_track->setBounds(proportionOfWidth(0.0526f), proportionOfHeight(0.6143f),
+                                            proportionOfWidth(0.3947f),
+                                            proportionOfHeight(0.0571f));
+    sl_midi_out_channel->setBounds(proportionOfWidth(0.2026f), proportionOfHeight(0.1143f),
+                                   proportionOfWidth(0.0702f), proportionOfHeight(0.0429f));
+    sl_midi_in_channel_pad_1->setBounds(proportionOfWidth(0.6983f), proportionOfHeight(0.4143f),
+                                        proportionOfWidth(0.0702f), proportionOfHeight(0.0429f));
+    sl_midi_out_channel_pad_1->setBounds(proportionOfWidth(0.6983f), proportionOfHeight(0.4714f),
+                                         proportionOfWidth(0.0702f), proportionOfHeight(0.0429f));
+    sl_midi_in_channel_pad_2->setBounds(proportionOfWidth(0.6983f), proportionOfHeight(0.7000f),
+                                        proportionOfWidth(0.0702f), proportionOfHeight(0.0429f));
+    sl_midi_out_channel_pad_2->setBounds(proportionOfWidth(0.6983f), proportionOfHeight(0.7571f),
+                                         proportionOfWidth(0.0702f), proportionOfHeight(0.0429f));
+    pb_refresh_pad_1->setBounds(proportionOfWidth(0.5175f), proportionOfHeight(0.5286f),
+                                proportionOfWidth(0.4298f), proportionOfHeight(0.0457f));
+    pb_refresh_pad_2->setBounds(proportionOfWidth(0.5175f), proportionOfHeight(0.8143f),
+                                proportionOfWidth(0.4298f), proportionOfHeight(0.0457f));
+    cb_midi_pad_in_1->setBounds(proportionOfWidth(0.7719f), proportionOfHeight(0.4143f),
+                                proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    cb_midi_pad_out_1->setBounds(proportionOfWidth(0.7719f), proportionOfHeight(0.4714f),
+                                 proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    cb_midi_pad_in_2->setBounds(proportionOfWidth(0.7719f), proportionOfHeight(0.7000f),
+                                proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    cb_midi_pad_out_2->setBounds(proportionOfWidth(0.7719f), proportionOfHeight(0.7571f),
+                                 proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    cb_midi_in_port->setBounds(proportionOfWidth(0.2754f), proportionOfHeight(0.3571f),
+                               proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    cb_midi_out_port->setBounds(proportionOfWidth(0.2754f), proportionOfHeight(0.1143f),
+                                proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    sl_midi_in_channel->setBounds(proportionOfWidth(0.2026f), proportionOfHeight(0.3571f),
+                                  proportionOfWidth(0.0702f), proportionOfHeight(0.0429f));
+    cb_midi_learn_in_port->setBounds(proportionOfWidth(0.7018f), proportionOfHeight(0.1143f),
+                                     proportionOfWidth(0.2456f), proportionOfHeight(0.0429f));
+    cb_midi_learn_out_port->setBounds(proportionOfWidth(0.7018f), proportionOfHeight(0.1714f),
+                                      proportionOfWidth(0.2456f), proportionOfHeight(0.0429f));
+    pb_refresh_feedback->setBounds(proportionOfWidth(0.5175f), proportionOfHeight(0.2286f),
+                                   proportionOfWidth(0.4298f), proportionOfHeight(0.0429f));
+    label_midi_in_port->setBounds(proportionOfWidth(0.0175f), proportionOfHeight(0.3571f),
+                                  proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    label_midi_out->setBounds(proportionOfWidth(0.0175f), proportionOfHeight(0.1143f),
+                              proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    label_master_slave_headline->setBounds(proportionOfWidth(0.0526f), proportionOfHeight(0.0286f),
+                                           proportionOfWidth(0.3947f), proportionOfHeight(0.0571f));
+    label_midi_learn_in->setBounds(proportionOfWidth(0.5175f), proportionOfHeight(0.1143f),
+                                   proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    label_midi_learn_out->setBounds(proportionOfWidth(0.5175f), proportionOfHeight(0.1714f),
+                                    proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    label_launchpad_1_headline->setBounds(proportionOfWidth(0.5526f), proportionOfHeight(0.3286f),
+                                          proportionOfWidth(0.3947f), proportionOfHeight(0.0571f));
+    label_midi_launchpad_1_in->setBounds(proportionOfWidth(0.5175f), proportionOfHeight(0.4143f),
+                                         proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    label_midi_launchpad_1_out->setBounds(proportionOfWidth(0.5175f), proportionOfHeight(0.4714f),
+                                          proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    label_launchpad_2_headline->setBounds(proportionOfWidth(0.5526f), proportionOfHeight(0.6286f),
+                                          proportionOfWidth(0.3947f), proportionOfHeight(0.0571f));
+    label_midi_launchpad_2_in->setBounds(proportionOfWidth(0.5175f), proportionOfHeight(0.7000f),
+                                         proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    label_midi_launchpad_2_out->setBounds(proportionOfWidth(0.5175f), proportionOfHeight(0.7571f),
+                                          proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    cb_midi_out_port_string_g->setBounds(proportionOfWidth(0.2754f), proportionOfHeight(0.7014f),
+                                         proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    sl_midi_out_channel_string_g->setBounds(proportionOfWidth(0.2026f), proportionOfHeight(0.7014f),
+                                            proportionOfWidth(0.0702f),
+                                            proportionOfHeight(0.0429f));
+    label_midi_out_string_g->setBounds(proportionOfWidth(0.0184f), proportionOfHeight(0.7014f),
+                                       proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    cb_midi_out_port_string_d->setBounds(proportionOfWidth(0.2754f), proportionOfHeight(0.7571f),
+                                         proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    sl_midi_out_channel_string_d->setBounds(proportionOfWidth(0.2018f), proportionOfHeight(0.7571f),
+                                            proportionOfWidth(0.0702f),
+                                            proportionOfHeight(0.0429f));
+    label_midi_out_string_d->setBounds(proportionOfWidth(0.0175f), proportionOfHeight(0.7571f),
+                                       proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    cb_midi_out_port_string_a->setBounds(proportionOfWidth(0.2754f), proportionOfHeight(0.8143f),
+                                         proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    sl_midi_out_channel_string_a->setBounds(proportionOfWidth(0.2018f), proportionOfHeight(0.8143f),
+                                            proportionOfWidth(0.0702f),
+                                            proportionOfHeight(0.0429f));
+    label_midi_out_string_a->setBounds(proportionOfWidth(0.0175f), proportionOfHeight(0.8143f),
+                                       proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    pb_refresh_all->setBounds(proportionOfWidth(0.0175f), proportionOfHeight(0.9143f),
+                              proportionOfWidth(0.9649f), proportionOfHeight(0.0457f));
+    cb_midi_out_port_b->setBounds(proportionOfWidth(0.2754f), proportionOfHeight(0.1714f),
+                                  proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    sl_midi_out_channel_b->setBounds(proportionOfWidth(0.2026f), proportionOfHeight(0.1714f),
+                                     proportionOfWidth(0.0702f), proportionOfHeight(0.0429f));
+    label_midi_in_port_b->setBounds(proportionOfWidth(0.0175f), proportionOfHeight(0.1714f),
+                                    proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
+    label_master_slave_headline2->setBounds(proportionOfWidth(0.0526f), proportionOfHeight(0.2714f),
+                                            proportionOfWidth(0.3947f),
+                                            proportionOfHeight(0.0571f));
+    button_info_master_out->setBounds(proportionOfWidth(0.4561f), proportionOfHeight(0.0357f),
+                                      proportionOfWidth(0.0263f), proportionOfHeight(0.0429f));
+    button_info_master_input->setBounds(proportionOfWidth(0.4561f), proportionOfHeight(0.2714f),
+                                        proportionOfWidth(0.0263f), proportionOfHeight(0.0429f));
+    button_info_midi_thru->setBounds(proportionOfWidth(0.4561f), proportionOfHeight(0.4571f),
+                                     proportionOfWidth(0.0263f), proportionOfHeight(0.0429f));
+    button_info_sequence_out->setBounds(proportionOfWidth(0.4561f), proportionOfHeight(0.6214f),
+                                        proportionOfWidth(0.0263f), proportionOfHeight(0.0429f));
+    button_info_cc_in->setBounds(proportionOfWidth(0.5175f), proportionOfHeight(0.0357f),
+                                 proportionOfWidth(0.0263f), proportionOfHeight(0.0429f));
+    button_info_launchpad_in_1->setBounds(proportionOfWidth(0.5175f), proportionOfHeight(0.3286f),
+                                          proportionOfWidth(0.0263f), proportionOfHeight(0.0429f));
     //[UserResized] Add your own custom resize handling here..
     ResizableWindow::resized();
     //[/UserResized]
 }
 
-void UiEditorSettings::buttonClicked (Button* buttonThatWasClicked)
+void UiEditorSettings::buttonClicked(Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -922,21 +1068,36 @@ void UiEditorSettings::buttonClicked (Button* buttonThatWasClicked)
         _app_instance_store->launchpad_2.refresh_all_buttons();
         _app_instance_store->midi_in_map.force_feedback_refresh();
 
-        sl_midi_out_channel->setValue( _app_instance_store->audio_processor->channel_out, NotificationType::dontSendNotification );
-        sl_midi_out_channel_string_g->setValue( _app_instance_store->audio_processor->channel_out_group_2, NotificationType::dontSendNotification );
-        sl_midi_out_channel_string_d->setValue( _app_instance_store->audio_processor->channel_out_group_3, NotificationType::dontSendNotification );
-        sl_midi_out_channel_string_a->setValue( _app_instance_store->audio_processor->channel_out_group_4, NotificationType::dontSendNotification );
-        sl_midi_out_channel_b->setValue( _app_instance_store->audio_processor->channel_out_b, NotificationType::dontSendNotification );
-        sl_midi_in_channel->setValue( _app_instance_store->audio_processor->channel_in, NotificationType::dontSendNotification );
+        sl_midi_out_channel->setValue(_app_instance_store->audio_processor->channel_out,
+                                      NotificationType::dontSendNotification);
+        sl_midi_out_channel_string_g->setValue(
+            _app_instance_store->audio_processor->channel_out_group_2,
+            NotificationType::dontSendNotification);
+        sl_midi_out_channel_string_d->setValue(
+            _app_instance_store->audio_processor->channel_out_group_3,
+            NotificationType::dontSendNotification);
+        sl_midi_out_channel_string_a->setValue(
+            _app_instance_store->audio_processor->channel_out_group_4,
+            NotificationType::dontSendNotification);
+        sl_midi_out_channel_b->setValue(_app_instance_store->audio_processor->channel_out_b,
+                                        NotificationType::dontSendNotification);
+        sl_midi_in_channel->setValue(_app_instance_store->audio_processor->channel_in,
+                                     NotificationType::dontSendNotification);
 
-        //sl_midi_learn_channel
-        sl_midi_in_channel_pad_1->setValue( _app_instance_store->launchpad_1.channel_in, NotificationType::dontSendNotification );
-        sl_midi_out_channel_pad_1->setValue( _app_instance_store->launchpad_1.channel_out, NotificationType::dontSendNotification );
-        sl_midi_in_channel_pad_2->setValue( _app_instance_store->launchpad_2.channel_in, NotificationType::dontSendNotification );
-        sl_midi_out_channel_pad_2->setValue( _app_instance_store->launchpad_2.channel_out, NotificationType::dontSendNotification );
-        tb_midi_thru_enable->setToggleState( _app_instance_store->audio_processor->midi_thru, NotificationType::dontSendNotification );
+        // sl_midi_learn_channel
+        sl_midi_in_channel_pad_1->setValue(_app_instance_store->launchpad_1.channel_in,
+                                           NotificationType::dontSendNotification);
+        sl_midi_out_channel_pad_1->setValue(_app_instance_store->launchpad_1.channel_out,
+                                            NotificationType::dontSendNotification);
+        sl_midi_in_channel_pad_2->setValue(_app_instance_store->launchpad_2.channel_in,
+                                           NotificationType::dontSendNotification);
+        sl_midi_out_channel_pad_2->setValue(_app_instance_store->launchpad_2.channel_out,
+                                            NotificationType::dontSendNotification);
+        tb_midi_thru_enable->setToggleState(_app_instance_store->audio_processor->midi_thru,
+                                            NotificationType::dontSendNotification);
 
-        tb_clock_thru->setToggleState( _app_instance_store->audio_processor->sync_thru, NotificationType::dontSendNotification );
+        tb_clock_thru->setToggleState(_app_instance_store->audio_processor->sync_thru,
+                                      NotificationType::dontSendNotification);
 
         fill_drop_downs();
         //[/UserButtonCode_pb_refresh_all]
@@ -944,55 +1105,61 @@ void UiEditorSettings::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == button_info_master_out)
     {
         //[UserButtonCode_button_info_master_out] -- add your button handler code here..
-        if(! _app_instance_store->editor_config.manual_editor )
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView( _app_instance_store );
+        if (!_app_instance_store->editor_config.manual_editor)
+            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
 
-        _app_instance_store->editor_config.manual_editor->try_open_url( MANUAL_URL+"beginner/master-and-slave-standalone" );
+        _app_instance_store->editor_config.manual_editor->try_open_url(
+            MANUAL_URL + "beginner/master-and-slave-standalone");
         //[/UserButtonCode_button_info_master_out]
     }
     else if (buttonThatWasClicked == button_info_master_input)
     {
         //[UserButtonCode_button_info_master_input] -- add your button handler code here..
-        if(! _app_instance_store->editor_config.manual_editor )
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView( _app_instance_store );
+        if (!_app_instance_store->editor_config.manual_editor)
+            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
 
-        _app_instance_store->editor_config.manual_editor->try_open_url( MANUAL_URL+"beginner/master-and-slave-standalone" );
+        _app_instance_store->editor_config.manual_editor->try_open_url(
+            MANUAL_URL + "beginner/master-and-slave-standalone");
         //[/UserButtonCode_button_info_master_input]
     }
     else if (buttonThatWasClicked == button_info_midi_thru)
     {
         //[UserButtonCode_button_info_midi_thru] -- add your button handler code here..
-        if(! _app_instance_store->editor_config.manual_editor )
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView( _app_instance_store );
+        if (!_app_instance_store->editor_config.manual_editor)
+            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
 
-        _app_instance_store->editor_config.manual_editor->try_open_url( MANUAL_URL+"beginner/master-and-slave-standalone" );
+        _app_instance_store->editor_config.manual_editor->try_open_url(
+            MANUAL_URL + "beginner/master-and-slave-standalone");
         //[/UserButtonCode_button_info_midi_thru]
     }
     else if (buttonThatWasClicked == button_info_sequence_out)
     {
         //[UserButtonCode_button_info_sequence_out] -- add your button handler code here..
-        if(! _app_instance_store->editor_config.manual_editor )
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView( _app_instance_store );
+        if (!_app_instance_store->editor_config.manual_editor)
+            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
 
-        _app_instance_store->editor_config.manual_editor->try_open_url( MANUAL_URL+"advanced-users/layer-b-4th-bar-playback" );
+        _app_instance_store->editor_config.manual_editor->try_open_url(
+            MANUAL_URL + "advanced-users/layer-b-4th-bar-playback");
         //[/UserButtonCode_button_info_sequence_out]
     }
     else if (buttonThatWasClicked == button_info_cc_in)
     {
         //[UserButtonCode_button_info_cc_in] -- add your button handler code here..
-        if(! _app_instance_store->editor_config.manual_editor )
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView( _app_instance_store );
+        if (!_app_instance_store->editor_config.manual_editor)
+            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
 
-        _app_instance_store->editor_config.manual_editor->try_open_url( MANUAL_URL+"conroller-stuff/midi-learn" );
+        _app_instance_store->editor_config.manual_editor->try_open_url(
+            MANUAL_URL + "conroller-stuff/midi-learn");
         //[/UserButtonCode_button_info_cc_in]
     }
     else if (buttonThatWasClicked == button_info_launchpad_in_1)
     {
         //[UserButtonCode_button_info_launchpad_in_1] -- add your button handler code here..
-        if(! _app_instance_store->editor_config.manual_editor )
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView( _app_instance_store );
+        if (!_app_instance_store->editor_config.manual_editor)
+            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
 
-        _app_instance_store->editor_config.manual_editor->try_open_url( MANUAL_URL+"conroller-stuff/novation-launchpad" );
+        _app_instance_store->editor_config.manual_editor->try_open_url(
+            MANUAL_URL + "conroller-stuff/novation-launchpad");
         //[/UserButtonCode_button_info_launchpad_in_1]
     }
 
@@ -1000,7 +1167,7 @@ void UiEditorSettings::buttonClicked (Button* buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiEditorSettings::sliderValueChanged (Slider* sliderThatWasMoved)
+void UiEditorSettings::sliderValueChanged(Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
@@ -1014,7 +1181,8 @@ void UiEditorSettings::sliderValueChanged (Slider* sliderThatWasMoved)
     else if (sliderThatWasMoved == sl_latency_clocks)
     {
         //[UserSliderCode_sl_latency_clocks] -- add your slider handling code here..
-        _app_instance_store->audio_processor->latency_corretion_clocks = sliderThatWasMoved->getValue();
+        _app_instance_store->audio_processor->latency_corretion_clocks =
+            sliderThatWasMoved->getValue();
         //[/UserSliderCode_sl_latency_clocks]
     }
     else if (sliderThatWasMoved == sl_midi_out_channel)
@@ -1051,7 +1219,8 @@ void UiEditorSettings::sliderValueChanged (Slider* sliderThatWasMoved)
     {
         //[UserSliderCode_sl_midi_in_channel] -- add your slider handling code here..
         _app_instance_store->audio_processor->channel_in = sliderThatWasMoved->getValue();
-        //sl_midi_in_channel->setValue( _app_instance_store->audio_processor->channel_in = sl_midi_out_channel->getValue(), NotificationType::dontSendNotification );
+        // sl_midi_in_channel->setValue( _app_instance_store->audio_processor->channel_in =
+        // sl_midi_out_channel->getValue(), NotificationType::dontSendNotification );
 
         //[/UserSliderCode_sl_midi_in_channel]
     }
@@ -1084,21 +1253,22 @@ void UiEditorSettings::sliderValueChanged (Slider* sliderThatWasMoved)
     //[/UsersliderValueChanged_Post]
 }
 
-void UiEditorSettings::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
+void UiEditorSettings::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
 {
     //[UsercomboBoxChanged_Pre]
     String selected_text = "";
-    if( comboBoxThatHasChanged->getSelectedId() )
-        selected_text = comboBoxThatHasChanged->getItemText( comboBoxThatHasChanged->getSelectedId() -1 );
+    if (comboBoxThatHasChanged->getSelectedId())
+        selected_text =
+            comboBoxThatHasChanged->getItemText(comboBoxThatHasChanged->getSelectedId() - 1);
 
-    int selected_index = comboBoxThatHasChanged->getSelectedId() -2;
+    int selected_index = comboBoxThatHasChanged->getSelectedId() - 2;
     //[/UsercomboBoxChanged_Pre]
 
     if (comboBoxThatHasChanged == cb_midi_pad_in_1)
     {
         //[UserComboBoxCode_cb_midi_pad_in_1] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.pad_1_in.close_port();
-        _app_instance_store->midi_io_handler.pad_1_in.set_port_name( selected_text, selected_index );
+        _app_instance_store->midi_io_handler.pad_1_in.set_port_name(selected_text, selected_index);
         _app_instance_store->midi_io_handler.pad_1_in.open_port();
         //[/UserComboBoxCode_cb_midi_pad_in_1]
     }
@@ -1106,7 +1276,7 @@ void UiEditorSettings::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     {
         //[UserComboBoxCode_cb_midi_pad_out_1] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.pad_1_out.close_port();
-        _app_instance_store->midi_io_handler.pad_1_out.set_port_name( selected_text, selected_index );
+        _app_instance_store->midi_io_handler.pad_1_out.set_port_name(selected_text, selected_index);
         _app_instance_store->midi_io_handler.pad_1_out.open_port();
         //[/UserComboBoxCode_cb_midi_pad_out_1]
     }
@@ -1114,7 +1284,7 @@ void UiEditorSettings::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     {
         //[UserComboBoxCode_cb_midi_pad_in_2] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.pad_2_in.close_port();
-        _app_instance_store->midi_io_handler.pad_2_in.set_port_name( selected_text, selected_index );
+        _app_instance_store->midi_io_handler.pad_2_in.set_port_name(selected_text, selected_index);
         _app_instance_store->midi_io_handler.pad_2_in.open_port();
         //[/UserComboBoxCode_cb_midi_pad_in_2]
     }
@@ -1122,7 +1292,7 @@ void UiEditorSettings::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     {
         //[UserComboBoxCode_cb_midi_pad_out_2] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.pad_2_out.close_port();
-        _app_instance_store->midi_io_handler.pad_2_out.set_port_name( selected_text, selected_index );
+        _app_instance_store->midi_io_handler.pad_2_out.set_port_name(selected_text, selected_index);
         _app_instance_store->midi_io_handler.pad_2_out.open_port();
         //[/UserComboBoxCode_cb_midi_pad_out_2]
     }
@@ -1130,7 +1300,7 @@ void UiEditorSettings::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     {
         //[UserComboBoxCode_cb_midi_in_port] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.midi_in.close_port();
-        _app_instance_store->midi_io_handler.midi_in.set_port_name( selected_text, selected_index );
+        _app_instance_store->midi_io_handler.midi_in.set_port_name(selected_text, selected_index);
         _app_instance_store->midi_io_handler.midi_in.open_port();
         //[/UserComboBoxCode_cb_midi_in_port]
     }
@@ -1138,7 +1308,8 @@ void UiEditorSettings::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     {
         //[UserComboBoxCode_cb_midi_out_port] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.get_out_port(0).close_port();
-        _app_instance_store->midi_io_handler.get_out_port(0).set_port_name( selected_text, selected_index );
+        _app_instance_store->midi_io_handler.get_out_port(0).set_port_name(selected_text,
+                                                                           selected_index);
         _app_instance_store->midi_io_handler.get_out_port(0).open_port();
         //[/UserComboBoxCode_cb_midi_out_port]
     }
@@ -1146,7 +1317,8 @@ void UiEditorSettings::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     {
         //[UserComboBoxCode_cb_midi_learn_in_port] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.midi_learn_in.close_port();
-        _app_instance_store->midi_io_handler.midi_learn_in.set_port_name( selected_text, selected_index );
+        _app_instance_store->midi_io_handler.midi_learn_in.set_port_name(selected_text,
+                                                                         selected_index);
         _app_instance_store->midi_io_handler.midi_learn_in.open_port();
         //[/UserComboBoxCode_cb_midi_learn_in_port]
     }
@@ -1154,7 +1326,8 @@ void UiEditorSettings::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     {
         //[UserComboBoxCode_cb_midi_learn_out_port] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.midi_learn_out.close_port();
-        _app_instance_store->midi_io_handler.midi_learn_out.set_port_name( selected_text, selected_index );
+        _app_instance_store->midi_io_handler.midi_learn_out.set_port_name(selected_text,
+                                                                          selected_index);
         _app_instance_store->midi_io_handler.midi_learn_out.open_port();
         //[/UserComboBoxCode_cb_midi_learn_out_port]
     }
@@ -1162,7 +1335,8 @@ void UiEditorSettings::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     {
         //[UserComboBoxCode_cb_midi_out_port_string_g] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.get_out_port(1).close_port();
-        _app_instance_store->midi_io_handler.get_out_port(1).set_port_name( selected_text, selected_index );
+        _app_instance_store->midi_io_handler.get_out_port(1).set_port_name(selected_text,
+                                                                           selected_index);
         _app_instance_store->midi_io_handler.get_out_port(1).open_port();
         //[/UserComboBoxCode_cb_midi_out_port_string_g]
     }
@@ -1170,7 +1344,8 @@ void UiEditorSettings::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     {
         //[UserComboBoxCode_cb_midi_out_port_string_d] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.get_out_port(2).close_port();
-        _app_instance_store->midi_io_handler.get_out_port(2).set_port_name( selected_text, selected_index );
+        _app_instance_store->midi_io_handler.get_out_port(2).set_port_name(selected_text,
+                                                                           selected_index);
         _app_instance_store->midi_io_handler.get_out_port(2).open_port();
         //[/UserComboBoxCode_cb_midi_out_port_string_d]
     }
@@ -1178,7 +1353,8 @@ void UiEditorSettings::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     {
         //[UserComboBoxCode_cb_midi_out_port_string_a] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.get_out_port(3).close_port();
-        _app_instance_store->midi_io_handler.get_out_port(3).set_port_name( selected_text, selected_index );
+        _app_instance_store->midi_io_handler.get_out_port(3).set_port_name(selected_text,
+                                                                           selected_index);
         _app_instance_store->midi_io_handler.get_out_port(3).open_port();
         //[/UserComboBoxCode_cb_midi_out_port_string_a]
     }
@@ -1186,7 +1362,8 @@ void UiEditorSettings::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     {
         //[UserComboBoxCode_cb_midi_out_port_b] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.get_out_port(4).close_port();
-        _app_instance_store->midi_io_handler.get_out_port(4).set_port_name( selected_text, selected_index );
+        _app_instance_store->midi_io_handler.get_out_port(4).set_port_name(selected_text,
+                                                                           selected_index);
         _app_instance_store->midi_io_handler.get_out_port(4).open_port();
         //[/UserComboBoxCode_cb_midi_out_port_b]
     }
@@ -1196,11 +1373,8 @@ void UiEditorSettings::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     //[/UsercomboBoxChanged_Post]
 }
 
-
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 //[/MiscUserCode]
-
 
 //==============================================================================
 #if 0
@@ -1509,7 +1683,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
-
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]

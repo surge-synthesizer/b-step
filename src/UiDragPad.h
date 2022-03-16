@@ -26,8 +26,6 @@
 class DragPad;
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -36,25 +34,22 @@ class DragPad;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiDragPad  : public Component,
-                   public mono_UiRefreshable
+class UiDragPad : public Component, public mono_UiRefreshable
 {
-public:
+  public:
     //==============================================================================
-    UiDragPad ();
+    UiDragPad();
     ~UiDragPad();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    void set_left_to_right_states( float left2right_state_, float top2bottom_state_ );
+    void set_left_to_right_states(float left2right_state_, float top2bottom_state_);
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     float left2right_state;
     float top2bottom_state;
@@ -66,12 +61,11 @@ private:
     //==============================================================================
     ScopedPointer<DragPad> track_area;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiDragPad)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiDragPad)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_21DFA7978352EE15__
+#endif // __JUCE_HEADER_21DFA7978352EE15__

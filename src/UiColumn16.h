@@ -24,8 +24,6 @@
 #include "UiColumnWrapper.h"
 //[/Headers]
 
-
-
 //==============================================================================
 /**
                                                                     //[Comments]
@@ -36,61 +34,56 @@
 */
 class UiColumn16 : public SubeditorBase
 {
-public:
+  public:
     //==============================================================================
-    UiColumn16 ();
+    UiColumn16();
     ~UiColumn16();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-private:
-    const Array< ModelBase* > models;
-    const Array< ModelBase* >& get_event_receiveable_models() {
-        return models;
-    }
-public:
+  private:
+    const Array<ModelBase *> models;
+    const Array<ModelBase *> &get_event_receiveable_models() { return models; }
+
+  public:
     // TODO deprecated
-    void set_controllers( const OwnedArray<MONO_Controller>& controllers_ )
+    void set_controllers(const OwnedArray<MONO_Controller> &controllers_)
     {
-        for( unsigned int i = 0 ; i != 16 ; ++i )
+        for (unsigned int i = 0; i != 16; ++i)
         {
-            models.getUnchecked( i )->set_controller( controllers_.getUnchecked( i ) );
+            models.getUnchecked(i)->set_controller(controllers_.getUnchecked(i));
         }
     }
-    void set_controllers( const Array<MONO_Controller*>& controllers_ )
+    void set_controllers(const Array<MONO_Controller *> &controllers_)
     {
-        MONO_Controller* controller_to_set;
-        ModelBase* model_to_change;
-        for( unsigned int i = 0 ; i != 16 ; ++i )
+        MONO_Controller *controller_to_set;
+        ModelBase *model_to_change;
+        for (unsigned int i = 0; i != 16; ++i)
         {
-            controller_to_set = controllers_.getUnchecked( i );
-            model_to_change = models.getUnchecked( i );
-            if( model_to_change->get_controller() != controller_to_set )
+            controller_to_set = controllers_.getUnchecked(i);
+            model_to_change = models.getUnchecked(i);
+            if (model_to_change->get_controller() != controller_to_set)
             {
-                model_to_change->set_controller( controller_to_set );
+                model_to_change->set_controller(controller_to_set);
             }
             else
                 return;
         }
     }
 
-    void refresh_ui( Array< Component* >& components_to_repaint_ ) override;
-    void get_controllers_for_paint_popup( Array< MONO_Controller* >& controllers_with_popup_ ) override;
-    void on_style_set( AppStyle*const style_ ) override;
-    void set_background_style( AppStyle*const style_ ) override;
+    void refresh_ui(Array<Component *> &components_to_repaint_) override;
+    void
+    get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_with_popup_) override;
+    void on_style_set(AppStyle *const style_) override;
+    void set_background_style(AppStyle *const style_) override;
 
-    ModelBase* get_model(uint8 id) override
-    {
-        return models.getUnchecked( id );
-    };
+    ModelBase *get_model(uint8 id) override { return models.getUnchecked(id); };
     //[/UserMethods]
 
-    void paint (Graphics& g);
+    void paint(Graphics &g);
     void resized();
 
-
-
-private:
+  private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
@@ -112,13 +105,11 @@ private:
     ScopedPointer<ModelBase> elem_14;
     ScopedPointer<ModelBase> elem_15;
 
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UiColumn16)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiColumn16)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_E43C5736B9D62706__
-
+#endif // __JUCE_HEADER_E43C5736B9D62706__

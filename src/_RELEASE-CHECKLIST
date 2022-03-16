@@ -1,0 +1,30 @@
+APPP IDEA: B-STEP MANUAL, TUTORIALS
+
+- Create a teaser announcement (2 weeks before release)
+- Send a newsletter
+- make a press release
+
+- QUALITY
+- be sure it can't crash!
+- make a leak scan
+- force debug mode and fix assertions
+- compile pedantic and extra (Wextra, pedantic,-Weffc++)
+
+
+- CHECK MANUAL URLS
+- CHECK MANUAL HTACCES (see /monoplugs/b-step-2/public/manual-redirect )
+
+- VERSIONING
+- App.h B_STEP_VERSION && http://install.b-step.monoplugs.com/admin/page/edit/67 (versions eintrag)
+- change DONT_SHOW_AGAIN_2_1 in app.h
+- set BETA AND ALPHA VERSION ( not done yet )
+
+PACKAGING:
+- MAC in conatainer (dmg builder)
+--> edit htaccess downloads/mac
+- LINUX 
+--> edit htaccess downloads/linux
+- Windows Installer as before
+--> edit htaccess downloads/windows
+
+---> Test the links

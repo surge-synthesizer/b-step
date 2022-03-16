@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<B-ChordSet-2.0>
+  <ChordSet>
+    <Chord0 Offset-D="2" Offset-A="2"/>
+    <Chord1 Offset-G="2" Offset-D="2" Offset-A="3" Offset-E="5"/>
+    <Chord2 Offset-G="2" Offset-E="2"/>
+    <Chord3 Offset-A="2" Offset-E="3"/>
+    <Chord4 Offset-G="2" Offset-D="2" Offset-A="3" Offset-E="5" Transpose="12"/>
+    <Chord5 Offset-G="2" Offset-E="1" Transpose="12"/>
+  </ChordSet>
+</B-ChordSet-2.0>

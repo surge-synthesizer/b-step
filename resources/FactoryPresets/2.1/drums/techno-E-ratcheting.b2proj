@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<B-Project-2.1>
+  <Processor BPM="138"/>
+  <UISettings Selected-Bar-ID="15" User-Mode="2" ChordView="1" FT-Chord-Editor="0"/>
+  <Global>
+    <Bar0 Repeats="2" Chord-ID="0">
+      <BarStep1 Velocity="126"/>
+      <BarStep2 Velocity="126"/>
+      <BarStep3 Velocity="126"/>
+      <BarStep4 Velocity="126"/>
+      <BarStep5 Velocity="126"/>
+      <BarStep6 Velocity="126" Repeats="8" Repeat-Interval="2" Repeat-Velocity-Offset="-10"
+                Repeat-Probability="52"/>
+      <BarStep7 Velocity="126" Repeats="8" Repeat-Interval="4" Repeat-Velocity-Offset="-12"
+                Repeat-Interval-Offset="1" Repeat-Probability="52"/>
+      <BarStep8 Velocity="126"/>
+      <BarStep9 Velocity="126"/>
+      <BarStep10 Velocity="126"/>
+      <BarStep11 Velocity="126"/>
+      <BarStep12 Velocity="126"/>
+      <BarStep13 Velocity="126"/>
+      <BarStep14 Velocity="126"/>
+      <BarStep15 Velocity="126" Delay="1" Repeat-Velocity-Offset="-6"/>
+      <Barstring0>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step7 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step4 Mute="0"/>
+        <Step12 Mute="0"/>
+        <Step15 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+        <Step4 Mute="0"/>
+        <Step8 Mute="0"/>
+        <Step12 Mute="0"/>
+      </Barstring3>
+    </Bar0>
+    <Bar1 Repeats="2" Chord-ID="0">
+      <BarStep1 Velocity="126"/>
+      <BarStep2 Velocity="126"/>
+      <BarStep3 Velocity="126"/>
+      <BarStep4 Velocity="126"/>
+      <BarStep5 Velocity="126"/>
+      <BarStep6 Velocity="126" Repeats="8" Repeat-Interval="2" Repeat-Velocity-Offset="-10"
+                Repeat-Probability="52"/>
+      <BarStep7 Velocity="126" Repeats="8" Repeat-Interval="4" Repeat-Velocity-Offset="-12"
+                Repeat-Interval-Offset="1" Repeat-Probability="52"/>
+      <BarStep8 Velocity="126"/>
+      <BarStep9 Velocity="126"/>
+      <BarStep10 Velocity="126"/>
+      <BarStep11 Velocity="126"/>
+      <BarStep12 Velocity="126"/>
+      <BarStep13 Velocity="126"/>
+      <BarStep14 Velocity="126"/>
+      <BarStep15 Velocity="126" Delay="1" Repeat-Velocity-Offset="-6"/>
+      <Barstring0>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step7 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step4 Mute="0"/>
+        <Step12 Mute="0"/>
+        <Step15 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+        <Step4 Mute="0"/>
+        <Step8 Mute="0"/>
+        <Step12 Mute="0"/>
+      </Barstring3>
+    </Bar1>
+    <Bar2 Repeats="2" Chord-ID="0">
+      <BarStep1 Velocity="126"/>
+      <BarStep2 Velocity="126"/>
+      <BarStep3 Velocity="126"/>
+      <BarStep4 Velocity="126"/>
+      <BarStep5 Velocity="126"/>
+      <BarStep6 Velocity="126" Repeats="8" Repeat-Interval="2" Repeat-Velocity-Offset="-10"
+                Repeat-Probability="52"/>
+      <BarStep7 Velocity="126" Repeats="8" Repeat-Interval="4" Repeat-Velocity-Offset="-12"
+                Repeat-Interval-Offset="1" Repeat-Probability="52"/>
+      <BarStep8 Velocity="126"/>
+      <BarStep9 Velocity="126"/>
+      <BarStep10 Velocity="126"/>
+      <BarStep11 Velocity="126"/>
+      <BarStep12 Velocity="126"/>
+      <BarStep13 Velocity="126"/>
+      <BarStep14 Velocity="126"/>
+      <BarStep15 Velocity="126" Delay="1" Repeat-Velocity-Offset="-6"/>
+      <Barstring0>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step7 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step4 Mute="0"/>
+        <Step12 Mute="0"/>
+        <Step15 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+        <Step4 Mute="0"/>
+        <Step8 Mute="0"/>
+        <Step12 Mute="0"/>
+      </Barstring3>
+    </Bar2>
+    <Bar3 Chord-ID="0">
+      <BarStep1 Velocity="126"/>
+      <BarStep2 Velocity="126"/>
+      <BarStep3 Velocity="126"/>
+      <BarStep4 Velocity="126"/>
+      <BarStep5 Velocity="126"/>
+      <BarStep6 Velocity="126" Repeats="8" Repeat-Interval="2" Repeat-Velocity-Offset="-10"
+                Repeat-Probability="52"/>
+      <BarStep7 Velocity="126" Repeats="8" Repeat-Interval="4" Repeat-Velocity-Offset="-12"
+                Repeat-Interval-Offset="1" Repeat-Probability="52"/>
+      <BarStep8 Velocity="126"/>
+      <BarStep9 Velocity="126"/>
+      <BarStep10 Velocity="126"/>
+      <BarStep11 Velocity="126"/>
+      <BarStep12 Velocity="126"/>
+      <BarStep13 Velocity="126"/>
+      <BarStep14 Velocity="126"/>
+      <BarStep15 Velocity="126" Delay="1" Repeat-Velocity-Offset="-6"/>
+      <Barstring0>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step7 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step4 Mute="0"/>
+        <Step12 Mute="0"/>
+        <Step15 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+        <Step4 Mute="0"/>
+        <Step8 Mute="0"/>
+        <Step12 Mute="0"/>
+      </Barstring3>
+    </Bar3>
+    <Bar4 Chord-ID="0">
+      <BarStep1 Velocity="126"/>
+      <BarStep2 Velocity="126"/>
+      <BarStep3 Velocity="126"/>
+      <BarStep4 Velocity="126"/>
+      <BarStep5 Velocity="126"/>
+      <BarStep6 Velocity="126" Repeats="8" Repeat-Interval="7" Repeat-Interval-Offset="-1"/>
+      <BarStep7 Velocity="126" Repeat-Interval-Offset="1" Repeat-Probability="52"/>
+      <BarStep8 Velocity="126"/>
+      <BarStep9 Velocity="126"/>
+      <BarStep10 Velocity="126" Repeats="8" Repeat-Interval-Offset="-2" Repeat-Probability="52"/>
+      <BarStep11 Velocity="126"/>
+      <BarStep12 Velocity="126"/>
+      <BarStep13 Velocity="126"/>
+      <BarStep14 Velocity="126" Repeats="8" Repeat-Interval="1"/>
+      <BarStep15 Velocity="126" Delay="1" Repeat-Velocity-Offset="-6"/>
+      <Barstring0>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step7 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step4 Mute="0"/>
+        <Step12 Mute="0"/>
+        <Step15 Mute="0"/>
+      </Barstring2>
+    </Bar4>
+    <Bar5 Repeats="2" Chord-ID="0">
+      <BarStep1 Velocity="126"/>
+      <BarStep2 Velocity="126"/>
+      <BarStep3 Velocity="126"/>
+      <BarStep4 Velocity="126"/>
+      <BarStep5 Velocity="126"/>
+      <BarStep6 Velocity="126" Repeat-Probability="52"/>
+      <BarStep7 Velocity="126" Repeat-Interval-Offset="1" Repeat-Probability="52"/>
+      <BarStep8 Velocity="126"/>
+      <BarStep9 Velocity="126"/>
+      <BarStep10 Velocity="126"/>
+      <BarStep11 Velocity="126"/>
+      <BarStep12 Velocity="126"/>
+      <BarStep13 Velocity="126"/>
+      <BarStep14 Velocity="126"/>
+      <BarStep15 Velocity="126" Delay="1"/>
+      <Barstring0>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step7 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step4 Mute="0"/>
+        <Step12 Mute="0"/>
+        <Step15 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+        <Step4 Mute="0"/>
+        <Step8 Mute="0"/>
+        <Step12 Mute="0"/>
+      </Barstring3>
+    </Bar5>
+    <Bar6 Repeats="2" Chord-ID="0">
+      <BarStep1 Velocity="126"/>
+      <BarStep2 Velocity="126"/>
+      <BarStep3 Velocity="126"/>
+      <BarStep4 Velocity="126"/>
+      <BarStep5 Velocity="126"/>
+      <BarStep6 Velocity="126" Repeat-Probability="52"/>
+      <BarStep7 Velocity="126" Repeat-Interval-Offset="1" Repeat-Probability="52"/>
+      <BarStep8 Velocity="126"/>
+      <BarStep9 Velocity="126"/>
+      <BarStep10 Velocity="126"/>
+      <BarStep11 Velocity="126"/>
+      <BarStep12 Velocity="126"/>
+      <BarStep13 Velocity="126"/>
+      <BarStep14 Velocity="126"/>
+      <BarStep15 Velocity="126" Delay="1"/>
+      <Barstring0>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step7 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step4 Mute="0"/>
+        <Step12 Mute="0"/>
+        <Step15 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+        <Step4 Mute="0"/>
+        <Step8 Mute="0"/>
+        <Step12 Mute="0"/>
+      </Barstring3>
+    </Bar6>
+    <Bar7 Chord-ID="0">
+      <BarStep1 Velocity="126"/>
+      <BarStep2 Velocity="126"/>
+      <BarStep3 Velocity="126"/>
+      <BarStep4 Velocity="126"/>
+      <BarStep5 Velocity="126"/>
+      <BarStep6 Velocity="126" Repeats="8" Repeat-Interval="7" Repeat-Interval-Offset="-1"/>
+      <BarStep7 Velocity="126" Repeat-Interval-Offset="1" Repeat-Probability="52"/>
+      <BarStep8 Velocity="126"/>
+      <BarStep9 Velocity="126"/>
+      <BarStep10 Velocity="126" Repeats="8" Repeat-Interval-Offset="-2" Repeat-Probability="52"/>
+      <BarStep11 Velocity="126"/>
+      <BarStep12 Velocity="126"/>
+      <BarStep13 Velocity="126"/>
+      <BarStep14 Velocity="126" Repeats="8" Repeat-Interval="1"/>
+      <BarStep15 Velocity="126" Delay="1" Repeat-Velocity-Offset="-6"/>
+      <Barstring0>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step7 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step4 Mute="0"/>
+        <Step12 Mute="0"/>
+        <Step15 Mute="0"/>
+      </Barstring2>
+    </Bar7>
+    <Bar8 Repeats="2" Chord-ID="0" Sequence-Nr="1">
+      <BarStep0 Velocity="64"/>
+      <BarStep1 Velocity="64"/>
+      <BarStep2 Velocity="64"/>
+      <BarStep3 Velocity="64"/>
+      <BarStep4 Velocity="64"/>
+      <BarStep5 Velocity="64"/>
+      <BarStep6 Velocity="64"/>
+      <BarStep7 Velocity="64"/>
+      <BarStep8 Velocity="64"/>
+      <BarStep9 Velocity="64"/>
+      <BarStep10 Velocity="64"/>
+      <BarStep11 Velocity="64"/>
+      <BarStep12 Velocity="64"/>
+      <BarStep13 Velocity="64"/>
+      <BarStep14 Velocity="64"/>
+      <BarStep15 Velocity="64"/>
+      <Barstring0>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step3 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step9 Mute="0"/>
+      </Barstring1>
+    </Bar8>
+    <Bar9 Repeats="2" Chord-ID="1" Sequence-Nr="1">
+      <BarStep0 Velocity="64"/>
+      <BarStep1 Velocity="64"/>
+      <BarStep2 Velocity="64"/>
+      <BarStep3 Velocity="64"/>
+      <BarStep4 Velocity="64"/>
+      <BarStep5 Velocity="64"/>
+      <BarStep6 Velocity="64"/>
+      <BarStep7 Velocity="64"/>
+      <BarStep8 Velocity="64"/>
+      <BarStep9 Velocity="64"/>
+      <BarStep10 Velocity="64"/>
+      <BarStep11 Velocity="64"/>
+      <BarStep12 Velocity="64"/>
+      <BarStep13 Velocity="64"/>
+      <BarStep14 Velocity="64"/>
+      <BarStep15 Velocity="64"/>
+      <Barstring0>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step3 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step9 Mute="0"/>
+      </Barstring1>
+    </Bar9>
+    <Bar10 Repeats="2" Chord-ID="1" Sequence-Nr="1">
+      <BarStep0 Velocity="64"/>
+      <BarStep1 Velocity="64"/>
+      <BarStep2 Velocity="64"/>
+      <BarStep3 Velocity="64"/>
+      <BarStep4 Velocity="64"/>
+      <BarStep5 Velocity="64"/>
+      <BarStep6 Velocity="64"/>
+      <BarStep7 Velocity="64"/>
+      <BarStep8 Velocity="64"/>
+      <BarStep9 Velocity="64"/>
+      <BarStep10 Velocity="64"/>
+      <BarStep11 Velocity="64"/>
+      <BarStep12 Velocity="64"/>
+      <BarStep13 Velocity="64"/>
+      <BarStep14 Velocity="64"/>
+      <BarStep15 Velocity="64"/>
+      <Barstring0>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step3 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step9 Mute="0"/>
+      </Barstring1>
+    </Bar10>
+    <Bar11 Chord-ID="1" Sequence-Nr="1">
+      <BarStep0 Velocity="64"/>
+      <BarStep1 Velocity="64"/>
+      <BarStep2 Velocity="64"/>
+      <BarStep3 Velocity="64"/>
+      <BarStep4 Velocity="64"/>
+      <BarStep5 Velocity="64"/>
+      <BarStep6 Velocity="64"/>
+      <BarStep7 Velocity="64"/>
+      <BarStep8 Velocity="64"/>
+      <BarStep9 Velocity="64"/>
+      <BarStep10 Velocity="64"/>
+      <BarStep11 Velocity="64"/>
+      <BarStep12 Velocity="64"/>
+      <BarStep13 Velocity="64"/>
+      <BarStep14 Velocity="64"/>
+      <BarStep15 Velocity="64"/>
+      <Barstring0>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step3 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step9 Mute="0"/>
+      </Barstring1>
+    </Bar11>
+    <Bar12 Chord-ID="1" Sequence-Nr="1">
+      <BarStep0 Velocity="64"/>
+      <BarStep1 Velocity="64"/>
+      <BarStep2 Velocity="64"/>
+      <BarStep3 Velocity="64"/>
+      <BarStep4 Velocity="64"/>
+      <BarStep5 Velocity="64"/>
+      <BarStep6 Velocity="64"/>
+      <BarStep7 Velocity="64"/>
+      <BarStep8 Velocity="64"/>
+      <BarStep9 Velocity="64"/>
+      <BarStep10 Velocity="64"/>
+      <BarStep11 Velocity="48"/>
+      <BarStep12 Velocity="64"/>
+      <BarStep13 Velocity="64"/>
+      <BarStep14 Velocity="116"/>
+      <BarStep15 Velocity="64"/>
+      <Barstring0>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step3 Mute="0"/>
+        <Step13 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step11 Mute="0"/>
+        <Step12 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring2>
+    </Bar12>
+    <Bar13 Repeats="2" Chord-ID="1" Sequence-Nr="1">
+      <BarStep0 Velocity="64"/>
+      <BarStep1 Velocity="64"/>
+      <BarStep2 Velocity="64"/>
+      <BarStep3 Velocity="64"/>
+      <BarStep4 Velocity="64"/>
+      <BarStep5 Velocity="64"/>
+      <BarStep6 Velocity="64"/>
+      <BarStep7 Velocity="64"/>
+      <BarStep8 Velocity="64"/>
+      <BarStep9 Velocity="64"/>
+      <BarStep10 Velocity="64"/>
+      <BarStep11 Velocity="64"/>
+      <BarStep12 Velocity="64"/>
+      <BarStep13 Velocity="64"/>
+      <BarStep14 Velocity="64"/>
+      <BarStep15 Velocity="64"/>
+      <Barstring0>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step3 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step9 Mute="0"/>
+      </Barstring1>
+    </Bar13>
+    <Bar14 Repeats="2" Chord-ID="1" Sequence-Nr="1">
+      <BarStep0 Velocity="64"/>
+      <BarStep1 Velocity="64"/>
+      <BarStep2 Velocity="64"/>
+      <BarStep3 Velocity="64"/>
+      <BarStep4 Velocity="64"/>
+      <BarStep5 Velocity="64"/>
+      <BarStep6 Velocity="64"/>
+      <BarStep7 Velocity="64"/>
+      <BarStep8 Velocity="64"/>
+      <BarStep9 Velocity="64"/>
+      <BarStep10 Velocity="64"/>
+      <BarStep11 Velocity="64"/>
+      <BarStep12 Velocity="64"/>
+      <BarStep13 Velocity="64"/>
+      <BarStep14 Velocity="64"/>
+      <BarStep15 Velocity="64"/>
+      <Barstring0>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step3 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step9 Mute="0"/>
+      </Barstring1>
+    </Bar14>
+    <Bar15 Chord-ID="1" Sequence-Nr="1">
+      <BarStep0 Velocity="4"/>
+      <BarStep1 Velocity="24"/>
+      <BarStep2 Velocity="4"/>
+      <BarStep3 Velocity="36"/>
+      <BarStep4 Velocity="60"/>
+      <BarStep5 Velocity="44"/>
+      <BarStep6 Velocity="4"/>
+      <BarStep7 Velocity="52"/>
+      <BarStep8 Velocity="4"/>
+      <BarStep9 Velocity="60"/>
+      <BarStep10 Velocity="56"/>
+      <BarStep11 Velocity="76"/>
+      <BarStep12 Velocity="100"/>
+      <BarStep13 Velocity="76"/>
+      <BarStep15 Velocity="64"/>
+      <Barstring0>
+        <Step6 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step0 Mute="0"/>
+        <Step3 Mute="0"/>
+        <Step5 Mute="0"/>
+        <Step8 Mute="0"/>
+        <Step13 Mute="0"/>
+        <Step15 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step2 Mute="0"/>
+        <Step3 Mute="0"/>
+        <Step4 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step7 Mute="0"/>
+        <Step8 Mute="0"/>
+        <Step9 Mute="0"/>
+        <Step11 Mute="0"/>
+        <Step12 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring2>
+    </Bar15>
+    <ChordSet0>
+      <Chord0 Offset-G="-11" Offset-D="-9" Offset-A="-12" Offset-E="-9" Transpose="-7"/>
+      <Chord1 Offset-G="-1" Offset-D="-12" Offset-A="-12" Offset-E="-9" Transpose="-7"/>
+    </ChordSet0>
+  </Global>
+</B-Project-2.1>

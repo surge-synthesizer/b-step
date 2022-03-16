@@ -1,0 +1,377 @@
+TUTORIAL: Trommelwirbel mit ratchetings
+
+TODO: iPad notification window crashs
+      iPad editor windows lager than the desktop
+      iPad alert window behind modal windows.
+      iPad file manager input does not work
+
+
+
+TODO: ADD A WHATS NEW EDITOR
+      ADD ITS YOUR FIRST TIME EDITOR?
+      ADD IN APP BUY
+      
+      RESELLERS: Tracktion, Plugin Boutique
+      OFFER A CD
+      
+WEB:  SHOW PRICE DIRECTLY
+
+REAL SOFWARE BOX
+
+BUNDLE A RESELLERS WITH LAUNCHPAD
+CONTACT NOVATION
+
+PLACE BANNERS ON SYNTHOPIA AND DISCORD
+
+SETUP A NEW PAD: SUBMIT TO http://pad.asp-software.org/
+
+
+
+UI: set the models not visible before they are ready - and set the background corectly, unnecessary repaints are made
+UI: editor size must depend on the mainwindow ratio to have it correctly on iPad
+UI Filemanager: scroll by finger
+X position for button drawables are not correct
+
+0.1 bpm, scale
+
+MARKETING NOTE: RUNS MORE SMOTH IN BACKGROUND ALSO ON OLDER DEVICES!
+
+UI Performance, prepaint buttons an use it more than one time
+
+Chord master folge die alle takte überlegt
+
+
+
+BAR ELEMTS BG LIGGHT AND STEP ELEMENTS BG LIGHT
+
+
+
+Dynamische hilfe seite wenn neue video online sind statt statischer seite und nur update seite
+
+MY TODO
+- video texte ausführlich für seo
+- youtube playlists: manual(add links to videos and keywords), B-Step how to's, trailers, how to technical (vst, daw...) 
+- list of known compatible hosts
+- impressum facebook / Social
+- vst section in manual
+- sync section in manual
+- rss feed
+- how to run two b-steps at the same time tutorial
+- build version script automatically called from the makefile
+- 50th days fre version if you send me a demo song and a preset you will get your free version!
+- tabbed webpage - galerie, screenshots, artists, reviews, usevotes, tutorials...
+
+ 3/4 speed, 2/4 speed ----
+
+Marketing
+- The best synth is nothing without a good player!
+- Get everything out of them!
+
+
+- Moddweel for vibratoo - design over a step up to 6 steps
+
+
+//////// PUBLIC
+//////// PUBLIC
+//////// PUBLIC
+//////// PUBLIC
+//////// PUBLIC
+//////// PUBLIC
+
+**LAST EDITED: 30th of Sep. 2014**
+
+* **[MANUAL 2.0](http://b-step.monoplugs.com/manual-2_0)**
+
+* **[ISSUES](https://bitbucket.org/monotomy/b-step-test-builds/issues?status=new&status=open)**
+
+**TODO:** (TODO after 2.0 at the bottom)
+
+**BUGS / dont find reason yet**
+- step mute multidrag does not work
+
+** CHANGES 2014-20-10**
+
+- fix: soundsamples are wrong again
+- change: folders for projects and presets - please copy your projects manualy after the next run of B-Step (B creates the new folders!)
+--- > Windows ~\Documents and Settings\username\Application Data\B-Step Sequencer
+--- > Mac unchanged, still in ~/Music/B-Step Sequencer
+--- > Linux ~/Documents/B-Step
+--- > Raspberry ~/Documents/B-Step
+--- > iPad unchanged
+--- > Android ~/Documents/B-Step
+
+** CHANGES 2014-16-10**
+
+- fix: some descriptions (chordeditor help, midi learn help)
+- remove: slave channel (unneeded)
+- make outline and radius of buttons and sliders more beautiful on smaller resolutions
+- fix: X__OPEN_THE_SOUNDSAMPLES to __OPEN_THE_SOUNDSAMPLES
+
+** CHANGES 2014-13-10**
+
+- fix: not all notes was stoped on app shutdown
+- fix: reset bar counter was not reseted if you use all 16 bars
+- fix: running repeats was not reseted on stop
+- remove: 64x build on iOS, makes trouble with the background mode.
+- add: active sensing to keep B-Step e.g. in Ableton or Renoise alive.
+- change: green port color to black.
+
+**CHANGES 2014-10-10**
+
+- fix: cc load bug
+- fix: ui paint bug selected bar
+- change: sync thru on by default
+- fix: it's no more possible to send clock and sync to a same port more than two times!
+- fix: "Use Master Out" will come up opend/green by default
+- fix: android does not start correctly if a midi dev was selected
+- fix: android and raspbery store links in demo
+- fix: 1/96th to late bug (all version after 03.0ct)
+- enable: midi out of host (allow to use b-step as audio unit in logic, ableton...) or as vst in renoise
+- add: latency correction in ms and clocks (clocks only needed if something is very wrong)
+- add: audio unit support for ableton, logic
+- improvement: open virtual In and Out by default (iOS, Mac, Linux & Raspberry)
+- fix: midi note off handling. there was some notes not stopped correctly on MIDI stop
+- remove: do no more load and save the selected bar - when i open the programm it should be start with selectd bar 1
+- add: ios arm64 native support (special binary included)
+--- >  min ios version now 5.1.1 no more 5.0
+
+**CHANGES 2014-10-01**
+
+- fix: update playback mode slider
+- fix: ios, android and linux was overwriting files also if you pressed cancel
+- add: presets
+- add: shortcuts and PLAY_SAMPLE in the filechooser (open play sample will open the mp3 in the browser.
+- remove: flashing labels
+- change: clipboard "copy of... bar x" text.
+- rename: layer S2 to NL and S1 to S
+- changed: open folders in the filechooser by single click/tab (ios, android, linux, raspberry only)
+- changed: ios size of buttons and sliders are bigger now -> looks better
+
+**CHANGES 2014-09-30**
+
+- add: playback features, have a look in the settings window (not the connections)
+- fix: plugin sync was buggy
+- fix: cubase takes a while bug?
+
+**CHANGES 2014-09-25**
+
+- add: drum view option to the chord editor
+- fix: load midi map bugs, naming conflicts
+- increase: chord editor slider range to +/-15 for better drum support
+- fix: mainwindow shows correct note value or drum value from selected barchord, global string offset and barstring offset
+- fix: ui is dirty after loading some projects
+- fix: rubber on bar was broken - fixed
+- performance: increase ui performance
+- fix: multidrag cc and pc??
+- fix: chordeditor arrow overlay issue
+- change: default velocity to 127 (MAX) to improve shuffle sense
+- add: shuffle function
+- add: splash screen
+
+**CHANGES 2014-09-22**
+
+- fix vst bug???
+
+**CHANGES 2014-09-21**
+
+- add: android support
+- fix: crash on load a midi patch
+- fix: don't show up clipboard editors
+- fix: ios can not edit filenames to save in app doc root folder
+- fix: does not show multidrag picture, change simple drag picture from red dot to component pic 
+- change: font for editors
+- change: midi learn overlay colour to transparent grey
+- add: url's to question mark, info in io settings (quest marks)
+- rename: restart chain to restart sequence
+- add: bpm slider to the global area and move start stop pause back to the left side 
+- fix: refresh all in editor settings was not implemented
+- add: second master midi out (same data like the first port, just to share it more easy
+- rename: things in the settings editor
+- fix: crash if you open the cordeditor and the selected bar is not in sequence# 1
+- fix: does not play the first step on stop->start or app start.
+- fix: clock accuracy (not on windows - clock is slower or faster than the setted value (windows accuracy (by default) == 1ms :-( )
+- fix: reset/stop does set the right bar if e.g. the first is skiped 
+- change: space does start and stop NO MORE start and pause
+- fix: shutdown crash
+- fix: errro message on first startup
+- change: text error messages "MIDI Learn" and "No Synth seleted"
+- add: refreh ui if stoped (if you e.g. change the sequence or remove bars the ui will updated)
+- change: clock sync: if b-step receives a clock he stop generating it's own -> refresh interval 1500 ms -> if no more a clock is received start generating own
+- fix: VST is 16th to fast
+- fix: add keyboard support fot plugins / DOES WORK?
+- fix/improve: chordeditor colour highlights (running and selected chord)
+- fix: selected bar repaint bug on android and ios
+- fix: ios and android filechooser bugs
+- add: if you use << steps >> move function that bar that you change will be selected automatically
+- add: a muted or skipped step will grey out the step row, a skipped bar will be also greyed out
+- rename: choose a port to "No Device Selected"
+
+**CHANGES 2014-09-02**
+
+- improve: ios rendering performance, takes a bit longer to come up but the feeling is much better.
+
+**CHANGES 2014-08-29**
+
+- ADD: VST version, please check everything!!!!!!!!!!!!!!!!!!!!!!!!!!!
+- add: remove all mappings function
+- add: multidrag as option for th right mouse button
+- fix: multidrag is no more possible if midi learn is active
+- fix: mainwindow size things
+- fix: email title (old b-step 1.2) / - remove the github manual link
+- fix: editors will not be resized if one is open an you change the mainwin size
+- add: factory reset
+- fix: only the layers from the choosen user-mode are accessable by keyboard
+- fix: wrong color for the sync outport
+- add: virtual port for MIDI learn (in and out)
+- add: auto converter from 1.2 to 2.0 projects/settings/chordsets and settings (that mean you can load your old projects and load old presets)
+-----> just midi mappings are completely incompatible!!!
+- fix: load launchpad mode, channels and ports
+- /// ************************************************************************************
+- /// ************************************************************************************
+- /// ************************************************************************************
+- - add: hundreds off automation parameters (VST, AU)
+- -----> BUT there are only a few enabled by default.
+- -----> to enable all of them or that you need go to ../USER/Documents/b-step/auto-save/
+- -----> open "last-session.b2cfg" with an texteditor and enable (1) or disable (0) and start the plugin again!
+- ----------> ListParamsSteps="1"
+- ----------> ListParamsLayer-1="1"
+- ----------> ListParamsLayer-2="0"
+- ----------> ListParamsLayer-3="0"
+- ----------> ListParamsLayer-4="0"
+- ----------> ListParamsLayer-5="0"
+- ----------> ListParamsLayer-6="0"
+- ----------> ListParamsLayer-7="0"
+- -----> On my testhost "Carla" only ~200 automation parameters allowed, not sure how it is in other hosts, please check this and let me know!
+- -----> IMPORTANT, you have to load the plugin one time before to create that file!!!!!!!!!!!!!!!
+> /// ************************************************************************************
+> /// ************************************************************************************
+> /// ************************************************************************************
+- fix: make setup editor size dynamic
+
+**CHANGES 2014-08-08**
+
+- fix: group not in sync bug
+- fix: repeats are no more calculated in realtime 
+  ---> (if you change a repeat value during the repeat is running, it will not change the running one)
+- fix: performance issues, should be very very fast (i will test on iPad soon)
+- add: play reverse
+- fix: some elements have the same ident and become drop-able on multi drag
+- add: bar pos reset marker
+- fix: send program change and cc from the right group to the right port
+- rewrite/fix: midi learn feature, midi learn editor keeps up to date
+- change: fileformat, old settings you can not load atm, it very very fast and much smaller than the old files.
+- fix: snapshot tool bugs
+- fix: all settings should load and save correctly
+- fix: bar mute stops repeats
+- fix: collect hundred of notes if no port is enabled and shot all them out if you open the port :D
+- fix: rest bar point bugs, add label "<<"
+- fix: if you release skip repeat the repeat will be played
+- fix: step multidrag is broken
+- fix: midi sync should be perectly
+- fix: clock thru is now SYNC THRU (incl. clock, start, stop, continue)
+- fix: optimize random chord function, should no happen to often that you have the same note more than two times in one chord
+- chnage: save chord presets will export all 5 chordsets! Not only the selected!
+
+**CHANGES 2014-08-1**
+
+- add: change multidrag delay
+- add: change multidrag sensitivity
+- add: change simple drag'n'drop sensitivity
+- add: flashing labes for changed layers
+- add: enable/disable multidrag and flashing labels
+- fix: wrong repeat counter
+- fix: midiport bug (the in port was listing in ports and not out ports!) FUCK!!!
+- add: automatically rescan midi ports on drop down midi port comboboxes
+- fix: sequencer stops if "dont rolll repeat" is activated and no step is enabled
+- change: colours for roll and not roll repeats, also is a skipped repeat red
+- fix: first bar was overwriten by a snashot bar
+- fix: bar is mute step colour
+- change: toggle button style
+- fix: chord editor is dynamically sized
+- fix: wrong colour step mute button (was not red)
+
+**CHANGES 2014-07-18**
+
+- add: values to some buttons (use step chord shows the step chord value, send cc shows the current controller value)
+- add: rubber tool via drag and drop (if you drop on the top run light line you will reset the whole step, on the bar select the complete bar)
+- add: info/question tool (drag and drop the questmark to any element and you will get a description)
+- move: play,pause,stop,mute back to the main interface
+- fix: groups go out of sync???
+- move: chord editor open/close button to the main user interface
+- remove: warning massage if no port is selected (message will only shown if port 1 not setted)
+- clean/reoder: right menu bar
+- fix: wrong color barstring octave
+- fix: some values was not copyed on bar copy
+- add: bar-clipboard/bar-snapshot tool (right bar) with option to set up which data should be copyed if you copy back from the clipboard
+- add: save/load bar snapshots from the new editor
+- fix: crash if a editor is open
+- fix: linux crash on shut down
+- change: editor border layout and tool bar (load,save,move,close)
+- change: settings editor layout
+- remove: master and slave setup.
+---> if b-step is not started as master, B is listen for a external start signal, if B is started from extern, the clock sending will stopped and is only listen to the master
+---> if b is started as master, B will ignore messages from an other master (but recives also start and stop from an other master)
+---> NOTE the new sync out device is not implemented atm!
+- add: programm changes and remove one send cc (IT's not finished - its still sending CC!!!)
+- change: settings editor logo to a connection logo (a new settings editor will be added later)
+- change: font alignment
+
+**CHANGES 2014-07-11**
+
+- NOTE!!!!!! PLEASE RENAME OR DELETE THE B-STEP LAST SESSION FILE: ../USER/Documents/b-step/setup (I have inverted the function of "roll repeat")
+
+- fix:  stop will no more reset the bar repeat to 0, the repeat value will be set!
+- add:  show "next bar" & "bar repeats" for each group
+- fix:  midi channel for each group will be loaded
+- fix:  if bar 16 was reached, bar 16 was playing for ever
+- fix:  set the correct bar pos if some solo bars enabled
+- move: step copy to run light row
+- add:  short layer button description
+- reactivate: "accept mouse events that up to 20px beside a element"-hack (only at the main interface yet (not for menu bars or editors))
+- change: slider sensitivities
+- add: multicopy for steps (step runlight)
+- add: custom label colours for bargroups
+- add: show runtime things (running repeat etc) from the group of the selected bar
+- add: custom runlight color for each group (step light and running bar) (we can discuss the colors!)
+- change: layer order : 1,4,3,2
+- change: "roll repeat" is now "don't roll repeat" and is rolling by default
+- add: lite-, semi-, pro-mode to enable layers. lite = 1&2; semi = 1,2,3,4; pro = 1-7 
+- fix: labels on the step area show the note values (but not the correct value, will be fixed in the next build)
+- add: octave offset labels to step buttons <------ QUESTION QUESTION QUESTION: should also the master octave AND bar octave offset added to value sum??? or should we show the real note value instead???????
+- add: chord color to the step button if the step chord is used
+- change: "R" and "E" on the runlight to "<<" and ">>" for entry and reset
+
+**CHANGES 2014-06-19**
+
+- change: parallel bars to groups
+- add: MIDI channel and port for each group (if you not define a dev for group 2, 3, 4 then the port from group 1 will be used.)
+- ui colour update
+- you can define multible solo bars for each bar group
+- move: play, stop, pause to the right menu bar
+- add: stop, play on spacebar
+- add: keys 1 to 0 (10) to select a bar
+- add: keys F1 to F16 to select a bar
+- add: keys up and down to change the layer
+- add: keys left, right to navigate bars left or right
+- add: key play, stop (if the keyboard have)
+- fix: playback starts not immediately 
+- add: label for run light
+- fix: a few not updated colours on layer change
+
+**CHANGES 2014-06-12**
+
+- force bar chain does not longer select this bar as editable
+- remove: duration and velocity master
+- add: multi select/copy on long left mouse down 
+- ---> if the select markings are showing up you can drag this element over all targets and copy it to them
+- add: "run bars parallel", you can set for each bar a second trigger or run point (remove play random)
+- add: "<< step shift >>" to layer 2, remove clear bar (a rubber tool will repleace that function)
+- add: some more infos to the running bar button 
+- ---> N=NEXT bar in chain
+- ---> S=SKIP bar is skipped
+- ---> M=MUTE bar is muted
+- ---> -=IN CHAIN bar is in the chain
+- ---> |X|= this bar will run parallel to bar X
+- master tune was not from A to G#, it was from A to A ::: fixed
+- add: multi solos, you can define a bracket of bars that should play (this will ignore skip, and force the bar to the chain (also if the bar is empty)
+- add: multi bar copy

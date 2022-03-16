@@ -1,0 +1,194 @@
+htaccess
+search function in manual
+
+
+/usr/local/lib/carla/carla-discovery-native VST /home/monotomy/projects/g-step/Builds/Linux64/build/b-step_d.so
+
+
+
+/*
+JUCE VST WRAPPER
+	PluginHostType host;
+	
+        setNumInputs (numInChans);
+        setNumOutputs (host.isAbletonLive());
+
+        canProcessReplacing (true);
+
+        isSynth ((host.isAbletonLive()) != 0);
+*/
+
+
+
+
+// ************************************************************************************************
+// ************************************************************************************************
+// ************************************************************************************************
+
+// This is a realy easy cache model idea - every class that inherit
+// this CacheCounter can call CACHE_UPDATE if some data is changed.
+// Algorityms and other objects can store a cache_pair with a pointer
+// to this Counter and the cache value, if the cache is changed, they can
+// recalc nessesary things or use the old data.
+class CacheCounterVisitor;
+class CacheCounter // : public _SIGNAL_( CacheCounter )
+{
+    int _cache_counter;
+
+protected:
+    CacheCounter() : _cache_counter( 0 ) {}
+
+    inline void CACHE_UPDATE()
+    {
+        ++_cache_counter;
+    }
+
+public:
+    int get_cache_counter() const {
+        return _cache_counter;
+    }
+};
+
+
+class CacheCounterVisitor
+{
+    // stores a pointer to a cache object and the last visit counter
+    std::map< const CacheCounter*, int > _cache_visitor;
+
+    // TODO clean on copy
+
+public:
+    inline bool is_cache_changed_since_last_request( const CacheCounter& cache_counter_ )
+    {
+        std::map< const CacheCounter*, int >::iterator iter =  _cache_visitor.find( &cache_counter_ );
+
+        if( iter != _cache_visitor.end() )
+        {
+            if( iter->second != cache_counter_.get_cache_counter() )
+            {
+                iter->second = cache_counter_.get_cache_counter();
+                return true;
+            }
+
+            return false;
+        }
+        else
+        {
+            _cache_visitor.insert( std::make_pair( &cache_counter_, cache_counter_.get_cache_counter() ) );
+            return true;
+        }
+    }
+};
+
+
+
+
+
+// This simple signal and solt is cross connected and if the reciver dies,
+// the reciver will automaticaly disconnect from signal, if the signal dies,
+// the signal will notify all recivers and the recivers block future disconnects
+// to the signal.
+
+// NOTE ATTENTION - YOU HAVE TO ENABLE OR DISABLE SENDING! This option can save a lot of calls
+// without to redesign contructors or functions -> SIMPLE, enable it mostly on the end of the ctor's
+template< class sender_t > class Signal;
+/**
+ *
+ */
+#define _RECEIVER_( sender_t ) Receiver< Signal< sender_t > >
+template< typename signal_t >
+class Receiver
+{
+    friend signal_t;
+
+    std::set< signal_t* > _connected_signals;
+
+    void disconnect_by_signal_kill( signal_t*const signal_ )
+    {
+        _connected_signals.erase( signal_ );
+    };
+
+    virtual void receive( typename signal_t::sender_t*const, int SIGNAL_CODE = 0 ) = 0;
+
+protected:
+    void connect( signal_t& signal_ )
+    {
+        _connected_signals.insert( &signal_ );
+        signal_._connect( this );
+    }
+
+    void disconnect( signal_t& signal_ )
+    {
+        if( _connected_signals.find( &signal_ ) != _connected_signals.end() )
+        {
+            _connected_signals.erase( &signal_ );
+            signal_._disconnect( this );
+        }
+    }
+
+    Receiver() {};
+    ~Receiver()
+    {
+        for( typename std::set< signal_t* >::iterator iter = _connected_signals.begin(); iter != _connected_signals.end() ; ++ iter )
+            (*iter)->_disconnect( this );
+    }
+};
+
+/**
+ *
+ */
+#define _SIGNAL_( sender_t ) Signal< sender_t >
+template< class sender >
+class Signal
+{
+    typedef sender sender_t;
+    typedef Signal< sender_t > type;
+    typedef Receiver< type > reciver_t;
+
+    friend reciver_t;
+
+    bool _sending_is_enable;
+    std::set< reciver_t* > _receivers;
+
+
+    void _connect( reciver_t*const receiver_ )
+    {
+        _receivers.insert( receiver_ );
+    }
+
+    void _disconnect( reciver_t*const receiver_ )
+    {
+        _receivers.erase( receiver_ );
+    }
+
+protected:
+    Signal() : _sending_is_enable( false ) {}
+    ~Signal()
+    {
+        for( typename std::set< reciver_t* >::iterator iter = _receivers.begin(); iter != _receivers.end() ; ++ iter )
+            (*iter)->disconnect_by_signal_kill( this );
+    }
+
+    inline void send ( int SIGNAL_CODE )
+    {
+        if( not _sending_is_enable )
+            return;
+
+        for( typename std::set< reciver_t* >::iterator iter = _receivers.begin(); iter != _receivers.end() ; ++ iter )
+            (*iter)->receive( reinterpret_cast< sender_t* >( this ), SIGNAL_CODE );
+    }
+
+    // performance function, if you not support signal codes
+    inline void send ()
+    {
+        if( not _sending_is_enable )
+            return;
+      
+        for( typename std::set< reciver_t* >::iterator iter = _receivers.begin(); iter != _receivers.end() ; ++ iter )
+            (*iter)->receive( reinterpret_cast< sender_t* >( this ) );
+    }
+
+    inline void enable_sending( bool status_ ) {
+        _sending_is_enable = status_;
+    }
+};

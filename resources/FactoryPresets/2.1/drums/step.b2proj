@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<B-Project-2.1>
+  <Processor BPM="127"/>
+  <UISettings User-Mode="2" ChordView="1" FT-Chord-Editor="0"/>
+  <Global>
+    <Bar0 Chord-ID="0">
+      <BarStep6 Repeat-Interval-Offset="1"/>
+      <BarStep7 Repeat-Interval-Offset="1"/>
+      <Barstring0>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step9 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step1 Mute="0"/>
+        <Step9 Mute="0"/>
+        <Step13 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step4 Mute="0"/>
+        <Step12 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+        <Step7 Mute="0"/>
+        <Step10 Mute="0"/>
+      </Barstring3>
+    </Bar0>
+    <Bar1 Chord-ID="0">
+      <BarStep6 Repeat-Interval-Offset="1"/>
+      <BarStep7 Repeat-Interval-Offset="1"/>
+      <Barstring0>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step1 Mute="0"/>
+        <Step9 Mute="0"/>
+        <Step13 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step4 Mute="0"/>
+        <Step12 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+        <Step7 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step13 Mute="0"/>
+      </Barstring3>
+    </Bar1>
+    <Bar2 Chord-ID="0">
+      <BarStep6 Repeat-Interval-Offset="1"/>
+      <BarStep7 Repeat-Interval-Offset="1"/>
+    </Bar2>
+    <Bar3 Chord-ID="0">
+      <BarStep6 Repeat-Interval-Offset="1"/>
+      <BarStep7 Repeat-Interval-Offset="1"/>
+    </Bar3>
+    <Bar4 Chord-ID="0">
+      <BarStep6 Repeat-Interval-Offset="1"/>
+      <BarStep7 Repeat-Interval-Offset="1"/>
+    </Bar4>
+    <Bar5 Chord-ID="0">
+      <BarStep6 Repeat-Interval-Offset="1"/>
+      <BarStep7 Repeat-Interval-Offset="1"/>
+    </Bar5>
+    <Bar6 Chord-ID="0">
+      <BarStep6 Repeat-Interval-Offset="1"/>
+      <BarStep7 Repeat-Interval-Offset="1"/>
+    </Bar6>
+    <Bar7 Chord-ID="0">
+      <BarStep6 Repeat-Interval-Offset="1"/>
+      <BarStep7 Repeat-Interval-Offset="1"/>
+    </Bar7>
+    <Bar8 Chord-ID="1" Sequence-Nr="1">
+      <BarStep6 Repeat-Interval-Offset="1"/>
+      <BarStep7 Repeat-Interval-Offset="1"/>
+      <Barstring2>
+        <Step15 Mute="0"/>
+      </Barstring2>
+    </Bar8>
+    <Bar9 Chord-ID="1" Sequence-Nr="1">
+      <BarStep6 Repeat-Interval-Offset="1"/>
+      <BarStep7 Repeat-Interval-Offset="1"/>
+      <Barstring2>
+        <Step11 Mute="0"/>
+        <Step15 Mute="0"/>
+      </Barstring2>
+    </Bar9>
+    <Bar10 Chord-ID="1" Sequence-Nr="1">
+      <BarStep6 Repeat-Interval-Offset="1"/>
+      <BarStep7 Repeat-Interval-Offset="1"/>
+    </Bar10>
+    <Bar11 Chord-ID="1" Sequence-Nr="1">
+      <BarStep6 Repeat-Interval-Offset="1"/>
+      <BarStep7 Repeat-Interval-Offset="1"/>
+    </Bar11>
+    <Bar12 Chord-ID="1" Sequence-Nr="1">
+      <BarStep6 Repeat-Interval-Offset="1"/>
+      <BarStep7 Repeat-Interval-Offset="1"/>
+    </Bar12>
+    <Bar13 Chord-ID="1" Sequence-Nr="1">
+      <BarStep6 Repeat-Interval-Offset="1"/>
+      <BarStep7 Repeat-Interval-Offset="1"/>
+    </Bar13>
+    <Bar14 Chord-ID="1" Sequence-Nr="1">
+      <BarStep6 Repeat-Interval-Offset="1"/>
+      <BarStep7 Repeat-Interval-Offset="1"/>
+    </Bar14>
+    <Bar15 Chord-ID="1" Sequence-Nr="1">
+      <BarStep6 Repeat-Interval-Offset="1"/>
+      <BarStep7 Repeat-Interval-Offset="1"/>
+    </Bar15>
+    <ChordSet0>
+      <Chord0 Offset-G="-13" Offset-D="-12" Offset-A="-11" Offset-E="-8" Transpose="-8"/>
+      <Chord1 Offset-A="-8" Offset-E="-13"/>
+    </ChordSet0>
+  </Global>
+</B-Project-2.1>

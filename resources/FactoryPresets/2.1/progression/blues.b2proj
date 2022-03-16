@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<B-Project-2.1>
+  <Processor BPM="98" Pattern-split="0"/>
+  <UISettings User-Mode="2" FT-MIDI-Learn="0" FT-Chord-Editor="0" />
+  <Global Octave-Offset="-1" Chord-Set="2">
+    <Bar0 Repeats="4" Chord-ID="0">
+      <BarStep0 Duration="23"/>
+      <BarStep4 Duration="15"/>
+      <BarStep10 Duration="19"/>
+      <Barstring0>
+        <Step4 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step10 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step8 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+      </Barstring3>
+    </Bar0>
+    <Bar1 Repeats="2" Chord-ID="1">
+      <BarStep0 Duration="23"/>
+      <BarStep4 Duration="15"/>
+      <BarStep10 Duration="19"/>
+      <Barstring0>
+        <Step4 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step10 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step8 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+      </Barstring3>
+    </Bar1>
+    <Bar2 Repeats="2" Chord-ID="0">
+      <BarStep0 Duration="23"/>
+      <BarStep4 Duration="15"/>
+      <BarStep10 Duration="19"/>
+      <Barstring0>
+        <Step4 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step10 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step8 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+      </Barstring3>
+    </Bar2>
+    <Bar3 Chord-ID="2">
+      <BarStep0 Duration="23"/>
+      <BarStep4 Duration="15"/>
+      <BarStep10 Duration="19"/>
+      <Barstring0>
+        <Step4 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step10 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step8 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+      </Barstring3>
+    </Bar3>
+    <Bar4 Chord-ID="1">
+      <BarStep0 Duration="23"/>
+      <BarStep4 Duration="15"/>
+      <BarStep10 Duration="19"/>
+      <Barstring0>
+        <Step4 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step10 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step8 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+      </Barstring3>
+    </Bar4>
+    <Bar5 Chord-ID="0">
+      <BarStep0 Duration="23"/>
+      <BarStep4 Duration="15"/>
+      <BarStep10 Duration="19"/>
+      <Barstring0>
+        <Step4 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step10 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step8 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+      </Barstring3>
+    </Bar5>
+    <Bar6 Chord-ID="2">
+      <BarStep0 Duration="23"/>
+      <BarStep4 Duration="15"/>
+      <BarStep10 Duration="19"/>
+      <Barstring0>
+        <Step4 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step10 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step8 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+      </Barstring3>
+    </Bar6>
+    <Bar7 Repeats="4" Chord-ID="0">
+      <BarStep0 Duration="23"/>
+      <BarStep4 Duration="15"/>
+      <BarStep10 Duration="19"/>
+      <Barstring0>
+        <Step4 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step10 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step8 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+      </Barstring3>
+    </Bar7>
+    <Bar8 Repeats="2">
+      <BarStep0 Duration="23"/>
+      <BarStep4 Duration="15"/>
+      <BarStep10 Duration="19"/>
+      <Barstring0>
+        <Step4 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step10 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step8 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+      </Barstring3>
+    </Bar8>
+    <Bar9 Repeats="2" Chord-ID="0">
+      <BarStep0 Duration="23"/>
+      <BarStep4 Duration="15"/>
+      <BarStep10 Duration="19"/>
+      <Barstring0>
+        <Step4 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step10 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step8 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+      </Barstring3>
+    </Bar9>
+    <Bar10 Chord-ID="5">
+      <BarStep0 Duration="23"/>
+      <BarStep4 Duration="15"/>
+      <BarStep10 Duration="19"/>
+      <Barstring0>
+        <Step4 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step10 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step8 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+      </Barstring3>
+    </Bar10>
+    <Bar11>
+      <BarStep0 Duration="23"/>
+      <BarStep4 Duration="15"/>
+      <BarStep10 Duration="19"/>
+      <Barstring0>
+        <Step4 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step10 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step8 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+      </Barstring3>
+    </Bar11>
+    <Bar12 Chord-ID="0">
+      <BarStep0 Duration="23"/>
+      <BarStep4 Duration="15"/>
+      <BarStep10 Duration="19"/>
+      <Barstring0>
+        <Step4 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step10 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step8 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+      </Barstring3>
+    </Bar12>
+    <Bar13 Chord-ID="4">
+      <BarStep0 Duration="23"/>
+      <BarStep4 Duration="15"/>
+      <BarStep10 Duration="19"/>
+      <Barstring0>
+        <Step4 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step10 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step8 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+      </Barstring3>
+    </Bar13>
+    <Bar14>
+      <BarStep0 Duration="23"/>
+    </Bar14>
+    <Bar15>
+      <BarStep0 Duration="23"/>
+    </Bar15>
+    <ChordSet0>
+      <Chord0 Offset-G="1" Offset-D="2" Offset-A="2"/>
+      <Chord1 Offset-G="2" Offset-D="2" Offset-A="4" Offset-E="5"/>
+      <Chord2 Offset-G="2" Offset-D="2" Offset-A="4" Offset-E="5" Transpose="2"/>
+      <Chord3 Offset-A="2" Offset-E="3" Transpose="2"/>
+      <Chord4 Offset-A="2" Offset-E="3" Transpose="4"/>
+      <Chord5 Offset-G="2" Offset-D="3" Offset-A="3" Offset-E="1" Transpose="6"/>
+    </ChordSet0>
+    <ChordSet1>
+      <Chord0 Offset-D="2" Offset-A="2"/>
+      <Chord1 Offset-G="2" Offset-D="2" Offset-A="3" Offset-E="5"/>
+      <Chord2 Offset-G="2" Offset-D="2" Offset-A="3" Offset-E="5" Transpose="2"/>
+      <Chord3 Offset-G="2" Offset-D="2" Offset-A="3" Offset-E="5" Transpose="2"/>
+      <Chord4 Offset-A="1" Offset-E="3" Transpose="4"/>
+      <Chord5 Offset-G="1" Offset-D="3" Offset-A="3" Offset-E="1" Transpose="6"/>
+    </ChordSet1>
+    <ChordSet2>
+      <Chord0 Offset-D="2" Offset-A="2"/>
+      <Chord1 Offset-D="2" Offset-A="2" Transpose="5"/>
+      <Chord2 Offset-D="2" Offset-A="2" Transpose="7"/>
+      <Chord3 Offset-G="2" Offset-E="1" Transpose="7"/>
+      <Chord4 Offset-D="2" Offset-A="2" Transpose="7"/>
+      <Chord5 Offset-G="2" Offset-E="1" Transpose="9"/>
+    </ChordSet2>
+    <ChordSet3>
+      <Chord0 Offset-G="1" Offset-D="2" Offset-A="2"/>
+      <Chord1 Offset-G="1" Offset-D="2" Offset-A="2" Transpose="5"/>
+      <Chord2 Offset-G="1" Offset-D="2" Offset-A="2" Transpose="7"/>
+      <Chord3 Offset-G="2" Offset-E="2" Transpose="7"/>
+      <Chord4 Offset-G="1" Offset-D="2" Offset-A="2" Transpose="7"/>
+      <Chord5 Offset-G="2" Offset-E="2" Transpose="9"/>
+    </ChordSet3>
+    <ChordSet4>
+      <Chord0 Offset-G="1" Offset-D="2" Offset-A="2" Transpose="-12"/>
+      <Chord1 Offset-G="1" Offset-D="2" Offset-A="2" Transpose="-7"/>
+      <Chord2 Offset-G="1" Offset-D="2" Offset-A="2" Transpose="-5"/>
+      <Chord3 Offset-G="2" Offset-E="2" Transpose="7"/>
+      <Chord4 Offset-G="1" Offset-D="2" Offset-A="2" Transpose="7"/>
+      <Chord5 Offset-G="2" Offset-E="2" Transpose="9"/>
+    </ChordSet4>
+  </Global>
+</B-Project-2.1>

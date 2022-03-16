@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<B-Project-2.1>
+  <Processor BPM="122"/>
+  <UISettings User-Mode="2" ChordView="1" FT-Chord-Editor="0" />
+  <Global Swing-Position="1" Swing-Percent="5" Swing-Velocity="112" Swing-Duartion="10">
+    <Bar0 Chord-ID="0">
+      <Barstring0>
+        <Step2 Mute="0"/>
+        <Step6 Mute="0"/>
+        <Step10 Mute="0"/>
+        <Step14 Mute="0"/>
+      </Barstring0>
+      <Barstring1>
+        <Step0 Mute="0"/>
+        <Step1 Mute="0"/>
+        <Step3 Mute="0"/>
+        <Step4 Mute="0"/>
+        <Step5 Mute="0"/>
+        <Step7 Mute="0"/>
+        <Step8 Mute="0"/>
+        <Step9 Mute="0"/>
+        <Step11 Mute="0"/>
+        <Step12 Mute="0"/>
+        <Step13 Mute="0"/>
+        <Step15 Mute="0"/>
+      </Barstring1>
+      <Barstring2>
+        <Step4 Mute="0"/>
+        <Step12 Mute="0"/>
+      </Barstring2>
+      <Barstring3>
+        <Step0 Mute="0"/>
+        <Step4 Mute="0"/>
+        <Step8 Mute="0"/>
+        <Step12 Mute="0"/>
+      </Barstring3>
+    </Bar0>
+    <Bar1 Chord-ID="0"/>
+    <Bar2 Chord-ID="0"/>
+    <Bar3 Chord-ID="0"/>
+    <Bar4 Chord-ID="0"/>
+    <Bar5 Chord-ID="0"/>
+    <Bar6 Chord-ID="0"/>
+    <Bar7 Chord-ID="0"/>
+    <Bar8 Chord-ID="0"/>
+    <Bar9 Chord-ID="0"/>
+    <Bar10 Chord-ID="0"/>
+    <Bar11 Chord-ID="0"/>
+    <Bar12 Octave-Offset="-1" Chord-ID="0"/>
+    <Bar13 Octave-Offset="-1" Chord-ID="0"/>
+    <Bar14 Octave-Offset="-1" Chord-ID="0"/>
+    <Bar15 Chord-ID="0"/>
+    <ChordSet0>
+      <Chord0 Offset-G="-9" Offset-D="-8" Offset-A="-7" Offset-E="-4" Transpose="-12"/>
+      <Chord1 Offset-G="-12" Offset-D="-12" Offset-A="4" Offset-E="9" Transpose="-12"/>
+      <Chord2 Offset-G="4" Offset-D="-5" Offset-A="4" Offset-E="-1"/>
+      <Chord3 Offset-D="1" Offset-A="3" Offset-E="3"/>
+      <Chord4 Offset-D="2" Offset-A="2"/>
+    </ChordSet0>
+  </Global>
+</B-Project-2.1>

@@ -1,11 +1,26 @@
-This is in a private surge synth team repo for now because
+# B-Step Sequencer
 
-1. I haven't scanned the resources for open 
-2. I haven't set up the CLA
-3. and I haven't done anything else even like that
+The B-Step Sequencer is a midi generating plugin and program which was originally authored by
+Monoplugs and its principal Thomas Arndt. In March of 2022, after he had open sourced Monique
+with the Surge team, Thomas donated the B-Step source to the Surge Synth Team.
 
-but I wanted it up on git
+Currently, we are seeing if it is even tractable to restore this program, although we do
+have it at least compiling. If you are a developer and would like to work on B-Step, please
+do get in touch!
 
+Standard build instructions for the rest of the Surge Synth Team plant apply here too.
+
+```
+git clone https://github.com/surge-synthesizer/b-step
+cd b-step
+git submodule update --init --recursive
+cmake -Bignore/build 
+cmake --build ignore/build
+```
+
+As of now we haven't done any of the cmake work we have in our other synths, so the
+VST3 and stuff will end up in places which will change, and there's no installer
+or downloadable asset. But we'll get there!! Probably! We think. Perhaps?
 
 # An important note about licensing
 

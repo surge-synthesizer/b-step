@@ -210,7 +210,7 @@ UiLookAndFeel::UiLookAndFeel()
     for (int i = 0; i < numElementsInArray (standardColours); i += 2)
         setColour ((int) standardColours [i], Colour ((uint32) standardColours [i + 1]));
 
-    defaultFont = Font(Typeface::createSystemTypefaceFor(BinaryData::FjallaOneRegular_otf,BinaryData::FjallaOneRegular_otfSize));
+    defaultFont = Font(Typeface::createSystemTypefaceFor(BinaryData::FjallaOneRegular_ttf,BinaryData::FjallaOneRegular_ttfSize));
 }
 
 //==============================================================================

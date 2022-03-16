@@ -574,17 +574,17 @@ Array< const MIDIInToControllerHandler* > MIDIInToControllerMap::get_registerd_h
         }
     }
 
-    return MOVE(handlers);
+    return std::move(handlers);
 }
 Array< const MIDIInToControllerHandler* > MIDIInToControllerMap::get_registerd_handlers_for_learning_controller() const
 {
     Array< const MIDIInToControllerHandler* > handlers;
     if( _learning_controller )
     {
-        return MOVE(get_registerd_handlers2controller( _learning_controller ));
+        return std::move(get_registerd_handlers2controller( _learning_controller ));
     }
 
-    return MOVE(handlers);
+    return std::move(handlers);
 }
 int8 MIDIInToControllerMap::get_last_learned_cc_type(MONO_Controller*const controller_)
 {

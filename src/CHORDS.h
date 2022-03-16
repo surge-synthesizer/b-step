@@ -129,7 +129,7 @@ static inline Array< int8 > get_chord( CHORD_AT_E_TUNE chord_ident_ )
         chord_offsets.add( 0 );
     };
 
-    return MOVE(chord_offsets);
+    return std::move(chord_offsets);
 }
 
 #endif

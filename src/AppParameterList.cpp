@@ -16,7 +16,7 @@
     for( int i = 0 ; i != LIST_SIZE ; ++i ) \
         list.add( static_cast< IDS >( i ) ); \
     \
-    return MOVE(list)
+    return std::move(list)
 
 // ************************************************************************************************
 // ************************************************************************************************
@@ -482,7 +482,7 @@ Array< APPDEF_Bar::IDS > APPDEF_Bar::get_copyable_parameter_list()
     list.add( I_PLAY_REVERSE );
     list.add( I_PLAY_RANDOM );
 
-    return MOVE(list);
+    return std::move(list);
 }
 Array< APPDEF_Bar::IDS > APPDEF_Bar::get_project_parameter_list()
 {
@@ -949,7 +949,7 @@ Array< APPDEF_UIUserData::IDS > APPDEF_UIUserData::get_project_parameter_list()
 
     list.add( I_AUTOPLAY_SAMPLE_AUDIO );
 
-    return MOVE(list);
+    return std::move(list);
 }
 Array< APPDEF_UIUserData::IDS > APPDEF_UIUserData::get_automation_parameter_list()
 {
@@ -957,13 +957,13 @@ Array< APPDEF_UIUserData::IDS > APPDEF_UIUserData::get_automation_parameter_list
 
     list.add( I_SELECTED_BAR_ID );
 
-    return MOVE(list);
+    return std::move(list);
 }
 Array< APPDEF_UIUserData::IDS > APPDEF_UIUserData::get_setup_parameter_list()
 {
     Array< IDS > list;
 
-    return MOVE(list);
+    return std::move(list);
 }
 
 // ************************************************************************************************

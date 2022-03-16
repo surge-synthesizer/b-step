@@ -103,7 +103,7 @@ Array< MONO_Controller* > convert_to_array( const OwnedArray< MONO_Controller >&
     }
     array.minimiseStorageOverheads();
 
-    return MOVE(array);
+    return std::move(array);
 }
 
 UiLookAndFeel* init_lock_and_feel_hack() {
@@ -521,7 +521,7 @@ AppInstanceStore::AppInstanceStore( GstepAudioProcessor*const audio_processor_ )
     Font android_font = Font("subway_black", 21, Font::italic );
     _font = Font( Typeface::createSystemTypefaceFor(reinterpret_cast<const void*>( &android_font ),99));
 #else
-    subway_typeface = Typeface::createSystemTypefaceFor(BinaryData::Subway_Black_ttf,BinaryData::Subway_Black_ttfSize);
+    subway_typeface = Typeface::createSystemTypefaceFor(BinaryData::FredokaOneRegular_ttf,BinaryData::FredokaOneRegular_ttfSize);
     oswald_typeface = Typeface::createSystemTypefaceFor(BinaryData::OswaldRegular_ttf,BinaryData::OswaldRegular_ttfSize);
 #endif
 

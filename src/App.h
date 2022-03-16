@@ -128,14 +128,6 @@ class AppInstanceStore;
 // --------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------
 
-// MOVE SUPPPORT IF AVAILABLE
-#if JUCE_MAC
-#   	define MOVE( object_to_move ) object_to_move
-#elif JUCE_COMPILER_SUPPORTS_MOVE_SEMANTICS
-#  	define MOVE( object_to_move ) std::move( object_to_move )
-#else
-#  	define define MOVE( object_to_move ) object_to_move
-#endif
 
 // --------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------

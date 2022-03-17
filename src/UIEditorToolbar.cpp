@@ -62,7 +62,7 @@ void UiEditor::center_relative_and_make_visible(Component *const parent_, bool r
     else
     {
         uint16 desktop_height =
-            Desktop::getInstance().getDisplays().getMainDisplay().userArea.getHeight();
+            Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getHeight();
         scale = 1.f / APPDEF_UIUserData::WINDOW_HEIGHT_DESIGN * desktop_height;
         addToDesktop();
     }

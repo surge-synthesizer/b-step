@@ -52,10 +52,10 @@ class UiEditorSetup : public UiEditor, public Button::Listener, public Slider::L
     void refresh_ui();
     //[/UserMethods]
 
-    void paint(Graphics &g);
-    void resized();
-    void buttonClicked(Button *buttonThatWasClicked);
-    void sliderValueChanged(Slider *sliderThatWasMoved);
+    void paint(Graphics &g) override;
+    void resized() override;
+    void buttonClicked(Button *buttonThatWasClicked) override;
+    void sliderValueChanged(Slider *sliderThatWasMoved) override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.

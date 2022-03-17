@@ -67,9 +67,9 @@ class MenuBarRight : public Component, public Button::Listener
 
     //[/UserMethods]
 
-    void paint(Graphics &g);
-    void resized();
-    void buttonClicked(Button *buttonThatWasClicked);
+    void paint(Graphics &g) override;
+    void resized() override;
+    void buttonClicked(Button *buttonThatWasClicked) override;
 
     // Binary resources:
     static const char *load_svg;

@@ -66,8 +66,8 @@ class UiLeftsideStartStopPause : public SubeditorBase
     void refresh_ui(Array<Component *> &components_to_repaint_) override;
     //[/UserMethods]
 
-    void paint(Graphics &g);
-    void resized();
+    void paint(Graphics &g) override;
+    void resized() override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.

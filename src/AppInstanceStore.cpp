@@ -587,7 +587,7 @@ String AppInstanceStore::write(const XmlElement &xml_, const File &xml_doc) cons
 {
     String error;
 
-    if (!xml_.writeToFile(xml_doc, ""))
+    if (!xml_.writeTo(xml_doc, {}))
     {
         error += String("Can NOT write to file: ") + xml_doc.getFileName();
         error += "\n";
@@ -1026,7 +1026,7 @@ void AppInstanceStore::update_loaded_project_cache()
     current_project_backup.clear();
     XmlElement xml("mem");
     save_project(xml);
-    current_project_backup = xml.createDocument("", true, false);
+    current_project_backup = xml.toString();
 }
 
 bool AppInstanceStore::is_project_changed() const
@@ -1036,7 +1036,7 @@ bool AppInstanceStore::is_project_changed() const
     {
         XmlElement xml("mem");
         save_project(xml);
-        is_changed = current_project_backup != xml.createDocument("", true, false);
+        is_changed = current_project_backup != xml.toString();
     }
 
     return is_changed;
@@ -1643,7 +1643,7 @@ class ControllerBPM : public MONO_UISliderController
         string_ = String(_app_instance_store->audio_processor->bpm);
     }
 
-    virtual bool paint_popup_above() const { return false; }
+    virtual bool paint_popup_above() const override { return false; }
 
   public:
     ControllerBPM(AppInstanceStore *const app_instance_store_)

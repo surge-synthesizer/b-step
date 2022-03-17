@@ -50,17 +50,17 @@ class UiEditorAppStyler : public UiEditor,
     uint32 *target_color;
     uint32 last_col_refresh;
 
-    void timerCallback();
+    void timerCallback() override;
     void on_close_clicked() override;
 
     void on_load_clicked() override;
     void on_save_clicked() override;
     //[/UserMethods]
 
-    void paint(Graphics &g);
-    void resized();
-    void buttonClicked(Button *buttonThatWasClicked);
-    void labelTextChanged(Label *labelThatHasChanged);
+    void paint(Graphics &g) override;
+    void resized() override;
+    void buttonClicked(Button *buttonThatWasClicked) override;
+    void labelTextChanged(Label *labelThatHasChanged) override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.

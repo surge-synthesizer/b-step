@@ -59,9 +59,9 @@ class UiLeftsideLabelModel : public SubeditorBase, public Button::Listener
     get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_with_popup_) override;
     //[/UserMethods]
 
-    void paint(Graphics &g);
-    void resized();
-    void buttonClicked(Button *buttonThatWasClicked);
+    void paint(Graphics &g) override;
+    void resized() override;
+    void buttonClicked(Button *buttonThatWasClicked) override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.

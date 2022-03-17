@@ -221,7 +221,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
             delete this;
         }
 
-        void on_text_changed(String &text_)
+        void on_text_changed(String &text_) override
         {
             _owner_item->set_input_listener(nullptr);
 
@@ -314,7 +314,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
             SHOW_CANCEL_NOTIFICATION();
             delete this;
         }
-        void on_text_changed(String &text_)
+        void on_text_changed(String &text_) override
         {
             _subfolder_item->set_input_listener(nullptr);
 
@@ -401,7 +401,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
             delete this;
         }
 
-        void on_text_changed(String &text_)
+        void on_text_changed(String &text_) override
         {
             _new_file_item->set_input_listener(nullptr);
 
@@ -780,7 +780,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
 
     // VIEW
 
-    std::unique_ptr<Component> createItemComponent()
+    std::unique_ptr<Component> createItemComponent() override
     {
         return std::unique_ptr<Component>(refresh_get_view());
     }
@@ -880,7 +880,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         }
     }
 
-    void buttonClicked(Button *)
+    void buttonClicked(Button *) override
     {
         switch (_type)
         {
@@ -1055,7 +1055,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
                 {
                     xml->removeAttribute("COMMENT");
                     xml->setAttribute("COMMENT", comment_);
-                    if (xml->writeToFile(_file, ""))
+                    if (xml->writeTo(_file, {}))
                         return true;
                 }
             }
@@ -1073,7 +1073,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         File file = folder_.getChildFile("directory.info");
         XmlElement xml("INFO");
         xml.setAttribute("COMMENT", comment_);
-        if (xml.writeToFile(file, ""))
+        if (xml.writeTo(file, {}))
             return true;
 
         return false;
@@ -2269,7 +2269,7 @@ void UiEditorFileManager::store_tree_view()
 {
     ScopedPointer<XmlElement> state = treeView->getOpennessState(true).release();
     if (state)
-        state->writeToFile(File(get_view_restore_file(_view_type, true)), "");
+        state->writeTo(File(get_view_restore_file(_view_type, true)), {});
 }
 
 void UiEditorFileManager::build_init_tree_view()

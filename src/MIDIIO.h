@@ -237,7 +237,7 @@ class MidiInputObject : public MidiIOObject<MidiInput>, public MidiInputCallback
     }
 
   public:
-    bool open_port()
+    bool open_port() override
     {
         close_port();
 
@@ -357,7 +357,7 @@ class MidiOutputObject : public MidiIOObject<MidiOutput>
 
     //// Interface
   public:
-    bool open_port()
+    bool open_port() override
     {
         close_port();
 

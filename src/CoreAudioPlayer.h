@@ -215,7 +215,7 @@ class AudioPlayer : public Component, public Timer, public Slider::Listener
         if (_thumb == thumb_)
             _thumb = nullptr;
     }
-    void sliderValueChanged(Slider *thumb_)
+    void sliderValueChanged(Slider *thumb_) override
     {
         if (_thumb)
         {

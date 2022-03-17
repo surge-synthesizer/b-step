@@ -71,10 +71,10 @@ class UiEditorClipboard : public UiEditor,
     void textEditorTextChanged(TextEditor &editor_) override;
     //[/UserMethods]
 
-    void paint(Graphics &g);
-    void resized();
-    void buttonClicked(Button *buttonThatWasClicked);
-    void labelTextChanged(Label *labelThatHasChanged);
+    void paint(Graphics &g) override;
+    void resized() override;
+    void buttonClicked(Button *buttonThatWasClicked) override;
+    void labelTextChanged(Label *labelThatHasChanged) override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.

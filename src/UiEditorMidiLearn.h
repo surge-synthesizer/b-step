@@ -71,10 +71,10 @@ class UiEditorMidiLearn : public UiEditor, public Button::Listener, public Combo
   private:
     //[/UserMethods]
 
-    void paint(Graphics &g);
-    void resized();
-    void buttonClicked(Button *buttonThatWasClicked);
-    void comboBoxChanged(ComboBox *comboBoxThatHasChanged);
+    void paint(Graphics &g) override;
+    void resized() override;
+    void buttonClicked(Button *buttonThatWasClicked) override;
+    void comboBoxChanged(ComboBox *comboBoxThatHasChanged) override;
 
     // Binary resources:
     static const char *trash_svg;

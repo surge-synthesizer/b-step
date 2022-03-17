@@ -519,7 +519,7 @@ class NavItem : public TreeViewItem
             click();
     }
 
-    virtual void paintItem(Graphics &g, int width, int height)
+    virtual void paintItem(Graphics &g, int width, int height) override
     {
         _label->setBounds(0, 0, width, height);
     }

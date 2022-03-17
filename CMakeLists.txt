@@ -183,3 +183,13 @@ target_link_libraries(B-Step
     juce::juce_recommended_lto_flags
     # juce::juce_recommended_warning_flags
 )
+
+
+# stub for azure
+add_custom_target(bstep-installer)
+add_custom_command(TARGET bstep-installer
+        POST_BUILD
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        COMMAND ${CMAKE_COMMAND} -E make_directory installer
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/README.md installer/README-${CMAKE_SYSTEM_NAME}.md
+        )

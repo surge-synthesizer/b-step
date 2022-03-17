@@ -94,7 +94,7 @@ jobs:
   - bash: |
       echo cmake --build build --config Debug --target $(cmakePRTarget) --parallel 4
       cmake --build build --config Debug --target $(cmakePRTarget) --parallel 4
-    displayName: Build Monique for a Pull Request
+    displayName: Build BStep for a Pull Request
     condition: eq(variables['Build.Reason'], 'PullRequest')
 
   - bash: |
@@ -105,7 +105,7 @@ jobs:
 
   - bash: |
       cmake --build build --config Release --target bstep-installer --parallel 4
-    displayName: Build Monique Installer for Main
+    displayName: Build BStep Installer for Main
     condition: and(not(eq(variables['Build.Reason'], 'PullRequest')),variables.releaseAsset)
 
   - bash: |
@@ -165,7 +165,7 @@ jobs:
 
     - task: DownloadSecureFile@1
       inputs:
-        secureFile: discord-nightly-monique.webhook
+        secureFile: discord-nightly-BStep.webhook
 
     - task: DownloadPipelineArtifact@0
       inputs:
@@ -255,7 +255,7 @@ jobs:
         # Finally tell discord
         export GIT_LOG_DISP=`cat git_info/git_nightly_bstep_log_display  | sed -e s/\"//g`
         
-        curl -i -H "Accept: application/json" -H "Content-Type:application/json" -X POST --data "{\"content\": \"A Monique Nightly is available. Get it here:\n${GIT_LOG_DISP}\nhttps://github.com/surge-synthesizer/bstep-monosynth/releases/tag/Nightly\"}" `cat $AGENT_TEMPDIRECTORY/discord-nightly-bstep.webhook`
+        curl -i -H "Accept: application/json" -H "Content-Type:application/json" -X POST --data "{\"content\": \"A BStep Nightly is available. Get it here:\n${GIT_LOG_DISP}\nhttps://github.com/surge-synthesizer/bstep-monosynth/releases/tag/Nightly\"}" `cat $AGENT_TEMPDIRECTORY/discord-nightly-bstep.webhook`
       displayName: Tell Discord
       condition: eq(variables.DO_RELEASE, 'true')
 

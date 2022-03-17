@@ -266,12 +266,10 @@ UiLookAndFeel::UiLookAndFeel()
         /*MidiKeyboardComponent::keySeparatorLineColourId*/ 0x66000000,
         0x1005003,
         /*MidiKeyboardComponent::mouseOverKeyOverlayColourId*/
-        GLOBAL_VALUE_HOLDER::getInstance()
-            ->MASTER_COLOUR,
+        GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR,
         0x1005004,
         /*MidiKeyboardComponent::keyDownOverlayColourId*/
-        GLOBAL_VALUE_HOLDER::getInstance()
-            ->MASTER_COLOUR,
+        GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR,
         0x1005005,
         /*MidiKeyboardComponent::textLabelColourId*/ 0xff000000,
         0x1005006,

@@ -508,7 +508,9 @@ void MenuBarRight::buttonClicked(Button *buttonThatWasClicked)
 
           public:
             CallbackManager(AppInstanceStore *const store_) : _app_instance_store(store_) {}
-            ~CallbackManager() { /* will be killed by the ModalComponentManager */ }
+            ~CallbackManager()
+            { /* will be killed by the ModalComponentManager */
+            }
 
             JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CallbackManager)
         };

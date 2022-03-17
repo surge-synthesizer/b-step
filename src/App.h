@@ -26,8 +26,8 @@ class AppInstanceStore;
 #ifdef TESTER_BUILD
 //#	define BUILD_INFO String(String("FEB-14
 //")+Time::getCompilationDate().formatted("%Y:%m:%d-%H:%M:%S" +String(" "))) #	define USE_A_SYNTH
-//1             // in development #	define USE_STANDALONE_SYNTH 1	 // in development #
-//define USE_PLUGIN_PROCESS_BLOCK 1
+// 1             // in development #	define USE_STANDALONE_SYNTH 1	 // in development #
+// define USE_PLUGIN_PROCESS_BLOCK 1
 #define LOG_THE_EVENTS_TO_FILE 1
 #ifndef USE_PLUGIN_PROCESS_BLOCK
 #ifndef B_STEP_STANDALONE

@@ -408,7 +408,7 @@ struct APPDEF_Chord
 
     /// INTERNAL TYPEDEFS
   private:
-    friend class Chord;
+    friend struct Chord;
     typedef PodParameter<-15, 0, 15, I_OFFSET_G, APPDEF_Chord> offset_g_t;
     typedef PodParameter<-15, 0, 15, I_OFFSET_D, APPDEF_Chord> offset_d_t;
     typedef PodParameter<-15, 0, 15, I_OFFSET_A, APPDEF_Chord> offset_a_t;

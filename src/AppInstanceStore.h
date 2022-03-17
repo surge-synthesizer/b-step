@@ -159,7 +159,7 @@ class MidiIOHandler;
 class AutomationParameter;
 class Parameters;
 
-class Bar;
+struct Bar;
 
 class BarCopyClipboard;
 

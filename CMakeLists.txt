@@ -74,6 +74,7 @@ target_compile_definitions(B-Step
     JUCE_USE_WINDOWS_MEDIA_FORMAT=enabled
     JUCE_WASAPI=enabled
     JUCE_WEB_BROWSER=disabled
+    JUCE_VST3_CAN_REPLACE_VST2=0
 
     JUCE_MODAL_LOOPS_PERMITTED=1
 

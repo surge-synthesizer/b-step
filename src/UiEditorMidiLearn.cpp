@@ -381,7 +381,9 @@ void UiEditorMidiLearn::buttonClicked(Button *buttonThatWasClicked)
                 : _map(map_), _editor(editor_)
             {
             }
-            ~CallbackManager() { /* will be killed by the ModalComponentManager */ }
+            ~CallbackManager()
+            { /* will be killed by the ModalComponentManager */
+            }
 
             JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CallbackManager)
         };

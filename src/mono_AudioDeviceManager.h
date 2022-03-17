@@ -267,6 +267,7 @@ class mono_AudioDeviceManager : public AudioDeviceManager, public MidiInputCallb
         bool success = false;
         if (main_input)
         {
+            // clang-format off
             if (main_input->is_same(source))
             {
 #ifdef IS_STANDALONE
@@ -298,6 +299,7 @@ class mono_AudioDeviceManager : public AudioDeviceManager, public MidiInputCallb
 
                 success = true;
             }
+            // clang-format on
         }
         if (!success && cc_input)
         {

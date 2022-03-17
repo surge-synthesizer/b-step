@@ -102,13 +102,13 @@ class UiEditorToolbar : public Component, public Button::Listener
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<ImageButton> close;
-    ScopedPointer<ImageButton> load;
-    ScopedPointer<ImageButton> save;
-    ScopedPointer<Drawable> drawable1;
-    ScopedPointer<Drawable> drawable2;
-    ScopedPointer<Drawable> drawable3;
-    ScopedPointer<Drawable> drawable4;
+    std::unique_ptr<ImageButton> close;
+    std::unique_ptr<ImageButton> load;
+    std::unique_ptr<ImageButton> save;
+    std::unique_ptr<Drawable> drawable1;
+    std::unique_ptr<Drawable> drawable2;
+    std::unique_ptr<Drawable> drawable3;
+    std::unique_ptr<Drawable> drawable4;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorToolbar)

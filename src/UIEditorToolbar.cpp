@@ -207,43 +207,47 @@ UiEditorToolbar::UiEditorToolbar(UiEditor *const owner_editor_, bool show_close,
                                  bool show_load_save)
     : _owner_editor(owner_editor_)
 {
-    addAndMakeVisible(close = new ImageButton(String()));
+    close = std::make_unique<ImageButton>();
+    addAndMakeVisible(*close);
     close->addListener(this);
 
     close->setImages(false, true, true, Image(), 0.000f, Colour(0x00000000), Image(), 0.000f,
                      Colour(0x00000000), Image(), 0.000f, Colour(0x00000000));
-    addAndMakeVisible(load = new ImageButton(String()));
+    load = std::make_unique<ImageButton>();
+    addAndMakeVisible(*load);
     load->addListener(this);
 
     load->setImages(false, true, true, Image(), 0.000f, Colour(0x00000000), Image(), 0.000f,
                     Colour(0x00000000), Image(), 0.000f, Colour(0x00000000));
-    addAndMakeVisible(save = new ImageButton(String()));
+
+    save = std::make_unique<ImageButton>();
+    addAndMakeVisible(*save);
     save->addListener(this);
 
     save->setImages(false, true, true, Image(), 0.000f, Colour(0x00000000), Image(), 0.000f,
                     Colour(0x00000000), Image(), 0.000f, Colour(0x00000000));
-    drawable1 = Drawable::createFromImageData(load_svg, load_svgSize).release();
-    drawable2 = Drawable::createFromImageData(save_svg, save_svgSize).release();
-    drawable3 = Drawable::createFromImageData(move_svg, move_svgSize).release();
-    drawable4 = Drawable::createFromImageData(close_svg, close_svgSize).release();
+    drawable1 = Drawable::createFromImageData(load_svg, load_svgSize);
+    drawable2 = Drawable::createFromImageData(save_svg, save_svgSize);
+    drawable3 = Drawable::createFromImageData(move_svg, move_svgSize);
+    drawable4 = Drawable::createFromImageData(close_svg, close_svgSize);
 
     //[UserPreSize]
     if (!show_close)
     {
         close->setVisible(false);
-        drawable4 = Drawable::createFromImageData(close_svg, 0).release();
+        drawable4 = Drawable::createFromImageData(close_svg, 0);
     }
     if (!show_move)
     {
-        drawable3 = Drawable::createFromImageData(move_svg, 0).release();
+        drawable3 = Drawable::createFromImageData(move_svg, 0);
     }
     if (!show_load_save)
     {
         load->setVisible(false);
         save->setVisible(false);
 
-        drawable1 = Drawable::createFromImageData(load_svg, 0).release();
-        drawable2 = Drawable::createFromImageData(save_svg, 0).release();
+        drawable1 = Drawable::createFromImageData(load_svg, 0);
+        drawable2 = Drawable::createFromImageData(save_svg, 0);
     }
     //[/UserPreSize]
 
@@ -254,22 +258,7 @@ UiEditorToolbar::UiEditorToolbar(UiEditor *const owner_editor_, bool show_close,
     //[/Constructor]
 }
 
-UiEditorToolbar::~UiEditorToolbar()
-{
-    //[Destructor_pre]. You can add your own custom destruction code here..
-    //[/Destructor_pre]
-
-    close = nullptr;
-    load = nullptr;
-    save = nullptr;
-    drawable1 = nullptr;
-    drawable2 = nullptr;
-    drawable3 = nullptr;
-    drawable4 = nullptr;
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
-}
+UiEditorToolbar::~UiEditorToolbar() {}
 
 //==============================================================================
 void UiEditorToolbar::paint(Graphics &g)
@@ -278,8 +267,8 @@ void UiEditorToolbar::paint(Graphics &g)
     //[/UserPrePaint]
 
     g.setColour(Colours::black);
-    // jassert (drawable1 != 0);
-    if (drawable1 != 0)
+    // jassert (drawable1 );
+    if (drawable1)
         drawable1->drawWithin(
             g,
             Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.6000f),
@@ -287,8 +276,8 @@ void UiEditorToolbar::paint(Graphics &g)
             RectanglePlacement::centred, 1.000f);
 
     g.setColour(Colours::black);
-    // jassert (drawable2 != 0);
-    if (drawable2 != 0)
+    // jassert (drawable2 );
+    if (drawable2)
         drawable2->drawWithin(
             g,
             Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.7500f),
@@ -296,8 +285,8 @@ void UiEditorToolbar::paint(Graphics &g)
             RectanglePlacement::centred, 1.000f);
 
     g.setColour(Colours::black);
-    // jassert (drawable3 != 0);
-    if (drawable3 != 0)
+    // jassert (drawable3 );
+    if (drawable3)
         drawable3->drawWithin(
             g,
             Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.3500f),
@@ -305,8 +294,8 @@ void UiEditorToolbar::paint(Graphics &g)
             RectanglePlacement::centred, 1.000f);
 
     g.setColour(Colours::black);
-    // jassert (drawable4 != 0);
-    if (drawable4 != 0)
+    // jassert (drawable4 );
+    if (drawable4)
         drawable4->drawWithin(
             g,
             Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.0750f),
@@ -337,7 +326,7 @@ void UiEditorToolbar::buttonClicked(Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == close)
+    if (buttonThatWasClicked == close.get())
     {
         //[UserButtonCode_close] -- add your button handler code here..
         if (!_owner_editor->animate_lock)
@@ -346,13 +335,13 @@ void UiEditorToolbar::buttonClicked(Button *buttonThatWasClicked)
         }
         //[/UserButtonCode_close]
     }
-    else if (buttonThatWasClicked == load)
+    else if (buttonThatWasClicked == load.get())
     {
         //[UserButtonCode_load] -- add your button handler code here..
         _owner_editor->on_load_clicked();
         //[/UserButtonCode_load]
     }
-    else if (buttonThatWasClicked == save)
+    else if (buttonThatWasClicked == save.get())
     {
         //[UserButtonCode_save] -- add your button handler code here..
         _owner_editor->on_save_clicked();

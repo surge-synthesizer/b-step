@@ -435,7 +435,7 @@ class ControllerBarstepReset2Default : public MONO_UIButtonController, public Ti
 
     unsigned int get_current_state() const override { return Timer::isTimerRunning(); }
 
-    void timerCallback() { stopTimer(); }
+    void timerCallback() override { stopTimer(); }
 
   public:
     ControllerBarstepReset2Default(AppInstanceStore *const app_instance_store_, uint8 step_id_)

@@ -95,12 +95,12 @@ class UiTextImExport : public UiEditor, public Timer, public Button::Listener
     UiTextImExportListener *const _listener;
 
     void timerCallback() override;
-    void on_close_clicked();
+    void on_close_clicked() override;
     //[/UserMethods]
 
-    void paint(Graphics &g);
-    void resized();
-    void buttonClicked(Button *buttonThatWasClicked);
+    void paint(Graphics &g) override;
+    void resized() override;
+    void buttonClicked(Button *buttonThatWasClicked) override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.

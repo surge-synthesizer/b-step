@@ -182,8 +182,8 @@ class GstepAudioProcessorEditor : public AudioProcessorEditor, public Timer, pub
   public:
     //[/UserMethods]
 
-    void paint(Graphics &g);
-    void resized();
+    void paint(Graphics &g) override;
+    void resized() override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.

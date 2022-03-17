@@ -71,9 +71,9 @@ class UiEditorAbout : public UiEditor, public Button::Listener
     URL url_google;
     //[/UserMethods]
 
-    void paint(Graphics &g);
-    void resized();
-    void buttonClicked(Button *buttonThatWasClicked);
+    void paint(Graphics &g) override;
+    void resized() override;
+    void buttonClicked(Button *buttonThatWasClicked) override;
 
     // Binary resources:
     static const char *b_logo_png;

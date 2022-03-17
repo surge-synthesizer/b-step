@@ -17,7 +17,7 @@ class UITool : public DragAndDropContainer, public ImageButton
 
   private:
     virtual void mouseDrag(const MouseEvent &e_) override;
-    void mouseUp(const MouseEvent &e_);
+    void mouseUp(const MouseEvent &e_) override;
     void clicked() override;
 
   protected:

@@ -344,9 +344,9 @@ bool GstepAudioProcessorEditor::keyPressed(const KeyPress &key_, Component *orig
              key_.getTextDescription() == "ctrl + shift + +")
     {
         int desktop_width =
-            Desktop::getInstance().getDisplays().getMainDisplay().userArea.getWidth();
+            Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getWidth();
         int desktop_height =
-            Desktop::getInstance().getDisplays().getMainDisplay().userArea.getHeight();
+            Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getHeight();
 
 #ifdef B_STEP_STANDALONE
         int w = getParentComponent()->getWidth();

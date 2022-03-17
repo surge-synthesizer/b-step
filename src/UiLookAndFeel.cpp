@@ -542,21 +542,21 @@ int UiLookAndFeel::getAlertBoxWindowFlags()
 int UiLookAndFeel::getAlertWindowButtonHeight()
 {
     return int(1.f / 900 *
-               Desktop::getInstance().getDisplays().getMainDisplay().userArea.getHeight() * 30);
+               Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getHeight() * 30);
 }
 
 Font UiLookAndFeel::getAlertWindowMessageFont()
 {
     return defaultFont.withHeight(
-        1.f / 900 * Desktop::getInstance().getDisplays().getMainDisplay().userArea.getHeight() *
+        1.f / 900 * Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getHeight() *
         20);
 }
 
 Font UiLookAndFeel::getAlertWindowFont()
 {
     return defaultFont.withHeight(
-        (1.f / 900 * Desktop::getInstance().getDisplays().getMainDisplay().userArea.getHeight() *
-         17));
+        (1.f / 900 *
+         Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getHeight() * 17));
 }
 
 //==============================================================================
@@ -627,7 +627,8 @@ void UiLookAndFeel::drawSpinningWaitAnimation(Graphics &g, const Colour &colour,
         const uint32 n = (i + 12 - animationIndex) % 12;
         g.setColour(colour.withMultipliedAlpha((n + 1) / 12.0f));
 
-        g.fillPath(p, AffineTransform::rotation(i * (float_Pi / 6.0f)).translated(cx, cy));
+        g.fillPath(p, AffineTransform::rotation(i * (juce::MathConstants<float>::pi / 6.0f))
+                          .translated(cx, cy));
     }
 }
 
@@ -843,8 +844,8 @@ void UiLookAndFeel::drawTreeviewPlusMinusBox(Graphics &g, const Rectangle<float>
     g.setColour(Colour(0x80000000));
     g.drawRect(x, y, w, h);
 
-    const float size = boxSize / 2 + 1.0f;
-    const float centre = (float)(boxSize / 2);
+    const float size = boxSize / 2.0 + 1.0f;
+    const float centre = (float)(boxSize / 2.0);
 
     g.fillRect(x + (w - size) * 0.5f, y + centre, size, 1.0f);
 
@@ -1849,16 +1850,19 @@ void UiLookAndFeel::drawGroupComponentOutline(Graphics &g, int width, int height
     p.startNewSubPath(x + textX + textW, y);
     p.lineTo(x + w - cs, y);
 
-    p.addArc(x + w - cs2, y, cs2, cs2, 0, float_Pi * 0.5f);
+    p.addArc(x + w - cs2, y, cs2, cs2, 0, juce::MathConstants<float>::pi * 0.5f);
     p.lineTo(x + w, y + h - cs);
 
-    p.addArc(x + w - cs2, y + h - cs2, cs2, cs2, float_Pi * 0.5f, float_Pi);
+    p.addArc(x + w - cs2, y + h - cs2, cs2, cs2, juce::MathConstants<float>::pi * 0.5f,
+             juce::MathConstants<float>::pi);
     p.lineTo(x + cs, y + h);
 
-    p.addArc(x, y + h - cs2, cs2, cs2, float_Pi, float_Pi * 1.5f);
+    p.addArc(x, y + h - cs2, cs2, cs2, juce::MathConstants<float>::pi,
+             juce::MathConstants<float>::pi * 1.5f);
     p.lineTo(x, y + cs);
 
-    p.addArc(x, y, cs2, cs2, float_Pi * 1.5f, float_Pi * 2.0f);
+    p.addArc(x, y, cs2, cs2, juce::MathConstants<float>::pi * 1.5f,
+             juce::MathConstants<float>::pi * 2.0f);
     p.lineTo(x + textX, y);
 
     const float alpha = group.isEnabled() ? 1.0f : 0.5f;
@@ -2038,10 +2042,12 @@ void UiLookAndFeel::drawTabButtonText(TabBarButton &button, Graphics &g, bool is
     switch (button.getTabbedButtonBar().getOrientation())
     {
     case TabbedButtonBar::TabsAtLeft:
-        t = t.rotated(float_Pi * -0.5f).translated(area.getX(), area.getBottom());
+        t = t.rotated(juce::MathConstants<float>::pi * -0.5f)
+                .translated(area.getX(), area.getBottom());
         break;
     case TabbedButtonBar::TabsAtRight:
-        t = t.rotated(float_Pi * 0.5f).translated(area.getRight(), area.getY());
+        t = t.rotated(juce::MathConstants<float>::pi * 0.5f)
+                .translated(area.getRight(), area.getY());
         break;
     case TabbedButtonBar::TabsAtTop:
     case TabbedButtonBar::TabsAtBottom:
@@ -2844,8 +2850,8 @@ void UiLookAndFeel::drawGlassPointer(Graphics &g, const float x, const float y,
     p.lineTo(x, y + diameter * 0.6f);
     p.closeSubPath();
 
-    p.applyTransform(AffineTransform::rotation(direction * (float_Pi * 0.5f), x + diameter * 0.5f,
-                                               y + diameter * 0.5f));
+    p.applyTransform(AffineTransform::rotation(direction * (juce::MathConstants<float>::pi * 0.5f),
+                                               x + diameter * 0.5f, y + diameter * 0.5f));
 
     {
         ColourGradient cg(Colours::white.overlaidWith(colour.withMultipliedAlpha(0.3f)), 0, y,

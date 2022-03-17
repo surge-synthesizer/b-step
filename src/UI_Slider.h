@@ -88,14 +88,14 @@ class UISlider : public Component,
     UISlider();
     ~UISlider();
 
-    void mouseDown(const MouseEvent &e_) { slider->mouseDown(e_); }
-    void mouseUp(const MouseEvent &e_) { slider->mouseUp(e_); }
-    void mouseMove(const MouseEvent &e_) { slider->mouseMove(e_); }
-    void mouseEnter(const MouseEvent &e_) { slider->mouseEnter(e_); }
-    void mouseExit(const MouseEvent &e_) { slider->mouseExit(e_); }
-    void mouseDrag(const MouseEvent &e_) { slider->mouseDrag(e_); }
-    void mouseDoubleClick(const MouseEvent &e_) { slider->mouseDoubleClick(e_); }
-    void mouseWheelMove(const MouseEvent &e_, const MouseWheelDetails &w_)
+    void mouseDown(const MouseEvent &e_) override { slider->mouseDown(e_); }
+    void mouseUp(const MouseEvent &e_) override { slider->mouseUp(e_); }
+    void mouseMove(const MouseEvent &e_) override { slider->mouseMove(e_); }
+    void mouseEnter(const MouseEvent &e_) override { slider->mouseEnter(e_); }
+    void mouseExit(const MouseEvent &e_) override { slider->mouseExit(e_); }
+    void mouseDrag(const MouseEvent &e_) override { slider->mouseDrag(e_); }
+    void mouseDoubleClick(const MouseEvent &e_) override { slider->mouseDoubleClick(e_); }
+    void mouseWheelMove(const MouseEvent &e_, const MouseWheelDetails &w_) override
     {
         slider->mouseWheelMove(e_, w_);
     }

@@ -1,6 +1,14 @@
 #ifndef PLUGIN_EDITOR_LAYOUT_H
 #define PLUGIN_EDITOR_LAYOUT_H
 
+#include "AppStyles.h"
+#include "ControllerMidiLearn.h"
+#include "MIDILearn.h"
+#include "MenuBarLeft.h"
+#include "MenuBarRight.h"
+#include "UiEditorMidiLearn.h"
+#include "UiEditorChords.h"
+#include "UiEditorSetup.h"
 #include "UiMainWindow.h"
 #include "UiColumn16.h"
 #include "UiLeftsideLabel.h"
@@ -104,7 +112,7 @@ enum POSITIONS_LAYER_OLDSCOOL
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-void GstepAudioProcessorEditor::auto_resize_to_user_area()
+inline void GstepAudioProcessorEditor::auto_resize_to_user_area()
 {
 #ifndef B_STEP_STANDALONE
     resizeLimits.setSizeLimits(
@@ -117,8 +125,10 @@ void GstepAudioProcessorEditor::auto_resize_to_user_area()
     bool is_desktop_to_small = false;
     float height_factor = 1;
     float width_factor = 1;
-    int desktop_width = Desktop::getInstance().getDisplays().getMainDisplay().userArea.getWidth();
-    int desktop_height = Desktop::getInstance().getDisplays().getMainDisplay().userArea.getHeight();
+    int desktop_width =
+        Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getWidth();
+    int desktop_height =
+        Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getHeight();
 
     int width = _app_instance_store->editor_config.editor_width;
     int height = _app_instance_store->editor_config.editor_height;
@@ -202,7 +212,8 @@ void GstepAudioProcessorEditor::auto_resize_to_user_area()
     }
 }
 
-void GstepAudioProcessorEditor::refresh_selected_bar(Array<Component *> &components_to_repaint_)
+inline void
+GstepAudioProcessorEditor::refresh_selected_bar(Array<Component *> &components_to_repaint_)
 {
     uint8 selected_bar_id = _app_instance_store->editor_config.selected_bar_id;
     if (selected_bar_id != last_painted_bar || refresh_bar_select_paint)
@@ -395,7 +406,7 @@ class LabelPopupWithLivetime
 // ************************************************************************************************
 // ************************************************************************************************
 #include "UIHtmlView.h"
-void GstepAudioProcessorEditor::check_paint_slider_value_popup()
+inline void GstepAudioProcessorEditor::check_paint_slider_value_popup()
 {
     if (!_app_instance_store->midi_in_map.is_in_learning_mode())
     {
@@ -463,7 +474,7 @@ void GstepAudioProcessorEditor::check_paint_slider_value_popup()
 }
 #include "UiEditorInputPopup.h"
 #include "UiQuestionIsYourFriend.h"
-void GstepAudioProcessorEditor::timerCallback()
+inline void GstepAudioProcessorEditor::timerCallback()
 {
     if (input_popup)
         input_popup->refresh_ui();
@@ -724,7 +735,7 @@ void GstepAudioProcessorEditor::timerCallback()
     lock.exit();
 }
 
-void GstepAudioProcessorEditor::init_column_wrappers()
+inline void GstepAudioProcessorEditor::init_column_wrappers()
 {
     for (int i = 0; i != 5; ++i)
     {
@@ -792,7 +803,7 @@ class TimerLock
             _timer->startTimer(_timer_interval);
     }
 };
-void GstepAudioProcessorEditor::init_layer_controllers_until_steps()
+inline void GstepAudioProcessorEditor::init_layer_controllers_until_steps()
 {
     UiColumnWrapper *column_wrapper = _columns_fixed_steps.getUnchecked(0);
     UiColumn16 *model_column = column_wrapper->get_column_editor();
@@ -863,7 +874,7 @@ void GstepAudioProcessorEditor::init_layer_controllers_until_steps()
         ->set_style(_app_instance_store->style_step_area_octave);
 }
 
-void GstepAudioProcessorEditor::init_layer_controllers_fixed_bar_part()
+inline void GstepAudioProcessorEditor::init_layer_controllers_fixed_bar_part()
 {
     UiColumnWrapper *column_wrapper = _columns_fixed_bar.getUnchecked(0);
     UiColumn16 *model_column = column_wrapper->get_column_editor();
@@ -882,7 +893,7 @@ void GstepAudioProcessorEditor::init_layer_controllers_fixed_bar_part()
     column_wrapper->set_style(_app_instance_store->style_bar_area_run);
 }
 
-void GstepAudioProcessorEditor::init_layer_controllers_page()
+inline void GstepAudioProcessorEditor::init_layer_controllers_page()
 {
     UiColumnWrapper *column_wrapper;
     UiColumn16 *model_column;
@@ -908,7 +919,7 @@ void GstepAudioProcessorEditor::init_layer_controllers_page()
     }
 }
 
-void GstepAudioProcessorEditor::init_layer_controllers_page_7()
+inline void GstepAudioProcessorEditor::init_layer_controllers_page_7()
 {
     int col = 5;
     UiColumnWrapper *column_wrapper = _columns[6]->getUnchecked(0);
@@ -972,7 +983,7 @@ void GstepAudioProcessorEditor::init_layer_controllers_page_7()
     column_wrapper->set_style(_app_instance_store->layer_styles.getReference(6).getUnchecked(col));
 }
 
-void GstepAudioProcessorEditor::set_layer_controllers_page(int layer_id, bool force)
+inline void GstepAudioProcessorEditor::set_layer_controllers_page(int layer_id, bool force)
 {
     if (_config->current_layer == layer_id && !force)
         return;
@@ -991,7 +1002,7 @@ void GstepAudioProcessorEditor::set_layer_controllers_page(int layer_id, bool fo
     repaint();
 }
 
-void GstepAudioProcessorEditor::get_step_area(Rectangle<int> &area_)
+inline void GstepAudioProcessorEditor::get_step_area(Rectangle<int> &area_)
 {
     float width_prop = width_propertion();
     float height_prop = height_propertion();
@@ -1029,7 +1040,7 @@ void GstepAudioProcessorEditor::get_step_area(Rectangle<int> &area_)
     area_.setHeight(height_prop * (step_area_bg_height));
 }
 
-void GstepAudioProcessorEditor::get_bar_area(Rectangle<int> &area_)
+inline void GstepAudioProcessorEditor::get_bar_area(Rectangle<int> &area_)
 {
     float width_prop = width_propertion();
     float height_prop = height_propertion();
@@ -1073,7 +1084,7 @@ void GstepAudioProcessorEditor::get_bar_area(Rectangle<int> &area_)
     area_.setHeight(height_prop * (bar_area_bg_height));
 }
 
-void GstepAudioProcessorEditor::get_selecter_area(Rectangle<int> &area_, uint8 id_)
+inline void GstepAudioProcessorEditor::get_selecter_area(Rectangle<int> &area_, uint8 id_)
 {
     float width_prop = width_propertion();
 
@@ -1092,7 +1103,7 @@ void GstepAudioProcessorEditor::get_selecter_area(Rectangle<int> &area_, uint8 i
     area_.setWidth(selecter_width);
 }
 
-void GstepAudioProcessorEditor::complex_paint(Graphics &g)
+inline void GstepAudioProcessorEditor::complex_paint(Graphics &g)
 {
     float width_prop = width_propertion();
 

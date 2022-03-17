@@ -49,7 +49,7 @@ class MONO_UIButtonController : public MONO_Controller
         return _no_conroller;
     }
 
-    virtual UI_VIEW_TYPES get_view_type() { return UI_VIEW_TYPES::UI_BUTTON; }
+    virtual UI_VIEW_TYPES get_view_type() override { return UI_VIEW_TYPES::UI_BUTTON; }
 
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
@@ -197,7 +197,7 @@ class MONO_UISliderController : public MONO_Controller
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // IDENTING
-    virtual UI_VIEW_TYPES get_view_type() { return UI_VIEW_TYPES::UI_SLIDER; }
+    virtual UI_VIEW_TYPES get_view_type() override { return UI_VIEW_TYPES::UI_SLIDER; }
 
     const char *get_controller_type_ident() const override
     {
@@ -250,7 +250,7 @@ class MONO_UISliderController : public MONO_Controller
         }
     }
 
-    virtual bool do_you_need_a_text_popup()
+    virtual bool do_you_need_a_text_popup() override
     {
         MultidragSource *const multidrag_source =
             _app_instance_store->editor_config.multidrag_source;

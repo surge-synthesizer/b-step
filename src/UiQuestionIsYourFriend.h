@@ -47,9 +47,9 @@ class UiQuestionIsYourFriend : public UiEditor, public Button::Listener
     void on_close_clicked() override;
     //[/UserMethods]
 
-    void paint(Graphics &g);
-    void resized();
-    void buttonClicked(Button *buttonThatWasClicked);
+    void paint(Graphics &g) override;
+    void resized() override;
+    void buttonClicked(Button *buttonThatWasClicked) override;
 
     // Binary resources:
     static const char *question_svg;

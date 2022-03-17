@@ -69,11 +69,11 @@ class UiEditorSettings : public UiEditor,
   private:
     //[/UserMethods]
 
-    void paint(Graphics &g);
-    void resized();
-    void buttonClicked(Button *buttonThatWasClicked);
-    void sliderValueChanged(Slider *sliderThatWasMoved);
-    void comboBoxChanged(ComboBox *comboBoxThatHasChanged);
+    void paint(Graphics &g) override;
+    void resized() override;
+    void buttonClicked(Button *buttonThatWasClicked) override;
+    void sliderValueChanged(Slider *sliderThatWasMoved) override;
+    void comboBoxChanged(ComboBox *comboBoxThatHasChanged) override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.

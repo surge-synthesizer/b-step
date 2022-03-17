@@ -43,7 +43,7 @@ class UiColumn16 : public SubeditorBase
     //[UserMethods]     -- You can add your own custom methods in this section.
   private:
     const Array<ModelBase *> models;
-    const Array<ModelBase *> &get_event_receiveable_models() { return models; }
+    const Array<ModelBase *> &get_event_receiveable_models() override { return models; }
 
   public:
     // TODO deprecated
@@ -80,8 +80,8 @@ class UiColumn16 : public SubeditorBase
     ModelBase *get_model(uint8 id) override { return models.getUnchecked(id); };
     //[/UserMethods]
 
-    void paint(Graphics &g);
-    void resized();
+    void paint(Graphics &g) override;
+    void resized() override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.

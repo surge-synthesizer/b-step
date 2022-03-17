@@ -47,7 +47,7 @@ class UiLeftsideModelLabel : public SubeditorBase
     String _text;
 
   public:
-    void set_text(const String &text_);
+    void set_text(const String &text_) override;
     void on_style_set(AppStyle *const style_) override;
 
     void set_controller(MONO_Controller *const controller_) { model->set_controller(controller_); }
@@ -57,8 +57,8 @@ class UiLeftsideModelLabel : public SubeditorBase
     get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_with_popup_) override;
     //[/UserMethods]
 
-    void paint(Graphics &g);
-    void resized();
+    void paint(Graphics &g) override;
+    void resized() override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.

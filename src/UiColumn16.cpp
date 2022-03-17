@@ -182,79 +182,79 @@ void UiColumn16::resized()
                       proportionOfWidth(0.0491f), proportionOfHeight(0.8000f));
     elem_1->setBounds(proportionOfWidth(0.0675f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_2->setBounds(proportionOfWidth(0.1288f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_3->setBounds(proportionOfWidth(0.1902f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_4->setBounds(proportionOfWidth(0.2577f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_5->setBounds(proportionOfWidth(0.3190f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_6->setBounds(proportionOfWidth(0.3804f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_7->setBounds(proportionOfWidth(0.4417f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_8->setBounds(proportionOfWidth(0.5092f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_9->setBounds(proportionOfWidth(0.5706f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_10->setBounds(proportionOfWidth(0.6319f),
                        (proportionOfHeight(0.1000f)) +
-                           roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundFloatToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                       roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_11->setBounds(proportionOfWidth(0.6933f),
                        (proportionOfHeight(0.1000f)) +
-                           roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundFloatToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                       roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_12->setBounds(proportionOfWidth(0.7607f),
                        (proportionOfHeight(0.1000f)) +
-                           roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundFloatToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                       roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_13->setBounds(proportionOfWidth(0.8221f),
                        (proportionOfHeight(0.1000f)) +
-                           roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundFloatToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                       roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_14->setBounds(proportionOfWidth(0.8834f),
                        (proportionOfHeight(0.1000f)) +
-                           roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundFloatToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                       roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_15->setBounds(proportionOfWidth(0.9448f),
                        (proportionOfHeight(0.1000f)) +
-                           roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundFloatToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                       roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
 
     //[UserResized] Add your own custom resize handling here..
 #else
@@ -262,79 +262,79 @@ void UiColumn16::resized()
                       proportionOfWidth(0.0531f), proportionOfHeight(0.8000f));
     elem_1->setBounds(proportionOfWidth(0.0675f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_2->setBounds(proportionOfWidth(0.1288f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_3->setBounds(proportionOfWidth(0.1902f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_4->setBounds(proportionOfWidth(0.2577f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_5->setBounds(proportionOfWidth(0.3190f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_6->setBounds(proportionOfWidth(0.3804f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_7->setBounds(proportionOfWidth(0.4417f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_8->setBounds(proportionOfWidth(0.5092f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_9->setBounds(proportionOfWidth(0.5706f),
                       (proportionOfHeight(0.1000f)) +
-                          roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundFloatToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_10->setBounds(proportionOfWidth(0.6319f),
                        (proportionOfHeight(0.1000f)) +
-                           roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundFloatToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                       roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_11->setBounds(proportionOfWidth(0.6933f),
                        (proportionOfHeight(0.1000f)) +
-                           roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundFloatToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                       roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_12->setBounds(proportionOfWidth(0.7607f),
                        (proportionOfHeight(0.1000f)) +
-                           roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundFloatToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                       roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_13->setBounds(proportionOfWidth(0.8221f),
                        (proportionOfHeight(0.1000f)) +
-                           roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundFloatToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                       roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_14->setBounds(proportionOfWidth(0.8834f),
                        (proportionOfHeight(0.1000f)) +
-                           roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundFloatToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                       roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_15->setBounds(proportionOfWidth(0.9448f),
                        (proportionOfHeight(0.1000f)) +
-                           roundFloatToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundFloatToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                       roundFloatToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
 #endif
     //[/UserResized]
 }

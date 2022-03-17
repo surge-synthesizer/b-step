@@ -161,6 +161,12 @@ if (APPLE)
             -Wno-inconsistent-missing-override
             -Wno-switch-enum
             )
+elseif(UNIX)
+    message(STATUS "Turning off a collection of legitimate compiler warnings" )
+    target_compile_options(${PROJECT_NAME} PUBLIC
+            #-Werror
+            -Wno-deprecated-declarations
+            )
 endif()
 
 target_link_libraries(B-Step

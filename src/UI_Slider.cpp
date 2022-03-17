@@ -174,8 +174,8 @@ void SliderWrapper::cache_paint(Graphics &g_, uint32 background_colour_)
 
     g_.fillAll(Colour(background_colour_));
 
-    static const float rotaryStartAngle = (float_Pi * 1.2f);
-    static const float rotaryEndAngle = (float_Pi * 2.8f);
+    static const float rotaryStartAngle = (juce::MathConstants<float>::pi * 1.2f);
+    static const float rotaryEndAngle = (juce::MathConstants<float>::pi * 2.8f);
 
     const float rx = centreX - radius;
     const float ry = centreY - radius;

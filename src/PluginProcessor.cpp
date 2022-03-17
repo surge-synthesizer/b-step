@@ -373,7 +373,7 @@ class MessageProcessor :
         }
     }
     void handleNoteOff(MidiKeyboardState *source, int midiChannel, int midiNoteNumber,
-                       float velocity)
+                       float velocity) override
     {
         return;
 
@@ -394,7 +394,7 @@ class MessageProcessor :
     MidiMessage last_in_message;
     int8 last_remote_tune;
     int pressed_keys;
-    inline void process(const MidiMessage &message_)
+    inline void process(const MidiMessage &message_) override
     {
         last_in_message = message_;
 
@@ -964,7 +964,7 @@ class MessageProcessor :
   private:
     /// NOTE in VST Mode we call this manually from the processBlock, even if we are not playing!
     CriticalSection lock;
-    void timerCallback()
+    void timerCallback() override
     {
         if (!lock.tryEnter())
             return;

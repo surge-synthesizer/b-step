@@ -34,7 +34,7 @@ void UiEditorInputPopup::capture_editor(TextEditor *source_)
         if (parent_editor)
         {
             int desktop_height =
-                Desktop::getInstance().getDisplays().getMainDisplay().userArea.getHeight();
+                Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getHeight();
             Rectangle<int> child_screen_bounds = source_->getScreenBounds();
             int top_y = desktop_height / 4 - source_->getHeight() / 2;
 

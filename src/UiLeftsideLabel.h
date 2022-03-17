@@ -44,7 +44,7 @@ class UiLeftsideLabel : public SubeditorBase
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
   public:
-    void set_text(const String &text_);
+    void set_text(const String &text_) override;
     void on_style_set(AppStyle *const style_) override;
 
     uint32 last_painted_bg;
@@ -52,8 +52,8 @@ class UiLeftsideLabel : public SubeditorBase
     void refresh_ui(Array<Component *> &components_to_repaint_) override;
     //[/UserMethods]
 
-    void paint(Graphics &g);
-    void resized();
+    void paint(Graphics &g) override;
+    void resized() override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.

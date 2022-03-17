@@ -840,7 +840,7 @@ class ControllerBarReset2Default : public MONO_UIButtonController, public Timer
 
     unsigned int get_current_state() const override { return Timer::isTimerRunning(); }
 
-    void timerCallback() { stopTimer(); }
+    void timerCallback() override { stopTimer(); }
 
   public:
     ControllerBarReset2Default(AppInstanceStore *const app_instance_store_, uint8 bar_id_)

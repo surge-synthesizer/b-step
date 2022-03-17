@@ -194,7 +194,7 @@ jobs:
   
         mkdir -p releases
         
-        mv *.zip *.md releases
+        # mv *.zip *.md releases
         
         ls -l $(System.DefaultWorkingDirectory)/git_info/
         echo "## B-Step Nightly Build" > releases/ReleaseNotes.md
@@ -216,7 +216,7 @@ jobs:
 
     - task: GitHubRelease@0
       displayName: "Create Github Nightly Release"
-      # condition: eq(variables.SURGE_IS_MAIN, 'true')
+      condition: eq(variables.DO_RELEASE, 'true')
       inputs:
         gitHubConnection: surge-rackupdater
         repositoryName: surge-synthesizer/bstep-monosynth
@@ -257,3 +257,5 @@ jobs:
         
         curl -i -H "Accept: application/json" -H "Content-Type:application/json" -X POST --data "{\"content\": \"A Monique Nightly is available. Get it here:\n${GIT_LOG_DISP}\nhttps://github.com/surge-synthesizer/bstep-monosynth/releases/tag/Nightly\"}" `cat $AGENT_TEMPDIRECTORY/discord-nightly-bstep.webhook`
       displayName: Tell Discord
+      condition: eq(variables.DO_RELEASE, 'true')
+

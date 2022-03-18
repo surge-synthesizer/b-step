@@ -21,6 +21,7 @@
 #include "UiSettings.h"
 #include "PluginProcessor.h"
 #include "UiMainWindow.h"
+#include "version.h"
 //[/Headers]
 
 #include "UiEditorAbout.h"
@@ -246,6 +247,15 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
                         String(") : ")));
 
     debug_out->setVisible(false);
+
+    buildInfo = std::make_unique<juce::Label>();
+    auto vs = juce::String(BStep::Build::FullVersionStr) + " on " + BStep::Build::BuildDate +
+              " at " + BStep::Build::BuildTime;
+    buildInfo->setText(vs, juce::dontSendNotification);
+    buildInfo->setFont(oswald_font);
+    buildInfo->setJustificationType(juce::Justification::left);
+    buildInfo->setColour(juce::Label::textColourId, juce::Colours::white);
+    addAndMakeVisible(*buildInfo);
     //[/UserPreSize]
 
     setSize(431, 540);
@@ -409,6 +419,8 @@ void UiEditorAbout::resized()
                        proportionOfWidth(0.6125f), proportionOfHeight(0.0518f));
     video_5->setBounds(proportionOfWidth(0.2784f), proportionOfHeight(0.5778f),
                        proportionOfWidth(0.6125f), proportionOfHeight(0.0518f));
+    buildInfo->setBounds(proportionOfWidth(0.2784f), proportionOfHeight(0.5778f + 0.05f),
+                         proportionOfWidth(0.6125f), proportionOfHeight(0.0518f));
     debug_out->setBounds(0, 0, proportionOfWidth(0.8910f), proportionOfHeight(1.0000f));
     toolbar->setBounds(getWidth() - proportionOfWidth(0.1160f), 0, proportionOfWidth(0.1160f),
                        proportionOfHeight(0.3704f));

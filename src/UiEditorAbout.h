@@ -101,6 +101,9 @@ class UiEditorAbout : public UiEditor, public Button::Listener
     ScopedPointer<TextEditor> debug_out;
     ScopedPointer<UiEditorToolbar> toolbar;
     ScopedPointer<ImageButton> open_debug;
+
+    std::unique_ptr<juce::Label> buildInfo;
+
     Image cachedImage_aboutbox_png;
     Image cachedImage_b_logo_png;
 

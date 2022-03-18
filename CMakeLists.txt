@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 3.15)
 
-project("B-Step"  VERSION 2.1 LANGUAGES C CXX ASM)
+project("B-Step" VERSION 2.1 LANGUAGES C CXX ASM)
 
 option(BSTEP_COPY_PLUGIN_AFTER_BUILD "Copy JUCE Plugins after built" OFF)
 
@@ -11,36 +11,36 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_CXX_STANDARD 17)
 
 juce_add_plugin(B-Step
-  VERSION "2.1"
-  BUNDLE_ID "org.surge-synth-team.bstep"
-    COMPANY_NAME "Surge Synth Team"
-    PLUGIN_MANUFACTURER_CODE "VmbA"
-    COMPANY_COPYRIGHT "Copyright Thomas Arndt and Authors in Github, 2010-2021"
-    COMPANY_WEBSITE "http://surge-synth-team.org"
+        VERSION "2.1"
+        BUNDLE_ID "org.surge-synth-team.bstep"
+        COMPANY_NAME "Surge Synth Team"
+        PLUGIN_MANUFACTURER_CODE "VmbA"
+        COMPANY_COPYRIGHT "Copyright Thomas Arndt and Authors in Github, 2010-2021"
+        COMPANY_WEBSITE "http://surge-synth-team.org"
 
-  FORMATS
-    "VST3"
-    "AU"
-    "Standalone"
+        FORMATS
+        "VST3"
+        "AU"
+        "Standalone"
 
-    NEEDS_MIDI_INPUT TRUE
-    NEEDS_MIDI_OUTPUT TRUE
-    IS_MIDI_EFFECT TRUE
-    IS_SYNTH TRUE
+        NEEDS_MIDI_INPUT TRUE
+        NEEDS_MIDI_OUTPUT TRUE
+        IS_MIDI_EFFECT TRUE
+        IS_SYNTH TRUE
 
-  PLUGIN_NAME "B-Step Sequencer"
-  DESCRIPTION "Step Sequencer"
-  PLUGIN_MANUFACTURER_CODE "VmbA"
-  PLUGIN_CODE "bPlg"
-  AU_EXPORT_PREFIX "bstepAU"
+        PLUGIN_NAME "B-Step Sequencer"
+        DESCRIPTION "Step Sequencer"
+        PLUGIN_MANUFACTURER_CODE "VmbA"
+        PLUGIN_CODE "bPlg"
+        AU_EXPORT_PREFIX "bstepAU"
 
         COPY_PLUGIN_AFTER_BUILD ${BSTEP_COPY_PLUGIN_AFTER_BUILD}
-)
+        )
 
 juce_generate_juce_header(B-Step)
 
 
-message(STATUS "FIXME - We obvioulsy over-glob here" )
+message(STATUS "FIXME - We obvioulsy over-glob here")
 file(GLOB_RECURSE BSTEP_RESOURCES
         LIST_DIRECTORIES false
         ${CMAKE_SOURCE_DIR}/resources/*)
@@ -48,99 +48,99 @@ file(GLOB_RECURSE BSTEP_RESOURCES
 juce_add_binary_data(B-Step-Binary SOURCES ${BSTEP_RESOURCES})
 
 target_compile_definitions(B-Step
-  PUBLIC
-    JUCE_ALSA=enabled
-    JUCE_ASIO=disabled
-    JUCE_CHECK_MEMORY_LEAKS=disabled
-    JUCE_DIRECTSOUND=enabled
-    JUCE_ENABLE_LIVE_CONSTANT_EDITOR=disabled
-    JUCE_FORCE_DEBUG=disabled
-    JUCE_JACK=enabled
-    JUCE_LOG_ASSERTIONS=disabled
-    JUCE_PLUGINHOST_AU=disabled
-    JUCE_PLUGINHOST_VST3=disabled
-    JUCE_PLUGINHOST_VST=disabled
-    JUCE_QUICKTIME=disabled
-    JUCE_USE_ANDROID_OPENSLES=disabled
-    JUCE_USE_CDBURNER=disabled
-    JUCE_USE_CDREADER=disabled
-    JUCE_USE_COREIMAGE_LOADER=enabled
-    JUCE_USE_CURL=0
-    JUCE_USE_DIRECTWRITE=enabled
-    JUCE_USE_FLAC=enabled
-    JUCE_USE_LAME_AUDIO_FORMAT=disabled
-    JUCE_USE_MP3AUDIOFORMAT=enabled
-    JUCE_USE_OGGVORBIS=enabled
-    JUCE_USE_WINDOWS_MEDIA_FORMAT=enabled
-    JUCE_WASAPI=enabled
-    JUCE_WEB_BROWSER=disabled
-    JUCE_VST3_CAN_REPLACE_VST2=0
+        PUBLIC
+        JUCE_ALSA=enabled
+        JUCE_ASIO=disabled
+        JUCE_CHECK_MEMORY_LEAKS=disabled
+        JUCE_DIRECTSOUND=enabled
+        JUCE_ENABLE_LIVE_CONSTANT_EDITOR=disabled
+        JUCE_FORCE_DEBUG=disabled
+        JUCE_JACK=enabled
+        JUCE_LOG_ASSERTIONS=disabled
+        JUCE_PLUGINHOST_AU=disabled
+        JUCE_PLUGINHOST_VST3=disabled
+        JUCE_PLUGINHOST_VST=disabled
+        JUCE_QUICKTIME=disabled
+        JUCE_USE_ANDROID_OPENSLES=disabled
+        JUCE_USE_CDBURNER=disabled
+        JUCE_USE_CDREADER=disabled
+        JUCE_USE_COREIMAGE_LOADER=enabled
+        JUCE_USE_CURL=0
+        JUCE_USE_DIRECTWRITE=enabled
+        JUCE_USE_FLAC=enabled
+        JUCE_USE_LAME_AUDIO_FORMAT=disabled
+        JUCE_USE_MP3AUDIOFORMAT=enabled
+        JUCE_USE_OGGVORBIS=enabled
+        JUCE_USE_WINDOWS_MEDIA_FORMAT=enabled
+        JUCE_WASAPI=enabled
+        JUCE_WEB_BROWSER=disabled
+        JUCE_VST3_CAN_REPLACE_VST2=0
 
-    JUCE_MODAL_LOOPS_PERMITTED=1
+        JUCE_MODAL_LOOPS_PERMITTED=1
 
         FIXMEPORT=jassertfalse
-)
+        )
 
 target_sources(B-Step
-  PRIVATE
+        PRIVATE
 
-    "src/AppInstanceStore.cpp"
-    "src/AppParameterList.cpp"
-    "src/AppStyleEditor.cpp"
-    "src/AppStyles.cpp"
-    "src/Controller.cpp"
-    "src/ControllerMidiLearn.cpp"
-    "src/CoreDatastructure.cpp"
-    "src/CoreLaunchpad.cpp"
-    "src/CoreSequencer.cpp"
-    "src/DoYouKnow.cpp"
-    "src/FileIO.cpp"
-    "src/MIDIIO.cpp"
-    "src/MIDILearn.cpp"
-    "src/MenuBarLeft.cpp"
-    "src/MenuBarRight.cpp"
-    "src/Parameter.cpp"
-    "src/PluginProcessor.cpp"
-    "src/SliderValuePopup.cpp"
-    "src/SplashScreen.cpp"
-    "src/UIEditorToolbar.cpp"
-    "src/UIHtmlView.cpp"
-    "src/UI_Button.cpp"
-    "src/UI_Label.cpp"
-    "src/UI_Slider.cpp"
-    "src/UI_Tools.cpp"
-    "src/UiChordEditorChordOffset.cpp"
-    "src/UiChordEditorStringOffset.cpp"
-    "src/UiColumn16.cpp"
-    "src/UiColumnWrapper.cpp"
-    "src/UiDualAudioPlayer.cpp"
-    "src/UiDualDownload.cpp"
-    "src/UiEditorAbout.cpp"
-    "src/UiEditorChords.cpp"
-    "src/UiEditorClipboard.cpp"
-    "src/UiEditorDemo.cpp"
-    "src/UiEditorFileManager.cpp"
-    "src/UiEditorInputPopup.cpp"
-    "src/UiEditorKeyboard.cpp"
-    "src/UiEditorMidiLearn.cpp"
-    "src/UiEditorRightMainwindows.cpp"
-    "src/UiEditorSettings.cpp"
-    "src/UiEditorSetup.cpp"
-    "src/UiEditorWhatsNew.cpp"
-    "src/UiFileView.cpp"
-    "src/UiLeftsideCC.cpp"
-    "src/UiLeftsideLabel.cpp"
-    "src/UiLeftsideLabelModel.cpp"
-    "src/UiLeftsideModelLabel.cpp"
-    "src/UiLeftsideStartStopPause.cpp"
-    "src/UiLookAndFeel.cpp"
-    "src/UiMainWindow.cpp"
-    "src/UiNotificationAnimation.cpp"
-    "src/UiQuestionIsYourFriend.cpp"
-    "src/UiSettings.cpp"
-    "src/UiTextImExport.cpp"
-    "src/ticker.cpp"
-)
+        "src/AppInstanceStore.cpp"
+        "src/AppParameterList.cpp"
+        "src/AppStyleEditor.cpp"
+        "src/AppStyles.cpp"
+        "src/Controller.cpp"
+        "src/ControllerMidiLearn.cpp"
+        "src/CoreDatastructure.cpp"
+        "src/CoreLaunchpad.cpp"
+        "src/CoreSequencer.cpp"
+        "src/DoYouKnow.cpp"
+        "src/FileIO.cpp"
+        "src/MIDIIO.cpp"
+        "src/MIDILearn.cpp"
+        "src/MenuBarLeft.cpp"
+        "src/MenuBarRight.cpp"
+        "src/Parameter.cpp"
+        "src/PluginProcessor.cpp"
+        "src/SliderValuePopup.cpp"
+        "src/SplashScreen.cpp"
+        "src/UIEditorToolbar.cpp"
+        "src/UIHtmlView.cpp"
+        "src/UI_Button.cpp"
+        "src/UI_Label.cpp"
+        "src/UI_Slider.cpp"
+        "src/UI_Tools.cpp"
+        "src/UiChordEditorChordOffset.cpp"
+        "src/UiChordEditorStringOffset.cpp"
+        "src/UiColumn16.cpp"
+        "src/UiColumnWrapper.cpp"
+        "src/UiDualAudioPlayer.cpp"
+        "src/UiDualDownload.cpp"
+        "src/UiEditorAbout.cpp"
+        "src/UiEditorChords.cpp"
+        "src/UiEditorClipboard.cpp"
+        "src/UiEditorDemo.cpp"
+        "src/UiEditorFileManager.cpp"
+        "src/UiEditorInputPopup.cpp"
+        "src/UiEditorKeyboard.cpp"
+        "src/UiEditorMidiLearn.cpp"
+        "src/UiEditorRightMainwindows.cpp"
+        "src/UiEditorSettings.cpp"
+        "src/UiEditorSetup.cpp"
+        "src/UiEditorWhatsNew.cpp"
+        "src/UiFileView.cpp"
+        "src/UiLeftsideCC.cpp"
+        "src/UiLeftsideLabel.cpp"
+        "src/UiLeftsideLabelModel.cpp"
+        "src/UiLeftsideModelLabel.cpp"
+        "src/UiLeftsideStartStopPause.cpp"
+        "src/UiLookAndFeel.cpp"
+        "src/UiMainWindow.cpp"
+        "src/UiNotificationAnimation.cpp"
+        "src/UiQuestionIsYourFriend.cpp"
+        "src/UiSettings.cpp"
+        "src/UiTextImExport.cpp"
+        "src/ticker.cpp"
+        )
 
 
 if (APPLE)
@@ -151,7 +151,7 @@ if (APPLE)
     #
     # Then one by one we should document each of these and decide if we want to
     # keep them or fix them. Most probably fix.
-    message(STATUS "Turning off a collection of legitimate compiler warnings" )
+    message(STATUS "Turning off a collection of legitimate compiler warnings")
     target_compile_options(${PROJECT_NAME} PUBLIC
             #-Werror
             -Wlogical-op-parentheses
@@ -161,55 +161,47 @@ if (APPLE)
             -Wno-inconsistent-missing-override
             -Wno-switch-enum
             )
-elseif(UNIX)
-    message(STATUS "Turning off a collection of legitimate compiler warnings" )
+elseif (UNIX)
+    message(STATUS "Turning off a collection of legitimate compiler warnings")
     target_compile_options(${PROJECT_NAME} PUBLIC
             #-Werror
             -Wno-deprecated-declarations
             )
-endif()
+endif ()
 
 target_link_libraries(B-Step
-  PRIVATE
-    juce::juce_audio_basics
-    juce::juce_audio_devices
-    juce::juce_audio_formats
-    juce::juce_audio_plugin_client
-    juce::juce_audio_processors
-    juce::juce_audio_utils
-    juce::juce_core
-    juce::juce_cryptography
-    juce::juce_data_structures
-    juce::juce_events
-    juce::juce_graphics
-    juce::juce_gui_basics
-    juce::juce_gui_extra
+        PRIVATE
+        juce::juce_audio_basics
+        juce::juce_audio_devices
+        juce::juce_audio_formats
+        juce::juce_audio_plugin_client
+        juce::juce_audio_processors
+        juce::juce_audio_utils
+        juce::juce_core
+        juce::juce_cryptography
+        juce::juce_data_structures
+        juce::juce_events
+        juce::juce_graphics
+        juce::juce_gui_basics
+        juce::juce_gui_extra
         B-Step-Binary
-  PUBLIC
-    juce::juce_recommended_config_flags
-    juce::juce_recommended_lto_flags
-    # juce::juce_recommended_warning_flags
-)
-
-
-# stub for azure
-add_custom_target(bstep-installer)
-add_custom_command(TARGET bstep-installer
-        POST_BUILD
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-        COMMAND ${CMAKE_COMMAND} -E make_directory installer
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/README.md installer/README-${CMAKE_SYSTEM_NAME}.md
+        PUBLIC
+        juce::juce_recommended_config_flags
+        juce::juce_recommended_lto_flags
+        # juce::juce_recommended_warning_flags
         )
+
+include(cmake/basic-installer.cmake)
 
 # clang-format pipeline check
 add_custom_target(code-quality-pipeline-checks)
 set(CLANG_FORMAT_DIRS src)
 set(CLANG_FORMAT_EXTS cpp h)
-foreach(dir ${CLANG_FORMAT_DIRS})
-    foreach(ext ${CLANG_FORMAT_EXTS})
+foreach (dir ${CLANG_FORMAT_DIRS})
+    foreach (ext ${CLANG_FORMAT_EXTS})
         list(APPEND CLANG_FORMAT_GLOBS "':(glob)${dir}/**/*.${ext}'")
-    endforeach()
-endforeach()
+    endforeach ()
+endforeach ()
 add_custom_command(TARGET code-quality-pipeline-checks
         POST_BUILD
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}

@@ -27,15 +27,15 @@ or downloadable asset. But we'll get there!! Probably! We think. Perhaps?
 Just like with the rest of our team projects, we welcome any and all contributions from anyone who wants
 to work on open source music software.
 
-At the initial open-sourcing, the copyright to the Monique source was held by Thomas. When open sourcing,
+At the initial open-sourcing, the copyright to the B-Step source was held by Thomas. When open sourcing,
 we had several projects - including a potential iOS port - which meant we had to think hard about licensing.
 
-As such, we have decided that Monique should be dual licened GPL3 and MIT. In some contexts, such as the
+As such, we have decided that B-Step should be dual licened GPL3 and MIT. In some contexts, such as the
 binaries which you will one day be able to download here for linux, mac, and windows, we are using the GPL3
 version of JUCE, but we may want to also release in situations where open source is still possible, but GPL3
 is not, and then want to use the MIT license.
 
-As a result, we are asking individual contributors who want to contribute to Monique Mono-Synth to sign a CLA.
+As a result, we are asking individual contributors who want to contribute to B-Step to sign a CLA.
 We have used the Canonical/Harmony 1.0 CLA http://selector.harmonyagreements.org with the following choices:
 
 1. You retain copyright to your code. *We do not need you to assign copyright to us*.

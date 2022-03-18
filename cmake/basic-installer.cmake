@@ -88,7 +88,7 @@ if (APPLE)
             POST_BUILD
             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
             COMMAND ${CMAKE_COMMAND} -E make_directory installer
-            COMMAND ${CMAKE_SOURCE_DIR}/libs/sst/sst-plugininfra/scripts/installer_mac/make_installer.sh "BStep" ${CMAKE_BINARY_DIR}/bstep-products ${CMAKE_SOURCE_DIR}/resources/installer_mac ${CMAKE_BINARY_DIR}/installer "${BSTEP_DATE}-${VERSION_CHUNK}"
+            COMMAND ${CMAKE_SOURCE_DIR}/libs/sst/sst-plugininfra/scripts/installer_mac/make_installer.sh "B-Step" ${CMAKE_BINARY_DIR}/bstep-products ${CMAKE_SOURCE_DIR}/resources/installer_mac ${CMAKE_BINARY_DIR}/installer "${BSTEP_DATE}-${VERSION_CHUNK}"
     )
 elseif (WIN32)
     message(STATUS "Basic Installer: Target is installer/${BSTEP_ZIP}")

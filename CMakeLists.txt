@@ -34,6 +34,8 @@ juce_add_plugin(B-Step
         PLUGIN_CODE "bPlg"
         AU_EXPORT_PREFIX "bstepAU"
 
+        ICON_BIG "${CMAKE_SOURCE_DIR}/resources/Images/b-step-appicon.png"
+
         COPY_PLUGIN_AFTER_BUILD ${BSTEP_COPY_PLUGIN_AFTER_BUILD}
         )
 

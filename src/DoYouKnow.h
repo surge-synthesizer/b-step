@@ -13,7 +13,7 @@
 
 #include "App.h"
 
-struct DoYouKnow : public DeletedAtShutdown
+struct DoYouKnow : public juce::DeletedAtShutdown
 {
     enum MESSAGES
     {
@@ -31,7 +31,7 @@ struct DoYouKnow : public DeletedAtShutdown
     juce_DeclareSingleton(DoYouKnow, false) private :
 
         // TODO EXPORT TO FILE
-        Array<MESSAGES> dont_show_agains;
+        juce::Array<MESSAGES> dont_show_agains;
     bool never_show_a_message;
 
     struct CharPair
@@ -54,8 +54,8 @@ struct DoYouKnow : public DeletedAtShutdown
     ~DoYouKnow() { clearSingletonInstance(); }
     bool show(MESSAGES id, bool force = false);
 
-    void export_to(XmlElement &xml) const;
-    void import_from(const XmlElement &xml);
+    void export_to(juce::XmlElement &xml) const;
+    void import_from(const juce::XmlElement &xml);
     void import_by_default();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DoYouKnow)

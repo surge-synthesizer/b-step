@@ -38,7 +38,7 @@ class Parser;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorAbout : public UiEditor, public Button::Listener
+class UiEditorAbout : public UiEditor, public juce::Button::Listener
 {
   public:
     //==============================================================================
@@ -62,18 +62,18 @@ class UiEditorAbout : public UiEditor, public Button::Listener
     void print_debug(String text);
 #endif
   private:
-    URL url_facebook;
-    URL url_youtube;
-    URL url_digg;
-    URL url_deli;
-    URL url_twitter;
-    URL url_pinit;
-    URL url_google;
+    juce::URL url_facebook;
+    juce::URL url_youtube;
+    juce::URL url_digg;
+    juce::URL url_deli;
+    juce::URL url_twitter;
+    juce::URL url_pinit;
+    juce::URL url_google;
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
-    void buttonClicked(Button *buttonThatWasClicked) override;
+    void buttonClicked(juce::Button *buttonThatWasClicked) override;
 
     // Binary resources:
     static const char *b_logo_png;
@@ -90,22 +90,22 @@ class UiEditorAbout : public UiEditor, public Button::Listener
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<ImageButton> au_button;
-    ScopedPointer<ImageButton> vst_button;
-    ScopedPointer<HyperlinkButton> hyperlinkButton8;
-    ScopedPointer<HyperlinkButton> video_1;
-    ScopedPointer<HyperlinkButton> video_2;
-    ScopedPointer<HyperlinkButton> video_3;
-    ScopedPointer<HyperlinkButton> video_4;
-    ScopedPointer<HyperlinkButton> video_5;
-    ScopedPointer<TextEditor> debug_out;
-    ScopedPointer<UiEditorToolbar> toolbar;
-    ScopedPointer<ImageButton> open_debug;
+    juce::ScopedPointer<juce::ImageButton> au_button;
+    juce::ScopedPointer<juce::ImageButton> vst_button;
+    juce::ScopedPointer<juce::HyperlinkButton> hyperlinkButton8;
+    juce::ScopedPointer<juce::HyperlinkButton> video_1;
+    juce::ScopedPointer<juce::HyperlinkButton> video_2;
+    juce::ScopedPointer<juce::HyperlinkButton> video_3;
+    juce::ScopedPointer<juce::HyperlinkButton> video_4;
+    juce::ScopedPointer<juce::HyperlinkButton> video_5;
+    juce::ScopedPointer<juce::TextEditor> debug_out;
+    juce::ScopedPointer<UiEditorToolbar> toolbar;
+    juce::ScopedPointer<juce::ImageButton> open_debug;
 
     std::unique_ptr<juce::Label> buildInfo;
 
-    Image cachedImage_aboutbox_png;
-    Image cachedImage_b_logo_png;
+    juce::Image cachedImage_aboutbox_png;
+    juce::Image cachedImage_b_logo_png;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorAbout)

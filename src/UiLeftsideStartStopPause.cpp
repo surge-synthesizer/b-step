@@ -29,7 +29,7 @@
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-void UiLeftsideStartStopPause::refresh_ui(Array<Component *> &components_to_repaint_)
+void UiLeftsideStartStopPause::refresh_ui(juce::Array<juce::Component *> &components_to_repaint_)
 {
     button_play->get_components_to_repaint(components_to_repaint_);
     button_pause->get_components_to_repaint(components_to_repaint_);
@@ -73,13 +73,13 @@ UiLeftsideStartStopPause::~UiLeftsideStartStopPause()
 }
 
 //==============================================================================
-void UiLeftsideStartStopPause::paint(Graphics &g)
+void UiLeftsideStartStopPause::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     return;
     //[/UserPrePaint]
 
-    g.fillAll(Colours::white);
+    g.fillAll(juce::Colours::white);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]

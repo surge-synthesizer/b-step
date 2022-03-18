@@ -25,8 +25,9 @@
 #include "UIEditorToolbar.h"
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-UiEditor::UiEditor(String name)
-    : ResizableWindow(name, Colour(0xff000000), false), animate_lock(false), _animate_mover(nullptr)
+UiEditor::UiEditor(juce::String name)
+    : juce::ResizableWindow(name, juce::Colour(0xff000000), false), animate_lock(false),
+      _animate_mover(nullptr)
 {
     SESSION_ERROR_LOG("BOOT::UiEditor::" + name + String("\n"));
 
@@ -43,7 +44,7 @@ UiEditor::~UiEditor()
     SESSION_ERROR_LOG("DOWN::UiEditor::" + getName() + "::DONE" + String("\n"));
 }
 
-void UiEditor::center_relative_and_make_visible(Component *const parent_, bool resize_,
+void UiEditor::center_relative_and_make_visible(juce::Component *const parent_, bool resize_,
                                                 bool make_labels_dragable_)
 {
     if (make_labels_dragable_)
@@ -61,8 +62,8 @@ void UiEditor::center_relative_and_make_visible(Component *const parent_, bool r
     }
     else
     {
-        uint16 desktop_height =
-            Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getHeight();
+        std::uint16_t desktop_height =
+            juce::Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getHeight();
         scale = 1.f / APPDEF_UIUserData::WINDOW_HEIGHT_DESIGN * desktop_height;
         addToDesktop();
     }
@@ -109,20 +110,20 @@ void UiEditor::center_relative_and_make_visible(Component *const parent_, bool r
     setVisible(true);
 }
 
-void UiEditor::restore_XY(Point<int> &XY_)
+void UiEditor::restore_XY(juce::Point<int> &XY_)
 {
     if (XY_.getX() != -9999 && XY_.getY() != -9999)
         setTopLeftPosition(XY_);
 }
 void UiEditor::make_childs_dragable()
 {
-    Label *label = nullptr;
+    juce::Label *label = nullptr;
     for (int i = 0; i != getNumChildComponents(); ++i)
-        if ((label = dynamic_cast<Label *>(getChildComponent(i))))
+        if ((label = dynamic_cast<juce::Label *>(getChildComponent(i))))
             label->setInterceptsMouseClicks(false, false);
 }
 
-class AnimateMove : public Timer
+class AnimateMove : public juce::Timer
 {
     // BUG this will crash if the edior will closed
     UiEditor *const _window_to_move;
@@ -207,47 +208,50 @@ UiEditorToolbar::UiEditorToolbar(UiEditor *const owner_editor_, bool show_close,
                                  bool show_load_save)
     : _owner_editor(owner_editor_)
 {
-    close = std::make_unique<ImageButton>();
+    close = std::make_unique<juce::ImageButton>();
     addAndMakeVisible(*close);
     close->addListener(this);
 
-    close->setImages(false, true, true, Image(), 0.000f, Colour(0x00000000), Image(), 0.000f,
-                     Colour(0x00000000), Image(), 0.000f, Colour(0x00000000));
-    load = std::make_unique<ImageButton>();
+    close->setImages(false, true, true, juce::Image(), 0.000f, juce::Colour(0x00000000),
+                     juce::Image(), 0.000f, juce::Colour(0x00000000), juce::Image(), 0.000f,
+                     juce::Colour(0x00000000));
+    load = std::make_unique<juce::ImageButton>();
     addAndMakeVisible(*load);
     load->addListener(this);
 
-    load->setImages(false, true, true, Image(), 0.000f, Colour(0x00000000), Image(), 0.000f,
-                    Colour(0x00000000), Image(), 0.000f, Colour(0x00000000));
+    load->setImages(false, true, true, juce::Image(), 0.000f, juce::Colour(0x00000000),
+                    juce::Image(), 0.000f, juce::Colour(0x00000000), juce::Image(), 0.000f,
+                    juce::Colour(0x00000000));
 
-    save = std::make_unique<ImageButton>();
+    save = std::make_unique<juce::ImageButton>();
     addAndMakeVisible(*save);
     save->addListener(this);
 
-    save->setImages(false, true, true, Image(), 0.000f, Colour(0x00000000), Image(), 0.000f,
-                    Colour(0x00000000), Image(), 0.000f, Colour(0x00000000));
-    drawable1 = Drawable::createFromImageData(load_svg, load_svgSize);
-    drawable2 = Drawable::createFromImageData(save_svg, save_svgSize);
-    drawable3 = Drawable::createFromImageData(move_svg, move_svgSize);
-    drawable4 = Drawable::createFromImageData(close_svg, close_svgSize);
+    save->setImages(false, true, true, juce::Image(), 0.000f, juce::Colour(0x00000000),
+                    juce::Image(), 0.000f, juce::Colour(0x00000000), juce::Image(), 0.000f,
+                    juce::Colour(0x00000000));
+    drawable1 = juce::Drawable::createFromImageData(load_svg, load_svgSize);
+    drawable2 = juce::Drawable::createFromImageData(save_svg, save_svgSize);
+    drawable3 = juce::Drawable::createFromImageData(move_svg, move_svgSize);
+    drawable4 = juce::Drawable::createFromImageData(close_svg, close_svgSize);
 
     //[UserPreSize]
     if (!show_close)
     {
         close->setVisible(false);
-        drawable4 = Drawable::createFromImageData(close_svg, 0);
+        drawable4 = juce::Drawable::createFromImageData(close_svg, 0);
     }
     if (!show_move)
     {
-        drawable3 = Drawable::createFromImageData(move_svg, 0);
+        drawable3 = juce::Drawable::createFromImageData(move_svg, 0);
     }
     if (!show_load_save)
     {
         load->setVisible(false);
         save->setVisible(false);
 
-        drawable1 = Drawable::createFromImageData(load_svg, 0);
-        drawable2 = Drawable::createFromImageData(save_svg, 0);
+        drawable1 = juce::Drawable::createFromImageData(load_svg, 0);
+        drawable2 = juce::Drawable::createFromImageData(save_svg, 0);
     }
     //[/UserPreSize]
 
@@ -261,46 +265,46 @@ UiEditorToolbar::UiEditorToolbar(UiEditor *const owner_editor_, bool show_close,
 UiEditorToolbar::~UiEditorToolbar() {}
 
 //==============================================================================
-void UiEditorToolbar::paint(Graphics &g)
+void UiEditorToolbar::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     // jassert (drawable1 );
     if (drawable1)
         drawable1->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.6000f),
-                             proportionOfWidth(0.5000f), proportionOfHeight(0.1250f)),
-            RectanglePlacement::centred, 1.000f);
+            juce::Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.6000f),
+                                   proportionOfWidth(0.5000f), proportionOfHeight(0.1250f)),
+            juce::RectanglePlacement::centred, 1.000f);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     // jassert (drawable2 );
     if (drawable2)
         drawable2->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.7500f),
-                             proportionOfWidth(0.5000f), proportionOfHeight(0.1250f)),
-            RectanglePlacement::centred, 1.000f);
+            juce::Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.7500f),
+                                   proportionOfWidth(0.5000f), proportionOfHeight(0.1250f)),
+            juce::RectanglePlacement::centred, 1.000f);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     // jassert (drawable3 );
     if (drawable3)
         drawable3->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.3500f),
-                             proportionOfWidth(0.5000f), proportionOfHeight(0.1250f)),
-            RectanglePlacement::centred, 1.000f);
+            juce::Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.3500f),
+                                   proportionOfWidth(0.5000f), proportionOfHeight(0.1250f)),
+            juce::RectanglePlacement::centred, 1.000f);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     // jassert (drawable4 );
     if (drawable4)
         drawable4->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.0750f),
-                             proportionOfWidth(0.5000f), proportionOfHeight(0.1250f)),
-            RectanglePlacement::centred, 1.000f);
+            juce::Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.0750f),
+                                   proportionOfWidth(0.5000f), proportionOfHeight(0.1250f)),
+            juce::RectanglePlacement::centred, 1.000f);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -321,7 +325,7 @@ void UiEditorToolbar::resized()
     //[/UserResized]
 }
 
-void UiEditorToolbar::buttonClicked(Button *buttonThatWasClicked)
+void UiEditorToolbar::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]

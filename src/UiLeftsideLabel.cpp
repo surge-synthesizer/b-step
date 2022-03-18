@@ -24,7 +24,7 @@
 #include "UiLeftsideLabel.h"
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-void UiLeftsideLabel::set_text(const String &text_) { label.set_text(text_); }
+void UiLeftsideLabel::set_text(const juce::String &text_) { label.set_text(text_); }
 
 void UiLeftsideLabel::on_style_set(AppStyle *const style_)
 {
@@ -34,7 +34,7 @@ void UiLeftsideLabel::on_style_set(AppStyle *const style_)
     }
 }
 
-void UiLeftsideLabel::refresh_ui(Array<Component *> &components_to_repaint_)
+void UiLeftsideLabel::refresh_ui(juce::Array<juce::Component *> &components_to_repaint_)
 {
     if (label.is_repaint_required())
     {
@@ -52,7 +52,7 @@ UiLeftsideLabel::UiLeftsideLabel()
     last_painted_bg = 0x00000000;
     _style = nullptr;
 
-    label.justification = Justification::right;
+    label.justification = juce::Justification::right;
     addAndMakeVisible(&label);
 
 #ifdef DO_NEVER_DEFINE_THIS
@@ -75,10 +75,10 @@ UiLeftsideLabel::~UiLeftsideLabel()
 }
 
 //==============================================================================
-void UiLeftsideLabel::paint(Graphics &g)
+void UiLeftsideLabel::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-    g.fillAll(Colour(0x00000000));
+    g.fillAll(juce::Colour(0x00000000));
     //[/UserPrePaint]
 
     //[UserPaint] Add your own custom painting code here..

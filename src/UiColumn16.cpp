@@ -24,7 +24,7 @@
 #include "UiColumn16.h"
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-void UiColumn16::refresh_ui(Array<Component *> &components_to_repaint_)
+void UiColumn16::refresh_ui(juce::Array<Component *> &components_to_repaint_)
 {
     for (unsigned int i = 0; i != 16; ++i)
     {
@@ -32,7 +32,8 @@ void UiColumn16::refresh_ui(Array<Component *> &components_to_repaint_)
     }
 }
 
-void UiColumn16::get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_with_popup_)
+void UiColumn16::get_controllers_for_paint_popup(
+    juce::Array<MONO_Controller *> &controllers_with_popup_)
 {
     for (unsigned int i = 0; i != 16; ++i)
     {
@@ -102,23 +103,23 @@ UiColumn16::UiColumn16()
     //[UserPreSize]
     _style = nullptr;
 
-    const_cast<Array<ModelBase *> &>(models).add(elem_0.get());
-    const_cast<Array<ModelBase *> &>(models).add(elem_1.get());
-    const_cast<Array<ModelBase *> &>(models).add(elem_2.get());
-    const_cast<Array<ModelBase *> &>(models).add(elem_3.get());
-    const_cast<Array<ModelBase *> &>(models).add(elem_4.get());
-    const_cast<Array<ModelBase *> &>(models).add(elem_5.get());
-    const_cast<Array<ModelBase *> &>(models).add(elem_6.get());
-    const_cast<Array<ModelBase *> &>(models).add(elem_7.get());
-    const_cast<Array<ModelBase *> &>(models).add(elem_8.get());
-    const_cast<Array<ModelBase *> &>(models).add(elem_9.get());
-    const_cast<Array<ModelBase *> &>(models).add(elem_10.get());
-    const_cast<Array<ModelBase *> &>(models).add(elem_11.get());
-    const_cast<Array<ModelBase *> &>(models).add(elem_12.get());
-    const_cast<Array<ModelBase *> &>(models).add(elem_13.get());
-    const_cast<Array<ModelBase *> &>(models).add(elem_14.get());
-    const_cast<Array<ModelBase *> &>(models).add(elem_15.get());
-    const_cast<Array<ModelBase *> &>(models).minimiseStorageOverheads();
+    const_cast<juce::Array<ModelBase *> &>(models).add(elem_0.get());
+    const_cast<juce::Array<ModelBase *> &>(models).add(elem_1.get());
+    const_cast<juce::Array<ModelBase *> &>(models).add(elem_2.get());
+    const_cast<juce::Array<ModelBase *> &>(models).add(elem_3.get());
+    const_cast<juce::Array<ModelBase *> &>(models).add(elem_4.get());
+    const_cast<juce::Array<ModelBase *> &>(models).add(elem_5.get());
+    const_cast<juce::Array<ModelBase *> &>(models).add(elem_6.get());
+    const_cast<juce::Array<ModelBase *> &>(models).add(elem_7.get());
+    const_cast<juce::Array<ModelBase *> &>(models).add(elem_8.get());
+    const_cast<juce::Array<ModelBase *> &>(models).add(elem_9.get());
+    const_cast<juce::Array<ModelBase *> &>(models).add(elem_10.get());
+    const_cast<juce::Array<ModelBase *> &>(models).add(elem_11.get());
+    const_cast<juce::Array<ModelBase *> &>(models).add(elem_12.get());
+    const_cast<juce::Array<ModelBase *> &>(models).add(elem_13.get());
+    const_cast<juce::Array<ModelBase *> &>(models).add(elem_14.get());
+    const_cast<juce::Array<ModelBase *> &>(models).add(elem_15.get());
+    const_cast<juce::Array<ModelBase *> &>(models).minimiseStorageOverheads();
 
 #ifdef DO_NEVER_DEFINE_THIS
     //[/UserPreSize]
@@ -157,16 +158,16 @@ UiColumn16::~UiColumn16()
 }
 
 //==============================================================================
-void UiColumn16::paint(Graphics &g)
+void UiColumn16::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     if (_style)
         if (_style->is_wrapper_opaque())
-            g.fillAll(Colour(_style->get_foreground_color()));
+            g.fillAll(juce::Colour(_style->get_foreground_color()));
     return;
     //[/UserPrePaint]
 
-    g.fillAll(Colours::white);
+    g.fillAll(juce::Colours::white);
 
     //[UserPaint] Add your own custom painting code here..
 
@@ -182,79 +183,79 @@ void UiColumn16::resized()
                       proportionOfWidth(0.0491f), proportionOfHeight(0.8000f));
     elem_1->setBounds(proportionOfWidth(0.0675f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_2->setBounds(proportionOfWidth(0.1288f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_3->setBounds(proportionOfWidth(0.1902f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_4->setBounds(proportionOfWidth(0.2577f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_5->setBounds(proportionOfWidth(0.3190f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_6->setBounds(proportionOfWidth(0.3804f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_7->setBounds(proportionOfWidth(0.4417f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_8->setBounds(proportionOfWidth(0.5092f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_9->setBounds(proportionOfWidth(0.5706f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_10->setBounds(proportionOfWidth(0.6319f),
                        (proportionOfHeight(0.1000f)) +
-                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       juce::roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                       juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_11->setBounds(proportionOfWidth(0.6933f),
                        (proportionOfHeight(0.1000f)) +
-                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       juce::roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                       juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_12->setBounds(proportionOfWidth(0.7607f),
                        (proportionOfHeight(0.1000f)) +
-                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       juce::roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                       juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_13->setBounds(proportionOfWidth(0.8221f),
                        (proportionOfHeight(0.1000f)) +
-                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       juce::roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                       juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_14->setBounds(proportionOfWidth(0.8834f),
                        (proportionOfHeight(0.1000f)) +
-                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       juce::roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                       juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_15->setBounds(proportionOfWidth(0.9448f),
                        (proportionOfHeight(0.1000f)) +
-                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
-                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       juce::roundToInt((proportionOfWidth(0.0491f)) * 1.0000f),
+                       juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
 
     //[UserResized] Add your own custom resize handling here..
 #else
@@ -262,79 +263,79 @@ void UiColumn16::resized()
                       proportionOfWidth(0.0531f), proportionOfHeight(0.8000f));
     elem_1->setBounds(proportionOfWidth(0.0675f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_2->setBounds(proportionOfWidth(0.1288f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_3->setBounds(proportionOfWidth(0.1902f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_4->setBounds(proportionOfWidth(0.2577f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_5->setBounds(proportionOfWidth(0.3190f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_6->setBounds(proportionOfWidth(0.3804f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_7->setBounds(proportionOfWidth(0.4417f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_8->setBounds(proportionOfWidth(0.5092f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_9->setBounds(proportionOfWidth(0.5706f),
                       (proportionOfHeight(0.1000f)) +
-                          roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                      roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                      roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                          juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                      juce::roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                      juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_10->setBounds(proportionOfWidth(0.6319f),
                        (proportionOfHeight(0.1000f)) +
-                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       juce::roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                       juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_11->setBounds(proportionOfWidth(0.6933f),
                        (proportionOfHeight(0.1000f)) +
-                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       juce::roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                       juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_12->setBounds(proportionOfWidth(0.7607f),
                        (proportionOfHeight(0.1000f)) +
-                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       juce::roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                       juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_13->setBounds(proportionOfWidth(0.8221f),
                        (proportionOfHeight(0.1000f)) +
-                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       juce::roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                       juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_14->setBounds(proportionOfWidth(0.8834f),
                        (proportionOfHeight(0.1000f)) +
-                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       juce::roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                       juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
     elem_15->setBounds(proportionOfWidth(0.9448f),
                        (proportionOfHeight(0.1000f)) +
-                           roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
-                       roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
-                       roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
+                           juce::roundToInt((proportionOfHeight(0.8000f)) * 0.0000f),
+                       juce::roundToInt((proportionOfWidth(0.0531f)) * 1.0000f),
+                       juce::roundToInt((proportionOfHeight(0.8000f)) * 1.0000f));
 #endif
     //[/UserResized]
 }

@@ -37,7 +37,7 @@ class ModelBase;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class MenuBarLeft : public Component, public Button::Listener
+class MenuBarLeft : public juce::Component, public juce::Button::Listener
 {
   public:
     //==============================================================================
@@ -54,15 +54,15 @@ class MenuBarLeft : public Component, public Button::Listener
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
   public:
-    void refresh_ui(Array<Component *> &components_to_repaint_);
+    void refresh_ui(juce::Array<Component *> &components_to_repaint_);
 
   private:
     void set_user_mode();
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
-    void buttonClicked(Button *buttonThatWasClicked);
+    void buttonClicked(juce::Button *buttonThatWasClicked);
 
     // Binary resources:
     static const char *_5stars_svg;
@@ -83,19 +83,19 @@ class MenuBarLeft : public Component, public Button::Listener
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<ModelBase> button_layer_1;
-    ScopedPointer<ModelBase> button_layer_2;
-    ScopedPointer<ModelBase> button_layer_3;
-    ScopedPointer<ModelBase> button_layer_4;
-    ScopedPointer<ModelBase> button_layer_5;
-    ScopedPointer<ModelBase> button_layer_6;
-    ScopedPointer<ModelBase> button_layer_7;
-    ScopedPointer<ImageButton> pb_lite_mode;
-    ScopedPointer<ImageButton> pb_semi_mode;
-    ScopedPointer<ImageButton> pb_pro_mode;
-    ScopedPointer<Drawable> drawable1;
-    ScopedPointer<Drawable> drawable2;
-    ScopedPointer<Drawable> drawable3;
+    juce::ScopedPointer<ModelBase> button_layer_1;
+    juce::ScopedPointer<ModelBase> button_layer_2;
+    juce::ScopedPointer<ModelBase> button_layer_3;
+    juce::ScopedPointer<ModelBase> button_layer_4;
+    juce::ScopedPointer<ModelBase> button_layer_5;
+    juce::ScopedPointer<ModelBase> button_layer_6;
+    juce::ScopedPointer<ModelBase> button_layer_7;
+    juce::ScopedPointer<juce::ImageButton> pb_lite_mode;
+    juce::ScopedPointer<juce::ImageButton> pb_semi_mode;
+    juce::ScopedPointer<juce::ImageButton> pb_pro_mode;
+    juce::ScopedPointer<juce::Drawable> drawable1;
+    juce::ScopedPointer<juce::Drawable> drawable2;
+    juce::ScopedPointer<juce::Drawable> drawable3;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MenuBarLeft)

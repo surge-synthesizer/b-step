@@ -32,9 +32,9 @@ enum CHORD_AT_E_TUNE
     G_MINOR
 };
 
-static inline Array<int8> get_chord(CHORD_AT_E_TUNE chord_ident_)
+static inline juce::Array<std::int8_t> get_chord(CHORD_AT_E_TUNE chord_ident_)
 {
-    Array<int8> chord_offsets;
+    juce::Array<std::int8_t> chord_offsets;
     switch (chord_ident_)
     {
     case A_MAJOR:

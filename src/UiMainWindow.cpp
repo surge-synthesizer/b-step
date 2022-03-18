@@ -163,10 +163,10 @@ void GstepAudioProcessorEditor::open_writer(VIEW_TYPE type_)
 #endif // DEMO
 }
 
-static inline void add_as_kylistener_to_all_childs(KeyListener *const listener_,
-                                                   Component *const parent_)
+static inline void add_as_kylistener_to_all_childs(juce::KeyListener *const listener_,
+                                                   juce::Component *const parent_)
 {
-    Component *comp;
+    juce::Component *comp;
     for (int i = 0; i != parent_->getNumChildComponents(); ++i)
     {
         comp = parent_->getChildComponent(i);
@@ -175,7 +175,8 @@ static inline void add_as_kylistener_to_all_childs(KeyListener *const listener_,
     }
 }
 
-bool GstepAudioProcessorEditor::keyPressed(const KeyPress &key_, Component *originatingComponent_)
+bool GstepAudioProcessorEditor::keyPressed(const juce::KeyPress &key_,
+                                           juce::Component *originatingComponent_)
 {
     if (key_ == key_.spaceKey)
     {
@@ -206,7 +207,7 @@ bool GstepAudioProcessorEditor::keyPressed(const KeyPress &key_, Component *orig
         else if (_config->user_mode == 2)
             layer_brake = 6;
 
-        uint8 tmp_current_page = _config->current_layer;
+        std::uint8_t tmp_current_page = _config->current_layer;
         if (tmp_current_page < layer_brake)
         {
             ++tmp_current_page;
@@ -226,7 +227,7 @@ bool GstepAudioProcessorEditor::keyPressed(const KeyPress &key_, Component *orig
         else if (_config->user_mode == 2)
             layer_brake = 6;
 
-        uint8 tmp_current_page = _config->current_layer;
+        std::uint8_t tmp_current_page = _config->current_layer;
         if (tmp_current_page > 0)
         {
             --tmp_current_page;
@@ -344,9 +345,9 @@ bool GstepAudioProcessorEditor::keyPressed(const KeyPress &key_, Component *orig
              key_.getTextDescription() == "ctrl + shift + +")
     {
         int desktop_width =
-            Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getWidth();
+            juce::Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getWidth();
         int desktop_height =
-            Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getHeight();
+            juce::Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getHeight();
 
 #ifdef B_STEP_STANDALONE
         int w = getParentComponent()->getWidth();
@@ -418,7 +419,7 @@ bool GstepAudioProcessorEditor::keyPressed(const KeyPress &key_, Component *orig
     return true;
 }
 #include "AppStyles.h"
-void GstepAudioProcessorEditor::mouseDown(const MouseEvent &e_)
+void GstepAudioProcessorEditor::mouseDown(const juce::MouseEvent &e_)
 {
     if (_app_instance_store->editor_config.style_editor)
     {
@@ -450,18 +451,19 @@ void GstepAudioProcessorEditor::visibilityChanged()
 GstepAudioProcessorEditor::GstepAudioProcessorEditor(GstepAudioProcessor *processor_)
     : AudioProcessorEditor(processor_), _app_instance_store(&processor_->_app_instance_store)
 {
-    addAndMakeVisible(midi_learn_focus = new ImageButton(String()));
+    addAndMakeVisible(midi_learn_focus = new juce::ImageButton(juce::String()));
 
-    midi_learn_focus->setImages(false, true, false, Image(), 1.000f, Colour(0x00000000), Image(),
-                                1.000f, Colour(0x00000000), Image(), 1.000f, Colour(0x00000000));
-    addAndMakeVisible(midi_cc_value = new Label(String(), TRANS("n/a")));
-    midi_cc_value->setFont(Font(15.00f, Font::bold));
-    midi_cc_value->setJustificationType(Justification::centred);
+    midi_learn_focus->setImages(false, true, false, juce::Image(), 1.000f, juce::Colour(0x00000000),
+                                juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(),
+                                1.000f, juce::Colour(0x00000000));
+    addAndMakeVisible(midi_cc_value = new juce::Label(juce::String(), TRANS("n/a")));
+    midi_cc_value->setFont(juce::Font(15.00f, juce::Font::bold));
+    midi_cc_value->setJustificationType(juce::Justification::centred);
     midi_cc_value->setEditable(false, false, false);
-    midi_cc_value->setColour(Label::textColourId, Colours::white);
-    midi_cc_value->setColour(TextEditor::textColourId, Colours::white);
-    midi_cc_value->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
-    midi_cc_value->setColour(TextEditor::highlightColourId, Colour(0x00000000));
+    midi_cc_value->setColour(juce::Label::textColourId, juce::Colours::white);
+    midi_cc_value->setColour(juce::TextEditor::textColourId, juce::Colours::white);
+    midi_cc_value->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
+    midi_cc_value->setColour(juce::TextEditor::highlightColourId, juce::Colour(0x00000000));
 
     //[UserPreSize]
     is_first_callback = true;
@@ -491,7 +493,7 @@ GstepAudioProcessorEditor::GstepAudioProcessorEditor(GstepAudioProcessor *proces
     addAndMakeVisible(_menue_bar_right = new MenuBarRight(_app_instance_store, this));
     addAndMakeVisible(_menue_bar_left = new MenuBarLeft(_app_instance_store, this));
 
-    addAndMakeVisible(resizer = new ResizableCornerComponent(this, &resizeLimits));
+    addAndMakeVisible(resizer = new juce::ResizableCornerComponent(this, &resizeLimits));
     addKeyListener(this);
 
     keyboard = new UiEditorKeyboard(_app_instance_store);
@@ -577,7 +579,7 @@ GstepAudioProcessorEditor::~GstepAudioProcessorEditor()
 }
 
 //==============================================================================
-void GstepAudioProcessorEditor::paint(Graphics &g)
+void GstepAudioProcessorEditor::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     lock.enter();
@@ -587,13 +589,13 @@ void GstepAudioProcessorEditor::paint(Graphics &g)
     // forces to two paints a least to get the updater painted
     //[/UserPrePaint]
 
-    g.fillAll(Colours::black);
+    g.fillAll(juce::Colours::black);
 
-    g.setColour(Colour(0xff111111));
+    g.setColour(juce::Colour(0xff111111));
     g.fillRoundedRectangle(1.0f, 1.0f, static_cast<float>(proportionOfWidth(0.9672f)),
                            static_cast<float>(getHeight() - 2), 10.000f);
 
-    g.setColour(Colour(0xff1111ff));
+    g.setColour(juce::Colour(0xff1111ff));
     g.drawRoundedRectangle(1.0f, 1.0f, static_cast<float>(proportionOfWidth(0.9672f)),
                            static_cast<float>(getHeight() - 2), 10.000f, 2.000f);
 

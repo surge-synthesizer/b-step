@@ -50,16 +50,16 @@ class ControllerStepMute : public MONO_UIButtonController
         }
     }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
-        int8 sum_octave_offset = selected_step.get_selected_barstep().octave_offset;
+        std::int8_t sum_octave_offset = selected_step.get_selected_barstep().octave_offset;
         sum_octave_offset += selected_step.get_selected_barstring().octave_offset;
         sum_octave_offset +=
             _app_instance_store->pattern.master_string_octave(selected_step.barstring_id).value();
 
         if (sum_octave_offset != 0)
         {
-            string_ = String(sum_octave_offset);
+            string_ = juce::String(sum_octave_offset);
             return;
         }
 
@@ -72,7 +72,7 @@ class ControllerStepMute : public MONO_UIButtonController
         return _app_instance_store->style_step_area_octave;
     }
 
-    uint32 get_current_color() const override
+    std::uint32_t get_current_color() const override
     {
         if (_model)
         {
@@ -96,7 +96,7 @@ class ControllerStepMute : public MONO_UIButtonController
         return 0x00000000;
     }
 
-    uint32 get_runing_color() const
+    std::uint32_t get_runing_color() const
     {
         if (selected_step.get_selected_barstep().use_step_chord)
         {
@@ -109,8 +109,8 @@ class ControllerStepMute : public MONO_UIButtonController
     }
 
   public:
-    ControllerStepMute(AppInstanceStore *const app_instance_store_, uint8 barstring_id_,
-                       uint8 step_id_)
+    ControllerStepMute(AppInstanceStore *const app_instance_store_, std::uint8_t barstring_id_,
+                       std::uint8_t step_id_)
         : MONO_UIButtonController(app_instance_store_),
           selected_step(app_instance_store_, barstring_id_, step_id_)
     {

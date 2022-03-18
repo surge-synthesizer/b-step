@@ -30,12 +30,13 @@
 */
 
 #include "dRowAudio_SegmentedMeter.h"
+#include "dRowAudio_AudioUtility.h"
 
 SegmentedMeter::SegmentedMeter()
-    : my_red(Colours::red.getARGB()), my_yellow(4287387171), my_green(4278251775), numRedSeg(2),
-      numYellowSeg(4), numGreenSeg(9), totalNumSegs(numRedSeg + numYellowSeg + numGreenSeg),
-      decibelsPerSeg(3.0f), numSegs(0), sampleCount(0), samplesToCount(2048), sampleMax(0.0f),
-      level(0.0f), needsRepaint(true)
+    : my_red(juce::Colours::red.getARGB()), my_yellow(4287387171), my_green(4278251775),
+      numRedSeg(2), numYellowSeg(4), numGreenSeg(9),
+      totalNumSegs(numRedSeg + numYellowSeg + numGreenSeg), decibelsPerSeg(3.0f), numSegs(0),
+      sampleCount(0), samplesToCount(2048), sampleMax(0.0f), level(0.0f), needsRepaint(true)
 {
     setOpaque(true);
 }
@@ -46,7 +47,8 @@ void SegmentedMeter::calculateSegments()
 {
     float numDecibels = (float)toDecibels(level.getCurrent());
     // map decibels to numSegs
-    numSegs = jmax(0, roundToInt((numDecibels / decibelsPerSeg) + (totalNumSegs - numRedSeg)));
+    numSegs = juce::jmax(
+        0, juce::roundToInt((numDecibels / decibelsPerSeg) + (totalNumSegs - numRedSeg)));
 
     // impliment slow decay
     //	level.set((0.5f * level.getCurrent()) + (0.1f * level.getPrevious()));
@@ -64,46 +66,46 @@ void SegmentedMeter::resized()
     const float w = getWidth();
     const float h = getHeight();
 
-    onImage = Image(Image::ARGB, w, h, true);
-    offImage = Image(Image::ARGB, w, h, true);
+    onImage = juce::Image(juce::Image::ARGB, w, h, true);
+    offImage = juce::Image(juce::Image::ARGB, w, h, true);
 
-    Graphics gOn(onImage);
-    Graphics gOff(offImage);
+    juce::Graphics gOn(onImage);
+    juce::Graphics gOff(offImage);
 
     const int numSegments = (numRedSeg + numYellowSeg + numGreenSeg);
     const float segmentHeight = (h - 1) / numSegments;
 
     for (int i = 1; i <= numSegments; ++i)
     {
-        Colour colour_on;
-        Colour colour_off;
+        juce::Colour colour_on;
+        juce::Colour colour_off;
 
         if (i <= numGreenSeg)
         {
-            colour_on = Colour(my_green).brighter(0.25);
-            colour_off = Colour(my_green).darker(1).darker(0.5);
+            colour_on = juce::Colour(my_green).brighter(0.25);
+            colour_off = juce::Colour(my_green).darker(1).darker(0.5);
         }
         else if (i <= (numYellowSeg + numGreenSeg))
         {
-            colour_on = Colour(my_yellow).brighter(0.25);
-            colour_off = Colour(my_yellow).darker(1).darker(0.5);
+            colour_on = juce::Colour(my_yellow).brighter(0.25);
+            colour_off = juce::Colour(my_yellow).darker(1).darker(0.5);
         }
         else
         {
-            colour_on = Colour(my_red).brighter(0.25);
-            colour_off = Colour(my_red).darker(1).darker(0.5);
+            colour_on = juce::Colour(my_red).brighter(0.25);
+            colour_off = juce::Colour(my_red).darker(1).darker(0.5);
         }
 
         float y = h - (i * segmentHeight);
         float y2 = h - ((i + 1.0f) * segmentHeight);
         // gOn.fillAll(Colour(0xff161616));
-        gOn.setGradientFill(
-            ColourGradient(colour_on.darker(0.1), 0.0f, y, Colour(0xff161616), 0.0f, y2, false));
+        gOn.setGradientFill(juce::ColourGradient(colour_on.darker(0.1), 0.0f, y,
+                                                 juce::Colour(0xff161616), 0.0f, y2, false));
         gOn.fillRoundedRectangle(1.0f, y, w - 2, segmentHeight - 2, 0.3);
         gOn.setColour(colour_off);
         gOn.drawRoundedRectangle(1.0f, y, w - 2, segmentHeight - 2, 0.3, 0.5);
-        gOff.setGradientFill(
-            ColourGradient(colour_off.darker(0.3), 0.0f, y, Colour(0xff161616), 0.0f, y2, false));
+        gOff.setGradientFill(juce::ColourGradient(colour_off.darker(0.3), 0.0f, y,
+                                                  juce::Colour(0xff161616), 0.0f, y2, false));
         gOff.fillRoundedRectangle(1.0f, y, w - 2, segmentHeight - 2, 0.3);
         gOff.setColour(colour_off.darker(0.6f));
         gOff.drawRoundedRectangle(1.0f, y, w - 2, segmentHeight - 2, 0.3, 0.5);
@@ -118,17 +120,17 @@ void SegmentedMeter::resized()
     needsRepaint = true;
 }
 
-void SegmentedMeter::paint(Graphics &g)
+void SegmentedMeter::paint(juce::Graphics &g)
 {
     const int w = getWidth();
     const int h = getHeight();
 
-    g.fillAll(Colour(0xff161616));
+    g.fillAll(juce::Colour(0xff161616));
 
     if (onImage.isValid())
     {
         const int onHeight =
-            roundToInt((numSegs.getCurrent() / (float)totalNumSegs) * onImage.getHeight());
+            juce::roundToInt((numSegs.getCurrent() / (float)totalNumSegs) * onImage.getHeight());
         const int offHeight = h - onHeight;
 
         //        g.drawImage (onImage,

@@ -3,14 +3,15 @@
 
 // JUCE
 #ifdef B_STEP_STANDALONE
-#include "../../b-step-standalone/JuceLibraryCode/JuceHeader.h"
+// #include "../../b-step-standalone/JuceLibraryCode/JuceHeader.h"
+#include <juce_core/juce_core.h>
 #else
-#include "../JuceLibraryCode/JuceHeader.h"
+#include <juce_core/juce_core.h>
 #endif
 
 struct MIDICC
 {
-    Array<String> names;
+    juce::Array<juce::String> names;
 
     MIDICC()
     {

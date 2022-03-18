@@ -29,18 +29,19 @@ class UiTextImExportListener
 {
     friend class UiTextImExport;
 
-    const String _title;
+    const juce::String _title;
     bool _is_importer;
 
   protected:
-    String _data;
+    juce::String _data;
 
   private:
     virtual bool on_ok() = 0;
     virtual void on_chancel(){};
 
   protected:
-    UiTextImExportListener(const String &title_, const String &default_text_, bool is_importer_)
+    UiTextImExportListener(const juce::String &title_, const juce::String &default_text_,
+                           bool is_importer_)
         : _title(title_), _is_importer(is_importer_), _data(default_text_)
     {
     }
@@ -81,7 +82,7 @@ class UiTextImExportListener
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiTextImExport : public UiEditor, public Timer, public Button::Listener
+class UiTextImExport : public UiEditor, public juce::Timer, public juce::Button::Listener
 {
   public:
     //==============================================================================
@@ -98,25 +99,25 @@ class UiTextImExport : public UiEditor, public Timer, public Button::Listener
     void on_close_clicked() override;
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
-    void buttonClicked(Button *buttonThatWasClicked) override;
+    void buttonClicked(juce::Button *buttonThatWasClicked) override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Label> titel;
-    ScopedPointer<TextButton> ok;
-    ScopedPointer<TextButton> cancel;
-    ScopedPointer<TextEditor> text;
-    ScopedPointer<TextButton> copy_past;
-    ScopedPointer<Label> note;
-    ScopedPointer<Label> description;
-    ScopedPointer<TextButton> send_mail;
-    ScopedPointer<TextButton> send_mail_to_monoplugs;
-    ScopedPointer<TextButton> button_info;
+    juce::ScopedPointer<juce::Label> titel;
+    juce::ScopedPointer<juce::TextButton> ok;
+    juce::ScopedPointer<juce::TextButton> cancel;
+    juce::ScopedPointer<juce::TextEditor> text;
+    juce::ScopedPointer<juce::TextButton> copy_past;
+    juce::ScopedPointer<juce::Label> note;
+    juce::ScopedPointer<juce::Label> description;
+    juce::ScopedPointer<juce::TextButton> send_mail;
+    juce::ScopedPointer<juce::TextButton> send_mail_to_monoplugs;
+    juce::ScopedPointer<juce::TextButton> button_info;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiTextImExport)

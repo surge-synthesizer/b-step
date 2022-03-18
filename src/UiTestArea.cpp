@@ -28,80 +28,81 @@
 //==============================================================================
 UiTestArea::UiTestArea()
 {
-    addAndMakeVisible(slider = new Slider("new slider"));
+    addAndMakeVisible(slider = new juce::Slider("new slider"));
     slider->setRange(0, 10, 0);
-    slider->setSliderStyle(Slider::LinearVertical);
-    slider->setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
-    slider->setColour(Slider::backgroundColourId, Colour(0x00000000));
-    slider->setColour(Slider::thumbColourId, Colours::red);
-    slider->setColour(Slider::trackColourId, Colours::yellow);
+    slider->setSliderStyle(juce::Slider::LinearVertical);
+    slider->setTextBoxStyle(juce::Slider::NoTextBox, true, 80, 20);
+    slider->setColour(juce::Slider::backgroundColourId, juce::Colour(0x00000000));
+    slider->setColour(juce::Slider::thumbColourId, juce::Colours::red);
+    slider->setColour(juce::Slider::trackColourId, juce::Colours::yellow);
     slider->addListener(this);
 
-    addAndMakeVisible(textButton2 = new TextButton("new button"));
+    addAndMakeVisible(textButton2 = new juce::TextButton("new button"));
     textButton2->setButtonText(TRANS("FEAT."));
-    textButton2->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                   Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    textButton2->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                                   juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     textButton2->addListener(this);
-    textButton2->setColour(TextButton::buttonColourId, Colours::chartreuse);
-    textButton2->setColour(TextButton::buttonOnColourId, Colours::white);
+    textButton2->setColour(juce::TextButton::buttonColourId, juce::Colours::chartreuse);
+    textButton2->setColour(juce::TextButton::buttonOnColourId, juce::Colours::white);
 
-    addAndMakeVisible(textButton3 = new TextButton("new button"));
+    addAndMakeVisible(textButton3 = new juce::TextButton("new button"));
     textButton3->setButtonText(TRANS("FEAT."));
-    textButton3->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                   Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    textButton3->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                                   juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     textButton3->addListener(this);
-    textButton3->setColour(TextButton::buttonColourId, Colours::chartreuse);
-    textButton3->setColour(TextButton::buttonOnColourId, Colours::white);
+    textButton3->setColour(juce::TextButton::buttonColourId, juce::Colours::chartreuse);
+    textButton3->setColour(juce::TextButton::buttonOnColourId, juce::Colours::white);
 
-    addAndMakeVisible(textButton4 = new TextButton("new button"));
+    addAndMakeVisible(textButton4 = new juce::TextButton("new button"));
     textButton4->setButtonText(TRANS("FEAT."));
-    textButton4->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                   Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    textButton4->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                                   juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     textButton4->addListener(this);
-    textButton4->setColour(TextButton::buttonColourId, Colours::chartreuse);
-    textButton4->setColour(TextButton::buttonOnColourId, Colours::white);
+    textButton4->setColour(juce::TextButton::buttonColourId, juce::Colours::chartreuse);
+    textButton4->setColour(juce::TextButton::buttonOnColourId, juce::Colours::white);
 
-    addAndMakeVisible(textButton5 = new TextButton("new button"));
+    addAndMakeVisible(textButton5 = new juce::TextButton("new button"));
     textButton5->setButtonText(TRANS("FEAT."));
-    textButton5->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                   Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    textButton5->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                                   juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     textButton5->addListener(this);
-    textButton5->setColour(TextButton::buttonColourId, Colours::chartreuse);
-    textButton5->setColour(TextButton::buttonOnColourId, Colours::white);
+    textButton5->setColour(juce::TextButton::buttonColourId, juce::Colours::chartreuse);
+    textButton5->setColour(juce::TextButton::buttonOnColourId, juce::Colours::white);
 
-    addAndMakeVisible(textButton6 = new TextButton("new button"));
+    addAndMakeVisible(textButton6 = new juce::TextButton("new button"));
     textButton6->setButtonText(TRANS("FEAT."));
-    textButton6->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                   Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    textButton6->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                                   juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     textButton6->addListener(this);
-    textButton6->setColour(TextButton::buttonColourId, Colours::chartreuse);
-    textButton6->setColour(TextButton::buttonOnColourId, Colours::white);
+    textButton6->setColour(juce::TextButton::buttonColourId, juce::Colours::chartreuse);
+    textButton6->setColour(juce::TextButton::buttonOnColourId, juce::Colours::white);
 
-    addAndMakeVisible(textButton8 = new TextButton("new button"));
+    addAndMakeVisible(textButton8 = new juce::TextButton("new button"));
     textButton8->setButtonText(TRANS("FEAT."));
-    textButton8->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                   Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    textButton8->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                                   juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     textButton8->addListener(this);
-    textButton8->setColour(TextButton::buttonColourId, Colours::chartreuse);
-    textButton8->setColour(TextButton::buttonOnColourId, Colours::white);
+    textButton8->setColour(juce::TextButton::buttonColourId, juce::Colours::chartreuse);
+    textButton8->setColour(juce::TextButton::buttonOnColourId, juce::Colours::white);
 
-    addAndMakeVisible(textButton9 = new TextButton("new button"));
+    addAndMakeVisible(textButton9 = new juce::TextButton("new button"));
     textButton9->setButtonText(TRANS("FEAT."));
-    textButton9->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                   Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    textButton9->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                                   juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     textButton9->addListener(this);
-    textButton9->setColour(TextButton::buttonColourId, Colours::chartreuse);
-    textButton9->setColour(TextButton::buttonOnColourId, Colours::white);
+    textButton9->setColour(juce::TextButton::buttonColourId, juce::Colours::chartreuse);
+    textButton9->setColour(juce::TextButton::buttonOnColourId, juce::Colours::white);
 
-    addAndMakeVisible(textButton7 = new TextButton("new button"));
+    addAndMakeVisible(textButton7 = new juce::TextButton("new button"));
     textButton7->setButtonText(TRANS("X"));
-    textButton7->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                   Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    textButton7->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                                   juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     textButton7->addListener(this);
-    textButton7->setColour(TextButton::buttonColourId, Colours::red);
-    textButton7->setColour(TextButton::buttonOnColourId, Colours::white);
+    textButton7->setColour(juce::TextButton::buttonColourId, juce::Colours::red);
+    textButton7->setColour(juce::TextButton::buttonOnColourId, juce::Colours::white);
 
-    cachedImage_fullscreen_png = ImageCache::getFromMemory(fullscreen_png, fullscreen_pngSize);
+    cachedImage_fullscreen_png =
+        juce::ImageCache::getFromMemory(fullscreen_png, fullscreen_pngSize);
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -132,34 +133,34 @@ UiTestArea::~UiTestArea()
 }
 
 //==============================================================================
-void UiTestArea::paint(Graphics &g)
+void UiTestArea::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll(Colours::white);
+    g.fillAll(juce::Colours::white);
 
-    g.setColour(Colours::black);
-    g.drawImageWithin(cachedImage_fullscreen_png, 0, 0, proportionOfWidth(1.0000f),
-                      proportionOfHeight(1.0000f),
-                      RectanglePlacement::centred | RectanglePlacement::onlyReduceInSize, false);
+    g.setColour(juce::Colours::black);
+    g.drawImageWithin(
+        cachedImage_fullscreen_png, 0, 0, proportionOfWidth(1.0000f), proportionOfHeight(1.0000f),
+        juce::RectanglePlacement::centred | juce::RectanglePlacement::onlyReduceInSize, false);
 
-    g.setColour(Colour(0x4c000000));
+    g.setColour(juce::Colour(0x4c000000));
     g.fillRect(490, 284, 55, 86);
 
-    g.setColour(Colour(0x4c000000));
+    g.setColour(juce::Colour(0x4c000000));
     g.fillRect(425, 130, 65, 240);
 
-    g.setColour(Colour(0x4c000000));
+    g.setColour(juce::Colour(0x4c000000));
     g.fillRect(545, 130, 45, 240);
 
-    g.setColour(Colour(0x4c000000));
+    g.setColour(juce::Colour(0x4c000000));
     g.fillRect(490, 130, 55, 82);
 
-    g.setColour(Colours::yellow);
+    g.setColour(juce::Colours::yellow);
     g.drawRect(425, 130, 165, 245, 3);
 
-    g.setColour(Colours::yellow);
+    g.setColour(juce::Colours::yellow);
     g.drawRect(485, 214, 65, 76, 3);
 
     //[UserPaint] Add your own custom painting code here..
@@ -184,7 +185,7 @@ void UiTestArea::resized()
     //[/UserResized]
 }
 
-void UiTestArea::sliderValueChanged(Slider *sliderThatWasMoved)
+void UiTestArea::sliderValueChanged(juce::Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
@@ -199,7 +200,7 @@ void UiTestArea::sliderValueChanged(Slider *sliderThatWasMoved)
     //[/UsersliderValueChanged_Post]
 }
 
-void UiTestArea::buttonClicked(Button *buttonThatWasClicked)
+void UiTestArea::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]

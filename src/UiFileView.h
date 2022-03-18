@@ -38,7 +38,7 @@ class FileViewOwner
 class UiFileViewListener
 {
     friend class UiFileView;
-    virtual void on_text_changed(String &new_text_) = 0;
+    virtual void on_text_changed(juce::String &new_text_) = 0;
     virtual void on_text_chancel() = 0;
 
   protected:
@@ -56,11 +56,11 @@ class UiFileViewListener
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiFileView : public TextButton,
-                   public Timer,
-                   public TextEditor::Listener,
-                   public Button::Listener,
-                   public Slider::Listener
+class UiFileView : public juce::TextButton,
+                   public juce::Timer,
+                   public juce::TextEditor::Listener,
+                   public juce::Button::Listener,
+                   public juce::Slider::Listener
 {
   public:
     //==============================================================================
@@ -72,30 +72,31 @@ class UiFileView : public TextButton,
     FileViewOwner *_owner;
     void set_owner(FileViewOwner *const owner_) { _owner = owner_; }
 
-    void set_label_text(const String &);
-    void add_button_listener(Button::Listener *const listener_)
+    void set_label_text(const juce::String &);
+    void add_button_listener(juce::Button::Listener *const listener_)
     {
         imageButton->addListener(listener_);
     }
     void show_slider(bool state) { player_slider->setVisible(state); }
-    Slider *get_thumb() const { return player_slider; }
+    juce::Slider *get_thumb() const { return player_slider; }
 
     int label_offset;
     void set_label_x_offset(int label_offset_) { label_offset = label_offset_; }
 
-    void set_label_color(uint32 color)
+    void set_label_color(std::uint32_t color)
     {
-        label->setColour(TextEditor::textColourId, Colour(color));
+        label->setColour(juce::TextEditor::textColourId, juce::Colour(color));
 
         // FORCE COLOR REPAINT
-        String temp_text = label->getText();
+        juce::String temp_text = label->getText();
         label->setText("");
         label->setText(temp_text, false);
     }
 
     UiFileViewListener *_listener;
     bool is_notified;
-    void set_input_listener(UiFileViewListener *const input_listener_, const String &default_name_)
+    void set_input_listener(UiFileViewListener *const input_listener_,
+                            const juce::String &default_name_)
     {
         is_notified = false;
 
@@ -120,7 +121,7 @@ class UiFileView : public TextButton,
         stopTimer();
     }
 
-    void textEditorEscapeKeyPressed(TextEditor &) override
+    void textEditorEscapeKeyPressed(juce::TextEditor &) override
     {
         if (_listener && !is_notified)
         {
@@ -134,21 +135,21 @@ class UiFileView : public TextButton,
             imageButton->toFront(true);
 
             // FORCE COLOR REPAINT
-            String temp_text = label->getText();
+            juce::String temp_text = label->getText();
             label->setText("");
             label->setText(temp_text, false);
 
             OUT("ESC");
         }
     }
-    void textEditorReturnKeyPressed(TextEditor &te_) override
+    void textEditorReturnKeyPressed(juce::TextEditor &te_) override
     {
         if (_listener && !is_notified)
         {
             is_notified = true;
             grabKeyboardFocus();
 
-            String text = te_.getText();
+            juce::String text = te_.getText();
             _listener->on_text_changed(text);
             te_.setText(text, false);
             _listener = nullptr;
@@ -157,15 +158,15 @@ class UiFileView : public TextButton,
             imageButton->toFront(true);
 
             // FORCE COLOR REPAINT
-            String temp_text = label->getText();
+            juce::String temp_text = label->getText();
             label->setText("");
             label->setText(temp_text, false);
         }
     }
-    void textEditorFocusLost(TextEditor &te_) override
+    void textEditorFocusLost(juce::TextEditor &te_) override
     {
-        if (Desktop::getInstance().findComponentAt(Desktop::getLastMouseDownPosition()) ==
-            label.get())
+        if (juce::Desktop::getInstance().findComponentAt(
+                juce::Desktop::getLastMouseDownPosition()) == label.get())
         {
             te_.grabKeyboardFocus();
             return;
@@ -175,19 +176,19 @@ class UiFileView : public TextButton,
 
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
-    void buttonClicked(Button *buttonThatWasClicked) override;
-    void sliderValueChanged(Slider *sliderThatWasMoved) override;
+    void buttonClicked(juce::Button *buttonThatWasClicked) override;
+    void sliderValueChanged(juce::Slider *sliderThatWasMoved) override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<TextEditor> label;
-    ScopedPointer<ImageButton> imageButton;
-    ScopedPointer<Slider> player_slider;
+    juce::ScopedPointer<juce::TextEditor> label;
+    juce::ScopedPointer<juce::ImageButton> imageButton;
+    juce::ScopedPointer<juce::Slider> player_slider;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiFileView)

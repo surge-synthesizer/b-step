@@ -115,7 +115,7 @@ static float inline taylor_sin(float x) noexcept
     return t4 + t3 + t2 + t1;
 }
 #define TABLESIZE_MULTI 1000
-#define SIN_LOOKUP_TABLE_SIZE int(float_Pi * TABLESIZE_MULTI * 2)
+#define SIN_LOOKUP_TABLE_SIZE int(juce::MathConstants<float>::pi * TABLESIZE_MULTI * 2)
 float *SINE_LOOKUP_TABLE;
 struct SIN_LOOKUP
 {
@@ -139,7 +139,7 @@ NOINLINE SIN_LOOKUP::~SIN_LOOKUP()
 
 static float inline lookup_sine(float x) noexcept
 {
-    return SINE_LOOKUP_TABLE[int(int64(x * TABLESIZE_MULTI) % SIN_LOOKUP_TABLE_SIZE)];
+    return SINE_LOOKUP_TABLE[int(std::int64_t(x * TABLESIZE_MULTI) % SIN_LOOKUP_TABLE_SIZE)];
 }
 
 //==============================================================================
@@ -3466,8 +3466,8 @@ inline int ArpSequencer::process_samples_to_next_step(int start_sample_, int num
     double steps_per_min = info.bpm * 4.0 / 1.0 * speed_multi;
     double steps_per_sample = steps_per_min / samples_per_min;
     double samples_per_step = samples_per_min / steps_per_min;
-    int64 sync_sample_pos = info.samples_since_start + start_sample_;
-    int64 step = next_step_on_hold;
+    std::int64_t sync_sample_pos = info.samples_since_start + start_sample_;
+    std::int64_t step = next_step_on_hold;
     step_at_sample_current_buffer = -1;
     for (int i = 0; i < num_samples_; ++i)
     {

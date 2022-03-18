@@ -24,14 +24,15 @@
 
 // TODO, update block size from processblock
 // TODO dummy, to store old ports
+#include <juce_audio_devices/juce_audio_devices.h>
 
 class MidiInputWrapper
 {
-    ScopedPointer<MidiInput> _midi_input;
+    juce::ScopedPointer<juce::MidiInput> _midi_input;
     const bool is_daw_port;
 
   public:
-    inline bool is_same(MidiInput *other_input_) const noexcept
+    inline bool is_same(juce::MidiInput *other_input_) const noexcept
     {
         return !(_midi_input != other_input_);
     }
@@ -41,20 +42,22 @@ class MidiInputWrapper
             _midi_input->stop();
     }
 
-    const String port_ident_name;
-    const String name;
+    const juce::String port_ident_name;
+    const juce::String name;
 
-    NOINLINE MidiInputWrapper(MidiInput *const midi_output_, const String &port_ident_name_,
-                              const String &device_name_)
+    NOINLINE MidiInputWrapper(juce::MidiInput *const midi_output_,
+                              const juce::String &port_ident_name_,
+                              const juce::String &device_name_)
         : _midi_input(midi_output_), is_daw_port(device_name_ == DAW_INPUT),
           port_ident_name(port_ident_name_), name(device_name_)
     {
     }
 
     ~MidiInputWrapper() { stop(); }
-
-    static MidiInputWrapper *open(int device_index_, const String &port_ident_name_,
-                                  const String &device_name_, MidiInputCallback *listener_)
+    juce::String static MidiInputWrapper *open(int device_index_,
+                                               const juce::String &port_ident_name_,
+                                               const juce::String &device_name_,
+                                               MidiInputCallback *listener_)
     {
         MidiInput *device = nullptr;
 #ifdef IS_PLUGIN
@@ -64,10 +67,10 @@ class MidiInputWrapper
 #endif
 #ifndef JUCE_WINDOWS
             if (device_index_ == VIRTUAL_PORT_ID)
-            device = MidiInput::createNewDevice(device_name_, listener_);
+            device = juce::MidiInput::createNewDevice(device_name_, listener_);
         else
 #endif
-            device = MidiInput::openDevice(device_index_, listener_);
+            device = juce::MidiInput::openDevice(device_index_, listener_);
 
         if (device)
         {
@@ -87,15 +90,15 @@ class MidiInputWrapper
 
 class MidiOutputWrapper : public RuntimeListener
 {
-    ScopedPointer<MidiOutput> _midi_output;
+    juce::ScopedPointer<juce::MidiOutput> _midi_output;
     const bool is_daw_port;
     int pos_in_buffer;
 
-    CriticalSection daw_lock;
-    MidiBuffer _daw_mesages;
+    juce::CriticalSection daw_lock;
+    juce::MidiBuffer _daw_mesages;
 
   public:
-    inline void send_message_now(const MidiMessage &message_, int pos_in_buffer_)
+    inline void send_message_now(const juce::MidiMessage &message_, int pos_in_buffer_)
     {
         if (_midi_output)
         {
@@ -103,7 +106,7 @@ class MidiOutputWrapper : public RuntimeListener
         }
         else if (is_daw_port)
         {
-            ScopedLock locked(daw_lock);
+            juce::ScopedLock locked(daw_lock);
             _daw_mesages.addEvent(message_, pos_in_buffer_);
         }
     }
@@ -121,12 +124,12 @@ class MidiOutputWrapper : public RuntimeListener
 
     // PLEASE LOCK MANUAL TO USE THIS METHODE - SHOULD BE SAVE, BUT HOW KNOWS
     inline void lock() { daw_lock.enter(); }
-    inline void add_message(const MidiMessage &message_, int pos_in_buffer_)
+    inline void add_message(const juce::MidiMessage &message_, int pos_in_buffer_)
     {
         if (_midi_output || is_daw_port)
             _daw_mesages.addEvent(message_, pos_in_buffer_);
     }
-    inline void add_message_fifo(const MidiMessage &message_)
+    inline void add_message_fifo(const juce::MidiMessage &message_)
     {
         if (_midi_output || is_daw_port)
         {
@@ -138,7 +141,7 @@ class MidiOutputWrapper : public RuntimeListener
     {
         if (_midi_output)
         {
-            _midi_output->sendBlockOfMessages(_daw_mesages, Time::getMillisecondCounter() + 2,
+            _midi_output->sendBlockOfMessages(_daw_mesages, juce::Time::getMillisecondCounter() + 2,
                                               sample_rate);
             _daw_mesages.clear();
             pos_in_buffer = 0;
@@ -149,9 +152,9 @@ class MidiOutputWrapper : public RuntimeListener
     inline void unlock() { daw_lock.exit(); }
     /////////////////////////////////////////
 
-    inline void send_messages_to_daw_and_clear(MidiBuffer &midi_messages_)
+    inline void send_messages_to_daw_and_clear(juce::MidiBuffer &midi_messages_)
     {
-        ScopedLock locked(daw_lock);
+        juce::ScopedLock locked(daw_lock);
 
         if (is_daw_port)
             midi_messages_.addEvents(_daw_mesages, _daw_mesages.getFirstEventTime(),
@@ -160,11 +163,12 @@ class MidiOutputWrapper : public RuntimeListener
         _daw_mesages.clear();
     }
 
-    const String port_ident_name;
-    const String name;
+    const juce::String port_ident_name;
+    const juce::String name;
 
-    NOINLINE MidiOutputWrapper(MidiOutput *const midi_output_, const String &port_ident_name_,
-                               const String &device_name_)
+    NOINLINE MidiOutputWrapper(juce::MidiOutput *const midi_output_,
+                               const juce::String &port_ident_name_,
+                               const juce::String &device_name_)
         : _midi_output(midi_output_), is_daw_port(device_name_ == DAW_OUTPUT), pos_in_buffer(0),
           port_ident_name(port_ident_name_), name(device_name_)
     {
@@ -176,10 +180,10 @@ class MidiOutputWrapper : public RuntimeListener
             _midi_output->stopBackgroundThread();
     }
 
-    static MidiOutputWrapper *open(int device_index_, const String &port_ident_name_,
-                                   const String &device_name_)
+    static MidiOutputWrapper *open(int device_index_, const juce::String &port_ident_name_,
+                                   const juce::String &device_name_)
     {
-        MidiOutput *device = nullptr;
+        juce::MidiOutput *device = nullptr;
 #ifdef IS_PLUGIN
         if (device_name_ == DAW_OUTPUT)
             ;
@@ -187,10 +191,10 @@ class MidiOutputWrapper : public RuntimeListener
 #endif
 #ifndef JUCE_WINDOWS
             if (device_index_ == VIRTUAL_PORT_ID)
-            device = MidiOutput::createNewDevice(device_name_);
+            device = juce::MidiOutput::createNewDevice(device_name_);
         else
 #endif
-            device = MidiOutput::openDevice(device_index_);
+            device = juce::MidiOutput::openDevice(device_index_);
 
         if (device)
             return new MidiOutputWrapper(device, port_ident_name_, device_name_);
@@ -233,36 +237,37 @@ enum PORT_IDENT
     RECIEVE_CC
 };
 
-class mono_AudioDeviceManager : public AudioDeviceManager, public MidiInputCallback
+class mono_AudioDeviceManager : public juce::AudioDeviceManager, public juce::MidiInputCallback
 {
   public:
     bool main_input_thru;
     bool use_main_input_as_cc;
 
   private:
-    ScopedPointer<MidiInputWrapper> main_input;
+    juce::ScopedPointer<MidiInputWrapper> main_input;
 
-    ScopedPointer<MidiInputWrapper> cc_input;
+    juce::ScopedPointer<MidiInputWrapper> cc_input;
     bool cc_input_thru;
-    ScopedPointer<MidiOutputWrapper> cc_output;
+    juce::ScopedPointer<MidiOutputWrapper> cc_output;
 
-    ScopedPointer<MidiOutputWrapper> thru_output;
-    ScopedPointer<MidiOutputWrapper> clock_output;
+    juce::ScopedPointer<MidiOutputWrapper> thru_output;
+    juce::ScopedPointer<MidiOutputWrapper> clock_output;
 
-    OwnedArray<MidiOutputWrapper> lfo_outputs;
-    OwnedArray<MidiOutputWrapper> adsr_outputs;
+    juce::OwnedArray<MidiOutputWrapper> lfo_outputs;
+    juce::OwnedArray<MidiOutputWrapper> adsr_outputs;
 
-    StringArray output_ident_names;
-    StringArray input_ident_names;
+    juce::StringArray output_ident_names;
+    juce::StringArray input_ident_names;
 
     // INPUT
     // call this block at the beginning of your processblock and
     // override the virtual functions to handle it!
-    void handle_incoming_midi_messages(MidiBuffer &midi_messages_) {}
+    void handle_incoming_midi_messages(juce::MidiBuffer &midi_messages_) {}
 
     // TODO, send feedback for option
     // TODO, this handles the processor!
-    void handleIncomingMidiMessage(MidiInput *source, const MidiMessage &message) override
+    void handleIncomingMidiMessage(juce::MidiInput *source,
+                                   const juce::MidiMessage &message) override
     {
         bool success = false;
         if (main_input)
@@ -320,27 +325,27 @@ class mono_AudioDeviceManager : public AudioDeviceManager, public MidiInputCallb
     virtual void handle_extern_midi_continue(const MidiMessage &message) noexcept = 0;
     virtual void handle_extern_midi_clock(const MidiMessage &message) noexcept = 0;
 #endif
-    virtual void handle_extern_note_input(const MidiMessage &message) noexcept = 0;
-    virtual void handle_extern_cc_input(const MidiMessage &message) noexcept = 0;
+    virtual void handle_extern_note_input(const juce::MidiMessage &message) noexcept = 0;
+    virtual void handle_extern_cc_input(const juce::MidiMessage &message) noexcept = 0;
     virtual void trigger_send_feedback() noexcept = 0;
     virtual void trigger_send_clear_feedback() noexcept = 0;
 
   protected:
     // OUTPUT
-    void get_messages_to_send_to_daw(MidiBuffer &midi_messages_);
+    void get_messages_to_send_to_daw(juce::MidiBuffer &midi_messages_);
 
   public:
     // UNIVERSAL FOR IN AND OUTPUTS
-    StringArray get_available_ports(const String &port_ident_name_);
-    void open_port(const String &port_ident_name_, const String &device_name_);
-    String get_selected_device_name(const String &port_ident_name_) const;
-    bool is_port_open(const String &port_ident_name_) const;
+    juce::StringArray get_available_ports(const juce::String &port_ident_name_);
+    void open_port(const juce::String &port_ident_name_, const juce::String &device_name_);
+    juce::String get_selected_device_name(const juce::String &port_ident_name_) const;
+    bool is_port_open(const juce::String &port_ident_name_) const;
 
   public:
     // SEND
     void send_lfo_message(int lfo_id_, const float *lfo_amps_, int num_samples_);
     void send_adsr_message(int adsr_id_, const float *adsr_amps_, int num_samples_);
-    inline void send_feedback_message(const MidiMessage &message) noexcept
+    inline void send_feedback_message(const juce::MidiMessage &message) noexcept
     {
         if (cc_output)
             cc_output->send_message_now(message, 0);

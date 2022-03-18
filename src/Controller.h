@@ -65,15 +65,15 @@ class MONO_Controller
     // VALUE, SETUP COMUNICATION
   private:
     friend class SliderWrapper;
-    virtual bool on_pre_mouse_down_escape(const MouseEvent &);
-    virtual void on_mouse_down(const MouseEvent &) {}
-    virtual void on_mouse_up(const MouseEvent &) {}
-    virtual void on_mouse_move(const MouseEvent &) {}
-    virtual void on_mouse_enter(const MouseEvent &) {}
-    virtual void on_mouse_exit(const MouseEvent &) {}
-    virtual void on_mouse_drag(const MouseEvent &) {}
-    virtual void on_mouse_double_click(const MouseEvent &) {}
-    virtual void on_mouse_wheel_move(const MouseEvent &, const MouseWheelDetails &) {}
+    virtual bool on_pre_mouse_down_escape(const juce::MouseEvent &);
+    virtual void on_mouse_down(const juce::MouseEvent &) {}
+    virtual void on_mouse_up(const juce::MouseEvent &) {}
+    virtual void on_mouse_move(const juce::MouseEvent &) {}
+    virtual void on_mouse_enter(const juce::MouseEvent &) {}
+    virtual void on_mouse_exit(const juce::MouseEvent &) {}
+    virtual void on_mouse_drag(const juce::MouseEvent &) {}
+    virtual void on_mouse_double_click(const juce::MouseEvent &) {}
+    virtual void on_mouse_wheel_move(const juce::MouseEvent &, const juce::MouseWheelDetails &) {}
     virtual void on_trigger_click() {}
     void on_clicked(bool do_realy_click_ = true);
     virtual bool is_click_blocked() { return false; }
@@ -95,8 +95,8 @@ class MONO_Controller
   public:
     virtual const char *get_controller_type_ident() const = 0;
 
-    String _no_conroller;
-    virtual const String &get_controller_name() const { return _no_conroller; }
+    juce::String _no_conroller;
+    virtual const juce::String &get_controller_name() const { return _no_conroller; }
 
   private:
     virtual int get_range_max() = 0;
@@ -104,27 +104,30 @@ class MONO_Controller
 
     // DRAG'N'DROP
     virtual bool
-    is_interested_in_drag_source(const DragAndDropTarget::SourceDetails &dragSourceDetails_);
-    void item_dropped(const DragAndDropTarget::SourceDetails &dragSourceDetails_);
-    virtual void item_dropped_top(const DragAndDropTarget::SourceDetails &) {}
+    is_interested_in_drag_source(const juce::DragAndDropTarget::SourceDetails &dragSourceDetails_);
+    void item_dropped(const juce::DragAndDropTarget::SourceDetails &dragSourceDetails_);
+    virtual void item_dropped_top(const juce::DragAndDropTarget::SourceDetails &) {}
     virtual bool are_you_rubberable() { return false; }
     virtual void rubber_droped() {}
-    virtual const String get_help_url();
+    virtual const juce::String get_help_url();
     virtual bool are_you_simple_dragable() { return false; }
 
-    String _dragNdrop_ident;
-    virtual String &get_dragNdrop_ident() { return _dragNdrop_ident; }
-    String _multidrag_ident;
-    virtual String &get_multi_dragNdrop_ident() { return _multidrag_ident; };
-    virtual Component *get_dragNdrop_source() { return nullptr; }
+    juce::String _dragNdrop_ident;
+    virtual juce::String &get_dragNdrop_ident() { return _dragNdrop_ident; }
+    juce::String _multidrag_ident;
+    virtual juce::String &get_multi_dragNdrop_ident() { return _multidrag_ident; };
+    virtual juce::Component *get_dragNdrop_source() { return nullptr; }
 
   protected:
     virtual void on_value_changed(int) {}
 
   public:
     virtual int get_value() const { return 0; };
-    void get_label_text(String &string_) const;
-    virtual void get_label_text_top(String &string_) const { string_ = String(HAS_NO_TEXT_VALUE); };
+    void get_label_text(juce::String &string_) const;
+    virtual void get_label_text_top(juce::String &string_) const
+    {
+        string_ = juce::String(HAS_NO_TEXT_VALUE);
+    };
     virtual bool do_you_need_a_text_popup() { return false; }
     virtual bool paint_popup_above() const { return true; }
 
@@ -132,14 +135,14 @@ class MONO_Controller
 
   private:
     // IMAGE BUTTON THINGS ONLY
-    virtual const Image *get_current_image() { return nullptr; }
-    virtual const Drawable *get_current_drawable() { return nullptr; }
+    virtual const juce::Image *get_current_image() { return nullptr; }
+    virtual const juce::Drawable *get_current_drawable() { return nullptr; }
 
     // STYLE THINGS
     friend class UIBase;
     // return true if there are some changes
     virtual void prepare_current_ui_states() {}
-    uint32 get_current_color_low();
+    std::uint32_t get_current_color_low();
 #define IS_NOT_MIDI_LEARNABLE                                                                      \
     bool is_learnable() const override { return false; }
 
@@ -149,11 +152,11 @@ class MONO_Controller
     virtual bool is_learnable() const { return true; }
 
   public:
-    virtual uint32 get_current_color() const = 0;
+    virtual std::uint32_t get_current_color() const = 0;
     virtual void setup_view(void *const){};
 
   public:
-    const Component *get_ui_peer() const;
+    const juce::Component *get_ui_peer() const;
     const ModelBase *get_model() const;
     virtual PodParameterBase *get_parameter() const { return nullptr; }
     // --------------------------------------------------------------------------------------------
@@ -182,9 +185,9 @@ class MONO_Controller
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MONO_Controller)
 };
 // IDENT TO CHECK IF IT IS A MULTIDRAG
-struct MultidragSource : public Component
+struct MultidragSource : public juce::Component
 {
-    Array<MONO_Controller *> alreay_handled_controllers;
+    juce::Array<MONO_Controller *> alreay_handled_controllers;
     int source_state;
     const char *const controller_type_ident;
     const MONO_Controller *controller;
@@ -206,7 +209,7 @@ struct MultidragSource : public Component
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-class ModelBase : public Component
+class ModelBase : public juce::Component
 {
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
@@ -222,11 +225,11 @@ class ModelBase : public Component
     MONO_Controller *_controller;
     AppStyle *_style;
     AppStyle *_background_style;
-    uint32 _background_color;
+    std::uint32_t _background_color;
     bool should_repaint;
 
   public:
-    Image &get_drag_image(Image &) const;
+    juce::Image &get_drag_image(juce::Image &) const;
 
   private:
     bool _is_manual_opaque;
@@ -250,8 +253,8 @@ class ModelBase : public Component
     void resized() override;
 
   public:
-    void get_components_to_repaint(Array<Component *> &components_to_repaint_);
-    void get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_for_popup_);
+    void get_components_to_repaint(juce::Array<juce::Component *> &components_to_repaint_);
+    void get_controllers_for_paint_popup(juce::Array<MONO_Controller *> &controllers_for_popup_);
 
     void set_controller(MONO_Controller *const controller_);
 
@@ -267,11 +270,11 @@ class ModelBase : public Component
 
   private:
     void refresh_background();
-    void paint(Graphics &g_) override;
+    void paint(juce::Graphics &g_) override;
 
   public:
     AppStyle *get_style() const;
-    Component *get_view();
+    juce::Component *get_view();
     const MONO_Controller *get_controller() const;
 
     //==============================================================================

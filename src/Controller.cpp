@@ -126,7 +126,7 @@ void ModelBase::resized()
     }
 }
 
-void ModelBase::get_components_to_repaint(Array<Component *> &components_)
+void ModelBase::get_components_to_repaint(juce::Array<juce::Component *> &components_)
 {
     if (_view)
         if (_controller)
@@ -146,8 +146,8 @@ void ModelBase::get_components_to_repaint(Array<Component *> &components_)
 
 void ModelBase::refresh_background()
 {
-    uint32 new_bg_colour;
-    uint32 working_colour;
+    std::uint32_t new_bg_colour;
+    std::uint32_t working_colour;
     if (!_is_manual_opaque)
     {
         setOpaque(false);
@@ -182,7 +182,7 @@ void ModelBase::refresh_background()
     }
 }
 
-void ModelBase::paint(Graphics &g_)
+void ModelBase::paint(juce::Graphics &g_)
 {
     refresh_background();
     should_repaint = false;
@@ -196,7 +196,8 @@ void ModelBase::set_manual_opaque(bool state_)
     should_repaint = true;
 }
 
-void ModelBase::get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_for_popup_)
+void ModelBase::get_controllers_for_paint_popup(
+    juce::Array<MONO_Controller *> &controllers_for_popup_)
 {
     if (_view)
         if (_controller)
@@ -214,7 +215,7 @@ void ModelBase::set_style(AppStyle *const style_)
 
     if (_view)
     {
-        Component *_view_component = _view->get_top_level_component();
+        juce::Component *_view_component = _view->get_top_level_component();
         if (!_view_component->isVisible())
         {
             _view_component->setVisible(true);
@@ -231,7 +232,7 @@ void ModelBase::set_background_style(AppStyle *const style_)
     }
 }
 
-uint32 MONO_Controller::get_current_color_low()
+std::uint32_t MONO_Controller::get_current_color_low()
 {
     bool use_midi_learn_colour = false;
     if (_app_instance_store->midi_in_map.is_in_learning_mode())
@@ -240,7 +241,7 @@ uint32 MONO_Controller::get_current_color_low()
 
     if (use_midi_learn_colour)
     {
-        return Colour(get_current_color()).overlaidWith(Colour(0x66888888)).getARGB();
+        return juce::Colour(get_current_color()).overlaidWith(juce::Colour(0x66888888)).getARGB();
     }
     else
     {
@@ -248,19 +249,19 @@ uint32 MONO_Controller::get_current_color_low()
     }
 }
 
-Image &ModelBase::get_drag_image(Image &image) const
+juce::Image &ModelBase::get_drag_image(juce::Image &image) const
 {
     int spacer = 20;
-    image = Image(Image::ARGB, getWidth() + spacer, getHeight() + spacer, true);
-    Graphics g(image);
-    Colour col = Colours::yellow;
+    image = juce::Image(juce::Image::ARGB, getWidth() + spacer, getHeight() + spacer, true);
+    juce::Graphics g(image);
+    juce::Colour col = juce::Colours::yellow;
     if (_style)
-        col = Colour(_style->get_font_color());
+        col = juce::Colour(_style->get_font_color());
     g.setColour(col);
     g.drawEllipse(2, 2, getWidth() + spacer - 4, getHeight() + spacer - 4, 4);
 
-    Image element = Image(Image::ARGB, getWidth(), getHeight(), true);
-    Graphics g_element(element);
+    juce::Image element = juce::Image(juce::Image::ARGB, getWidth(), getHeight(), true);
+    juce::Graphics g_element(element);
     _view->cache_paint(g_element, 0x00000000);
 
     g.drawImageAt(element, spacer / 2, spacer / 2);
@@ -273,7 +274,7 @@ AppStyle *ModelBase::get_style() const { return _style; }
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-const Component *MONO_Controller::get_ui_peer() const
+const juce::Component *MONO_Controller::get_ui_peer() const
 {
     if (_model)
         return _model->get_view();
@@ -283,7 +284,7 @@ const Component *MONO_Controller::get_ui_peer() const
 
 const ModelBase *MONO_Controller::get_model() const { return _model; }
 
-Component *ModelBase::get_view() { return _view->get_top_level_component(); }
+juce::Component *ModelBase::get_view() { return _view->get_top_level_component(); }
 
 const MONO_Controller *ModelBase::get_controller() const { return _controller; }
 
@@ -298,7 +299,7 @@ MONO_Controller::MONO_Controller(AppInstanceStore *const app_instance_store_)
         _app_instance_store->midi_mappable_controllers.add(this);
 }
 #include "UIHtmlView.h"
-bool MONO_Controller::on_pre_mouse_down_escape(const MouseEvent &)
+bool MONO_Controller::on_pre_mouse_down_escape(const juce::MouseEvent &)
 {
     if (_app_instance_store->editor_config.style_editor)
     {
@@ -375,7 +376,7 @@ bool MONO_Controller::should_start_multi_drag()
 
     return false;
 }
-void MONO_Controller::get_label_text(String &string_) const
+void MONO_Controller::get_label_text(juce::String &string_) const
 {
     if (_app_instance_store->midi_in_map.is_in_learning_mode())
         return;
@@ -386,16 +387,16 @@ void MONO_Controller::get_label_text(String &string_) const
         if (multidrag_source->controller_type_ident == get_controller_type_ident())
         {
             if (multidrag_source->controller != this)
-                string_ = String(".T.");
+                string_ = juce::String(".T.");
             else
-                string_ = String(".S.");
+                string_ = juce::String(".S.");
         }
     }
     else
         get_label_text_top(string_);
 }
 bool MONO_Controller::is_interested_in_drag_source(
-    const DragAndDropTarget::SourceDetails &dragSourceDetails_)
+    const juce::DragAndDropTarget::SourceDetails &dragSourceDetails_)
 {
     if (_app_instance_store->midi_in_map.is_in_learning_mode())
         return false;
@@ -441,7 +442,7 @@ bool MONO_Controller::is_interested_in_drag_source(
     return false;
 }
 #include "UIHtmlView.h"
-void MONO_Controller::item_dropped(const DragAndDropTarget::SourceDetails &dragSourceDetails_)
+void MONO_Controller::item_dropped(const juce::DragAndDropTarget::SourceDetails &dragSourceDetails_)
 {
     if (dragSourceDetails_.sourceComponent.get()->getName().compare("TlR") == 0)
     {
@@ -464,7 +465,7 @@ void MONO_Controller::item_dropped(const DragAndDropTarget::SourceDetails &dragS
     }
 }
 
-const String MONO_Controller::get_help_url()
+const juce::String MONO_Controller::get_help_url()
 {
     PodParameterBase *const param = get_parameter();
     if (param)

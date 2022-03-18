@@ -36,26 +36,26 @@ void UiEditorSynthLitePopup::refresh()
     {
         if (!combo_midi_listen_type->isMouseOverOrDragging())
             combo_midi_listen_type->setSelectedItemIndex(_midi_control->get_listen_type() + 1,
-                                                         dontSendNotification);
+                                                         juce::dontSendNotification);
         if (!combo_midi_number->isMouseOverOrDragging())
             combo_midi_number->setSelectedItemIndex(_midi_control->get_midi_number(),
-                                                    dontSendNotification);
+                                                    juce::dontSendNotification);
         if (!combo_midi_channel->isMouseOverOrDragging())
             combo_midi_channel->setSelectedItemIndex(_midi_control->get_chnanel() - 1,
-                                                     dontSendNotification);
+                                                     juce::dontSendNotification);
     }
     else
     {
-        combo_midi_listen_type->setSelectedItemIndex(0, dontSendNotification);
+        combo_midi_listen_type->setSelectedItemIndex(0, juce::dontSendNotification);
         combo_midi_listen_type->setEnabled(false);
         combo_midi_number->setEnabled(false);
         combo_midi_channel->setEnabled(false);
     }
 }
 
-void UiEditorSynthLitePopup::set_element_to_show(Component *const comp_)
+void UiEditorSynthLitePopup::set_element_to_show(juce::Component *const comp_)
 {
-    Component *parent = comp_->getParentComponent();
+    juce::Component *parent = comp_->getParentComponent();
     int x = comp_->getX();
     int y = comp_->getY();
     while (parent)
@@ -79,31 +79,31 @@ UiEditorSynthLitePopup::UiEditorSynthLitePopup(UiEditorSynthLite *const parent_,
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    addAndMakeVisible(combo_midi_listen_type = new ComboBox(String()));
+    addAndMakeVisible(combo_midi_listen_type = new juce::ComboBox(juce::String()));
     combo_midi_listen_type->setEditableText(false);
-    combo_midi_listen_type->setJustificationType(Justification::centredLeft);
+    combo_midi_listen_type->setJustificationType(juce::Justification::centredLeft);
     combo_midi_listen_type->setTextWhenNothingSelected(TRANS("TYPE"));
     combo_midi_listen_type->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     combo_midi_listen_type->addListener(this);
 
-    addAndMakeVisible(combo_midi_number = new ComboBox(String()));
+    addAndMakeVisible(combo_midi_number = new juce::ComboBox(juce::String()));
     combo_midi_number->setEditableText(false);
-    combo_midi_number->setJustificationType(Justification::centredLeft);
+    combo_midi_number->setJustificationType(juce::Justification::centredLeft);
     combo_midi_number->setTextWhenNothingSelected(TRANS("NR"));
     combo_midi_number->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     combo_midi_number->addListener(this);
 
-    addAndMakeVisible(close = new TextButton(String()));
+    addAndMakeVisible(close = new juce::TextButton(juce::String()));
     close->setButtonText(TRANS("ESC X"));
     close->addListener(this);
-    close->setColour(TextButton::buttonColourId, Colours::red);
-    close->setColour(TextButton::buttonOnColourId, Colours::red);
-    close->setColour(TextButton::textColourOnId, Colours::black);
-    close->setColour(TextButton::textColourOffId, Colours::black);
+    close->setColour(juce::TextButton::buttonColourId, juce::Colours::red);
+    close->setColour(juce::TextButton::buttonOnColourId, juce::Colours::red);
+    close->setColour(juce::TextButton::textColourOnId, juce::Colours::black);
+    close->setColour(juce::TextButton::textColourOffId, juce::Colours::black);
 
-    addAndMakeVisible(combo_midi_channel = new ComboBox(String()));
+    addAndMakeVisible(combo_midi_channel = new juce::ComboBox(juce::String()));
     combo_midi_channel->setEditableText(false);
-    combo_midi_channel->setJustificationType(Justification::centredLeft);
+    combo_midi_channel->setJustificationType(juce::Justification::centredLeft);
     combo_midi_channel->setTextWhenNothingSelected(TRANS("CH"));
     combo_midi_channel->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     combo_midi_channel->addListener(this);
@@ -115,12 +115,12 @@ UiEditorSynthLitePopup::UiEditorSynthLitePopup(UiEditorSynthLite *const parent_,
 
     for (int i = 1; i != 129; ++i)
     {
-        combo_midi_number->addItem(String(i), i);
+        combo_midi_number->addItem(juce::String(i), i);
     }
 
     for (int i = 1; i != 17; ++i)
     {
-        combo_midi_channel->addItem(String(i), i);
+        combo_midi_channel->addItem(juce::String(i), i);
     }
 
     refresh();
@@ -147,16 +147,16 @@ UiEditorSynthLitePopup::~UiEditorSynthLitePopup()
 }
 
 //==============================================================================
-void UiEditorSynthLitePopup::paint(Graphics &g)
+void UiEditorSynthLitePopup::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
 #include "UiDynamicSizeStart.h"
     //[/UserPrePaint]
 
-    g.setColour(Colour(0x885f9ea0));
+    g.setColour(juce::Colour(0x885f9ea0));
     g.fillRoundedRectangle(1.0f, 10.0f, 80.0f, 100.0f, 10.000f);
 
-    g.setColour(Colour(0x885f9ea0));
+    g.setColour(juce::Colour(0x885f9ea0));
     g.fillPath(internalPath1);
 
     //[UserPaint] Add your own custom painting code here..
@@ -183,7 +183,7 @@ void UiEditorSynthLitePopup::resized()
     //[/UserResized]
 }
 
-void UiEditorSynthLitePopup::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
+void UiEditorSynthLitePopup::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
 {
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]
@@ -226,7 +226,7 @@ void UiEditorSynthLitePopup::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
     //[/UsercomboBoxChanged_Post]
 }
 
-void UiEditorSynthLitePopup::buttonClicked(Button *buttonThatWasClicked)
+void UiEditorSynthLitePopup::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -244,11 +244,11 @@ void UiEditorSynthLitePopup::buttonClicked(Button *buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-bool UiEditorSynthLitePopup::keyPressed(const KeyPress &key)
+bool UiEditorSynthLitePopup::keyPressed(const juce::KeyPress &key)
 {
     //[UserCode_keyPressed] -- Add your code here...
     bool success = false;
-    if (key == KeyPress::escapeKey)
+    if (key == juce::KeyPress::escapeKey)
     {
         MIDIControlHandler::getInstance()->clear();
         parent->popup = nullptr;

@@ -27,6 +27,7 @@
 class AppInstanceStore;
 class UiLabel;
 class BarCopyClipboard;
+
 //[/Headers]
 
 //==============================================================================
@@ -38,14 +39,14 @@ class BarCopyClipboard;
                                                                     //[/Comments]
 */
 class UiEditorClipboard : public UiEditor,
-                          public Timer,
-                          public TextEditor::Listener,
-                          public Button::Listener,
-                          public Label::Listener
+                          public juce::Timer,
+                          public juce::TextEditor::Listener,
+                          public juce::Button::Listener,
+                          public juce::Label::Listener
 {
   public:
     //==============================================================================
-    UiEditorClipboard(AppInstanceStore *const app_instance_store_, uint8 clipboard_id_);
+    UiEditorClipboard(AppInstanceStore *const app_instance_store_, std::uint8_t clipboard_id_);
     ~UiEditorClipboard();
 
     //==============================================================================
@@ -53,7 +54,7 @@ class UiEditorClipboard : public UiEditor,
     AppInstanceStore *const _app_instance_store;
 
   public:
-    const uint8 _clipboard_id;
+    const std::uint8_t _clipboard_id;
 
   private:
     BarCopyClipboard &_bar_copy_clipboard;
@@ -68,13 +69,13 @@ class UiEditorClipboard : public UiEditor,
     void on_close_clicked() override;
 
   private:
-    void textEditorTextChanged(TextEditor &editor_) override;
+    void textEditorTextChanged(juce::TextEditor &editor_) override;
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
-    void buttonClicked(Button *buttonThatWasClicked) override;
-    void labelTextChanged(Label *labelThatHasChanged) override;
+    void buttonClicked(juce::Button *buttonThatWasClicked) override;
+    void labelTextChanged(juce::Label *labelThatHasChanged) override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
@@ -82,37 +83,37 @@ class UiEditorClipboard : public UiEditor,
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Label> newComponent;
-    ScopedPointer<ToggleButton> toggle_copy_steps;
-    ScopedPointer<UiEditorToolbar> toolbar;
-    ScopedPointer<Label> newComponent15;
-    ScopedPointer<Label> newComponent14;
-    ScopedPointer<Label> newComponent13;
-    ScopedPointer<Label> newComponent12;
-    ScopedPointer<Label> newComponent11;
-    ScopedPointer<Label> newComponent9;
-    ScopedPointer<Label> newComponent8;
-    ScopedPointer<Label> newComponent7;
-    ScopedPointer<Label> newComponent6;
-    ScopedPointer<Label> newComponent4;
-    ScopedPointer<Label> newComponent3;
-    ScopedPointer<Label> newComponent10;
-    ScopedPointer<ToggleButton> toggle_select_all;
-    ScopedPointer<ToggleButton> toggle_copy_layer_7;
-    ScopedPointer<ToggleButton> toggle_copy_layer_5_6;
-    ScopedPointer<ToggleButton> toggle_copy_layer_4;
-    ScopedPointer<ToggleButton> toggle_copy_layer_3;
-    ScopedPointer<ToggleButton> toggle_copy_layer_2;
-    ScopedPointer<ToggleButton> toggle_copy_layer_1;
-    ScopedPointer<ToggleButton> toggle_copy_bar_groups;
-    ScopedPointer<ToggleButton> toggle_copy_bar_solo;
-    ScopedPointer<ToggleButton> toggle_copy_step_duration;
-    ScopedPointer<ToggleButton> toggle_copy_step_velocity;
-    ScopedPointer<ToggleButton> toggle_copy_string_octave;
-    ScopedPointer<Label> newComponent2;
-    ScopedPointer<Label> newComponent5;
-    ScopedPointer<Label> label;
-    ScopedPointer<TextButton> button_info;
+    juce::ScopedPointer<juce::Label> newComponent;
+    juce::ScopedPointer<juce::ToggleButton> toggle_copy_steps;
+    juce::ScopedPointer<UiEditorToolbar> toolbar;
+    juce::ScopedPointer<juce::Label> newComponent15;
+    juce::ScopedPointer<juce::Label> newComponent14;
+    juce::ScopedPointer<juce::Label> newComponent13;
+    juce::ScopedPointer<juce::Label> newComponent12;
+    juce::ScopedPointer<juce::Label> newComponent11;
+    juce::ScopedPointer<juce::Label> newComponent9;
+    juce::ScopedPointer<juce::Label> newComponent8;
+    juce::ScopedPointer<juce::Label> newComponent7;
+    juce::ScopedPointer<juce::Label> newComponent6;
+    juce::ScopedPointer<juce::Label> newComponent4;
+    juce::ScopedPointer<juce::Label> newComponent3;
+    juce::ScopedPointer<juce::Label> newComponent10;
+    juce::ScopedPointer<juce::ToggleButton> toggle_select_all;
+    juce::ScopedPointer<juce::ToggleButton> toggle_copy_layer_7;
+    juce::ScopedPointer<juce::ToggleButton> toggle_copy_layer_5_6;
+    juce::ScopedPointer<juce::ToggleButton> toggle_copy_layer_4;
+    juce::ScopedPointer<juce::ToggleButton> toggle_copy_layer_3;
+    juce::ScopedPointer<juce::ToggleButton> toggle_copy_layer_2;
+    juce::ScopedPointer<juce::ToggleButton> toggle_copy_layer_1;
+    juce::ScopedPointer<juce::ToggleButton> toggle_copy_bar_groups;
+    juce::ScopedPointer<juce::ToggleButton> toggle_copy_bar_solo;
+    juce::ScopedPointer<juce::ToggleButton> toggle_copy_step_duration;
+    juce::ScopedPointer<juce::ToggleButton> toggle_copy_step_velocity;
+    juce::ScopedPointer<juce::ToggleButton> toggle_copy_string_octave;
+    juce::ScopedPointer<juce::Label> newComponent2;
+    juce::ScopedPointer<juce::Label> newComponent5;
+    juce::ScopedPointer<juce::Label> label;
+    juce::ScopedPointer<juce::TextButton> button_info;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorClipboard)

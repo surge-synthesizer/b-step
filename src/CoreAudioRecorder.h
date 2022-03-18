@@ -3,10 +3,11 @@
 
 #include "App.h"
 #include "PluginProcessor.h"
+#include <juce_audio_processors/juce_audio_processors.h>
 
 #define HOST_AUDIO_IN "Audio In (From Host)"
 
-class AudioRecorder : public AudioIODeviceCallback
+class AudioRecorder : public juce::AudioIODeviceCallback
 {
     AppInstanceStore *const _app_instance_store;
     int selected_device;
@@ -40,14 +41,14 @@ class AudioRecorder : public AudioIODeviceCallback
         }
 #else
         if (_app_instance_store->audio_processor->wrapperType !=
-            AudioProcessor::WrapperType::wrapperType_AudioUnit)
+            juce::AudioProcessor::WrapperType::wrapperType_AudioUnit)
         {
             set_audio_device(HOST_AUDIO_IN);
             selected_device = -1;
         }
         else
         {
-            StringArray devices = get_availabe_devices();
+            juce::StringArray devices = get_availabe_devices();
             if (devices.size())
                 selected_device = 0;
         }
@@ -73,7 +74,7 @@ class AudioRecorder : public AudioIODeviceCallback
         return selected_device;
 #else
         if (_app_instance_store->audio_processor->wrapperType !=
-            AudioProcessor::WrapperType::wrapperType_AudioUnit)
+            juce::AudioProcessor::WrapperType::wrapperType_AudioUnit)
             return selected_device + 1;
         else
             return selected_device;
@@ -81,7 +82,7 @@ class AudioRecorder : public AudioIODeviceCallback
     }
 
     //==============================================================================
-    void startRecording(const File &file)
+    void startRecording(const juce::File &file)
     {
         if (selected_device == -2)
             return;
@@ -92,7 +93,8 @@ class AudioRecorder : public AudioIODeviceCallback
         {
             // Create an OutputStream to write to our destination file...
             file.deleteFile();
-            ScopedPointer<FileOutputStream> fileStream(file.createOutputStream().release());
+            juce::ScopedPointer<juce::FileOutputStream> fileStream(
+                file.createOutputStream().release());
 
             if (fileStream != nullptr)
             {
@@ -102,7 +104,7 @@ class AudioRecorder : public AudioIODeviceCallback
                 // OggVorbisAudioFormat ogg;
                 // AudioFormatWriter* writer = ogg.createWriterFor (fileStream, sampleRate, 1, 16,
                 // StringPairArray(), 0);
-                AudioFormatWriter *writer{nullptr};
+                juce::AudioFormatWriter *writer{nullptr};
 
                 if (writer != nullptr)
                 {
@@ -111,12 +113,12 @@ class AudioRecorder : public AudioIODeviceCallback
 
                     // Now we'll create one of these helper objects which will act as a FIFO buffer,
                     // and will write the data to disk on our background thread.
-                    threadedWriter =
-                        new AudioFormatWriter::ThreadedWriter(writer, backgroundThread, 32768);
+                    threadedWriter = new juce::AudioFormatWriter::ThreadedWriter(
+                        writer, backgroundThread, 32768);
 
                     // And now, swap over our active writer pointer so that the audio callback will
                     // start using it..
-                    const ScopedLock sl(writerLock);
+                    const juce::ScopedLock sl(writerLock);
                     activeWriter = threadedWriter;
 #ifndef B_STEP_STANDALONE
                     if (is_host_audio_recorder)
@@ -131,7 +133,7 @@ class AudioRecorder : public AudioIODeviceCallback
     {
         // First, clear this pointer to stop the audio callback from using our writer object..
         {
-            const ScopedLock sl(writerLock);
+            const juce::ScopedLock sl(writerLock);
 
 #ifndef B_STEP_STANDALONE
             _app_instance_store->audio_processor->set_active_writer(nullptr);
@@ -148,7 +150,7 @@ class AudioRecorder : public AudioIODeviceCallback
     bool isRecording() const { return activeWriter != nullptr; }
 
     //==============================================================================
-    void audioDeviceAboutToStart(AudioIODevice *device) override
+    void audioDeviceAboutToStart(juce::AudioIODevice *device) override
     {
         sampleRate = device->getCurrentSampleRate();
     }
@@ -159,7 +161,7 @@ class AudioRecorder : public AudioIODeviceCallback
                                float **outputChannelData, int numOutputChannels,
                                int numSamples) override
     {
-        const ScopedLock sl(writerLock);
+        const juce::ScopedLock sl(writerLock);
 
         if (activeWriter != nullptr)
         {
@@ -167,16 +169,17 @@ class AudioRecorder : public AudioIODeviceCallback
 
             // Create an AudioSampleBuffer to wrap our incomming data, note that this does no
             // allocations or copies, it simply references our input data
-            const AudioSampleBuffer buffer(const_cast<float **>(inputChannelData), 2, numSamples);
+            const juce::AudioSampleBuffer buffer(const_cast<float **>(inputChannelData), 2,
+                                                 numSamples);
         }
 
         // We need to clear the output buffers, in case they're full of junk..
         for (int i = 0; i < numOutputChannels; ++i)
             if (outputChannelData[i] != nullptr)
-                FloatVectorOperations::clear(outputChannelData[i], numSamples);
+                juce::FloatVectorOperations::clear(outputChannelData[i], numSamples);
     }
 #ifndef B_STEP_STANDALONE
-    AudioFormatWriter::ThreadedWriter *get_active_writer()
+    juce::AudioFormatWriter::ThreadedWriter *get_active_writer()
     {
         if (is_host_audio_recorder)
             return activeWriter;
@@ -184,19 +187,20 @@ class AudioRecorder : public AudioIODeviceCallback
         return nullptr;
     }
 #endif
-    StringArray get_availabe_devices()
+    juce::StringArray get_availabe_devices()
     {
-        StringArray names;
+        juce::StringArray names;
 
 #ifndef B_STEP_STANDALONE
         if (_app_instance_store->audio_processor->wrapperType !=
-            AudioProcessor::WrapperType::wrapperType_AudioUnit)
+            juce::AudioProcessor::WrapperType::wrapperType_AudioUnit)
             names.add(HOST_AUDIO_IN);
 #endif
-        const OwnedArray<AudioIODeviceType> &devices = deviceManager.getAvailableDeviceTypes();
+        const juce::OwnedArray<juce::AudioIODeviceType> &devices =
+            deviceManager.getAvailableDeviceTypes();
         for (int i = 0; i < devices.size(); ++i)
         {
-            AudioIODeviceType *dev = devices.getUnchecked(i);
+            juce::AudioIODeviceType *dev = devices.getUnchecked(i);
             // dev->scanForDevices();
             if (dev->getDeviceNames().size())
             {
@@ -206,7 +210,7 @@ class AudioRecorder : public AudioIODeviceCallback
         return names;
     }
 
-    void set_audio_device(const String &device_name_)
+    void set_audio_device(const juce::String &device_name_)
     {
 #ifndef B_STEP_STANDALONE
         if (device_name_ == HOST_AUDIO_IN)
@@ -219,7 +223,7 @@ class AudioRecorder : public AudioIODeviceCallback
         else
 #endif
         {
-            StringArray devices = get_availabe_devices();
+            juce::StringArray devices = get_availabe_devices();
             if (!devices.size())
             {
                 selected_device = -2;
@@ -236,6 +240,7 @@ class AudioRecorder : public AudioIODeviceCallback
 #else
                     deviceManager.initialise(1, 0, nullptr, false, devices[0])
 #endif
+
                     != "")
                 {
                     selected_device = -2;
@@ -249,7 +254,7 @@ class AudioRecorder : public AudioIODeviceCallback
         }
     }
 
-    String get_selected_device_name() const noexcept
+    juce::String get_selected_device_name() const noexcept
     {
 #ifndef B_STEP_STANDALONE
         if (selected_device == -1)
@@ -262,14 +267,14 @@ class AudioRecorder : public AudioIODeviceCallback
     }
 
   private:
-    TimeSliceThread backgroundThread; // the thread that will write our audio data to disk
-    ScopedPointer<AudioFormatWriter::ThreadedWriter>
+    juce::TimeSliceThread backgroundThread; // the thread that will write our audio data to disk
+    juce::ScopedPointer<juce::AudioFormatWriter::ThreadedWriter>
         threadedWriter; // the FIFO used to buffer the incoming data
     double sampleRate;
-    AudioDeviceManager deviceManager;
+    juce::AudioDeviceManager deviceManager;
 
-    CriticalSection writerLock;
-    AudioFormatWriter::ThreadedWriter *volatile activeWriter;
+    juce::CriticalSection writerLock;
+    juce::AudioFormatWriter::ThreadedWriter *volatile activeWriter;
 
     bool is_host_audio_recorder;
 

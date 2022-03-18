@@ -33,7 +33,7 @@ class ModelBase;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class SliderValuePopup : public Component
+class SliderValuePopup : public juce::Component
 {
   public:
     //==============================================================================
@@ -43,14 +43,14 @@ class SliderValuePopup : public Component
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
   private:
-    String _text;
+    juce::String _text;
     const ModelBase *const _model;
 
   public:
-    void set_text(String &value_);
+    void set_text(juce::String &value_);
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
 
   private:

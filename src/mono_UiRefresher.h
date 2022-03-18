@@ -24,11 +24,11 @@ class mono_UiRefreshable
 };
 
 //==============================================================================
-class mono_UiRefresher : public Timer
+class mono_UiRefresher : public juce::Timer
 {
-    CriticalSection lock;
+    juce::CriticalSection lock;
 
-    Array<mono_UiRefreshable *> refreshables;
+    juce::Array<mono_UiRefreshable *> refreshables;
 
     void timerCallback() override;
 

@@ -32,6 +32,8 @@
 #ifndef __DROWAUDIO_MATHSUTILITIES_H__
 #define __DROWAUDIO_MATHSUTILITIES_H__
 
+#include <juce_core/juce_core.h>
+
 #if JUCE_MSVC
 #pragma warning(disable : 4505)
 #endif
@@ -402,7 +404,8 @@ static inline FloatingPointType sincPi(const FloatingPointType x) noexcept
     if (x == 0)
         return static_cast<FloatingPointType>(1);
 
-    return static_cast<FloatingPointType>(std::sin(double_Pi * x) / (double_Pi * x));
+    return static_cast<FloatingPointType>(std::sin(juce::MathConstants<double>::pi * x) /
+                                          (juce::MathConstants<double>::pi * x));
 }
 
 //==============================================================================
@@ -410,12 +413,12 @@ static inline FloatingPointType sincPi(const FloatingPointType x) noexcept
 template <typename FloatingPointType>
 static inline FloatingPointType degreesToRadians(const FloatingPointType degrees) noexcept
 {
-    return (degrees / 180.0) * double_Pi;
+    return (degrees / 180.0) * juce::MathConstants<double>::pi;
 }
 
 template <> inline float degreesToRadians<float>(const float degrees) noexcept
 {
-    return (degrees / 180.0f) * float_Pi;
+    return (degrees / 180.0f) * juce::MathConstants<float>::pi;
 }
 
 /**	Returns the previous power of 2.
@@ -423,7 +426,7 @@ template <> inline float degreesToRadians<float>(const float degrees) noexcept
  */
 static inline int prevPowerOfTwo(int number) noexcept
 {
-    if (isPowerOfTwo(number))
+    if (juce::isPowerOfTwo(number))
         return number;
     else
         return (int)(pow(2.0, ceil(log((double)number) / log(2.0))) * 0.5);
@@ -435,10 +438,10 @@ static inline int prevPowerOfTwo(int number) noexcept
  */
 static inline int findPowerForBaseTwo(int number) noexcept
 {
-    if (isPowerOfTwo(number))
+    if (juce::isPowerOfTwo(number))
         return (int)(log((double)number) / log(2.0));
     else
-        return (int)(log((double)nextPowerOfTwo(number)) / log(2.0));
+        return (int)(log((double)juce::nextPowerOfTwo(number)) / log(2.0));
 }
 
 #if JUCE_MSVC || DOXYGEN

@@ -21,7 +21,8 @@
 #define __JUCE_HEADER_8D76C0B9054580BE__
 
 //[Headers]     -- You can add your own extra header files here --
-#include "JuceHeader.h"
+#include <juce_gui_basics/juce_gui_basics.h>
+
 //[/Headers]
 
 //==============================================================================
@@ -32,7 +33,9 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiTestArea : public Component, public Slider::Listener, public Button::Listener
+class UiTestArea : public juce::Component,
+                   public juce::Slider::Listener,
+                   public juce::Button::Listener
 {
   public:
     //==============================================================================
@@ -43,10 +46,10 @@ class UiTestArea : public Component, public Slider::Listener, public Button::Lis
     //[UserMethods]     -- You can add your own custom methods in this section.
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
-    void sliderValueChanged(Slider *sliderThatWasMoved);
-    void buttonClicked(Button *buttonThatWasClicked);
+    void sliderValueChanged(juce::Slider *sliderThatWasMoved);
+    void buttonClicked(juce::Button *buttonThatWasClicked);
 
     // Binary resources:
     static const char *fullscreen_png;
@@ -57,16 +60,16 @@ class UiTestArea : public Component, public Slider::Listener, public Button::Lis
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Slider> slider;
-    ScopedPointer<TextButton> textButton2;
-    ScopedPointer<TextButton> textButton3;
-    ScopedPointer<TextButton> textButton4;
-    ScopedPointer<TextButton> textButton5;
-    ScopedPointer<TextButton> textButton6;
-    ScopedPointer<TextButton> textButton8;
-    ScopedPointer<TextButton> textButton9;
-    ScopedPointer<TextButton> textButton7;
-    Image cachedImage_fullscreen_png;
+    juce::ScopedPointer<juce::Slider> slider;
+    juce::ScopedPointer<juce::TextButton> textButton2;
+    juce::ScopedPointer<juce::TextButton> textButton3;
+    juce::ScopedPointer<juce::TextButton> textButton4;
+    juce::ScopedPointer<juce::TextButton> textButton5;
+    juce::ScopedPointer<juce::TextButton> textButton6;
+    juce::ScopedPointer<juce::TextButton> textButton8;
+    juce::ScopedPointer<juce::TextButton> textButton9;
+    juce::ScopedPointer<juce::TextButton> textButton7;
+    juce::Image cachedImage_fullscreen_png;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiTestArea)

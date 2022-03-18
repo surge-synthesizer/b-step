@@ -8,16 +8,16 @@
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-class UITool : public DragAndDropContainer, public ImageButton
+class UITool : public juce::DragAndDropContainer, public juce::ImageButton
 {
   protected:
-    Image _curser_image;
+    juce::Image _curser_image;
 
-    virtual const Image &get_curser_image();
+    virtual const juce::Image &get_curser_image();
 
   private:
-    virtual void mouseDrag(const MouseEvent &e_) override;
-    void mouseUp(const MouseEvent &e_) override;
+    virtual void mouseDrag(const juce::MouseEvent &e_) override;
+    void mouseUp(const juce::MouseEvent &e_) override;
     void clicked() override;
 
   protected:
@@ -30,7 +30,7 @@ class UITool : public DragAndDropContainer, public ImageButton
 
     bool is_draged;
 
-    UITool(const String &name_);
+    UITool(const juce::String &name_);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UITool)
 };
@@ -40,9 +40,9 @@ class UITool : public DragAndDropContainer, public ImageButton
 // ************************************************************************************************
 class UIRubber : public UITool
 {
-    ScopedPointer<Drawable> drawable;
+    juce::ScopedPointer<juce::Drawable> drawable;
 
-    void paint(Graphics &g_) override;
+    void paint(juce::Graphics &g_) override;
 
   public:
     void set_app_instance_store(AppInstanceStore *const app_instance_store_)
@@ -50,7 +50,7 @@ class UIRubber : public UITool
         _app_instance_store = app_instance_store_;
     }
 
-    UIRubber(const String &);
+    UIRubber(const juce::String &);
 };
 
 // ************************************************************************************************
@@ -58,9 +58,9 @@ class UIRubber : public UITool
 // ************************************************************************************************
 class UIQuestion : public UITool
 {
-    ScopedPointer<Drawable> drawable;
+    juce::ScopedPointer<juce::Drawable> drawable;
 
-    void paint(Graphics &g_) override;
+    void paint(juce::Graphics &g_) override;
 
   public:
     void set_app_instance_store(AppInstanceStore *const app_instance_store_)
@@ -68,7 +68,7 @@ class UIQuestion : public UITool
         _app_instance_store = app_instance_store_;
     }
 
-    UIQuestion(const String &);
+    UIQuestion(const juce::String &);
 };
 
 // ************************************************************************************************
@@ -80,41 +80,41 @@ class BarCopyClipboard : public UIBarClipboardSettings
     Bar *stored_bar;
 
   public:
-    BarCopyClipboard(uint8 id_);
+    BarCopyClipboard(std::uint8_t id_);
     ~BarCopyClipboard();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BarCopyClipboard)
 };
 
 class UiEditorClipboard;
-class UIClipboard : public UITool, public DragAndDropTarget
+class UIClipboard : public UITool, public juce::DragAndDropTarget
 {
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
-    ScopedPointer<Component> drag_source;
+    juce::ScopedPointer<juce::Component> drag_source;
 
   public:
     // PARAMETER
     AppInstanceStore *const _app_instance_store;
     GstepAudioProcessorEditor *const _main_window;
-    const uint8 id;
+    const std::uint8_t id;
     BarCopyClipboard &_bar_copy_clipboard;
 
-    ScopedPointer<Drawable> drawable;
+    juce::ScopedPointer<juce::Drawable> drawable;
     UiEditorClipboard *_editor;
 
-    void paint(Graphics &g_) override;
-    void mouseDrag(const MouseEvent &e_) override;
+    void paint(juce::Graphics &g_) override;
+    void mouseDrag(const juce::MouseEvent &e_) override;
     void clicked() override;
 
     bool isInterestedInDragSource(const SourceDetails &dragSourceDetails_) override;
     void itemDropped(const SourceDetails &dragSourceDetails_) override;
-    void dragOperationEnded(const DragAndDropTarget::SourceDetails &) override;
+    void dragOperationEnded(const juce::DragAndDropTarget::SourceDetails &) override;
 
   public:
     UIClipboard(AppInstanceStore *app_instance_store_, GstepAudioProcessorEditor *main_window_,
-                uint8 id_);
+                std::uint8_t id_);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UIClipboard)
 };

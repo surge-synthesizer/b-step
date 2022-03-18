@@ -40,7 +40,7 @@ class MONO_UIButtonController : public MONO_Controller
         return nullptr;
     }
 
-    virtual const String &get_controller_name() const override
+    virtual const juce::String &get_controller_name() const override
     {
         PodParameterBase *const param = get_parameter();
         if (param)
@@ -115,7 +115,7 @@ class MONO_UIButtonController : public MONO_Controller
 
     virtual int get_value() const override { return get_current_state(); }
 
-    virtual uint32 get_current_color() const override
+    virtual std::uint32_t get_current_color() const override
     {
         if (_model)
         {
@@ -189,7 +189,7 @@ class MONO_UISliderController : public MONO_Controller
 {
     AppInstanceStore *const _app_instance_store;
 
-    virtual const String &get_controller_name() const override
+    virtual const juce::String &get_controller_name() const override
     {
         PodParameterBase *const param = get_parameter();
         if (param)
@@ -217,7 +217,7 @@ class MONO_UISliderController : public MONO_Controller
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // VIEW EVENT HANDLING
-    void on_mouse_down(const MouseEvent &) override
+    void on_mouse_down(const juce::MouseEvent &) override
     {
         if (_app_instance_store->midi_in_map.is_in_learning_mode() && is_learnable())
         {
@@ -234,7 +234,7 @@ class MONO_UISliderController : public MONO_Controller
         }
     }
 
-    void on_mouse_up(const MouseEvent &) override
+    void on_mouse_up(const juce::MouseEvent &) override
     {
         if (_app_instance_store->editor_config.slider_controller_is_down == this)
         {
@@ -247,9 +247,9 @@ class MONO_UISliderController : public MONO_Controller
         }
     }
 
-    virtual void get_label_text_top(String &string_) const override
+    virtual void get_label_text_top(juce::String &string_) const override
     {
-        string_ = String(get_value());
+        string_ = juce::String(get_value());
     };
 
     // --------------------------------------------------------------------------------------------
@@ -320,7 +320,7 @@ class MONO_UISliderController : public MONO_Controller
         return 0;
     }
 
-    virtual uint32 get_current_color() const override
+    virtual std::uint32_t get_current_color() const override
     {
         if (_model)
         {
@@ -358,8 +358,8 @@ class MONO_UISliderController : public MONO_Controller
     /* virtual */ void setup_slider(UISlider *const slider_)
     {
         slider_->setRange(get_range_min(), get_range_max(), 1);
-        slider_->setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-        slider_->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+        slider_->setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
+        slider_->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
         if (get_range_max() > 350)
         {
             slider_->setDragSensitivity(1550);

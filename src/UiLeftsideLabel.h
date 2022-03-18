@@ -24,6 +24,7 @@
 #include "App.h"
 #include "UiColumnWrapper.h"
 #include "_H_UiElements.h"
+
 //[/Headers]
 
 //==============================================================================
@@ -44,15 +45,15 @@ class UiLeftsideLabel : public SubeditorBase
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
   public:
-    void set_text(const String &text_) override;
+    void set_text(const juce::String &text_) override;
     void on_style_set(AppStyle *const style_) override;
 
-    uint32 last_painted_bg;
+    std::uint32_t last_painted_bg;
 
-    void refresh_ui(Array<Component *> &components_to_repaint_) override;
+    void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_) override;
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
 
   private:

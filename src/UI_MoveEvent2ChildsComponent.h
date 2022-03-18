@@ -7,14 +7,14 @@
 
 #define NEUTRAL_MOUSE_DOWN_POINT Point<int>(-1, -1)
 
-class MoveEvent2ChildsComponent : public Component
+class MoveEvent2ChildsComponent : public juce::Component
 {
 #ifdef USE_BIGGER_AREA_HACK
-    Point<int> _last_mouse_down_point;
+    juce::Point<int> _last_mouse_down_point;
 
   private:
-    Array<ModelBase *> _null_models;
-    virtual const Array<ModelBase *> &get_event_receiveable_models() { return _null_models; }
+    juce::Array<ModelBase *> _null_models;
+    virtual const juce::Array<ModelBase *> &get_event_receiveable_models() { return _null_models; }
 
     enum MOUSE_EVENT_TYPE
     {
@@ -28,47 +28,49 @@ class MoveEvent2ChildsComponent : public Component
         MOUSE_DOUBLE_CLICK
     };
 
-    void mouseDown(const MouseEvent &event_) override
+    void mouseDown(const juce::MouseEvent &event_) override
     {
         try_trigger_mouse_event(event_, nullptr, MOUSE_DOWN);
     }
 
-    void mouseUp(const MouseEvent &event_) override
+    void mouseUp(const juce::MouseEvent &event_) override
     {
         try_trigger_mouse_event(event_, nullptr, MOUSE_UP);
     }
 
-    void mouseMove(const MouseEvent &event_) override
+    void mouseMove(const juce::MouseEvent &event_) override
     {
         try_trigger_mouse_event(event_, nullptr, MOUSE_MOVE);
     }
 
-    void mouseEnter(const MouseEvent &event_) override
+    void mouseEnter(const juce::MouseEvent &event_) override
     {
         try_trigger_mouse_event(event_, nullptr, MOUSE_ENTER);
     }
 
-    void mouseExit(const MouseEvent &event_) override
+    void mouseExit(const juce::MouseEvent &event_) override
     {
         try_trigger_mouse_event(event_, nullptr, MOUSE_EXIT);
     }
 
-    void mouseDrag(const MouseEvent &event_) override
+    void mouseDrag(const juce::MouseEvent &event_) override
     {
         try_trigger_mouse_event(event_, nullptr, MOUSE_DRAG);
     }
 
-    void mouseDoubleClick(const MouseEvent &event_) override
+    void mouseDoubleClick(const juce::MouseEvent &event_) override
     {
         try_trigger_mouse_event(event_, nullptr, MOUSE_DOUBLE_CLICK);
     }
 
-    void mouseWheelMove(const MouseEvent &event_, const MouseWheelDetails &wheel_) override
+    void mouseWheelMove(const juce::MouseEvent &event_,
+                        const juce::MouseWheelDetails &wheel_) override
     {
         try_trigger_mouse_event(event_, &wheel_, MOUSE_WHEEL_MOVE);
     }
 
-    void try_trigger_mouse_event(const MouseEvent &event_, const MouseWheelDetails *const wheel_,
+    void try_trigger_mouse_event(const juce::MouseEvent &event_,
+                                 const juce::MouseWheelDetails *const wheel_,
                                  MOUSE_EVENT_TYPE event_type_)
     {
         int x = event_.getMouseDownX();
@@ -95,12 +97,12 @@ class MoveEvent2ChildsComponent : public Component
         }
     }
 
-    inline bool try_send_event_at(int x_, int y_, const MouseEvent &event_,
-                                  const MouseWheelDetails *const wheel_,
+    inline bool try_send_event_at(int x_, int y_, const juce::MouseEvent &event_,
+                                  const juce::MouseWheelDetails *const wheel_,
                                   MOUSE_EVENT_TYPE event_type_)
     {
-        const Array<ModelBase *> &models = get_event_receiveable_models();
-        Rectangle<int> bounds_in_parent;
+        const juce::Array<ModelBase *> &models = get_event_receiveable_models();
+        juce::Rectangle<int> bounds_in_parent;
         ModelBase *model;
         for (int i = 0; i != models.size(); ++i)
         {
@@ -111,7 +113,7 @@ class MoveEvent2ChildsComponent : public Component
                 ((y_ >= bounds_in_parent.getY() &&
                   y_ <= bounds_in_parent.getY() + bounds_in_parent.getHeight())))
             {
-                Component *const component = model->get_view();
+                juce::Component *const component = model->get_view();
                 if (component)
                 {
                     switch (event_type_)

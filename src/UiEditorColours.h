@@ -22,6 +22,8 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "App.h"
+#include <juce_gui_extra/juce_gui_extra.h>
+
 class ComponentColours;
 //[/Headers]
 
@@ -33,7 +35,9 @@ class ComponentColours;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorColourStyler : public Component, public Timer, public Button::Listener
+class UiEditorColourStyler : public juce::Component,
+                             public juce::Timer,
+                             public juce::Button::Listener
 {
   public:
     //==============================================================================
@@ -43,37 +47,37 @@ class UiEditorColourStyler : public Component, public Timer, public Button::List
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
     ComponentColours *const _colours;
-    Colour *editable_colour;
+    juce::Colour *editable_colour;
 
     void timerCallback();
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
-    void buttonClicked(Button *buttonThatWasClicked);
+    void buttonClicked(juce::Button *buttonThatWasClicked);
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<ColourSelector> colour_selector;
-    ScopedPointer<TextButton> col_1;
-    ScopedPointer<TextButton> style_1;
-    ScopedPointer<TextButton> col_2;
-    ScopedPointer<TextButton> col_3;
-    ScopedPointer<TextButton> col_4;
-    ScopedPointer<TextButton> col_5;
-    ScopedPointer<TextButton> col_6;
-    ScopedPointer<TextButton> col_7;
-    ScopedPointer<TextButton> col_8;
-    ScopedPointer<TextButton> col_9;
-    ScopedPointer<TextButton> col_10;
-    ScopedPointer<TextButton> style_2;
-    ScopedPointer<TextButton> style_3;
-    ScopedPointer<TextButton> style_4;
-    ScopedPointer<TextButton> style_5;
-    ScopedPointer<TextButton> col_11;
+    juce::ScopedPointer<juce::ColourSelector> colour_selector;
+    juce::ScopedPointer<juce::TextButton> col_1;
+    juce::ScopedPointer<juce::TextButton> style_1;
+    juce::ScopedPointer<juce::TextButton> col_2;
+    juce::ScopedPointer<juce::TextButton> col_3;
+    juce::ScopedPointer<juce::TextButton> col_4;
+    juce::ScopedPointer<juce::TextButton> col_5;
+    juce::ScopedPointer<juce::TextButton> col_6;
+    juce::ScopedPointer<juce::TextButton> col_7;
+    juce::ScopedPointer<juce::TextButton> col_8;
+    juce::ScopedPointer<juce::TextButton> col_9;
+    juce::ScopedPointer<juce::TextButton> col_10;
+    juce::ScopedPointer<juce::TextButton> style_2;
+    juce::ScopedPointer<juce::TextButton> style_3;
+    juce::ScopedPointer<juce::TextButton> style_4;
+    juce::ScopedPointer<juce::TextButton> style_5;
+    juce::ScopedPointer<juce::TextButton> col_11;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorColourStyler)

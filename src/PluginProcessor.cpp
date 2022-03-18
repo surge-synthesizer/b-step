@@ -16,6 +16,7 @@
 
 #include "DoYouKnow.h"
 
+#include <juce_events/juce_events.h>
 /// TODO make the ticker!
 
 #include INCLUDE_USER_DEBUG
@@ -38,12 +39,12 @@ class MessageStoreage
         MIDIMessageWithDuration *const ident_message;
 
       private:
-        Array<MIDIMessageWithDuration *> messages_to_trigger;
+        juce::Array<MIDIMessageWithDuration *> messages_to_trigger;
 
       public:
         void add_retrigger_message_or_kill(MIDIMessageWithDuration *duration_message_)
         {
-            MidiMessage *message;
+            juce::MidiMessage *message;
             bool already_on_stack = false;
             for (int i = 0; i != messages_to_trigger.size(); ++i)
             {
@@ -60,7 +61,10 @@ class MessageStoreage
             else
                 messages_to_trigger.add(duration_message_);
         }
-        Array<MIDIMessageWithDuration *> &get_retrigger_messages() { return messages_to_trigger; }
+        juce::Array<MIDIMessageWithDuration *> &get_retrigger_messages()
+        {
+            return messages_to_trigger;
+        }
 
         RetriggerPair(MIDIMessageWithDuration *const ident_message_,
                       MIDIMessageWithDuration *const retrigger_message_)
@@ -71,7 +75,7 @@ class MessageStoreage
     };
     class RetriggerStack
     {
-        OwnedArray<RetriggerPair> retrigger_pairs;
+        juce::OwnedArray<RetriggerPair> retrigger_pairs;
 
         inline RetriggerPair *find(MIDIMessageWithDuration *const duration_message_)
         {
@@ -105,11 +109,11 @@ class MessageStoreage
                 retrigger_pairs.add(new RetriggerPair(duration_message_, retrigger_message_));
         }
 
-        inline Array<MIDIMessageWithDuration *>
+        inline juce::Array<MIDIMessageWithDuration *>
         pull_retrigger_messages(MIDIMessageWithDuration *const duration_message_)
         {
             RetriggerPair *existing_pair = remove(duration_message_);
-            Array<MIDIMessageWithDuration *> retrigger_messages;
+            juce::Array<MIDIMessageWithDuration *> retrigger_messages;
             if (existing_pair)
             {
                 retrigger_messages = existing_pair->get_retrigger_messages();
@@ -122,11 +126,11 @@ class MessageStoreage
 
     RetriggerStack retrigger_stack;
 
-    OwnedArray<MIDIMessageWithDuration> _duration_messages;
-    Array<MidiMessage *> _over_messages;
+    juce::OwnedArray<MIDIMessageWithDuration> _duration_messages;
+    juce::Array<juce::MidiMessage *> _over_messages;
 
   public:
-    Array<MIDIMessageWithDuration *> _ready_messages;
+    juce::Array<MIDIMessageWithDuration *> _ready_messages;
 
   public:
     inline void add_duration_message(MIDIMessageWithDuration *const message_)
@@ -143,13 +147,13 @@ class MessageStoreage
 
             if (duration_message->duration == 0)
             {
-                *duration_message->message =
-                    MidiMessage::noteOff(duration_message->message->getChannel(),
-                                         duration_message->message->getNoteNumber(), (uint8_t)0);
+                *duration_message->message = juce::MidiMessage::noteOff(
+                    duration_message->message->getChannel(),
+                    duration_message->message->getNoteNumber(), (uint8_t)0);
                 _over_messages.add(duration_message->message);
 
                 // ADD RETRIGGER MESSAGES
-                Array<MIDIMessageWithDuration *> retrigger_messages =
+                juce::Array<MIDIMessageWithDuration *> retrigger_messages =
                     retrigger_stack.pull_retrigger_messages(duration_message);
                 for (int i = 0; i != retrigger_messages.size(); ++i)
                 {
@@ -166,12 +170,15 @@ class MessageStoreage
             duration_message = _duration_messages.getUnchecked(i);
             duration_message->duration = 0;
             *duration_message->message =
-                MidiMessage::noteOff(duration_message->message->getChannel(),
-                                     duration_message->message->getNoteNumber(), (uint8_t)0);
+                juce::MidiMessage::noteOff(duration_message->message->getChannel(),
+                                           duration_message->message->getNoteNumber(), (uint8_t)0);
             _over_messages.add(duration_message->message);
         }
     }
-    inline const Array<MidiMessage *> &get_over_messages() const { return _over_messages; }
+    inline const juce::Array<juce::MidiMessage *> &get_over_messages() const
+    {
+        return _over_messages;
+    }
     inline void set_same_messages_to_timeover(MIDIMessageWithDuration *const duration_message_,
                                               int playback_mode_)
     {
@@ -226,7 +233,8 @@ class MessageStoreage
                     if (new_duration > 0)
                     {
                         MIDIMessageWithDuration *retrigger_message = new MIDIMessageWithDuration(
-                            new MidiMessage(*to_stop_duration_message->message), new_duration);
+                            new juce::MidiMessage(*to_stop_duration_message->message),
+                            new_duration);
                         retrigger_stack.add_new(duration_message_, retrigger_message);
                     }
                 }
@@ -243,7 +251,7 @@ class MessageStoreage
 
                 // WILL STOP THE MESSAGE
                 to_stop_duration_message->duration = 0;
-                *to_stop_duration_message->message = MidiMessage::noteOff(
+                *to_stop_duration_message->message = juce::MidiMessage::noteOff(
                     to_stop_duration_message->message->getChannel(),
                     to_stop_duration_message->message->getNoteNumber(), (uint8_t)0);
                 _over_messages.add(to_stop_duration_message->message);
@@ -253,10 +261,10 @@ class MessageStoreage
 
     /// SINGLESHOTS
   private:
-    OwnedArray<MidiMessage> _singleshots_messages;
+    juce::OwnedArray<juce::MidiMessage> _singleshots_messages;
 
   public:
-    inline void add_singleshot_message(MidiMessage *const on_message_)
+    inline void add_singleshot_message(juce::MidiMessage *const on_message_)
     {
         _singleshots_messages.add(on_message_);
     }
@@ -274,7 +282,7 @@ class MessageStoreage
     inline void precalculate_cleanup()
     {
         MIDIMessageWithDuration *duration_message;
-        Array<MIDIMessageWithDuration *> duration_messages_to_kill;
+        juce::Array<MIDIMessageWithDuration *> duration_messages_to_kill;
         for (int i = 0; i != _duration_messages.size(); ++i)
         {
             duration_message = _duration_messages.getUnchecked(i);
@@ -317,8 +325,8 @@ class MessageProcessor :
     public Ticker,
 #endif
     public MIDIInListener,
-    public Timer,
-    public MidiKeyboardStateListener
+    public juce::Timer,
+    public juce::MidiKeyboardStateListener
 {
   public:
     bool is_playing;
@@ -328,10 +336,10 @@ class MessageProcessor :
 
     int _last_bpm;
 
-    MidiMessage clock_message;
-    MidiMessage start_message;
-    MidiMessage stop_message;
-    MidiMessage continue_message;
+    juce::MidiMessage clock_message;
+    juce::MidiMessage start_message;
+    juce::MidiMessage stop_message;
+    juce::MidiMessage continue_message;
 
     MidiIOHandler &_midi_io_handler;
     GstepAudioProcessor &_audio_processor;
@@ -355,8 +363,8 @@ class MessageProcessor :
 
     // KEP KEY PRESSED FUNCTION
 
-    Array<bool> pressed_keys_store;
-    void handleNoteOn(MidiKeyboardState *source, int midiChannel, int midiNoteNumber,
+    juce::Array<bool> pressed_keys_store;
+    void handleNoteOn(juce::MidiKeyboardState *source, int midiChannel, int midiNoteNumber,
                       float velocity) override
     {
         return;
@@ -372,7 +380,7 @@ class MessageProcessor :
             pressed_keys++;
         }
     }
-    void handleNoteOff(MidiKeyboardState *source, int midiChannel, int midiNoteNumber,
+    void handleNoteOff(juce::MidiKeyboardState *source, int midiChannel, int midiNoteNumber,
                        float velocity) override
     {
         return;
@@ -391,16 +399,16 @@ class MessageProcessor :
         }
     }
 
-    MidiMessage last_in_message;
-    int8 last_remote_tune;
+    juce::MidiMessage last_in_message;
+    std::int8_t last_remote_tune;
     int pressed_keys;
-    inline void process(const MidiMessage &message_) override
+    inline void process(const juce::MidiMessage &message_) override
     {
         last_in_message = message_;
 
         // TODO make the ports not virtual
         MidiOutputObject *midi_out_port;
-        Array<int> feeded_ports;
+        juce::Array<int> feeded_ports;
         feeded_ports.ensureStorageAllocated(BAR_GROUPS + MIDI_OUT_B);
         for (int i = 0; i != BAR_GROUPS + MIDI_OUT_B; ++i)
         {
@@ -460,7 +468,8 @@ class MessageProcessor :
     }
 
   private:
-    inline void forward_incoming_message(MidiOutputObject *const port_, const MidiMessage &message_)
+    inline void forward_incoming_message(MidiOutputObject *const port_,
+                                         const juce::MidiMessage &message_)
     {
         bool is_sync_message = false;
         if (message_.isMidiClock())
@@ -514,7 +523,7 @@ class MessageProcessor :
 
     /// SLAVE AND MASTER
   public:
-    inline void precalculate(bool do_, int64 absolute_vst_clock = -1)
+    inline void precalculate(bool do_, std::int64_t absolute_vst_clock = -1)
     {
 #ifdef B_STEP_STANDALONE
         if (is_playing)
@@ -532,12 +541,12 @@ class MessageProcessor :
             // if( ! _app_instance_store->audio_processor->is_mute )
             {
                 MessageStoreage *running_midi_messages_per_group;
-                Array<MIDIMessageWithDuration *> duration_messages;
+                juce::Array<MIDIMessageWithDuration *> duration_messages;
                 duration_messages.ensureStorageAllocated(SUM_STRINGS);
-                Array<MidiMessage *> pc_and_cc_messages;
+                juce::Array<juce::MidiMessage *> pc_and_cc_messages;
                 MidiOutputObject *port;
                 int sequence_group_id;
-                // Array< int > feeded_PC_CC_ports;
+                // juce::Array< int > feeded_PC_CC_ports;
                 for (int group_id = 0; group_id != BAR_GROUPS + MIDI_OUT_B; ++group_id)
                 {
                     sequence_group_id = group_id;
@@ -553,7 +562,7 @@ class MessageProcessor :
                     { // if( ! _app_instance_store->audio_processor->is_mute ) {
                         if (port->is_open())
                         {
-                            Array<MIDIMessageWithDuration *> &precalculated_messages =
+                            juce::Array<MIDIMessageWithDuration *> &precalculated_messages =
                                 running_midi_messages_per_group->_ready_messages;
 
                             // FIFO CC, PC, NOTES
@@ -570,7 +579,7 @@ class MessageProcessor :
                                                                    sequence_group_id, true);
                                 for (int i = 0; i != pc_and_cc_messages.size(); ++i)
                                 {
-                                    MidiMessage *message = pc_and_cc_messages.getUnchecked(i);
+                                    juce::MidiMessage *message = pc_and_cc_messages.getUnchecked(i);
                                     message->setChannel(_audio_processor.get_channel(group_id));
                                     precalculated_messages.add(new MIDIMessageWithDuration(
                                         pc_and_cc_messages.getUnchecked(i), SINGLE_SHOT_MESSAGE));
@@ -585,7 +594,7 @@ class MessageProcessor :
                                                                    sequence_group_id);
                                 for (int i = 0; i != pc_and_cc_messages.size(); ++i)
                                 {
-                                    MidiMessage *message = pc_and_cc_messages.getUnchecked(i);
+                                    juce::MidiMessage *message = pc_and_cc_messages.getUnchecked(i);
                                     message->setChannel(_audio_processor.get_channel(group_id));
                                     precalculated_messages.add(new MIDIMessageWithDuration(
                                         pc_and_cc_messages.getUnchecked(i), SINGLE_SHOT_MESSAGE));
@@ -641,7 +650,7 @@ class MessageProcessor :
                                                                    sequence_group_id, false);
                                 for (int i = 0; i != pc_and_cc_messages.size(); ++i)
                                 {
-                                    MidiMessage *message = pc_and_cc_messages.getUnchecked(i);
+                                    juce::MidiMessage *message = pc_and_cc_messages.getUnchecked(i);
                                     message->setChannel(_audio_processor.get_channel(group_id));
                                     precalculated_messages.add(new MIDIMessageWithDuration(
                                         pc_and_cc_messages.getUnchecked(i), SINGLE_SHOT_MESSAGE));
@@ -697,8 +706,8 @@ class MessageProcessor :
     }
 
   private:
-    MidiMessage sysex_bulk_message;
-    OwnedArray<MessageStoreage> _messages_stores;
+    juce::MidiMessage sysex_bulk_message;
+    juce::OwnedArray<MessageStoreage> _messages_stores;
     inline void process_output(bool only_send_stop_messages = false)
     {
         MessageStoreage *running_midi_messages_per_group;
@@ -711,7 +720,7 @@ class MessageProcessor :
             // SEND STOP MESSAGES
             if (port->is_open())
             {
-                const Array<MidiMessage *> &stop_messages =
+                const juce::Array<juce::MidiMessage *> &stop_messages =
                     running_midi_messages_per_group->get_over_messages();
                 for (int i = 0; i != stop_messages.size(); ++i)
                 {
@@ -720,7 +729,7 @@ class MessageProcessor :
             }
 
             // SEND NEW MESSAGES
-            Array<MIDIMessageWithDuration *> &new_messages =
+            juce::Array<MIDIMessageWithDuration *> &new_messages =
                 running_midi_messages_per_group->_ready_messages;
             if (port->is_open())
             {
@@ -730,7 +739,7 @@ class MessageProcessor :
                     duration_message = new_messages.getUnchecked(i);
                     /*
                     // CC HACK
-                    *duration_message->message = MidiMessage::contyrollerEvent(
+                    *duration_message->message = juce::MidiMessage::contyrollerEvent(
                     duration_message->message->getChannel(),
                     _app_instance_store->audio_processor->CCommand,
                     duration_message->message->getNoteNumber() );
@@ -891,7 +900,7 @@ class MessageProcessor :
     }
 
   private:
-    void send_sync_message_to_all_ports(const MidiMessage &message_)
+    void send_sync_message_to_all_ports(const juce::MidiMessage &message_)
     {
 #ifdef B_STEP_STANDALONE
         MidiOutputObject *port;
@@ -903,15 +912,15 @@ class MessageProcessor :
             if (output_guard.is_port_valid_for_sending(port))
             {
                 running_midi_messages_per_group = _messages_stores.getUnchecked(i);
-                Array<MIDIMessageWithDuration *> &precalculated_messages =
+                juce::Array<MIDIMessageWithDuration *> &precalculated_messages =
                     running_midi_messages_per_group->_ready_messages;
-                precalculated_messages.add(
-                    new MIDIMessageWithDuration(new MidiMessage(message_), SINGLE_SHOT_MESSAGE));
+                precalculated_messages.add(new MIDIMessageWithDuration(
+                    new juce::MidiMessage(message_), SINGLE_SHOT_MESSAGE));
             }
         }
 #endif
     }
-    void send_sync_message_to_all_ports_NOW(const MidiMessage &message_)
+    void send_sync_message_to_all_ports_NOW(const juce::MidiMessage &message_)
     {
 #ifdef B_STEP_STANDALONE
         MidiOutputObject *port;
@@ -926,7 +935,7 @@ class MessageProcessor :
     }
 
   public:
-    Array<MidiMessage> all_notes_off_messages;
+    juce::Array<juce::MidiMessage> all_notes_off_messages;
     void send_panic()
     {
         MidiOutputObject *port;
@@ -937,7 +946,7 @@ class MessageProcessor :
             port = &_midi_io_handler.get_out_port_for_sending(group_id);
             if (output_guard.is_port_valid_for_sending(port))
             {
-                MidiMessage &message = all_notes_off_messages.getReference(group_id);
+                juce::MidiMessage &message = all_notes_off_messages.getReference(group_id);
                 message.setChannel(_audio_processor.get_channel(group_id));
                 port->send_message(message);
             }
@@ -963,7 +972,7 @@ class MessageProcessor :
 
   private:
     /// NOTE in VST Mode we call this manually from the processBlock, even if we are not playing!
-    CriticalSection lock;
+    juce::CriticalSection lock;
     void timerCallback() override
     {
         if (!lock.tryEnter())
@@ -980,13 +989,13 @@ class MessageProcessor :
         {
             if (_app_instance_store->midi_io_handler.midi_learn_out.is_open())
             {
-                Array<MidiMessage *> messages_to_send;
+                juce::Array<juce::MidiMessage *> messages_to_send;
                 _app_instance_store->midi_in_map.get_feedback_messages(messages_to_send);
 
                 // TODO get all sysex messages and make a bulk message from.
                 // send this bulk
-                Array<MidiMessage *> sysex_messages;
-                MidiMessage *message;
+                juce::Array<juce::MidiMessage *> sysex_messages;
+                juce::MidiMessage *message;
                 // standard messages
                 for (int i = 0; i != messages_to_send.size(); ++i)
                 {
@@ -1006,11 +1015,11 @@ class MessageProcessor :
                 if( sysex_messages.size() > 1 )
                 {
                     const int bulk_size = sysex_messages.size()*SYSEX_DATA_SIZE + SYSEX_IDENT_SIZE;
-                    uint8 sysex_bulk_data[bulk_size];
+                    std::uint8_t sysex_bulk_data[bulk_size];
                     sysex_bulk_data[ARRAY_B2B_SYSEX_A] = MONOPLUGS_;
                     sysex_bulk_data[ARRAY_B2B_SYSEX_B] = MONOPLUGS_B_STEP;
                     int m_id = 0;
-                    const uint8* data;
+                    const std::uint8_t* data;
                     for( int i = SYSEX_IDENT_SIZE ; i < bulk_size; i+=SYSEX_DATA_SIZE, ++m_id )
                     {
                         message = sysex_messages.getUnchecked(m_id);
@@ -1020,7 +1029,7 @@ class MessageProcessor :
                         sysex_bulk_data[i+1] = data[ARRAY_B2B_SYSEX_CONTROLLER];
                         sysex_bulk_data[i+2] = data[ARRAY_B2B_SYSEX_VALUE];
                     }
-                    sysex_bulk_message = MidiMessage::createSysExMessage( sysex_bulk_data,
+                    sysex_bulk_message = juce::MidiMessage::createSysExMessage( sysex_bulk_data,
                 sizeof(sysex_bulk_data) ); _midi_io_handler.midi_learn_out.send_message(
                 sysex_bulk_message );
                 }
@@ -1045,7 +1054,7 @@ class MessageProcessor :
     {
         if (midi_out_.is_open())
         {
-            Array<MidiMessage *> messages_to_send;
+            juce::Array<juce::MidiMessage *> messages_to_send;
             if (shutdown_)
                 launchpad_.all_buttons_off(messages_to_send);
             else
@@ -1077,8 +1086,9 @@ MessageProcessor::MessageProcessor(AppInstanceStore *const app_instance_store_)
 
       _last_bpm(app_instance_store_->audio_processor->bpm),
 
-      clock_message(MidiMessage::midiClock()), start_message(MidiMessage::midiStart()),
-      stop_message(MidiMessage::midiStop()), continue_message(MidiMessage::midiContinue()),
+      clock_message(juce::MidiMessage::midiClock()), start_message(juce::MidiMessage::midiStart()),
+      stop_message(juce::MidiMessage::midiStop()),
+      continue_message(juce::MidiMessage::midiContinue()),
 
       _midi_io_handler(app_instance_store_->midi_io_handler),
       _audio_processor(*app_instance_store_->audio_processor),
@@ -1094,11 +1104,11 @@ MessageProcessor::MessageProcessor(AppInstanceStore *const app_instance_store_)
     }
     _messages_stores.minimiseStorageOverheads();
 
-    all_notes_off_messages.add(MidiMessage::allNotesOff(1));
-    all_notes_off_messages.add(MidiMessage::allNotesOff(1));
-    all_notes_off_messages.add(MidiMessage::allNotesOff(1));
-    all_notes_off_messages.add(MidiMessage::allNotesOff(1));
-    all_notes_off_messages.add(MidiMessage::allNotesOff(1));
+    all_notes_off_messages.add(juce::MidiMessage::allNotesOff(1));
+    all_notes_off_messages.add(juce::MidiMessage::allNotesOff(1));
+    all_notes_off_messages.add(juce::MidiMessage::allNotesOff(1));
+    all_notes_off_messages.add(juce::MidiMessage::allNotesOff(1));
+    all_notes_off_messages.add(juce::MidiMessage::allNotesOff(1));
     all_notes_off_messages.minimiseStorageOverheads();
 
     for (int i = 0; i != 128; ++i)
@@ -1127,7 +1137,7 @@ MessageProcessor::~MessageProcessor()
     process_output(true);
     shutdown_controllers();
 
-    Thread::sleep(500);
+    juce::Thread::sleep(500);
 
     // TODO add an short wait to be sure no message is still pending
 
@@ -1144,15 +1154,15 @@ MessageProcessor::~MessageProcessor()
 class VSTClockProcessor
 {
     GstepAudioProcessor *const _listener;
-    int64 _last_absolute_clock;
+    std::int64_t _last_absolute_clock;
     bool _wasPlaying;
     bool _was_over_zero;
     float _last_speed_factor;
-    uint64 _stop_positon;
+    std::uint64_t _stop_positon;
 
   public:
-    void generate_clock_callbacks(const AudioPlayHead::CurrentPositionInfo &lastPosInfo,
-                                  const MidiBuffer *const midiBuffer, const int bufferSize,
+    void generate_clock_callbacks(const juce::AudioPlayHead::CurrentPositionInfo &lastPosInfo,
+                                  const juce::MidiBuffer *const midiBuffer, const int bufferSize,
                                   const double sampleRate)
     {
         // TODO dont do anything if the last pos is same
@@ -1166,7 +1176,7 @@ class VSTClockProcessor
                 _listener->on_vst_continue(lastPosInfo.timeInSamples);
 
             // TODO THSI CAN BE UINT
-            uint64 time_in_samples = lastPosInfo.timeInSamples;
+            std::uint64_t time_in_samples = lastPosInfo.timeInSamples;
 
             // SPEED CHANGE SHOULD CHANGE POS
             float speed_factor = double(_listener->speed) / APPDEF_ProcessorUserData::SPEED_DEVISOR;
@@ -1181,8 +1191,8 @@ class VSTClockProcessor
             double clocksPerSample =
                 double(lastPosInfo.bpm * 24.f / speed_factor) / double(sampleRate * 60.f);
 
-            int64 syncSamplePos = time_in_samples;
-            int64 clock;
+            std::int64_t syncSamplePos = time_in_samples;
+            std::int64_t clock;
             // SEARCH FOR A CLOCK
             for (int posInBuffer = 0; posInBuffer < bufferSize; ++posInBuffer)
             {
@@ -1224,8 +1234,8 @@ class VSTClockProcessor
                 USER_OUT(LOG_VST_TRANSPORT_EVENTS,
                          "in::generate_clock_callbacks @@@ wasRunning --- INFO::isPlaying; "
                          "INFO::isRecording; INFO::isLooping;,",
-                         String(lastPosInfo.isPlaying), String(lastPosInfo.isRecording),
-                         String(lastPosInfo.isLooping));
+                         juce::String(lastPosInfo.isPlaying), juce::String(lastPosInfo.isRecording),
+                         juce::String(lastPosInfo.isLooping));
                 _listener->on_vst_stopped(lastPosInfo.timeInSamples);
                 _stop_positon = lastPosInfo.timeInSamples;
             }
@@ -1259,80 +1269,85 @@ VSTClockProcessor::VSTClockProcessor(GstepAudioProcessor *const listener_)
 // ********************************************************************************************
 // ********************************************************************************************
 // ********************************************************************************************
-void GstepAudioProcessor::on_new_vst_clock(int samples_delay_, int64 absolute_clock_,
+void GstepAudioProcessor::on_new_vst_clock(int samples_delay_, std::int64_t absolute_clock_,
                                            double sample_rate_ = 0)
 {
-    USER_OUT(LOG_VST_CLOCK, "enter::on_new_vst_clock @@@ inSamples::", String(samples_delay_),
-             " clocksFromZero:", String(absolute_clock_));
+    USER_OUT(LOG_VST_CLOCK, "enter::on_new_vst_clock @@@ inSamples::", juce::String(samples_delay_),
+             " clocksFromZero:", juce::String(absolute_clock_));
 
     _current_vst_samples_delay = samples_delay_;
     _current_sample_rate = sample_rate_;
     _message_processor->send_precalculated_messages();
     _message_processor->precalculate(true, absolute_clock_);
 
-    USER_OUT(LOG_VST_CLOCK, "exit::on_new_vst_clock @@@ inSamples::", String(samples_delay_),
-             " clocksFromZero:", String(absolute_clock_));
+    USER_OUT(LOG_VST_CLOCK, "exit::on_new_vst_clock @@@ inSamples::", juce::String(samples_delay_),
+             " clocksFromZero:", juce::String(absolute_clock_));
 }
 
-void GstepAudioProcessor::on_vst_pos_jumped(int64 pos_)
+void GstepAudioProcessor::on_vst_pos_jumped(std::int64_t pos_)
 {
-    USER_OUT(LOG_VST_TRANSPORT_EVENTS, "enter::on_vst_pos_jumped @@@ toPos::", String(pos_), "",
-             "");
+    USER_OUT(LOG_VST_TRANSPORT_EVENTS, "enter::on_vst_pos_jumped @@@ toPos::", juce::String(pos_),
+             "", "");
     if (pos_)
     {
         if (_current_buffer)
         {
             USER_OUT(LOG_VST_TRANSPORT_EVENTS,
-                     "in::on_vst_pos_jumped->stop_all_pending_notes @@@ pos::", String(pos_), "",
-                     "");
+                     "in::on_vst_pos_jumped->stop_all_pending_notes @@@ pos::", juce::String(pos_),
+                     "", "");
             //_message_processor->stop_all_pending_notes();
         }
 
         if (pos_ > 0)
         {
             USER_OUT(LOG_VST_TRANSPORT_EVENTS,
-                     "in::on_vst_pos_jumped->force_to_beat_at_next_clock @@@ pos::", String(pos_),
-                     "", "");
+                     "in::on_vst_pos_jumped->force_to_beat_at_next_clock @@@ pos::",
+                     juce::String(pos_), "", "");
             _app_instance_store.sequencer.force_to_beat_at_next_step();
         }
     }
     else
     {
         USER_OUT(LOG_VST_TRANSPORT_EVENTS,
-                 "in::on_vst_pos_jumped->on_vst_stopped @@@ pos::", String(pos_), "", "");
+                 "in::on_vst_pos_jumped->on_vst_stopped @@@ pos::", juce::String(pos_), "", "");
         on_vst_stopped(pos_);
     }
 
-    USER_OUT(LOG_VST_TRANSPORT_EVENTS, "exit::on_vst_pos_jumped @@@ toPos::", String(pos_), "", "");
+    USER_OUT(LOG_VST_TRANSPORT_EVENTS, "exit::on_vst_pos_jumped @@@ toPos::", juce::String(pos_),
+             "", "");
 }
 
-void GstepAudioProcessor::on_vst_loop_pos_jumped(int64 pos_)
+void GstepAudioProcessor::on_vst_loop_pos_jumped(std::int64_t pos_)
 {
     USER_OUT(LOG_VST_TRANSPORT_EVENTS,
-             "in::on_vst_pos_jumped->force_to_beat_at_next_clock @@@ pos::", String(pos_), "", "");
+             "in::on_vst_pos_jumped->force_to_beat_at_next_clock @@@ pos::", juce::String(pos_), "",
+             "");
     _app_instance_store.sequencer.force_to_beat_at_next_step();
 }
 
-void GstepAudioProcessor::on_vst_stopped(int64 pos_)
+void GstepAudioProcessor::on_vst_stopped(std::int64_t pos_)
 {
-    USER_OUT(LOG_VST_TRANSPORT_EVENTS, "enter::on_vst_stopped @@@ pos::", String(pos_), "", "");
+    USER_OUT(LOG_VST_TRANSPORT_EVENTS, "enter::on_vst_stopped @@@ pos::", juce::String(pos_), "",
+             "");
 
     if (_current_buffer)
     {
         USER_OUT(LOG_VST_TRANSPORT_EVENTS,
-                 "in::on_vst_stopped->stop_all_pending_notes @@@ pos::", String(pos_), "", "");
+                 "in::on_vst_stopped->stop_all_pending_notes @@@ pos::", juce::String(pos_), "",
+                 "");
         _message_processor->stop_all_pending_notes();
     }
     if (pos_ <= 0)
     {
-        USER_OUT(LOG_VST_TRANSPORT_EVENTS, "in::on_vst_stopped->hard_reset @@@ pos::", String(pos_),
-                 "", "");
+        USER_OUT(LOG_VST_TRANSPORT_EVENTS,
+                 "in::on_vst_stopped->hard_reset @@@ pos::", juce::String(pos_), "", "");
         _app_instance_store.sequencer.hard_reset();
     }
 
-    USER_OUT(LOG_VST_TRANSPORT_EVENTS, "exit::on_vst_stopped @@@ pos::", String(pos_), "", "");
+    USER_OUT(LOG_VST_TRANSPORT_EVENTS, "exit::on_vst_stopped @@@ pos::", juce::String(pos_), "",
+             "");
 }
-void GstepAudioProcessor::on_vst_continue(int64 pos_)
+void GstepAudioProcessor::on_vst_continue(std::int64_t pos_)
 {
     if (pos_ <= 0)
     {
@@ -1341,7 +1356,7 @@ void GstepAudioProcessor::on_vst_continue(int64 pos_)
     else
         _app_instance_store.sequencer.force_to_beat_at_next_step();
 
-    USER_OUT(LOG_VST_TRANSPORT_EVENTS, "enter-exit::on_vst_continue @@@ pos::", String(pos_),
+    USER_OUT(LOG_VST_TRANSPORT_EVENTS, "enter-exit::on_vst_continue @@@ pos::", juce::String(pos_),
              " NOTE: empty function", "");
 }
 #endif // USE_PLUGIN_PROCESS_BLOCK
@@ -1380,7 +1395,7 @@ class SineWaveVoice : public SynthesiserVoice
         level = velocity * 0.15;
         tailOff = 0.0;
 
-        double cyclesPerSecond = MidiMessage::getMidiNoteInHertz(midiNoteNumber);
+        double cyclesPerSecond = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber);
         double cyclesPerSample = cyclesPerSecond / getSampleRate();
 
         angleDelta = cyclesPerSample * 2.0 * double_Pi;
@@ -1469,7 +1484,7 @@ const float defaultDelay = 0.5f;
 #endif // USE_A_SYNTH
 
 #ifndef B_STEP_STANDALONE
-class SensingTimer : public Timer
+class SensingTimer : public juce::Timer
 {
     void timerCallback() { ++callback_counter; }
 
@@ -1480,7 +1495,8 @@ class SensingTimer : public Timer
 };
 #endif
 
-void GstepAudioProcessor::processBlock(AudioSampleBuffer &buffer_, MidiBuffer &midi_messages_)
+void GstepAudioProcessor::processBlock(juce::AudioSampleBuffer &buffer_,
+                                       juce::MidiBuffer &midi_messages_)
 {
 #ifdef B_STEP_STANDALONE
     buffer_.clear();
@@ -1497,7 +1513,7 @@ void GstepAudioProcessor::processBlock(AudioSampleBuffer &buffer_, MidiBuffer &m
 #ifdef USE_PLUGIN_PROCESS_BLOCK
     /// TODO handle incoming messages
 
-    AudioPlayHead::CurrentPositionInfo pos;
+    juce::AudioPlayHead::CurrentPositionInfo pos;
     if (getPlayHead() != 0)
     {
         if (getPlayHead()->getCurrentPosition(pos))
@@ -1508,8 +1524,8 @@ void GstepAudioProcessor::processBlock(AudioSampleBuffer &buffer_, MidiBuffer &m
             MidiIOHandler &midi_io_handler = _app_instance_store.midi_io_handler;
             if (!midi_messages_.isEmpty())
             {
-                MidiBuffer::Iterator iter(midi_messages_);
-                MidiMessage in_message;
+                juce::MidiBuffer::Iterator iter(midi_messages_);
+                juce::MidiMessage in_message;
                 int ignored;
                 while (iter.getNextEvent(in_message, ignored))
                 {
@@ -1578,7 +1594,7 @@ void GstepAudioProcessor::processBlock(AudioSampleBuffer &buffer_, MidiBuffer &m
         }
         if (_active_sample_playback && _sample_started)
         {
-            ScopedLock locked(sample_playback_lock);
+            juce::ScopedLock locked(sample_playback_lock);
             if (_sample_playback_position >= _sample_playback_length &&
                 _sample_playback_position != 0)
             {
@@ -1893,12 +1909,12 @@ float GstepAudioProcessor::getParameter(int i_)
     return get_automatable_parameter(i_).in_percent();
 }
 
-const String GstepAudioProcessor::getParameterText(int i_)
+const juce::String GstepAudioProcessor::getParameterText(int i_)
 {
     return get_automatable_parameter(i_).as_string();
 }
 
-String GstepAudioProcessor::getParameterLabel(int i_) const
+juce::String GstepAudioProcessor::getParameterLabel(int i_) const
 {
     return get_automatable_parameter(i_).name();
 }
@@ -1913,7 +1929,7 @@ float GstepAudioProcessor::getParameterDefaultValue(int i_)
     return get_automatable_parameter(i_).default_value_in_percent();
 }
 
-const String GstepAudioProcessor::getParameterName(int i_)
+const juce::String GstepAudioProcessor::getParameterName(int i_)
 {
     return get_automatable_parameter(i_).get_param_short_ident();
 }
@@ -1924,10 +1940,10 @@ void GstepAudioProcessor::setParameter(int i_, float value_)
 }
 #endif
 
-void GstepAudioProcessor::getStateInformation(MemoryBlock &destData)
+void GstepAudioProcessor::getStateInformation(juce::MemoryBlock &destData)
 {
-    XmlElement xml(APPDEFF::vst_file_version);
-    XmlElement *vst_project = xml.createNewChildElement(APPDEFF::project_file_version);
+    juce::XmlElement xml(APPDEFF::vst_file_version);
+    juce::XmlElement *vst_project = xml.createNewChildElement(APPDEFF::project_file_version);
     if (vst_project)
         _app_instance_store.save_plugin(*vst_project);
 
@@ -1936,12 +1952,12 @@ void GstepAudioProcessor::getStateInformation(MemoryBlock &destData)
 
 void GstepAudioProcessor::setStateInformation(const void *data, int sizeInBytes)
 {
-    XmlElement *xml(getXmlFromBinary(data, sizeInBytes).release());
+    juce::XmlElement *xml(getXmlFromBinary(data, sizeInBytes).release());
     if (xml)
     {
         if (xml->hasTagName(APPDEFF::vst_file_version))
         {
-            XmlElement *project_part = xml->getChildByName(APPDEFF::project_file_version);
+            juce::XmlElement *project_part = xml->getChildByName(APPDEFF::project_file_version);
             if (project_part)
                 _app_instance_store.load_plugin(*project_part);
         }
@@ -1953,7 +1969,7 @@ void GstepAudioProcessor::setStateInformation(const void *data, int sizeInBytes)
     }
 }
 
-const String GstepAudioProcessor::getName() const
+const juce::String GstepAudioProcessor::getName() const
 {
 #ifdef B_STEP_STANDALONE
     return "";
@@ -1962,14 +1978,14 @@ const String GstepAudioProcessor::getName() const
 #endif
 }
 
-const String GstepAudioProcessor::getInputChannelName(int) const
+const juce::String GstepAudioProcessor::getInputChannelName(int) const
 {
-    return String("B-STEP SAMPLE RECORDER");
+    return juce::String("B-STEP SAMPLE RECORDER");
 }
 
-const String GstepAudioProcessor::getOutputChannelName(int) const
+const juce::String GstepAudioProcessor::getOutputChannelName(int) const
 {
-    return String("B-STEP SAMPLE PLAYER");
+    return juce::String("B-STEP SAMPLE PLAYER");
 }
 
 bool GstepAudioProcessor::isInputChannelStereoPair(int) const { return false; }
@@ -1990,19 +2006,19 @@ int GstepAudioProcessor::getCurrentProgram() { return 1; }
 
 void GstepAudioProcessor::setCurrentProgram(int) {}
 
-const String GstepAudioProcessor::getProgramName(int) { return "B-Step"; }
+const juce::String GstepAudioProcessor::getProgramName(int) { return "B-Step"; }
 
-void GstepAudioProcessor::changeProgramName(int, const String &) { return; }
+void GstepAudioProcessor::changeProgramName(int, const juce::String &) { return; }
 
 bool GstepAudioProcessor::hasEditor() const { return true; }
 
-AudioProcessorEditor *GstepAudioProcessor::createEditor()
+juce::AudioProcessorEditor *GstepAudioProcessor::createEditor()
 {
     _app_instance_store.editor = new GstepAudioProcessorEditor(this);
     return _app_instance_store.editor;
 }
 
-AudioProcessor *JUCE_CALLTYPE createPluginFilter() { return new GstepAudioProcessor(); }
+juce::AudioProcessor *JUCE_CALLTYPE createPluginFilter() { return new GstepAudioProcessor(); }
 
 struct BStepJuceWrappingParameter : juce::AudioProcessorParameter,
                                     PodParameterBase::NotifiableWrapper
@@ -2023,14 +2039,14 @@ struct BStepJuceWrappingParameter : juce::AudioProcessorParameter,
     void setValue(float newValue) override { ap().set_from_percent(newValue); }
     float getDefaultValue() const override { return ap().default_value_in_percent(); }
     // NAME is the display name and chan change
-    String getName(int maximumStringLength) const override
+    juce::String getName(int maximumStringLength) const override
     {
         return ap().name().substring(0, maximumStringLength);
     }
     // LABEL is the internal ID and must be stable for
     // DAW streaming sessions to work
-    String getLabel() const override { return ap().get_param_short_ident(); }
-    float getValueForText(const String &text) const override { return 0; }
+    juce::String getLabel() const override { return ap().get_param_short_ident(); }
+    float getValueForText(const juce::String &text) const override { return 0; }
 };
 
 // ********************************************************************************************
@@ -2044,7 +2060,7 @@ GstepAudioProcessor::GstepAudioProcessor()
       _clock(new VSTClockProcessor(this)), _active_writer(nullptr), _current_vst_samples_delay(0),
       _current_sample_rate(0), _sample_playback_position(0), _sample_playback_length(0),
       _sample_started(false),
-      sensing_timer(PluginHostType().isAbletonLive() ? (new SensingTimer()) : nullptr),
+      sensing_timer(juce::PluginHostType().isAbletonLive() ? (new SensingTimer()) : nullptr),
       last_sensing(0)
 #endif
 #ifdef USE_A_SYNTH
@@ -2076,14 +2092,15 @@ GstepAudioProcessor::GstepAudioProcessor()
 #endif
 
 #ifdef DEBUG___________________
-    String data;
+    juce::String data;
     for (int i = 0; i != getNumParameters(); ++i)
     {
-        data +=
-            (String("PARAMETER: ") + getParameterName(i) + String(" (") + getParameterLabel(i) +
-             String(")") + String("\n") + String("DEFAULT VALUE:") +
-             String(getParameterDefaultValue(i)) + String("\n") + String("HELP URL:") + MANUAL_URL +
-             String(get_automatable_parameter(i).get_help_url()) + String("\n") + String("\n"));
+        data += (juce::String("PARAMETER: ") + getParameterName(i) + juce::String(" (") +
+                 getParameterLabel(i) + juce::String(")") + juce::String("\n") +
+                 juce::String("DEFAULT VALUE:") + juce::String(getParameterDefaultValue(i)) +
+                 juce::String("\n") + juce::String("HELP URL:") + MANUAL_URL +
+                 juce::String(get_automatable_parameter(i).get_help_url()) + juce::String("\n") +
+                 juce::String("\n"));
     }
     OUT(data);
 #endif

@@ -11,6 +11,7 @@
 #define MONO_PARAMETER_H_INCLUDED
 
 #include "App.h"
+#include <juce_audio_basics/juce_audio_basics.h>
 
 // TODO snap to zero and 1
 
@@ -76,23 +77,26 @@ class MIDIControl : mono_ParameterListener<float>,
     friend class mono_ParameterCompatibilityBase;
     int listen_type;
     int channel;
-    int8 midi_number; // NOTES OR CC
-    String is_ctrl_version_of_name;
+    std::int8_t midi_number; // NOTES OR CC
+    juce::String is_ctrl_version_of_name;
     bool is_in_ctrl_mode;
     mono_ParameterCompatibilityBase *const owner;
 
   public:
     int get_listen_type() const noexcept { return listen_type; }
-    int8 get_midi_number() const noexcept { return midi_number; }
+    std::int8_t get_midi_number() const noexcept { return midi_number; }
     int get_chnanel() const noexcept { return channel; }
-    const String &get_is_ctrl_version_of_name() const noexcept { return is_ctrl_version_of_name; }
+    const juce::String &get_is_ctrl_version_of_name() const noexcept
+    {
+        return is_ctrl_version_of_name;
+    }
 
-    bool is_listen_to(MidiMessage &input_message_) const noexcept;
-    bool read_from_if_you_listen(const MidiMessage &input_message_) noexcept;
-    bool train(const MidiMessage &input_message_,
+    bool is_listen_to(juce::MidiMessage &input_message_) const noexcept;
+    bool read_from_if_you_listen(const juce::MidiMessage &input_message_) noexcept;
+    bool train(const juce::MidiMessage &input_message_,
                mono_ParameterCompatibilityBase *const is_ctrl_version_of_) noexcept;
-    bool train(int listen_type_, int8 midi_number, int channel_,
-               String is_ctrl_version_of_name_) noexcept;
+    bool train(int listen_type_, std::int8_t midi_number, int channel_,
+               juce::String is_ctrl_version_of_name_) noexcept;
     bool is_valid_trained() const noexcept;
     void send_feedback_only() const noexcept;
     void send_clear_feedback_only() const noexcept;
@@ -111,8 +115,8 @@ class MIDIControl : mono_ParameterListener<float>,
     void parameter_value_on_load_changed(mono_ParameterBase<bool> *param_) noexcept override;
     void parameter_value_changed(mono_ParameterBase<int> *param_) noexcept override;
     void parameter_value_on_load_changed(mono_ParameterBase<int> *param_) noexcept override;
-    void generate_feedback_message(MidiMessage &) const noexcept;
-    void generate_modulation_feedback_message(MidiMessage &) const noexcept;
+    void generate_feedback_message(juce::MidiMessage &) const noexcept;
+    void generate_modulation_feedback_message(juce::MidiMessage &) const noexcept;
     void send_standard_feedback() const noexcept;
     void send_modulation_feedback() const noexcept;
 
@@ -128,18 +132,20 @@ class MIDIControlHandler
     mono_ParameterCompatibilityBase *learning_param;
     mono_ParameterCompatibilityBase *learning_ctrl_param;
 
-    Array<Component *> learning_comps;
+    juce::Array<juce::Component *> learning_comps;
 
   public:
     void toggle_midi_learn();
     bool is_waiting_for_param() const;
     void set_learn_param(mono_ParameterCompatibilityBase *param_);
     void set_learn_width_ctrl_param(mono_ParameterCompatibilityBase *param_,
-                                    mono_ParameterCompatibilityBase *ctrl_param_, Component *comp_);
-    void set_learn_param(mono_ParameterCompatibilityBase *param_, Component *comp_);
-    void set_learn_param(mono_ParameterCompatibilityBase *param_, Array<Component *> comps_);
+                                    mono_ParameterCompatibilityBase *ctrl_param_,
+                                    juce::Component *comp_);
+    void set_learn_param(mono_ParameterCompatibilityBase *param_, juce::Component *comp_);
+    void set_learn_param(mono_ParameterCompatibilityBase *param_,
+                         juce::Array<juce::Component *> comps_);
     mono_ParameterCompatibilityBase *is_learning() const;
-    bool handle_incoming_message(const MidiMessage &input_message_);
+    bool handle_incoming_message(const juce::MidiMessage &input_message_);
     void clear();
 
     MIDIControlHandler();
@@ -252,7 +258,7 @@ struct mono_ParameterCompatibilityBase
 
 // ==============================================================================
 #define PARAM_CHANGE_INTERVAL_IN_MS 20
-class ChangeParamOverTime : public Timer
+class ChangeParamOverTime : public juce::Timer
 {
     mono_ParameterBase<float> &_param;
     int _sum_callbacks;

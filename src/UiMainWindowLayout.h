@@ -25,6 +25,7 @@
 #include "UiLeftsideStartStopPause.h"
 
 #include "CoreSequencer.h"
+#include <juce_core/juce_core.h>
 
 enum POSITIONS_LAYER_OLDSCOOL
 {
@@ -126,9 +127,9 @@ inline void GstepAudioProcessorEditor::auto_resize_to_user_area()
     float height_factor = 1;
     float width_factor = 1;
     int desktop_width =
-        Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getWidth();
+        juce::Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getWidth();
     int desktop_height =
-        Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getHeight();
+        juce::Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getHeight();
 
     int width = _app_instance_store->editor_config.editor_width;
     int height = _app_instance_store->editor_config.editor_height;
@@ -164,6 +165,7 @@ inline void GstepAudioProcessorEditor::auto_resize_to_user_area()
 #else
             centreWithSize(width_factor * APPDEF_UIUserData::WINDOW_WIDTH * 0.95,
                            width_factor * APPDEF_UIUserData::WINDOW_HEIGHT * 0.95);
+
 #endif
         }
         else
@@ -212,10 +214,10 @@ inline void GstepAudioProcessorEditor::auto_resize_to_user_area()
     }
 }
 
-inline void
-GstepAudioProcessorEditor::refresh_selected_bar(Array<Component *> &components_to_repaint_)
+inline void GstepAudioProcessorEditor::refresh_selected_bar(
+    juce::Array<juce::Component *> &components_to_repaint_)
 {
-    uint8 selected_bar_id = _app_instance_store->editor_config.selected_bar_id;
+    std::uint8_t selected_bar_id = _app_instance_store->editor_config.selected_bar_id;
     if (selected_bar_id != last_painted_bar || refresh_bar_select_paint)
     {
         // CLEAN
@@ -274,7 +276,7 @@ GstepAudioProcessorEditor::refresh_selected_bar(Array<Component *> &components_t
         }
 
         // THIS WILL JUST REPAINT THE SELECTER!!
-        Rectangle<int> area;
+        juce::Rectangle<int> area;
         if (last_painted_bar != -1)
         {
             get_selecter_area(area, last_painted_bar);
@@ -301,7 +303,7 @@ class LabelPopupWithLivetime
     int _live_time;
 
     const MONO_Controller *const _controller;
-    ScopedPointer<SliderValuePopup> popup;
+    juce::ScopedPointer<SliderValuePopup> popup;
 
     bool is_top_popup;
 
@@ -327,7 +329,7 @@ class LabelPopupWithLivetime
 
     void refresh_ui()
     {
-        String string;
+        juce::String string;
         _controller->get_label_text(string);
         popup->set_text(string);
     }
@@ -343,7 +345,7 @@ class LabelPopupWithLivetime
 
         popup = new SliderValuePopup( _controller->get_model() );
 
-        String text;
+        juce::String text;
         _controller->get_label_text( text );
         popup->set_text( text );
 
@@ -353,21 +355,22 @@ class LabelPopupWithLivetime
         h = 40;
         */
 
-        const Component *model = _controller->get_model();
-        Rectangle<int> model_area_to_mainwindow = model->getBoundsInParent();
+        const juce::Component *model = _controller->get_model();
+        juce::Rectangle<int> model_area_to_mainwindow = model->getBoundsInParent();
         while ((model = model->getParentComponent()))
         {
             // DO NOT COUNT THE DESKTOP
             if (model->getParentComponent())
             {
-                Rectangle<int> parent_area = model->getBoundsInParent();
-                model_area_to_mainwindow += Point<int>(parent_area.getX(), parent_area.getY());
+                juce::Rectangle<int> parent_area = model->getBoundsInParent();
+                model_area_to_mainwindow +=
+                    juce::Point<int>(parent_area.getX(), parent_area.getY());
             }
         }
 
         popup = new SliderValuePopup(_controller->get_model());
 
-        String text;
+        juce::String text;
         _controller->get_label_text(text);
         popup->set_text(text);
 
@@ -410,9 +413,10 @@ inline void GstepAudioProcessorEditor::check_paint_slider_value_popup()
 {
     if (!_app_instance_store->midi_in_map.is_in_learning_mode())
     {
-        Array<MONO_Controller *> controllers_that_need_a_popup;
+        juce::Array<MONO_Controller *> controllers_that_need_a_popup;
         {
-            for (uint8 i = 0; i != _columns.getUnchecked(_config->current_layer)->size(); ++i)
+            for (std::uint8_t i = 0; i != _columns.getUnchecked(_config->current_layer)->size();
+                 ++i)
             {
                 _columns.getUnchecked(_config->current_layer)
                     ->getUnchecked(i)
@@ -455,7 +459,7 @@ inline void GstepAudioProcessorEditor::check_paint_slider_value_popup()
         }
     }
     // COUNT DOWN LIVE TIME
-    Array<LabelPopupWithLivetime *> items_to_remove;
+    juce::Array<LabelPopupWithLivetime *> items_to_remove;
     for (int i = 0; i != open_label_popups.size(); ++i)
     {
         LabelPopupWithLivetime *const popup = open_label_popups.getUnchecked(i);
@@ -487,18 +491,18 @@ inline void GstepAudioProcessorEditor::timerCallback()
     if (!lock.tryEnter())
         return;
 
-    Array<Component *> components_to_repaint;
+    juce::Array<juce::Component *> components_to_repaint;
 
     refresh_selected_bar(components_to_repaint);
-    for (uint8 i = 0; i != _columns_fixed_steps.size(); ++i)
+    for (std::uint8_t i = 0; i != _columns_fixed_steps.size(); ++i)
     {
         _columns_fixed_steps.getUnchecked(i)->refresh_ui(components_to_repaint);
     }
-    for (uint8 i = 0; i != _columns_fixed_bar.size(); ++i)
+    for (std::uint8_t i = 0; i != _columns_fixed_bar.size(); ++i)
     {
         _columns_fixed_bar.getUnchecked(i)->refresh_ui(components_to_repaint);
     }
-    for (uint8 i = 0; i != _columns.getUnchecked(_config->current_layer)->size(); ++i)
+    for (std::uint8_t i = 0; i != _columns.getUnchecked(_config->current_layer)->size(); ++i)
     {
         _columns.getUnchecked(_config->current_layer)
             ->getUnchecked(i)
@@ -532,15 +536,16 @@ inline void GstepAudioProcessorEditor::timerCallback()
             _config->midi_learn_editor->refresh_ui();
 
     {
-        uint8 selected_bar_id = _app_instance_store->editor_config.selected_bar_id;
+        std::uint8_t selected_bar_id = _app_instance_store->editor_config.selected_bar_id;
         Bar &selected_bar = _app_instance_store->pattern.bar(selected_bar_id);
-        uint8 selected_chord_id = selected_bar.chord_id;
+        std::uint8_t selected_chord_id = selected_bar.chord_id;
 
         Chord &chord = _app_instance_store->pattern.selected_chordset().chord(selected_chord_id);
-        int8 base_note_value = _app_instance_store->pattern.note_offset +
-                               _app_instance_store->pattern.octave_offset * OCTAVE_MULTIPLIER;
+        std::int8_t base_note_value =
+            _app_instance_store->pattern.note_offset +
+            _app_instance_store->pattern.octave_offset * OCTAVE_MULTIPLIER;
 
-        int8 pattern_and_barstring_offset;
+        std::int8_t pattern_and_barstring_offset;
         for (int i = 0; i != SUM_STRINGS; ++i)
         {
             pattern_and_barstring_offset = (_app_instance_store->pattern.master_string_octave(i) +
@@ -554,7 +559,7 @@ inline void GstepAudioProcessorEditor::timerCallback()
             {
                 if (value >= 0 && value < 128)
                     _columns_fixed_steps.getUnchecked(i + 1)->set_text(
-                        String(MidiMessage::getMidiNoteName(
+                        juce::String(juce::MidiMessage::getMidiNoteName(
                             _app_instance_store->sequencer.get_string_offset(i) +
                                 _app_instance_store->pattern.get_remote_offset() +
                                 pattern_and_barstring_offset + base_note_value +
@@ -588,7 +593,7 @@ inline void GstepAudioProcessorEditor::timerCallback()
                 "Please send the logs to Monoplugs to help fixing that issue.", "YES, SEND AS MAIL",
                 "OPEN LOG FOLDER", "IGNORE", this);
 
-            String additional_info;
+            juce::String additional_info;
 #ifndef B_STEP_STANDALONE
             additional_info = PluginHostType().getHostDescription();
             additional_info += " ";
@@ -596,10 +601,11 @@ inline void GstepAudioProcessorEditor::timerCallback()
             additional_info += SystemStats::getOperatingSystemName();
             if (answer == 1)
             {
-                URL(String(
+                URL(juce::String(
                         "mailto:support@monoplugs.com?subject=B-Step-Report&body=B-Step-Report ") +
-                    ProjectInfo::versionString + String(" (") + additional_info +
-                    String(")  \n\n\n" + GLOBAL_VALUE_HOLDER::getInstance()->COPY_OF_SESSION_FILE))
+                    ProjectInfo::versionString + juce::String(" (") + additional_info +
+                    juce::String(")  \n\n\n" +
+                                 GLOBAL_VALUE_HOLDER::getInstance()->COPY_OF_SESSION_FILE))
                     .launchInDefaultBrowser();
             }
             else if (answer == 2)
@@ -644,8 +650,8 @@ inline void GstepAudioProcessorEditor::timerCallback()
                                     GLOBAL_VALUE_HOLDER::getInstance()->USER_ASKED_FOR_AUTO_UPDATE =
                                         true;
                                     GLOBAL_VALUE_HOLDER::getInstance()->AUTO_CHECK_UPDATES =
-                                        AlertWindow::showOkCancelBox(
-                                            AlertWindow::QuestionIcon,
+                                        juce::AlertWindow::showOkCancelBox(
+                                            juce::AlertWindow::QuestionIcon,
                                             "AUTOMATICALLY CHECK FOR UPDATES?",
                                             "Would you like to atomatically check for new B-Step "
                                             "updates?",
@@ -662,8 +668,8 @@ inline void GstepAudioProcessorEditor::timerCallback()
                                 }
                                 //#endif
 
-                                URL version(MANUAL_URL + "version");
-                                String v_info = version.readEntireTextStream();
+                                juce::URL version(MANUAL_URL + "version");
+                                juce::String v_info = version.readEntireTextStream();
                                 float number = -1;
                                 int minor = -1;
                                 if (v_info.contains("<!-- VERSION:"))
@@ -684,10 +690,10 @@ inline void GstepAudioProcessorEditor::timerCallback()
                                     (number == float(B_STEP_VERSION) &&
                                      minor > B_STEP_MINOR_VERSION))
                                 {
-                                    int answer = AlertWindow::showYesNoCancelBox(
-                                        AlertWindow::InfoIcon,
-                                        "VERSION " + String(number) + String(".") + String(minor) +
-                                            " IS AVAILABLE!",
+                                    int answer = juce::AlertWindow::showYesNoCancelBox(
+                                        juce::AlertWindow::InfoIcon,
+                                        "VERSION " + juce::String(number) + juce::String(".") +
+                                            juce::String(minor) + " IS AVAILABLE!",
                                         "Would you like to see what's new in this version?",
                                         "SHOW ME THAT STUFF!", "NO, NOT NOW",
                                         "DISABLE UPDATE CHECK", _owner);
@@ -761,7 +767,7 @@ inline void GstepAudioProcessorEditor::init_column_wrappers()
 
     for (int layer_id = 0; layer_id != 7; ++layer_id) // SUM LAYERS
     {
-        _columns.add(new OwnedArray<UiColumnWrapper>());
+        _columns.add(new juce::OwnedArray<UiColumnWrapper>());
         for (int i = 0; i != 6; ++i) // SUM COLS
         {
             UiColumnWrapper *column_wrapper = new UiColumnWrapper();
@@ -785,12 +791,12 @@ inline void GstepAudioProcessorEditor::init_column_wrappers()
 
 class TimerLock
 {
-    Timer *const _timer;
+    juce::Timer *const _timer;
     int _timer_interval;
     bool _timer_was_running;
 
   public:
-    TimerLock(Timer *const timer_)
+    TimerLock(juce::Timer *const timer_)
         : _timer(timer_), _timer_interval(timer_->getTimerInterval()),
           _timer_was_running(timer_->isTimerRunning())
     {
@@ -1002,7 +1008,7 @@ inline void GstepAudioProcessorEditor::set_layer_controllers_page(int layer_id, 
     repaint();
 }
 
-inline void GstepAudioProcessorEditor::get_step_area(Rectangle<int> &area_)
+inline void GstepAudioProcessorEditor::get_step_area(juce::Rectangle<int> &area_)
 {
     float width_prop = width_propertion();
     float height_prop = height_propertion();
@@ -1040,7 +1046,7 @@ inline void GstepAudioProcessorEditor::get_step_area(Rectangle<int> &area_)
     area_.setHeight(height_prop * (step_area_bg_height));
 }
 
-inline void GstepAudioProcessorEditor::get_bar_area(Rectangle<int> &area_)
+inline void GstepAudioProcessorEditor::get_bar_area(juce::Rectangle<int> &area_)
 {
     float width_prop = width_propertion();
     float height_prop = height_propertion();
@@ -1084,7 +1090,8 @@ inline void GstepAudioProcessorEditor::get_bar_area(Rectangle<int> &area_)
     area_.setHeight(height_prop * (bar_area_bg_height));
 }
 
-inline void GstepAudioProcessorEditor::get_selecter_area(Rectangle<int> &area_, uint8 id_)
+inline void GstepAudioProcessorEditor::get_selecter_area(juce::Rectangle<int> &area_,
+                                                         std::uint8_t id_)
 {
     float width_prop = width_propertion();
 
@@ -1103,50 +1110,51 @@ inline void GstepAudioProcessorEditor::get_selecter_area(Rectangle<int> &area_, 
     area_.setWidth(selecter_width);
 }
 
-inline void GstepAudioProcessorEditor::complex_paint(Graphics &g)
+inline void GstepAudioProcessorEditor::complex_paint(juce::Graphics &g)
 {
     float width_prop = width_propertion();
 
-    g.fillAll(Colours::black);
-    g.setColour(Colour(_app_instance_store->style_global_area->get_foreground_color()));
+    g.fillAll(juce::Colours::black);
+    g.setColour(juce::Colour(_app_instance_store->style_global_area->get_foreground_color()));
     g.fillRoundedRectangle(width_prop * 42, 1.0f,
                            width_prop * (APPDEF_UIUserData::WINDOW_WIDTH - 42 * 2),
                            static_cast<float>(getHeight() - 2), 10.000f);
-    g.setColour(Colour(_app_instance_store->style_global_area->get_border_color()));
+    g.setColour(juce::Colour(_app_instance_store->style_global_area->get_border_color()));
     g.drawRoundedRectangle(width_prop * 42, 1.0f,
                            width_prop * (APPDEF_UIUserData::WINDOW_WIDTH - 42 * 2),
                            static_cast<float>(getHeight() - 2), 10.000f, 2.000f);
 
     struct PaintBG
     {
-        static inline void paint_rounded_rectangle(Graphics &g_, uint32 c_fore_, uint32 c_border_,
-                                                   Rectangle<int> &area_)
+        static inline void paint_rounded_rectangle(juce::Graphics &g_, std::uint32_t c_fore_,
+                                                   std::uint32_t c_border_,
+                                                   juce::Rectangle<int> &area_)
         {
             // Content
-            g_.setColour(Colour(c_fore_));
+            g_.setColour(juce::Colour(c_fore_));
             g_.fillRoundedRectangle(area_.getX(), area_.getY(), area_.getWidth(), area_.getHeight(),
                                     10);
 
             // Border
-            g_.setColour(Colour(c_border_));
+            g_.setColour(juce::Colour(c_border_));
             g_.drawRoundedRectangle(area_.getX(), area_.getY(), area_.getWidth(), area_.getHeight(),
                                     10, 2);
         }
-        static inline void paint_rectangle(Graphics &g_, uint32 c_fore_, uint32 c_border_,
-                                           Rectangle<int> &area_)
+        static inline void paint_rectangle(juce::Graphics &g_, std::uint32_t c_fore_,
+                                           std::uint32_t c_border_, juce::Rectangle<int> &area_)
         {
             // Content
-            g_.setColour(Colour(c_fore_));
+            g_.setColour(juce::Colour(c_fore_));
             g_.fillRect(area_.getX(), area_.getY(), area_.getWidth(), area_.getHeight());
 
             // Border
-            g_.setColour(Colour(c_border_));
+            g_.setColour(juce::Colour(c_border_));
             g_.drawRect(area_.getX(), area_.getY(), area_.getWidth(), area_.getHeight(), 2);
         }
     };
 
     // BAR AREA BG
-    Rectangle<int> area;
+    juce::Rectangle<int> area;
     get_bar_area(area);
     PaintBG::paint_rounded_rectangle(g, _app_instance_store->style_bar_area->get_foreground_color(),
                                      _app_instance_store->style_bar_area->get_border_color(), area);

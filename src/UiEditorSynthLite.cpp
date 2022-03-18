@@ -59,14 +59,14 @@ void UiEditorSynthLite::show_programs_and_select()
         last_bank = current_bank;
         last_programm = current_programm;
 
-        combo_bank->clear(dontSendNotification);
+        combo_bank->clear(juce::dontSendNotification);
         combo_bank->addItemList(synth_data->get_banks(), 1);
-        combo_bank->setSelectedId(synth_data->get_current_bank() + 1, dontSendNotification);
+        combo_bank->setSelectedId(synth_data->get_current_bank() + 1, juce::dontSendNotification);
 
-        combo_programm->clear(dontSendNotification);
+        combo_programm->clear(juce::dontSendNotification);
         combo_programm->addItemList(synth_data->get_current_bank_programms(), 1);
         combo_programm->setSelectedItemIndex(synth_data->get_current_program(),
-                                             dontSendNotification);
+                                             juce::dontSendNotification);
     }
 }
 void UiEditorSynthLite::show_ctrl_state()
@@ -88,7 +88,7 @@ void UiEditorSynthLite::show_ctrl_state()
         }
     }
 }
-void UiEditorSynthLite::show_info_popup(Component *comp_, MIDIControl *midi_conrtrol_)
+void UiEditorSynthLite::show_info_popup(juce::Component *comp_, MIDIControl *midi_conrtrol_)
 {
     popup = nullptr;
     if (MIDIControlHandler::getInstance()->is_learning() && midi_conrtrol_)
@@ -102,162 +102,169 @@ void UiEditorSynthLite::show_info_popup(Component *comp_, MIDIControl *midi_conr
 void UiEditorSynthLite::show_current_voice_data()
 {
     ComponentColours colours = UiLookAndFeel::getInstance()->colours;
-    Colour button_on = colours.button_on_colour;
-    Colour button_off = colours.button_off_colour;
+    juce::Colour button_on = colours.button_on_colour;
+    juce::Colour button_off = colours.button_off_colour;
 
     // FILTER 1
-    uint8 f_type = synth_data->filter_datas[0]->filter_type;
-    filter_type_6_1->setColour(TextButton::buttonColourId,
+    std::uint8_t f_type = synth_data->filter_datas[0]->filter_type;
+    filter_type_6_1->setColour(juce::TextButton::buttonColourId,
                                f_type == LPF || f_type == LPF_2_PASS ? button_on : button_off);
-    filter_type_2_1->setColour(TextButton::buttonColourId,
+    filter_type_2_1->setColour(juce::TextButton::buttonColourId,
                                f_type == HPF || f_type == HIGH_2_PASS ? button_on : button_off);
     filter_type_1_1->setColour(
-        TextButton::buttonColourId,
+        juce::TextButton::buttonColourId,
         f_type == LPF_2_PASS || f_type == HIGH_2_PASS || f_type == MOOG_AND_LPF ? button_on
                                                                                 : button_off);
-    filter_type_3_1->setColour(TextButton::buttonColourId, f_type == BPF ? button_on : button_off);
-    filter_type_5_1->setColour(TextButton::buttonColourId, f_type == PASS ? button_on : button_off);
+    filter_type_3_1->setColour(juce::TextButton::buttonColourId,
+                               f_type == BPF ? button_on : button_off);
+    filter_type_5_1->setColour(juce::TextButton::buttonColourId,
+                               f_type == PASS ? button_on : button_off);
 
     // FILTER 2
     f_type = synth_data->filter_datas[1]->filter_type;
-    filter_type_6_2->setColour(TextButton::buttonColourId,
+    filter_type_6_2->setColour(juce::TextButton::buttonColourId,
                                f_type == LPF || f_type == LPF_2_PASS ? button_on : button_off);
-    filter_type_2_2->setColour(TextButton::buttonColourId,
+    filter_type_2_2->setColour(juce::TextButton::buttonColourId,
                                f_type == HPF || f_type == HIGH_2_PASS ? button_on : button_off);
     filter_type_1_2->setColour(
-        TextButton::buttonColourId,
+        juce::TextButton::buttonColourId,
         f_type == LPF_2_PASS || f_type == HIGH_2_PASS || f_type == MOOG_AND_LPF ? button_on
                                                                                 : button_off);
-    filter_type_3_2->setColour(TextButton::buttonColourId, f_type == BPF ? button_on : button_off);
-    filter_type_5_2->setColour(TextButton::buttonColourId, f_type == PASS ? button_on : button_off);
+    filter_type_3_2->setColour(juce::TextButton::buttonColourId,
+                               f_type == BPF ? button_on : button_off);
+    filter_type_5_2->setColour(juce::TextButton::buttonColourId,
+                               f_type == PASS ? button_on : button_off);
 
     // FILTER 3
     f_type = synth_data->filter_datas[2]->filter_type;
-    filter_type_6_3->setColour(TextButton::buttonColourId,
+    filter_type_6_3->setColour(juce::TextButton::buttonColourId,
                                f_type == LPF || f_type == LPF_2_PASS ? button_on : button_off);
-    filter_type_2_3->setColour(TextButton::buttonColourId,
+    filter_type_2_3->setColour(juce::TextButton::buttonColourId,
                                f_type == HPF || f_type == HIGH_2_PASS ? button_on : button_off);
     filter_type_1_3->setColour(
-        TextButton::buttonColourId,
+        juce::TextButton::buttonColourId,
         f_type == LPF_2_PASS || f_type == HIGH_2_PASS || f_type == MOOG_AND_LPF ? button_on
                                                                                 : button_off);
-    filter_type_3_3->setColour(TextButton::buttonColourId, f_type == BPF ? button_on : button_off);
-    filter_type_5_3->setColour(TextButton::buttonColourId, f_type == PASS ? button_on : button_off);
+    filter_type_3_3->setColour(juce::TextButton::buttonColourId,
+                               f_type == BPF ? button_on : button_off);
+    filter_type_5_3->setColour(juce::TextButton::buttonColourId,
+                               f_type == PASS ? button_on : button_off);
 
     // SEQUENCE
     MONOVoice *voice =
         reinterpret_cast<MONOVoice *>(_app_instance_store->audio_processor->synth.getVoice(0));
-    button_sequence_1->setColour(TextButton::buttonColourId,
+    button_sequence_1->setColour(juce::TextButton::buttonColourId,
                                  synth_data->arp_sequencer_data->step[0]
                                      ? button_on.darker(1.0f - voice->get_arp_sequence_amp(0))
                                      : button_off);
-    button_sequence_2->setColour(TextButton::buttonColourId,
+    button_sequence_2->setColour(juce::TextButton::buttonColourId,
                                  synth_data->arp_sequencer_data->step[1]
                                      ? button_on.darker(1.0f - voice->get_arp_sequence_amp(1))
                                      : button_off);
-    button_sequence_3->setColour(TextButton::buttonColourId,
+    button_sequence_3->setColour(juce::TextButton::buttonColourId,
                                  synth_data->arp_sequencer_data->step[2]
                                      ? button_on.darker(1.0f - voice->get_arp_sequence_amp(2))
                                      : button_off);
-    button_sequence_4->setColour(TextButton::buttonColourId,
+    button_sequence_4->setColour(juce::TextButton::buttonColourId,
                                  synth_data->arp_sequencer_data->step[3]
                                      ? button_on.darker(1.0f - voice->get_arp_sequence_amp(3))
                                      : button_off);
-    button_sequence_5->setColour(TextButton::buttonColourId,
+    button_sequence_5->setColour(juce::TextButton::buttonColourId,
                                  synth_data->arp_sequencer_data->step[4]
                                      ? button_on.darker(1.0f - voice->get_arp_sequence_amp(4))
                                      : button_off);
-    button_sequence_6->setColour(TextButton::buttonColourId,
+    button_sequence_6->setColour(juce::TextButton::buttonColourId,
                                  synth_data->arp_sequencer_data->step[5]
                                      ? button_on.darker(1.0f - voice->get_arp_sequence_amp(5))
                                      : button_off);
-    button_sequence_7->setColour(TextButton::buttonColourId,
+    button_sequence_7->setColour(juce::TextButton::buttonColourId,
                                  synth_data->arp_sequencer_data->step[6]
                                      ? button_on.darker(1.0f - voice->get_arp_sequence_amp(6))
                                      : button_off);
-    button_sequence_8->setColour(TextButton::buttonColourId,
+    button_sequence_8->setColour(juce::TextButton::buttonColourId,
                                  synth_data->arp_sequencer_data->step[7]
                                      ? button_on.darker(1.0f - voice->get_arp_sequence_amp(7))
                                      : button_off);
-    button_sequence_9->setColour(TextButton::buttonColourId,
+    button_sequence_9->setColour(juce::TextButton::buttonColourId,
                                  synth_data->arp_sequencer_data->step[8]
                                      ? button_on.darker(1.0f - voice->get_arp_sequence_amp(8))
                                      : button_off);
-    button_sequence_10->setColour(TextButton::buttonColourId,
+    button_sequence_10->setColour(juce::TextButton::buttonColourId,
                                   synth_data->arp_sequencer_data->step[9]
                                       ? button_on.darker(1.0f - voice->get_arp_sequence_amp(9))
                                       : button_off);
-    button_sequence_11->setColour(TextButton::buttonColourId,
+    button_sequence_11->setColour(juce::TextButton::buttonColourId,
                                   synth_data->arp_sequencer_data->step[10]
                                       ? button_on.darker(1.0f - voice->get_arp_sequence_amp(10))
                                       : button_off);
-    button_sequence_12->setColour(TextButton::buttonColourId,
+    button_sequence_12->setColour(juce::TextButton::buttonColourId,
                                   synth_data->arp_sequencer_data->step[11]
                                       ? button_on.darker(1.0f - voice->get_arp_sequence_amp(11))
                                       : button_off);
-    button_sequence_13->setColour(TextButton::buttonColourId,
+    button_sequence_13->setColour(juce::TextButton::buttonColourId,
                                   synth_data->arp_sequencer_data->step[12]
                                       ? button_on.darker(1.0f - voice->get_arp_sequence_amp(12))
                                       : button_off);
-    button_sequence_14->setColour(TextButton::buttonColourId,
+    button_sequence_14->setColour(juce::TextButton::buttonColourId,
                                   synth_data->arp_sequencer_data->step[13]
                                       ? button_on.darker(1.0f - voice->get_arp_sequence_amp(13))
                                       : button_off);
-    button_sequence_15->setColour(TextButton::buttonColourId,
+    button_sequence_15->setColour(juce::TextButton::buttonColourId,
                                   synth_data->arp_sequencer_data->step[14]
                                       ? button_on.darker(1.0f - voice->get_arp_sequence_amp(14))
                                       : button_off);
-    button_sequence_16->setColour(TextButton::buttonColourId,
+    button_sequence_16->setColour(juce::TextButton::buttonColourId,
                                   synth_data->arp_sequencer_data->step[15]
                                       ? button_on.darker(1.0f - voice->get_arp_sequence_amp(15))
                                       : button_off);
 
     button_arp_speed_XNORM->setColour(
-        TextButton::buttonColourId,
+        juce::TextButton::buttonColourId,
         synth_data->arp_sequencer_data->speed_multi == _XNORM ? button_on : button_off);
-    button_arp_speed_X2->setColour(TextButton::buttonColourId,
+    button_arp_speed_X2->setColour(juce::TextButton::buttonColourId,
                                    synth_data->arp_sequencer_data->speed_multi == _X2 ? button_on
                                                                                       : button_off);
-    button_arp_speed_X3->setColour(TextButton::buttonColourId,
+    button_arp_speed_X3->setColour(juce::TextButton::buttonColourId,
                                    synth_data->arp_sequencer_data->speed_multi == _X3 ? button_on
                                                                                       : button_off);
-    button_arp_speed_X4->setColour(TextButton::buttonColourId,
+    button_arp_speed_X4->setColour(juce::TextButton::buttonColourId,
                                    synth_data->arp_sequencer_data->speed_multi == _X4 ? button_on
                                                                                       : button_off);
     button_arp_speed_X05->setColour(
-        TextButton::buttonColourId,
+        juce::TextButton::buttonColourId,
         synth_data->arp_sequencer_data->speed_multi == _X05 ? button_on : button_off);
     button_arp_speed_X025->setColour(
-        TextButton::buttonColourId,
+        juce::TextButton::buttonColourId,
         synth_data->arp_sequencer_data->speed_multi == _X025 ? button_on : button_off);
 
     // MORPHERS
     {
-        sl_morhp_mix->setValue(synth_data->linear_morhp_state * 1000, dontSendNotification);
+        sl_morhp_mix->setValue(synth_data->linear_morhp_state * 1000, juce::dontSendNotification);
     }
 
     // MIDI LEARN
-    button_midi_learn->setColour(TextButton::buttonColourId,
-                                 MIDIControlHandler::getInstance()->is_waiting_for_param()
-                                     ? button_on
-                                 : MIDIControlHandler::getInstance()->is_learning() ? Colours::red
-                                                                                    : button_off);
-    button_ctrl_toggle->setColour(TextButton::buttonColourId,
-                                  synth_data->ctrl ? Colours::red : button_off);
+    button_midi_learn->setColour(
+        juce::TextButton::buttonColourId,
+        MIDIControlHandler::getInstance()->is_waiting_for_param() ? button_on
+        : MIDIControlHandler::getInstance()->is_learning()        ? juce::Colours::red
+                                                                  : button_off);
+    button_ctrl_toggle->setColour(juce::TextButton::buttonColourId,
+                                  synth_data->ctrl ? juce::Colours::red : button_off);
 
     // EDITORS
-    button_open_config->setColour(TextButton::buttonColourId,
-                                  editor_settings ? Colours::lightblue : button_off);
-    button_open_midi_io_settings->setColour(TextButton::buttonColourId,
-                                            editor_midiio ? Colours::lightblue : button_off);
-    button_open_morph->setColour(TextButton::buttonColourId,
-                                 editor_morph ? Colours::lightblue : button_off);
-    button_open_oszi->setColour(TextButton::buttonColourId,
-                                MONOVoice::get_amp_painter() ? Colours::lightblue : button_off);
+    button_open_config->setColour(juce::TextButton::buttonColourId,
+                                  editor_settings ? juce::Colours::lightblue : button_off);
+    button_open_midi_io_settings->setColour(juce::TextButton::buttonColourId,
+                                            editor_midiio ? juce::Colours::lightblue : button_off);
+    button_open_morph->setColour(juce::TextButton::buttonColourId,
+                                 editor_morph ? juce::Colours::lightblue : button_off);
+    button_open_oszi->setColour(juce::TextButton::buttonColourId, MONOVoice::get_amp_painter()
+                                                                      ? juce::Colours::lightblue
+                                                                      : button_off);
 
     button_values_toggle->setColour(
-        TextButton::buttonColourId,
-        UiLookAndFeel::getInstance()->show_values_always ? Colours::lightblue : button_off);
+        juce::TextButton::buttonColourId,
+        UiLookAndFeel::getInstance()->show_values_always ? juce::Colours::lightblue : button_off);
 
     if (popup)
         popup->refresh();
@@ -273,7 +280,7 @@ void UiEditorSynthLite::resize_sequence_buttons()
         last_shuffle = shuffle;
         for (int i = 0; i != sequence_buttons.size(); ++i)
         {
-            TextButton *button = sequence_buttons[i];
+            juce::TextButton *button = sequence_buttons[i];
             if (i % 4 == 0)
             {
                 button->setSize(60.0f * width_factor + shuffle, 20.0f * height_factor);
@@ -315,7 +322,7 @@ void UiEditorSynthLite::switch_finalizer_tab()
     !state_switch ? effect_finalizer_switch->setButtonText("E Q")
                   : effect_finalizer_switch->setButtonText("F X");
 }
-void UiEditorSynthLite::sliderClicked(Slider *s_)
+void UiEditorSynthLite::sliderClicked(juce::Slider *s_)
 {
     if (MIDIControlHandler::getInstance()->is_waiting_for_param() ||
         MIDIControlHandler::getInstance()->is_learning())
@@ -339,13 +346,13 @@ UiEditorSynthLite::UiEditorSynthLite()
 
     addAndMakeVisible(morpher_1 = new mono_ModulationSlider(new MorphSLConfig(0)));
 
-    addAndMakeVisible(label_effect_hider = new Label(String(), String()));
-    label_effect_hider->setFont(Font(30.00f, Font::plain));
-    label_effect_hider->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_effect_hider = new juce::Label(juce::String(), juce::String()));
+    label_effect_hider->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_effect_hider->setJustificationType(juce::Justification::centredLeft);
     label_effect_hider->setEditable(false, false, false);
-    label_effect_hider->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_effect_hider->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_effect_hider->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_effect_hider->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_effect_hider->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_effect_hider->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     addAndMakeVisible(eq_9 = new mono_ModulationSlider(new EQSlConfig(8)));
 
@@ -375,9 +382,9 @@ UiEditorSynthLite::UiEditorSynthLite()
 
     addAndMakeVisible(osc_wave_3 = new mono_ModulationSlider(new WAVESlConfig(2)));
 
-    addAndMakeVisible(keyboard =
-                          new MidiKeyboardComponent(*_app_instance_store->audio_processor,
-                                                    MidiKeyboardComponent::horizontalKeyboard));
+    addAndMakeVisible(keyboard = new juce::MidiKeyboardComponent(
+                          *_app_instance_store->audio_processor,
+                          juce::MidiKeyboardComponent::horizontalKeyboard));
 
     addAndMakeVisible(glide2 = new mono_ModulationSlider(new GlideConfig()));
 
@@ -453,285 +460,287 @@ UiEditorSynthLite::UiEditorSynthLite()
 
     addAndMakeVisible(volume_master_meter = new SegmentedMeter());
 
-    addAndMakeVisible(label_monolisa = new Label(String(), TRANS("M O N I Q U E")));
-    label_monolisa->setFont(Font(30.00f, Font::plain));
-    label_monolisa->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_monolisa = new juce::Label(juce::String(), TRANS("M O N I Q U E")));
+    label_monolisa->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_monolisa->setJustificationType(juce::Justification::centredRight);
     label_monolisa->setEditable(false, false, false);
-    label_monolisa->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_monolisa->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_monolisa->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_monolisa->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_monolisa->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_monolisa->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(filter_type_1_1 = new TextButton("VOICE 1"));
+    addAndMakeVisible(filter_type_1_1 = new juce::TextButton("VOICE 1"));
     filter_type_1_1->setButtonText(TRANS("- 2PASS"));
     filter_type_1_1->addListener(this);
-    filter_type_1_1->setColour(TextButton::buttonColourId, Colours::black);
-    filter_type_1_1->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    filter_type_1_1->setColour(TextButton::textColourOffId, Colours::yellow);
+    filter_type_1_1->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    filter_type_1_1->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    filter_type_1_1->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(filter_type_2_1 = new TextButton("VOICE 1"));
+    addAndMakeVisible(filter_type_2_1 = new juce::TextButton("VOICE 1"));
     filter_type_2_1->setButtonText(TRANS("HP"));
     filter_type_2_1->addListener(this);
-    filter_type_2_1->setColour(TextButton::buttonColourId, Colours::black);
-    filter_type_2_1->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    filter_type_2_1->setColour(TextButton::textColourOffId, Colours::yellow);
+    filter_type_2_1->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    filter_type_2_1->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    filter_type_2_1->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(filter_type_3_1 = new TextButton("VOICE 1"));
+    addAndMakeVisible(filter_type_3_1 = new juce::TextButton("VOICE 1"));
     filter_type_3_1->setButtonText(TRANS("BAND"));
     filter_type_3_1->addListener(this);
-    filter_type_3_1->setColour(TextButton::buttonColourId, Colours::black);
-    filter_type_3_1->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    filter_type_3_1->setColour(TextButton::textColourOffId, Colours::yellow);
+    filter_type_3_1->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    filter_type_3_1->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    filter_type_3_1->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(filter_type_1_2 = new TextButton("VOICE 1"));
+    addAndMakeVisible(filter_type_1_2 = new juce::TextButton("VOICE 1"));
     filter_type_1_2->setButtonText(TRANS("- 2PASS"));
     filter_type_1_2->addListener(this);
-    filter_type_1_2->setColour(TextButton::buttonColourId, Colours::black);
-    filter_type_1_2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    filter_type_1_2->setColour(TextButton::textColourOffId, Colours::yellow);
+    filter_type_1_2->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    filter_type_1_2->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    filter_type_1_2->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(filter_type_2_2 = new TextButton("VOICE 1"));
+    addAndMakeVisible(filter_type_2_2 = new juce::TextButton("VOICE 1"));
     filter_type_2_2->setButtonText(TRANS("HP"));
     filter_type_2_2->addListener(this);
-    filter_type_2_2->setColour(TextButton::buttonColourId, Colours::black);
-    filter_type_2_2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    filter_type_2_2->setColour(TextButton::textColourOffId, Colours::yellow);
+    filter_type_2_2->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    filter_type_2_2->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    filter_type_2_2->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(filter_type_3_2 = new TextButton("VOICE 1"));
+    addAndMakeVisible(filter_type_3_2 = new juce::TextButton("VOICE 1"));
     filter_type_3_2->setButtonText(TRANS("BAND"));
     filter_type_3_2->addListener(this);
-    filter_type_3_2->setColour(TextButton::buttonColourId, Colours::black);
-    filter_type_3_2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    filter_type_3_2->setColour(TextButton::textColourOffId, Colours::yellow);
+    filter_type_3_2->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    filter_type_3_2->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    filter_type_3_2->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(filter_type_1_3 = new TextButton("VOICE 1"));
+    addAndMakeVisible(filter_type_1_3 = new juce::TextButton("VOICE 1"));
     filter_type_1_3->setButtonText(TRANS("- 2PASS"));
     filter_type_1_3->addListener(this);
-    filter_type_1_3->setColour(TextButton::buttonColourId, Colours::black);
-    filter_type_1_3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    filter_type_1_3->setColour(TextButton::textColourOffId, Colours::yellow);
+    filter_type_1_3->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    filter_type_1_3->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    filter_type_1_3->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(filter_type_2_3 = new TextButton("VOICE 1"));
+    addAndMakeVisible(filter_type_2_3 = new juce::TextButton("VOICE 1"));
     filter_type_2_3->setButtonText(TRANS("HP"));
     filter_type_2_3->addListener(this);
-    filter_type_2_3->setColour(TextButton::buttonColourId, Colours::black);
-    filter_type_2_3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    filter_type_2_3->setColour(TextButton::textColourOffId, Colours::yellow);
+    filter_type_2_3->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    filter_type_2_3->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    filter_type_2_3->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(filter_type_3_3 = new TextButton("VOICE 1"));
+    addAndMakeVisible(filter_type_3_3 = new juce::TextButton("VOICE 1"));
     filter_type_3_3->setButtonText(TRANS("BAND"));
     filter_type_3_3->addListener(this);
-    filter_type_3_3->setColour(TextButton::buttonColourId, Colours::black);
-    filter_type_3_3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    filter_type_3_3->setColour(TextButton::textColourOffId, Colours::yellow);
+    filter_type_3_3->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    filter_type_3_3->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    filter_type_3_3->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(filter_type_5_1 = new TextButton("VOICE 1"));
+    addAndMakeVisible(filter_type_5_1 = new juce::TextButton("VOICE 1"));
     filter_type_5_1->setButtonText(TRANS("PASS"));
     filter_type_5_1->addListener(this);
-    filter_type_5_1->setColour(TextButton::buttonColourId, Colours::black);
-    filter_type_5_1->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    filter_type_5_1->setColour(TextButton::textColourOffId, Colours::yellow);
+    filter_type_5_1->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    filter_type_5_1->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    filter_type_5_1->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(filter_type_5_2 = new TextButton("VOICE 1"));
+    addAndMakeVisible(filter_type_5_2 = new juce::TextButton("VOICE 1"));
     filter_type_5_2->setButtonText(TRANS("PASS"));
     filter_type_5_2->addListener(this);
-    filter_type_5_2->setColour(TextButton::buttonColourId, Colours::black);
-    filter_type_5_2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    filter_type_5_2->setColour(TextButton::textColourOffId, Colours::yellow);
+    filter_type_5_2->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    filter_type_5_2->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    filter_type_5_2->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(filter_type_5_3 = new TextButton("VOICE 1"));
+    addAndMakeVisible(filter_type_5_3 = new juce::TextButton("VOICE 1"));
     filter_type_5_3->setButtonText(TRANS("PASS"));
     filter_type_5_3->addListener(this);
-    filter_type_5_3->setColour(TextButton::buttonColourId, Colours::black);
-    filter_type_5_3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    filter_type_5_3->setColour(TextButton::textColourOffId, Colours::yellow);
+    filter_type_5_3->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    filter_type_5_3->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    filter_type_5_3->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_sequence_2 = new TextButton(String()));
+    addAndMakeVisible(button_sequence_2 = new juce::TextButton(juce::String()));
     button_sequence_2->addListener(this);
-    button_sequence_2->setColour(TextButton::buttonColourId, Colours::black);
-    button_sequence_2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_sequence_2->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_sequence_2->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_sequence_2->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_sequence_2->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_sequence_3 = new TextButton(String()));
+    addAndMakeVisible(button_sequence_3 = new juce::TextButton(juce::String()));
     button_sequence_3->addListener(this);
-    button_sequence_3->setColour(TextButton::buttonColourId, Colours::black);
-    button_sequence_3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_sequence_3->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_sequence_3->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_sequence_3->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_sequence_3->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_sequence_4 = new TextButton(String()));
+    addAndMakeVisible(button_sequence_4 = new juce::TextButton(juce::String()));
     button_sequence_4->addListener(this);
-    button_sequence_4->setColour(TextButton::buttonColourId, Colours::black);
-    button_sequence_4->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_sequence_4->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_sequence_4->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_sequence_4->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_sequence_4->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_sequence_5 = new TextButton(String()));
+    addAndMakeVisible(button_sequence_5 = new juce::TextButton(juce::String()));
     button_sequence_5->addListener(this);
-    button_sequence_5->setColour(TextButton::buttonColourId, Colours::black);
-    button_sequence_5->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_sequence_5->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_sequence_5->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_sequence_5->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_sequence_5->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_sequence_6 = new TextButton(String()));
+    addAndMakeVisible(button_sequence_6 = new juce::TextButton(juce::String()));
     button_sequence_6->addListener(this);
-    button_sequence_6->setColour(TextButton::buttonColourId, Colours::black);
-    button_sequence_6->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_sequence_6->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_sequence_6->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_sequence_6->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_sequence_6->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_sequence_7 = new TextButton(String()));
+    addAndMakeVisible(button_sequence_7 = new juce::TextButton(juce::String()));
     button_sequence_7->addListener(this);
-    button_sequence_7->setColour(TextButton::buttonColourId, Colours::black);
-    button_sequence_7->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_sequence_7->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_sequence_7->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_sequence_7->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_sequence_7->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_sequence_8 = new TextButton(String()));
+    addAndMakeVisible(button_sequence_8 = new juce::TextButton(juce::String()));
     button_sequence_8->addListener(this);
-    button_sequence_8->setColour(TextButton::buttonColourId, Colours::black);
-    button_sequence_8->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_sequence_8->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_sequence_8->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_sequence_8->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_sequence_8->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_arp_speed_X2 = new TextButton(String()));
+    addAndMakeVisible(button_arp_speed_X2 = new juce::TextButton(juce::String()));
     button_arp_speed_X2->setButtonText(TRANS("x2"));
     button_arp_speed_X2->addListener(this);
-    button_arp_speed_X2->setColour(TextButton::buttonColourId, Colours::black);
-    button_arp_speed_X2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_arp_speed_X2->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_arp_speed_X2->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_arp_speed_X2->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_arp_speed_X2->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_arp_speed_X05 = new TextButton(String()));
+    addAndMakeVisible(button_arp_speed_X05 = new juce::TextButton(juce::String()));
     button_arp_speed_X05->setButtonText(TRANS("/2"));
     button_arp_speed_X05->addListener(this);
-    button_arp_speed_X05->setColour(TextButton::buttonColourId, Colours::black);
-    button_arp_speed_X05->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_arp_speed_X05->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_arp_speed_X05->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_arp_speed_X05->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_arp_speed_X05->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_sequence_9 = new TextButton(String()));
+    addAndMakeVisible(button_sequence_9 = new juce::TextButton(juce::String()));
     button_sequence_9->addListener(this);
-    button_sequence_9->setColour(TextButton::buttonColourId, Colours::black);
-    button_sequence_9->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_sequence_9->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_sequence_9->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_sequence_9->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_sequence_9->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_sequence_10 = new TextButton(String()));
+    addAndMakeVisible(button_sequence_10 = new juce::TextButton(juce::String()));
     button_sequence_10->addListener(this);
-    button_sequence_10->setColour(TextButton::buttonColourId, Colours::black);
-    button_sequence_10->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_sequence_10->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_sequence_10->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_sequence_10->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_sequence_10->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_sequence_11 = new TextButton(String()));
+    addAndMakeVisible(button_sequence_11 = new juce::TextButton(juce::String()));
     button_sequence_11->addListener(this);
-    button_sequence_11->setColour(TextButton::buttonColourId, Colours::black);
-    button_sequence_11->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_sequence_11->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_sequence_11->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_sequence_11->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_sequence_11->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_sequence_12 = new TextButton(String()));
+    addAndMakeVisible(button_sequence_12 = new juce::TextButton(juce::String()));
     button_sequence_12->addListener(this);
-    button_sequence_12->setColour(TextButton::buttonColourId, Colours::black);
-    button_sequence_12->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_sequence_12->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_sequence_12->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_sequence_12->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_sequence_12->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_sequence_13 = new TextButton(String()));
+    addAndMakeVisible(button_sequence_13 = new juce::TextButton(juce::String()));
     button_sequence_13->addListener(this);
-    button_sequence_13->setColour(TextButton::buttonColourId, Colours::black);
-    button_sequence_13->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_sequence_13->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_sequence_13->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_sequence_13->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_sequence_13->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_sequence_14 = new TextButton(String()));
+    addAndMakeVisible(button_sequence_14 = new juce::TextButton(juce::String()));
     button_sequence_14->addListener(this);
-    button_sequence_14->setColour(TextButton::buttonColourId, Colours::black);
-    button_sequence_14->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_sequence_14->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_sequence_14->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_sequence_14->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_sequence_14->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_sequence_15 = new TextButton(String()));
+    addAndMakeVisible(button_sequence_15 = new juce::TextButton(juce::String()));
     button_sequence_15->addListener(this);
-    button_sequence_15->setColour(TextButton::buttonColourId, Colours::black);
-    button_sequence_15->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_sequence_15->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_sequence_15->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_sequence_15->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_sequence_15->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_sequence_16 = new TextButton(String()));
+    addAndMakeVisible(button_sequence_16 = new juce::TextButton(juce::String()));
     button_sequence_16->addListener(this);
-    button_sequence_16->setColour(TextButton::buttonColourId, Colours::black);
-    button_sequence_16->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_sequence_16->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_sequence_16->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_sequence_16->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_sequence_16->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_arp_speed_X3 = new TextButton(String()));
+    addAndMakeVisible(button_arp_speed_X3 = new juce::TextButton(juce::String()));
     button_arp_speed_X3->setButtonText(TRANS("x3"));
     button_arp_speed_X3->addListener(this);
-    button_arp_speed_X3->setColour(TextButton::buttonColourId, Colours::black);
-    button_arp_speed_X3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_arp_speed_X3->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_arp_speed_X3->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_arp_speed_X3->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_arp_speed_X3->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_arp_speed_X4 = new TextButton(String()));
+    addAndMakeVisible(button_arp_speed_X4 = new juce::TextButton(juce::String()));
     button_arp_speed_X4->setButtonText(TRANS("x4"));
     button_arp_speed_X4->addListener(this);
-    button_arp_speed_X4->setColour(TextButton::buttonColourId, Colours::black);
-    button_arp_speed_X4->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_arp_speed_X4->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_arp_speed_X4->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_arp_speed_X4->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_arp_speed_X4->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_arp_speed_X025 = new TextButton(String()));
+    addAndMakeVisible(button_arp_speed_X025 = new juce::TextButton(juce::String()));
     button_arp_speed_X025->setButtonText(TRANS("/4"));
     button_arp_speed_X025->addListener(this);
-    button_arp_speed_X025->setColour(TextButton::buttonColourId, Colours::black);
-    button_arp_speed_X025->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_arp_speed_X025->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_arp_speed_X025->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_arp_speed_X025->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_arp_speed_X025->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(combo_programm = new ComboBox(String()));
+    addAndMakeVisible(combo_programm = new juce::ComboBox(juce::String()));
     combo_programm->setEditableText(true);
-    combo_programm->setJustificationType(Justification::centredLeft);
+    combo_programm->setJustificationType(juce::Justification::centredLeft);
     combo_programm->setTextWhenNothingSelected(TRANS("SELECT PROGRAM"));
     combo_programm->setTextWhenNoChoicesAvailable(TRANS("EMPTY BANK"));
     combo_programm->addListener(this);
 
-    addAndMakeVisible(button_programm_left = new TextButton(String()));
+    addAndMakeVisible(button_programm_left = new juce::TextButton(juce::String()));
     button_programm_left->setButtonText(TRANS("<"));
     button_programm_left->addListener(this);
-    button_programm_left->setColour(TextButton::buttonColourId, Colours::black);
-    button_programm_left->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_programm_left->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_programm_left->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_programm_left->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_programm_left->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_programm_right = new TextButton(String()));
+    addAndMakeVisible(button_programm_right = new juce::TextButton(juce::String()));
     button_programm_right->setButtonText(TRANS(">"));
     button_programm_right->addListener(this);
-    button_programm_right->setColour(TextButton::buttonColourId, Colours::black);
-    button_programm_right->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_programm_right->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_programm_right->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_programm_right->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_programm_right->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_programm_replace = new TextButton(String()));
+    addAndMakeVisible(button_programm_replace = new juce::TextButton(juce::String()));
     button_programm_replace->setButtonText(TRANS("REPLACE"));
     button_programm_replace->addListener(this);
-    button_programm_replace->setColour(TextButton::buttonColourId, Colours::black);
-    button_programm_replace->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_programm_replace->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_programm_replace->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_programm_replace->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_programm_replace->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_programm_new = new TextButton(String()));
+    addAndMakeVisible(button_programm_new = new juce::TextButton(juce::String()));
     button_programm_new->setButtonText(TRANS("NEW"));
     button_programm_new->addListener(this);
-    button_programm_new->setColour(TextButton::buttonColourId, Colours::black);
-    button_programm_new->setColour(TextButton::textColourOnId, Colour(0xffbcff00));
-    button_programm_new->setColour(TextButton::textColourOffId, Colour(0xffd0ff00));
+    button_programm_new->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_programm_new->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffbcff00));
+    button_programm_new->setColour(juce::TextButton::textColourOffId, juce::Colour(0xffd0ff00));
 
-    addAndMakeVisible(button_open_oszi = new TextButton(String()));
+    addAndMakeVisible(button_open_oszi = new juce::TextButton(juce::String()));
     button_open_oszi->setButtonText(TRANS("OSCI"));
     button_open_oszi->addListener(this);
-    button_open_oszi->setColour(TextButton::buttonColourId, Colours::black);
-    button_open_oszi->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_open_oszi->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_open_oszi->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_open_oszi->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_open_oszi->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_open_midi_io_settings = new TextButton(String()));
+    addAndMakeVisible(button_open_midi_io_settings = new juce::TextButton(juce::String()));
     button_open_midi_io_settings->setButtonText(TRANS("MIDI IO"));
     button_open_midi_io_settings->addListener(this);
-    button_open_midi_io_settings->setColour(TextButton::buttonColourId, Colours::black);
-    button_open_midi_io_settings->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_open_midi_io_settings->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_open_midi_io_settings->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_open_midi_io_settings->setColour(juce::TextButton::textColourOnId,
+                                            juce::Colour(0xffff3b00));
+    button_open_midi_io_settings->setColour(juce::TextButton::textColourOffId,
+                                            juce::Colours::yellow);
 
-    addAndMakeVisible(combo_bank = new ComboBox(String()));
+    addAndMakeVisible(combo_bank = new juce::ComboBox(juce::String()));
     combo_bank->setEditableText(false);
-    combo_bank->setJustificationType(Justification::centredLeft);
-    combo_bank->setTextWhenNothingSelected(String());
+    combo_bank->setJustificationType(juce::Justification::centredLeft);
+    combo_bank->setTextWhenNothingSelected(juce::String());
     combo_bank->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     combo_bank->addListener(this);
 
-    addAndMakeVisible(button_programm_load = new TextButton(String()));
+    addAndMakeVisible(button_programm_load = new juce::TextButton(juce::String()));
     button_programm_load->setButtonText(TRANS("LOAD"));
     button_programm_load->addListener(this);
-    button_programm_load->setColour(TextButton::buttonColourId, Colours::black);
-    button_programm_load->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_programm_load->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_programm_load->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_programm_load->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_programm_load->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
     addAndMakeVisible(osc_1 = new mono_ModulationSlider(new OSCSlConfig(0)));
 
@@ -801,11 +810,11 @@ UiEditorSynthLite::UiEditorSynthLite()
 
     addAndMakeVisible(lfo_opt_3 = new mono_ModulationSlider(new EnvLfoSlConfig(2)));
 
-    addAndMakeVisible(button_sequence_1 = new TextButton(String()));
+    addAndMakeVisible(button_sequence_1 = new juce::TextButton(juce::String()));
     button_sequence_1->addListener(this);
-    button_sequence_1->setColour(TextButton::buttonColourId, Colours::black);
-    button_sequence_1->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_sequence_1->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_sequence_1->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_sequence_1->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_sequence_1->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
     addAndMakeVisible(flt_release_4 = new mono_ModulationSlider(new ReleaseSlConfig(MAIN_ENV)));
 
@@ -817,12 +826,12 @@ UiEditorSynthLite::UiEditorSynthLite()
 
     addAndMakeVisible(flt_distortion_3 = new mono_ModulationSlider(new GForceSlConfig(2)));
 
-    addAndMakeVisible(button_arp_speed_XNORM = new TextButton(String()));
+    addAndMakeVisible(button_arp_speed_XNORM = new juce::TextButton(juce::String()));
     button_arp_speed_XNORM->setButtonText(TRANS("x1"));
     button_arp_speed_XNORM->addListener(this);
-    button_arp_speed_XNORM->setColour(TextButton::buttonColourId, Colours::black);
-    button_arp_speed_XNORM->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_arp_speed_XNORM->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_arp_speed_XNORM->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_arp_speed_XNORM->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_arp_speed_XNORM->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
     addAndMakeVisible(flt_attack_5 = new mono_ModulationSlider(new FMFreqSlConfig()));
 
@@ -832,126 +841,126 @@ UiEditorSynthLite::UiEditorSynthLite()
 
     addAndMakeVisible(osc_wave_2 = new mono_ModulationSlider(new WAVESlConfig(1)));
 
-    addAndMakeVisible(sl_morhp_mix = new Slider("new slider"));
+    addAndMakeVisible(sl_morhp_mix = new juce::Slider("new slider"));
     sl_morhp_mix->setRange(0, 3000, 0.01);
-    sl_morhp_mix->setSliderStyle(Slider::LinearHorizontal);
-    sl_morhp_mix->setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
+    sl_morhp_mix->setSliderStyle(juce::Slider::LinearHorizontal);
+    sl_morhp_mix->setTextBoxStyle(juce::Slider::NoTextBox, false, 80, 20);
     sl_morhp_mix->addListener(this);
 
-    addAndMakeVisible(button_programm_delete = new TextButton(String()));
+    addAndMakeVisible(button_programm_delete = new juce::TextButton(juce::String()));
     button_programm_delete->setButtonText(TRANS("DELETE"));
     button_programm_delete->addListener(this);
-    button_programm_delete->setColour(TextButton::buttonColourId, Colours::black);
-    button_programm_delete->setColour(TextButton::textColourOnId, Colours::red);
-    button_programm_delete->setColour(TextButton::textColourOffId, Colour(0xffff7900));
+    button_programm_delete->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_programm_delete->setColour(juce::TextButton::textColourOnId, juce::Colours::red);
+    button_programm_delete->setColour(juce::TextButton::textColourOffId, juce::Colour(0xffff7900));
 
-    addAndMakeVisible(button_open_config = new TextButton(String()));
+    addAndMakeVisible(button_open_config = new juce::TextButton(juce::String()));
     button_open_config->setButtonText(TRANS("CFG"));
     button_open_config->addListener(this);
-    button_open_config->setColour(TextButton::buttonColourId, Colours::black);
-    button_open_config->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_open_config->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_open_config->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_open_config->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_open_config->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(filter_type_6_1 = new TextButton("VOICE 1"));
+    addAndMakeVisible(filter_type_6_1 = new juce::TextButton("VOICE 1"));
     filter_type_6_1->setButtonText(TRANS("LP"));
     filter_type_6_1->addListener(this);
-    filter_type_6_1->setColour(TextButton::buttonColourId, Colours::black);
-    filter_type_6_1->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    filter_type_6_1->setColour(TextButton::textColourOffId, Colours::yellow);
+    filter_type_6_1->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    filter_type_6_1->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    filter_type_6_1->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(filter_type_6_2 = new TextButton("VOICE 1"));
+    addAndMakeVisible(filter_type_6_2 = new juce::TextButton("VOICE 1"));
     filter_type_6_2->setButtonText(TRANS("LP"));
     filter_type_6_2->addListener(this);
-    filter_type_6_2->setColour(TextButton::buttonColourId, Colours::black);
-    filter_type_6_2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    filter_type_6_2->setColour(TextButton::textColourOffId, Colours::yellow);
+    filter_type_6_2->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    filter_type_6_2->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    filter_type_6_2->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(filter_type_6_3 = new TextButton("VOICE 1"));
+    addAndMakeVisible(filter_type_6_3 = new juce::TextButton("VOICE 1"));
     filter_type_6_3->setButtonText(TRANS("LP"));
     filter_type_6_3->addListener(this);
-    filter_type_6_3->setColour(TextButton::buttonColourId, Colours::black);
-    filter_type_6_3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    filter_type_6_3->setColour(TextButton::textColourOffId, Colours::yellow);
+    filter_type_6_3->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    filter_type_6_3->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    filter_type_6_3->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(label_monolisa2 =
-                          new Label(String(), TRANS("M   O   N   O   P   L   U   G   S")));
-    label_monolisa2->setFont(Font(30.00f, Font::plain));
-    label_monolisa2->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_monolisa2 = new juce::Label(
+                          juce::String(), TRANS("M   O   N   O   P   L   U   G   S")));
+    label_monolisa2->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_monolisa2->setJustificationType(juce::Justification::centredRight);
     label_monolisa2->setEditable(false, false, false);
-    label_monolisa2->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_monolisa2->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_monolisa2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_monolisa2->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_monolisa2->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_monolisa2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(button_midi_learn = new TextButton(String()));
+    addAndMakeVisible(button_midi_learn = new juce::TextButton(juce::String()));
     button_midi_learn->setButtonText(TRANS("LEARN"));
     button_midi_learn->addListener(this);
-    button_midi_learn->setColour(TextButton::buttonColourId, Colours::black);
-    button_midi_learn->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_midi_learn->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_midi_learn->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_midi_learn->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_midi_learn->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_ctrl_toggle = new TextButton(String()));
+    addAndMakeVisible(button_ctrl_toggle = new juce::TextButton(juce::String()));
     button_ctrl_toggle->setButtonText(TRANS("SHIFT"));
     button_ctrl_toggle->addListener(this);
-    button_ctrl_toggle->setColour(TextButton::buttonColourId, Colours::black);
-    button_ctrl_toggle->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_ctrl_toggle->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_ctrl_toggle->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_ctrl_toggle->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_ctrl_toggle->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
     addAndMakeVisible(colour = new mono_ModulationSlider(new FColourSlConfig()));
 
     addAndMakeVisible(volume2 = new mono_ModulationSlider(new BPMSlConfig()));
 
-    addAndMakeVisible(button_open_morph = new TextButton(String()));
+    addAndMakeVisible(button_open_morph = new juce::TextButton(juce::String()));
     button_open_morph->setButtonText(TRANS("CFG"));
     button_open_morph->addListener(this);
-    button_open_morph->setColour(TextButton::buttonColourId, Colours::black);
-    button_open_morph->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_open_morph->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_open_morph->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_open_morph->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_open_morph->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(effect_finalizer_switch = new TextButton(String()));
+    addAndMakeVisible(effect_finalizer_switch = new juce::TextButton(juce::String()));
     effect_finalizer_switch->setButtonText(TRANS("F X"));
     effect_finalizer_switch->addListener(this);
-    effect_finalizer_switch->setColour(TextButton::buttonColourId, Colours::black);
-    effect_finalizer_switch->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    effect_finalizer_switch->setColour(TextButton::textColourOffId, Colours::yellow);
+    effect_finalizer_switch->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    effect_finalizer_switch->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    effect_finalizer_switch->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(label_ui_headline2 = new Label(String(), TRANS("M-OSC")));
-    label_ui_headline2->setFont(Font(30.00f, Font::plain));
-    label_ui_headline2->setJustificationType(Justification::centred);
+    addAndMakeVisible(label_ui_headline2 = new juce::Label(juce::String(), TRANS("M-OSC")));
+    label_ui_headline2->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_ui_headline2->setJustificationType(juce::Justification::centred);
     label_ui_headline2->setEditable(false, false, false);
-    label_ui_headline2->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_ui_headline2->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_ui_headline2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_ui_headline2->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_ui_headline2->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_ui_headline2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_ui_headline3 = new Label(String(), TRANS("M-FLT")));
-    label_ui_headline3->setFont(Font(30.00f, Font::plain));
-    label_ui_headline3->setJustificationType(Justification::centred);
+    addAndMakeVisible(label_ui_headline3 = new juce::Label(juce::String(), TRANS("M-FLT")));
+    label_ui_headline3->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_ui_headline3->setJustificationType(juce::Justification::centred);
     label_ui_headline3->setEditable(false, false, false);
-    label_ui_headline3->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_ui_headline3->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_ui_headline3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_ui_headline3->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_ui_headline3->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_ui_headline3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_ui_headline5 = new Label(String(), TRANS("M-FX")));
-    label_ui_headline5->setFont(Font(30.00f, Font::plain));
-    label_ui_headline5->setJustificationType(Justification::centred);
+    addAndMakeVisible(label_ui_headline5 = new juce::Label(juce::String(), TRANS("M-FX")));
+    label_ui_headline5->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_ui_headline5->setJustificationType(juce::Justification::centred);
     label_ui_headline5->setEditable(false, false, false);
-    label_ui_headline5->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_ui_headline5->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_ui_headline5->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_ui_headline5->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_ui_headline5->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_ui_headline5->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_ui_headline6 = new Label(String(), TRANS("M-ARP")));
-    label_ui_headline6->setFont(Font(30.00f, Font::plain));
-    label_ui_headline6->setJustificationType(Justification::centred);
+    addAndMakeVisible(label_ui_headline6 = new juce::Label(juce::String(), TRANS("M-ARP")));
+    label_ui_headline6->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_ui_headline6->setJustificationType(juce::Justification::centred);
     label_ui_headline6->setEditable(false, false, false);
-    label_ui_headline6->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_ui_headline6->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_ui_headline6->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_ui_headline6->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_ui_headline6->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_ui_headline6->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(button_values_toggle = new TextButton(String()));
+    addAndMakeVisible(button_values_toggle = new juce::TextButton(juce::String()));
     button_values_toggle->setButtonText(TRANS("VAL"));
     button_values_toggle->addListener(this);
-    button_values_toggle->setColour(TextButton::buttonColourId, Colours::black);
-    button_values_toggle->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_values_toggle->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_values_toggle->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_values_toggle->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_values_toggle->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
     addAndMakeVisible(reverb_width = new mono_ModulationSlider(new RWidthSlConfig()));
 
@@ -962,7 +971,7 @@ UiEditorSynthLite::UiEditorSynthLite()
     last_programm = -1;
     is_in_help_mode = false;
 
-    peak_meter_thread = new TimeSliceThread("Monolisa-PeakThread");
+    peak_meter_thread = new juce::TimeSliceThread("Monolisa-PeakThread");
     peak_meter_thread->startThread(2);
     peak_meter_thread->addTimeSliceClient(volume_master_meter);
     _app_instance_store->audio_processor->peak_meter = volume_master_meter;
@@ -1000,18 +1009,18 @@ UiEditorSynthLite::UiEditorSynthLite()
     switch_finalizer_tab();
 
     ComponentColours colours = UiLookAndFeel::getInstance()->colours;
-    Colour button_off = colours.button_off_colour;
+    juce::Colour button_off = colours.button_off_colour;
 
-    button_programm_new->setColour(TextButton::buttonColourId, button_off);
-    button_programm_replace->setColour(TextButton::buttonColourId, button_off);
-    button_programm_delete->setColour(TextButton::buttonColourId, button_off);
-    button_programm_load->setColour(TextButton::buttonColourId, button_off);
-    button_programm_left->setColour(TextButton::buttonColourId, button_off);
-    button_programm_right->setColour(TextButton::buttonColourId, button_off);
-    button_open_config->setColour(TextButton::buttonColourId, button_off);
-    button_open_oszi->setColour(TextButton::buttonColourId, button_off);
-    button_open_midi_io_settings->setColour(TextButton::buttonColourId, button_off);
-    effect_finalizer_switch->setColour(TextButton::buttonColourId, button_off);
+    button_programm_new->setColour(juce::TextButton::buttonColourId, button_off);
+    button_programm_replace->setColour(juce::TextButton::buttonColourId, button_off);
+    button_programm_delete->setColour(juce::TextButton::buttonColourId, button_off);
+    button_programm_load->setColour(juce::TextButton::buttonColourId, button_off);
+    button_programm_left->setColour(juce::TextButton::buttonColourId, button_off);
+    button_programm_right->setColour(juce::TextButton::buttonColourId, button_off);
+    button_open_config->setColour(juce::TextButton::buttonColourId, button_off);
+    button_open_oszi->setColour(juce::TextButton::buttonColourId, button_off);
+    button_open_midi_io_settings->setColour(juce::TextButton::buttonColourId, button_off);
+    effect_finalizer_switch->setColour(juce::TextButton::buttonColourId, button_off);
 
     setOpaque(true);
 
@@ -1058,10 +1067,10 @@ UiEditorSynthLite::~UiEditorSynthLite()
     //[Destructor_pre]. You can add your own custom destruction code here..
     mono_UiRefresher::getInstance()->stopTimer();
     mono_UiRefresher::getInstance()->remove_all();
-    Thread::sleep(100);
+    juce::Thread::sleep(100);
 
     AppInstanceStore::getInstance()->editor = nullptr;
-    Thread::sleep(500); // to be sure we are no more in a update run
+    juce::Thread::sleep(500); // to be sure we are no more in a update run
 
     if (MONOVoice::get_amp_painter())
     {
@@ -1242,421 +1251,421 @@ UiEditorSynthLite::~UiEditorSynthLite()
 }
 
 //==============================================================================
-void UiEditorSynthLite::paint(Graphics &g)
+void UiEditorSynthLite::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-    g.fillAll(Colour(0xff161616));
+    g.fillAll(juce::Colour(0xff161616));
 #include "UiDynamicSizeStart.h"
     //[/UserPrePaint]
 
-    g.fillAll(Colour(0xff101010));
+    g.fillAll(juce::Colour(0xff101010));
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(170.0f, 20.0f, 155.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xff101010));
+    g.setColour(juce::Colour(0xff101010));
     g.fillRoundedRectangle(263.0f, 15.0f, 5.0f, 15.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(165.0f, 15.0f, 100.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xff101010));
+    g.setColour(juce::Colour(0xff101010));
     g.fillRoundedRectangle(203.0f, 10.0f, 5.0f, 15.0f, 1.000f);
 
-    g.setColour(Colour(0xff161616));
+    g.setColour(juce::Colour(0xff161616));
     g.fillRoundedRectangle(155.0f, 178.0f, 10.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1230.0f, 335.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1380.0f, 335.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1140.0f, 335.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1080.0f, 335.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1020.0f, 335.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(540.0f, 340.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(770.0f, 340.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(760.0f, 335.0f, 620.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(770.0f, 340.0f, 81.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(850.0f, 340.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(760.0f, 335.0f, 1.0f, 15.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(750.0f, 340.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(830.0f, 345.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(410.0f, 345.0f, 280.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(540.0f, 340.0f, 210.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(180.0f, 170.0f, 1230.0f, 2.0f, 1.000f);
 
-    g.setColour(Colour(0xff101010));
+    g.setColour(juce::Colour(0xff101010));
     g.fillRoundedRectangle(293.0f, 160.0f, 5.0f, 25.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(20.0f, 650.0f, 1320.0f, 2.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(15.0f, 30.0f, 1.0f, 470.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(540.0f, 20.0f, 210.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(20.0f, 810.0f, 1060.0f, 2.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(500.0f, 810.0f, 910.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(20.0f, 814.0f, 1020.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(20.0f, 817.0f, 940.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(20.0f, 820.0f, 800.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(20.0f, 823.0f, 150.0f, 1.0f, 10.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(15.0f, 500.0f, 71.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(150.0f, 680.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(80.0f, 680.0f, 10.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(410.0f, 25.0f, 280.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(30.0f, 25.0f, 110.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(85.0f, 10.0f, 120.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(325.0f, 20.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(205.0f, 10.0f, 1.0f, 16.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(85.0f, 10.0f, 1.0f, 15.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(15.0f, 30.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(30.0f, 505.0f, 110.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(85.0f, 500.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(830.0f, 25.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(750.0f, 20.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(595.0f, 645.0f, 415.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(950.0f, 640.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(595.0f, 640.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1010.0f, 640.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(990.0f, 640.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(760.0f, 15.0f, 1.0f, 15.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(850.0f, 20.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(770.0f, 20.0f, 81.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(760.0f, 15.0f, 620.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(770.0f, 20.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(85.0f, 520.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(85.0f, 515.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1260.0f, 680.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1265.0f, 675.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(540.0f, 20.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1020.0f, 15.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1080.0f, 15.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1140.0f, 15.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1380.0f, 15.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(180.0f, 330.0f, 1230.0f, 2.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(180.0f, 490.0f, 1230.0f, 2.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1230.0f, 15.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(295.0f, 160.0f, 1.0f, 25.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(260.0f, 160.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xff101010));
+    g.setColour(juce::Colour(0xff101010));
     g.fillRoundedRectangle(353.0f, 160.0f, 5.0f, 25.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(355.0f, 160.0f, 1.0f, 25.0f, 1.000f);
 
-    g.setColour(Colour(0xff101010));
+    g.setColour(juce::Colour(0xff101010));
     g.fillRoundedRectangle(233.0f, 160.0f, 5.0f, 25.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(235.0f, 160.0f, 1.0f, 25.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(200.0f, 160.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(320.0f, 160.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xff101010));
+    g.setColour(juce::Colour(0xff101010));
     g.fillRoundedRectangle(293.0f, 320.0f, 5.0f, 25.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(295.0f, 320.0f, 1.0f, 25.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(260.0f, 320.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xff101010));
+    g.setColour(juce::Colour(0xff101010));
     g.fillRoundedRectangle(353.0f, 320.0f, 5.0f, 25.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(355.0f, 320.0f, 1.0f, 25.0f, 1.000f);
 
-    g.setColour(Colour(0xff101010));
+    g.setColour(juce::Colour(0xff101010));
     g.fillRoundedRectangle(233.0f, 320.0f, 5.0f, 25.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(235.0f, 320.0f, 1.0f, 25.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(200.0f, 320.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(320.0f, 320.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1360.0f, 160.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1380.0f, 160.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xff101010));
+    g.setColour(juce::Colour(0xff101010));
     g.fillRoundedRectangle(1288.0f, 320.0f, 5.0f, 30.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1290.0f, 325.0f, 1.0f, 25.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1290.0f, 325.0f, 90.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1360.0f, 320.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1380.0f, 320.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(265.0f, 15.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(540.0f, 180.0f, 210.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(410.0f, 185.0f, 280.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(830.0f, 185.0f, 40.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(750.0f, 180.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(760.0f, 175.0f, 1.0f, 15.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(850.0f, 180.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(770.0f, 180.0f, 81.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(760.0f, 175.0f, 620.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(770.0f, 180.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(540.0f, 180.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1020.0f, 175.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1080.0f, 175.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1140.0f, 175.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1380.0f, 175.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1230.0f, 175.0f, 1.0f, 10.0f, 1.000f);
 
-    g.setColour(Colour(0xff101010));
+    g.setColour(juce::Colour(0xff101010));
     g.fillRoundedRectangle(1288.0f, 160.0f, 5.0f, 30.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1290.0f, 165.0f, 1.0f, 25.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(1290.0f, 165.0f, 90.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(30.0f, 185.0f, 110.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(85.0f, 180.0f, 80.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(85.0f, 180.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(165.0f, 15.0f, 1.0f, 166.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(30.0f, 345.0f, 110.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(85.0f, 340.0f, 85.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(85.0f, 340.0f, 1.0f, 5.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(170.0f, 20.0f, 1.0f, 321.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(15.0f, 190.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(15.0f, 30.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(15.0f, 160.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(15.0f, 320.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(15.0f, 350.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(15.0f, 480.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(915.0f, 255.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(915.0f, 205.0f, 1.0f, 51.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(915.0f, 230.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(915.0f, 205.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(915.0f, 95.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(915.0f, 45.0f, 1.0f, 51.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(915.0f, 70.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(915.0f, 45.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(915.0f, 415.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(915.0f, 365.0f, 1.0f, 51.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(915.0f, 390.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(915.0f, 365.0f, 5.0f, 1.0f, 1.000f);
 
     //[UserPaint] Add your own custom painting code here..
@@ -1842,7 +1851,7 @@ void UiEditorSynthLite::resized()
     //[/UserResized]
 }
 
-void UiEditorSynthLite::buttonClicked(Button *buttonThatWasClicked)
+void UiEditorSynthLite::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -1862,7 +1871,7 @@ void UiEditorSynthLite::buttonClicked(Button *buttonThatWasClicked)
                                                     buttons)
         else
         {
-            uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
+            std::uint8_t current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
             if (current_filter_type == LPF_2_PASS)
             {
                 synth_data->filter_datas[flt_id]->filter_type = LPF;
@@ -1894,7 +1903,7 @@ void UiEditorSynthLite::buttonClicked(Button *buttonThatWasClicked)
                                                     buttonThatWasClicked)
         else
         {
-            uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
+            std::uint8_t current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
             if (current_filter_type == HPF)
             {
                 synth_data->filter_datas[flt_id]->filter_type = HIGH_2_PASS;
@@ -1924,7 +1933,7 @@ void UiEditorSynthLite::buttonClicked(Button *buttonThatWasClicked)
                                                     buttonThatWasClicked)
         else
         {
-            uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
+            std::uint8_t current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
             if (current_filter_type == LPF_2_PASS)
             {
                 synth_data->filter_datas[flt_id]->filter_type = LPF;
@@ -1956,7 +1965,7 @@ void UiEditorSynthLite::buttonClicked(Button *buttonThatWasClicked)
                                                     buttonThatWasClicked)
         else
         {
-            uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
+            std::uint8_t current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
             if (current_filter_type == HPF)
             {
                 synth_data->filter_datas[flt_id]->filter_type = HIGH_2_PASS;
@@ -1986,7 +1995,7 @@ void UiEditorSynthLite::buttonClicked(Button *buttonThatWasClicked)
                                                     buttonThatWasClicked)
         else
         {
-            uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
+            std::uint8_t current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
             if (current_filter_type == LPF_2_PASS)
             {
                 synth_data->filter_datas[flt_id]->filter_type = LPF;
@@ -2018,7 +2027,7 @@ void UiEditorSynthLite::buttonClicked(Button *buttonThatWasClicked)
                                                     buttonThatWasClicked)
         else
         {
-            uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
+            std::uint8_t current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
             if (current_filter_type == HPF)
             {
                 synth_data->filter_datas[flt_id]->filter_type = HIGH_2_PASS;
@@ -2404,7 +2413,7 @@ void UiEditorSynthLite::buttonClicked(Button *buttonThatWasClicked)
                                                     buttonThatWasClicked)
         else
         {
-            uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
+            std::uint8_t current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
             if (current_filter_type == LPF)
             {
                 synth_data->filter_datas[flt_id]->filter_type = LPF_2_PASS;
@@ -2424,7 +2433,7 @@ void UiEditorSynthLite::buttonClicked(Button *buttonThatWasClicked)
                                                     buttonThatWasClicked)
         else
         {
-            uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
+            std::uint8_t current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
             if (current_filter_type == LPF)
             {
                 synth_data->filter_datas[flt_id]->filter_type = LPF_2_PASS;
@@ -2444,7 +2453,7 @@ void UiEditorSynthLite::buttonClicked(Button *buttonThatWasClicked)
                                                     buttonThatWasClicked)
         else
         {
-            uint8 current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
+            std::uint8_t current_filter_type = synth_data->filter_datas[flt_id]->filter_type;
             if (current_filter_type == LPF)
             {
                 synth_data->filter_datas[flt_id]->filter_type = LPF_2_PASS;
@@ -2508,7 +2517,7 @@ void UiEditorSynthLite::buttonClicked(Button *buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiEditorSynthLite::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
+void UiEditorSynthLite::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
 {
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]
@@ -2518,8 +2527,8 @@ void UiEditorSynthLite::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
         //[UserComboBoxCode_combo_programm] -- add your combo box handling code here..
         combo_programm->setEditableText(false);
 
-        String new_name = combo_programm->getText();
-        String old_name = combo_programm->getItemText(combo_programm->getSelectedItemIndex());
+        juce::String new_name = combo_programm->getText();
+        juce::String old_name = combo_programm->getItemText(combo_programm->getSelectedItemIndex());
         if (old_name != new_name && combo_programm->getSelectedItemIndex() == -1)
         {
             synth_data->create_new();
@@ -2545,7 +2554,7 @@ void UiEditorSynthLite::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
     //[/UsercomboBoxChanged_Post]
 }
 
-void UiEditorSynthLite::sliderValueChanged(Slider *sliderThatWasMoved)
+void UiEditorSynthLite::sliderValueChanged(juce::Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
@@ -2564,11 +2573,11 @@ void UiEditorSynthLite::sliderValueChanged(Slider *sliderThatWasMoved)
     //[/UsersliderValueChanged_Post]
 }
 
-bool UiEditorSynthLite::keyPressed(const KeyPress &key)
+bool UiEditorSynthLite::keyPressed(const juce::KeyPress &key)
 {
     //[UserCode_keyPressed] -- Add your code here...
     bool success = false;
-    if (key == KeyPress::escapeKey)
+    if (key == juce::KeyPress::escapeKey)
     {
         MIDIControlHandler::getInstance()->clear();
 
@@ -2591,7 +2600,7 @@ bool UiEditorSynthLite::keyPressed(const KeyPress &key)
     //[/UserCode_keyPressed]
 }
 
-void UiEditorSynthLite::modifierKeysChanged(const ModifierKeys &modifiers)
+void UiEditorSynthLite::modifierKeysChanged(const juce::ModifierKeys &modifiers)
 {
     //[UserCode_modifierKeysChanged] -- Add your code here...
     if (!combo_programm->isTextEditable())

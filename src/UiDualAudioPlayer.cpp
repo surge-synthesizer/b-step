@@ -38,137 +38,140 @@ void UiDualAudioMessage::timerCallback()
 //==============================================================================
 UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
                                        UiDualAudioMessageListener *const listener_,
-                                       const String &project_name_,
+                                       const juce::String &project_name_,
                                        AudioPlayer *const audio_player_)
     : UiEditor("B-AudioPlayer"), _app_instance_store(app_instance_store_), _listener(listener_),
       _audio_player(audio_player_)
 {
-    addAndMakeVisible(ok = new TextButton(String()));
+    addAndMakeVisible(ok = new juce::TextButton(juce::String()));
     ok->setExplicitFocusOrder(2);
     ok->setButtonText(TRANS("OK / ASSIGN"));
-    ok->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                          Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    ok->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                          juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     ok->addListener(this);
-    ok->setColour(TextButton::buttonColourId, Colours::black);
-    ok->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
-    ok->setColour(TextButton::textColourOnId, Colours::chartreuse);
-    ok->setColour(TextButton::textColourOffId, Colours::chartreuse);
+    ok->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    ok->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
+    ok->setColour(juce::TextButton::textColourOnId, juce::Colours::chartreuse);
+    ok->setColour(juce::TextButton::textColourOffId, juce::Colours::chartreuse);
 
-    addAndMakeVisible(cancel = new TextButton(String()));
+    addAndMakeVisible(cancel = new juce::TextButton(juce::String()));
     cancel->setExplicitFocusOrder(3);
     cancel->setButtonText(TRANS("CANCEL"));
-    cancel->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                              Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    cancel->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                              juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     cancel->addListener(this);
-    cancel->setColour(TextButton::buttonColourId, Colours::black);
-    cancel->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
-    cancel->setColour(TextButton::textColourOnId, Colours::red);
-    cancel->setColour(TextButton::textColourOffId, Colours::red);
+    cancel->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    cancel->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
+    cancel->setColour(juce::TextButton::textColourOnId, juce::Colours::red);
+    cancel->setColour(juce::TextButton::textColourOffId, juce::Colours::red);
 
-    addAndMakeVisible(audio_thumb_new = new Slider(String()));
+    addAndMakeVisible(audio_thumb_new = new juce::Slider(juce::String()));
     audio_thumb_new->setRange(0, 10, 0);
-    audio_thumb_new->setSliderStyle(Slider::LinearHorizontal);
-    audio_thumb_new->setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
+    audio_thumb_new->setSliderStyle(juce::Slider::LinearHorizontal);
+    audio_thumb_new->setTextBoxStyle(juce::Slider::NoTextBox, false, 80, 20);
     audio_thumb_new->addListener(this);
 
-    addAndMakeVisible(play_new = new TextButton(String()));
+    addAndMakeVisible(play_new = new juce::TextButton(juce::String()));
     play_new->setExplicitFocusOrder(2);
     play_new->setButtonText(TRANS("PLAY"));
-    play_new->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    play_new->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                                juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     play_new->addListener(this);
-    play_new->setColour(TextButton::buttonColourId, Colours::black);
-    play_new->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
-    play_new->setColour(TextButton::textColourOnId, Colours::chartreuse);
-    play_new->setColour(TextButton::textColourOffId, Colours::chartreuse);
+    play_new->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    play_new->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
+    play_new->setColour(juce::TextButton::textColourOnId, juce::Colours::chartreuse);
+    play_new->setColour(juce::TextButton::textColourOffId, juce::Colours::chartreuse);
 
-    addAndMakeVisible(audio_thumb_old = new Slider(String()));
+    addAndMakeVisible(audio_thumb_old = new juce::Slider(juce::String()));
     audio_thumb_old->setRange(0, 10, 0);
-    audio_thumb_old->setSliderStyle(Slider::LinearHorizontal);
-    audio_thumb_old->setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
+    audio_thumb_old->setSliderStyle(juce::Slider::LinearHorizontal);
+    audio_thumb_old->setTextBoxStyle(juce::Slider::NoTextBox, false, 80, 20);
     audio_thumb_old->addListener(this);
 
     addAndMakeVisible(
-        titel2 = new Label(String(), TRANS("Would you like to assign this audio to project: ")));
-    titel2->setFont(Font("Oswald", 18.00f, Font::plain));
-    titel2->setJustificationType(Justification::centredLeft);
+        titel2 = new juce::Label(juce::String(),
+                                 TRANS("Would you like to assign this audio to project: ")));
+    titel2->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
+    titel2->setJustificationType(juce::Justification::centredLeft);
     titel2->setEditable(false, false, false);
-    titel2->setColour(Label::textColourId,
-                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    titel2->setColour(TextEditor::textColourId, Colours::black);
-    titel2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    titel2->setColour(juce::Label::textColourId,
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    titel2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    titel2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(project_name = new Label(String(), TRANS("XYZ")));
-    project_name->setFont(Font("Oswald", 18.00f, Font::plain));
-    project_name->setJustificationType(Justification::centred);
+    addAndMakeVisible(project_name = new juce::Label(juce::String(), TRANS("XYZ")));
+    project_name->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
+    project_name->setJustificationType(juce::Justification::centred);
     project_name->setEditable(false, false, false);
-    project_name->setColour(Label::textColourId, Colours::aqua);
-    project_name->setColour(TextEditor::textColourId, Colours::black);
-    project_name->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    project_name->setColour(juce::Label::textColourId, juce::Colours::aqua);
+    project_name->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    project_name->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(titel4 = new Label(String(), TRANS("?")));
-    titel4->setFont(Font("Oswald", 18.00f, Font::plain));
-    titel4->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(titel4 = new juce::Label(juce::String(), TRANS("?")));
+    titel4->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
+    titel4->setJustificationType(juce::Justification::centredRight);
     titel4->setEditable(false, false, false);
-    titel4->setColour(Label::textColourId,
-                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    titel4->setColour(TextEditor::textColourId, Colours::black);
-    titel4->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    titel4->setColour(juce::Label::textColourId,
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    titel4->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    titel4->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     addAndMakeVisible(
-        old_info_2 = new Label(
-            String(),
+        old_info_2 = new juce::Label(
+            juce::String(),
             TRANS("Assigning a audio file will create a copy of the file you like to asign. It "
                   "also replaces existing audio assigns for this projects (unrestoreable).")));
-    old_info_2->setFont(Font("Oswald", 18.00f, Font::plain));
-    old_info_2->setJustificationType(Justification::topLeft);
+    old_info_2->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
+    old_info_2->setJustificationType(juce::Justification::topLeft);
     old_info_2->setEditable(false, false, false);
-    old_info_2->setColour(Label::textColourId, Colours::red);
-    old_info_2->setColour(TextEditor::textColourId, Colours::black);
-    old_info_2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    old_info_2->setColour(juce::Label::textColourId, juce::Colours::red);
+    old_info_2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    old_info_2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(old_info_3 = new Label(String(), TRANS("NOTE:")));
-    old_info_3->setFont(Font("Oswald", 18.00f, Font::plain));
-    old_info_3->setJustificationType(Justification::topLeft);
+    addAndMakeVisible(old_info_3 = new juce::Label(juce::String(), TRANS("NOTE:")));
+    old_info_3->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
+    old_info_3->setJustificationType(juce::Justification::topLeft);
     old_info_3->setEditable(false, false, false);
-    old_info_3->setColour(Label::textColourId, Colours::red);
-    old_info_3->setColour(TextEditor::textColourId, Colours::black);
-    old_info_3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    old_info_3->setColour(juce::Label::textColourId, juce::Colours::red);
+    old_info_3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    old_info_3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(titel7 = new Label(String(), TRANS("ASSIGN SAMPLE AUDIO TO PROJECT")));
-    titel7->setFont(Font("Oswald", 25.00f, Font::bold));
-    titel7->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(titel7 =
+                          new juce::Label(juce::String(), TRANS("ASSIGN SAMPLE AUDIO TO PROJECT")));
+    titel7->setFont(juce::Font("Oswald", 25.00f, juce::Font::bold));
+    titel7->setJustificationType(juce::Justification::centredLeft);
     titel7->setEditable(false, false, false);
-    titel7->setColour(Label::textColourId,
-                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    titel7->setColour(TextEditor::textColourId, Colours::black);
-    titel7->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    titel7->setColour(juce::Label::textColourId,
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    titel7->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    titel7->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(play_old = new TextButton(String()));
+    addAndMakeVisible(play_old = new juce::TextButton(juce::String()));
     play_old->setExplicitFocusOrder(2);
     play_old->setButtonText(TRANS("PLAY"));
-    play_old->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    play_old->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                                juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     play_old->addListener(this);
-    play_old->setColour(TextButton::buttonColourId, Colours::black);
-    play_old->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
-    play_old->setColour(TextButton::textColourOnId, Colours::red);
-    play_old->setColour(TextButton::textColourOffId, Colours::red);
+    play_old->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    play_old->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
+    play_old->setColour(juce::TextButton::textColourOnId, juce::Colours::red);
+    play_old->setColour(juce::TextButton::textColourOffId, juce::Colours::red);
 
-    addAndMakeVisible(old_info_1 = new Label(
-                          String(), TRANS("Currently assigned audio file (will be replaced)")));
-    old_info_1->setFont(Font("Oswald", 18.00f, Font::plain));
-    old_info_1->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(
+        old_info_1 = new juce::Label(juce::String(),
+                                     TRANS("Currently assigned audio file (will be replaced)")));
+    old_info_1->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
+    old_info_1->setJustificationType(juce::Justification::centredLeft);
     old_info_1->setEditable(false, false, false);
-    old_info_1->setColour(Label::textColourId,
-                          Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    old_info_1->setColour(TextEditor::textColourId, Colours::black);
-    old_info_1->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    old_info_1->setColour(juce::Label::textColourId,
+                          juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    old_info_1->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    old_info_1->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     addAndMakeVisible(toolbar = new UiEditorToolbar(this, false, true, false));
 
     //[UserPreSize]
-    project_name->setText(project_name_, dontSendNotification);
+    project_name->setText(project_name_, juce::dontSendNotification);
 
     if (!_listener->get_old_audio_file().existsAsFile())
     {
@@ -184,7 +187,7 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
 
     //[Constructor] You can add your own custom stuff here..
     center_relative_and_make_visible(
-        reinterpret_cast<Component *const>(_app_instance_store->editor));
+        reinterpret_cast<juce::Component *const>(_app_instance_store->editor));
     // setAlwaysOnTop(true);
     enterModalState(true);
     // AUTO START
@@ -220,21 +223,21 @@ UiDualAudioMessage::~UiDualAudioMessage()
 }
 
 //==============================================================================
-void UiDualAudioMessage::paint(Graphics &g)
+void UiDualAudioMessage::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll(Colours::white);
+    g.fillAll(juce::Colours::white);
 
-    g.setColour(Colour(0xff161616));
+    g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
     //[UserPaint] Add your own custom painting code here..
-    ResizableWindow::moved();
+    juce::ResizableWindow::moved();
     //[/UserPaint]
 }
 
@@ -277,11 +280,11 @@ void UiDualAudioMessage::resized()
     toolbar->setBounds(getWidth() - proportionOfWidth(0.1136f), proportionOfHeight(-0.1738f),
                        proportionOfWidth(0.1136f), proportionOfHeight(0.6557f));
     //[UserResized] Add your own custom resize handling here..
-    ResizableWindow::resized();
+    juce::ResizableWindow::resized();
     //[/UserResized]
 }
 
-void UiDualAudioMessage::buttonClicked(Button *buttonThatWasClicked)
+void UiDualAudioMessage::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -353,7 +356,7 @@ void UiDualAudioMessage::buttonClicked(Button *buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiDualAudioMessage::sliderValueChanged(Slider *sliderThatWasMoved)
+void UiDualAudioMessage::sliderValueChanged(juce::Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]

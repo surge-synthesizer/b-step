@@ -22,6 +22,7 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "App.h"
+#include <juce_gui_basics/juce_gui_basics.h>
 
 class mono_AudioDeviceManager;
 //[/Headers]
@@ -34,10 +35,10 @@ class mono_AudioDeviceManager;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorMIDIIO : public Component,
-                       public ComboBox::Listener,
-                       public Button::Listener,
-                       public Slider::Listener
+class UiEditorMIDIIO : public juce::Component,
+                       public juce::ComboBox::Listener,
+                       public juce::Button::Listener,
+                       public juce::Slider::Listener
 {
   public:
     //==============================================================================
@@ -52,12 +53,12 @@ class UiEditorMIDIIO : public Component,
     const float original_h;
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
-    void comboBoxChanged(ComboBox *comboBoxThatHasChanged);
-    void buttonClicked(Button *buttonThatWasClicked);
-    void sliderValueChanged(Slider *sliderThatWasMoved);
-    bool keyPressed(const KeyPress &key);
+    void comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged);
+    void buttonClicked(juce::Button *buttonThatWasClicked);
+    void sliderValueChanged(juce::Slider *sliderThatWasMoved);
+    bool keyPressed(const juce::KeyPress &key);
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
@@ -65,74 +66,74 @@ class UiEditorMIDIIO : public Component,
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Label> label_7;
-    ScopedPointer<ComboBox> combo_input_main;
-    ScopedPointer<ComboBox> combo_input_main_channel;
-    ScopedPointer<Label> label_1;
-    ScopedPointer<Label> label_3;
-    ScopedPointer<ToggleButton> toggle_input_main_thru;
-    ScopedPointer<Label> label_4;
-    ScopedPointer<Label> label_5;
-    ScopedPointer<ComboBox> combo_output_thru;
-    ScopedPointer<Label> label_6;
-    ScopedPointer<ComboBox> combo_input_cc;
-    ScopedPointer<ToggleButton> toggle_input_main_cc;
-    ScopedPointer<ToggleButton> toggle_input_cc_thru;
-    ScopedPointer<Label> label_8;
-    ScopedPointer<Label> label_9;
-    ScopedPointer<ComboBox> combo_output_cc;
-    ScopedPointer<ToggleButton> toggle_output_cc_mute;
-    ScopedPointer<ToggleButton> toggle_output_thru_mute;
-    ScopedPointer<Label> label_11;
-    ScopedPointer<ComboBox> combo_output_lfo_1;
-    ScopedPointer<ComboBox> combo_output_lfo_channel_1;
-    ScopedPointer<Label> label_12;
-    ScopedPointer<ToggleButton> toggle_output_lfo_mute_1;
-    ScopedPointer<ComboBox> combo_output_lfo_number_1;
-    ScopedPointer<Label> label_15;
-    ScopedPointer<ComboBox> combo_output_lfo_2;
-    ScopedPointer<ComboBox> combo_output_lfo_channel_2;
-    ScopedPointer<ToggleButton> toggle_output_lfo_mute_2;
-    ScopedPointer<ComboBox> combo_output_lfo_number_2;
-    ScopedPointer<Label> label_16;
-    ScopedPointer<ComboBox> combo_output_lfo_3;
-    ScopedPointer<ComboBox> combo_output_lfo_channel_3;
-    ScopedPointer<ToggleButton> toggle_output_lfo_mute_3;
-    ScopedPointer<ComboBox> combo_output_lfo_number_3;
-    ScopedPointer<ToggleButton> toggle_output_lfo_mute_5;
-    ScopedPointer<Label> label_19;
-    ScopedPointer<ComboBox> combo_output_adsr_1;
-    ScopedPointer<ComboBox> combo_output_adsr_channel_1;
-    ScopedPointer<ToggleButton> toggle_output_adsr_mute_1;
-    ScopedPointer<ComboBox> combo_output_adsr_number_1;
-    ScopedPointer<Label> label_20;
-    ScopedPointer<ComboBox> combo_output_adsr_2;
-    ScopedPointer<ComboBox> combo_output_adsr_channel_2;
-    ScopedPointer<ToggleButton> toggle_output_adsr_mute_2;
-    ScopedPointer<ComboBox> combo_output_adsr_number_2;
-    ScopedPointer<Label> label_21;
-    ScopedPointer<ComboBox> combo_output_adsr_3;
-    ScopedPointer<ComboBox> combo_output_adsr_channel_3;
-    ScopedPointer<ToggleButton> toggle_output_adsr_mute_3;
-    ScopedPointer<ComboBox> combo_output_adsr_number_3;
-    ScopedPointer<Label> label_22;
-    ScopedPointer<ComboBox> combo_output_adsr_4;
-    ScopedPointer<ComboBox> combo_output_adsr_channel_4;
-    ScopedPointer<ToggleButton> toggle_output_adsr_mute_4;
-    ScopedPointer<ComboBox> combo_output_adsr_number_4;
-    ScopedPointer<Label> label_23;
-    ScopedPointer<ComboBox> combo_output_clock;
-    ScopedPointer<ToggleButton> toggle_output_clock_mute;
-    ScopedPointer<Label> label_32;
-    ScopedPointer<Label> label_33;
-    ScopedPointer<Label> label_34;
-    ScopedPointer<Label> label_35;
-    ScopedPointer<Label> label_13;
-    ScopedPointer<TextButton> close;
-    ScopedPointer<Label> label_38;
-    ScopedPointer<Slider> slider_midi_pickup;
-    ScopedPointer<TextButton> button_midi_learn;
-    ScopedPointer<Label> label_17;
+    juce::ScopedPointer<juce::Label> label_7;
+    juce::ScopedPointer<juce::ComboBox> combo_input_main;
+    juce::ScopedPointer<juce::ComboBox> combo_input_main_channel;
+    juce::ScopedPointer<juce::Label> label_1;
+    juce::ScopedPointer<juce::Label> label_3;
+    juce::ScopedPointer<juce::ToggleButton> toggle_input_main_thru;
+    juce::ScopedPointer<juce::Label> label_4;
+    juce::ScopedPointer<juce::Label> label_5;
+    juce::ScopedPointer<juce::ComboBox> combo_output_thru;
+    juce::ScopedPointer<juce::Label> label_6;
+    juce::ScopedPointer<juce::ComboBox> combo_input_cc;
+    juce::ScopedPointer<juce::ToggleButton> toggle_input_main_cc;
+    juce::ScopedPointer<juce::ToggleButton> toggle_input_cc_thru;
+    juce::ScopedPointer<juce::Label> label_8;
+    juce::ScopedPointer<juce::Label> label_9;
+    juce::ScopedPointer<juce::ComboBox> combo_output_cc;
+    juce::ScopedPointer<juce::ToggleButton> toggle_output_cc_mute;
+    juce::ScopedPointer<juce::ToggleButton> toggle_output_thru_mute;
+    juce::ScopedPointer<juce::Label> label_11;
+    juce::ScopedPointer<juce::ComboBox> combo_output_lfo_1;
+    juce::ScopedPointer<juce::ComboBox> combo_output_lfo_channel_1;
+    juce::ScopedPointer<juce::Label> label_12;
+    juce::ScopedPointer<juce::ToggleButton> toggle_output_lfo_mute_1;
+    juce::ScopedPointer<juce::ComboBox> combo_output_lfo_number_1;
+    juce::ScopedPointer<juce::Label> label_15;
+    juce::ScopedPointer<juce::ComboBox> combo_output_lfo_2;
+    juce::ScopedPointer<juce::ComboBox> combo_output_lfo_channel_2;
+    juce::ScopedPointer<juce::ToggleButton> toggle_output_lfo_mute_2;
+    juce::ScopedPointer<juce::ComboBox> combo_output_lfo_number_2;
+    juce::ScopedPointer<juce::Label> label_16;
+    juce::ScopedPointer<juce::ComboBox> combo_output_lfo_3;
+    juce::ScopedPointer<juce::ComboBox> combo_output_lfo_channel_3;
+    juce::ScopedPointer<juce::ToggleButton> toggle_output_lfo_mute_3;
+    juce::ScopedPointer<juce::ComboBox> combo_output_lfo_number_3;
+    juce::ScopedPointer<juce::ToggleButton> toggle_output_lfo_mute_5;
+    juce::ScopedPointer<juce::Label> label_19;
+    juce::ScopedPointer<juce::ComboBox> combo_output_adsr_1;
+    juce::ScopedPointer<juce::ComboBox> combo_output_adsr_channel_1;
+    juce::ScopedPointer<juce::ToggleButton> toggle_output_adsr_mute_1;
+    juce::ScopedPointer<juce::ComboBox> combo_output_adsr_number_1;
+    juce::ScopedPointer<juce::Label> label_20;
+    juce::ScopedPointer<juce::ComboBox> combo_output_adsr_2;
+    juce::ScopedPointer<juce::ComboBox> combo_output_adsr_channel_2;
+    juce::ScopedPointer<juce::ToggleButton> toggle_output_adsr_mute_2;
+    juce::ScopedPointer<juce::ComboBox> combo_output_adsr_number_2;
+    juce::ScopedPointer<juce::Label> label_21;
+    juce::ScopedPointer<juce::ComboBox> combo_output_adsr_3;
+    juce::ScopedPointer<juce::ComboBox> combo_output_adsr_channel_3;
+    juce::ScopedPointer<juce::ToggleButton> toggle_output_adsr_mute_3;
+    juce::ScopedPointer<juce::ComboBox> combo_output_adsr_number_3;
+    juce::ScopedPointer<juce::Label> label_22;
+    juce::ScopedPointer<juce::ComboBox> combo_output_adsr_4;
+    juce::ScopedPointer<juce::ComboBox> combo_output_adsr_channel_4;
+    juce::ScopedPointer<juce::ToggleButton> toggle_output_adsr_mute_4;
+    juce::ScopedPointer<juce::ComboBox> combo_output_adsr_number_4;
+    juce::ScopedPointer<juce::Label> label_23;
+    juce::ScopedPointer<juce::ComboBox> combo_output_clock;
+    juce::ScopedPointer<juce::ToggleButton> toggle_output_clock_mute;
+    juce::ScopedPointer<juce::Label> label_32;
+    juce::ScopedPointer<juce::Label> label_33;
+    juce::ScopedPointer<juce::Label> label_34;
+    juce::ScopedPointer<juce::Label> label_35;
+    juce::ScopedPointer<juce::Label> label_13;
+    juce::ScopedPointer<juce::TextButton> close;
+    juce::ScopedPointer<juce::Label> label_38;
+    juce::ScopedPointer<juce::Slider> slider_midi_pickup;
+    juce::ScopedPointer<juce::TextButton> button_midi_learn;
+    juce::ScopedPointer<juce::Label> label_17;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorMIDIIO)

@@ -23,6 +23,7 @@
 //[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
+
 class AppInstanceStore;
 class AudioPlayer;
 class AudioRecorder;
@@ -74,10 +75,10 @@ class FingerDrag;
                                                                     //[/Comments]
 */
 class UiEditorFileManager : public UiEditor,
-                            public Timer,
-                            public TextEditor::Listener,
-                            public Button::Listener,
-                            public ComboBox::Listener
+                            public juce::Timer,
+                            public juce::TextEditor::Listener,
+                            public juce::Button::Listener,
+                            public juce::ComboBox::Listener
 {
   public:
     //==============================================================================
@@ -88,13 +89,13 @@ class UiEditorFileManager : public UiEditor,
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
     bool volatile should_refresh_all;
-    CriticalSection lock;
+    juce::CriticalSection lock;
 
     AppInstanceStore *const _app_instance_store;
     bool _is_in_write_mode;
     bool _was_a_reader_request;
 
-    File tmp_audio;
+    juce::File tmp_audio;
 
     bool _trigger_close;
     void trigger_close();
@@ -111,26 +112,26 @@ class UiEditorFileManager : public UiEditor,
     void reset_tree_view();
     void build_init_tree_view();
 
-    uint8 force_info_focus;
+    std::uint8_t force_info_focus;
     bool is_on_return_lost;
-    Array<TextButton *> before_focus_was_visible;
-    void textEditorReturnKeyPressed(TextEditor &te_) override;
-    void textEditorEscapeKeyPressed(TextEditor &te_) override;
-    void textEditorFocusLost(TextEditor &te_) override;
+    juce::Array<juce::TextButton *> before_focus_was_visible;
+    void textEditorReturnKeyPressed(juce::TextEditor &te_) override;
+    void textEditorEscapeKeyPressed(juce::TextEditor &te_) override;
+    void textEditorFocusLost(juce::TextEditor &te_) override;
 
     bool ignore_text_editor_focus_lost;
     void perform_chancel_info();
-    void perform_write_info(const String &info_text_);
-    void perform_confirm_write_info(const String &info_text_);
+    void perform_write_info(const juce::String &info_text_);
+    void perform_confirm_write_info(const juce::String &info_text_);
 
     VIEW_TYPE _view_type;
 
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
-    void buttonClicked(Button *buttonThatWasClicked) override;
-    void comboBoxChanged(ComboBox *comboBoxThatHasChanged) override;
+    void buttonClicked(juce::Button *buttonThatWasClicked) override;
+    void comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged) override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
@@ -138,33 +139,33 @@ class UiEditorFileManager : public UiEditor,
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Label> label5;
-    ScopedPointer<UiNotificationAnimation> info_animation;
-    ScopedPointer<TextButton> open;
-    ScopedPointer<TextButton> import;
-    ScopedPointer<UiEditorToolbar> toolbar;
-    ScopedPointer<TextEditor> info;
-    ScopedPointer<Label> label;
-    ScopedPointer<Label> label2;
-    ScopedPointer<Label> path_view;
-    ScopedPointer<TextButton> play;
-    ScopedPointer<Label> label3;
-    ScopedPointer<TextButton> record;
-    ScopedPointer<TextButton> delete_audio;
-    ScopedPointer<TextButton> assign;
-    ScopedPointer<ComboBox> audio_source_devices;
-    ScopedPointer<TextButton> rename;
-    ScopedPointer<TextButton> delete_file;
-    ScopedPointer<ToggleButton> toggleButton;
-    ScopedPointer<TextButton> show_audio_dyk;
-    ScopedPointer<TextButton> show_info_dyk;
-    ScopedPointer<TextButton> save;
-    ScopedPointer<TreeView> treeView;
-    ScopedPointer<TextButton> export_;
-    ScopedPointer<FingerDrag> finger_dragger;
-    ScopedPointer<TextButton> show_new_stuff;
-    ScopedPointer<TextButton> confirm_text_changes;
-    ScopedPointer<TextButton> cancel_text_changes;
+    juce::ScopedPointer<juce::Label> label5;
+    juce::ScopedPointer<UiNotificationAnimation> info_animation;
+    juce::ScopedPointer<juce::TextButton> open;
+    juce::ScopedPointer<juce::TextButton> import;
+    juce::ScopedPointer<UiEditorToolbar> toolbar;
+    juce::ScopedPointer<juce::TextEditor> info;
+    juce::ScopedPointer<juce::Label> label;
+    juce::ScopedPointer<juce::Label> label2;
+    juce::ScopedPointer<juce::Label> path_view;
+    juce::ScopedPointer<juce::TextButton> play;
+    juce::ScopedPointer<juce::Label> label3;
+    juce::ScopedPointer<juce::TextButton> record;
+    juce::ScopedPointer<juce::TextButton> delete_audio;
+    juce::ScopedPointer<juce::TextButton> assign;
+    juce::ScopedPointer<juce::ComboBox> audio_source_devices;
+    juce::ScopedPointer<juce::TextButton> rename;
+    juce::ScopedPointer<juce::TextButton> delete_file;
+    juce::ScopedPointer<juce::ToggleButton> toggleButton;
+    juce::ScopedPointer<juce::TextButton> show_audio_dyk;
+    juce::ScopedPointer<juce::TextButton> show_info_dyk;
+    juce::ScopedPointer<juce::TextButton> save;
+    juce::ScopedPointer<juce::TreeView> treeView;
+    juce::ScopedPointer<juce::TextButton> export_;
+    juce::ScopedPointer<FingerDrag> finger_dragger;
+    juce::ScopedPointer<juce::TextButton> show_new_stuff;
+    juce::ScopedPointer<juce::TextButton> confirm_text_changes;
+    juce::ScopedPointer<juce::TextButton> cancel_text_changes;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorFileManager)

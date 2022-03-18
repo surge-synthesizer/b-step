@@ -9,13 +9,14 @@ class ControllerMIDILearn
 {
   private:
     AppInstanceStore *const _app_instance_store;
-    ImageButton *const _midi_learn_focus;
-    Label *const _midi_cc_value;
+    juce::ImageButton *const _midi_learn_focus;
+    juce::Label *const _midi_cc_value;
 
     ControllerMIDILearn(); //->delete
   public:
     ControllerMIDILearn(AppInstanceStore *const app_instance_store_,
-                        ImageButton *const midi_learn_focus_, Label *const midi_cc_value_);
+                        juce::ImageButton *const midi_learn_focus_,
+                        juce::Label *const midi_cc_value_);
 
     ~ControllerMIDILearn();
 

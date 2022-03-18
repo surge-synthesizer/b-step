@@ -36,55 +36,61 @@
 // ORG SIZE 1140X700
 
 template <class port_type>
-static inline void add_set_midi_port(ComboBox *const cb_, const String &port_name_, int at_index_,
-                                     const port_type &port_)
+static inline void add_set_midi_port(juce::ComboBox *const cb_, const juce::String &port_name_,
+                                     int at_index_, const port_type &port_)
 {
     cb_->addItem(port_name_, at_index_);
     if (port_name_.compare(port_.port_name()) == 0)
     {
-        cb_->setSelectedId(at_index_, NotificationType::dontSendNotification);
+        cb_->setSelectedId(at_index_, juce::NotificationType::dontSendNotification);
 
         if (!port_.is_open())
         {
-            cb_->setColour(ComboBox::ColourIds::textColourId, Colour(0xffff0000));
+            cb_->setColour(juce::ComboBox::ColourIds::textColourId, juce::Colour(0xffff0000));
         }
         else
         {
-            cb_->setColour(ComboBox::ColourIds::textColourId, Colours::greenyellow);
+            cb_->setColour(juce::ComboBox::ColourIds::textColourId, juce::Colours::greenyellow);
         }
     }
 }
 
 void UiEditorSettings::fill_drop_downs()
 {
-    cb_midi_pad_out_1->clear(NotificationType::dontSendNotification);
-    cb_midi_pad_out_2->clear(NotificationType::dontSendNotification);
-    cb_midi_out_port->clear(NotificationType::dontSendNotification);
-    cb_midi_out_port_string_g->clear(NotificationType::dontSendNotification);
-    cb_midi_out_port_string_d->clear(NotificationType::dontSendNotification);
-    cb_midi_out_port_string_a->clear(NotificationType::dontSendNotification);
-    cb_midi_out_port_b->clear(NotificationType::dontSendNotification);
-    cb_midi_pad_in_1->clear(NotificationType::dontSendNotification);
-    cb_midi_pad_in_2->clear(NotificationType::dontSendNotification);
-    cb_midi_in_port->clear(NotificationType::dontSendNotification);
-    cb_midi_learn_in_port->clear(NotificationType::dontSendNotification);
-    cb_midi_learn_out_port->clear(NotificationType::dontSendNotification);
+    cb_midi_pad_out_1->clear(juce::NotificationType::dontSendNotification);
+    cb_midi_pad_out_2->clear(juce::NotificationType::dontSendNotification);
+    cb_midi_out_port->clear(juce::NotificationType::dontSendNotification);
+    cb_midi_out_port_string_g->clear(juce::NotificationType::dontSendNotification);
+    cb_midi_out_port_string_d->clear(juce::NotificationType::dontSendNotification);
+    cb_midi_out_port_string_a->clear(juce::NotificationType::dontSendNotification);
+    cb_midi_out_port_b->clear(juce::NotificationType::dontSendNotification);
+    cb_midi_pad_in_1->clear(juce::NotificationType::dontSendNotification);
+    cb_midi_pad_in_2->clear(juce::NotificationType::dontSendNotification);
+    cb_midi_in_port->clear(juce::NotificationType::dontSendNotification);
+    cb_midi_learn_in_port->clear(juce::NotificationType::dontSendNotification);
+    cb_midi_learn_out_port->clear(juce::NotificationType::dontSendNotification);
 
-    cb_midi_pad_out_1->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
-    cb_midi_pad_out_2->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
-    cb_midi_out_port->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
-    cb_midi_out_port_string_g->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
-    cb_midi_out_port_string_d->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
-    cb_midi_out_port_string_a->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
-    cb_midi_out_port_b->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
-    cb_midi_pad_in_1->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
-    cb_midi_pad_in_2->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
-    cb_midi_in_port->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
-    cb_midi_learn_in_port->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
-    cb_midi_learn_out_port->setColour(ComboBox::ColourIds::textColourId, Colour(0xffffffff));
+    cb_midi_pad_out_1->setColour(juce::ComboBox::ColourIds::textColourId, juce::Colour(0xffffffff));
+    cb_midi_pad_out_2->setColour(juce::ComboBox::ColourIds::textColourId, juce::Colour(0xffffffff));
+    cb_midi_out_port->setColour(juce::ComboBox::ColourIds::textColourId, juce::Colour(0xffffffff));
+    cb_midi_out_port_string_g->setColour(juce::ComboBox::ColourIds::textColourId,
+                                         juce::Colour(0xffffffff));
+    cb_midi_out_port_string_d->setColour(juce::ComboBox::ColourIds::textColourId,
+                                         juce::Colour(0xffffffff));
+    cb_midi_out_port_string_a->setColour(juce::ComboBox::ColourIds::textColourId,
+                                         juce::Colour(0xffffffff));
+    cb_midi_out_port_b->setColour(juce::ComboBox::ColourIds::textColourId,
+                                  juce::Colour(0xffffffff));
+    cb_midi_pad_in_1->setColour(juce::ComboBox::ColourIds::textColourId, juce::Colour(0xffffffff));
+    cb_midi_pad_in_2->setColour(juce::ComboBox::ColourIds::textColourId, juce::Colour(0xffffffff));
+    cb_midi_in_port->setColour(juce::ComboBox::ColourIds::textColourId, juce::Colour(0xffffffff));
+    cb_midi_learn_in_port->setColour(juce::ComboBox::ColourIds::textColourId,
+                                     juce::Colour(0xffffffff));
+    cb_midi_learn_out_port->setColour(juce::ComboBox::ColourIds::textColourId,
+                                      juce::Colour(0xffffffff));
 
     // OUTPUTS
-    StringArray all_devs = MidiOutput::getDevices();
+    juce::StringArray all_devs = juce::MidiOutput::getDevices();
     int index = 1;
     add_set_midi_port(cb_midi_pad_out_1, DISABLED_PORT, index,
                       _app_instance_store->midi_io_handler.pad_1_out);
@@ -156,7 +162,7 @@ void UiEditorSettings::fill_drop_downs()
 #endif
 
     // INPUTS
-    StringArray all_indevs = MidiInput::getDevices();
+    juce::StringArray all_indevs = juce::MidiInput::getDevices();
     index = 1;
     add_set_midi_port(cb_midi_pad_in_1, DISABLED_PORT, index,
                       _app_instance_store->midi_io_handler.pad_1_in);
@@ -201,499 +207,540 @@ void UiEditorSettings::on_close_clicked()
     _app_instance_store->editor_config.editor_settings = nullptr;
 }
 
-void UiEditorSettings::comboBoxMouseDown(ComboBox *) { fill_drop_downs(); }
+void UiEditorSettings::comboBoxMouseDown(juce::ComboBox *) { fill_drop_downs(); }
 //[/MiscUserDefs]
 
 //==============================================================================
 UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-IO-Settings"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(label_latency_ms = new Label(String(), TRANS("Latency +/- ms")));
-    label_latency_ms->setFont(Font(15.00f, Font::plain));
-    label_latency_ms->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_latency_ms = new juce::Label(juce::String(), TRANS("Latency +/- ms")));
+    label_latency_ms->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_latency_ms->setJustificationType(juce::Justification::centredRight);
     label_latency_ms->setEditable(false, false, false);
-    label_latency_ms->setColour(Label::textColourId,
-                                Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_latency_ms->setColour(TextEditor::textColourId, Colours::black);
-    label_latency_ms->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_latency_ms->setColour(juce::Label::textColourId,
+                                juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_latency_ms->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_latency_ms->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(lbl_clock_thru = new Label(String(), TRANS("Sync Thru (Clock, Start...)")));
-    lbl_clock_thru->setFont(Font(15.00f, Font::plain));
-    lbl_clock_thru->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(lbl_clock_thru =
+                          new juce::Label(juce::String(), TRANS("Sync Thru (Clock, Start...)")));
+    lbl_clock_thru->setFont(juce::Font(15.00f, juce::Font::plain));
+    lbl_clock_thru->setJustificationType(juce::Justification::centredLeft);
     lbl_clock_thru->setEditable(false, false, false);
-    lbl_clock_thru->setColour(Label::textColourId,
-                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    lbl_clock_thru->setColour(TextEditor::textColourId, Colours::black);
-    lbl_clock_thru->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    lbl_clock_thru->setColour(juce::Label::textColourId,
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    lbl_clock_thru->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    lbl_clock_thru->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(tb_clock_thru = new ToggleButton(String()));
+    addAndMakeVisible(tb_clock_thru = new juce::ToggleButton(juce::String()));
     tb_clock_thru->setExplicitFocusOrder(2);
     tb_clock_thru->addListener(this);
 
-    addAndMakeVisible(label_latency_clocks = new Label(String(), TRANS("Latency +1/96")));
-    label_latency_clocks->setFont(Font(15.00f, Font::plain));
-    label_latency_clocks->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_latency_clocks =
+                          new juce::Label(juce::String(), TRANS("Latency +1/96")));
+    label_latency_clocks->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_latency_clocks->setJustificationType(juce::Justification::centredRight);
     label_latency_clocks->setEditable(false, false, false);
-    label_latency_clocks->setColour(Label::textColourId,
-                                    Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_latency_clocks->setColour(TextEditor::textColourId, Colours::black);
-    label_latency_clocks->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_latency_clocks->setColour(
+        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_latency_clocks->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_latency_clocks->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_midi_thru = new Label(String(), TRANS("MIDI Thru")));
-    label_midi_thru->setFont(Font(15.00f, Font::plain));
-    label_midi_thru->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_midi_thru = new juce::Label(juce::String(), TRANS("MIDI Thru")));
+    label_midi_thru->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_midi_thru->setJustificationType(juce::Justification::centredLeft);
     label_midi_thru->setEditable(false, false, false);
-    label_midi_thru->setColour(Label::textColourId,
-                               Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_thru->setColour(TextEditor::textColourId, Colours::black);
-    label_midi_thru->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_midi_thru->setColour(juce::Label::textColourId,
+                               juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_thru->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_midi_thru->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(tb_midi_thru_enable = new ToggleButton(String()));
+    addAndMakeVisible(tb_midi_thru_enable = new juce::ToggleButton(juce::String()));
     tb_midi_thru_enable->setExplicitFocusOrder(2);
     tb_midi_thru_enable->addListener(this);
 
-    addAndMakeVisible(sl_latency_ms = new Slider(String()));
+    addAndMakeVisible(sl_latency_ms = new juce::Slider(juce::String()));
     sl_latency_ms->setExplicitFocusOrder(1);
     sl_latency_ms->setRange(0, 400, 1);
-    sl_latency_ms->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    sl_latency_ms->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
-    sl_latency_ms->setColour(Slider::thumbColourId, Colour(0x00000000));
-    sl_latency_ms->setColour(Slider::trackColourId, Colour(0x00000000));
-    sl_latency_ms->setColour(Slider::rotarySliderFillColourId, Colours::cornsilk);
-    sl_latency_ms->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_latency_ms->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    sl_latency_ms->setTextBoxStyle(juce::Slider::TextBoxRight, false, 40, 100);
+    sl_latency_ms->setColour(juce::Slider::thumbColourId, juce::Colour(0x00000000));
+    sl_latency_ms->setColour(juce::Slider::trackColourId, juce::Colour(0x00000000));
+    sl_latency_ms->setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::cornsilk);
+    sl_latency_ms->setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colour(0xff272727));
     sl_latency_ms->addListener(this);
 
-    addAndMakeVisible(sl_latency_clocks = new Slider(String()));
+    addAndMakeVisible(sl_latency_clocks = new juce::Slider(juce::String()));
     sl_latency_clocks->setExplicitFocusOrder(1);
     sl_latency_clocks->setRange(-5, 5, 1);
-    sl_latency_clocks->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    sl_latency_clocks->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
-    sl_latency_clocks->setColour(Slider::thumbColourId, Colour(0x00000000));
-    sl_latency_clocks->setColour(Slider::trackColourId, Colour(0x00000000));
-    sl_latency_clocks->setColour(Slider::rotarySliderFillColourId, Colours::cornsilk);
-    sl_latency_clocks->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_latency_clocks->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    sl_latency_clocks->setTextBoxStyle(juce::Slider::TextBoxRight, false, 40, 100);
+    sl_latency_clocks->setColour(juce::Slider::thumbColourId, juce::Colour(0x00000000));
+    sl_latency_clocks->setColour(juce::Slider::trackColourId, juce::Colour(0x00000000));
+    sl_latency_clocks->setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::cornsilk);
+    sl_latency_clocks->setColour(juce::Slider::rotarySliderOutlineColourId,
+                                 juce::Colour(0xff272727));
     sl_latency_clocks->addListener(this);
 
     addAndMakeVisible(label_midi_learn_headline =
-                          new Label(String(), TRANS("MIDI LEARN (CC, NOTES)")));
-    label_midi_learn_headline->setFont(Font(15.00f, Font::plain));
-    label_midi_learn_headline->setJustificationType(Justification::centred);
+                          new juce::Label(juce::String(), TRANS("MIDI LEARN (CC, NOTES)")));
+    label_midi_learn_headline->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_midi_learn_headline->setJustificationType(juce::Justification::centred);
     label_midi_learn_headline->setEditable(false, false, false);
-    label_midi_learn_headline->setColour(Label::textColourId,
-                                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_learn_headline->setColour(TextEditor::textColourId, Colours::black);
-    label_midi_learn_headline->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_midi_learn_headline->setColour(
+        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_learn_headline->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_midi_learn_headline->setColour(juce::TextEditor::backgroundColourId,
+                                         juce::Colour(0x00000000));
 
     addAndMakeVisible(toolbar = new UiEditorToolbar(this, true, true, false));
 
-    addAndMakeVisible(label_midi_io_port_per_track =
-                          new Label(String(), TRANS("MIDI OUT FOR SEQUENCE# 2, 3 & 4")));
-    label_midi_io_port_per_track->setFont(Font(15.00f, Font::plain));
-    label_midi_io_port_per_track->setJustificationType(Justification::centred);
+    addAndMakeVisible(label_midi_io_port_per_track = new juce::Label(
+                          juce::String(), TRANS("MIDI OUT FOR SEQUENCE# 2, 3 & 4")));
+    label_midi_io_port_per_track->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_midi_io_port_per_track->setJustificationType(juce::Justification::centred);
     label_midi_io_port_per_track->setEditable(false, false, false);
     label_midi_io_port_per_track->setColour(
-        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_io_port_per_track->setColour(TextEditor::textColourId, Colours::black);
-    label_midi_io_port_per_track->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_io_port_per_track->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_midi_io_port_per_track->setColour(juce::TextEditor::backgroundColourId,
+                                            juce::Colour(0x00000000));
 
-    addAndMakeVisible(sl_midi_out_channel = new Slider(String()));
+    addAndMakeVisible(sl_midi_out_channel = new juce::Slider(juce::String()));
     sl_midi_out_channel->setExplicitFocusOrder(1);
     sl_midi_out_channel->setRange(1, 16, 1);
-    sl_midi_out_channel->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_out_channel->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
-    sl_midi_out_channel->setColour(Slider::thumbColourId, Colour(0x00000000));
-    sl_midi_out_channel->setColour(Slider::trackColourId, Colour(0x00000000));
-    sl_midi_out_channel->setColour(Slider::rotarySliderFillColourId, Colours::aqua);
-    sl_midi_out_channel->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_midi_out_channel->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_out_channel->setTextBoxStyle(juce::Slider::TextBoxRight, false, 40, 100);
+    sl_midi_out_channel->setColour(juce::Slider::thumbColourId, juce::Colour(0x00000000));
+    sl_midi_out_channel->setColour(juce::Slider::trackColourId, juce::Colour(0x00000000));
+    sl_midi_out_channel->setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::aqua);
+    sl_midi_out_channel->setColour(juce::Slider::rotarySliderOutlineColourId,
+                                   juce::Colour(0xff272727));
     sl_midi_out_channel->addListener(this);
 
-    addAndMakeVisible(sl_midi_in_channel_pad_1 = new Slider(String()));
+    addAndMakeVisible(sl_midi_in_channel_pad_1 = new juce::Slider(juce::String()));
     sl_midi_in_channel_pad_1->setExplicitFocusOrder(6);
     sl_midi_in_channel_pad_1->setRange(1, 16, 1);
-    sl_midi_in_channel_pad_1->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_in_channel_pad_1->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
-    sl_midi_in_channel_pad_1->setColour(Slider::thumbColourId, Colour(0x00000000));
-    sl_midi_in_channel_pad_1->setColour(Slider::trackColourId, Colour(0x00000000));
-    sl_midi_in_channel_pad_1->setColour(Slider::rotarySliderFillColourId, Colours::chartreuse);
-    sl_midi_in_channel_pad_1->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_midi_in_channel_pad_1->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_in_channel_pad_1->setTextBoxStyle(juce::Slider::TextBoxRight, false, 40, 100);
+    sl_midi_in_channel_pad_1->setColour(juce::Slider::thumbColourId, juce::Colour(0x00000000));
+    sl_midi_in_channel_pad_1->setColour(juce::Slider::trackColourId, juce::Colour(0x00000000));
+    sl_midi_in_channel_pad_1->setColour(juce::Slider::rotarySliderFillColourId,
+                                        juce::Colours::chartreuse);
+    sl_midi_in_channel_pad_1->setColour(juce::Slider::rotarySliderOutlineColourId,
+                                        juce::Colour(0xff272727));
     sl_midi_in_channel_pad_1->addListener(this);
 
-    addAndMakeVisible(sl_midi_out_channel_pad_1 = new Slider(String()));
+    addAndMakeVisible(sl_midi_out_channel_pad_1 = new juce::Slider(juce::String()));
     sl_midi_out_channel_pad_1->setExplicitFocusOrder(7);
     sl_midi_out_channel_pad_1->setRange(1, 16, 1);
-    sl_midi_out_channel_pad_1->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_out_channel_pad_1->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
-    sl_midi_out_channel_pad_1->setColour(Slider::thumbColourId, Colour(0x00ff0000));
-    sl_midi_out_channel_pad_1->setColour(Slider::trackColourId, Colour(0x00000000));
-    sl_midi_out_channel_pad_1->setColour(Slider::rotarySliderFillColourId, Colours::aqua);
-    sl_midi_out_channel_pad_1->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_midi_out_channel_pad_1->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_out_channel_pad_1->setTextBoxStyle(juce::Slider::TextBoxRight, false, 40, 100);
+    sl_midi_out_channel_pad_1->setColour(juce::Slider::thumbColourId, juce::Colour(0x00ff0000));
+    sl_midi_out_channel_pad_1->setColour(juce::Slider::trackColourId, juce::Colour(0x00000000));
+    sl_midi_out_channel_pad_1->setColour(juce::Slider::rotarySliderFillColourId,
+                                         juce::Colours::aqua);
+    sl_midi_out_channel_pad_1->setColour(juce::Slider::rotarySliderOutlineColourId,
+                                         juce::Colour(0xff272727));
     sl_midi_out_channel_pad_1->addListener(this);
 
-    addAndMakeVisible(sl_midi_in_channel_pad_2 = new Slider(String()));
+    addAndMakeVisible(sl_midi_in_channel_pad_2 = new juce::Slider(juce::String()));
     sl_midi_in_channel_pad_2->setExplicitFocusOrder(10);
     sl_midi_in_channel_pad_2->setRange(1, 16, 1);
-    sl_midi_in_channel_pad_2->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_in_channel_pad_2->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
-    sl_midi_in_channel_pad_2->setColour(Slider::thumbColourId, Colour(0x00000000));
-    sl_midi_in_channel_pad_2->setColour(Slider::trackColourId, Colour(0x00000000));
-    sl_midi_in_channel_pad_2->setColour(Slider::rotarySliderFillColourId, Colours::chartreuse);
-    sl_midi_in_channel_pad_2->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_midi_in_channel_pad_2->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_in_channel_pad_2->setTextBoxStyle(juce::Slider::TextBoxRight, false, 40, 100);
+    sl_midi_in_channel_pad_2->setColour(juce::Slider::thumbColourId, juce::Colour(0x00000000));
+    sl_midi_in_channel_pad_2->setColour(juce::Slider::trackColourId, juce::Colour(0x00000000));
+    sl_midi_in_channel_pad_2->setColour(juce::Slider::rotarySliderFillColourId,
+                                        juce::Colours::chartreuse);
+    sl_midi_in_channel_pad_2->setColour(juce::Slider::rotarySliderOutlineColourId,
+                                        juce::Colour(0xff272727));
     sl_midi_in_channel_pad_2->addListener(this);
 
-    addAndMakeVisible(sl_midi_out_channel_pad_2 = new Slider(String()));
+    addAndMakeVisible(sl_midi_out_channel_pad_2 = new juce::Slider(juce::String()));
     sl_midi_out_channel_pad_2->setExplicitFocusOrder(11);
     sl_midi_out_channel_pad_2->setRange(1, 16, 1);
-    sl_midi_out_channel_pad_2->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_out_channel_pad_2->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
-    sl_midi_out_channel_pad_2->setColour(Slider::thumbColourId, Colour(0x00ff0000));
-    sl_midi_out_channel_pad_2->setColour(Slider::trackColourId, Colour(0x00000000));
-    sl_midi_out_channel_pad_2->setColour(Slider::rotarySliderFillColourId, Colours::aqua);
-    sl_midi_out_channel_pad_2->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_midi_out_channel_pad_2->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_out_channel_pad_2->setTextBoxStyle(juce::Slider::TextBoxRight, false, 40, 100);
+    sl_midi_out_channel_pad_2->setColour(juce::Slider::thumbColourId, juce::Colour(0x00ff0000));
+    sl_midi_out_channel_pad_2->setColour(juce::Slider::trackColourId, juce::Colour(0x00000000));
+    sl_midi_out_channel_pad_2->setColour(juce::Slider::rotarySliderFillColourId,
+                                         juce::Colours::aqua);
+    sl_midi_out_channel_pad_2->setColour(juce::Slider::rotarySliderOutlineColourId,
+                                         juce::Colour(0xff272727));
     sl_midi_out_channel_pad_2->addListener(this);
 
-    addAndMakeVisible(pb_refresh_pad_1 = new TextButton(String()));
+    addAndMakeVisible(pb_refresh_pad_1 = new juce::TextButton(juce::String()));
     pb_refresh_pad_1->setExplicitFocusOrder(8);
     pb_refresh_pad_1->setButtonText(TRANS("Refresh Launchpad 1 (MIDI OUT)"));
-    pb_refresh_pad_1->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                        Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    pb_refresh_pad_1->setConnectedEdges(
+        juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+        juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     pb_refresh_pad_1->addListener(this);
 
-    addAndMakeVisible(pb_refresh_pad_2 = new TextButton(String()));
+    addAndMakeVisible(pb_refresh_pad_2 = new juce::TextButton(juce::String()));
     pb_refresh_pad_2->setExplicitFocusOrder(12);
     pb_refresh_pad_2->setButtonText(TRANS("Refresh Launchpad 2 (MIDI OUT)"));
-    pb_refresh_pad_2->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                        Button::ConnectedOnBottom);
+    pb_refresh_pad_2->setConnectedEdges(juce::Button::ConnectedOnLeft |
+                                        juce::Button::ConnectedOnRight |
+                                        juce::Button::ConnectedOnBottom);
     pb_refresh_pad_2->addListener(this);
 
-    addAndMakeVisible(cb_midi_pad_in_1 = new ComboBox(String()));
+    addAndMakeVisible(cb_midi_pad_in_1 = new juce::ComboBox(juce::String()));
     cb_midi_pad_in_1->setEditableText(false);
-    cb_midi_pad_in_1->setJustificationType(Justification::centredLeft);
+    cb_midi_pad_in_1->setJustificationType(juce::Justification::centredLeft);
     cb_midi_pad_in_1->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_pad_in_1->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_pad_in_1->addListener(this);
 
-    addAndMakeVisible(cb_midi_pad_out_1 = new ComboBox(String()));
+    addAndMakeVisible(cb_midi_pad_out_1 = new juce::ComboBox(juce::String()));
     cb_midi_pad_out_1->setEditableText(false);
-    cb_midi_pad_out_1->setJustificationType(Justification::centredLeft);
+    cb_midi_pad_out_1->setJustificationType(juce::Justification::centredLeft);
     cb_midi_pad_out_1->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_pad_out_1->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_pad_out_1->addListener(this);
 
-    addAndMakeVisible(cb_midi_pad_in_2 = new ComboBox(String()));
+    addAndMakeVisible(cb_midi_pad_in_2 = new juce::ComboBox(juce::String()));
     cb_midi_pad_in_2->setEditableText(false);
-    cb_midi_pad_in_2->setJustificationType(Justification::centredLeft);
+    cb_midi_pad_in_2->setJustificationType(juce::Justification::centredLeft);
     cb_midi_pad_in_2->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_pad_in_2->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_pad_in_2->addListener(this);
 
-    addAndMakeVisible(cb_midi_pad_out_2 = new ComboBox(String()));
+    addAndMakeVisible(cb_midi_pad_out_2 = new juce::ComboBox(juce::String()));
     cb_midi_pad_out_2->setEditableText(false);
-    cb_midi_pad_out_2->setJustificationType(Justification::centredLeft);
+    cb_midi_pad_out_2->setJustificationType(juce::Justification::centredLeft);
     cb_midi_pad_out_2->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_pad_out_2->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_pad_out_2->addListener(this);
 
-    addAndMakeVisible(cb_midi_in_port = new ComboBox(String()));
+    addAndMakeVisible(cb_midi_in_port = new juce::ComboBox(juce::String()));
     cb_midi_in_port->setEditableText(false);
-    cb_midi_in_port->setJustificationType(Justification::centredLeft);
+    cb_midi_in_port->setJustificationType(juce::Justification::centredLeft);
     cb_midi_in_port->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_in_port->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_in_port->addListener(this);
 
-    addAndMakeVisible(cb_midi_out_port = new ComboBox(String()));
+    addAndMakeVisible(cb_midi_out_port = new juce::ComboBox(juce::String()));
     cb_midi_out_port->setEditableText(false);
-    cb_midi_out_port->setJustificationType(Justification::centredLeft);
+    cb_midi_out_port->setJustificationType(juce::Justification::centredLeft);
     cb_midi_out_port->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_out_port->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_out_port->addListener(this);
 
-    addAndMakeVisible(sl_midi_in_channel = new Slider(String()));
+    addAndMakeVisible(sl_midi_in_channel = new juce::Slider(juce::String()));
     sl_midi_in_channel->setExplicitFocusOrder(1);
     sl_midi_in_channel->setRange(1, 16, 1);
-    sl_midi_in_channel->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_in_channel->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
-    sl_midi_in_channel->setColour(Slider::thumbColourId, Colour(0x00000000));
-    sl_midi_in_channel->setColour(Slider::trackColourId, Colour(0x00000000));
-    sl_midi_in_channel->setColour(Slider::rotarySliderFillColourId, Colours::chartreuse);
-    sl_midi_in_channel->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_midi_in_channel->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_in_channel->setTextBoxStyle(juce::Slider::TextBoxRight, false, 40, 100);
+    sl_midi_in_channel->setColour(juce::Slider::thumbColourId, juce::Colour(0x00000000));
+    sl_midi_in_channel->setColour(juce::Slider::trackColourId, juce::Colour(0x00000000));
+    sl_midi_in_channel->setColour(juce::Slider::rotarySliderFillColourId,
+                                  juce::Colours::chartreuse);
+    sl_midi_in_channel->setColour(juce::Slider::rotarySliderOutlineColourId,
+                                  juce::Colour(0xff272727));
     sl_midi_in_channel->addListener(this);
 
-    addAndMakeVisible(cb_midi_learn_in_port = new ComboBox(String()));
+    addAndMakeVisible(cb_midi_learn_in_port = new juce::ComboBox(juce::String()));
     cb_midi_learn_in_port->setEditableText(false);
-    cb_midi_learn_in_port->setJustificationType(Justification::centredLeft);
+    cb_midi_learn_in_port->setJustificationType(juce::Justification::centredLeft);
     cb_midi_learn_in_port->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_learn_in_port->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_learn_in_port->addListener(this);
 
-    addAndMakeVisible(cb_midi_learn_out_port = new ComboBox(String()));
+    addAndMakeVisible(cb_midi_learn_out_port = new juce::ComboBox(juce::String()));
     cb_midi_learn_out_port->setEditableText(false);
-    cb_midi_learn_out_port->setJustificationType(Justification::centredLeft);
+    cb_midi_learn_out_port->setJustificationType(juce::Justification::centredLeft);
     cb_midi_learn_out_port->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_learn_out_port->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_learn_out_port->addListener(this);
 
-    addAndMakeVisible(pb_refresh_feedback = new TextButton(String()));
+    addAndMakeVisible(pb_refresh_feedback = new juce::TextButton(juce::String()));
     pb_refresh_feedback->setExplicitFocusOrder(8);
     pb_refresh_feedback->setButtonText(TRANS("Refresh Feedback (MIDI OUT)"));
-    pb_refresh_feedback->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                           Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    pb_refresh_feedback->setConnectedEdges(
+        juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+        juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     pb_refresh_feedback->addListener(this);
 
-    addAndMakeVisible(label_midi_in_port = new Label(String(), TRANS("Receive Port (Slave)")));
-    label_midi_in_port->setFont(Font(15.00f, Font::plain));
-    label_midi_in_port->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_midi_in_port =
+                          new juce::Label(juce::String(), TRANS("Receive Port (Slave)")));
+    label_midi_in_port->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_midi_in_port->setJustificationType(juce::Justification::centredRight);
     label_midi_in_port->setEditable(false, false, false);
-    label_midi_in_port->setColour(Label::textColourId,
-                                  Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_in_port->setColour(TextEditor::textColourId, Colours::black);
-    label_midi_in_port->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_midi_in_port->setColour(juce::Label::textColourId,
+                                  juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_in_port->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_midi_in_port->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_midi_out = new Label(String(), TRANS("Master Out (to Synth) Ch/Port")));
-    label_midi_out->setFont(Font(15.00f, Font::plain));
-    label_midi_out->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_midi_out =
+                          new juce::Label(juce::String(), TRANS("Master Out (to Synth) Ch/Port")));
+    label_midi_out->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_midi_out->setJustificationType(juce::Justification::centredRight);
     label_midi_out->setEditable(false, false, false);
-    label_midi_out->setColour(Label::textColourId, Colours::yellow);
-    label_midi_out->setColour(TextEditor::textColourId, Colours::black);
-    label_midi_out->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_midi_out->setColour(juce::Label::textColourId, juce::Colours::yellow);
+    label_midi_out->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_midi_out->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     addAndMakeVisible(label_master_slave_headline =
-                          new Label(String(), TRANS("MIDI OUT (Notes, Sync)")));
-    label_master_slave_headline->setFont(Font(15.00f, Font::plain));
-    label_master_slave_headline->setJustificationType(Justification::centred);
+                          new juce::Label(juce::String(), TRANS("MIDI OUT (Notes, Sync)")));
+    label_master_slave_headline->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_master_slave_headline->setJustificationType(juce::Justification::centred);
     label_master_slave_headline->setEditable(false, false, false);
     label_master_slave_headline->setColour(
-        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_master_slave_headline->setColour(TextEditor::textColourId, Colours::black);
-    label_master_slave_headline->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_master_slave_headline->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_master_slave_headline->setColour(juce::TextEditor::backgroundColourId,
+                                           juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_midi_learn_in = new Label(String(), TRANS("Receive Port (IN)")));
-    label_midi_learn_in->setFont(Font(15.00f, Font::plain));
-    label_midi_learn_in->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_midi_learn_in =
+                          new juce::Label(juce::String(), TRANS("Receive Port (IN)")));
+    label_midi_learn_in->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_midi_learn_in->setJustificationType(juce::Justification::centredRight);
     label_midi_learn_in->setEditable(false, false, false);
-    label_midi_learn_in->setColour(Label::textColourId,
-                                   Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_learn_in->setColour(TextEditor::textColourId, Colours::black);
-    label_midi_learn_in->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_midi_learn_in->setColour(juce::Label::textColourId,
+                                   juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_learn_in->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_midi_learn_in->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_midi_learn_out = new Label(String(), TRANS("Feedback Port (OUT)")));
-    label_midi_learn_out->setFont(Font(15.00f, Font::plain));
-    label_midi_learn_out->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_midi_learn_out =
+                          new juce::Label(juce::String(), TRANS("Feedback Port (OUT)")));
+    label_midi_learn_out->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_midi_learn_out->setJustificationType(juce::Justification::centredRight);
     label_midi_learn_out->setEditable(false, false, false);
-    label_midi_learn_out->setColour(Label::textColourId,
-                                    Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_learn_out->setColour(TextEditor::textColourId, Colours::black);
-    label_midi_learn_out->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_midi_learn_out->setColour(
+        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_learn_out->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_midi_learn_out->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     addAndMakeVisible(label_launchpad_1_headline =
-                          new Label(String(), TRANS("NOVATION LAUNCHPAD 1")));
-    label_launchpad_1_headline->setFont(Font(15.00f, Font::plain));
-    label_launchpad_1_headline->setJustificationType(Justification::centred);
+                          new juce::Label(juce::String(), TRANS("NOVATION LAUNCHPAD 1")));
+    label_launchpad_1_headline->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_launchpad_1_headline->setJustificationType(juce::Justification::centred);
     label_launchpad_1_headline->setEditable(false, false, false);
     label_launchpad_1_headline->setColour(
-        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_launchpad_1_headline->setColour(TextEditor::textColourId, Colours::black);
-    label_launchpad_1_headline->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_launchpad_1_headline->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_launchpad_1_headline->setColour(juce::TextEditor::backgroundColourId,
+                                          juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_midi_launchpad_1_in = new Label(String(), TRANS("Receive Port (IN)")));
-    label_midi_launchpad_1_in->setFont(Font(15.00f, Font::plain));
-    label_midi_launchpad_1_in->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_midi_launchpad_1_in =
+                          new juce::Label(juce::String(), TRANS("Receive Port (IN)")));
+    label_midi_launchpad_1_in->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_midi_launchpad_1_in->setJustificationType(juce::Justification::centredRight);
     label_midi_launchpad_1_in->setEditable(false, false, false);
-    label_midi_launchpad_1_in->setColour(Label::textColourId,
-                                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_launchpad_1_in->setColour(TextEditor::textColourId, Colours::black);
-    label_midi_launchpad_1_in->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_midi_launchpad_1_in->setColour(
+        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_launchpad_1_in->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_midi_launchpad_1_in->setColour(juce::TextEditor::backgroundColourId,
+                                         juce::Colour(0x00000000));
 
     addAndMakeVisible(label_midi_launchpad_1_out =
-                          new Label(String(), TRANS("Feedback Port (OUT)")));
-    label_midi_launchpad_1_out->setFont(Font(15.00f, Font::plain));
-    label_midi_launchpad_1_out->setJustificationType(Justification::centredRight);
+                          new juce::Label(juce::String(), TRANS("Feedback Port (OUT)")));
+    label_midi_launchpad_1_out->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_midi_launchpad_1_out->setJustificationType(juce::Justification::centredRight);
     label_midi_launchpad_1_out->setEditable(false, false, false);
     label_midi_launchpad_1_out->setColour(
-        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_launchpad_1_out->setColour(TextEditor::textColourId, Colours::black);
-    label_midi_launchpad_1_out->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_launchpad_1_out->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_midi_launchpad_1_out->setColour(juce::TextEditor::backgroundColourId,
+                                          juce::Colour(0x00000000));
 
     addAndMakeVisible(label_launchpad_2_headline =
-                          new Label(String(), TRANS("NOVATION LAUNCHPAD 2")));
-    label_launchpad_2_headline->setFont(Font(15.00f, Font::plain));
-    label_launchpad_2_headline->setJustificationType(Justification::centred);
+                          new juce::Label(juce::String(), TRANS("NOVATION LAUNCHPAD 2")));
+    label_launchpad_2_headline->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_launchpad_2_headline->setJustificationType(juce::Justification::centred);
     label_launchpad_2_headline->setEditable(false, false, false);
     label_launchpad_2_headline->setColour(
-        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_launchpad_2_headline->setColour(TextEditor::textColourId, Colours::black);
-    label_launchpad_2_headline->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_launchpad_2_headline->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_launchpad_2_headline->setColour(juce::TextEditor::backgroundColourId,
+                                          juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_midi_launchpad_2_in = new Label(String(), TRANS("Receive Port (IN)")));
-    label_midi_launchpad_2_in->setFont(Font(15.00f, Font::plain));
-    label_midi_launchpad_2_in->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_midi_launchpad_2_in =
+                          new juce::Label(juce::String(), TRANS("Receive Port (IN)")));
+    label_midi_launchpad_2_in->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_midi_launchpad_2_in->setJustificationType(juce::Justification::centredRight);
     label_midi_launchpad_2_in->setEditable(false, false, false);
-    label_midi_launchpad_2_in->setColour(Label::textColourId,
-                                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_launchpad_2_in->setColour(TextEditor::textColourId, Colours::black);
-    label_midi_launchpad_2_in->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_midi_launchpad_2_in->setColour(
+        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_launchpad_2_in->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_midi_launchpad_2_in->setColour(juce::TextEditor::backgroundColourId,
+                                         juce::Colour(0x00000000));
 
     addAndMakeVisible(label_midi_launchpad_2_out =
-                          new Label(String(), TRANS("Feedback Port (OUT)")));
-    label_midi_launchpad_2_out->setFont(Font(15.00f, Font::plain));
-    label_midi_launchpad_2_out->setJustificationType(Justification::centredRight);
+                          new juce::Label(juce::String(), TRANS("Feedback Port (OUT)")));
+    label_midi_launchpad_2_out->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_midi_launchpad_2_out->setJustificationType(juce::Justification::centredRight);
     label_midi_launchpad_2_out->setEditable(false, false, false);
     label_midi_launchpad_2_out->setColour(
-        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_launchpad_2_out->setColour(TextEditor::textColourId, Colours::black);
-    label_midi_launchpad_2_out->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_launchpad_2_out->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_midi_launchpad_2_out->setColour(juce::TextEditor::backgroundColourId,
+                                          juce::Colour(0x00000000));
 
-    addAndMakeVisible(cb_midi_out_port_string_g = new ComboBox(String()));
+    addAndMakeVisible(cb_midi_out_port_string_g = new juce::ComboBox(juce::String()));
     cb_midi_out_port_string_g->setEditableText(false);
-    cb_midi_out_port_string_g->setJustificationType(Justification::centredLeft);
+    cb_midi_out_port_string_g->setJustificationType(juce::Justification::centredLeft);
     cb_midi_out_port_string_g->setTextWhenNothingSelected(TRANS("Use Master Output"));
     cb_midi_out_port_string_g->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_out_port_string_g->addListener(this);
 
-    addAndMakeVisible(sl_midi_out_channel_string_g = new Slider(String()));
+    addAndMakeVisible(sl_midi_out_channel_string_g = new juce::Slider(juce::String()));
     sl_midi_out_channel_string_g->setExplicitFocusOrder(1);
     sl_midi_out_channel_string_g->setRange(1, 16, 1);
-    sl_midi_out_channel_string_g->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_out_channel_string_g->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
-    sl_midi_out_channel_string_g->setColour(Slider::thumbColourId, Colour(0x00000000));
-    sl_midi_out_channel_string_g->setColour(Slider::trackColourId, Colour(0x00000000));
-    sl_midi_out_channel_string_g->setColour(Slider::rotarySliderFillColourId, Colours::aqua);
-    sl_midi_out_channel_string_g->setColour(Slider::rotarySliderOutlineColourId,
-                                            Colour(0xff272727));
+    sl_midi_out_channel_string_g->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_out_channel_string_g->setTextBoxStyle(juce::Slider::TextBoxRight, false, 40, 100);
+    sl_midi_out_channel_string_g->setColour(juce::Slider::thumbColourId, juce::Colour(0x00000000));
+    sl_midi_out_channel_string_g->setColour(juce::Slider::trackColourId, juce::Colour(0x00000000));
+    sl_midi_out_channel_string_g->setColour(juce::Slider::rotarySliderFillColourId,
+                                            juce::Colours::aqua);
+    sl_midi_out_channel_string_g->setColour(juce::Slider::rotarySliderOutlineColourId,
+                                            juce::Colour(0xff272727));
     sl_midi_out_channel_string_g->addListener(this);
 
     addAndMakeVisible(label_midi_out_string_g =
-                          new Label(String(), TRANS("Output (to Synth) Group 2")));
-    label_midi_out_string_g->setFont(Font(15.00f, Font::plain));
-    label_midi_out_string_g->setJustificationType(Justification::centredRight);
+                          new juce::Label(juce::String(), TRANS("Output (to Synth) Group 2")));
+    label_midi_out_string_g->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_midi_out_string_g->setJustificationType(juce::Justification::centredRight);
     label_midi_out_string_g->setEditable(false, false, false);
-    label_midi_out_string_g->setColour(Label::textColourId,
-                                       Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_out_string_g->setColour(TextEditor::textColourId, Colours::black);
-    label_midi_out_string_g->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_midi_out_string_g->setColour(
+        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_out_string_g->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_midi_out_string_g->setColour(juce::TextEditor::backgroundColourId,
+                                       juce::Colour(0x00000000));
 
-    addAndMakeVisible(cb_midi_out_port_string_d = new ComboBox(String()));
+    addAndMakeVisible(cb_midi_out_port_string_d = new juce::ComboBox(juce::String()));
     cb_midi_out_port_string_d->setEditableText(false);
-    cb_midi_out_port_string_d->setJustificationType(Justification::centredLeft);
+    cb_midi_out_port_string_d->setJustificationType(juce::Justification::centredLeft);
     cb_midi_out_port_string_d->setTextWhenNothingSelected(TRANS("Use Master Output"));
     cb_midi_out_port_string_d->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_out_port_string_d->addListener(this);
 
-    addAndMakeVisible(sl_midi_out_channel_string_d = new Slider(String()));
+    addAndMakeVisible(sl_midi_out_channel_string_d = new juce::Slider(juce::String()));
     sl_midi_out_channel_string_d->setExplicitFocusOrder(1);
     sl_midi_out_channel_string_d->setRange(1, 16, 1);
-    sl_midi_out_channel_string_d->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_out_channel_string_d->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
-    sl_midi_out_channel_string_d->setColour(Slider::thumbColourId, Colour(0x00000000));
-    sl_midi_out_channel_string_d->setColour(Slider::trackColourId, Colour(0x00000000));
-    sl_midi_out_channel_string_d->setColour(Slider::rotarySliderFillColourId, Colours::aqua);
-    sl_midi_out_channel_string_d->setColour(Slider::rotarySliderOutlineColourId,
-                                            Colour(0xff272727));
+    sl_midi_out_channel_string_d->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_out_channel_string_d->setTextBoxStyle(juce::Slider::TextBoxRight, false, 40, 100);
+    sl_midi_out_channel_string_d->setColour(juce::Slider::thumbColourId, juce::Colour(0x00000000));
+    sl_midi_out_channel_string_d->setColour(juce::Slider::trackColourId, juce::Colour(0x00000000));
+    sl_midi_out_channel_string_d->setColour(juce::Slider::rotarySliderFillColourId,
+                                            juce::Colours::aqua);
+    sl_midi_out_channel_string_d->setColour(juce::Slider::rotarySliderOutlineColourId,
+                                            juce::Colour(0xff272727));
     sl_midi_out_channel_string_d->addListener(this);
 
     addAndMakeVisible(label_midi_out_string_d =
-                          new Label(String(), TRANS("Output (to Synth) Group 3")));
-    label_midi_out_string_d->setFont(Font(15.00f, Font::plain));
-    label_midi_out_string_d->setJustificationType(Justification::centredRight);
+                          new juce::Label(juce::String(), TRANS("Output (to Synth) Group 3")));
+    label_midi_out_string_d->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_midi_out_string_d->setJustificationType(juce::Justification::centredRight);
     label_midi_out_string_d->setEditable(false, false, false);
-    label_midi_out_string_d->setColour(Label::textColourId,
-                                       Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_out_string_d->setColour(TextEditor::textColourId, Colours::black);
-    label_midi_out_string_d->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_midi_out_string_d->setColour(
+        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_out_string_d->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_midi_out_string_d->setColour(juce::TextEditor::backgroundColourId,
+                                       juce::Colour(0x00000000));
 
-    addAndMakeVisible(cb_midi_out_port_string_a = new ComboBox(String()));
+    addAndMakeVisible(cb_midi_out_port_string_a = new juce::ComboBox(juce::String()));
     cb_midi_out_port_string_a->setEditableText(false);
-    cb_midi_out_port_string_a->setJustificationType(Justification::centredLeft);
+    cb_midi_out_port_string_a->setJustificationType(juce::Justification::centredLeft);
     cb_midi_out_port_string_a->setTextWhenNothingSelected(TRANS("Use Master Output"));
     cb_midi_out_port_string_a->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_out_port_string_a->addListener(this);
 
-    addAndMakeVisible(sl_midi_out_channel_string_a = new Slider(String()));
+    addAndMakeVisible(sl_midi_out_channel_string_a = new juce::Slider(juce::String()));
     sl_midi_out_channel_string_a->setExplicitFocusOrder(1);
     sl_midi_out_channel_string_a->setRange(1, 16, 1);
-    sl_midi_out_channel_string_a->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_out_channel_string_a->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
-    sl_midi_out_channel_string_a->setColour(Slider::thumbColourId, Colour(0x00000000));
-    sl_midi_out_channel_string_a->setColour(Slider::trackColourId, Colour(0x00000000));
-    sl_midi_out_channel_string_a->setColour(Slider::rotarySliderFillColourId, Colours::aqua);
-    sl_midi_out_channel_string_a->setColour(Slider::rotarySliderOutlineColourId,
-                                            Colour(0xff272727));
+    sl_midi_out_channel_string_a->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_out_channel_string_a->setTextBoxStyle(juce::Slider::TextBoxRight, false, 40, 100);
+    sl_midi_out_channel_string_a->setColour(juce::Slider::thumbColourId, juce::Colour(0x00000000));
+    sl_midi_out_channel_string_a->setColour(juce::Slider::trackColourId, juce::Colour(0x00000000));
+    sl_midi_out_channel_string_a->setColour(juce::Slider::rotarySliderFillColourId,
+                                            juce::Colours::aqua);
+    sl_midi_out_channel_string_a->setColour(juce::Slider::rotarySliderOutlineColourId,
+                                            juce::Colour(0xff272727));
     sl_midi_out_channel_string_a->addListener(this);
 
     addAndMakeVisible(label_midi_out_string_a =
-                          new Label(String(), TRANS("Output (to Synth) Group 4")));
-    label_midi_out_string_a->setFont(Font(15.00f, Font::plain));
-    label_midi_out_string_a->setJustificationType(Justification::centredRight);
+                          new juce::Label(juce::String(), TRANS("Output (to Synth) Group 4")));
+    label_midi_out_string_a->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_midi_out_string_a->setJustificationType(juce::Justification::centredRight);
     label_midi_out_string_a->setEditable(false, false, false);
-    label_midi_out_string_a->setColour(Label::textColourId,
-                                       Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_out_string_a->setColour(TextEditor::textColourId, Colours::black);
-    label_midi_out_string_a->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_midi_out_string_a->setColour(
+        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_out_string_a->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_midi_out_string_a->setColour(juce::TextEditor::backgroundColourId,
+                                       juce::Colour(0x00000000));
 
-    addAndMakeVisible(pb_refresh_all = new TextButton(String()));
+    addAndMakeVisible(pb_refresh_all = new juce::TextButton(juce::String()));
     pb_refresh_all->setExplicitFocusOrder(12);
     pb_refresh_all->setButtonText(TRANS("Refresh All"));
-    pb_refresh_all->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                      Button::ConnectedOnBottom);
+    pb_refresh_all->setConnectedEdges(juce::Button::ConnectedOnLeft |
+                                      juce::Button::ConnectedOnRight |
+                                      juce::Button::ConnectedOnBottom);
     pb_refresh_all->addListener(this);
 
-    addAndMakeVisible(cb_midi_out_port_b = new ComboBox(String()));
+    addAndMakeVisible(cb_midi_out_port_b = new juce::ComboBox(juce::String()));
     cb_midi_out_port_b->setEditableText(false);
-    cb_midi_out_port_b->setJustificationType(Justification::centredLeft);
+    cb_midi_out_port_b->setJustificationType(juce::Justification::centredLeft);
     cb_midi_out_port_b->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_out_port_b->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_out_port_b->addListener(this);
 
-    addAndMakeVisible(sl_midi_out_channel_b = new Slider(String()));
+    addAndMakeVisible(sl_midi_out_channel_b = new juce::Slider(juce::String()));
     sl_midi_out_channel_b->setExplicitFocusOrder(1);
     sl_midi_out_channel_b->setRange(1, 16, 1);
-    sl_midi_out_channel_b->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    sl_midi_out_channel_b->setTextBoxStyle(Slider::TextBoxRight, false, 40, 100);
-    sl_midi_out_channel_b->setColour(Slider::thumbColourId, Colour(0x00000000));
-    sl_midi_out_channel_b->setColour(Slider::trackColourId, Colour(0x00000000));
-    sl_midi_out_channel_b->setColour(Slider::rotarySliderFillColourId, Colours::aqua);
-    sl_midi_out_channel_b->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff272727));
+    sl_midi_out_channel_b->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    sl_midi_out_channel_b->setTextBoxStyle(juce::Slider::TextBoxRight, false, 40, 100);
+    sl_midi_out_channel_b->setColour(juce::Slider::thumbColourId, juce::Colour(0x00000000));
+    sl_midi_out_channel_b->setColour(juce::Slider::trackColourId, juce::Colour(0x00000000));
+    sl_midi_out_channel_b->setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::aqua);
+    sl_midi_out_channel_b->setColour(juce::Slider::rotarySliderOutlineColourId,
+                                     juce::Colour(0xff272727));
     sl_midi_out_channel_b->addListener(this);
 
-    addAndMakeVisible(label_midi_in_port_b = new Label(String(), TRANS("Second Out")));
-    label_midi_in_port_b->setFont(Font(15.00f, Font::plain));
-    label_midi_in_port_b->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_midi_in_port_b = new juce::Label(juce::String(), TRANS("Second Out")));
+    label_midi_in_port_b->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_midi_in_port_b->setJustificationType(juce::Justification::centredRight);
     label_midi_in_port_b->setEditable(false, false, false);
-    label_midi_in_port_b->setColour(Label::textColourId,
-                                    Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_midi_in_port_b->setColour(TextEditor::textColourId, Colours::black);
-    label_midi_in_port_b->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_midi_in_port_b->setColour(
+        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_in_port_b->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_midi_in_port_b->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     addAndMakeVisible(label_master_slave_headline2 =
-                          new Label(String(), TRANS("MIDI IN (Slave, Thru)")));
-    label_master_slave_headline2->setFont(Font(15.00f, Font::plain));
-    label_master_slave_headline2->setJustificationType(Justification::centred);
+                          new juce::Label(juce::String(), TRANS("MIDI IN (Slave, Thru)")));
+    label_master_slave_headline2->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_master_slave_headline2->setJustificationType(juce::Justification::centred);
     label_master_slave_headline2->setEditable(false, false, false);
     label_master_slave_headline2->setColour(
-        Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_master_slave_headline2->setColour(TextEditor::textColourId, Colours::black);
-    label_master_slave_headline2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_master_slave_headline2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_master_slave_headline2->setColour(juce::TextEditor::backgroundColourId,
+                                            juce::Colour(0x00000000));
 
-    addAndMakeVisible(button_info_master_out = new TextButton(String()));
+    addAndMakeVisible(button_info_master_out = new juce::TextButton(juce::String()));
     button_info_master_out->setButtonText(TRANS("?"));
     button_info_master_out->addListener(this);
 
-    addAndMakeVisible(button_info_master_input = new TextButton(String()));
+    addAndMakeVisible(button_info_master_input = new juce::TextButton(juce::String()));
     button_info_master_input->setButtonText(TRANS("?"));
     button_info_master_input->addListener(this);
 
-    addAndMakeVisible(button_info_midi_thru = new TextButton(String()));
+    addAndMakeVisible(button_info_midi_thru = new juce::TextButton(juce::String()));
     button_info_midi_thru->setButtonText(TRANS("?"));
     button_info_midi_thru->addListener(this);
 
-    addAndMakeVisible(button_info_sequence_out = new TextButton(String()));
+    addAndMakeVisible(button_info_sequence_out = new juce::TextButton(juce::String()));
     button_info_sequence_out->setButtonText(TRANS("?"));
     button_info_sequence_out->addListener(this);
 
-    addAndMakeVisible(button_info_cc_in = new TextButton(String()));
+    addAndMakeVisible(button_info_cc_in = new juce::TextButton(juce::String()));
     button_info_cc_in->setButtonText(TRANS("?"));
     button_info_cc_in->addListener(this);
 
-    addAndMakeVisible(button_info_launchpad_in_1 = new TextButton(String()));
+    addAndMakeVisible(button_info_launchpad_in_1 = new juce::TextButton(juce::String()));
     button_info_launchpad_in_1->setButtonText(TRANS("?"));
     button_info_launchpad_in_1->addListener(this);
 
@@ -715,7 +762,7 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     sl_midi_in_channel->setEnabled(false);
 
     // TODO, set an other style
-    lbl_clock_thru->setColour(Label::textColourId, Colour(0xff515151));
+    lbl_clock_thru->setColour(juce::Label::textColourId, juce::Colour(0xff515151));
 
     tb_clock_thru->setVisible(false);
     tb_midi_thru_enable->setVisible(false);
@@ -729,40 +776,40 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
 #endif
 
     sl_midi_out_channel->setValue(_app_instance_store->audio_processor->channel_out,
-                                  NotificationType::dontSendNotification);
+                                  juce::NotificationType::dontSendNotification);
     sl_midi_out_channel_b->setValue(_app_instance_store->audio_processor->channel_out_b,
-                                    NotificationType::dontSendNotification);
+                                    juce::NotificationType::dontSendNotification);
     sl_midi_out_channel_string_g->setValue(
         _app_instance_store->audio_processor->channel_out_group_2,
-        NotificationType::dontSendNotification);
+        juce::NotificationType::dontSendNotification);
     sl_midi_out_channel_string_d->setValue(
         _app_instance_store->audio_processor->channel_out_group_3,
-        NotificationType::dontSendNotification);
+        juce::NotificationType::dontSendNotification);
     sl_midi_out_channel_string_a->setValue(
         _app_instance_store->audio_processor->channel_out_group_4,
-        NotificationType::dontSendNotification);
+        juce::NotificationType::dontSendNotification);
     sl_midi_in_channel->setValue(_app_instance_store->audio_processor->channel_in,
-                                 NotificationType::dontSendNotification);
+                                 juce::NotificationType::dontSendNotification);
 
     // sl_midi_learn_channel
     sl_midi_in_channel_pad_1->setValue(_app_instance_store->launchpad_1.channel_in,
-                                       NotificationType::dontSendNotification);
+                                       juce::NotificationType::dontSendNotification);
     sl_midi_out_channel_pad_1->setValue(_app_instance_store->launchpad_1.channel_out,
-                                        NotificationType::dontSendNotification);
+                                        juce::NotificationType::dontSendNotification);
     sl_midi_in_channel_pad_2->setValue(_app_instance_store->launchpad_2.channel_in,
-                                       NotificationType::dontSendNotification);
+                                       juce::NotificationType::dontSendNotification);
     sl_midi_out_channel_pad_2->setValue(_app_instance_store->launchpad_2.channel_out,
-                                        NotificationType::dontSendNotification);
+                                        juce::NotificationType::dontSendNotification);
     tb_midi_thru_enable->setToggleState(_app_instance_store->audio_processor->midi_thru,
-                                        NotificationType::dontSendNotification);
+                                        juce::NotificationType::dontSendNotification);
 
     tb_clock_thru->setToggleState(_app_instance_store->audio_processor->sync_thru,
-                                  NotificationType::dontSendNotification);
+                                  juce::NotificationType::dontSendNotification);
 
     sl_latency_clocks->setValue(_app_instance_store->audio_processor->latency_corretion_clocks,
-                                NotificationType::dontSendNotification);
+                                juce::NotificationType::dontSendNotification);
     sl_latency_ms->setValue(_app_instance_store->audio_processor->latency_corretion_ms,
-                            NotificationType::dontSendNotification);
+                            juce::NotificationType::dontSendNotification);
 
     fill_drop_downs();
 
@@ -779,7 +826,7 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
 UiEditorSettings::~UiEditorSettings()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
-    _app_instance_store->editor_config.XY_editor_settings = Point<int>(getX(), getY());
+    _app_instance_store->editor_config.XY_editor_settings = juce::Point<int>(getX(), getY());
     //[/Destructor_pre]
 
     label_latency_ms = nullptr;
@@ -847,49 +894,49 @@ UiEditorSettings::~UiEditorSettings()
 }
 
 //==============================================================================
-void UiEditorSettings::paint(Graphics &g)
+void UiEditorSettings::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.setColour(Colour(0xff161616));
+    g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.0175f)),
                            static_cast<float>(proportionOfHeight(0.4286f)),
                            static_cast<float>(proportionOfWidth(0.4649f)), 1.0f, 10.000f);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.5000f)),
                            static_cast<float>(proportionOfHeight(0.0286f)), 1.0f,
                            static_cast<float>(proportionOfHeight(0.8571f)), 10.000f);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.5175f)),
                            static_cast<float>(proportionOfHeight(0.3000f)),
                            static_cast<float>(proportionOfWidth(0.4649f)), 1.0f, 10.000f);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.0175f)),
                            static_cast<float>(proportionOfHeight(0.5857f)),
                            static_cast<float>(proportionOfWidth(0.4649f)), 1.0f, 10.000f);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.5175f)),
                            static_cast<float>(proportionOfHeight(0.6000f)),
                            static_cast<float>(proportionOfWidth(0.4649f)), 1.0f, 10.000f);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.0175f)),
                            static_cast<float>(proportionOfHeight(0.2414f)),
                            static_cast<float>(proportionOfWidth(0.4649f)), 1.0f, 10.000f);
 
     //[UserPaint] Add your own custom painting code here..
-    ResizableWindow::moved();
+    juce::ResizableWindow::moved();
     //[/UserPaint]
 }
 
@@ -1022,11 +1069,11 @@ void UiEditorSettings::resized()
     button_info_launchpad_in_1->setBounds(proportionOfWidth(0.5175f), proportionOfHeight(0.3286f),
                                           proportionOfWidth(0.0263f), proportionOfHeight(0.0429f));
     //[UserResized] Add your own custom resize handling here..
-    ResizableWindow::resized();
+    juce::ResizableWindow::resized();
     //[/UserResized]
 }
 
-void UiEditorSettings::buttonClicked(Button *buttonThatWasClicked)
+void UiEditorSettings::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -1069,35 +1116,35 @@ void UiEditorSettings::buttonClicked(Button *buttonThatWasClicked)
         _app_instance_store->midi_in_map.force_feedback_refresh();
 
         sl_midi_out_channel->setValue(_app_instance_store->audio_processor->channel_out,
-                                      NotificationType::dontSendNotification);
+                                      juce::NotificationType::dontSendNotification);
         sl_midi_out_channel_string_g->setValue(
             _app_instance_store->audio_processor->channel_out_group_2,
-            NotificationType::dontSendNotification);
+            juce::NotificationType::dontSendNotification);
         sl_midi_out_channel_string_d->setValue(
             _app_instance_store->audio_processor->channel_out_group_3,
-            NotificationType::dontSendNotification);
+            juce::NotificationType::dontSendNotification);
         sl_midi_out_channel_string_a->setValue(
             _app_instance_store->audio_processor->channel_out_group_4,
-            NotificationType::dontSendNotification);
+            juce::NotificationType::dontSendNotification);
         sl_midi_out_channel_b->setValue(_app_instance_store->audio_processor->channel_out_b,
-                                        NotificationType::dontSendNotification);
+                                        juce::NotificationType::dontSendNotification);
         sl_midi_in_channel->setValue(_app_instance_store->audio_processor->channel_in,
-                                     NotificationType::dontSendNotification);
+                                     juce::NotificationType::dontSendNotification);
 
         // sl_midi_learn_channel
         sl_midi_in_channel_pad_1->setValue(_app_instance_store->launchpad_1.channel_in,
-                                           NotificationType::dontSendNotification);
+                                           juce::NotificationType::dontSendNotification);
         sl_midi_out_channel_pad_1->setValue(_app_instance_store->launchpad_1.channel_out,
-                                            NotificationType::dontSendNotification);
+                                            juce::NotificationType::dontSendNotification);
         sl_midi_in_channel_pad_2->setValue(_app_instance_store->launchpad_2.channel_in,
-                                           NotificationType::dontSendNotification);
+                                           juce::NotificationType::dontSendNotification);
         sl_midi_out_channel_pad_2->setValue(_app_instance_store->launchpad_2.channel_out,
-                                            NotificationType::dontSendNotification);
+                                            juce::NotificationType::dontSendNotification);
         tb_midi_thru_enable->setToggleState(_app_instance_store->audio_processor->midi_thru,
-                                            NotificationType::dontSendNotification);
+                                            juce::NotificationType::dontSendNotification);
 
         tb_clock_thru->setToggleState(_app_instance_store->audio_processor->sync_thru,
-                                      NotificationType::dontSendNotification);
+                                      juce::NotificationType::dontSendNotification);
 
         fill_drop_downs();
         //[/UserButtonCode_pb_refresh_all]
@@ -1167,7 +1214,7 @@ void UiEditorSettings::buttonClicked(Button *buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiEditorSettings::sliderValueChanged(Slider *sliderThatWasMoved)
+void UiEditorSettings::sliderValueChanged(juce::Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
@@ -1253,10 +1300,10 @@ void UiEditorSettings::sliderValueChanged(Slider *sliderThatWasMoved)
     //[/UsersliderValueChanged_Post]
 }
 
-void UiEditorSettings::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
+void UiEditorSettings::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
 {
     //[UsercomboBoxChanged_Pre]
-    String selected_text = "";
+    juce::String selected_text = "";
     if (comboBoxThatHasChanged->getSelectedId())
         selected_text =
             comboBoxThatHasChanged->getItemText(comboBoxThatHasChanged->getSelectedId() - 1);

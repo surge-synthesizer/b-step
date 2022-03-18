@@ -54,14 +54,14 @@ Pattern::Pattern()
       _remote_tune_center(64)
 {
     // CHORD SETS
-    for (uint8 chord_set_id = 0; chord_set_id != appdeff_t::SUM_CHORD_SETS; ++chord_set_id)
+    for (std::uint8_t chord_set_id = 0; chord_set_id != appdeff_t::SUM_CHORD_SETS; ++chord_set_id)
     {
         _chord_sets.add(new ChordSet(chord_set_id));
     }
     _chord_sets.minimiseStorageOverheads();
 
     // BARS
-    for (uint8 bar_id = 0; bar_id != SUM_BARS; ++bar_id)
+    for (std::uint8_t bar_id = 0; bar_id != SUM_BARS; ++bar_id)
     {
         Bar *bar = new Bar(bar_id);
         _bars.add(bar);
@@ -72,9 +72,9 @@ Pattern::Pattern()
 // ********************************************************************************************
 // ********************************************************************************************
 // ********************************************************************************************
-ChordSet::ChordSet(uint8 chordset_id_) : id(chordset_id_)
+ChordSet::ChordSet(std::uint8_t chordset_id_) : id(chordset_id_)
 {
-    for (uint8 chord_id = 0; chord_id != APPDEF_ChordSet::SUM_CHORDS; ++chord_id)
+    for (std::uint8_t chord_id = 0; chord_id != APPDEF_ChordSet::SUM_CHORDS; ++chord_id)
     {
         _chords.add(new Chord(chordset_id_, chord_id));
     }
@@ -85,7 +85,7 @@ ChordSet::ChordSet(uint8 chordset_id_) : id(chordset_id_)
 // ********************************************************************************************
 // ********************************************************************************************
 // ********************************************************************************************
-Chord::Chord(uint8 chordset_id_, uint8 chord_id_)
+Chord::Chord(std::uint8_t chordset_id_, std::uint8_t chord_id_)
     : id(chord_id_), chord_set_id(chordset_id_),
 
       offset_g(chord_id_), offset_d(chord_id_), offset_a(chord_id_), offset_e(chord_id_),
@@ -98,7 +98,7 @@ Chord::Chord(uint8 chordset_id_, uint8 chord_id_)
 // ********************************************************************************************
 // ********************************************************************************************
 // ********************************************************************************************
-Bar::Bar(uint8 bar_id_)
+Bar::Bar(std::uint8_t bar_id_)
     : id(bar_id_),
 
       repeats(id), octave_offset(id), chord_id(id), force_chain(id), pos_reset(id),
@@ -118,21 +118,21 @@ Bar::Bar(uint8 bar_id_)
                      &group)
 {
     // BARSTEPS
-    for (uint8 barstep_id = 0; barstep_id != SUM_STEPS; ++barstep_id)
+    for (std::uint8_t barstep_id = 0; barstep_id != SUM_STEPS; ++barstep_id)
     {
         _barsteps.add(new BarStep(barstep_id));
     }
     _barsteps.minimiseStorageOverheads();
 
     // BARSTRINGS
-    for (uint8 barstring_id = 0; barstring_id != SUM_STRINGS; ++barstring_id)
+    for (std::uint8_t barstring_id = 0; barstring_id != SUM_STRINGS; ++barstring_id)
     {
         _barstrings.add(new Barstring(barstring_id));
     }
     _barstrings.minimiseStorageOverheads();
 
     // CC
-    for (uint8 cc_set_id = 0; cc_set_id != appdeff_t::SUM_CC_SETS; ++cc_set_id)
+    for (std::uint8_t cc_set_id = 0; cc_set_id != appdeff_t::SUM_CC_SETS; ++cc_set_id)
     {
         _cc_sets.add(new BarCCSet(cc_set_id));
     }
@@ -142,7 +142,7 @@ Bar::Bar(uint8 bar_id_)
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-BarCCSet::BarCCSet(uint8 set_id_)
+BarCCSet::BarCCSet(std::uint8_t set_id_)
     : id(set_id_),
 
       cc_type(id),
@@ -161,7 +161,7 @@ BarCCSet &BarCCSet::operator=(const BarCCSet &other_)
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-BarStep::BarStep(uint8 step_id_)
+BarStep::BarStep(std::uint8_t step_id_)
     : id(step_id_),
 
       velocity(id), duration(id),
@@ -185,7 +185,7 @@ BarStep::BarStep(uint8 step_id_)
                      &pos_entry_point, &pos_reset_point, &pos_force_to_absolute_step)
 {
     // CC VALS
-    for (uint8 cc_val_id = 0; cc_val_id != appdeff_t::SUM_CC_VALS; ++cc_val_id)
+    for (std::uint8_t cc_val_id = 0; cc_val_id != appdeff_t::SUM_CC_VALS; ++cc_val_id)
     {
         _cc_vals.add(new BarStepCCVals(step_id_, cc_val_id));
     }
@@ -195,11 +195,13 @@ BarStep::BarStep(uint8 step_id_)
 // ********************************************************************************************
 // ********************************************************************************************
 // ********************************************************************************************
-BarStepCCVals::BarStepCCVals(uint8 step_id_, uint8 column_id_)
+BarStepCCVals::BarStepCCVals(std::uint8_t step_id_, std::uint8_t column_id_)
     : id(column_id_),
 
-      value(String("-") + String(column_id_ + 1) + String("-") + String(step_id_ + 1)),
-      enable(String("-") + String(column_id_ + 1) + String("-") + String(step_id_ + 1)),
+      value(juce::String("-") + juce::String(column_id_ + 1) + juce::String("-") +
+            juce::String(step_id_ + 1)),
+      enable(juce::String("-") + juce::String(column_id_ + 1) + juce::String("-") +
+             juce::String(step_id_ + 1)),
 
       parameter_list(&value, &enable)
 {
@@ -215,7 +217,7 @@ BarStepCCVals &BarStepCCVals::operator=(const BarStepCCVals &other_)
 // ********************************************************************************************
 // ********************************************************************************************
 // ********************************************************************************************
-Barstring::Barstring(uint8 id_)
+Barstring::Barstring(std::uint8_t id_)
     : id(id_),
 
       octave_offset(id),
@@ -223,7 +225,7 @@ Barstring::Barstring(uint8 id_)
       parameter_list(&octave_offset)
 {
     // STEPS
-    for (uint8 step_id = 0; step_id != SUM_STEPS; ++step_id)
+    for (std::uint8_t step_id = 0; step_id != SUM_STEPS; ++step_id)
     {
         _steps.add(new Step(id_, step_id));
     }
@@ -233,13 +235,13 @@ Barstring::Barstring(uint8 id_)
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-Step::Step(uint8 sid, uint8 id_)
+Step::Step(std::uint8_t sid, std::uint8_t id_)
     : id(id_),
 
-      is_mute(String((sid == 0)   ? "-G-"
-                     : (sid == 1) ? "-D-"
-                     : (sid == 2) ? "-A-"
-                                  : "-E-") += (id + 1)),
+      is_mute(juce::String((sid == 0)   ? "-G-"
+                           : (sid == 1) ? "-D-"
+                           : (sid == 2) ? "-A-"
+                                        : "-E-") += (id + 1)),
 
       parameter_list(&is_mute)
 {
@@ -257,7 +259,7 @@ UIUserData::UIUserData()
 // ********************************************************************************************
 // ********************************************************************************************
 // ********************************************************************************************
-UIBarClipboardSettings::UIBarClipboardSettings(uint8 clipboard_id_)
+UIBarClipboardSettings::UIBarClipboardSettings(std::uint8_t clipboard_id_)
     : id(clipboard_id_),
 
       is_copy_steps(clipboard_id_), is_copy_string_octave(clipboard_id_),
@@ -287,13 +289,13 @@ Bar &Bar::operator=(const Bar &other_)
 {
     CoreCopy::by_copyable_def(other_, *this);
 
-    for (uint8 step_id = 0; step_id != SUM_STEPS; ++step_id)
+    for (std::uint8_t step_id = 0; step_id != SUM_STEPS; ++step_id)
         *_barsteps[step_id] = *other_._barsteps[step_id];
 
-    for (uint8 barstring_id = 0; barstring_id != SUM_STRINGS; ++barstring_id)
+    for (std::uint8_t barstring_id = 0; barstring_id != SUM_STRINGS; ++barstring_id)
         *_barstrings[barstring_id] = *other_._barstrings[barstring_id];
 
-    for (uint8 cc_set_id = 0; cc_set_id != appdeff_t::SUM_CC_SETS; ++cc_set_id)
+    for (std::uint8_t cc_set_id = 0; cc_set_id != appdeff_t::SUM_CC_SETS; ++cc_set_id)
         *_cc_sets[cc_set_id] = *other_._cc_sets[cc_set_id];
 
     return *this;
@@ -303,7 +305,7 @@ Barstring &Barstring::operator=(const Barstring &other_)
 {
     CoreCopy::by_copyable_def(other_, *this);
 
-    for (uint8 step_id = 0; step_id != SUM_STEPS; ++step_id)
+    for (std::uint8_t step_id = 0; step_id != SUM_STEPS; ++step_id)
         *_steps[step_id] = *other_._steps[step_id];
 
     return *this;
@@ -313,7 +315,7 @@ BarStep &BarStep::operator=(const BarStep &other_)
 {
     CoreCopy::by_copyable_def(other_, *this);
 
-    for (uint8 cc_val_id = 0; cc_val_id != _cc_vals.size(); ++cc_val_id)
+    for (std::uint8_t cc_val_id = 0; cc_val_id != _cc_vals.size(); ++cc_val_id)
         *_cc_vals[cc_val_id] = *other_._cc_vals[cc_val_id];
 
     return *this;
@@ -331,18 +333,18 @@ Step &Step::operator=(const Step &other_)
 // ************************************************************************************************
 
 //// LOAD AND SAVE
-static inline void export_to(const PodParameterBase &param_, XmlElement &xml_)
+static inline void export_to(const PodParameterBase &param_, juce::XmlElement &xml_)
 {
     if (param_.value() != param_.default_value())
         xml_.setAttribute(param_.get_param_ident(), param_.value());
 }
-static inline void import_from(PodParameterBase &param_, const XmlElement &xml_)
+static inline void import_from(PodParameterBase &param_, const juce::XmlElement &xml_)
 {
     param_.set_value(xml_.getIntAttribute(param_.get_param_ident(), param_.default_value()));
 }
 
 template <class child_container_t>
-void import_childs_from(const child_container_t &childs_, XmlElement &xml_)
+void import_childs_from(const child_container_t &childs_, juce::XmlElement &xml_)
 {
     for (int i = 0; i != childs_.size(); ++i)
     {
@@ -357,9 +359,9 @@ template <class child_container_t> void import_childs_by_default(const child_con
     }
 }
 
-template <class T> void import_my_params_from(const T &owner_, XmlElement &xml_)
+template <class T> void import_my_params_from(const T &owner_, juce::XmlElement &xml_)
 {
-    Array<typename T::appdeff_t::IDS> param_list = T::appdeff_t::get_project_parameter_list();
+    juce::Array<typename T::appdeff_t::IDS> param_list = T::appdeff_t::get_project_parameter_list();
     for (int i = 0; i != param_list.size(); ++i)
     {
         import_from(*owner_.parameter_list[param_list.getUnchecked(i)], xml_);
@@ -368,7 +370,7 @@ template <class T> void import_my_params_from(const T &owner_, XmlElement &xml_)
 template <class T> void import_my_params_by_default(const T &owner_)
 {
     PodParameterBase *param;
-    Array<typename T::appdeff_t::IDS> param_list = T::appdeff_t::get_project_parameter_list();
+    juce::Array<typename T::appdeff_t::IDS> param_list = T::appdeff_t::get_project_parameter_list();
     for (int i = 0; i != param_list.size(); ++i)
     {
         param = owner_.parameter_list[param_list.getUnchecked(i)];
@@ -376,7 +378,8 @@ template <class T> void import_my_params_by_default(const T &owner_)
     }
 }
 
-template <class child_t> void export_childs_to(const OwnedArray<child_t> &childs_, XmlElement &xml_)
+template <class child_t>
+void export_childs_to(const juce::OwnedArray<child_t> &childs_, juce::XmlElement &xml_)
 {
     for (int i = 0; i != childs_.size(); ++i)
     {
@@ -384,9 +387,9 @@ template <class child_t> void export_childs_to(const OwnedArray<child_t> &childs
     }
 }
 
-template <class T> void export_my_params_to(const T &owner_, XmlElement &xml_)
+template <class T> void export_my_params_to(const T &owner_, juce::XmlElement &xml_)
 {
-    Array<typename T::appdeff_t::IDS> param_list = T::appdeff_t::get_project_parameter_list();
+    juce::Array<typename T::appdeff_t::IDS> param_list = T::appdeff_t::get_project_parameter_list();
     for (int i = 0; i != param_list.size(); ++i)
     {
         export_to(*owner_.parameter_list[param_list.getUnchecked(i)], xml_);
@@ -394,22 +397,24 @@ template <class T> void export_my_params_to(const T &owner_, XmlElement &xml_)
 }
 
 #define MY_PARAMS_EXPORTER_AND_INITER_BY_ID                                                        \
-    XmlElement *element = xml_.createNewChildElement(appdeff_t::class_name + String(id));          \
+    juce::XmlElement *element =                                                                    \
+        xml_.createNewChildElement(appdeff_t::class_name + juce::String(id));                      \
     export_my_params_to(*this, *element);
 
 #define MY_PARAMS_EXPORTER_AND_INITER                                                              \
-    XmlElement *element = xml_.createNewChildElement(appdeff_t::class_name);                       \
+    juce::XmlElement *element = xml_.createNewChildElement(appdeff_t::class_name);                 \
     export_my_params_to(*this, *element);
 
 #define MY_PARAMS_IMPORTER_AND_INITER_BY_ID                                                        \
-    XmlElement *element = xml_.getChildByName(String(appdeff_t::class_name) + String(id));         \
+    juce::XmlElement *element =                                                                    \
+        xml_.getChildByName(juce::String(appdeff_t::class_name) + juce::String(id));               \
     if (element)                                                                                   \
         import_my_params_from(*this, *element);                                                    \
     else                                                                                           \
         import_by_default();
 
 #define MY_PARAMS_IMPORTER_AND_INITER                                                              \
-    XmlElement *element = xml_.getChildByName(String(appdeff_t::class_name));                      \
+    juce::XmlElement *element = xml_.getChildByName(juce::String(appdeff_t::class_name));          \
     if (element)                                                                                   \
         import_my_params_from(*this, *element);                                                    \
     else                                                                                           \
@@ -425,25 +430,25 @@ template <class T> void export_my_params_to(const T &owner_, XmlElement &xml_)
     if (element->getNumAttributes() == 0 && element->getNumChildElements() == 0)                   \
         xml_.removeChildElement(element, true);
 
-void ProcessorUserData::export_to(XmlElement &xml_) const
+void ProcessorUserData::export_to(juce::XmlElement &xml_) const
 {
     MY_PARAMS_EXPORTER_AND_INITER
 
     REMOVE_IF_ELEMENT_IS_EMPTY
 }
-void ProcessorUserData::import_from(const XmlElement &xml_) { MY_PARAMS_IMPORTER_AND_INITER }
+void ProcessorUserData::import_from(const juce::XmlElement &xml_) { MY_PARAMS_IMPORTER_AND_INITER }
 void ProcessorUserData::import_by_default() { import_my_params_by_default(*this); }
 
-void MIDIUserData::export_to(XmlElement &xml_) const
+void MIDIUserData::export_to(juce::XmlElement &xml_) const
 {
     MY_PARAMS_EXPORTER_AND_INITER
 
     REMOVE_IF_ELEMENT_IS_EMPTY
 }
-void MIDIUserData::import_from(const XmlElement &xml_) { MY_PARAMS_IMPORTER_AND_INITER }
+void MIDIUserData::import_from(const juce::XmlElement &xml_) { MY_PARAMS_IMPORTER_AND_INITER }
 void MIDIUserData::import_by_default() { import_my_params_by_default(*this); }
 
-void Pattern::export_to(XmlElement &xml_) const
+void Pattern::export_to(juce::XmlElement &xml_) const
 {
     MY_PARAMS_EXPORTER_AND_INITER
     for (int i = 0; i != SUM_BARS; ++i)
@@ -458,9 +463,9 @@ void Pattern::export_to(XmlElement &xml_) const
     REMOVE_IF_ELEMENT_IS_EMPTY
 }
 
-void Pattern::import_from(const XmlElement &xml_)
+void Pattern::import_from(const juce::XmlElement &xml_)
 {
-    XmlElement *element = xml_.getChildByName(appdeff_t::class_name);
+    juce::XmlElement *element = xml_.getChildByName(appdeff_t::class_name);
     if (element)
     {
         import_my_params_from(*this, *element);
@@ -477,9 +482,9 @@ void Pattern::import_from(const XmlElement &xml_)
         import_by_default();
 }
 
-void Pattern::import_from_2_0(const XmlElement &xml_)
+void Pattern::import_from_2_0(const juce::XmlElement &xml_)
 {
-    XmlElement *element = xml_.getChildByName(appdeff_t::class_name);
+    juce::XmlElement *element = xml_.getChildByName(appdeff_t::class_name);
     if (element)
     {
         import_my_params_from(*this, *element);
@@ -508,11 +513,12 @@ void Pattern::import_by_default()
     }
 }
 
-void ChordSet::export_to(XmlElement &xml_, bool with_id_) const
+void ChordSet::export_to(juce::XmlElement &xml_, bool with_id_) const
 {
-    XmlElement *element;
+    juce::XmlElement *element;
     if (with_id_)
-        element = xml_.createNewChildElement(String(appdeff_t::class_name) + String(id));
+        element =
+            xml_.createNewChildElement(juce::String(appdeff_t::class_name) + juce::String(id));
     else
         element = xml_.createNewChildElement(appdeff_t::class_name);
 
@@ -521,11 +527,11 @@ void ChordSet::export_to(XmlElement &xml_, bool with_id_) const
     REMOVE_IF_ELEMENT_IS_EMPTY
 }
 
-void ChordSet::import_from(const XmlElement &xml_, bool with_id_)
+void ChordSet::import_from(const juce::XmlElement &xml_, bool with_id_)
 {
-    XmlElement *element;
+    juce::XmlElement *element;
     if (with_id_)
-        element = xml_.getChildByName(String(appdeff_t::class_name) + String(id));
+        element = xml_.getChildByName(juce::String(appdeff_t::class_name) + juce::String(id));
     else
         element = xml_.getChildByName(appdeff_t::class_name);
 
@@ -536,20 +542,21 @@ void ChordSet::import_from(const XmlElement &xml_, bool with_id_)
 }
 void ChordSet::import_by_default(bool) { import_childs_by_default(_chords); }
 
-void Chord::export_to(XmlElement &xml_) const
+void Chord::export_to(juce::XmlElement &xml_) const
 {
     MY_PARAMS_EXPORTER_AND_INITER_BY_ID
 
     REMOVE_IF_ELEMENT_IS_EMPTY
 }
-void Chord::import_from(const XmlElement &xml_) { MY_PARAMS_IMPORTER_AND_INITER_BY_ID }
+void Chord::import_from(const juce::XmlElement &xml_) { MY_PARAMS_IMPORTER_AND_INITER_BY_ID }
 void Chord::import_by_default() { import_my_params_by_default(*this); }
 
-void Bar::export_to(XmlElement &xml_, bool with_id_) const
+void Bar::export_to(juce::XmlElement &xml_, bool with_id_) const
 {
-    XmlElement *element;
+    juce::XmlElement *element;
     if (with_id_)
-        element = xml_.createNewChildElement(String(appdeff_t::class_name) + String(id));
+        element =
+            xml_.createNewChildElement(juce::String(appdeff_t::class_name) + juce::String(id));
     else
         element = xml_.createNewChildElement(appdeff_t::class_name);
 
@@ -560,11 +567,11 @@ void Bar::export_to(XmlElement &xml_, bool with_id_) const
 
     REMOVE_IF_ELEMENT_IS_EMPTY
 }
-void Bar::import_from(const XmlElement &xml_, bool with_id_)
+void Bar::import_from(const juce::XmlElement &xml_, bool with_id_)
 {
-    XmlElement *element;
+    juce::XmlElement *element;
     if (with_id_)
-        element = xml_.getChildByName(String(appdeff_t::class_name) + String(id));
+        element = xml_.getChildByName(juce::String(appdeff_t::class_name) + juce::String(id));
     else
         element = xml_.getChildByName(appdeff_t::class_name);
 
@@ -588,23 +595,23 @@ void Bar::import_by_default(bool)
     import_childs_by_default(_cc_sets);
 }
 
-void BarCCSet::export_to(XmlElement &xml_) const
+void BarCCSet::export_to(juce::XmlElement &xml_) const
 {
     MY_PARAMS_EXPORTER_AND_INITER_BY_ID
 
     REMOVE_IF_ELEMENT_IS_EMPTY
 }
-void BarCCSet::import_from(const XmlElement &xml_) { MY_PARAMS_IMPORTER_AND_INITER_BY_ID }
+void BarCCSet::import_from(const juce::XmlElement &xml_) { MY_PARAMS_IMPORTER_AND_INITER_BY_ID }
 void BarCCSet::import_by_default() { import_my_params_by_default(*this); }
 
-void BarStep::export_to(XmlElement &xml_) const
+void BarStep::export_to(juce::XmlElement &xml_) const
 {
     MY_PARAMS_EXPORTER_AND_INITER_BY_ID
     export_childs_to(_cc_vals, *element);
 
     REMOVE_IF_ELEMENT_IS_EMPTY
 }
-void BarStep::import_from(const XmlElement &xml_)
+void BarStep::import_from(const juce::XmlElement &xml_)
 {
     MY_PARAMS_IMPORTER_AND_INITER_BY_ID
     CHILDS_IMPORTER(_cc_vals)
@@ -615,23 +622,26 @@ void BarStep::import_by_default()
     import_childs_by_default(_cc_vals);
 }
 
-void BarStepCCVals::export_to(XmlElement &xml_) const
+void BarStepCCVals::export_to(juce::XmlElement &xml_) const
 {
     MY_PARAMS_EXPORTER_AND_INITER_BY_ID
 
     REMOVE_IF_ELEMENT_IS_EMPTY
 }
-void BarStepCCVals::import_from(const XmlElement &xml_) { MY_PARAMS_IMPORTER_AND_INITER_BY_ID }
+void BarStepCCVals::import_from(const juce::XmlElement &xml_)
+{
+    MY_PARAMS_IMPORTER_AND_INITER_BY_ID
+}
 void BarStepCCVals::import_by_default() { import_my_params_by_default(*this); }
 
-void Barstring::export_to(XmlElement &xml_) const
+void Barstring::export_to(juce::XmlElement &xml_) const
 {
     MY_PARAMS_EXPORTER_AND_INITER_BY_ID
     export_childs_to(_steps, *element);
 
     REMOVE_IF_ELEMENT_IS_EMPTY
 }
-void Barstring::import_from(const XmlElement &xml_)
+void Barstring::import_from(const juce::XmlElement &xml_)
 {
     MY_PARAMS_IMPORTER_AND_INITER_BY_ID
     CHILDS_IMPORTER(_steps)
@@ -642,31 +652,31 @@ void Barstring::import_by_default()
     import_childs_by_default(_steps);
 }
 
-void Step::export_to(XmlElement &xml_) const
+void Step::export_to(juce::XmlElement &xml_) const
 {
     MY_PARAMS_EXPORTER_AND_INITER_BY_ID
 
     REMOVE_IF_ELEMENT_IS_EMPTY
 }
-void Step::import_from(const XmlElement &xml_) { MY_PARAMS_IMPORTER_AND_INITER_BY_ID }
+void Step::import_from(const juce::XmlElement &xml_) { MY_PARAMS_IMPORTER_AND_INITER_BY_ID }
 void Step::import_by_default() { import_my_params_by_default(*this); }
 
-void UIUserData::export_to(XmlElement &xml_) const
+void UIUserData::export_to(juce::XmlElement &xml_) const
 {
     MY_PARAMS_EXPORTER_AND_INITER
 
     REMOVE_IF_ELEMENT_IS_EMPTY
 }
-void UIUserData::import_from(const XmlElement &xml_) { MY_PARAMS_IMPORTER_AND_INITER }
+void UIUserData::import_from(const juce::XmlElement &xml_) { MY_PARAMS_IMPORTER_AND_INITER }
 void UIUserData::import_by_default() { import_my_params_by_default(*this); }
 
-void UIBarClipboardSettings::export_to(XmlElement &xml_) const
+void UIBarClipboardSettings::export_to(juce::XmlElement &xml_) const
 {
     MY_PARAMS_EXPORTER_AND_INITER_BY_ID
 
     REMOVE_IF_ELEMENT_IS_EMPTY
 }
-void UIBarClipboardSettings::import_from(const XmlElement &xml_)
+void UIBarClipboardSettings::import_from(const juce::XmlElement &xml_)
 {
     MY_PARAMS_IMPORTER_AND_INITER_BY_ID
 }
@@ -675,7 +685,7 @@ void UIBarClipboardSettings::import_by_default() { import_my_params_by_default(*
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-void Pattern::import_from_1_2(const XmlElement &xml)
+void Pattern::import_from_1_2(const juce::XmlElement &xml)
 {
     // clean
     import_by_default();
@@ -690,7 +700,7 @@ void Pattern::import_from_1_2(const XmlElement &xml)
     string_offset_e.set_value(xml.getIntAttribute("Pattern-ma-eOctav", string_offset_e.DEFAULT));
 
     // child prepare
-    String parent_prefix = "";
+    juce::String parent_prefix = "";
 
     for (int i = 0; i != SUM_BARS; ++i)
     {
@@ -709,7 +719,7 @@ void Pattern::import_from_1_2(const XmlElement &xml)
         bar(old_solo_bar_id).solo = true;
 }
 
-void ChordSet::import_from_1_2(const XmlElement &xml)
+void ChordSet::import_from_1_2(const juce::XmlElement &xml)
 {
     for (int i = 0; i != APPDEF_ChordSet::SUM_CHORDS; ++i)
     {
@@ -717,17 +727,17 @@ void ChordSet::import_from_1_2(const XmlElement &xml)
     }
 }
 
-void ChordSet::import_from_1_2_snapshot(const XmlElement &xml)
+void ChordSet::import_from_1_2_snapshot(const juce::XmlElement &xml)
 {
     for (int i = 0; i != APPDEF_ChordSet::SUM_CHORDS; ++i)
     {
-        XmlElement *xml_chord = xml.getChildElement(i);
+        juce::XmlElement *xml_chord = xml.getChildElement(i);
         if (xml_chord)
             chord(i).import_from_1_2_snapshot(*xml_chord);
     }
 }
 
-void Chord::import_from_1_2(const XmlElement &xml)
+void Chord::import_from_1_2(const juce::XmlElement &xml)
 {
     // OLD FORMAT
     // ChordSet0Chord-chd-strG-0="2"
@@ -737,21 +747,21 @@ void Chord::import_from_1_2(const XmlElement &xml)
     // ChordSet0Chord-chd-all-0="0"
 
     // child prepare
-    String my_prefix = "ChordSet" + String(chord_set_id);
+    juce::String my_prefix = "ChordSet" + juce::String(chord_set_id);
 
     offset_g.set_value(
-        xml.getIntAttribute(my_prefix + "Chord-chd-strG-" + String(id), offset_g.DEFAULT));
+        xml.getIntAttribute(my_prefix + "Chord-chd-strG-" + juce::String(id), offset_g.DEFAULT));
     offset_d.set_value(
-        xml.getIntAttribute(my_prefix + "Chord-chd-strD-" + String(id), offset_d.DEFAULT));
+        xml.getIntAttribute(my_prefix + "Chord-chd-strD-" + juce::String(id), offset_d.DEFAULT));
     offset_a.set_value(
-        xml.getIntAttribute(my_prefix + "Chord-chd-strA-" + String(id), offset_a.DEFAULT));
+        xml.getIntAttribute(my_prefix + "Chord-chd-strA-" + juce::String(id), offset_a.DEFAULT));
     offset_e.set_value(
-        xml.getIntAttribute(my_prefix + "Chord-chd-strE-" + String(id), offset_e.DEFAULT));
+        xml.getIntAttribute(my_prefix + "Chord-chd-strE-" + juce::String(id), offset_e.DEFAULT));
     offset_all.set_value(
-        xml.getIntAttribute(my_prefix + "Chord-chd-all-" + String(id), offset_all.DEFAULT));
+        xml.getIntAttribute(my_prefix + "Chord-chd-all-" + juce::String(id), offset_all.DEFAULT));
 }
 
-void Chord::import_from_1_2_snapshot(const XmlElement &xml)
+void Chord::import_from_1_2_snapshot(const juce::XmlElement &xml)
 {
     // OLD FORMAT
     // chd-strG-0="2"
@@ -761,14 +771,14 @@ void Chord::import_from_1_2_snapshot(const XmlElement &xml)
     // chd-all-0="0"
 
     // child prepare
-    offset_g.set_value(xml.getIntAttribute("chd-strG-" + String(id), offset_g.DEFAULT));
-    offset_d.set_value(xml.getIntAttribute("chd-strD-" + String(id), offset_d.DEFAULT));
-    offset_a.set_value(xml.getIntAttribute("chd-strA-" + String(id), offset_a.DEFAULT));
-    offset_e.set_value(xml.getIntAttribute("chd-strE-" + String(id), offset_e.DEFAULT));
-    offset_all.set_value(xml.getIntAttribute("chd-all-" + String(id), offset_all.DEFAULT));
+    offset_g.set_value(xml.getIntAttribute("chd-strG-" + juce::String(id), offset_g.DEFAULT));
+    offset_d.set_value(xml.getIntAttribute("chd-strD-" + juce::String(id), offset_d.DEFAULT));
+    offset_a.set_value(xml.getIntAttribute("chd-strA-" + juce::String(id), offset_a.DEFAULT));
+    offset_e.set_value(xml.getIntAttribute("chd-strE-" + juce::String(id), offset_e.DEFAULT));
+    offset_all.set_value(xml.getIntAttribute("chd-all-" + juce::String(id), offset_all.DEFAULT));
 }
 
-void Bar::import_from_1_2(const XmlElement &xml, String &parent_prefix_)
+void Bar::import_from_1_2(const juce::XmlElement &xml, juce::String &parent_prefix_)
 {
     // OLD FORMAT
     // Bar-bar-rpts-0="1"
@@ -777,14 +787,14 @@ void Bar::import_from_1_2(const XmlElement &xml, String &parent_prefix_)
     // Bar-bar-mChain-0="0"
 
     // my importer
-    repeats.set_value(xml.getIntAttribute("Bar-bar-rpts-" + String(id), repeats.DEFAULT));
+    repeats.set_value(xml.getIntAttribute("Bar-bar-rpts-" + juce::String(id), repeats.DEFAULT));
     octave_offset.set_value(
-        xml.getIntAttribute("Bar-bar-octv-" + String(id), octave_offset.DEFAULT));
-    chord_id.set_value(xml.getIntAttribute("Bar-bar-chrd-" + String(id), chord_id.DEFAULT));
-    mute.set_value(xml.getIntAttribute("Bar-bar-mChain-" + String(id), mute.DEFAULT));
+        xml.getIntAttribute("Bar-bar-octv-" + juce::String(id), octave_offset.DEFAULT));
+    chord_id.set_value(xml.getIntAttribute("Bar-bar-chrd-" + juce::String(id), chord_id.DEFAULT));
+    mute.set_value(xml.getIntAttribute("Bar-bar-mChain-" + juce::String(id), mute.DEFAULT));
 
     // child import
-    String my_prefix = parent_prefix_ + "Bar" + String(id);
+    juce::String my_prefix = parent_prefix_ + "Bar" + juce::String(id);
     for (int i = 0; i != SUM_STRINGS; ++i)
     {
         barstring(i).import_from_1_2(xml, my_prefix);
@@ -795,17 +805,19 @@ void Bar::import_from_1_2(const XmlElement &xml, String &parent_prefix_)
     }
 }
 
-void BarStep::import_from_1_2(const XmlElement &xml, String &parent_prefix_)
+void BarStep::import_from_1_2(const juce::XmlElement &xml, juce::String &parent_prefix_)
 {
     // OLD FORMAT
     // Bar0BarStep-stp-velo-0="114"
     // Bar0BarStep-stp-dura-0="8"
 
-    velocity.set_value(xml.getIntAttribute(
-        parent_prefix_ + String("BarStep") + "-stp-velo-" + String(id), velocity.DEFAULT));
+    velocity.set_value(xml.getIntAttribute(parent_prefix_ + juce::String("BarStep") + "-stp-velo-" +
+                                               juce::String(id),
+                                           velocity.DEFAULT));
 
-    int old_duration = xml.getIntAttribute(
-        parent_prefix_ + String("BarStep") + "-stp-dura-" + String(id), duration.DEFAULT);
+    int old_duration = xml.getIntAttribute(parent_prefix_ + juce::String("BarStep") + "-stp-dura-" +
+                                               juce::String(id),
+                                           duration.DEFAULT);
     switch (old_duration)
     {
     case 1:
@@ -861,28 +873,28 @@ void BarStep::import_from_1_2(const XmlElement &xml, String &parent_prefix_)
     }
 }
 
-void Barstring::import_from_1_2(const XmlElement &xml, String &parent_prefix_)
+void Barstring::import_from_1_2(const juce::XmlElement &xml, juce::String &parent_prefix_)
 {
     // OLD FORMAT
     // Bar0Barstring-str-octv-0="0"
 
-    String my_prefix = parent_prefix_ + "Barstring";
+    juce::String my_prefix = parent_prefix_ + "Barstring";
 
     // my importer
     octave_offset.set_value(
-        xml.getIntAttribute(my_prefix + "-str-octv-" + String(id), octave_offset.DEFAULT));
+        xml.getIntAttribute(my_prefix + "-str-octv-" + juce::String(id), octave_offset.DEFAULT));
 
-    my_prefix += String(id);
+    my_prefix += juce::String(id);
     for (int i = 0; i != SUM_STEPS; ++i)
     {
         step(i).import_from_1_2(xml, my_prefix);
     }
 }
 
-void Step::import_from_1_2(const XmlElement &xml, String &parent_prefix_)
+void Step::import_from_1_2(const juce::XmlElement &xml, juce::String &parent_prefix_)
 {
     // OLD FORMAT
     // Bar0Barstring0Step-stp-mute-0="1"
     is_mute.set_value(
-        xml.getIntAttribute(parent_prefix_ + "Step-stp-mute-" + String(id), is_mute.DEFAULT));
+        xml.getIntAttribute(parent_prefix_ + "Step-stp-mute-" + juce::String(id), is_mute.DEFAULT));
 }

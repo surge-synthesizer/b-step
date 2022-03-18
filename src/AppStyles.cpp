@@ -12,22 +12,22 @@
 #include "App.h"
 #include "AppInstanceStore.h"
 
-uint32 &AppStyle::get_background_color() { return default_colour; }
-uint32 &AppStyle::get_foreground_color() { return default_colour; }
-uint32 &AppStyle::get_border_color() { return default_colour; }
-uint32 &AppStyle::get_button_border_color() { return button_border_color; }
-uint32 &AppStyle::get_font_color() { return default_colour; }
-uint32 &AppStyle::get_element_border_color() { return default_colour; }
-uint32 &AppStyle::get_slider_knob_color() { return default_colour; }
-uint32 &AppStyle::get_slider_outline_color() { return default_colour; }
-uint32 &AppStyle::get_state_on_1_color() { return default_colour; }
-uint32 &AppStyle::get_state_on_2_color() { return default_colour; }
-uint32 &AppStyle::get_state_off_1_color() { return default_colour; }
-uint32 &AppStyle::get_state_off_2_color() { return default_colour; }
+std::uint32_t &AppStyle::get_background_color() { return default_colour; }
+std::uint32_t &AppStyle::get_foreground_color() { return default_colour; }
+std::uint32_t &AppStyle::get_border_color() { return default_colour; }
+std::uint32_t &AppStyle::get_button_border_color() { return button_border_color; }
+std::uint32_t &AppStyle::get_font_color() { return default_colour; }
+std::uint32_t &AppStyle::get_element_border_color() { return default_colour; }
+std::uint32_t &AppStyle::get_slider_knob_color() { return default_colour; }
+std::uint32_t &AppStyle::get_slider_outline_color() { return default_colour; }
+std::uint32_t &AppStyle::get_state_on_1_color() { return default_colour; }
+std::uint32_t &AppStyle::get_state_on_2_color() { return default_colour; }
+std::uint32_t &AppStyle::get_state_off_1_color() { return default_colour; }
+std::uint32_t &AppStyle::get_state_off_2_color() { return default_colour; }
 bool AppStyle::is_opaque() const { return false; }
 bool AppStyle::is_wrapper_opaque() const { return false; }
-const Font &AppStyle::get_font() const { return _font; }
-void AppStyle::set_font(Font font_) { _font = font_; }
+const juce::Font &AppStyle::get_font() const { return _font; }
+void AppStyle::set_font(juce::Font font_) { _font = font_; }
 
 AppStyle::AppStyle() : default_colour(0xff000000), button_border_color(0xff111111) {}
 
@@ -93,20 +93,21 @@ ColorTheme::ColorTheme()
 {
     BOOT(ColorTheme);
 
-    main_border = Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR).darker(0.5).getARGB();
-    main_bg = Colour(0xFF412d21).darker(0.4).getARGB();
+    main_border =
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR).darker(0.5).getARGB();
+    main_bg = juce::Colour(0xFF412d21).darker(0.4).getARGB();
 
     step_area_border = GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR; //
     step_area_bg = 0xFF412d21;
 
     bar_area_border =
-        Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR).darker(0.2).getARGB();
-    bar_area_bg = Colour(step_area_bg).darker(0.6).getARGB();
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR).darker(0.2).getARGB();
+    bar_area_bg = juce::Colour(step_area_bg).darker(0.6).getARGB();
 
     elem_color_1 = 0xFFd0222d;
     elem_color_2 = 0xFF000000;
     elem_color_3 = elem_color_1;
-    elem_color_4 = Colour(step_area_bg).darker(0.6).getARGB();
+    elem_color_4 = juce::Colour(step_area_bg).darker(0.6).getARGB();
     elem_color_5 = 0xFFc9a376;
     elem_color_6 = 0xFFf98120;
     elem_color_7 = 0xFFff7f2b;
@@ -114,13 +115,13 @@ ColorTheme::ColorTheme()
     elem_color_9 = 0xFF4dadb1; // 0xff00c0c8;
     elem_color_10 = GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR;
 
-    main_step_bg = Colour(main_bg).darker(0.6).getARGB();
-    bar_step_bg = Colour(bar_area_bg).darker(0.6).getARGB();
-    step_step_bg = Colour(step_area_bg).darker(0.6).getARGB();
+    main_step_bg = juce::Colour(main_bg).darker(0.6).getARGB();
+    bar_step_bg = juce::Colour(bar_area_bg).darker(0.6).getARGB();
+    step_step_bg = juce::Colour(step_area_bg).darker(0.6).getARGB();
 
-    main_step_border = Colour(main_bg).darker(0.9).getARGB();
-    bar_step_border = Colour(bar_area_bg).darker(0.9).getARGB();
-    step_step_border = Colour(step_area_bg).darker(0.9).getARGB();
+    main_step_border = juce::Colour(main_bg).darker(0.9).getARGB();
+    bar_step_border = juce::Colour(bar_area_bg).darker(0.9).getARGB();
+    step_step_border = juce::Colour(step_area_bg).darker(0.9).getARGB();
 
     slider_knob_color = 0xff000000;
     slider_outline = 0xff141414;
@@ -156,10 +157,10 @@ ColorTheme::ColorTheme()
     color_list.add(&GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR);
 }
 
-void AppStyle::paint_outline_label(Graphics &g_, const Component &owner_, const String &text_,
-                                   AppStyle *const style_, const Justification justification_,
-                                   float x_, float y_, float w_, float h_,
-                                   bool heigh_else_with_prop)
+void AppStyle::paint_outline_label(juce::Graphics &g_, const juce::Component &owner_,
+                                   const juce::String &text_, AppStyle *const style_,
+                                   const juce::Justification justification_, float x_, float y_,
+                                   float w_, float h_, bool heigh_else_with_prop)
 {
     if (style_)
     {
@@ -188,28 +189,28 @@ void AppStyle::paint_outline_label(Graphics &g_, const Component &owner_, const 
 
         g_.drawImageAt(shadow_free, 0, 0);
 #else
-        Path text_path;
-        GlyphArrangement glyphs;
+        juce::Path text_path;
+        juce::GlyphArrangement glyphs;
         glyphs.addFittedText(style_->get_font().withHeight(prop * style_->get_font().getHeight()),
                              text_, owner_.proportionOfWidth(x_), owner_.proportionOfHeight(y_),
                              owner_.proportionOfWidth(w_), owner_.proportionOfHeight(h_),
                              justification_, 6, 0.3);
         glyphs.createPath(text_path);
 
-        g_.setColour(Colour(style_->get_slider_outline_color()));
-        PathStrokeType stroke_type(2 * prop);
+        g_.setColour(juce::Colour(style_->get_slider_outline_color()));
+        juce::PathStrokeType stroke_type(2 * prop);
         g_.strokePath(text_path, stroke_type);
 
-        g_.setColour(Colour(style_->get_font_color()));
+        g_.setColour(juce::Colour(style_->get_font_color()));
         g_.fillPath(text_path);
 #endif
     }
 }
 
-void ColorTheme::set_theme(String color_list_)
+void ColorTheme::set_theme(juce::String color_list_)
 {
     bool still_comma_inside = true;
-    String comma(",");
+    juce::String comma(",");
     int counter = 0;
     while (still_comma_inside)
     {
@@ -225,7 +226,7 @@ void ColorTheme::set_theme(String color_list_)
         {
             // Colour col( Colour::fromString( colour_list.substring(0,comma_poition) ) );
             *color_list.getUnchecked(counter) =
-                Colour::fromString(color_list_.substring(0, comma_poition)).getARGB();
+                juce::Colour::fromString(color_list_.substring(0, comma_poition)).getARGB();
             color_list_ = color_list_.substring(comma_poition + 1);
         }
 
@@ -236,15 +237,17 @@ void ColorTheme::set_theme(String color_list_)
         }
     }
 }
-const String ColorTheme::get_color_list() const
+const juce::String ColorTheme::get_color_list() const
 {
-    String color_list_string;
+    juce::String color_list_string;
     for (int i = 0; i != color_list.size(); ++i)
     {
-        color_list_string += Colour(*color_list.getUnchecked(i)).toString() + String(",");
+        color_list_string +=
+            juce::Colour(*color_list.getUnchecked(i)).toString() + juce::String(",");
     }
     color_list_string +=
-        Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR).toString() + String(",");
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR).toString() +
+        juce::String(",");
 
     return color_list_string;
 }

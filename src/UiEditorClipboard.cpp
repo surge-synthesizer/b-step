@@ -34,29 +34,29 @@
 void UiEditorClipboard::reload_ui()
 {
     toggle_copy_steps->setToggleState(_bar_copy_clipboard.is_copy_steps,
-                                      NotificationType::dontSendNotification);
+                                      juce::NotificationType::dontSendNotification);
     toggle_copy_string_octave->setToggleState(_bar_copy_clipboard.is_copy_string_octave,
-                                              NotificationType::dontSendNotification);
+                                              juce::NotificationType::dontSendNotification);
     toggle_copy_step_velocity->setToggleState(_bar_copy_clipboard.is_copy_step_velocity,
-                                              NotificationType::dontSendNotification);
+                                              juce::NotificationType::dontSendNotification);
     toggle_copy_step_duration->setToggleState(_bar_copy_clipboard.is_copy_step_duration,
-                                              NotificationType::dontSendNotification);
+                                              juce::NotificationType::dontSendNotification);
     toggle_copy_bar_groups->setToggleState(_bar_copy_clipboard.is_copy_bar_groups,
-                                           NotificationType::dontSendNotification);
+                                           juce::NotificationType::dontSendNotification);
     toggle_copy_bar_solo->setToggleState(_bar_copy_clipboard.is_copy_bar_solo,
-                                         NotificationType::dontSendNotification);
+                                         juce::NotificationType::dontSendNotification);
     toggle_copy_layer_1->setToggleState(_bar_copy_clipboard.is_copy_layer_1,
-                                        NotificationType::dontSendNotification);
+                                        juce::NotificationType::dontSendNotification);
     toggle_copy_layer_2->setToggleState(_bar_copy_clipboard.is_copy_layer_2,
-                                        NotificationType::dontSendNotification);
+                                        juce::NotificationType::dontSendNotification);
     toggle_copy_layer_3->setToggleState(_bar_copy_clipboard.is_copy_layer_3,
-                                        NotificationType::dontSendNotification);
+                                        juce::NotificationType::dontSendNotification);
     toggle_copy_layer_4->setToggleState(_bar_copy_clipboard.is_copy_layer_4,
-                                        NotificationType::dontSendNotification);
+                                        juce::NotificationType::dontSendNotification);
     toggle_copy_layer_5_6->setToggleState(_bar_copy_clipboard.is_copy_layer_5,
-                                          NotificationType::dontSendNotification);
+                                          juce::NotificationType::dontSendNotification);
     toggle_copy_layer_7->setToggleState(_bar_copy_clipboard.is_copy_layer_7,
-                                        NotificationType::dontSendNotification);
+                                        juce::NotificationType::dontSendNotification);
 }
 void UiEditorClipboard::timerCallback() { reload_ui(); }
 
@@ -75,7 +75,7 @@ void UiEditorClipboard::on_close_clicked()
     _app_instance_store->editor_config.clipboard_editor = nullptr;
 }
 
-void UiEditorClipboard::textEditorTextChanged(TextEditor &editor_)
+void UiEditorClipboard::textEditorTextChanged(juce::TextEditor &editor_)
 {
     _bar_copy_clipboard.stored_bar_source_ident = editor_.getText();
 }
@@ -84,209 +84,219 @@ void UiEditorClipboard::textEditorTextChanged(TextEditor &editor_)
 
 //==============================================================================
 UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_,
-                                     uint8 clipboard_id_)
+                                     std::uint8_t clipboard_id_)
     : UiEditor("B-Snapshot"), _app_instance_store(app_instance_store_),
       _clipboard_id(clipboard_id_),
       _bar_copy_clipboard(*_app_instance_store->bar_copy_clipboards.getUnchecked(_clipboard_id))
 {
-    addAndMakeVisible(newComponent = new Label(String(), TRANS("Copy Steps")));
-    newComponent->setFont(Font(15.00f, Font::plain));
-    newComponent->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(newComponent = new juce::Label(juce::String(), TRANS("Copy Steps")));
+    newComponent->setFont(juce::Font(15.00f, juce::Font::plain));
+    newComponent->setJustificationType(juce::Justification::centredLeft);
     newComponent->setEditable(false, false, false);
-    newComponent->setColour(Label::textColourId,
-                            Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    newComponent->setColour(TextEditor::textColourId, Colours::black);
-    newComponent->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    newComponent->setColour(juce::Label::textColourId,
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    newComponent->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    newComponent->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_copy_steps = new ToggleButton(String()));
+    addAndMakeVisible(toggle_copy_steps = new juce::ToggleButton(juce::String()));
     toggle_copy_steps->addListener(this);
 
     addAndMakeVisible(toolbar = new UiEditorToolbar(this));
 
-    addAndMakeVisible(newComponent15 = new Label(String(), TRANS("Copy Step Duration")));
-    newComponent15->setFont(Font(15.00f, Font::plain));
-    newComponent15->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(newComponent15 =
+                          new juce::Label(juce::String(), TRANS("Copy Step Duration")));
+    newComponent15->setFont(juce::Font(15.00f, juce::Font::plain));
+    newComponent15->setJustificationType(juce::Justification::centredLeft);
     newComponent15->setEditable(false, false, false);
-    newComponent15->setColour(Label::textColourId,
-                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    newComponent15->setColour(TextEditor::textColourId, Colours::black);
-    newComponent15->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    newComponent15->setColour(juce::Label::textColourId,
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    newComponent15->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    newComponent15->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent14 = new Label(String(), TRANS("Copy Step Velocity\n")));
-    newComponent14->setFont(Font(15.00f, Font::plain));
-    newComponent14->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(newComponent14 =
+                          new juce::Label(juce::String(), TRANS("Copy Step Velocity\n")));
+    newComponent14->setFont(juce::Font(15.00f, juce::Font::plain));
+    newComponent14->setJustificationType(juce::Justification::centredLeft);
     newComponent14->setEditable(false, false, false);
-    newComponent14->setColour(Label::textColourId,
-                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    newComponent14->setColour(TextEditor::textColourId, Colours::black);
-    newComponent14->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    newComponent14->setColour(juce::Label::textColourId,
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    newComponent14->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    newComponent14->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent13 = new Label(String(), TRANS("Copy Sequence#")));
-    newComponent13->setFont(Font(15.00f, Font::plain));
-    newComponent13->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(newComponent13 = new juce::Label(juce::String(), TRANS("Copy Sequence#")));
+    newComponent13->setFont(juce::Font(15.00f, juce::Font::plain));
+    newComponent13->setJustificationType(juce::Justification::centredLeft);
     newComponent13->setEditable(false, false, false);
-    newComponent13->setColour(Label::textColourId,
-                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    newComponent13->setColour(TextEditor::textColourId, Colours::black);
-    newComponent13->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    newComponent13->setColour(juce::Label::textColourId,
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    newComponent13->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    newComponent13->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent12 = new Label(String(), TRANS("Copy Bar Solo\n")));
-    newComponent12->setFont(Font(15.00f, Font::plain));
-    newComponent12->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(newComponent12 = new juce::Label(juce::String(), TRANS("Copy Bar Solo\n")));
+    newComponent12->setFont(juce::Font(15.00f, juce::Font::plain));
+    newComponent12->setJustificationType(juce::Justification::centredLeft);
     newComponent12->setEditable(false, false, false);
-    newComponent12->setColour(Label::textColourId,
-                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    newComponent12->setColour(TextEditor::textColourId, Colours::black);
-    newComponent12->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    newComponent12->setColour(juce::Label::textColourId,
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    newComponent12->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    newComponent12->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent11 = new Label(String(), TRANS("Copy String Octave")));
-    newComponent11->setFont(Font(15.00f, Font::plain));
-    newComponent11->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(newComponent11 =
+                          new juce::Label(juce::String(), TRANS("Copy String Octave")));
+    newComponent11->setFont(juce::Font(15.00f, juce::Font::plain));
+    newComponent11->setJustificationType(juce::Justification::centredLeft);
     newComponent11->setEditable(false, false, false);
-    newComponent11->setColour(Label::textColourId,
-                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    newComponent11->setColour(TextEditor::textColourId, Colours::black);
-    newComponent11->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    newComponent11->setColour(juce::Label::textColourId,
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    newComponent11->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    newComponent11->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent9 = new Label(String(), TRANS("Copy CC Layer Data (CC)")));
-    newComponent9->setFont(Font(15.00f, Font::plain));
-    newComponent9->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(newComponent9 =
+                          new juce::Label(juce::String(), TRANS("Copy CC Layer Data (CC)")));
+    newComponent9->setFont(juce::Font(15.00f, juce::Font::plain));
+    newComponent9->setJustificationType(juce::Justification::centredLeft);
     newComponent9->setEditable(false, false, false);
-    newComponent9->setColour(Label::textColourId,
-                             Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    newComponent9->setColour(TextEditor::textColourId, Colours::black);
-    newComponent9->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    newComponent9->setColour(juce::Label::textColourId,
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    newComponent9->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    newComponent9->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent8 =
-                          new Label(String(), TRANS("Copy Ratcheting Layer Data (REP1+REP2)")));
-    newComponent8->setFont(Font(15.00f, Font::plain));
-    newComponent8->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(newComponent8 = new juce::Label(
+                          juce::String(), TRANS("Copy Ratcheting Layer Data (REP1+REP2)")));
+    newComponent8->setFont(juce::Font(15.00f, juce::Font::plain));
+    newComponent8->setJustificationType(juce::Justification::centredLeft);
     newComponent8->setEditable(false, false, false);
-    newComponent8->setColour(Label::textColourId,
-                             Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    newComponent8->setColour(TextEditor::textColourId, Colours::black);
-    newComponent8->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    newComponent8->setColour(juce::Label::textColourId,
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    newComponent8->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    newComponent8->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent7 = new Label(String(), TRANS("Copy Bar Layer Data (BAR)")));
-    newComponent7->setFont(Font(15.00f, Font::plain));
-    newComponent7->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(newComponent7 =
+                          new juce::Label(juce::String(), TRANS("Copy Bar Layer Data (BAR)")));
+    newComponent7->setFont(juce::Font(15.00f, juce::Font::plain));
+    newComponent7->setJustificationType(juce::Justification::centredLeft);
     newComponent7->setEditable(false, false, false);
-    newComponent7->setColour(Label::textColourId,
-                             Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    newComponent7->setColour(TextEditor::textColourId, Colours::black);
-    newComponent7->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    newComponent7->setColour(juce::Label::textColourId,
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    newComponent7->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    newComponent7->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent6 = new Label(String(), TRANS("Copy Step Layer Data (STEP)")));
-    newComponent6->setFont(Font(15.00f, Font::plain));
-    newComponent6->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(newComponent6 =
+                          new juce::Label(juce::String(), TRANS("Copy Step Layer Data (STEP)")));
+    newComponent6->setFont(juce::Font(15.00f, juce::Font::plain));
+    newComponent6->setJustificationType(juce::Justification::centredLeft);
     newComponent6->setEditable(false, false, false);
-    newComponent6->setColour(Label::textColourId,
-                             Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    newComponent6->setColour(TextEditor::textColourId, Colours::black);
-    newComponent6->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    newComponent6->setColour(juce::Label::textColourId,
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    newComponent6->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    newComponent6->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent4 =
-                          new Label(String(), TRANS("Copy Sequence Layer Data (SEQ#)")));
-    newComponent4->setFont(Font(15.00f, Font::plain));
-    newComponent4->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(
+        newComponent4 = new juce::Label(juce::String(), TRANS("Copy Sequence Layer Data (SEQ#)")));
+    newComponent4->setFont(juce::Font(15.00f, juce::Font::plain));
+    newComponent4->setJustificationType(juce::Justification::centredLeft);
     newComponent4->setEditable(false, false, false);
-    newComponent4->setColour(Label::textColourId,
-                             Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    newComponent4->setColour(TextEditor::textColourId, Colours::black);
-    newComponent4->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    newComponent4->setColour(juce::Label::textColourId,
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    newComponent4->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    newComponent4->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent3 = new Label(String(), TRANS("Copy Main Layer Data (MAIN)")));
-    newComponent3->setFont(Font(15.00f, Font::plain));
-    newComponent3->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(newComponent3 =
+                          new juce::Label(juce::String(), TRANS("Copy Main Layer Data (MAIN)")));
+    newComponent3->setFont(juce::Font(15.00f, juce::Font::plain));
+    newComponent3->setJustificationType(juce::Justification::centredLeft);
     newComponent3->setEditable(false, false, false);
-    newComponent3->setColour(Label::textColourId,
-                             Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    newComponent3->setColour(TextEditor::textColourId, Colours::black);
-    newComponent3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    newComponent3->setColour(juce::Label::textColourId,
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    newComponent3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    newComponent3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent10 = new Label(String(), TRANS("SELECT/UNSELECT ALL")));
-    newComponent10->setFont(Font(15.00f, Font::plain));
-    newComponent10->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(newComponent10 =
+                          new juce::Label(juce::String(), TRANS("SELECT/UNSELECT ALL")));
+    newComponent10->setFont(juce::Font(15.00f, juce::Font::plain));
+    newComponent10->setJustificationType(juce::Justification::centredLeft);
     newComponent10->setEditable(false, false, false);
-    newComponent10->setColour(Label::textColourId,
-                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    newComponent10->setColour(TextEditor::textColourId, Colours::black);
-    newComponent10->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    newComponent10->setColour(juce::Label::textColourId,
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    newComponent10->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    newComponent10->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_select_all = new ToggleButton(String()));
+    addAndMakeVisible(toggle_select_all = new juce::ToggleButton(juce::String()));
     toggle_select_all->addListener(this);
 
-    addAndMakeVisible(toggle_copy_layer_7 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_copy_layer_7 = new juce::ToggleButton(juce::String()));
     toggle_copy_layer_7->addListener(this);
 
-    addAndMakeVisible(toggle_copy_layer_5_6 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_copy_layer_5_6 = new juce::ToggleButton(juce::String()));
     toggle_copy_layer_5_6->addListener(this);
 
-    addAndMakeVisible(toggle_copy_layer_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_copy_layer_4 = new juce::ToggleButton(juce::String()));
     toggle_copy_layer_4->addListener(this);
 
-    addAndMakeVisible(toggle_copy_layer_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_copy_layer_3 = new juce::ToggleButton(juce::String()));
     toggle_copy_layer_3->addListener(this);
 
-    addAndMakeVisible(toggle_copy_layer_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_copy_layer_2 = new juce::ToggleButton(juce::String()));
     toggle_copy_layer_2->addListener(this);
 
-    addAndMakeVisible(toggle_copy_layer_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_copy_layer_1 = new juce::ToggleButton(juce::String()));
     toggle_copy_layer_1->addListener(this);
 
-    addAndMakeVisible(toggle_copy_bar_groups = new ToggleButton(String()));
+    addAndMakeVisible(toggle_copy_bar_groups = new juce::ToggleButton(juce::String()));
     toggle_copy_bar_groups->addListener(this);
 
-    addAndMakeVisible(toggle_copy_bar_solo = new ToggleButton(String()));
+    addAndMakeVisible(toggle_copy_bar_solo = new juce::ToggleButton(juce::String()));
     toggle_copy_bar_solo->addListener(this);
 
-    addAndMakeVisible(toggle_copy_step_duration = new ToggleButton(String()));
+    addAndMakeVisible(toggle_copy_step_duration = new juce::ToggleButton(juce::String()));
     toggle_copy_step_duration->addListener(this);
 
-    addAndMakeVisible(toggle_copy_step_velocity = new ToggleButton(String()));
+    addAndMakeVisible(toggle_copy_step_velocity = new juce::ToggleButton(juce::String()));
     toggle_copy_step_velocity->addListener(this);
 
-    addAndMakeVisible(toggle_copy_string_octave = new ToggleButton(String()));
+    addAndMakeVisible(toggle_copy_string_octave = new juce::ToggleButton(juce::String()));
     toggle_copy_string_octave->addListener(this);
 
-    addAndMakeVisible(newComponent2 = new Label(String(), TRANS("Copy Back to Bar Options")));
-    newComponent2->setFont(Font(15.00f, Font::plain));
-    newComponent2->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(newComponent2 =
+                          new juce::Label(juce::String(), TRANS("Copy Back to Bar Options")));
+    newComponent2->setFont(juce::Font(15.00f, juce::Font::plain));
+    newComponent2->setJustificationType(juce::Justification::centredLeft);
     newComponent2->setEditable(false, false, false);
-    newComponent2->setColour(Label::textColourId,
-                             Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    newComponent2->setColour(TextEditor::textColourId, Colours::black);
-    newComponent2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    newComponent2->setColour(juce::Label::textColourId,
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    newComponent2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    newComponent2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent5 = new Label(String(), TRANS("Bar Snapshot Info :: 1")));
-    newComponent5->setFont(Font(15.00f, Font::plain));
-    newComponent5->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(newComponent5 =
+                          new juce::Label(juce::String(), TRANS("Bar Snapshot Info :: 1")));
+    newComponent5->setFont(juce::Font(15.00f, juce::Font::plain));
+    newComponent5->setJustificationType(juce::Justification::centredLeft);
     newComponent5->setEditable(false, false, false);
-    newComponent5->setColour(Label::textColourId,
-                             Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    newComponent5->setColour(TextEditor::textColourId, Colours::black);
-    newComponent5->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    newComponent5->setColour(juce::Label::textColourId,
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    newComponent5->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    newComponent5->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label = new Label(String(), String()));
-    label->setFont(Font(15.00f, Font::plain));
-    label->setJustificationType(Justification::centred);
+    addAndMakeVisible(label = new juce::Label(juce::String(), juce::String()));
+    label->setFont(juce::Font(15.00f, juce::Font::plain));
+    label->setJustificationType(juce::Justification::centred);
     label->setEditable(true, true, true);
-    label->setColour(Label::textColourId,
-                     Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label->setColour(Label::outlineColourId,
-                     Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label->setColour(TextEditor::textColourId, Colours::aqua);
-    label->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
-    label->setColour(TextEditor::highlightColourId, Colours::yellow);
+    label->setColour(juce::Label::textColourId,
+                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label->setColour(juce::Label::outlineColourId,
+                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label->setColour(juce::TextEditor::textColourId, juce::Colours::aqua);
+    label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
+    label->setColour(juce::TextEditor::highlightColourId, juce::Colours::yellow);
     label->addListener(this);
 
-    addAndMakeVisible(button_info = new TextButton(String()));
+    addAndMakeVisible(button_info = new juce::TextButton(juce::String()));
     button_info->setButtonText(TRANS("?"));
     button_info->addListener(this);
 
     //[UserPreSize]
-    newComponent5->setText(String("Bar Snapshot Info :: ").operator+=(_clipboard_id + 1),
-                           dontSendNotification);
+    newComponent5->setText(juce::String("Bar Snapshot Info :: ").operator+=(_clipboard_id + 1),
+                           juce::dontSendNotification);
     reload_ui();
     //[/UserPreSize]
 
@@ -299,7 +309,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     label->addListener(this);
 
     label->setText(_bar_copy_clipboard.stored_bar_source_ident,
-                   NotificationType::dontSendNotification);
+                   juce::NotificationType::dontSendNotification);
 
     startTimer(40);
     //[/Constructor]
@@ -308,7 +318,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
 UiEditorClipboard::~UiEditorClipboard()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
-    _app_instance_store->editor_config.XY_clipboard_editor = Point<int>(getX(), getY());
+    _app_instance_store->editor_config.XY_clipboard_editor = juce::Point<int>(getX(), getY());
     //[/Destructor_pre]
 
     newComponent = nullptr;
@@ -348,19 +358,19 @@ UiEditorClipboard::~UiEditorClipboard()
 }
 
 //==============================================================================
-void UiEditorClipboard::paint(Graphics &g)
+void UiEditorClipboard::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.setColour(Colour(0xff161616));
+    g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
     //[UserPaint] Add your own custom painting code here..
-    ResizableWindow::moved();
+    juce::ResizableWindow::moved();
     //[/UserPaint]
 }
 
@@ -432,11 +442,11 @@ void UiEditorClipboard::resized()
     button_info->setBounds(proportionOfWidth(0.8806f), proportionOfHeight(0.3597f),
                            proportionOfWidth(0.0833f), proportionOfHeight(0.0526f));
     //[UserResized] Add your own custom resize handling here..
-    ResizableWindow::resized();
+    juce::ResizableWindow::resized();
     //[/UserResized]
 }
 
-void UiEditorClipboard::buttonClicked(Button *buttonThatWasClicked)
+void UiEditorClipboard::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -451,29 +461,29 @@ void UiEditorClipboard::buttonClicked(Button *buttonThatWasClicked)
     {
         //[UserButtonCode_toggle_select_all] -- add your button handler code here..
         toggle_copy_steps->setToggleState(buttonThatWasClicked->getToggleState(),
-                                          NotificationType::sendNotification);
+                                          juce::NotificationType::sendNotification);
         toggle_copy_layer_1->setToggleState(buttonThatWasClicked->getToggleState(),
-                                            NotificationType::sendNotification);
+                                            juce::NotificationType::sendNotification);
         toggle_copy_layer_2->setToggleState(buttonThatWasClicked->getToggleState(),
-                                            NotificationType::sendNotification);
+                                            juce::NotificationType::sendNotification);
         toggle_copy_layer_3->setToggleState(buttonThatWasClicked->getToggleState(),
-                                            NotificationType::sendNotification);
+                                            juce::NotificationType::sendNotification);
         toggle_copy_layer_4->setToggleState(buttonThatWasClicked->getToggleState(),
-                                            NotificationType::sendNotification);
+                                            juce::NotificationType::sendNotification);
         toggle_copy_layer_5_6->setToggleState(buttonThatWasClicked->getToggleState(),
-                                              NotificationType::sendNotification);
+                                              juce::NotificationType::sendNotification);
         toggle_copy_layer_7->setToggleState(buttonThatWasClicked->getToggleState(),
-                                            NotificationType::sendNotification);
+                                            juce::NotificationType::sendNotification);
         toggle_copy_string_octave->setToggleState(buttonThatWasClicked->getToggleState(),
-                                                  NotificationType::sendNotification);
+                                                  juce::NotificationType::sendNotification);
         toggle_copy_bar_solo->setToggleState(buttonThatWasClicked->getToggleState(),
-                                             NotificationType::sendNotification);
+                                             juce::NotificationType::sendNotification);
         toggle_copy_bar_groups->setToggleState(buttonThatWasClicked->getToggleState(),
-                                               NotificationType::sendNotification);
+                                               juce::NotificationType::sendNotification);
         toggle_copy_step_velocity->setToggleState(buttonThatWasClicked->getToggleState(),
-                                                  NotificationType::sendNotification);
+                                                  juce::NotificationType::sendNotification);
         toggle_copy_step_duration->setToggleState(buttonThatWasClicked->getToggleState(),
-                                                  NotificationType::sendNotification);
+                                                  juce::NotificationType::sendNotification);
         //[/UserButtonCode_toggle_select_all]
     }
     else if (buttonThatWasClicked == toggle_copy_layer_7)
@@ -558,7 +568,7 @@ void UiEditorClipboard::buttonClicked(Button *buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiEditorClipboard::labelTextChanged(Label *labelThatHasChanged)
+void UiEditorClipboard::labelTextChanged(juce::Label *labelThatHasChanged)
 {
     //[UserlabelTextChanged_Pre]
     //[/UserlabelTextChanged_Pre]
@@ -587,7 +597,7 @@ BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="UiEditorClipboard" componentName=""
                  parentClasses="public UiEditor, public Timer, public TextEditor::Listener"
-                 constructorParams="AppInstanceStore* const app_instance_store_, uint8 clipboard_id_"
+                 constructorParams="AppInstanceStore* const app_instance_store_, std::uint8_t clipboard_id_"
                  variableInitialisers="UiEditor(&quot;B-Snapshot&quot;),_app_instance_store(app_instance_store_),&#10;_clipboard_id(clipboard_id_),&#10;_bar_copy_clipboard(*_app_instance_store-&gt;bar_copy_clipboards.getUnchecked(_clipboard_id ))"
                  snapPixels="5" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="1" initialWidth="360" initialHeight="570">

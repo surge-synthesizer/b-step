@@ -13,6 +13,7 @@
 
 #include "App.h"
 #include "MIDIIO.h"
+#include <juce_audio_basics/juce_audio_basics.h>
 
 /**
  * A QUICK AND DIRTY INTRO
@@ -51,10 +52,10 @@ class Launchpad : public MIDIInListener
     AppInstanceStore *const _app_instance_store;
 
   public:
-    uint8 id;
+    std::uint8_t id;
 
   private:
-    uint8 _current_scroll_offset; // on wich row we are?
+    std::uint8_t _current_scroll_offset; // on wich row we are?
 
     enum CONSTS
     {
@@ -88,8 +89,8 @@ class Launchpad : public MIDIInListener
 
         // PROPERTIES
       public:
-        int8 cache_launchpad_controller_value;
-        MidiMessage message;
+        std::int8_t cache_launchpad_controller_value;
+        juce::MidiMessage message;
         bool is_pressed;
 
         // --------------------------------------------------------------------------------------------
@@ -98,32 +99,35 @@ class Launchpad : public MIDIInListener
 
         //// CTORS
       public:
-        Button(uint8 hard_button_note_number_, int8);
+        Button(std::uint8_t hard_button_note_number_, std::int8_t);
     };
 
     // ************************************************************************************************
     struct ButtonRight : public Button
     {
         bool is_pressed;
-        ButtonRight(uint8 hard_button_note_number_, int8);
+        ButtonRight(std::uint8_t hard_button_note_number_, std::int8_t);
     };
 
     // ************************************************************************************************
     struct ButtonTop : public Button
     {
-        ButtonTop(uint8 hard_button_note_number_, int8);
+        ButtonTop(std::uint8_t hard_button_note_number_, std::int8_t);
     };
 
-    void process_colormessage_for_button(uint8 color_, uint8 channel_, Launchpad::Button &button_,
-                                         Array<MidiMessage *> &messages_, bool force_ = false);
+    void process_colormessage_for_button(std::uint8_t color_, std::uint8_t channel_,
+                                         Launchpad::Button &button_,
+                                         juce::Array<juce::MidiMessage *> &messages_,
+                                         bool force_ = false);
 
-    void process_colormessage_CC_for_button(uint8 color_, uint8 channel_,
+    void process_colormessage_CC_for_button(std::uint8_t color_, std::uint8_t channel_,
                                             Launchpad::Button &button_,
-                                            Array<MidiMessage *> &messages_, bool force_ = false);
+                                            juce::Array<juce::MidiMessage *> &messages_,
+                                            bool force_ = false);
 
-    Array<Array<Button>> _buttons;
-    Array<ButtonRight> _buttons_right;
-    Array<ButtonTop> _buttons_top;
+    juce::Array<juce::Array<Button>> _buttons;
+    juce::Array<ButtonRight> _buttons_right;
+    juce::Array<ButtonTop> _buttons_top;
 
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
@@ -131,7 +135,7 @@ class Launchpad : public MIDIInListener
 
     //// CTORS
   public:
-    Launchpad(AppInstanceStore *const app_instance_store_, uint8 launchpad_id_);
+    Launchpad(AppInstanceStore *const app_instance_store_, std::uint8_t launchpad_id_);
     EMPTY_D_CTOR_OUT_WRITE(Launchpad);
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
@@ -139,12 +143,12 @@ class Launchpad : public MIDIInListener
 
     //// INTERFACE
   public:
-    void get_updates(Array<MidiMessage *> &);
+    void get_updates(juce::Array<juce::MidiMessage *> &);
 
     void refresh_all_buttons();
-    void all_buttons_off(Array<MidiMessage *> &);
+    void all_buttons_off(juce::Array<juce::MidiMessage *> &);
 
-    void process(const MidiMessage &message_) override;
+    void process(const juce::MidiMessage &message_) override;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Launchpad)
 };

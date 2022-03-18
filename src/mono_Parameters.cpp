@@ -37,7 +37,7 @@ void MIDIControl::clear()
     is_ctrl_version_of_name = "";
 }
 
-bool MIDIControl::is_listen_to(MidiMessage &message_) const noexcept
+bool MIDIControl::is_listen_to(juce::MidiMessage &message_) const noexcept
 {
     bool is = false;
     if (message_.isController() && listen_type == CC)
@@ -57,7 +57,7 @@ bool MIDIControl::is_listen_to(MidiMessage &message_) const noexcept
 
     return is;
 }
-bool MIDIControl::read_from_if_you_listen(const MidiMessage &input_message_) noexcept
+bool MIDIControl::read_from_if_you_listen(const juce::MidiMessage &input_message_) noexcept
 {
     bool success = false;
     const float pickup = DATA(synth_data).midi_pickup_offset;
@@ -166,7 +166,7 @@ bool MIDIControl::read_from_if_you_listen(const MidiMessage &input_message_) noe
 
     return success;
 }
-bool MIDIControl::train(const MidiMessage &input_message_,
+bool MIDIControl::train(const juce::MidiMessage &input_message_,
                         mono_ParameterCompatibilityBase *const is_ctrl_version_of_) noexcept
 {
     send_clear_feedback_only();
@@ -209,8 +209,8 @@ bool MIDIControl::train(const MidiMessage &input_message_,
 
     return success;
 }
-bool MIDIControl::train(int listen_type_, int8 midi_number_, int channel_,
-                        String is_ctrl_version_of_name_) noexcept
+bool MIDIControl::train(int listen_type_, std::int8_t midi_number_, int channel_,
+                        juce::String is_ctrl_version_of_name_) noexcept
 {
     send_clear_feedback_only();
 
@@ -317,22 +317,23 @@ void MIDIControl::parameter_value_on_load_changed(mono_ParameterBase<int> *param
 {
     parameter_value_changed(param_);
 }
-void MIDIControl::generate_feedback_message(MidiMessage &message_) const noexcept
+void MIDIControl::generate_feedback_message(juce::MidiMessage &message_) const noexcept
 {
     if (listen_type == CC)
-        message_ = MidiMessage::controllerEvent(channel, midi_number,
-                                                127.0f * owner->get_float_percent_value());
+        message_ = juce::MidiMessage::controllerEvent(channel, midi_number,
+                                                      127.0f * owner->get_float_percent_value());
     else
-        message_ = MidiMessage::noteOn(channel, midi_number, owner->get_float_percent_value());
+        message_ =
+            juce::MidiMessage::noteOn(channel, midi_number, owner->get_float_percent_value());
 }
-void MIDIControl::generate_modulation_feedback_message(MidiMessage &message_) const noexcept
+void MIDIControl::generate_modulation_feedback_message(juce::MidiMessage &message_) const noexcept
 {
     if (listen_type == CC)
-        message_ = MidiMessage::controllerEvent(
+        message_ = juce::MidiMessage::controllerEvent(
             channel, midi_number, 127.0f * (owner->get_modulation_amount() * 0.5f + 1.0f));
     else
-        message_ = MidiMessage::noteOn(channel, midi_number,
-                                       (owner->get_modulation_amount() * 0.5f + 1.0f));
+        message_ = juce::MidiMessage::noteOn(channel, midi_number,
+                                             (owner->get_modulation_amount() * 0.5f + 1.0f));
 }
 void MIDIControl::send_feedback_only() const noexcept
 {
@@ -357,11 +358,11 @@ void MIDIControl::send_clear_feedback_only() const noexcept
 {
     if (is_valid_trained())
     {
-        MidiMessage fb_message;
+        juce::MidiMessage fb_message;
         if (listen_type == CC)
-            fb_message = MidiMessage::controllerEvent(channel, midi_number, 0);
+            fb_message = juce::MidiMessage::controllerEvent(channel, midi_number, 0);
         else
-            fb_message = MidiMessage::noteOn(channel, midi_number, 0.0f);
+            fb_message = juce::MidiMessage::noteOn(channel, midi_number, 0.0f);
 
         AppInstanceStore::getInstance()->audio_processor->send_feedback_message(fb_message);
     }
@@ -376,13 +377,13 @@ void MIDIControl::set_ctrl_mode(bool mode_) noexcept
 
 void MIDIControl::send_standard_feedback() const noexcept
 {
-    MidiMessage fb_message;
+    juce::MidiMessage fb_message;
     generate_feedback_message(fb_message);
     AppInstanceStore::getInstance()->audio_processor->send_feedback_message(fb_message);
 }
 void MIDIControl::send_modulation_feedback() const noexcept
 {
-    MidiMessage fb_message;
+    juce::MidiMessage fb_message;
     generate_modulation_feedback_message(fb_message);
     AppInstanceStore::getInstance()->audio_processor->send_feedback_message(fb_message);
 }
@@ -405,7 +406,7 @@ void MIDIControlHandler::set_learn_param(mono_ParameterCompatibilityBase *param_
 }
 void MIDIControlHandler::set_learn_width_ctrl_param(mono_ParameterCompatibilityBase *param_,
                                                     mono_ParameterCompatibilityBase *ctrl_param_,
-                                                    Component *comp_)
+                                                    juce::Component *comp_)
 {
     clear();
 
@@ -415,7 +416,8 @@ void MIDIControlHandler::set_learn_width_ctrl_param(mono_ParameterCompatibilityB
     learning_comps.add(comp_);
     SET_COMPONENT_TO_MIDI_LEARN(comp_)
 }
-void MIDIControlHandler::set_learn_param(mono_ParameterCompatibilityBase *param_, Component *comp_)
+void MIDIControlHandler::set_learn_param(mono_ParameterCompatibilityBase *param_,
+                                         juce::Component *comp_)
 {
     clear();
 
@@ -425,7 +427,7 @@ void MIDIControlHandler::set_learn_param(mono_ParameterCompatibilityBase *param_
     SET_COMPONENT_TO_MIDI_LEARN(comp_)
 }
 void MIDIControlHandler::set_learn_param(mono_ParameterCompatibilityBase *param_,
-                                         Array<Component *> comps_)
+                                         juce::Array<juce::Component *> comps_)
 {
     clear();
 
@@ -436,7 +438,7 @@ void MIDIControlHandler::set_learn_param(mono_ParameterCompatibilityBase *param_
         SET_COMPONENT_TO_MIDI_LEARN(learning_comps[i])
 }
 mono_ParameterCompatibilityBase *MIDIControlHandler::is_learning() const { return learning_param; }
-bool MIDIControlHandler::handle_incoming_message(const MidiMessage &input_message_)
+bool MIDIControlHandler::handle_incoming_message(const juce::MidiMessage &input_message_)
 {
     bool success = false;
     if (learning_param)

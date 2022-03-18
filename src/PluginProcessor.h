@@ -5,6 +5,12 @@
 #include "CoreDatastructure.h"
 
 #include "UiEditorDemo.h"
+#include <juce_audio_formats/juce_audio_formats.h>
+#include <juce_audio_devices/juce_audio_devices.h>
+#include <juce_audio_processors/juce_audio_processors.h>
+#include <juce_audio_basics/juce_audio_basics.h>
+
+#include <juce_core/juce_core.h>
 
 #ifdef DEMO
 #define SEC_PER_MIN 60 // 60
@@ -48,10 +54,10 @@ class SensingTimer;
 #endif
 class GstepAudioProcessor : public ProcessorUserData,
                             public MIDIUserData,
-                            public AudioProcessor,
-                            public MidiKeyboardState
+                            public juce::AudioProcessor,
+                            public juce::MidiKeyboardState
 {
-    MidiBuffer *_current_buffer;
+    juce::MidiBuffer *_current_buffer;
 
   public:
     AppInstanceStore _app_instance_store;
@@ -62,20 +68,20 @@ class GstepAudioProcessor : public ProcessorUserData,
   private:
 #ifdef USE_PLUGIN_PROCESS_BLOCK
     friend class VSTClockProcessor;
-    ScopedPointer<VSTClockProcessor> _clock;
-    AudioFormatWriter::ThreadedWriter *volatile _active_writer;
-    ScopedPointer<AudioFormatReader> _active_sample_playback;
+    juce::ScopedPointer<VSTClockProcessor> _clock;
+    juce::AudioFormatWriter::ThreadedWriter *volatile _active_writer;
+    juce::ScopedPointer<juce::AudioFormatReader> _active_sample_playback;
 
   public:
-    void set_active_writer(AudioFormatWriter::ThreadedWriter *active_writer_)
+    void set_active_writer(juce::AudioFormatWriter::ThreadedWriter *active_writer_)
     {
         _active_writer = active_writer_;
     }
-    CriticalSection sample_playback_lock;
+    juce::CriticalSection sample_playback_lock;
     // WE OWN THIS HERE!
-    void set_active_sample(AudioFormatReader *active_reader_)
+    void set_active_sample(juce::AudioFormatReader *active_reader_)
     {
-        ScopedLock locked(sample_playback_lock);
+        juce::ScopedLock locked(sample_playback_lock);
 
         _sample_playback_length = 0;
         if (active_reader_)
@@ -85,40 +91,40 @@ class GstepAudioProcessor : public ProcessorUserData,
         _sample_started = false;
         _active_sample_playback = active_reader_;
     }
-    uint64 _sample_playback_position;
-    uint64 _sample_playback_length;
+    std::uint64_t _sample_playback_position;
+    std::uint64_t _sample_playback_length;
     bool _sample_started;
-    uint64 get_sample_playback_position() const { return _sample_playback_position; }
-    uint64 get_sample_playback_length() const { return _sample_playback_length; }
+    std::uint64_t get_sample_playback_position() const { return _sample_playback_position; }
+    std::uint64_t get_sample_playback_length() const { return _sample_playback_length; }
     void start_playback()
     {
-        ScopedLock locked(sample_playback_lock);
+        juce::ScopedLock locked(sample_playback_lock);
         _sample_started = true;
     }
     void stop_playback() { set_active_sample(nullptr); }
 
     bool is_playing_sample() const { return _active_sample_playback && _sample_started; }
-    void change_playback_pos(uint64 new_pos_)
+    void change_playback_pos(std::uint64_t new_pos_)
     {
-        ScopedLock locked(sample_playback_lock);
+        juce::ScopedLock locked(sample_playback_lock);
         if (_active_sample_playback)
             _sample_playback_position = new_pos_;
     }
 
   private:
     friend class MidiOutputObject;
-    void on_new_vst_clock(int samples_delay_, int64 clock_pos_, double sample_rate_);
-    void on_vst_stopped(int64 pos_);
-    void on_vst_pos_jumped(int64 pos_);
-    void on_vst_loop_pos_jumped(int64 pos_);
-    void on_vst_continue(int64 pos_);
+    void on_new_vst_clock(int samples_delay_, std::int64_t clock_pos_, double sample_rate_);
+    void on_vst_stopped(std::int64_t pos_);
+    void on_vst_pos_jumped(std::int64_t pos_);
+    void on_vst_loop_pos_jumped(std::int64_t pos_);
+    void on_vst_continue(std::int64_t pos_);
     int _current_vst_samples_delay;
     int _current_sample_rate;
 
   public:
-    MidiMessage sensing_message;
+    juce::MidiMessage sensing_message;
     int last_sensing;
-    ScopedPointer<SensingTimer> sensing_timer;
+    juce::ScopedPointer<SensingTimer> sensing_timer;
 #endif // USE_PLUGIN_PROCESS_BLOCK
 #ifdef DEMO
   public:
@@ -136,7 +142,7 @@ class GstepAudioProcessor : public ProcessorUserData,
     bool is_paused() const;
     bool is_master() const;
 
-    inline uint8 get_channel(uint8 string_id_)
+    inline std::uint8_t get_channel(std::uint8_t string_id_)
     {
         switch (string_id_)
         {
@@ -158,7 +164,7 @@ class GstepAudioProcessor : public ProcessorUserData,
 
     /// PROCESS
   private:
-    void processBlock(AudioSampleBuffer &buffer_, MidiBuffer &midi_messages_) override;
+    void processBlock(juce::AudioSampleBuffer &buffer_, juce::MidiBuffer &midi_messages_) override;
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
     void reset() override;
@@ -185,7 +191,7 @@ class GstepAudioProcessor : public ProcessorUserData,
 
     /// LOAD AND SAVE
   private:
-    void getStateInformation(MemoryBlock &dest_data_) override;
+    void getStateInformation(juce::MemoryBlock &dest_data_) override;
     void setStateInformation(const void *data_, int size_in_bytes_) override;
 
   private:
@@ -193,9 +199,9 @@ class GstepAudioProcessor : public ProcessorUserData,
 
     short *getAudioChannels();
     bool hasEditor() const override;
-    const String getName() const override;
-    const String getInputChannelName(int channel_index_) const override;
-    const String getOutputChannelName(int channel_index_) const override;
+    const juce::String getName() const override;
+    const juce::String getInputChannelName(int channel_index_) const override;
+    const juce::String getOutputChannelName(int channel_index_) const override;
     bool isInputChannelStereoPair(int index_) const override;
     bool isOutputChannelStereoPair(int index_) const override;
     bool acceptsMidi() const override;
@@ -208,14 +214,14 @@ class GstepAudioProcessor : public ProcessorUserData,
     int getNumPrograms() override;
     int getCurrentProgram() override;
     void setCurrentProgram(int index_) override;
-    const String getProgramName(int index_) override;
-    void changeProgramName(int index_, const String &name_) override;
+    const juce::String getProgramName(int index_) override;
+    void changeProgramName(int index_, const juce::String &name_) override;
 
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
 
-    AudioProcessorEditor *createEditor() override;
+    juce::AudioProcessorEditor *createEditor() override;
 
   public:
     GstepAudioProcessor();

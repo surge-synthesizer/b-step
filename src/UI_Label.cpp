@@ -11,10 +11,10 @@
 #include "_H_UiElements.h"
 #include "AppStyles.h"
 
-UiLabel::UiLabel(const String &text_, AppStyle *const style_)
+UiLabel::UiLabel(const juce::String &text_, AppStyle *const style_)
     : _text(text_), _style(style_), _is_manual_unopaque(false), _last_painted_bg(0x00000000),
       _last_painted_outline(0x00000000), _last_painted_fg(0x00000000),
-      justification(Justification::right), force_repaint(false)
+      justification(juce::Justification::right), force_repaint(false)
 {
     setRepaintsOnMouseActivity(true);
     // setBufferedToImage(false);
@@ -24,7 +24,7 @@ UiLabel::UiLabel(const String &text_, AppStyle *const style_)
 
 UiLabel::~UiLabel() {}
 
-void UiLabel::set_text(const String &text_)
+void UiLabel::set_text(const juce::String &text_)
 {
     if (_text.compare(text_) == 0)
         return;
@@ -73,14 +73,14 @@ void UiLabel::cache_paint()
     _last_painted_fg = _style->get_font_color();
 }
 
-void UiLabel::paint(Graphics &g_)
+void UiLabel::paint(juce::Graphics &g_)
 {
     force_repaint = false;
 
     cache_paint();
     if (!_is_manual_unopaque)
         if (_style->is_opaque())
-            g_.fillAll(Colour(_style->get_foreground_color()));
+            g_.fillAll(juce::Colour(_style->get_foreground_color()));
 
     AppStyle::paint_outline_label(g_, *this, _text, _style, justification, 0.0588f, 0.1000f,
                                   0.8824f, 0.8000f, true);

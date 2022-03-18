@@ -35,7 +35,7 @@ class AppInstanceStore;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorWhatsNew : public UiEditor, public Timer, public Button::Listener
+class UiEditorWhatsNew : public UiEditor, public juce::Timer, public juce::Button::Listener
 {
   public:
     //==============================================================================
@@ -51,9 +51,9 @@ class UiEditorWhatsNew : public UiEditor, public Timer, public Button::Listener
   private:
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
-    void buttonClicked(Button *buttonThatWasClicked);
+    void buttonClicked(juce::Button *buttonThatWasClicked);
 
     // Binary resources:
     static const char *demobg_png2;
@@ -68,36 +68,36 @@ class UiEditorWhatsNew : public UiEditor, public Timer, public Button::Listener
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Label> label22;
-    ScopedPointer<ToggleButton> dont_show_again;
-    ScopedPointer<Label> label9;
-    ScopedPointer<Label> label2;
-    ScopedPointer<TextButton> close;
-    ScopedPointer<Label> label3;
-    ScopedPointer<Label> label4;
-    ScopedPointer<Label> label5;
-    ScopedPointer<Label> label6;
-    ScopedPointer<Label> label7;
-    ScopedPointer<Label> label10;
-    ScopedPointer<Label> label11;
-    ScopedPointer<TextButton> open_styler;
-    ScopedPointer<Label> label12;
-    ScopedPointer<Label> label13;
-    ScopedPointer<Label> label8;
-    ScopedPointer<TextButton> open_filemanager;
-    ScopedPointer<Label> label15;
-    ScopedPointer<Label> label16;
-    ScopedPointer<Label> label17;
-    ScopedPointer<Label> label18;
-    ScopedPointer<Label> label19;
-    ScopedPointer<Label> label20;
-    ScopedPointer<TextButton> open_log;
-    ScopedPointer<Label> label21;
-    ScopedPointer<Label> label14;
-    ScopedPointer<Label> label23;
-    Image cachedImage_demobg_png2;
-    Image cachedImage_colourstyles_png;
-    Image cachedImage_filemanager_png;
+    juce::ScopedPointer<juce::Label> label22;
+    juce::ScopedPointer<juce::ToggleButton> dont_show_again;
+    juce::ScopedPointer<juce::Label> label9;
+    juce::ScopedPointer<juce::Label> label2;
+    juce::ScopedPointer<juce::TextButton> close;
+    juce::ScopedPointer<juce::Label> label3;
+    juce::ScopedPointer<juce::Label> label4;
+    juce::ScopedPointer<juce::Label> label5;
+    juce::ScopedPointer<juce::Label> label6;
+    juce::ScopedPointer<juce::Label> label7;
+    juce::ScopedPointer<juce::Label> label10;
+    juce::ScopedPointer<juce::Label> label11;
+    juce::ScopedPointer<juce::TextButton> open_styler;
+    juce::ScopedPointer<juce::Label> label12;
+    juce::ScopedPointer<juce::Label> label13;
+    juce::ScopedPointer<juce::Label> label8;
+    juce::ScopedPointer<juce::TextButton> open_filemanager;
+    juce::ScopedPointer<juce::Label> label15;
+    juce::ScopedPointer<juce::Label> label16;
+    juce::ScopedPointer<juce::Label> label17;
+    juce::ScopedPointer<juce::Label> label18;
+    juce::ScopedPointer<juce::Label> label19;
+    juce::ScopedPointer<juce::Label> label20;
+    juce::ScopedPointer<juce::TextButton> open_log;
+    juce::ScopedPointer<juce::Label> label21;
+    juce::ScopedPointer<juce::Label> label14;
+    juce::ScopedPointer<juce::Label> label23;
+    juce::Image cachedImage_demobg_png2;
+    juce::Image cachedImage_colourstyles_png;
+    juce::Image cachedImage_filemanager_png;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorWhatsNew)

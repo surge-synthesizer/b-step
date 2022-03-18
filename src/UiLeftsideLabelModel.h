@@ -24,6 +24,7 @@
 #include "App.h"
 #include "Controller.h"
 #include "UiColumnWrapper.h"
+
 //[/Headers]
 
 //==============================================================================
@@ -34,7 +35,7 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiLeftsideLabelModel : public SubeditorBase, public Button::Listener
+class UiLeftsideLabelModel : public SubeditorBase, public juce::Button::Listener
 {
   public:
     //==============================================================================
@@ -45,31 +46,31 @@ class UiLeftsideLabelModel : public SubeditorBase, public Button::Listener
     //[UserMethods]     -- You can add your own custom methods in this section.
   private:
     AppInstanceStore *const _app_insteance_store;
-    String _text;
-    String _last_painted_text;
+    juce::String _text;
+    juce::String _last_painted_text;
 
   public:
-    void set_text(const String &text_) override;
+    void set_text(const juce::String &text_) override;
     void on_style_set(AppStyle *const style_) override;
 
     void set_controller(MONO_Controller *const controller_) { model->set_controller(controller_); }
 
-    void refresh_ui(Array<Component *> &components_to_repaint_) override;
-    void
-    get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_with_popup_) override;
+    void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_) override;
+    void get_controllers_for_paint_popup(
+        juce::Array<MONO_Controller *> &controllers_with_popup_) override;
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
-    void buttonClicked(Button *buttonThatWasClicked) override;
+    void buttonClicked(juce::Button *buttonThatWasClicked) override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<ImageButton> bg_button;
-    ScopedPointer<ModelBase> model;
+    juce::ScopedPointer<juce::ImageButton> bg_button;
+    juce::ScopedPointer<ModelBase> model;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiLeftsideLabelModel)

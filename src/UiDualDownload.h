@@ -28,20 +28,20 @@
 #define B_STEP_FILESIZE_URL "http://b-step.monoplugs.com/downloads/presets/filesize?file="
 #define B_STEP_DOWNLOADS_URL "http://b-step.monoplugs.com/downloads/presets/"
 
-struct Downloader : public Thread
+struct Downloader : public juce::Thread
 {
-    File _target_file;
-    URL _source_url;
+    juce::File _target_file;
+    juce::URL _source_url;
 
-    URL _filesize_url;
-    InputStream *_stream;
+    juce::URL _filesize_url;
+    juce::InputStream *_stream;
     int stream_size;
 
     bool _is_complete;
     bool _is_success;
 
-    Downloader(const URL &source_url_, File &target_file_)
-        : Thread("B-Downloader"),
+    Downloader(const juce::URL &source_url_, juce::File &target_file_)
+        : juce::Thread("B-Downloader"),
 
           _target_file(target_file_), _source_url(source_url_),
 
@@ -63,15 +63,17 @@ struct Downloader : public Thread
 
     void run()
     {
-        _filesize_url = URL(B_STEP_FILESIZE_URL + _source_url.toString(false).fromFirstOccurrenceOf(
-                                                      B_STEP_DOWNLOADS_URL, false, false));
+        _filesize_url =
+            juce::URL(B_STEP_FILESIZE_URL + _source_url.toString(false).fromFirstOccurrenceOf(
+                                                B_STEP_DOWNLOADS_URL, false, false));
 
-        _stream = _source_url.createInputStream(false, nullptr, nullptr, String(), 4000).release();
+        _stream =
+            _source_url.createInputStream(false, nullptr, nullptr, juce::String(), 4000).release();
         stream_size = _filesize_url.readEntireTextStream().getIntValue();
 
         if (_stream)
         {
-            MemoryBlock mem_block;
+            juce::MemoryBlock mem_block;
             _stream->readIntoMemoryBlock(mem_block);
             _is_success = _target_file.replaceWithData(mem_block.getData(), mem_block.getSize());
         }
@@ -258,9 +260,9 @@ class AppInstanceStore;
                                                                     //[/Comments]
 */
 class UiDualDownload : public UiEditor,
-                       public Timer,
-                       public Button::Listener,
-                       public Slider::Listener
+                       public juce::Timer,
+                       public juce::Button::Listener,
+                       public juce::Slider::Listener
 {
   public:
     //==============================================================================
@@ -292,32 +294,32 @@ class UiDualDownload : public UiEditor,
     }
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
-    void buttonClicked(Button *buttonThatWasClicked);
-    void sliderValueChanged(Slider *sliderThatWasMoved);
+    void buttonClicked(juce::Button *buttonThatWasClicked);
+    void sliderValueChanged(juce::Slider *sliderThatWasMoved);
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<TextButton> ok;
-    ScopedPointer<TextButton> close;
-    ScopedPointer<Slider> data_progress;
-    ScopedPointer<TextButton> cancel_data;
-    ScopedPointer<Slider> audio_progress;
-    ScopedPointer<Label> data_info;
-    ScopedPointer<Label> data_name;
-    ScopedPointer<Label> old_info_2;
-    ScopedPointer<Label> old_info_3;
-    ScopedPointer<Label> titel7;
-    ScopedPointer<TextButton> chancel_audio;
-    ScopedPointer<Label> audio_info;
-    ScopedPointer<Label> audio_name;
-    ScopedPointer<Label> data_percent;
-    ScopedPointer<Label> audio_percent;
-    ScopedPointer<UiEditorToolbar> toolbar;
+    juce::ScopedPointer<juce::TextButton> ok;
+    juce::ScopedPointer<juce::TextButton> close;
+    juce::ScopedPointer<juce::Slider> data_progress;
+    juce::ScopedPointer<juce::TextButton> cancel_data;
+    juce::ScopedPointer<juce::Slider> audio_progress;
+    juce::ScopedPointer<juce::Label> data_info;
+    juce::ScopedPointer<juce::Label> data_name;
+    juce::ScopedPointer<juce::Label> old_info_2;
+    juce::ScopedPointer<juce::Label> old_info_3;
+    juce::ScopedPointer<juce::Label> titel7;
+    juce::ScopedPointer<juce::TextButton> chancel_audio;
+    juce::ScopedPointer<juce::Label> audio_info;
+    juce::ScopedPointer<juce::Label> audio_name;
+    juce::ScopedPointer<juce::Label> data_percent;
+    juce::ScopedPointer<juce::Label> audio_percent;
+    juce::ScopedPointer<UiEditorToolbar> toolbar;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiDualDownload)

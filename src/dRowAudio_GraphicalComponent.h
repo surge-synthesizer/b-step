@@ -43,7 +43,7 @@
 
         @see SegmentedMeter
  */
-class GraphicalComponent : public Component, public TimeSliceClient, public Timer
+class GraphicalComponent : public juce::Component, public juce::TimeSliceClient, public juce::Timer
 {
   protected:
     //==============================================================================
@@ -97,12 +97,12 @@ class GraphicalComponent : public Component, public TimeSliceClient, public Time
 
   protected:
     //==============================================================================
-    CriticalSection lock;
+    juce::CriticalSection lock;
     bool paused;
     bool needToProcess;
 
     int sleepTime, numSamples;
-    HeapBlock<float> samples;
+    juce::HeapBlock<float> samples;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GraphicalComponent);

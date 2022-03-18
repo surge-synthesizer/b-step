@@ -47,11 +47,11 @@
     leftside_model_mode_model->set_controller_middle( _app_instance_store->controller.pause );
     leftside_model_mode_model->set_controller_right( _app_instance_store->controller.stop );
 */
-void MenuBarRight::refresh_ui(Array<Component *> &components_to_repaint_) {}
+void MenuBarRight::refresh_ui(juce::Array<juce::Component *> &components_to_repaint_) {}
 
 #include "UIHtmlView.h"
 #include "AppStyles.h"
-void MenuBarRight::mouseDown(const MouseEvent &e_)
+void MenuBarRight::mouseDown(const juce::MouseEvent &e_)
 {
     if (_app_instance_store->editor_config.style_editor)
     {
@@ -72,45 +72,52 @@ MenuBarRight::MenuBarRight(AppInstanceStore *const app_instance_store_,
                            GstepAudioProcessorEditor *const main_window_)
     : _app_instance_store(app_instance_store_), _main_window(main_window_)
 {
-    addAndMakeVisible(open_settings_editor = new ImageButton(String()));
+    addAndMakeVisible(open_settings_editor = new juce::ImageButton(juce::String()));
     open_settings_editor->addListener(this);
 
-    open_settings_editor->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000), Image(),
-                                    1.000f, Colour(0x00000000), Image(), 1.000f,
-                                    Colour(0x00000000));
-    addAndMakeVisible(do_midi_learn = new ImageButton(String()));
+    open_settings_editor->setImages(
+        false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
+        juce::Colour(0x00000000), juce::Image(), 1.000f, juce::Colour(0x00000000));
+    addAndMakeVisible(do_midi_learn = new juce::ImageButton(juce::String()));
     do_midi_learn->addListener(this);
 
-    do_midi_learn->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000), Image(),
-                             1.000f, Colour(0x00000000), Image(), 1.000f, Colour(0x00000000));
-    addAndMakeVisible(open_about_window = new ImageButton(String()));
+    do_midi_learn->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
+                             juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
+                             juce::Colour(0x00000000));
+    addAndMakeVisible(open_about_window = new juce::ImageButton(juce::String()));
     open_about_window->addListener(this);
 
-    open_about_window->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000), Image(),
-                                 1.000f, Colour(0x00000000), Image(), 1.000f, Colour(0x00000000));
-    addAndMakeVisible(save_preset = new ImageButton(String()));
+    open_about_window->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
+                                 juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(),
+                                 1.000f, juce::Colour(0x00000000));
+    addAndMakeVisible(save_preset = new juce::ImageButton(juce::String()));
     save_preset->addListener(this);
 
-    save_preset->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000), Image(), 1.000f,
-                           Colour(0x00000000), Image(), 1.000f, Colour(0x00000000));
-    addAndMakeVisible(panic = new ImageButton(String()));
+    save_preset->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
+                           juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
+                           juce::Colour(0x00000000));
+    addAndMakeVisible(panic = new juce::ImageButton(juce::String()));
     panic->addListener(this);
 
-    panic->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000), Image(), 1.000f,
-                     Colour(0x00000000), Image(), 1.000f, Colour(0x00000000));
-    addAndMakeVisible(load_preset = new ImageButton(String()));
+    panic->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
+                     juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
+                     juce::Colour(0x00000000));
+    addAndMakeVisible(load_preset = new juce::ImageButton(juce::String()));
     load_preset->addListener(this);
 
-    load_preset->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000), Image(), 1.000f,
-                           Colour(0x00000000), Image(), 1.000f, Colour(0x00000000));
-    addAndMakeVisible(button_rubber = new UIRubber(String()));
+    load_preset->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
+                           juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
+                           juce::Colour(0x00000000));
+    addAndMakeVisible(button_rubber = new UIRubber(juce::String()));
 
-    button_rubber->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000), Image(),
-                             1.000f, Colour(0x00000000), Image(), 1.000f, Colour(0x00000000));
-    addAndMakeVisible(button_question = new UIQuestion(String()));
+    button_rubber->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
+                             juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
+                             juce::Colour(0x00000000));
+    addAndMakeVisible(button_question = new UIQuestion(juce::String()));
 
-    button_question->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000), Image(),
-                               1.000f, Colour(0x00000000), Image(), 1.000f, Colour(0x00000000));
+    button_question->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
+                               juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(),
+                               1.000f, juce::Colour(0x00000000));
     addAndMakeVisible(button_clipboard_1 = new UIClipboard(_app_instance_store, _main_window, 0));
     button_clipboard_1->setName("tool_clipboard_1");
 
@@ -123,36 +130,39 @@ MenuBarRight::MenuBarRight(AppInstanceStore *const app_instance_store_,
     addAndMakeVisible(button_clipboard_4 = new UIClipboard(_app_instance_store, _main_window, 3));
     button_clipboard_4->setName("tool_clipboard_4");
 
-    addAndMakeVisible(open_setup_editor = new ImageButton(String()));
+    addAndMakeVisible(open_setup_editor = new juce::ImageButton(juce::String()));
     open_setup_editor->addListener(this);
 
-    open_setup_editor->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000), Image(),
-                                 1.000f, Colour(0x00000000), Image(), 1.000f, Colour(0x00000000));
-    addAndMakeVisible(clear_project = new ImageButton(String()));
+    open_setup_editor->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
+                                 juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(),
+                                 1.000f, juce::Colour(0x00000000));
+    addAndMakeVisible(clear_project = new juce::ImageButton(juce::String()));
     clear_project->addListener(this);
 
-    clear_project->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000), Image(),
-                             1.000f, Colour(0x00000000), Image(), 1.000f, Colour(0x00000000));
-    addAndMakeVisible(open_styler = new ImageButton(String()));
+    clear_project->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
+                             juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
+                             juce::Colour(0x00000000));
+    addAndMakeVisible(open_styler = new juce::ImageButton(juce::String()));
     open_styler->addListener(this);
 
-    open_styler->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000), Image(), 1.000f,
-                           Colour(0x00000000), Image(), 1.000f, Colour(0x00000000));
-    drawable1 = Drawable::createFromImageData(load_svg, load_svgSize).release();
-    drawable2 = Drawable::createFromImageData(save_svg, save_svgSize).release();
-    drawable3 = Drawable::createFromImageData(learn_svg, learn_svgSize).release();
-    drawable4 = Drawable::createFromImageData(connection_svg, connection_svgSize).release();
-    drawable5 = Drawable::createFromImageData(info_svg, info_svgSize).release();
-    drawable6 = Drawable::createFromImageData(panic_svg, panic_svgSize).release();
-    drawable7 = Drawable::createFromImageData(drag_svg, drag_svgSize).release();
-    drawable8 = Drawable::createFromImageData(drag_svg, drag_svgSize).release();
-    drawable9 = Drawable::createFromImageData(settings_svg, settings_svgSize).release();
-    drawable10 = Drawable::createFromImageData(drag_svg, drag_svgSize).release();
-    drawable11 = Drawable::createFromImageData(drag_svg, drag_svgSize).release();
-    drawable12 = Drawable::createFromImageData(drag_svg, drag_svgSize).release();
-    drawable13 = Drawable::createFromImageData(drag_svg, drag_svgSize).release();
-    drawable14 = Drawable::createFromImageData(trash_svg, trash_svgSize).release();
-    drawable15 = Drawable::createFromImageData(paint_svg, paint_svgSize).release();
+    open_styler->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
+                           juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
+                           juce::Colour(0x00000000));
+    drawable1 = juce::Drawable::createFromImageData(load_svg, load_svgSize).release();
+    drawable2 = juce::Drawable::createFromImageData(save_svg, save_svgSize).release();
+    drawable3 = juce::Drawable::createFromImageData(learn_svg, learn_svgSize).release();
+    drawable4 = juce::Drawable::createFromImageData(connection_svg, connection_svgSize).release();
+    drawable5 = juce::Drawable::createFromImageData(info_svg, info_svgSize).release();
+    drawable6 = juce::Drawable::createFromImageData(panic_svg, panic_svgSize).release();
+    drawable7 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize).release();
+    drawable8 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize).release();
+    drawable9 = juce::Drawable::createFromImageData(settings_svg, settings_svgSize).release();
+    drawable10 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize).release();
+    drawable11 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize).release();
+    drawable12 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize).release();
+    drawable13 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize).release();
+    drawable14 = juce::Drawable::createFromImageData(trash_svg, trash_svgSize).release();
+    drawable15 = juce::Drawable::createFromImageData(paint_svg, paint_svgSize).release();
 
     //[UserPreSize]
     drawables.add(drawable1);
@@ -230,11 +240,11 @@ MenuBarRight::~MenuBarRight()
 }
 
 //==============================================================================
-void MenuBarRight::paint(Graphics &g)
+void MenuBarRight::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     /*
-    int32 new_colur = GLOBAL_VALUE_HOLDER::get().MASTER_COLOUR;
+    std::uint32_t new_colur = GLOBAL_VALUE_HOLDER::get().MASTER_COLOUR;
       for( int i = 0 ; i != drawables.size() ; i++ )
       {
           Drawable* drawable = drawables.getUnchecked(i);
@@ -245,154 +255,154 @@ void MenuBarRight::paint(Graphics &g)
       */
     //[/UserPrePaint]
 
-    g.fillAll(Colours::black);
+    g.fillAll(juce::Colours::black);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     jassert(drawable1 != 0);
     if (drawable1 != 0)
         drawable1->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.1429f), proportionOfHeight(0.1354f),
-                             proportionOfWidth(0.7143f), proportionOfHeight(0.0469f)),
-            RectanglePlacement::centred, 1.000f);
+            juce::Rectangle<float>(proportionOfWidth(0.1429f), proportionOfHeight(0.1354f),
+                                   proportionOfWidth(0.7143f), proportionOfHeight(0.0469f)),
+            juce::RectanglePlacement::centred, 1.000f);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     jassert(drawable2 != 0);
     if (drawable2 != 0)
         drawable2->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.1429f), proportionOfHeight(0.1875f),
-                             proportionOfWidth(0.7143f), proportionOfHeight(0.0469f)),
-            RectanglePlacement::centred, 1.000f);
+            juce::Rectangle<float>(proportionOfWidth(0.1429f), proportionOfHeight(0.1875f),
+                                   proportionOfWidth(0.7143f), proportionOfHeight(0.0469f)),
+            juce::RectanglePlacement::centred, 1.000f);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     jassert(drawable3 != 0);
     if (drawable3 != 0)
         drawable3->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.1667f), proportionOfHeight(0.4414f),
-                             proportionOfWidth(0.7143f), proportionOfHeight(0.0469f)),
-            RectanglePlacement::centred, 1.000f);
+            juce::Rectangle<float>(proportionOfWidth(0.1667f), proportionOfHeight(0.4414f),
+                                   proportionOfWidth(0.7143f), proportionOfHeight(0.0469f)),
+            juce::RectanglePlacement::centred, 1.000f);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     jassert(drawable4 != 0);
     if (drawable4 != 0)
         drawable4->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.1667f), proportionOfHeight(0.3893f),
-                             proportionOfWidth(0.7143f), proportionOfHeight(0.0469f)),
-            RectanglePlacement::centred, 1.000f);
+            juce::Rectangle<float>(proportionOfWidth(0.1667f), proportionOfHeight(0.3893f),
+                                   proportionOfWidth(0.7143f), proportionOfHeight(0.0469f)),
+            juce::RectanglePlacement::centred, 1.000f);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     jassert(drawable5 != 0);
     if (drawable5 != 0)
         drawable5->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.0714f), proportionOfHeight(0.5039f),
-                             proportionOfWidth(0.9048f), proportionOfHeight(0.0313f)),
-            RectanglePlacement::centred, 1.000f);
+            juce::Rectangle<float>(proportionOfWidth(0.0714f), proportionOfHeight(0.5039f),
+                                   proportionOfWidth(0.9048f), proportionOfHeight(0.0313f)),
+            juce::RectanglePlacement::centred, 1.000f);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     jassert(drawable6 != 0);
     if (drawable6 != 0)
         drawable6->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.0476f), proportionOfHeight(0.0443f),
-                             proportionOfWidth(0.9048f), proportionOfHeight(0.0313f)),
-            RectanglePlacement::centred, 1.000f);
+            juce::Rectangle<float>(proportionOfWidth(0.0476f), proportionOfHeight(0.0443f),
+                                   proportionOfWidth(0.9048f), proportionOfHeight(0.0313f)),
+            juce::RectanglePlacement::centred, 1.000f);
 
-    g.setColour(Colour(0xffdfce89));
+    g.setColour(juce::Colour(0xffdfce89));
     g.fillRect(2, proportionOfHeight(0.1120f), getWidth() - 4, 1);
 
-    g.setColour(Colour(0xffdfce89));
+    g.setColour(juce::Colour(0xffdfce89));
     g.fillRect(3, proportionOfHeight(0.3138f), getWidth() - 4, 1);
 
-    g.setColour(Colour(0xffdfce89));
+    g.setColour(juce::Colour(0xffdfce89));
     g.fillRect(2, proportionOfHeight(0.6055f), getWidth() - 4, 1);
 
-    g.setColour(Colours::black.withAlpha(0.500f));
+    g.setColour(juce::Colours::black.withAlpha(0.500f));
     jassert(drawable7 != 0);
     if (drawable7 != 0)
         drawable7->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.0714f), proportionOfHeight(0.6719f),
-                             proportionOfWidth(0.9048f), proportionOfHeight(0.0521f)),
-            RectanglePlacement::centred, 0.500f);
+            juce::Rectangle<float>(proportionOfWidth(0.0714f), proportionOfHeight(0.6719f),
+                                   proportionOfWidth(0.9048f), proportionOfHeight(0.0521f)),
+            juce::RectanglePlacement::centred, 0.500f);
 
-    g.setColour(Colours::black.withAlpha(0.500f));
+    g.setColour(juce::Colours::black.withAlpha(0.500f));
     jassert(drawable8 != 0);
     if (drawable8 != 0)
         drawable8->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.0714f), proportionOfHeight(0.6198f),
-                             proportionOfWidth(0.9048f), proportionOfHeight(0.0521f)),
-            RectanglePlacement::centred, 0.500f);
+            juce::Rectangle<float>(proportionOfWidth(0.0714f), proportionOfHeight(0.6198f),
+                                   proportionOfWidth(0.9048f), proportionOfHeight(0.0521f)),
+            juce::RectanglePlacement::centred, 0.500f);
 
-    g.setColour(Colour(0xffdfce89));
+    g.setColour(juce::Colour(0xffdfce89));
     g.fillRect(2, proportionOfHeight(0.7370f), getWidth() - 4, 1);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     jassert(drawable9 != 0);
     if (drawable9 != 0)
         drawable9->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.1667f), proportionOfHeight(0.3372f),
-                             proportionOfWidth(0.7143f), proportionOfHeight(0.0469f)),
-            RectanglePlacement::centred, 1.000f);
+            juce::Rectangle<float>(proportionOfWidth(0.1667f), proportionOfHeight(0.3372f),
+                                   proportionOfWidth(0.7143f), proportionOfHeight(0.0469f)),
+            juce::RectanglePlacement::centred, 1.000f);
 
-    g.setColour(Colours::black.withAlpha(0.500f));
+    g.setColour(juce::Colours::black.withAlpha(0.500f));
     jassert(drawable10 != 0);
     if (drawable10 != 0)
         drawable10->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.0476f), proportionOfHeight(0.7578f),
-                             proportionOfWidth(0.9048f), proportionOfHeight(0.0521f)),
-            RectanglePlacement::centred, 0.500f);
+            juce::Rectangle<float>(proportionOfWidth(0.0476f), proportionOfHeight(0.7578f),
+                                   proportionOfWidth(0.9048f), proportionOfHeight(0.0521f)),
+            juce::RectanglePlacement::centred, 0.500f);
 
-    g.setColour(Colours::black.withAlpha(0.500f));
+    g.setColour(juce::Colours::black.withAlpha(0.500f));
     jassert(drawable11 != 0);
     if (drawable11 != 0)
         drawable11->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.0476f), proportionOfHeight(0.8099f),
-                             proportionOfWidth(0.9048f), proportionOfHeight(0.0521f)),
-            RectanglePlacement::centred, 0.500f);
+            juce::Rectangle<float>(proportionOfWidth(0.0476f), proportionOfHeight(0.8099f),
+                                   proportionOfWidth(0.9048f), proportionOfHeight(0.0521f)),
+            juce::RectanglePlacement::centred, 0.500f);
 
-    g.setColour(Colours::black.withAlpha(0.500f));
+    g.setColour(juce::Colours::black.withAlpha(0.500f));
     jassert(drawable12 != 0);
     if (drawable12 != 0)
         drawable12->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.0476f), proportionOfHeight(0.8620f),
-                             proportionOfWidth(0.9048f), proportionOfHeight(0.0521f)),
-            RectanglePlacement::centred, 0.500f);
+            juce::Rectangle<float>(proportionOfWidth(0.0476f), proportionOfHeight(0.8620f),
+                                   proportionOfWidth(0.9048f), proportionOfHeight(0.0521f)),
+            juce::RectanglePlacement::centred, 0.500f);
 
-    g.setColour(Colours::black.withAlpha(0.500f));
+    g.setColour(juce::Colours::black.withAlpha(0.500f));
     jassert(drawable13 != 0);
     if (drawable13 != 0)
         drawable13->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.0476f), proportionOfHeight(0.9141f),
-                             proportionOfWidth(0.9048f), proportionOfHeight(0.0521f)),
-            RectanglePlacement::centred, 0.500f);
+            juce::Rectangle<float>(proportionOfWidth(0.0476f), proportionOfHeight(0.9141f),
+                                   proportionOfWidth(0.9048f), proportionOfHeight(0.0521f)),
+            juce::RectanglePlacement::centred, 0.500f);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     jassert(drawable14 != 0);
     if (drawable14 != 0)
         drawable14->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.1429f), proportionOfHeight(0.2435f),
-                             proportionOfWidth(0.7143f), proportionOfHeight(0.0391f)),
-            RectanglePlacement::centred, 1.000f);
+            juce::Rectangle<float>(proportionOfWidth(0.1429f), proportionOfHeight(0.2435f),
+                                   proportionOfWidth(0.7143f), proportionOfHeight(0.0391f)),
+            juce::RectanglePlacement::centred, 1.000f);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     jassert(drawable15 != 0);
     if (drawable15 != 0)
         drawable15->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.0476f), proportionOfHeight(0.5534f),
-                             proportionOfWidth(0.9048f), proportionOfHeight(0.0365f)),
-            RectanglePlacement::centred, 1.000f);
+            juce::Rectangle<float>(proportionOfWidth(0.0476f), proportionOfHeight(0.5534f),
+                                   proportionOfWidth(0.9048f), proportionOfHeight(0.0365f)),
+            juce::RectanglePlacement::centred, 1.000f);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -433,7 +443,7 @@ void MenuBarRight::resized()
     //[/UserResized]
 }
 
-void MenuBarRight::buttonClicked(Button *buttonThatWasClicked)
+void MenuBarRight::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -493,7 +503,7 @@ void MenuBarRight::buttonClicked(Button *buttonThatWasClicked)
     else if (buttonThatWasClicked == clear_project)
     {
         //[UserButtonCode_clear_project] -- add your button handler code here..
-        class CallbackManager : public ModalComponentManager::Callback
+        class CallbackManager : public juce::ModalComponentManager::Callback
         {
             AppInstanceStore *const _app_instance_store;
 
@@ -502,7 +512,7 @@ void MenuBarRight::buttonClicked(Button *buttonThatWasClicked)
                 if (value_)
                 {
                     _app_instance_store->pattern.import_by_default();
-                    _app_instance_store->last_loaded_project = File("FROM SCRATCH");
+                    _app_instance_store->last_loaded_project = juce::File("FROM SCRATCH");
                 }
             };
 
@@ -516,10 +526,10 @@ void MenuBarRight::buttonClicked(Button *buttonThatWasClicked)
         };
 
         CallbackManager *callback = new CallbackManager(_app_instance_store);
-        AlertWindow::showOkCancelBox(AlertWindow::WarningIcon, "CLEAR WHOLE PROJECT?",
-                                     "This will clear your project to factory defaults!",
-                                     "YES, CLEAR ALL", "NO, KEEP IT", _app_instance_store->editor,
-                                     callback);
+        juce::AlertWindow::showOkCancelBox(juce::AlertWindow::WarningIcon, "CLEAR WHOLE PROJECT?",
+                                           "This will clear your project to factory defaults!",
+                                           "YES, CLEAR ALL", "NO, KEEP IT",
+                                           _app_instance_store->editor, callback);
         //[/UserButtonCode_clear_project]
     }
     else if (buttonThatWasClicked == open_styler)

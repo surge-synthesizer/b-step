@@ -24,45 +24,46 @@
 #include "UiFileView.h"
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-void UiFileView::set_label_text(const String &label_text_)
+void UiFileView::set_label_text(const juce::String &label_text_)
 {
-    label->setText(label_text_, dontSendNotification);
+    label->setText(label_text_, juce::dontSendNotification);
 }
 //[/MiscUserDefs]
 
 //==============================================================================
 UiFileView::UiFileView()
 {
-    addAndMakeVisible(label = new TextEditor(String()));
+    addAndMakeVisible(label = new juce::TextEditor(juce::String()));
     label->setMultiLine(false);
     label->setReturnKeyStartsNewLine(false);
     label->setReadOnly(false);
     label->setScrollbarsShown(false);
     label->setCaretVisible(true);
     label->setPopupMenuEnabled(false);
-    label->setColour(TextEditor::textColourId, Colour(0x00f0f8ff));
-    label->setColour(TextEditor::backgroundColourId, Colour(0xff161616));
-    label->setColour(TextEditor::highlightColourId, Colours::yellow);
-    label->setColour(TextEditor::outlineColourId, Colour(0x00ff3b00));
-    label->setColour(TextEditor::shadowColourId, Colour(0x00ff0000));
-    label->setColour(CaretComponent::caretColourId, Colours::aqua);
-    label->setText(String());
+    label->setColour(juce::TextEditor::textColourId, juce::Colour(0x00f0f8ff));
+    label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0xff161616));
+    label->setColour(juce::TextEditor::highlightColourId, juce::Colours::yellow);
+    label->setColour(juce::TextEditor::outlineColourId, juce::Colour(0x00ff3b00));
+    label->setColour(juce::TextEditor::shadowColourId, juce::Colour(0x00ff0000));
+    label->setColour(juce::CaretComponent::caretColourId, juce::Colours::aqua);
+    label->setText(juce::String());
 
-    addAndMakeVisible(imageButton = new ImageButton(String()));
+    addAndMakeVisible(imageButton = new juce::ImageButton(juce::String()));
     imageButton->addListener(this);
 
-    imageButton->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000), Image(), 1.000f,
-                           Colour(0x00000000), Image(), 1.000f, Colour(0x00000000));
-    addAndMakeVisible(player_slider = new Slider(String()));
+    imageButton->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
+                           juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
+                           juce::Colour(0x00000000));
+    addAndMakeVisible(player_slider = new juce::Slider(juce::String()));
     player_slider->setRange(0, 10, 0);
-    player_slider->setSliderStyle(Slider::LinearHorizontal);
-    player_slider->setTextBoxStyle(Slider::NoTextBox, false, 30, 20);
-    player_slider->setColour(Slider::thumbColourId,
-                             Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    player_slider->setColour(Slider::textBoxTextColourId,
-                             Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    player_slider->setColour(Slider::textBoxBackgroundColourId, Colour(0x00ffffff));
-    player_slider->setColour(Slider::textBoxOutlineColourId, Colour(0x00808080));
+    player_slider->setSliderStyle(juce::Slider::LinearHorizontal);
+    player_slider->setTextBoxStyle(juce::Slider::NoTextBox, false, 30, 20);
+    player_slider->setColour(juce::Slider::thumbColourId,
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    player_slider->setColour(juce::Slider::textBoxTextColourId,
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    player_slider->setColour(juce::Slider::textBoxBackgroundColourId, juce::Colour(0x00ffffff));
+    player_slider->setColour(juce::Slider::textBoxOutlineColourId, juce::Colour(0x00808080));
     player_slider->addListener(this);
 
     //[UserPreSize]
@@ -71,10 +72,10 @@ UiFileView::UiFileView()
     _listener = nullptr;
 
     player_slider->setVisible(false);
-    player_slider->setColour(Slider::thumbColourId, Colour(0xff313131));
+    player_slider->setColour(juce::Slider::thumbColourId, juce::Colour(0xff313131));
 
     UiLookAndFeel *my_look_and_feel =
-        dynamic_cast<UiLookAndFeel *>(&LookAndFeel::getDefaultLookAndFeel());
+        dynamic_cast<UiLookAndFeel *>(&juce::LookAndFeel::getDefaultLookAndFeel());
     if (my_look_and_feel)
         label->setFont(my_look_and_feel->defaultFont);
 
@@ -105,7 +106,7 @@ UiFileView::~UiFileView()
 }
 
 //==============================================================================
-void UiFileView::paint(Graphics &g)
+void UiFileView::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
@@ -131,7 +132,7 @@ void UiFileView::resized()
     //[/UserResized]
 }
 
-void UiFileView::buttonClicked(Button *buttonThatWasClicked)
+void UiFileView::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -146,7 +147,7 @@ void UiFileView::buttonClicked(Button *buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiFileView::sliderValueChanged(Slider *sliderThatWasMoved)
+void UiFileView::sliderValueChanged(juce::Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]

@@ -27,7 +27,7 @@
 class AudioPlayer;
 
 class UiDualAudioMessage;
-class UiDualAudioMessageListener : public Slider::Listener
+class UiDualAudioMessageListener : public juce::Slider::Listener
 {
     friend class UiDualAudioMessage;
 
@@ -35,10 +35,10 @@ class UiDualAudioMessageListener : public Slider::Listener
     virtual void on_ok() = 0;
     virtual void on_chancel() = 0;
 
-    virtual const File &get_new_audio_file() = 0;
-    virtual const File &get_old_audio_file() = 0;
+    virtual const juce::File &get_new_audio_file() = 0;
+    virtual const juce::File &get_old_audio_file() = 0;
 
-    void sliderValueChanged(Slider *sliderThatWasMoved) {}
+    void sliderValueChanged(juce::Slider *sliderThatWasMoved) {}
 
   protected:
     virtual ~UiDualAudioMessageListener() {}
@@ -62,15 +62,15 @@ class AppInstanceStore;
                                                                     //[/Comments]
 */
 class UiDualAudioMessage : public UiEditor,
-                           public Button::Listener,
-                           public Slider::Listener,
-                           public Timer
+                           public juce::Button::Listener,
+                           public juce::Slider::Listener,
+                           public juce::Timer
 {
   public:
     //==============================================================================
     UiDualAudioMessage(AppInstanceStore *app_instance_store_,
-                       UiDualAudioMessageListener *const listener_, const String &project_name_,
-                       AudioPlayer *const audio_player_);
+                       UiDualAudioMessageListener *const listener_,
+                       const juce::String &project_name_, AudioPlayer *const audio_player_);
     ~UiDualAudioMessage();
 
     //==============================================================================
@@ -79,35 +79,35 @@ class UiDualAudioMessage : public UiEditor,
     UiDualAudioMessageListener *const _listener;
     AudioPlayer *const _audio_player;
 
-    Slider *_playing_thumb;
+    juce::Slider *_playing_thumb;
 
     void timerCallback() override;
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
-    void buttonClicked(Button *buttonThatWasClicked) override;
-    void sliderValueChanged(Slider *sliderThatWasMoved) override;
+    void buttonClicked(juce::Button *buttonThatWasClicked) override;
+    void sliderValueChanged(juce::Slider *sliderThatWasMoved) override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<TextButton> ok;
-    ScopedPointer<TextButton> cancel;
-    ScopedPointer<Slider> audio_thumb_new;
-    ScopedPointer<TextButton> play_new;
-    ScopedPointer<Slider> audio_thumb_old;
-    ScopedPointer<Label> titel2;
-    ScopedPointer<Label> project_name;
-    ScopedPointer<Label> titel4;
-    ScopedPointer<Label> old_info_2;
-    ScopedPointer<Label> old_info_3;
-    ScopedPointer<Label> titel7;
-    ScopedPointer<TextButton> play_old;
-    ScopedPointer<Label> old_info_1;
-    ScopedPointer<UiEditorToolbar> toolbar;
+    juce::ScopedPointer<juce::TextButton> ok;
+    juce::ScopedPointer<juce::TextButton> cancel;
+    juce::ScopedPointer<juce::Slider> audio_thumb_new;
+    juce::ScopedPointer<juce::TextButton> play_new;
+    juce::ScopedPointer<juce::Slider> audio_thumb_old;
+    juce::ScopedPointer<juce::Label> titel2;
+    juce::ScopedPointer<juce::Label> project_name;
+    juce::ScopedPointer<juce::Label> titel4;
+    juce::ScopedPointer<juce::Label> old_info_2;
+    juce::ScopedPointer<juce::Label> old_info_3;
+    juce::ScopedPointer<juce::Label> titel7;
+    juce::ScopedPointer<juce::TextButton> play_old;
+    juce::ScopedPointer<juce::Label> old_info_1;
+    juce::ScopedPointer<UiEditorToolbar> toolbar;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiDualAudioMessage)

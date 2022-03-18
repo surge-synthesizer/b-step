@@ -31,6 +31,7 @@
 #include "UiMainWindow.h"
 #include "UiTextImExport.h"
 #include "UIHtmlView.h"
+#include "BinaryData.h"
 
 // HACK NOTE: NEVER PUT OTHER ITEMS THAN PresetItem in the TREEVIEW. reinterpret_cast is used!
 
@@ -152,7 +153,7 @@ class SubThreadOfFimemanager
         was_disabled = true;
         if (FILEMANAGER_PTR)
         {
-            const MessageManagerLock mmLock;
+            const juce::MessageManagerLock mmLock;
             was_disabled = !FILEMANAGER_PTR->isEnabled();
             FILEMANAGER_PTR->setEnabled(false);
         }
@@ -163,7 +164,7 @@ class SubThreadOfFimemanager
         {
             if (!was_disabled)
             {
-                const MessageManagerLock mmLock;
+                const juce::MessageManagerLock mmLock;
                 FILEMANAGER_PTR->setEnabled(true);
             }
         }
@@ -174,7 +175,7 @@ class SubThreadOfFimemanager
 
 void UiEditorFileManager::on_close_clicked()
 {
-    const MessageManagerLock mmLock;
+    const juce::MessageManagerLock mmLock;
 
     if (AUDIO_PLAYER_PTR)
         AUDIO_PLAYER_PTR->stop(true);
@@ -184,12 +185,15 @@ void UiEditorFileManager::on_close_clicked()
 }
 
 class PresetItem;
-static void add_folder_create_options(PresetItem *const parent_, const File &folder_,
+static void add_folder_create_options(PresetItem *const parent_, const juce::File &folder_,
                                       const char *file_extension, int file_color_);
-static void fill_folder_view(PresetItem *const parent_, const File &folder_,
+static void fill_folder_view(PresetItem *const parent_, const juce::File &folder_,
                              const char *file_extension, int file_color_,
                              bool add_options_in_root_);
-struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner, public Component
+struct PresetItem : public juce::TreeViewItem,
+                    juce::Button::Listener,
+                    public FileViewOwner,
+                    public juce::Component
 {
     enum TYPE
     {
@@ -210,8 +214,8 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         AppInstanceStore *_app_instance_store;
 
         PresetItem *const _owner_item;
-        const File _file;
-        const String _old_title;
+        const juce::File _file;
+        const juce::String _old_title;
 
         void on_text_chancel() override
         {
@@ -221,21 +225,21 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
             delete this;
         }
 
-        void on_text_changed(String &text_) override
+        void on_text_changed(juce::String &text_) override
         {
             _owner_item->set_input_listener(nullptr);
 
-            String file_extension = _file.getFileExtension();
-            File renamed_file = _file.getParentDirectory().getChildFile(
-                File::createLegalPathName(text_) + file_extension);
+            juce::String file_extension = _file.getFileExtension();
+            juce::File renamed_file = _file.getParentDirectory().getChildFile(
+                juce::File::createLegalPathName(text_) + file_extension);
 
             bool success = true;
             if (renamed_file.exists() && _file != renamed_file)
             {
-                if (!AlertWindow::showOkCancelBox(
-                        AlertWindow::WarningIcon, "REPLACE FILE???",
-                        text_ + String(" already exist!") +
-                            String("\nWould you like to replace by renaming?"),
+                if (!juce::AlertWindow::showOkCancelBox(
+                        juce::AlertWindow::WarningIcon, "REPLACE FILE???",
+                        text_ + juce::String(" already exist!") +
+                            juce::String("\nWould you like to replace by renaming?"),
                         "REPLACE IT", "KEEP IT", _owner_item->FILEMANAGER_PTR))
                 {
                     success = false;
@@ -262,7 +266,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
 
                         if (_owner_item->_audio_file.existsAsFile())
                         {
-                            File new_audio_file = renamed_file.withFileExtension(
+                            juce::File new_audio_file = renamed_file.withFileExtension(
                                 _owner_item->_audio_file.getFileExtension());
                             _owner_item->_audio_file.moveFileTo(new_audio_file);
                             _owner_item->_audio_file = new_audio_file;
@@ -301,10 +305,10 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         AppInstanceStore *_app_instance_store;
 
         PresetItem *const _parent_item;
-        const File _parent_folder;
+        const juce::File _parent_folder;
 
         PresetItem *_subfolder_item;
-        File _root_plus_new_folder;
+        juce::File _root_plus_new_folder;
 
         void on_text_chancel() override
         {
@@ -314,17 +318,19 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
             SHOW_CANCEL_NOTIFICATION();
             delete this;
         }
-        void on_text_changed(String &text_) override
+        void on_text_changed(juce::String &text_) override
         {
             _subfolder_item->set_input_listener(nullptr);
 
-            File new_folder = _parent_folder.getChildFile(File::createLegalPathName(text_));
+            juce::File new_folder =
+                _parent_folder.getChildFile(juce::File::createLegalPathName(text_));
             bool succes = true;
             if (new_folder.exists())
             {
-                AlertWindow::showMessageBox(AlertWindow::WarningIcon, "FOLDER ALREADY EXIST!",
-                                            String("Can not create \"") + text_ + String("\""),
-                                            "OK", FILEMANAGER_PTR);
+                juce::AlertWindow::showMessageBox(
+                    juce::AlertWindow::WarningIcon, "FOLDER ALREADY EXIST!",
+                    juce::String("Can not create \"") + text_ + juce::String("\""), "OK",
+                    FILEMANAGER_PTR);
                 succes = false;
                 GLOBAL_ERROR_LOG("FOLDER ALREADY EXIST Can not create " + text_);
                 SHOW_ERROR_NOTIFICATION();
@@ -388,10 +394,10 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         AppInstanceStore *const _app_instance_store;
 
         PresetItem *const _parent_item;
-        File _parent_folder;
+        juce::File _parent_folder;
 
         PresetItem *_new_file_item;
-        File _root_plus_new_file;
+        juce::File _root_plus_new_file;
 
         void on_text_chancel() override
         {
@@ -401,7 +407,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
             delete this;
         }
 
-        void on_text_changed(String &text_) override
+        void on_text_changed(juce::String &text_) override
         {
             _new_file_item->set_input_listener(nullptr);
 
@@ -409,17 +415,19 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
             if (!_parent_folder.exists())
                 _parent_folder.createDirectory();
 
-            _new_file_item->set_file(_parent_folder.getChildFile(File::createLegalFileName(text_))
-                                         .withFileExtension(_parent_item->_file_extension));
+            _new_file_item->set_file(
+                _parent_folder.getChildFile(juce::File::createLegalFileName(text_))
+                    .withFileExtension(_parent_item->_file_extension));
             _new_file_item->set_file_extension(_parent_item->_file_extension);
             _new_file_item->_name = text_;
             bool success = true;
             if (_new_file_item->_file.exists())
             {
-                if (!AlertWindow::showOkCancelBox(AlertWindow::WarningIcon, "FILE ALREADY EXIST!!!",
-                                                  text_ + String(" already exist!") +
-                                                      String("\nWould you like to replace it?"),
-                                                  "REPLACE IT", "KEEP IT", FILEMANAGER_PTR))
+                if (!juce::AlertWindow::showOkCancelBox(
+                        juce::AlertWindow::WarningIcon, "FILE ALREADY EXIST!!!",
+                        text_ + juce::String(" already exist!") +
+                            juce::String("\nWould you like to replace it?"),
+                        "REPLACE IT", "KEEP IT", FILEMANAGER_PTR))
                 {
                     success = false;
                     SHOW_CANCEL_NOTIFICATION();
@@ -435,8 +443,8 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
                 {
                     SHOW_CUSTOM_NOTIFICATION("FILE SAVED", 1);
 
-                    bool assign_additional_info = AlertWindow::showOkCancelBox(
-                        AlertWindow::QuestionIcon, "WOULD YOU LIKE TO SET ADDITIONAL INFO?",
+                    bool assign_additional_info = juce::AlertWindow::showOkCancelBox(
+                        juce::AlertWindow::QuestionIcon, "WOULD YOU LIKE TO SET ADDITIONAL INFO?",
                         "Identify your projects and files with comments and audio samples.",
                         "SET INFO", "NOT NOW", FILEMANAGER_PTR);
                     if (assign_additional_info)
@@ -481,7 +489,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
             : _app_instance_store(parent_item_->_app_instance_store), _parent_item(parent_item_),
               _parent_folder(parent_item_->_file), _new_file_item(nullptr)
         {
-            String ident;
+            juce::String ident;
 
             if (_parent_item->_file_extension == APPDEFF::project_file_extension)
             {
@@ -525,17 +533,18 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         AppInstanceStore *_app_instance_store;
         PresetItem *const _root_download_item;
 
-        File local_download_folder;
+        juce::File local_download_folder;
 
-        String presets_remote_root_folder;
+        juce::String presets_remote_root_folder;
 
-        File get_local_path(const String &subfolders_) const
+        juce::File get_local_path(const juce::String &subfolders_) const
         {
             return local_download_folder.getChildFile(subfolders_);
         }
-        URL get_remote_url(const String &subfolders_, const String &file_) const
+        juce::URL get_remote_url(const juce::String &subfolders_, const juce::String &file_) const
         {
-            String url_as_string(B_STEP_DOWNLOADS_URL + subfolders_ + String("/") + file_);
+            juce::String url_as_string(B_STEP_DOWNLOADS_URL + subfolders_ + juce::String("/") +
+                                       file_);
             url_as_string = url_as_string.replace(" ", "%20");
             return url_as_string;
         }
@@ -543,31 +552,32 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         bool has_downloaded_something;
         int found_sum_files;
 
-        void build_tree(const String &sub_parent_folders_, PresetItem *parent_item_)
+        void build_tree(const juce::String &sub_parent_folders_, PresetItem *parent_item_)
         {
             // DOWNLOAD ROOT OVERVIEW
-            ScopedPointer<XmlElement> folder = download_xml(sub_parent_folders_, "folders.xml");
+            juce::ScopedPointer<juce::XmlElement> folder =
+                download_xml(sub_parent_folders_, "folders.xml");
             if (folder)
             {
                 has_downloaded_something = true;
 
                 // READ FILES
-                ScopedPointer<XmlElement> overall_files =
+                juce::ScopedPointer<juce::XmlElement> overall_files =
                     download_xml(sub_parent_folders_, "files.xml");
-                XmlElement *files = overall_files;
+                juce::XmlElement *files = overall_files;
                 if (files)
                 {
                     files = files->getFirstChildElement();
                     while (files)
                     {
-                        String project = files->getStringAttribute("file", ERROR);
+                        juce::String project = files->getStringAttribute("file", ERROR);
                         if (project != ERROR)
                         {
-                            File local_tmp_file(
+                            juce::File local_tmp_file(
                                 get_local_path(sub_parent_folders_).getChildFile(project));
                             if (!local_tmp_file.exists())
                             {
-                                const MessageManagerLock mmLock;
+                                const juce::MessageManagerLock mmLock;
 
                                 found_sum_files++;
                                 PresetItem *bproject =
@@ -582,7 +592,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
                                     get_remote_url(sub_parent_folders_, project));
                                 bproject->set_file_extension(_root_download_item->_file_extension);
 
-                                String audio_file = files->getStringAttribute("audio", ERROR);
+                                juce::String audio_file = files->getStringAttribute("audio", ERROR);
                                 if (audio_file != ERROR && audio_file != "")
                                 {
                                     bproject->set_audio_file(get_local_path(sub_parent_folders_)
@@ -597,18 +607,19 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
                 }
 
                 // READ FOLDERS
-                XmlElement *child = folder->getFirstChildElement();
+                juce::XmlElement *child = folder->getFirstChildElement();
                 while (child)
                 {
-                    String child_folder_name = child->getStringAttribute("name", ERROR);
+                    juce::String child_folder_name = child->getStringAttribute("name", ERROR);
                     if (child_folder_name != ERROR)
                     {
-                        String child_sub_folders = sub_parent_folders_ + "/" + child_folder_name;
+                        juce::String child_sub_folders =
+                            sub_parent_folders_ + "/" + child_folder_name;
 
-                        MessageManagerLock *mmLock = new MessageManagerLock;
+                        juce::MessageManagerLock *mmLock = new juce::MessageManagerLock;
 
                         // UPDATE VIEW
-                        File local_folder = get_local_path(child_sub_folders);
+                        juce::File local_folder = get_local_path(child_sub_folders);
                         PresetItem *subfolder_item =
                             new PresetItem(parent_item_->_app_instance_store, child_folder_name,
                                            PresetItem::IS_DOWNLOAD_DIR);
@@ -621,7 +632,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
                         // RECURSIVE FOR CHILD FOLDERS
                         build_tree(child_sub_folders, subfolder_item);
 
-                        const MessageManagerLock mmLock_;
+                        const juce::MessageManagerLock mmLock_;
 
                         // ADD ONLY UNEMPTY ELEMENTS
                         if (subfolder_item->getNumSubItems())
@@ -636,9 +647,10 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         }
 
         // YOU HAVE TO DELETE THIS XML
-        XmlElement *download_xml(const String &subfolders_, const String &xml_name_)
+        juce::XmlElement *download_xml(const juce::String &subfolders_,
+                                       const juce::String &xml_name_)
         {
-            XmlElement *project_folders_overview_memory =
+            juce::XmlElement *project_folders_overview_memory =
                 get_remote_url(subfolders_, xml_name_).readEntireXmlStream().release();
             if (project_folders_overview_memory)
                 return project_folders_overview_memory;
@@ -650,8 +662,8 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         {
             build_tree(presets_remote_root_folder, _root_download_item);
 
-            String info;
-            String name;
+            juce::String info;
+            juce::String name;
             if (has_downloaded_something && found_sum_files == 0)
             {
                 info = "You have already downloaded all available stuff.";
@@ -671,7 +683,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
 
             if (info != "")
             {
-                const MessageManagerLock mmLock;
+                const juce::MessageManagerLock mmLock;
 
                 PresetItem *item = new PresetItem(_root_download_item->_app_instance_store, name,
                                                   PresetItem::IS_UNDEFINED);
@@ -736,9 +748,9 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
   private:
     const TYPE _type;
 
-    String _name;
-    File _file;
-    String _info;
+    juce::String _name;
+    juce::File _file;
+    juce::String _info;
 
     const char *_data;
     int _data_size;
@@ -748,16 +760,16 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
     int _image_data_size;
 
     UiFileView *_tmp_view;
-    ScopedPointer<Drawable> _drawable;
+    juce::ScopedPointer<juce::Drawable> _drawable;
     static PresetItem *_last_playback_item;
 
-    uint32 _label_color;
+    std::uint32_t _label_color;
 
-    String working_string;
+    juce::String working_string;
     bool _has_audio;
-    File _audio_file;
-    URL _audio_url;
-    URL _file_url;
+    juce::File _audio_file;
+    juce::URL _audio_url;
+    juce::URL _file_url;
 
     UiFileViewListener *_input_listener;
 
@@ -776,13 +788,13 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
 
     // INFO
 
-    String getUniqueName() const override { return _name; }
+    juce::String getUniqueName() const override { return _name; }
 
     // VIEW
 
-    std::unique_ptr<Component> createItemComponent() override
+    std::unique_ptr<juce::Component> createItemComponent() override
     {
-        return std::unique_ptr<Component>(refresh_get_view());
+        return std::unique_ptr<juce::Component>(refresh_get_view());
     }
     void on_view_delete(UiFileView *const view_) override
     {
@@ -792,22 +804,24 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
                 AUDIO_PLAYER_PTR->unset_view(view_->get_thumb());
     }
 
-    void paintHorizontalConnectingLine(Graphics &g, const Line<float> &line_) override
+    void paintHorizontalConnectingLine(juce::Graphics &g, const juce::Line<float> &line_) override
     {
         switch (_type)
         {
         case IS_CREATE_PROJECT:
-            _drawable = Drawable::createFromImageData(BinaryData::new_svg, BinaryData::new_svgSize)
-                            .release();
+            _drawable =
+                juce::Drawable::createFromImageData(BinaryData::new_svg, BinaryData::new_svgSize)
+                    .release();
             break;
         case IS_CREATE_FOLDER:
-            _drawable = Drawable::createFromImageData(BinaryData::foldernew_svg,
-                                                      BinaryData::foldernew_svgSize)
+            _drawable = juce::Drawable::createFromImageData(BinaryData::foldernew_svg,
+                                                            BinaryData::foldernew_svgSize)
                             .release();
             break;
         case IS_DOWNLOAD:
-            _drawable = Drawable::createFromImageData(BinaryData::eye_svg, BinaryData::eye_svgSize)
-                            .release();
+            _drawable =
+                juce::Drawable::createFromImageData(BinaryData::eye_svg, BinaryData::eye_svgSize)
+                    .release();
             break;
         default:
             _drawable = nullptr;
@@ -815,44 +829,47 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
 
         if (_drawable)
         {
-            Rectangle<float> area = Rectangle<float>(line_.getStartX(), line_.getStartY(),
-                                                     line_.getEndX() - line_.getStartX(),
-                                                     line_.getEndY() - line_.getStartY());
-            _drawable->replaceColour(Colour(0xffff3b00),
-                                     Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+            juce::Rectangle<float> area = juce::Rectangle<float>(
+                line_.getStartX(), line_.getStartY(), line_.getEndX() - line_.getStartX(),
+                line_.getEndY() - line_.getStartY());
+            _drawable->replaceColour(
+                juce::Colour(0xffff3b00),
+                juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
             _drawable->drawWithin(
                 g,
-                Rectangle<float>(area.getX() + area.getWidth(), 0.2 * getItemHeight(),
-                                 _app_instance_store->editor->height_propertion() * area.getWidth(),
-                                 0.6 * getItemHeight()),
-                RectanglePlacement::onlyReduceInSize, 1.000f);
+                juce::Rectangle<float>(area.getX() + area.getWidth(), 0.2 * getItemHeight(),
+                                       _app_instance_store->editor->height_propertion() *
+                                           area.getWidth(),
+                                       0.6 * getItemHeight()),
+                juce::RectanglePlacement::onlyReduceInSize, 1.000f);
 
-            TreeViewItem::paintHorizontalConnectingLine(g, line_);
+            juce::TreeViewItem::paintHorizontalConnectingLine(g, line_);
         }
         else
-            TreeViewItem::paintHorizontalConnectingLine(g, line_);
+            juce::TreeViewItem::paintHorizontalConnectingLine(g, line_);
     }
 
-    void paintOpenCloseButton(Graphics &g, const Rectangle<float> &area, Colour,
+    void paintOpenCloseButton(juce::Graphics &g, const juce::Rectangle<float> &area, juce::Colour,
                               bool /*isMouseOver*/) override
     {
         switch (_type)
         {
         case IS_DOWNLOAD_DIR:;
         case IS_DIR:
-            _drawable =
-                Drawable::createFromImageData(BinaryData::folder2_svg, BinaryData::folder2_svgSize)
-                    .release();
+            _drawable = juce::Drawable::createFromImageData(BinaryData::folder2_svg,
+                                                            BinaryData::folder2_svgSize)
+                            .release();
             if (_drawable)
             {
-                _drawable->replaceColour(Colour(0xffff3b00),
-                                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                _drawable->replaceColour(
+                    juce::Colour(0xffff3b00),
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
                 _drawable->drawWithin(g,
-                                      Rectangle<float>(area.getX() + area.getWidth() * 0.2,
-                                                       area.getY() + area.getHeight() * 0.2,
-                                                       area.getWidth() * 0.6,
-                                                       area.getHeight() * 0.6),
-                                      RectanglePlacement::onlyReduceInSize, 1.000f);
+                                      juce::Rectangle<float>(area.getX() + area.getWidth() * 0.2,
+                                                             area.getY() + area.getHeight() * 0.2,
+                                                             area.getWidth() * 0.6,
+                                                             area.getHeight() * 0.6),
+                                      juce::RectanglePlacement::onlyReduceInSize, 1.000f);
             }
             break;
         default:
@@ -880,7 +897,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         }
     }
 
-    void buttonClicked(Button *) override
+    void buttonClicked(juce::Button *) override
     {
         switch (_type)
         {
@@ -893,7 +910,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
                 AUDIO_PLAYER_PTR->stop();
             if (isSelected())
                 setOpen(!isOpen());
-            setSelected(true, true, sendNotification);
+            setSelected(true, true, juce::sendNotification);
             break;
 
         case IS_BINARY_FILE:   // NO BREAK!
@@ -901,7 +918,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         case IS_FILE:
             if (_app_instance_store->editor_config.autoplay_sample_audio)
                 play_audio();
-            setSelected(true, true, sendNotification);
+            setSelected(true, true, juce::sendNotification);
             break;
 
         case IS_CREATE_FOLDER:
@@ -972,10 +989,10 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
     // CLASSIFICATON
 
     PresetItem::TYPE get_type() const { return _type; }
-    void set_color(uint32 color_) { _label_color = color_; }
+    void set_color(std::uint32_t color_) { _label_color = color_; }
 
     // INFORMATION
-    void set_additional_info(const String &text_) { _info = text_; }
+    void set_additional_info(const juce::String &text_) { _info = text_; }
 
     // DATA / FILES / PROJECTS (XML)
 
@@ -990,9 +1007,9 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         _data = data_;
         _data_size = data_size_;
     }
-    void set_download_url(const URL &file_url_) { _file_url = file_url_; }
+    void set_download_url(const juce::URL &file_url_) { _file_url = file_url_; }
     bool is_already_on_disk() const { return _file.existsAsFile(); }
-    void set_file(const File &file_)
+    void set_file(const juce::File &file_)
     {
         _file = file_;
 
@@ -1002,7 +1019,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
             AudioPlayer *const _player = AUDIO_PLAYER_PTR;
             if (_player)
             {
-                StringArray extensions = _player->get_supported_audio_extensions();
+                juce::StringArray extensions = _player->get_supported_audio_extensions();
                 for (int i = 0; i != extensions.size(); ++i)
                     if (set_audio_file(_file.getParentDirectory().getChildFile(
                             _file.getFileNameWithoutExtension() + extensions.getReference(i))))
@@ -1014,8 +1031,8 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
 
     void set_file_extension(const char *file_extension_) { _file_extension = file_extension_; }
 
-    const File &get_file() const { return _file; }
-    String &get_file_info(String &comment_) const
+    const juce::File &get_file() const { return _file; }
+    juce::String &get_file_info(juce::String &comment_) const
     {
         comment_ =
             ((_is_writprotect || !FILEMANAGER_PTR->_is_in_write_mode) ? NO_FILEINFO_SET_READ_ONLY
@@ -1024,14 +1041,17 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
             comment_ = _info;
         else if (_type == IS_FILE)
         {
-            ScopedPointer<XmlElement> xml = XmlDocument(_file).getDocumentElement().release();
+            juce::ScopedPointer<juce::XmlElement> xml =
+                juce::XmlDocument(_file).getDocumentElement().release();
             if (xml)
                 comment_ = xml->getStringAttribute("COMMENT", comment_);
         }
         else if (_type == IS_DIR)
         {
-            ScopedPointer<XmlElement> xml =
-                XmlDocument(_file.getChildFile("directory.info")).getDocumentElement().release();
+            juce::ScopedPointer<juce::XmlElement> xml =
+                juce::XmlDocument(_file.getChildFile("directory.info"))
+                    .getDocumentElement()
+                    .release();
             if (xml)
                 comment_ = xml->getStringAttribute("COMMENT", comment_);
         }
@@ -1044,13 +1064,14 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
 
         return comment_;
     }
-    bool write_file_info(const String &comment_) const
+    bool write_file_info(const juce::String &comment_) const
     {
-        if (comment_ != String(NO_FILEINFO_SET))
+        if (comment_ != juce::String(NO_FILEINFO_SET))
         {
             if (_file.existsAsFile())
             {
-                ScopedPointer<XmlElement> xml = XmlDocument(_file).getDocumentElement().release();
+                juce::ScopedPointer<juce::XmlElement> xml =
+                    juce::XmlDocument(_file).getDocumentElement().release();
                 if (xml)
                 {
                     xml->removeAttribute("COMMENT");
@@ -1068,10 +1089,10 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         return false;
     }
 
-    static bool write_folder_info(const File &folder_, const String &comment_)
+    static bool write_folder_info(const juce::File &folder_, const juce::String &comment_)
     {
-        File file = folder_.getChildFile("directory.info");
-        XmlElement xml("INFO");
+        juce::File file = folder_.getChildFile("directory.info");
+        juce::XmlElement xml("INFO");
         xml.setAttribute("COMMENT", comment_);
         if (xml.writeTo(file, {}))
             return true;
@@ -1121,17 +1142,17 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         if (data_ && data_size_)
             _has_audio = true;
     }
-    void set_stream_url(const URL &stream_url_)
+    void set_stream_url(const juce::URL &stream_url_)
     {
         if (AUDIO_PLAYER_PTR)
             AUDIO_PLAYER_PTR->stop();
 
         _audio_url = stream_url_;
 
-        if (_audio_url != URL(ERROR))
+        if (_audio_url != juce::URL(ERROR))
             _has_audio = true;
     }
-    bool set_audio_file(const File &audio_file_)
+    bool set_audio_file(const juce::File &audio_file_)
     {
         if (AUDIO_PLAYER_PTR)
             AUDIO_PLAYER_PTR->stop();
@@ -1150,10 +1171,10 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
             AUDIO_PLAYER_PTR->stop();
 
         bool remove_it =
-            AlertWindow::showOkCancelBox(AlertWindow::QuestionIcon, "REMOVE AUDIO?",
-                                         "This will remove and delete the assigned audio.",
-                                         "REMOVE", "KEEP IT", FILEMANAGER_PTR);
-        SESSION_ERROR_LOG("REMOVE AUDIO " + String(remove_it));
+            juce::AlertWindow::showOkCancelBox(juce::AlertWindow::QuestionIcon, "REMOVE AUDIO?",
+                                               "This will remove and delete the assigned audio.",
+                                               "REMOVE", "KEEP IT", FILEMANAGER_PTR);
+        SESSION_ERROR_LOG("REMOVE AUDIO " + juce::String(remove_it));
         if (remove_it)
         {
             _has_audio = false;
@@ -1164,8 +1185,8 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
 #else
                 _audio_file.deleteFile();
 #endif
-            _audio_file = File("");
-            _audio_url = URL("");
+            _audio_file = juce::File("");
+            _audio_url = juce::URL("");
             _audio_data = nullptr;
             _audio_data_size = 0;
         }
@@ -1192,13 +1213,13 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
                     // FROM MEMORY
                     if (_audio_data && _audio_data_size)
                         AUDIO_PLAYER_PTR->loadFileIntoTransport(
-                            new MemoryInputStream(_audio_data, _audio_data_size, false));
+                            new juce::MemoryInputStream(_audio_data, _audio_data_size, false));
                     // FROM URL STREAM
-                    else if (_audio_url != URL(ERROR))
+                    else if (_audio_url != juce::URL(ERROR))
 #ifdef B_STEP_STANDALONE
 #ifndef LINUX
-                        AUDIO_PLAYER_PTR->loadFileIntoTransport(
-                            _audio_url.createInputStream(false, nullptr, nullptr, String(), 4000))
+                        AUDIO_PLAYER_PTR->loadFileIntoTransport(_audio_url.createInputStream(
+                            false, nullptr, nullptr, juce::String(), 4000))
 #endif
                             ;
 #else
@@ -1233,7 +1254,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
             }
         }
     }
-    void assign_new_audio(const File &new_audio_file_)
+    void assign_new_audio(const juce::File &new_audio_file_)
     {
         class AudioAssigner : public UiDualAudioMessageListener, public SubThreadOfFimemanager
         {
@@ -1241,16 +1262,16 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
 
             PresetItem *const _owner;
 
-            File _new_audio_file;
-            File _old_audio_file;
-            File _project_file;
+            juce::File _new_audio_file;
+            juce::File _old_audio_file;
+            juce::File _project_file;
 
             void on_ok() override
             {
                 if (_old_audio_file.existsAsFile())
                     _old_audio_file.deleteFile();
 
-                File new_audio_file_at_new_destination =
+                juce::File new_audio_file_at_new_destination =
                     _project_file.withFileExtension(_new_audio_file.getFileExtension());
                 if (_new_audio_file.copyFileTo(new_audio_file_at_new_destination))
                 {
@@ -1265,13 +1286,13 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
             }
             void on_chancel() override { SHOW_CANCEL_NOTIFICATION(); };
 
-            const File &get_new_audio_file() override { return _new_audio_file; }
-            const File &get_old_audio_file() override { return _old_audio_file; }
+            const juce::File &get_new_audio_file() override { return _new_audio_file; }
+            const juce::File &get_old_audio_file() override { return _old_audio_file; }
 
           public:
             AudioAssigner(AppInstanceStore *app_instance_store_, PresetItem *const owner_,
-                          const File &new_audio_file_, const File &old_audio_file_,
-                          const File &project_file_)
+                          const juce::File &new_audio_file_, const juce::File &old_audio_file_,
+                          const juce::File &project_file_)
                 : SubThreadOfFimemanager(app_instance_store_),
                   _app_instance_store(app_instance_store_), _owner(owner_),
                   _new_audio_file(new_audio_file_), _old_audio_file(old_audio_file_),
@@ -1365,9 +1386,9 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         // PROJECTS
         if (_file_extension == APPDEFF::project_file_extension)
         {
-            ScopedPointer<XmlElement> parsed =
-                XmlDocument::parse(
-                    MemoryInputStream(_data, _data_size, false).readEntireStreamAsString())
+            juce::ScopedPointer<juce::XmlElement> parsed =
+                juce::XmlDocument::parse(
+                    juce::MemoryInputStream(_data, _data_size, false).readEntireStreamAsString())
                     .release();
             if (parsed)
                 success = _app_instance_store->load_project(*parsed) == "";
@@ -1382,9 +1403,9 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         // CHORDS
         else if (_file_extension == APPDEFF::chordset_file_extension)
         {
-            ScopedPointer<XmlElement> parsed =
-                XmlDocument::parse(
-                    MemoryInputStream(_data, _data_size, false).readEntireStreamAsString())
+            juce::ScopedPointer<juce::XmlElement> parsed =
+                juce::XmlDocument::parse(
+                    juce::MemoryInputStream(_data, _data_size, false).readEntireStreamAsString())
                     .release();
             if (parsed)
                 success = _app_instance_store->load_chordset(*parsed) == "";
@@ -1411,13 +1432,13 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
                 // OVERWIRTE?
                 if (_file != _app_instance_store->last_loaded_project && _file.exists())
                 {
-                    if (AlertWindow::showOkCancelBox(
-                            AlertWindow::WarningIcon, "OVERWRITE EXISTING FILE???",
-                            _file.getFileNameWithoutExtension() + String(" already exist.") +
-                                String("\nWould you like to replace by ") +
+                    if (juce::AlertWindow::showOkCancelBox(
+                            juce::AlertWindow::WarningIcon, "OVERWRITE EXISTING FILE???",
+                            _file.getFileNameWithoutExtension() + juce::String(" already exist.") +
+                                juce::String("\nWould you like to replace by ") +
                                 _app_instance_store->last_loaded_project
                                     .getFileNameWithoutExtension() +
-                                String(" ?"),
+                                juce::String(" ?"),
                             "REPLACE", "KEEP IT", FILEMANAGER_PTR))
                     {
                         do_it = true;
@@ -1437,10 +1458,10 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         {
             if (_file.existsAsFile())
             {
-                if (AlertWindow::showOkCancelBox(
-                        AlertWindow::WarningIcon, "OVERWRITE EXISTING FILE???",
-                        _file.getFileNameWithoutExtension() + String(" already exist.") +
-                            String("\nWould you like to replace it?"),
+                if (juce::AlertWindow::showOkCancelBox(
+                        juce::AlertWindow::WarningIcon, "OVERWRITE EXISTING FILE???",
+                        _file.getFileNameWithoutExtension() + juce::String(" already exist.") +
+                            juce::String("\nWould you like to replace it?"),
                         "REPLACE", "KEEP IT", FILEMANAGER_PTR))
                 {
                     do_it = true;
@@ -1509,8 +1530,8 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
                     {
                         is_done = false;
 
-                        String x_of =
-                            String(i) + String("/") + String(_parent_folder->getNumSubItems());
+                        juce::String x_of = juce::String(i) + juce::String("/") +
+                                            juce::String(_parent_folder->getNumSubItems());
                         SHOW_CUSTOM_NOTIFICATION(x_of, 1);
 
                         if (child->_type == IS_DOWNLOAD_FILE)
@@ -1524,12 +1545,12 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
                             is_done = true;
 
                         while (!is_done)
-                            Thread::sleep(200);
+                            juce::Thread::sleep(200);
                     }
                 }
 
                 while (!is_done)
-                    Thread::sleep(200);
+                    juce::Thread::sleep(200);
 
                 if (_was_master_download)
                 {
@@ -1563,7 +1584,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
     void handle_download_from_server(bool volatile *autoclose_on_done_ = nullptr)
     {
         // NOTE _autoclose_on_done mages also if we reset the view
-        MessageManagerLock mml(Thread::getCurrentThread());
+        juce::MessageManagerLock mml(juce::Thread::getCurrentThread());
         class DownloadCallback : public UiDualDownloadListener, public SubThreadOfFimemanager
         {
             PresetItem *const _item;
@@ -1617,7 +1638,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         DownloadCallback *download_callback = nullptr;
         if (!_file.existsAsFile())
         {
-            if (_file_url != URL(ERROR))
+            if (_file_url != juce::URL(ERROR))
             {
                 bool should_write_folder_info = false;
                 if (!_file.getParentDirectory().exists())
@@ -1638,7 +1659,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
 
                     // AUDIO DOWNLOAD IF AVAILABLE
                     if (!_audio_file.existsAsFile())
-                        if (_audio_url != URL(ERROR))
+                        if (_audio_url != juce::URL(ERROR))
                             if (_audio_file.getParentDirectory().createDirectory())
                             {
                                 download_callback->set_audio_downloader(
@@ -1648,7 +1669,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
             }
             if (download_callback)
             {
-                MessageManagerLock lock;
+                juce::MessageManagerLock lock;
 
                 UiDualDownload *ui_download =
                     new UiDualDownload(_app_instance_store, download_callback);
@@ -1715,7 +1736,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         if (AUDIO_PLAYER_PTR)
             AUDIO_PLAYER_PTR->stop();
 
-        String tmp_file_info;
+        juce::String tmp_file_info;
         bool success = false;
         switch (_type)
         {
@@ -1770,16 +1791,16 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
         if (AUDIO_PLAYER_PTR)
             AUDIO_PLAYER_PTR->stop();
 
-        Array<File> files;
+        juce::Array<juce::File> files;
         switch (_type)
         {
         case IS_DIR:
-            _file.findChildFiles(files, File::findFilesAndDirectories | File::ignoreHiddenFiles,
-                                 true);
-            if (AlertWindow::showOkCancelBox(
-                    AlertWindow::WarningIcon, "DELETE A WHOLE FOLDER???",
-                    _file.getFileNameWithoutExtension() + String(" contains ") +
-                        String(files.size()) +
+            _file.findChildFiles(
+                files, juce::File::findFilesAndDirectories | juce::File::ignoreHiddenFiles, true);
+            if (juce::AlertWindow::showOkCancelBox(
+                    juce::AlertWindow::WarningIcon, "DELETE A WHOLE FOLDER???",
+                    _file.getFileNameWithoutExtension() + juce::String(" contains ") +
+                        juce::String(files.size()) +
                         " files and folders.\nAll files and folders will be deleted too!",
                     "DELETE", "KEEP IT", FILEMANAGER_PTR))
             {
@@ -1813,10 +1834,11 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
             break;
 
         case IS_FILE:
-            if (AlertWindow::showOkCancelBox(AlertWindow::WarningIcon, "DELETE FILE???",
-                                             String("Delete file: ") +
-                                                 _file.getFileNameWithoutExtension() + String(" ?"),
-                                             "DELETE", "KEEP IT", FILEMANAGER_PTR))
+            if (juce::AlertWindow::showOkCancelBox(juce::AlertWindow::WarningIcon, "DELETE FILE???",
+                                                   juce::String("Delete file: ") +
+                                                       _file.getFileNameWithoutExtension() +
+                                                       juce::String(" ?"),
+                                                   "DELETE", "KEEP IT", FILEMANAGER_PTR))
             {
                 SESSION_ERROR_LOG("DELETE FILE -> true " + _file.getFileNameWithoutExtension());
                 if (
@@ -1859,7 +1881,7 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
 
     // CTOR
 
-    PresetItem(AppInstanceStore *store_, const String &name_, PresetItem::TYPE type_)
+    PresetItem(AppInstanceStore *store_, const juce::String &name_, PresetItem::TYPE type_)
         : _type(type_), _name(name_),
 
           _data(nullptr), _data_size(0), _audio_data(nullptr), _audio_data_size(0),
@@ -1898,10 +1920,10 @@ struct PresetItem : public TreeViewItem, Button::Listener, public FileViewOwner,
 PresetItem *PresetItem::_last_playback_item = nullptr;
 bool PresetItem::UpdateServerFileStructure::is_working = false;
 
-static void add_folder_create_options(PresetItem *const parent_, const File &folder_,
+static void add_folder_create_options(PresetItem *const parent_, const juce::File &folder_,
                                       const char *file_extension, int file_color_)
 {
-    String ident;
+    juce::String ident;
     if (file_extension == APPDEFF::project_file_extension)
     {
         ident = "SAVE PROJECT UNDER NEW NAME";
@@ -1942,19 +1964,18 @@ static void add_folder_create_options(PresetItem *const parent_, const File &fol
     item->set_file_extension(file_extension);
 }
 
-static void fill_folder_view(PresetItem *const parent_, const File &folder_,
+static void fill_folder_view(PresetItem *const parent_, const juce::File &folder_,
                              const char *file_extension, int file_color_, bool add_options_in_root_)
 {
     // TODO isn't overflow save!
     if (add_options_in_root_)
         add_folder_create_options(parent_, folder_, file_extension, file_color_);
-
-    Array<File> b_projects;
+    juce::Array<juce::File> b_projects;
     parent_->set_file(folder_);
-    folder_.findChildFiles(b_projects, File::findFilesAndDirectories, false, "*");
+    folder_.findChildFiles(b_projects, juce::File::findFilesAndDirectories, false, "*");
     struct SortFilesAlphabetically
     {
-        static int compareElements(File a, File b)
+        static int compareElements(juce::File a, juce::File b)
         {
             if ((a.existsAsFile() && b.existsAsFile()) || (a.isDirectory() && b.isDirectory()))
             {
@@ -1976,7 +1997,7 @@ static void fill_folder_view(PresetItem *const parent_, const File &folder_,
     SortFilesAlphabetically comparer;
     b_projects.sort(comparer, true);
 
-    File file;
+    juce::File file;
     for (int i = 0; i != b_projects.size(); ++i)
     {
         file = b_projects.getUnchecked(i);
@@ -2016,7 +2037,7 @@ static inline void fill_project_presets(PresetItem *preset_folder_)
     parent_->addSubItem(preset_item);                                                              \
     preset_item->set_color(0xffff4e4e);                                                            \
     preset_item->set_file_extension(APPDEFF::project_file_extension);                              \
-    preset_item->set_file(File(String("Project Preset: ") + String(name_)))
+    preset_item->set_file(juce::File(juce::String("Project Preset: ") + juce::String(name_)))
 
 #define ADD_BINARY_PRESET_WITH_AUDIO(parent_, name_, binary_, audio_)                              \
     ADD_BINARY_PRESET(parent_, name_, binary_);                                                    \
@@ -2176,7 +2197,8 @@ static inline void fill_chord_presets(PresetItem *preset_folder_)
 #undef ADD_CHORD_PRESET
 }
 
-static inline File get_view_restore_file(VIEW_TYPE type, bool create_folders_if_not_exist_ = false)
+static inline juce::File get_view_restore_file(VIEW_TYPE type,
+                                               bool create_folders_if_not_exist_ = false)
 {
     switch (type)
     {
@@ -2194,50 +2216,52 @@ static inline File get_view_restore_file(VIEW_TYPE type, bool create_folders_if_
         return get_session_folder(create_folders_if_not_exist_).getChildFile("fb-cfg.xml");
     }
 
-    return File("&&");
+    return juce::File("&&");
 }
 
-void create_download_items(PresetItem *parent_, String name_, String folder_name_,
-                           const char *file_extension_, uint32 colour_, bool is_in_write_mode)
+void create_download_items(PresetItem *parent_, juce::String name_, juce::String folder_name_,
+                           const char *file_extension_, std::uint32_t colour_,
+                           bool is_in_write_mode)
 {
-    PresetItem *downloads_item = new PresetItem(parent_->_app_instance_store,
-                                                String("PRESETS (Download)"), PresetItem::IS_DIR);
+    PresetItem *downloads_item = new PresetItem(
+        parent_->_app_instance_store, juce::String("PRESETS (Download)"), PresetItem::IS_DIR);
     parent_->addSubItem(downloads_item);
     downloads_item->set_writeprotect(true);
-    downloads_item->set_additional_info(String("Downloaded ") + name_ +
-                                        String(" from the online repository (read/writeable)."));
+    downloads_item->set_additional_info(
+        juce::String("Downloaded ") + name_ +
+        juce::String(" from the online repository (read/writeable)."));
 
     fill_folder_view(downloads_item, get_downloads_folder().getChildFile(folder_name_),
                      file_extension_, colour_, false);
 
     if (!is_in_write_mode)
     {
-        PresetItem *item = new PresetItem(parent_->_app_instance_store,
-                                          String("REFRESH DOWNLOADABLE ") + name_.toUpperCase(),
-                                          PresetItem::IS_DOWNLOAD);
+        PresetItem *item = new PresetItem(
+            parent_->_app_instance_store,
+            juce::String("REFRESH DOWNLOADABLE ") + name_.toUpperCase(), PresetItem::IS_DOWNLOAD);
         parent_->addSubItem(item);
-        item->set_additional_info(String("Click this entry to watch for new ") + name_ +
-                                  String(" in the online repository."));
+        item->set_additional_info(juce::String("Click this entry to watch for new ") + name_ +
+                                  juce::String(" in the online repository."));
         item->set_file_extension(file_extension_);
     }
 }
 
-PresetItem *create_fill_subroot_folders(PresetItem *root_, String name_, String folder_,
-                                        String description_, const char *file_extension_,
-                                        uint32 colour_, bool is_in_write_mode)
+PresetItem *create_fill_subroot_folders(PresetItem *root_, juce::String name_, juce::String folder_,
+                                        juce::String description_, const char *file_extension_,
+                                        std::uint32_t colour_, bool is_in_write_mode)
 {
     PresetItem *subfolder_item =
         new PresetItem(root_->_app_instance_store, name_.toUpperCase(), PresetItem::IS_DIR);
     root_->addSubItem(subfolder_item);
-    root_->set_file(File(name_));
+    root_->set_file(juce::File(name_));
     subfolder_item->set_additional_info(description_);
     subfolder_item->set_writeprotect(true);
 
     PresetItem *user_folder_item = new PresetItem(
-        root_->_app_instance_store, String("MY ") + name_.toUpperCase(), PresetItem::IS_DIR);
+        root_->_app_instance_store, juce::String("MY ") + name_.toUpperCase(), PresetItem::IS_DIR);
     subfolder_item->addSubItem(user_folder_item);
     user_folder_item->set_additional_info("A read/writeable folder which contains your " + name_ +
-                                          String("."));
+                                          juce::String("."));
     user_folder_item->set_writeprotect(true);
 
     fill_folder_view(user_folder_item, get_app_folder().getChildFile(folder_), file_extension_,
@@ -2267,9 +2291,9 @@ void UiEditorFileManager::reset_tree_view()
 
 void UiEditorFileManager::store_tree_view()
 {
-    ScopedPointer<XmlElement> state = treeView->getOpennessState(true).release();
+    juce::ScopedPointer<juce::XmlElement> state = treeView->getOpennessState(true).release();
     if (state)
-        state->writeTo(File(get_view_restore_file(_view_type, true)), {});
+        state->writeTo(juce::File(get_view_restore_file(_view_type, true)), {});
 }
 
 void UiEditorFileManager::build_init_tree_view()
@@ -2389,8 +2413,10 @@ void UiEditorFileManager::build_init_tree_view()
 
     // RESTORE OPEN
     {
-        ScopedPointer<XmlElement> xml =
-            XmlDocument(File(get_view_restore_file(_view_type))).getDocumentElement().release();
+        juce::ScopedPointer<juce::XmlElement> xml =
+            juce::XmlDocument(juce::File(get_view_restore_file(_view_type)))
+                .getDocumentElement()
+                .release();
         if (xml)
             treeView->restoreOpennessState(*xml, false);
     }
@@ -2399,7 +2425,7 @@ void UiEditorFileManager::build_init_tree_view()
     PresetItem *item_found_ = nullptr;
     struct SearchAndSelect
     {
-        SearchAndSelect(PresetItem *const parent_item_, File &search_for_file_,
+        SearchAndSelect(PresetItem *const parent_item_, juce::File &search_for_file_,
                         PresetItem *item_found_)
         {
             PresetItem *child_item;
@@ -2411,7 +2437,7 @@ void UiEditorFileManager::build_init_tree_view()
                 {
                     item_found_ = child_item;
                     item_found_->setSelected(true, true);
-                    TreeViewItem *parent = item_found_->getParentItem();
+                    juce::TreeViewItem *parent = item_found_->getParentItem();
                     while (parent)
                     {
                         parent->setOpen(true);
@@ -2528,13 +2554,13 @@ void UiEditorFileManager::timerCallback()
         if (AUDIO_PLAYER_PTR->is_playing())
         {
             play->setButtonText("STOP");
-            play->setColour(TextButton::buttonColourId, Colour(SELECTED_COLOUR));
+            play->setColour(juce::TextButton::buttonColourId, juce::Colour(SELECTED_COLOUR));
             is_playing_yet = true;
         }
     if (!is_playing_yet)
     {
         play->setButtonText("PLAY");
-        play->setColour(TextButton::buttonColourId, Colour(BOTTON_BG_COLOUR));
+        play->setColour(juce::TextButton::buttonColourId, juce::Colour(BOTTON_BG_COLOUR));
     }
 
     if (_audio_recorder)
@@ -2542,7 +2568,7 @@ void UiEditorFileManager::timerCallback()
         if (_audio_recorder->isRecording())
         {
             record->setButtonText("STOP RECORDING");
-            record->setColour(TextButton::buttonColourId, Colours::red);
+            record->setColour(juce::TextButton::buttonColourId, juce::Colours::red);
             audio_source_devices->setEnabled(false);
         }
         else
@@ -2552,7 +2578,7 @@ void UiEditorFileManager::timerCallback()
 #else
             record->setButtonText("RECORD AUDIO:");
 #endif
-            record->setColour(TextButton::buttonColourId, Colour(BOTTON_BG_COLOUR));
+            record->setColour(juce::TextButton::buttonColourId, juce::Colour(BOTTON_BG_COLOUR));
             audio_source_devices->setEnabled(true);
         }
     }
@@ -2562,17 +2588,17 @@ void UiEditorFileManager::timerCallback()
 #endif
 
     toggleButton->setToggleState(_app_instance_store->editor_config.autoplay_sample_audio,
-                                 dontSendNotification);
+                                 juce::dontSendNotification);
 
     if (!info_is_in_edit_mode)
     {
         PresetItem *selected_item = get_selected_item();
         if (selected_item)
         {
-            String comment;
+            juce::String comment;
             selected_item->get_file_info(comment);
-            String file =
-                (String(">> ") + selected_item->get_file().getFullPathName().fromFirstOccurrenceOf(
+            juce::String file = (juce::String(">> ") +
+                                 selected_item->get_file().getFullPathName().fromFirstOccurrenceOf(
                                      get_app_folder().getFullPathName(), false, false));
 
             if (last_selected_item != selected_item)
@@ -2581,29 +2607,29 @@ void UiEditorFileManager::timerCallback()
 
                 // path_view->setColour(Label::textColourId, Colour
                 // (last_selected_item->_label_color));
-                path_view->setText(file, dontSendNotification);
-                info->setText(comment, dontSendNotification);
+                path_view->setText(file, juce::dontSendNotification);
+                info->setText(comment, juce::dontSendNotification);
             }
             else
             {
                 if (file != info->getText())
-                    info->setText(comment, dontSendNotification);
+                    info->setText(comment, juce::dontSendNotification);
                 if (comment != path_view->getText())
-                    path_view->setText(file, dontSendNotification);
+                    path_view->setText(file, juce::dontSendNotification);
             }
         }
         else
         {
-            info->setText("", dontSendNotification);
-            path_view->setText(">> NOTHING SELECTED", dontSendNotification);
+            info->setText("", juce::dontSendNotification);
+            path_view->setText(">> NOTHING SELECTED", juce::dontSendNotification);
         }
     }
 
     // INFO FOCUS HANDLING
-    Component *focus_component = Component::getCurrentlyFocusedComponent();
+    juce::Component *focus_component = juce::Component::getCurrentlyFocusedComponent();
     if (focus_component)
     {
-        TextEditor *editor = dynamic_cast<TextEditor *>(focus_component);
+        juce::TextEditor *editor = dynamic_cast<juce::TextEditor *>(focus_component);
         if (editor)
         {
             if (editor == info)
@@ -2647,24 +2673,24 @@ void UiEditorFileManager::timerCallback()
     }
 }
 
-void UiEditorFileManager::textEditorReturnKeyPressed(TextEditor &te_)
+void UiEditorFileManager::textEditorReturnKeyPressed(juce::TextEditor &te_)
 {
     OUT("return");
     perform_write_info(te_.getText());
 }
-void UiEditorFileManager::textEditorEscapeKeyPressed(TextEditor &)
+void UiEditorFileManager::textEditorEscapeKeyPressed(juce::TextEditor &)
 {
     OUT("esc");
     perform_chancel_info();
 }
-void UiEditorFileManager::textEditorFocusLost(TextEditor &te_)
+void UiEditorFileManager::textEditorFocusLost(juce::TextEditor &te_)
 {
     OUT("lost");
-    Component *component_under_mouse =
-        Desktop::getInstance().getMainMouseSource().getComponentUnderMouse();
+    juce::Component *component_under_mouse =
+        juce::Desktop::getInstance().getMainMouseSource().getComponentUnderMouse();
     if (component_under_mouse)
     {
-        TextButton *button = dynamic_cast<TextButton *>(component_under_mouse);
+        juce::TextButton *button = dynamic_cast<juce::TextButton *>(component_under_mouse);
         if (button)
             if (button == confirm_text_changes.get())
             {
@@ -2684,9 +2710,9 @@ void UiEditorFileManager::perform_chancel_info()
         PresetItem *edited_item = get_selected_item();
         if (edited_item)
         {
-            String old_info;
+            juce::String old_info;
             edited_item->get_file_info(old_info);
-            info->setText(old_info, dontSendNotification);
+            info->setText(old_info, juce::dontSendNotification);
         }
         FILEMANAGER_PTR->grabKeyboardFocus();
         {
@@ -2708,12 +2734,12 @@ void UiEditorFileManager::perform_chancel_info()
         PresetItem *edited_item = get_selected_item();
         if (edited_item)
         {
-            String old_info;
+            juce::String old_info;
             edited_item->get_file_info(old_info);
 
             if (old_info != info->getText())
             {
-                info->setText(old_info, dontSendNotification);
+                info->setText(old_info, juce::dontSendNotification);
                 SHOW_CANCEL_NOTIFICATION();
             }
         }
@@ -2724,7 +2750,7 @@ void UiEditorFileManager::perform_chancel_info()
     startTimer(100);
 }
 
-void UiEditorFileManager::perform_write_info(const String &info_text_)
+void UiEditorFileManager::perform_write_info(const juce::String &info_text_)
 {
     OUT("perform_write_info");
     is_on_return_lost = true;
@@ -2775,239 +2801,245 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     : UiEditor("B-FileManager"), _app_instance_store(app_instance_store_),
       _is_in_write_mode(write_mode_on_), _view_type(view_type_)
 {
-    addAndMakeVisible(label5 = new Label(String(), TRANS("AUTO PLAY SAMPLE AUDIO ON SELECT")));
-    label5->setFont(Font("Oswald", 15.00f, Font::plain));
-    label5->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(
+        label5 = new juce::Label(juce::String(), TRANS("AUTO PLAY SAMPLE AUDIO ON SELECT")));
+    label5->setFont(juce::Font("Oswald", 15.00f, juce::Font::plain));
+    label5->setJustificationType(juce::Justification::centredRight);
     label5->setEditable(false, false, false);
-    label5->setColour(Label::textColourId,
-                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label5->setColour(TextEditor::textColourId, Colours::black);
-    label5->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label5->setColour(juce::Label::textColourId,
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label5->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label5->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     addAndMakeVisible(info_animation = new UiNotificationAnimation());
 
-    addAndMakeVisible(open = new TextButton(String()));
+    addAndMakeVisible(open = new juce::TextButton(juce::String()));
     open->setButtonText(TRANS("OPEN"));
-    open->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                            Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    open->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                            juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     open->addListener(this);
-    open->setColour(TextButton::buttonColourId, Colours::black);
-    open->setColour(TextButton::textColourOnId, Colours::chartreuse);
-    open->setColour(TextButton::textColourOffId, Colours::chartreuse);
+    open->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    open->setColour(juce::TextButton::textColourOnId, juce::Colours::chartreuse);
+    open->setColour(juce::TextButton::textColourOffId, juce::Colours::chartreuse);
 
-    addAndMakeVisible(import = new TextButton(String()));
+    addAndMakeVisible(import = new juce::TextButton(juce::String()));
     import->setButtonText(TRANS("IMPORT"));
-    import->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                              Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    import->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                              juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     import->addListener(this);
-    import->setColour(TextButton::buttonColourId, Colours::black);
-    import->setColour(TextButton::textColourOnId, Colours::cornflowerblue);
-    import->setColour(TextButton::textColourOffId, Colours::cornflowerblue);
+    import->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    import->setColour(juce::TextButton::textColourOnId, juce::Colours::cornflowerblue);
+    import->setColour(juce::TextButton::textColourOffId, juce::Colours::cornflowerblue);
 
     addAndMakeVisible(toolbar = new UiEditorToolbar(this, true, false, false));
 
-    addAndMakeVisible(info = new TextEditor(String()));
+    addAndMakeVisible(info = new juce::TextEditor(juce::String()));
     info->setMultiLine(true);
     info->setReturnKeyStartsNewLine(false);
     info->setReadOnly(false);
     info->setScrollbarsShown(true);
     info->setCaretVisible(true);
     info->setPopupMenuEnabled(true);
-    info->setColour(TextEditor::textColourId,
-                    Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    info->setColour(TextEditor::backgroundColourId, Colour(0xff161616));
-    info->setColour(TextEditor::highlightColourId, Colours::yellow);
-    info->setColour(TextEditor::outlineColourId,
-                    Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    info->setColour(TextEditor::shadowColourId, Colour(0x00ff0000));
-    info->setColour(CaretComponent::caretColourId, Colours::aqua);
-    info->setText(String());
+    info->setColour(juce::TextEditor::textColourId,
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    info->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0xff161616));
+    info->setColour(juce::TextEditor::highlightColourId, juce::Colours::yellow);
+    info->setColour(juce::TextEditor::outlineColourId,
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    info->setColour(juce::TextEditor::shadowColourId, juce::Colour(0x00ff0000));
+    info->setColour(juce::CaretComponent::caretColourId, juce::Colours::aqua);
+    info->setText(juce::String());
 
-    addAndMakeVisible(label = new Label(String(), TRANS("PROJECT DATA MANAGEMENT\n")));
-    label->setFont(Font("Oswald", 33.10f, Font::plain));
-    label->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label = new juce::Label(juce::String(), TRANS("PROJECT DATA MANAGEMENT\n")));
+    label->setFont(juce::Font("Oswald", 33.10f, juce::Font::plain));
+    label->setJustificationType(juce::Justification::centredLeft);
     label->setEditable(false, false, false);
-    label->setColour(Label::textColourId,
-                     Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label->setColour(TextEditor::textColourId, Colours::black);
-    label->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label->setColour(juce::Label::textColourId,
+                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label2 = new Label(String(), TRANS("NOTES / COMMENTS")));
-    label2->setFont(Font("Oswald", 20.00f, Font::plain));
-    label2->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label2 = new juce::Label(juce::String(), TRANS("NOTES / COMMENTS")));
+    label2->setFont(juce::Font("Oswald", 20.00f, juce::Font::plain));
+    label2->setJustificationType(juce::Justification::centredLeft);
     label2->setEditable(false, false, false);
-    label2->setColour(Label::textColourId,
-                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label2->setColour(TextEditor::textColourId, Colours::black);
-    label2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label2->setColour(juce::Label::textColourId,
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(path_view = new Label(String(), TRANS("Label Text")));
-    path_view->setFont(Font(15.00f, Font::plain));
-    path_view->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(path_view = new juce::Label(juce::String(), TRANS("Label Text")));
+    path_view->setFont(juce::Font(15.00f, juce::Font::plain));
+    path_view->setJustificationType(juce::Justification::centredLeft);
     path_view->setEditable(false, false, false);
-    path_view->setColour(Label::textColourId,
-                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    path_view->setColour(TextEditor::textColourId, Colours::black);
-    path_view->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    path_view->setColour(juce::Label::textColourId,
+                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    path_view->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    path_view->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(play = new TextButton(String()));
+    addAndMakeVisible(play = new juce::TextButton(juce::String()));
     play->setButtonText(TRANS("PLAY"));
-    play->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                            Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    play->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                            juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     play->addListener(this);
-    play->setColour(TextButton::buttonColourId, Colours::black);
-    play->setColour(TextButton::textColourOnId,
-                    Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    play->setColour(TextButton::textColourOffId,
-                    Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    play->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    play->setColour(juce::TextButton::textColourOnId,
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    play->setColour(juce::TextButton::textColourOffId,
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(label3 = new Label(String(), TRANS("SAMPLE AUDIO:")));
-    label3->setFont(Font("Oswald", 20.00f, Font::plain));
-    label3->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label3 = new juce::Label(juce::String(), TRANS("SAMPLE AUDIO:")));
+    label3->setFont(juce::Font("Oswald", 20.00f, juce::Font::plain));
+    label3->setJustificationType(juce::Justification::centredLeft);
     label3->setEditable(false, false, false);
-    label3->setColour(Label::textColourId,
-                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label3->setColour(TextEditor::textColourId, Colours::black);
-    label3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label3->setColour(juce::Label::textColourId,
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(record = new TextButton(String()));
+    addAndMakeVisible(record = new juce::TextButton(juce::String()));
     record->setButtonText(TRANS("RECORD SOURCE:"));
-    record->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                              Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    record->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                              juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     record->addListener(this);
-    record->setColour(TextButton::buttonColourId, Colours::black);
-    record->setColour(TextButton::textColourOnId,
-                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    record->setColour(TextButton::textColourOffId,
-                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    record->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    record->setColour(juce::TextButton::textColourOnId,
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    record->setColour(juce::TextButton::textColourOffId,
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(delete_audio = new TextButton(String()));
+    addAndMakeVisible(delete_audio = new juce::TextButton(juce::String()));
     delete_audio->setButtonText(TRANS("REMOVE"));
-    delete_audio->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                    Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    delete_audio->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                                    juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     delete_audio->addListener(this);
-    delete_audio->setColour(TextButton::buttonColourId, Colours::black);
-    delete_audio->setColour(TextButton::textColourOnId,
-                            Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    delete_audio->setColour(TextButton::textColourOffId,
-                            Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    delete_audio->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    delete_audio->setColour(juce::TextButton::textColourOnId,
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    delete_audio->setColour(juce::TextButton::textColourOffId,
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(assign = new TextButton(String()));
+    addAndMakeVisible(assign = new juce::TextButton(juce::String()));
     assign->setButtonText(TRANS("ASSIGN"));
-    assign->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                              Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    assign->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                              juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     assign->addListener(this);
-    assign->setColour(TextButton::buttonColourId, Colours::black);
-    assign->setColour(TextButton::textColourOnId,
-                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    assign->setColour(TextButton::textColourOffId,
-                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    assign->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    assign->setColour(juce::TextButton::textColourOnId,
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    assign->setColour(juce::TextButton::textColourOffId,
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(audio_source_devices = new ComboBox(String()));
+    addAndMakeVisible(audio_source_devices = new juce::ComboBox(juce::String()));
     audio_source_devices->setEditableText(false);
-    audio_source_devices->setJustificationType(Justification::centredLeft);
-    audio_source_devices->setTextWhenNothingSelected(String());
+    audio_source_devices->setJustificationType(juce::Justification::centredLeft);
+    audio_source_devices->setTextWhenNothingSelected(juce::String());
     audio_source_devices->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     audio_source_devices->addListener(this);
 
-    addAndMakeVisible(rename = new TextButton(String()));
+    addAndMakeVisible(rename = new juce::TextButton(juce::String()));
     rename->setButtonText(TRANS("RENAME"));
-    rename->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                              Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    rename->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                              juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     rename->addListener(this);
-    rename->setColour(TextButton::buttonColourId, Colours::black);
-    rename->setColour(TextButton::textColourOnId, Colours::aquamarine);
-    rename->setColour(TextButton::textColourOffId, Colours::aquamarine);
+    rename->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    rename->setColour(juce::TextButton::textColourOnId, juce::Colours::aquamarine);
+    rename->setColour(juce::TextButton::textColourOffId, juce::Colours::aquamarine);
 
-    addAndMakeVisible(delete_file = new TextButton(String()));
+    addAndMakeVisible(delete_file = new juce::TextButton(juce::String()));
     delete_file->setButtonText(TRANS("DELETE"));
-    delete_file->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                   Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    delete_file->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                                   juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     delete_file->addListener(this);
-    delete_file->setColour(TextButton::buttonColourId, Colours::black);
-    delete_file->setColour(TextButton::textColourOnId, Colours::red);
-    delete_file->setColour(TextButton::textColourOffId, Colours::red);
+    delete_file->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    delete_file->setColour(juce::TextButton::textColourOnId, juce::Colours::red);
+    delete_file->setColour(juce::TextButton::textColourOffId, juce::Colours::red);
 
-    addAndMakeVisible(toggleButton = new ToggleButton(String()));
+    addAndMakeVisible(toggleButton = new juce::ToggleButton(juce::String()));
     toggleButton->addListener(this);
-    toggleButton->setColour(ToggleButton::textColourId,
-                            Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    toggleButton->setColour(juce::ToggleButton::textColourId,
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(show_audio_dyk = new TextButton(String()));
+    addAndMakeVisible(show_audio_dyk = new juce::TextButton(juce::String()));
     show_audio_dyk->setButtonText(TRANS("?"));
-    show_audio_dyk->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                      Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    show_audio_dyk->setConnectedEdges(
+        juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+        juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     show_audio_dyk->addListener(this);
-    show_audio_dyk->setColour(TextButton::buttonColourId, Colours::black);
-    show_audio_dyk->setColour(TextButton::textColourOnId,
-                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    show_audio_dyk->setColour(TextButton::textColourOffId,
-                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    show_audio_dyk->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    show_audio_dyk->setColour(juce::TextButton::textColourOnId,
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    show_audio_dyk->setColour(juce::TextButton::textColourOffId,
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(show_info_dyk = new TextButton(String()));
+    addAndMakeVisible(show_info_dyk = new juce::TextButton(juce::String()));
     show_info_dyk->setButtonText(TRANS("?"));
-    show_info_dyk->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                     Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    show_info_dyk->setConnectedEdges(juce::Button::ConnectedOnLeft |
+                                     juce::Button::ConnectedOnRight | juce::Button::ConnectedOnTop |
+                                     juce::Button::ConnectedOnBottom);
     show_info_dyk->addListener(this);
-    show_info_dyk->setColour(TextButton::buttonColourId, Colours::black);
-    show_info_dyk->setColour(TextButton::textColourOnId,
-                             Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    show_info_dyk->setColour(TextButton::textColourOffId,
-                             Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    show_info_dyk->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    show_info_dyk->setColour(juce::TextButton::textColourOnId,
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    show_info_dyk->setColour(juce::TextButton::textColourOffId,
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(save = new TextButton(String()));
+    addAndMakeVisible(save = new juce::TextButton(juce::String()));
     save->setButtonText(TRANS("REPLACE"));
-    save->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                            Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    save->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                            juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     save->addListener(this);
-    save->setColour(TextButton::buttonColourId, Colours::black);
-    save->setColour(TextButton::textColourOnId, Colours::chartreuse);
-    save->setColour(TextButton::textColourOffId, Colours::chartreuse);
+    save->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    save->setColour(juce::TextButton::textColourOnId, juce::Colours::chartreuse);
+    save->setColour(juce::TextButton::textColourOffId, juce::Colours::chartreuse);
 
-    addAndMakeVisible(treeView = new TreeView(String()));
+    addAndMakeVisible(treeView = new juce::TreeView(juce::String()));
     treeView->setDefaultOpenness(true);
-    treeView->setColour(TreeView::linesColourId,
-                        Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    treeView->setColour(juce::TreeView::linesColourId,
+                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(export_ = new TextButton(String()));
+    addAndMakeVisible(export_ = new juce::TextButton(juce::String()));
     export_->setButtonText(TRANS("EXPORT"));
-    export_->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                               Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    export_->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                               juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     export_->addListener(this);
-    export_->setColour(TextButton::buttonColourId, Colours::black);
-    export_->setColour(TextButton::textColourOnId, Colours::cornflowerblue);
-    export_->setColour(TextButton::textColourOffId, Colours::cornflowerblue);
+    export_->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    export_->setColour(juce::TextButton::textColourOnId, juce::Colours::cornflowerblue);
+    export_->setColour(juce::TextButton::textColourOffId, juce::Colours::cornflowerblue);
 
     addAndMakeVisible(finger_dragger = new FingerDrag(treeView->getViewport(), this));
 
-    addAndMakeVisible(show_new_stuff = new TextButton(String()));
+    addAndMakeVisible(show_new_stuff = new juce::TextButton(juce::String()));
     show_new_stuff->setButtonText(TRANS("SHOW ME THE LATEST PRESET DOWNLOADS"));
-    show_new_stuff->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                      Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    show_new_stuff->setConnectedEdges(
+        juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+        juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     show_new_stuff->addListener(this);
-    show_new_stuff->setColour(TextButton::buttonColourId, Colours::black);
-    show_new_stuff->setColour(TextButton::textColourOnId,
-                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    show_new_stuff->setColour(TextButton::textColourOffId,
-                              Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    show_new_stuff->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    show_new_stuff->setColour(juce::TextButton::textColourOnId,
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    show_new_stuff->setColour(juce::TextButton::textColourOffId,
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(confirm_text_changes = new TextButton(String()));
+    addAndMakeVisible(confirm_text_changes = new juce::TextButton(juce::String()));
     confirm_text_changes->setButtonText(TRANS("SET (OR PRESS RETURN)"));
-    confirm_text_changes->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                            Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    confirm_text_changes->setConnectedEdges(
+        juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+        juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     confirm_text_changes->addListener(this);
-    confirm_text_changes->setColour(TextButton::buttonColourId, Colours::black);
-    confirm_text_changes->setColour(TextButton::textColourOnId, Colours::chartreuse);
-    confirm_text_changes->setColour(TextButton::textColourOffId, Colours::chartreuse);
+    confirm_text_changes->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    confirm_text_changes->setColour(juce::TextButton::textColourOnId, juce::Colours::chartreuse);
+    confirm_text_changes->setColour(juce::TextButton::textColourOffId, juce::Colours::chartreuse);
 
-    addAndMakeVisible(cancel_text_changes = new TextButton(String()));
+    addAndMakeVisible(cancel_text_changes = new juce::TextButton(juce::String()));
     cancel_text_changes->setButtonText(TRANS("CANCEL (OR PRESS ESC)"));
-    cancel_text_changes->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                           Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    cancel_text_changes->setConnectedEdges(
+        juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+        juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     cancel_text_changes->addListener(this);
-    cancel_text_changes->setColour(TextButton::buttonColourId, Colours::black);
-    cancel_text_changes->setColour(TextButton::textColourOnId, Colours::red);
-    cancel_text_changes->setColour(TextButton::textColourOffId, Colours::red);
+    cancel_text_changes->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    cancel_text_changes->setColour(juce::TextButton::textColourOnId, juce::Colours::red);
+    cancel_text_changes->setColour(juce::TextButton::textColourOffId, juce::Colours::red);
 
     //[UserPreSize]
     is_on_return_lost = false;
@@ -3023,18 +3055,18 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     force_info_focus = false;
     last_selected_item = nullptr;
     should_refresh_all = false;
-    tmp_audio =
-        File::getSpecialLocation(File::tempDirectory).getChildFile("B-Step-Audio-Record.ogg");
+    tmp_audio = juce::File::getSpecialLocation(juce::File::tempDirectory)
+                    .getChildFile("B-Step-Audio-Record.ogg");
 
     _was_a_reader_request = !_is_in_write_mode;
     if (_view_type == VIEW_TYPE::PROJECTS)
         if (_app_instance_store->is_project_changed() && !_is_in_write_mode)
         {
-            int feedback = AlertWindow::showOkCancelBox(
-                AlertWindow::QuestionIcon, "SAVE CURRENT PROJECT FIRST?",
+            int feedback = juce::AlertWindow::showOkCancelBox(
+                juce::AlertWindow::QuestionIcon, "SAVE CURRENT PROJECT FIRST?",
                 "Would you like to save: " +
                     _app_instance_store->last_loaded_project.getFileNameWithoutExtension() +
-                    String(" ?"),
+                    juce::String(" ?"),
                 "SAVE IT, OPEN WRITER", "NO, OPEN READER", FILEMANAGER_PTR);
             if (feedback == 1)
                 _is_in_write_mode = true;
@@ -3045,9 +3077,9 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     // RW SETUP
     {
         if (_is_in_write_mode)
-            label->setText("B-DATA WRITER", dontSendNotification);
+            label->setText("B-DATA WRITER", juce::dontSendNotification);
         else
-            label->setText("B-DATA READER", dontSendNotification);
+            label->setText("B-DATA READER", juce::dontSendNotification);
 
         open->setVisible(!_is_in_write_mode);
         import->setVisible(!_is_in_write_mode);
@@ -3082,7 +3114,7 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
         OUT(_audio_recorder->get_selected_device_name());
         if (_audio_recorder->get_selected_device_id() > -1)
             audio_source_devices->setSelectedItemIndex(_audio_recorder->get_selected_device_id(),
-                                                       dontSendNotification);
+                                                       juce::dontSendNotification);
 #endif
     }
     else
@@ -3110,7 +3142,7 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
 UiEditorFileManager::~UiEditorFileManager()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
-    _app_instance_store->editor_config.XY_file_manager = Point<int>(getX(), getY());
+    _app_instance_store->editor_config.XY_file_manager = juce::Point<int>(getX(), getY());
 
     if (AUDIO_PLAYER_PTR)
         AUDIO_PLAYER_PTR->stop(true);
@@ -3158,25 +3190,25 @@ UiEditorFileManager::~UiEditorFileManager()
 }
 
 //==============================================================================
-void UiEditorFileManager::paint(Graphics &g)
+void UiEditorFileManager::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll(Colours::white);
+    g.fillAll(juce::Colours::white);
 
-    g.setColour(Colour(0xff161616));
+    g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.fillRect(proportionOfWidth(0.0333f), proportionOfHeight(0.6786f), proportionOfWidth(0.9333f),
                1);
 
     //[UserPaint] Add your own custom painting code here..
-    ResizableWindow::moved();
+    juce::ResizableWindow::moved();
     //[/UserPaint]
 }
 
@@ -3256,11 +3288,11 @@ void UiEditorFileManager::resized()
                                    proportionOfHeight(0.6964f), proportionOfWidth(0.2333f),
                                    proportionOfHeight(0.0446f));
     //[UserResized] Add your own custom resize handling here..
-    ResizableWindow::resized();
+    juce::ResizableWindow::resized();
     //[/UserResized]
 }
 
-void UiEditorFileManager::buttonClicked(Button *buttonThatWasClicked)
+void UiEditorFileManager::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -3293,15 +3325,16 @@ void UiEditorFileManager::buttonClicked(Button *buttonThatWasClicked)
             {
                 bool success = false;
 
-                ScopedPointer<XmlElement> xml = XmlDocument::parse(_data).release();
+                juce::ScopedPointer<juce::XmlElement> xml =
+                    juce::XmlDocument::parse(_data).release();
                 if (xml)
                 {
                     success = _app_instance_store->load_b_step_xml(*xml) == "";
 
                     if (!success)
                     {
-                        AlertWindow::showMessageBox(
-                            AlertWindow::WarningIcon, "IMPORT ERROR!!!",
+                        juce::AlertWindow::showMessageBox(
+                            juce::AlertWindow::WarningIcon, "IMPORT ERROR!!!",
                             "Your imported data does not match to any supported B-Step data "
                             "file.\nPlease check if you have paste the whole exported data.",
                             "DAMN", FILEMANAGER_PTR);
@@ -3317,10 +3350,11 @@ void UiEditorFileManager::buttonClicked(Button *buttonThatWasClicked)
                 }
                 else
                 {
-                    AlertWindow::showMessageBox(AlertWindow::WarningIcon, "IMPORT ERROR!!!",
-                                                "Your imported data looks not good.\nPlease check "
-                                                "if you have paste the whole exported data.",
-                                                "DAMN", FILEMANAGER_PTR);
+                    juce::AlertWindow::showMessageBox(
+                        juce::AlertWindow::WarningIcon, "IMPORT ERROR!!!",
+                        "Your imported data looks not good.\nPlease check "
+                        "if you have paste the whole exported data.",
+                        "DAMN", FILEMANAGER_PTR);
 
                     GLOBAL_ERROR_LOG("IMPORT ERROR - CANT PARSE PASTED XML");
                 }
@@ -3330,8 +3364,8 @@ void UiEditorFileManager::buttonClicked(Button *buttonThatWasClicked)
             void on_chancel() override { SHOW_CANCEL_NOTIFICATION(); };
 
           public:
-            TextImporter(AppInstanceStore *const app_instance_store_, const String &title_,
-                         const String &default_text_)
+            TextImporter(AppInstanceStore *const app_instance_store_, const juce::String &title_,
+                         const juce::String &default_text_)
                 : UiTextImExportListener(title_, default_text_, true),
                   SubThreadOfFimemanager(app_instance_store_),
                   _app_instance_store(app_instance_store_)
@@ -3373,9 +3407,9 @@ void UiEditorFileManager::buttonClicked(Button *buttonThatWasClicked)
                         SHOW_CUSTOM_NOTIFICATION("RECORDING", 2);
                     else
                     {
-                        AlertWindow::showMessageBox(AlertWindow::WarningIcon, "RECORDING ERROR",
-                                                    "Audio Recorder not ready.", "OK",
-                                                    FILEMANAGER_PTR);
+                        juce::AlertWindow::showMessageBox(
+                            juce::AlertWindow::WarningIcon, "RECORDING ERROR",
+                            "Audio Recorder not ready.", "OK", FILEMANAGER_PTR);
                         GLOBAL_ERROR_LOG("RECORDING ERROR - CANT START RECORD");
                     }
                 }
@@ -3392,8 +3426,8 @@ void UiEditorFileManager::buttonClicked(Button *buttonThatWasClicked)
         }
         else
         {
-            AlertWindow::showMessageBox(AlertWindow::WarningIcon, "RECORDING ERROR",
-                                        "Audio Recorder not ready.", "OK", FILEMANAGER_PTR);
+            juce::AlertWindow::showMessageBox(juce::AlertWindow::WarningIcon, "RECORDING ERROR",
+                                              "Audio Recorder not ready.", "OK", FILEMANAGER_PTR);
             GLOBAL_ERROR_LOG("RECORDING ERROR - RECORDER NOT READY");
         }
         //[/UserButtonCode_record]
@@ -3416,10 +3450,10 @@ void UiEditorFileManager::buttonClicked(Button *buttonThatWasClicked)
 
         struct LoadPolicy
         {
-            const File project_file;
+            const juce::File project_file;
             UiEditorFileManager *const owner;
 
-            inline void put_file_to_target(const File &file_)
+            inline void put_file_to_target(const juce::File &file_)
             {
                 if (owner->AUDIO_PLAYER_PTR)
                 {
@@ -3430,10 +3464,11 @@ void UiEditorFileManager::buttonClicked(Button *buttonThatWasClicked)
                     }
                     else
                     {
-                        AlertWindow::showMessageBox(
-                            AlertWindow::WarningIcon, "ERROR: UNSUPPORTED AUDIO FORMAT",
+                        juce::AlertWindow::showMessageBox(
+                            juce::AlertWindow::WarningIcon, "ERROR: UNSUPPORTED AUDIO FORMAT",
                             file_.getFileExtension() +
-                                " file format is not supported.\nSupported audio formats are: " +
+                                " file format is not supported.\nSupported audio formats "
+                                "are: " +
                                 owner->AUDIO_PLAYER_PTR->get_supported_audio_formats(),
                             "DAMN", owner->FILEMANAGER_PTR);
 
@@ -3442,16 +3477,16 @@ void UiEditorFileManager::buttonClicked(Button *buttonThatWasClicked)
                 }
                 else
                 {
-                    AlertWindow::showMessageBox(AlertWindow::WarningIcon, "PLAYBACK ERROR",
-                                                "Audio Player not ready.", "OK",
-                                                owner->FILEMANAGER_PTR);
+                    juce::AlertWindow::showMessageBox(juce::AlertWindow::WarningIcon,
+                                                      "PLAYBACK ERROR", "Audio Player not ready.",
+                                                      "OK", owner->FILEMANAGER_PTR);
                     GLOBAL_ERROR_LOG("PLAYBACK ERROR - PLAYER NOT BOOTED");
                 }
             }
 
             AppInstanceStore *store;
 
-            LoadPolicy(UiEditorFileManager *const owner_, const File &project_file_)
+            LoadPolicy(UiEditorFileManager *const owner_, const juce::File &project_file_)
                 : project_file(project_file_), owner(owner_)
             {
             }
@@ -3461,22 +3496,23 @@ void UiEditorFileManager::buttonClicked(Button *buttonThatWasClicked)
         PresetItem *item = get_selected_item();
         if (item ? (get_selected_item()->get_type() == PresetItem::IS_FILE) : false)
         {
-            const File &project_file = get_selected_item()->get_file();
+            const juce::File &project_file = get_selected_item()->get_file();
 
             LoadPolicy *policy = new LoadPolicy(this, project_file);
             policy->store = _app_instance_store;
 
             reader_t *reader = new reader_t(policy);
-            reader->set_file(File::getSpecialLocation(File::userMusicDirectory));
+            reader->set_file(juce::File::getSpecialLocation(juce::File::userMusicDirectory));
             reader->set_dialog_name("CHOOSE A SAMPLE AUDIO FILE");
             reader->exec_and_set_to_selfmanagement();
         }
         else
         {
-            AlertWindow::showMessageBox(AlertWindow::WarningIcon, "ERROR",
-                                        "You can only assign a audio file to a B-Step project "
-                                        "file.\nPlease select a project file first.",
-                                        "OK", this);
+            juce::AlertWindow::showMessageBox(
+                juce::AlertWindow::WarningIcon, "ERROR",
+                "You can only assign a audio file to a B-Step project "
+                "file.\nPlease select a project file first.",
+                "OK", this);
         }
         //[/UserButtonCode_assign]
     }
@@ -3541,8 +3577,8 @@ void UiEditorFileManager::buttonClicked(Button *buttonThatWasClicked)
             bool on_ok() override { return true; };
 
           public:
-            TextExporter(AppInstanceStore *const app_instance_store_, const String &title_,
-                         const String &default_text_)
+            TextExporter(AppInstanceStore *const app_instance_store_, const juce::String &title_,
+                         const juce::String &default_text_)
                 : UiTextImExportListener(title_, default_text_, false),
                   SubThreadOfFimemanager(app_instance_store_),
                   _app_instance_store(app_instance_store_)
@@ -3552,8 +3588,8 @@ void UiEditorFileManager::buttonClicked(Button *buttonThatWasClicked)
             JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TextExporter)
         };
 
-        File file;
-        String data;
+        juce::File file;
+        juce::String data;
         if (get_selected_item())
         {
             file = get_selected_item()->get_file();
@@ -3598,7 +3634,7 @@ void UiEditorFileManager::buttonClicked(Button *buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiEditorFileManager::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
+void UiEditorFileManager::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
 {
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]
@@ -3610,7 +3646,7 @@ void UiEditorFileManager::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
         {
             _audio_recorder->set_audio_device(comboBoxThatHasChanged->getText());
             audio_source_devices->setText(_audio_recorder->get_selected_device_name(),
-                                          dontSendNotification);
+                                          juce::dontSendNotification);
         }
         //[/UserComboBoxCode_audio_source_devices]
     }

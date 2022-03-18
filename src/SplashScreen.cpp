@@ -30,7 +30,7 @@
 MySplashScreen::MySplashScreen()
 {
     cachedImage_desktopsplash_png =
-        ImageCache::getFromMemory(desktopsplash_png, desktopsplash_pngSize);
+        juce::ImageCache::getFromMemory(desktopsplash_png, desktopsplash_pngSize);
 
     //[UserPreSize]
     BOOT(SplashScreen)
@@ -40,7 +40,7 @@ MySplashScreen::MySplashScreen()
 
     //[Constructor] You can add your own custom stuff here..
     centreWithSize(getWidth(), getHeight());
-    addToDesktop(ComponentPeer::StyleFlags::windowIsTemporary, nullptr);
+    addToDesktop(juce::ComponentPeer::StyleFlags::windowIsTemporary, nullptr);
     // setAlwaysOnTop( true );
     enterModalState(true);
     setVisible(true);
@@ -58,12 +58,12 @@ MySplashScreen::~MySplashScreen()
 }
 
 //==============================================================================
-void MySplashScreen::paint(Graphics &g)
+void MySplashScreen::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     g.drawImage(cachedImage_desktopsplash_png, 0, 0, proportionOfWidth(1.0000f),
                 proportionOfHeight(1.0000f), 0, 0, cachedImage_desktopsplash_png.getWidth(),
                 cachedImage_desktopsplash_png.getHeight());

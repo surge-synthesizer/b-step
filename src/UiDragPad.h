@@ -34,7 +34,7 @@ class DragPad;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiDragPad : public Component, public mono_UiRefreshable
+class UiDragPad : public juce::Component, public mono_UiRefreshable
 {
   public:
     //==============================================================================
@@ -46,20 +46,20 @@ class UiDragPad : public Component, public mono_UiRefreshable
     void set_left_to_right_states(float left2right_state_, float top2bottom_state_);
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     float left2right_state;
     float top2bottom_state;
-    Point<int> current_position;
+    juce::Point<int> current_position;
 
     void refresh() override;
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<DragPad> track_area;
+    juce::ScopedPointer<DragPad> track_area;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiDragPad)

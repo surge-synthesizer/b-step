@@ -32,6 +32,8 @@
 #ifndef __DROWAUDIO_BUFFER_H__
 #define __DROWAUDIO_BUFFER_H__
 
+#include "App.h"
+
 //==============================================================================
 /** A buffer to hold an array of floats.
 
@@ -74,7 +76,7 @@ class Buffer
         buffer.realloc(newSize);
 
         if (newSize > bufferSize)
-            zeromem(buffer + bufferSize, (newSize - bufferSize) * sizeof(float));
+            juce::zeromem(buffer + bufferSize, (newSize - bufferSize) * sizeof(float));
 
         bufferSize = newSize;
     }
@@ -138,13 +140,13 @@ class Buffer
      */
     void applyBuffer(float *samples, int numSamples)
     {
-        const int numToApply = jmin(bufferSize, numSamples);
+        const int numToApply = juce::jmin(bufferSize, numSamples);
 
         for (int i = 0; i < numToApply; i++)
             samples[i] *= buffer[i];
 
         if (bufferSize < numSamples)
-            zeromem(samples + numToApply, (numSamples - numToApply) * sizeof(float));
+            juce::zeromem(samples + numToApply, (numSamples - numToApply) * sizeof(float));
     }
 
     /**	This performs a very quick copy of some data given to it.
@@ -187,10 +189,10 @@ class Buffer
 
   private:
     //==============================================================================
-    HeapBlock<float> buffer;
+    juce::HeapBlock<float> buffer;
     int bufferSize;
 
-    ListenerList<Listener> listeners;
+    juce::ListenerList<Listener> listeners;
 
     JUCE_LEAK_DETECTOR(Buffer)
 };

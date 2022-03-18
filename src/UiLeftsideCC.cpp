@@ -35,7 +35,7 @@ void UiLeftsideCC::on_style_set(AppStyle *const)
     cc_type->set_style(_style);
     cc_label->set_style(_style);
 }
-void UiLeftsideCC::refresh_ui(Array<Component *> &components_to_repaint_)
+void UiLeftsideCC::refresh_ui(juce::Array<juce::Component *> &components_to_repaint_)
 {
     cc_type->get_components_to_repaint(components_to_repaint_);
 
@@ -44,7 +44,7 @@ void UiLeftsideCC::refresh_ui(Array<Component *> &components_to_repaint_)
 
     const MONO_Controller *constroller = cc_type->get_controller();
     if (constroller)
-        cc_label->set_text(String("CC ") + String(constroller->get_value()));
+        cc_label->set_text(juce::String("CC ") + juce::String(constroller->get_value()));
 }
 //[/MiscUserDefs]
 
@@ -81,17 +81,17 @@ UiLeftsideCC::~UiLeftsideCC()
 }
 
 //==============================================================================
-void UiLeftsideCC::paint(Graphics &g)
+void UiLeftsideCC::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     if (_style)
         if (_style->is_wrapper_opaque())
-            g.fillAll(Colour(_style->get_foreground_color()));
+            g.fillAll(juce::Colour(_style->get_foreground_color()));
 
     return;
     //[/UserPrePaint]
 
-    g.fillAll(Colours::white);
+    g.fillAll(juce::Colours::white);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]

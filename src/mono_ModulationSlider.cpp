@@ -47,7 +47,7 @@ void mono_ModulationSlider::refresh()
             if (amp < 0)
                 amp *= -1;
             button_modulator->setColour(
-                TextButton::buttonColourId,
+                juce::TextButton::buttonColourId,
                 UiLookAndFeel::getInstance()
                     ->colours.button_on_colour.darker(1.0f - amp)
                     .interpolatedWith(UiLookAndFeel::getInstance()->colours.button_off_colour,
@@ -55,7 +55,7 @@ void mono_ModulationSlider::refresh()
         }
         else if (amp == FIXED_TOP_BUTTON_COLOUR)
             button_modulator->setColour(
-                TextButton::buttonColourId,
+                juce::TextButton::buttonColourId,
                 UiLookAndFeel::getInstance()->colours.button_on_colour.darker(1.0f));
         else if (_button_parameter.get_value())
         {
@@ -65,21 +65,21 @@ void mono_ModulationSlider::refresh()
                 {
                     float modulation = _parameter.get_last_modulation();
                     button_modulator->setColour(
-                        TextButton::buttonColourId,
+                        juce::TextButton::buttonColourId,
                         UiLookAndFeel::getInstance()->colours.button_on_colour.darker(1.0f -
                                                                                       modulation));
                 }
                 else
                     button_modulator->setColour(
-                        TextButton::buttonColourId,
+                        juce::TextButton::buttonColourId,
                         UiLookAndFeel::getInstance()->colours.button_on_colour.darker(1.0f));
             }
             else
-                button_modulator->setColour(TextButton::buttonColourId,
+                button_modulator->setColour(juce::TextButton::buttonColourId,
                                             UiLookAndFeel::getInstance()->colours.button_on_colour);
         }
         else
-            button_modulator->setColour(TextButton::buttonColourId,
+            button_modulator->setColour(juce::TextButton::buttonColourId,
                                         UiLookAndFeel::getInstance()->colours.button_off_colour);
     }
 
@@ -213,7 +213,7 @@ void mono_ModulationSlider::show_view_mode()
         slider_modulation->setEnabled(false);
 
         button_switch->setButtonText(_config->get_bottom_button_text().text);
-        button_switch->setColour(TextButton::buttonColourId,
+        button_switch->setColour(juce::TextButton::buttonColourId,
                                  UiLookAndFeel::getInstance()->colours.button_off_colour);
 
         label_top->SET_LABEL_STYLE(IS_VALUE_LABEL);
@@ -230,14 +230,14 @@ void mono_ModulationSlider::show_view_mode()
         slider_value->setEnabled(false);
 
         button_switch->setButtonText(_config->get_botton_button_switch_text().text);
-        button_switch->setColour(TextButton::buttonColourId,
+        button_switch->setColour(juce::TextButton::buttonColourId,
                                  UiLookAndFeel::getInstance()->colours.button_on_colour);
 
         label_top->SET_LABEL_STYLE(IS_SECOND_VALUE_LABEL);
         label_top->repaint();
     }
 }
-void mono_ModulationSlider::sliderClicked(Slider *s_)
+void mono_ModulationSlider::sliderClicked(juce::Slider *s_)
 {
     if (MIDIControlHandler::getInstance()->is_waiting_for_param() ||
         MIDIControlHandler::getInstance()->is_learning())
@@ -256,57 +256,57 @@ mono_ModulationSlider::mono_ModulationSlider(ModulationSliderConfigBase *config_
 
     addAndMakeVisible(slider_value = new SnapSlider("0"));
     slider_value->setRange(0, 1000, 0.01);
-    slider_value->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    slider_value->setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
-    slider_value->setColour(Slider::backgroundColourId, Colour(0xff101010));
-    slider_value->setColour(Slider::rotarySliderFillColourId, Colours::yellow);
-    slider_value->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff161616));
-    slider_value->setColour(Slider::textBoxTextColourId, Colours::yellow);
-    slider_value->setColour(Slider::textBoxBackgroundColourId, Colour(0xff161616));
+    slider_value->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    slider_value->setTextBoxStyle(juce::Slider::NoTextBox, true, 80, 20);
+    slider_value->setColour(juce::Slider::backgroundColourId, juce::Colour(0xff101010));
+    slider_value->setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::yellow);
+    slider_value->setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colour(0xff161616));
+    slider_value->setColour(juce::Slider::textBoxTextColourId, juce::Colours::yellow);
+    slider_value->setColour(juce::Slider::textBoxBackgroundColourId, juce::Colour(0xff161616));
     slider_value->addListener(this);
 
-    addAndMakeVisible(button_switch = new TextButton(String()));
+    addAndMakeVisible(button_switch = new juce::TextButton(String()));
     button_switch->addListener(this);
-    button_switch->setColour(TextButton::buttonColourId, Colours::black);
-    button_switch->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_switch->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_switch->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_switch->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_switch->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
     addAndMakeVisible(slider_modulation = new Left2MiddleSlider("1"));
     slider_modulation->setRange(0, 100, 1);
-    slider_modulation->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    slider_modulation->setTextBoxStyle(Slider::NoTextBox, true, 70, 20);
-    slider_modulation->setColour(Slider::backgroundColourId, Colour(0xff101010));
-    slider_modulation->setColour(Slider::thumbColourId, Colours::black);
-    slider_modulation->setColour(Slider::trackColourId, Colours::black);
-    slider_modulation->setColour(Slider::rotarySliderFillColourId, Colours::red);
-    slider_modulation->setColour(Slider::rotarySliderOutlineColourId, Colours::black);
-    slider_modulation->setColour(Slider::textBoxTextColourId, Colours::red);
-    slider_modulation->setColour(Slider::textBoxBackgroundColourId, Colour(0xff161616));
-    slider_modulation->setColour(Slider::textBoxHighlightColourId, Colours::black);
-    slider_modulation->setColour(Slider::textBoxOutlineColourId, Colours::black);
+    slider_modulation->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    slider_modulation->setTextBoxStyle(juce::Slider::NoTextBox, true, 70, 20);
+    slider_modulation->setColour(juce::Slider::backgroundColourId, juce::Colour(0xff101010));
+    slider_modulation->setColour(juce::Slider::thumbColourId, juce::Colours::black);
+    slider_modulation->setColour(juce::Slider::trackColourId, juce::Colours::black);
+    slider_modulation->setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::red);
+    slider_modulation->setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colours::black);
+    slider_modulation->setColour(juce::Slider::textBoxTextColourId, juce::Colours::red);
+    slider_modulation->setColour(juce::Slider::textBoxBackgroundColourId, juce::Colour(0xff161616));
+    slider_modulation->setColour(juce::Slider::textBoxHighlightColourId, juce::Colours::black);
+    slider_modulation->setColour(juce::Slider::textBoxOutlineColourId, juce::Colours::black);
     slider_modulation->addListener(this);
 
     addAndMakeVisible(label = new Label(String(), String()));
     label->setFont(Font(15.00f, Font::plain));
     label->setJustificationType(Justification::centred);
     label->setEditable(false, false, false);
-    label->setColour(Label::textColourId, Colours::yellow);
-    label->setColour(TextEditor::textColourId, Colours::black);
-    label->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label->setColour(Label::textColourId, juce::Colours::yellow);
+    label->setColour(TextEditor::textColourId, juce::Colours::black);
+    label->setColour(TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(button_modulator = new TextButton(String()));
+    addAndMakeVisible(button_modulator = new juce::TextButton(String()));
     button_modulator->addListener(this);
-    button_modulator->setColour(TextButton::buttonColourId, Colours::black);
-    button_modulator->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_modulator->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_modulator->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_modulator->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_modulator->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
     addAndMakeVisible(label_top = new Label(String(), String()));
     label_top->setFont(Font(15.00f, Font::plain));
     label_top->setJustificationType(Justification::centred);
     label_top->setEditable(false, false, false);
-    label_top->setColour(Label::textColourId, Colours::yellow);
-    label_top->setColour(TextEditor::textColourId, Colours::black);
-    label_top->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_top->setColour(Label::textColourId, juce::Colours::yellow);
+    label_top->setColour(TextEditor::textColourId, ::black);
+    label_top->setColour(TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     //[UserPreSize]
     last_painted_mod_slider_val = -999999;
@@ -321,8 +321,8 @@ mono_ModulationSlider::mono_ModulationSlider(ModulationSliderConfigBase *config_
     // STYLE
     if (_config->get_is_linear())
     {
-        slider_modulation->setSliderStyle(Slider::LinearVertical);
-        slider_value->setSliderStyle(Slider::LinearVertical);
+        slider_modulation->setSliderStyle(juce::Slider::LinearVertical);
+        slider_value->setSliderStyle(juce::Slider::LinearVertical);
     }
 
     // INIT SLIDERS AND BUTTONS
@@ -364,17 +364,17 @@ mono_ModulationSlider::mono_ModulationSlider(ModulationSliderConfigBase *config_
     // SET COLOURS AND TEXT
     {
         button_modulator->setButtonText(_config->get_top_button_text().text);
-        button_modulator->setColour(TextButton::buttonColourId,
+        button_modulator->setColour(juce::TextButton::buttonColourId,
                                     UiLookAndFeel::getInstance()->colours.button_off_colour);
-        button_modulator->setColour(TextButton::textColourOnId,
+        button_modulator->setColour(juce::TextButton::textColourOnId,
                                     UiLookAndFeel::getInstance()->colours.button_text_colour);
 
         // BUTTON / LABEL
         label->setText(_config->get_bottom_button_text().text, dontSendNotification);
         button_switch->setButtonText(_config->get_bottom_button_text().text);
-        button_switch->setColour(TextButton::buttonColourId,
+        button_switch->setColour(juce::TextButton::buttonColourId,
                                  UiLookAndFeel::getInstance()->colours.button_off_colour);
-        button_switch->setColour(TextButton::textColourOnId,
+        button_switch->setColour(juce::TextButton::textColourOnId,
                                  UiLookAndFeel::getInstance()->colours.button_text_colour);
     }
 
@@ -422,14 +422,14 @@ mono_ModulationSlider::~mono_ModulationSlider()
 }
 
 //==============================================================================
-void mono_ModulationSlider::paint(Graphics &g)
+void mono_ModulationSlider::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     g.fillAll(UiLookAndFeel::getInstance()->colours.bg);
     return;
     //[/UserPrePaint]
 
-    g.fillAll(Colours::black);
+    g.fillAll(::black);
 
     //[UserPaint] Add your own custom painting code here..
 #define original_w 60.0f
@@ -453,8 +453,8 @@ void mono_ModulationSlider::resized()
     {
         // const float width = 56.0f*(1.0f/original_w*getWidth());
         // const float height = 20.0f*(1.0f/original_h*getHeight());
-        // slider_modulation->setTextBoxStyle (Slider::TextBoxBelow, false,  width, height);
-        // slider_value->setTextBoxStyle (Slider::TextBoxBelow, false, width, height);
+        // slider_modulation->setTextBoxStyle (juce::Slider::TextBoxBelow, false,  width, height);
+        // slider_value->setTextBoxStyle (juce::Slider::TextBoxBelow, false, width, height);
     }
 #include "UiDynamicSizeEnd.h"
 #undef original_w
@@ -462,7 +462,7 @@ void mono_ModulationSlider::resized()
     //[/UserResized]
 }
 
-void mono_ModulationSlider::sliderValueChanged(Slider *sliderThatWasMoved)
+void mono_ModulationSlider::sliderValueChanged(juce::Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
@@ -510,7 +510,7 @@ void mono_ModulationSlider::sliderValueChanged(Slider *sliderThatWasMoved)
     //[/UsersliderValueChanged_Post]
 }
 
-void mono_ModulationSlider::buttonClicked(Button *buttonThatWasClicked)
+void mono_ModulationSlider::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -540,7 +540,7 @@ void mono_ModulationSlider::buttonClicked(Button *buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-bool mono_ModulationSlider::keyPressed(const KeyPress &key)
+bool mono_ModulationSlider::keyPressed(const juce::KeyPress &key)
 {
     //[UserCode_keyPressed] -- Add your code here...
     return false; // Return true if your handler uses this key event, or false to allow it to be
@@ -556,21 +556,21 @@ bool mono_ModulationSlider::keyStateChanged(const bool isKeyDown)
     //[/UserCode_keyStateChanged]
 }
 
-void mono_ModulationSlider::modifierKeysChanged(const ModifierKeys &modifiers)
+void mono_ModulationSlider::modifierKeysChanged(const juce::ModifierKeys &modifiers)
 {
     //[UserCode_modifierKeysChanged] -- Add your code here...
     //[/UserCode_modifierKeysChanged]
 }
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-void SnapSlider::mouseEnter(const MouseEvent &event) { owner->sliderValueEnter(this); }
-void SnapSlider::mouseExit(const MouseEvent &event) { owner->sliderValueExit(this); }
-void Left2MiddleSlider::mouseEnter(const MouseEvent &event) { owner->sliderModEnter(this); }
-void Left2MiddleSlider::mouseExit(const MouseEvent &event) { owner->sliderModExit(this); }
-void mono_ModulationSlider::sliderValueEnter(Slider *s_) { show_value_popup = true; };
-void mono_ModulationSlider::sliderValueExit(Slider *s_) { show_value_popup = false; };
-void mono_ModulationSlider::sliderModEnter(Slider *s_) { show_value_popup = true; };
-void mono_ModulationSlider::sliderModExit(Slider *s_) { show_value_popup = false; };
+void SnapSlider::mouseEnter(const juce::MouseEvent &event) { owner->sliderValueEnter(this); }
+void SnapSlider::mouseExit(const juce::MouseEvent &event) { owner->sliderValueExit(this); }
+void Left2MiddleSlider::mouseEnter(const juce::MouseEvent &event) { owner->sliderModEnter(this); }
+void Left2MiddleSlider::mouseExit(const juce::MouseEvent &event) { owner->sliderModExit(this); }
+void mono_ModulationSlider::sliderValueEnter(juce::Slider *s_) { show_value_popup = true; };
+void mono_ModulationSlider::sliderValueExit(juce::Slider *s_) { show_value_popup = false; };
+void mono_ModulationSlider::sliderModEnter(juce::Slider *s_) { show_value_popup = true; };
+void mono_ModulationSlider::sliderModExit(juce::Slider *s_) { show_value_popup = false; };
 //[/MiscUserCode]
 
 //==============================================================================

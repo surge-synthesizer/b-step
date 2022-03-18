@@ -36,8 +36,8 @@ struct ProcessorUserData
     Parameters parameter_list;
 
   public:
-    void export_to(XmlElement &xml) const;
-    void import_from(const XmlElement &xml);
+    void export_to(juce::XmlElement &xml) const;
+    void import_from(const juce::XmlElement &xml);
     void import_by_default();
 
   public:
@@ -70,8 +70,8 @@ struct MIDIUserData
     Parameters parameter_list;
 
   public:
-    void export_to(XmlElement &xml) const;
-    void import_from(const XmlElement &xml);
+    void export_to(juce::XmlElement &xml) const;
+    void import_from(const juce::XmlElement &xml);
     void import_by_default();
 
   public:
@@ -102,7 +102,7 @@ struct Pattern
     appdeff_t::swing_velocity_offset_t swing_velocity_offset;
     appdeff_t::swing_duration_offset_t swing_duration_offset;
 
-    PodParameterBase &master_string_octave(uint8 id_)
+    PodParameterBase &master_string_octave(std::uint8_t id_)
     {
         switch (id_)
         {
@@ -116,7 +116,7 @@ struct Pattern
             return string_offset_e;
         }
     }
-    const PodParameterBase &master_string_octave_c(uint8 id_) const
+    const PodParameterBase &master_string_octave_c(std::uint8_t id_) const
     {
         switch (id_)
         {
@@ -132,35 +132,41 @@ struct Pattern
     }
 
   private:
-    OwnedArray<Bar> _bars;
-    OwnedArray<ChordSet> _chord_sets;
+    juce::OwnedArray<Bar> _bars;
+    juce::OwnedArray<ChordSet> _chord_sets;
 
   public:
-    inline Bar &bar(uint8 bar_id_) const { return *_bars.getUnchecked(bar_id_); }
+    inline Bar &bar(std::uint8_t bar_id_) const { return *_bars.getUnchecked(bar_id_); }
 
     inline ChordSet &selected_chordset() const { return *_chord_sets.getUnchecked(chord_type); }
-    inline ChordSet &chordset(uint8 id) const { return *_chord_sets.getUnchecked(id); }
+    inline ChordSet &chordset(std::uint8_t id) const { return *_chord_sets.getUnchecked(id); }
 
   public:
     Parameters parameter_list;
 
   public:
-    void export_to(XmlElement &xml) const;
-    void import_from(const XmlElement &xml);
+    void export_to(juce::XmlElement &xml) const;
+    void import_from(const juce::XmlElement &xml);
     void import_by_default();
 
     /// 1.2 importer
-    void import_from_2_0(const XmlElement &xml_);
-    void import_from_1_2(const XmlElement &xml);
+    void import_from_2_0(const juce::XmlElement &xml_);
+    void import_from_1_2(const juce::XmlElement &xml);
 
   public:
     Pattern();
 
-    int8 _remote_tune;
-    int8 _remote_tune_center;
+    std::int8_t _remote_tune;
+    std::int8_t _remote_tune_center;
 
-    inline int8 get_remote_offset() const { return ((_remote_tune_center - _remote_tune) * -1); }
-    inline void set_remote_offset(uint8 midi_note_value_) { _remote_tune = midi_note_value_; }
+    inline std::int8_t get_remote_offset() const
+    {
+        return ((_remote_tune_center - _remote_tune) * -1);
+    }
+    inline void set_remote_offset(std::uint8_t midi_note_value_)
+    {
+        _remote_tune = midi_note_value_;
+    }
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Pattern)
 };
@@ -171,27 +177,27 @@ struct Pattern
 struct Chord;
 struct ChordSet
 {
-    const uint8 id;
+    const std::uint8_t id;
 
     typedef APPDEF_ChordSet appdeff_t;
 
   private:
-    OwnedArray<Chord> _chords;
+    juce::OwnedArray<Chord> _chords;
 
   public:
-    inline Chord &chord(uint8 chord_id_) const { return *_chords.getUnchecked(chord_id_); }
+    inline Chord &chord(std::uint8_t chord_id_) const { return *_chords.getUnchecked(chord_id_); }
 
   public:
-    void export_to(XmlElement &xml_, bool with_id_) const;
-    void import_from(const XmlElement &xml_, bool with_id_);
+    void export_to(juce::XmlElement &xml_, bool with_id_) const;
+    void import_from(const juce::XmlElement &xml_, bool with_id_);
     void import_by_default(bool with_id_);
 
     /// 1.2 importer
-    void import_from_1_2(const XmlElement &xml);
-    void import_from_1_2_snapshot(const XmlElement &xml);
+    void import_from_1_2(const juce::XmlElement &xml);
+    void import_from_1_2_snapshot(const juce::XmlElement &xml);
 
   public:
-    ChordSet(uint8 chordset_id_);
+    ChordSet(std::uint8_t chordset_id_);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ChordSet)
 };
@@ -201,8 +207,8 @@ struct ChordSet
 // ************************************************************************************************
 struct Chord
 {
-    const uint8 id;
-    const uint8 chord_set_id;
+    const std::uint8_t id;
+    const std::uint8_t chord_set_id;
 
     typedef APPDEF_Chord appdeff_t;
 
@@ -213,7 +219,7 @@ struct Chord
     appdeff_t::offset_all_t offset_all;
 
   public:
-    inline PodParameterBase &get_string_offset(uint8 barstring_id_)
+    inline PodParameterBase &get_string_offset(std::uint8_t barstring_id_)
     {
         switch (barstring_id_)
         {
@@ -234,17 +240,17 @@ struct Chord
   public:
     Parameters parameter_list;
 
-    void export_to(XmlElement &xml_) const;
-    void import_from(const XmlElement &xml_);
+    void export_to(juce::XmlElement &xml_) const;
+    void import_from(const juce::XmlElement &xml_);
     void import_by_default();
 
     /// 1.2 importer
-    void import_from_1_2(const XmlElement &xml);
-    void import_from_1_2_snapshot(const XmlElement &xml);
+    void import_from_1_2(const juce::XmlElement &xml);
+    void import_from_1_2_snapshot(const juce::XmlElement &xml);
 
   private:
     friend class ChordSet;
-    Chord(uint8 chordset_id_, uint8 chord_id_);
+    Chord(std::uint8_t chordset_id_, std::uint8_t chord_id_);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Chord)
 };
@@ -257,7 +263,7 @@ struct Barstring;
 struct BarCCSet;
 struct Bar
 {
-    const uint8 id;
+    const std::uint8_t id;
 
     typedef APPDEF_Bar appdeff_t;
 
@@ -274,19 +280,22 @@ struct Bar
     appdeff_t::group_t group;
 
   private:
-    OwnedArray<BarStep> _barsteps;
-    OwnedArray<Barstring> _barstrings;
-    OwnedArray<BarCCSet> _cc_sets;
+    juce::OwnedArray<BarStep> _barsteps;
+    juce::OwnedArray<Barstring> _barstrings;
+    juce::OwnedArray<BarCCSet> _cc_sets;
 
   public:
-    inline BarStep &barstep(uint8 step_id_) const { return *_barsteps.getUnchecked(step_id_); }
+    inline BarStep &barstep(std::uint8_t step_id_) const
+    {
+        return *_barsteps.getUnchecked(step_id_);
+    }
 
-    inline Barstring &barstring(uint8 barstring_id_) const
+    inline Barstring &barstring(std::uint8_t barstring_id_) const
     {
         return *_barstrings.getUnchecked(barstring_id_);
     }
 
-    inline BarCCSet &cc_set(uint8 cc_id_) const { return *_cc_sets.getUnchecked(cc_id_); }
+    inline BarCCSet &cc_set(std::uint8_t cc_id_) const { return *_cc_sets.getUnchecked(cc_id_); }
 
   public:
     Bar &operator=(const Bar &);
@@ -295,15 +304,15 @@ struct Bar
     Parameters parameter_list;
 
   public:
-    void export_to(XmlElement &xml_, bool with_id_) const;
-    void import_from(const XmlElement &xml_, bool with_id_);
+    void export_to(juce::XmlElement &xml_, bool with_id_) const;
+    void import_from(const juce::XmlElement &xml_, bool with_id_);
     void import_by_default(bool with_id_);
 
     /// 1.2 importer
-    void import_from_1_2(const XmlElement &xml, String &parent_prefix_);
+    void import_from_1_2(const juce::XmlElement &xml, juce::String &parent_prefix_);
 
   public:
-    Bar(uint8 bar_id_);
+    Bar(std::uint8_t bar_id_);
 
     JUCE_LEAK_DETECTOR(Bar)
 };
@@ -313,7 +322,7 @@ struct Bar
 // ************************************************************************************************
 struct BarCCSet
 {
-    const uint8 id;
+    const std::uint8_t id;
 
     typedef APPDEF_BarCCSet appdeff_t;
 
@@ -326,12 +335,12 @@ struct BarCCSet
     Parameters parameter_list;
 
   public:
-    void export_to(XmlElement &xml_) const;
-    void import_from(const XmlElement &xml_);
+    void export_to(juce::XmlElement &xml_) const;
+    void import_from(const juce::XmlElement &xml_);
     void import_by_default();
 
   public:
-    BarCCSet(uint8 bar_id_);
+    BarCCSet(std::uint8_t bar_id_);
 
     JUCE_LEAK_DETECTOR(BarCCSet)
 };
@@ -342,7 +351,7 @@ struct BarCCSet
 struct BarStepCCVals;
 struct BarStep
 {
-    const uint8 id;
+    const std::uint8_t id;
 
     typedef APPDEF_BarStep appdeff_t;
 
@@ -373,10 +382,10 @@ struct BarStep
     appdeff_t::pos_force_to_absolute_step_t pos_force_to_absolute_step;
 
   private:
-    OwnedArray<BarStepCCVals> _cc_vals;
+    juce::OwnedArray<BarStepCCVals> _cc_vals;
 
   public:
-    inline BarStepCCVals &cc_val(uint8 cc_val_id_) const
+    inline BarStepCCVals &cc_val(std::uint8_t cc_val_id_) const
     {
         return *_cc_vals.getUnchecked(cc_val_id_);
     }
@@ -385,15 +394,15 @@ struct BarStep
     Parameters parameter_list;
 
   public:
-    void export_to(XmlElement &xml_) const;
-    void import_from(const XmlElement &xml_);
+    void export_to(juce::XmlElement &xml_) const;
+    void import_from(const juce::XmlElement &xml_);
     void import_by_default();
 
     /// 1.2 importer
-    void import_from_1_2(const XmlElement &xml, String &parent_prefix_);
+    void import_from_1_2(const juce::XmlElement &xml, juce::String &parent_prefix_);
 
   public:
-    BarStep(uint8 step_id_);
+    BarStep(std::uint8_t step_id_);
     BarStep &operator=(const BarStep &);
 
     JUCE_LEAK_DETECTOR(BarStep)
@@ -404,7 +413,7 @@ struct BarStep
 // ************************************************************************************************
 struct BarStepCCVals
 {
-    const uint8 id;
+    const std::uint8_t id;
 
     typedef APPDEF_BarStepCCVals appdeff_t;
 
@@ -418,12 +427,12 @@ struct BarStepCCVals
     BarStepCCVals &operator=(const BarStepCCVals &);
 
   public:
-    void export_to(XmlElement &xml_) const;
-    void import_from(const XmlElement &xml_);
+    void export_to(juce::XmlElement &xml_) const;
+    void import_from(const juce::XmlElement &xml_);
     void import_by_default();
 
   public:
-    BarStepCCVals(uint8 step_id_, uint8 column_id_);
+    BarStepCCVals(std::uint8_t step_id_, std::uint8_t column_id_);
 
     JUCE_LEAK_DETECTOR(BarStepCCVals)
 };
@@ -434,17 +443,17 @@ struct BarStepCCVals
 struct Step;
 struct Barstring
 {
-    const uint8 id;
+    const std::uint8_t id;
 
     typedef APPDEF_Barstring appdeff_t;
 
     appdeff_t::octave_offset_t octave_offset;
 
   private:
-    OwnedArray<Step> _steps;
+    juce::OwnedArray<Step> _steps;
 
   public:
-    inline Step &step(uint8 step_id_) const { return *_steps.getUnchecked(step_id_); }
+    inline Step &step(std::uint8_t step_id_) const { return *_steps.getUnchecked(step_id_); }
 
   public:
     Parameters parameter_list;
@@ -453,15 +462,15 @@ struct Barstring
     Barstring &operator=(const Barstring &);
 
   public:
-    void export_to(XmlElement &xml_) const;
-    void import_from(const XmlElement &xml_);
+    void export_to(juce::XmlElement &xml_) const;
+    void import_from(const juce::XmlElement &xml_);
     void import_by_default();
 
     /// 1.2 importer
-    void import_from_1_2(const XmlElement &xml, String &parent_prefix_);
+    void import_from_1_2(const juce::XmlElement &xml, juce::String &parent_prefix_);
 
   public:
-    Barstring(uint8 id_);
+    Barstring(std::uint8_t id_);
 
     JUCE_LEAK_DETECTOR(Barstring)
 };
@@ -471,7 +480,7 @@ struct Barstring
 // ************************************************************************************************
 struct Step
 {
-    const uint8 id;
+    const std::uint8_t id;
 
     typedef APPDEF_Step appdeff_t;
 
@@ -484,15 +493,15 @@ struct Step
     Step &operator=(const Step &);
 
   public:
-    void export_to(XmlElement &xml_) const;
-    void import_from(const XmlElement &xml_);
+    void export_to(juce::XmlElement &xml_) const;
+    void import_from(const juce::XmlElement &xml_);
     void import_by_default();
 
     /// 1.2 importer
-    void import_from_1_2(const XmlElement &xml, String &parent_prefix_);
+    void import_from_1_2(const juce::XmlElement &xml, juce::String &parent_prefix_);
 
   public:
-    Step(uint8 string_id, uint8 id_);
+    Step(std::uint8_t string_id, std::uint8_t id_);
 
     JUCE_LEAK_DETECTOR(Step)
 };
@@ -516,8 +525,8 @@ struct UIUserData
     Parameters parameter_list;
 
   public:
-    void export_to(XmlElement &xml_) const;
-    void import_from(const XmlElement &xml_);
+    void export_to(juce::XmlElement &xml_) const;
+    void import_from(const juce::XmlElement &xml_);
     void import_by_default();
 
   public:
@@ -531,7 +540,7 @@ struct UIUserData
 // ************************************************************************************************
 struct UIBarClipboardSettings
 {
-    const uint8 id;
+    const std::uint8_t id;
 
     typedef APPDEF_UIBarClipboardSettings appdeff_t;
 
@@ -549,18 +558,18 @@ struct UIBarClipboardSettings
     appdeff_t::is_copy_layer_6_t is_copy_layer_6;
     appdeff_t::is_copy_layer_7_t is_copy_layer_7;
 
-    String stored_bar_source_ident;
+    juce::String stored_bar_source_ident;
 
   public:
     Parameters parameter_list;
 
   public:
-    void export_to(XmlElement &xml_) const;
-    void import_from(const XmlElement &xml_);
+    void export_to(juce::XmlElement &xml_) const;
+    void import_from(const juce::XmlElement &xml_);
     void import_by_default();
 
   public:
-    UIBarClipboardSettings(uint8 clipboard_id_);
+    UIBarClipboardSettings(std::uint8_t clipboard_id_);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UIBarClipboardSettings)
 };

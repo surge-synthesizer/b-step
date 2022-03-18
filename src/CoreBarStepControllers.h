@@ -24,13 +24,13 @@ class ControllerStepDuration : public MONO_UISliderController
 
     PodParameterBase *get_parameter() const override { return &selected_barstep.get().duration; }
 
-    void get_label_text_top(String &popup_text_) const override
+    void get_label_text_top(juce::String &popup_text_) const override
     {
         APPDEF_BarStep::duration2string(selected_barstep.get().duration, popup_text_);
     };
 
   public:
-    ControllerStepDuration(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerStepDuration(AppInstanceStore *const app_instance_store_, std::uint8_t step_id_)
         : MONO_UISliderController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -49,7 +49,7 @@ class ControllerStepVelocity : public MONO_UISliderController
     PodParameterBase *get_parameter() const override { return &selected_barstep.get().velocity; }
 
   public:
-    ControllerStepVelocity(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerStepVelocity(AppInstanceStore *const app_instance_store_, std::uint8_t step_id_)
         : MONO_UISliderController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -68,7 +68,7 @@ class ControllerBarstepRepeats : public MONO_UISliderController
     PodParameterBase *get_parameter() const override { return &selected_barstep.get().repeats; }
 
   public:
-    ControllerBarstepRepeats(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepRepeats(AppInstanceStore *const app_instance_store_, std::uint8_t step_id_)
         : MONO_UISliderController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -89,13 +89,14 @@ class ControllerBarstepRepeatsDistance : public MONO_UISliderController
         return &selected_barstep.get().repeat_distance;
     }
 
-    void get_label_text_top(String &popup_text_) const override
+    void get_label_text_top(juce::String &popup_text_) const override
     {
         APPDEF_BarStep::duration2string(selected_barstep.get().repeat_distance, popup_text_);
     };
 
   public:
-    ControllerBarstepRepeatsDistance(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepRepeatsDistance(AppInstanceStore *const app_instance_store_,
+                                     std::uint8_t step_id_)
         : MONO_UISliderController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -116,14 +117,14 @@ class ControllerBarstepRepeatsDistanceOffset : public MONO_UISliderController
         return &selected_barstep.get().repeat_distance_offset;
     }
 
-    void get_label_text_top(String &popup_text_) const override
+    void get_label_text_top(juce::String &popup_text_) const override
     {
         APPDEF_BarStep::duration2string(selected_barstep.get().repeat_distance_offset, popup_text_);
     };
 
   public:
     ControllerBarstepRepeatsDistanceOffset(AppInstanceStore *const app_instance_store_,
-                                           uint8 step_id_)
+                                           std::uint8_t step_id_)
         : MONO_UISliderController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -146,7 +147,7 @@ class ControllerBarstepRepeatsVelocityOffset : public MONO_UISliderController
 
   public:
     ControllerBarstepRepeatsVelocityOffset(AppInstanceStore *const app_instance_store_,
-                                           uint8 step_id_)
+                                           std::uint8_t step_id_)
         : MONO_UISliderController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -167,14 +168,14 @@ class ControllerBarstepRepeatsDurationOffset : public MONO_UISliderController
         return &selected_barstep.get().repeat_duration_offset;
     }
 
-    void get_label_text_top(String &popup_text_) const override
+    void get_label_text_top(juce::String &popup_text_) const override
     {
         APPDEF_BarStep::duration2string(selected_barstep.get().repeat_duration_offset, popup_text_);
     };
 
   public:
     ControllerBarstepRepeatsDurationOffset(AppInstanceStore *const app_instance_store_,
-                                           uint8 step_id_)
+                                           std::uint8_t step_id_)
         : MONO_UISliderController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -195,13 +196,14 @@ class ControllerBarstepRepeatsNoteOffset : public MONO_UISliderController
         return &selected_barstep.get().repeat_note_offset;
     }
 
-    void get_label_text_top(String &popup_text_) const override
+    void get_label_text_top(juce::String &popup_text_) const override
     {
-        popup_text_ = String(selected_barstep.get().repeat_note_offset);
+        popup_text_ = juce::String(selected_barstep.get().repeat_note_offset);
     };
 
   public:
-    ControllerBarstepRepeatsNoteOffset(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepRepeatsNoteOffset(AppInstanceStore *const app_instance_store_,
+                                       std::uint8_t step_id_)
         : MONO_UISliderController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -222,13 +224,14 @@ class ControllerBarstepRepeatsProbability : public MONO_UISliderController
         return &selected_barstep.get().repeat_probability;
     }
 
-    void get_label_text_top(String &popup_text_) const override
+    void get_label_text_top(juce::String &popup_text_) const override
     {
-        popup_text_ = String(selected_barstep.get().repeat_probability) + "%";
+        popup_text_ = juce::String(selected_barstep.get().repeat_probability) + "%";
     };
 
   public:
-    ControllerBarstepRepeatsProbability(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepRepeatsProbability(AppInstanceStore *const app_instance_store_,
+                                        std::uint8_t step_id_)
         : MONO_UISliderController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -251,7 +254,7 @@ class ControllerBarstepRepeatsForce2ChordNotes : public MONO_UIButtonController
 
   public:
     ControllerBarstepRepeatsForce2ChordNotes(AppInstanceStore *const app_instance_store_,
-                                             uint8 step_id_)
+                                             std::uint8_t step_id_)
         : MONO_UIButtonController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -273,7 +276,8 @@ class ControllerBarstepOctaveOffset : public MONO_UISliderController
     }
 
   public:
-    ControllerBarstepOctaveOffset(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepOctaveOffset(AppInstanceStore *const app_instance_store_,
+                                  std::uint8_t step_id_)
         : MONO_UISliderController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -291,13 +295,13 @@ class ControllerBarstepChord : public MONO_UISliderController
 
     PodParameterBase *get_parameter() const override { return &selected_barstep.get().chord_id; }
 
-    void get_label_text_top(String &popup_text_) const override
+    void get_label_text_top(juce::String &popup_text_) const override
     {
-        popup_text_ = String(selected_barstep.get().chord_id + 1);
+        popup_text_ = juce::String(selected_barstep.get().chord_id + 1);
     };
 
   public:
-    ControllerBarstepChord(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepChord(AppInstanceStore *const app_instance_store_, std::uint8_t step_id_)
         : MONO_UISliderController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -316,7 +320,7 @@ class ControllerBarstepSkip : public MONO_UIButtonController
     PodParameterBase *get_parameter() const override { return &selected_barstep.get().skip; }
 
   public:
-    ControllerBarstepSkip(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepSkip(AppInstanceStore *const app_instance_store_, std::uint8_t step_id_)
         : MONO_UIButtonController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -351,7 +355,7 @@ class ControllerBarstepMute : public MONO_UIButtonController
     }
 
   public:
-    ControllerBarstepMute(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepMute(AppInstanceStore *const app_instance_store_, std::uint8_t step_id_)
         : MONO_UIButtonController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -369,13 +373,13 @@ class ControllerBarstepDelay : public MONO_UISliderController
 
     PodParameterBase *get_parameter() const override { return &selected_barstep.get().delay; }
 
-    void get_label_text_top(String &popup_text_) const override
+    void get_label_text_top(juce::String &popup_text_) const override
     {
         APPDEF_BarStep::duration2string(selected_barstep.get().delay, popup_text_);
     };
 
   public:
-    ControllerBarstepDelay(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepDelay(AppInstanceStore *const app_instance_store_, std::uint8_t step_id_)
         : MONO_UISliderController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -393,13 +397,13 @@ class ControllerBarstepProbability : public MONO_UISliderController
 
     PodParameterBase *get_parameter() const override { return &selected_barstep.get().probability; }
 
-    void get_label_text_top(String &popup_text_) const override
+    void get_label_text_top(juce::String &popup_text_) const override
     {
-        popup_text_ = String(selected_barstep.get().probability) + String("%");
+        popup_text_ = juce::String(selected_barstep.get().probability) + juce::String("%");
     };
 
   public:
-    ControllerBarstepProbability(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepProbability(AppInstanceStore *const app_instance_store_, std::uint8_t step_id_)
         : MONO_UISliderController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -409,7 +413,7 @@ class ControllerBarstepProbability : public MONO_UISliderController
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-class ControllerBarstepReset2Default : public MONO_UIButtonController, public Timer
+class ControllerBarstepReset2Default : public MONO_UIButtonController, public juce::Timer
 {
     SelectedBarstepObserver selected_barstep;
     AppInstanceStore *const _app_instance_store;
@@ -438,7 +442,8 @@ class ControllerBarstepReset2Default : public MONO_UIButtonController, public Ti
     void timerCallback() override { stopTimer(); }
 
   public:
-    ControllerBarstepReset2Default(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepReset2Default(AppInstanceStore *const app_instance_store_,
+                                   std::uint8_t step_id_)
         : MONO_UIButtonController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_), _app_instance_store(app_instance_store_)
     {
@@ -456,7 +461,7 @@ class ControllerBarstepCopy : public MONO_UIButtonController
     SelectedBarstepObserver selected_barstep;
 
   public:
-    ControllerBarstepCopy(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepCopy(AppInstanceStore *const app_instance_store_, std::uint8_t step_id_)
         : MONO_UIButtonController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -475,7 +480,8 @@ class ControllerBarstepRepeatsIsUsed : public MONO_UIButtonController
     PodParameterBase *get_parameter() const override { return &selected_barstep.get().skip_repeat; }
 
   public:
-    ControllerBarstepRepeatsIsUsed(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepRepeatsIsUsed(AppInstanceStore *const app_instance_store_,
+                                   std::uint8_t step_id_)
         : MONO_UIButtonController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -497,7 +503,8 @@ class ControllerBarstepRepeatsNoteUpNDown : public MONO_UIButtonController
     }
 
   public:
-    ControllerBarstepRepeatsNoteUpNDown(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepRepeatsNoteUpNDown(AppInstanceStore *const app_instance_store_,
+                                        std::uint8_t step_id_)
         : MONO_UIButtonController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -519,7 +526,7 @@ class ControllerBarstepRepeatsRoll : public MONO_UIButtonController
     }
 
   public:
-    ControllerBarstepRepeatsRoll(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepRepeatsRoll(AppInstanceStore *const app_instance_store_, std::uint8_t step_id_)
         : MONO_UIButtonController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -557,7 +564,8 @@ class ControllerBarstepPosEntryPoint : public MONO_UIButtonController
     }
 
   public:
-    ControllerBarstepPosEntryPoint(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepPosEntryPoint(AppInstanceStore *const app_instance_store_,
+                                   std::uint8_t step_id_)
         : MONO_UIButtonController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -580,7 +588,8 @@ class ControllerBarstepPosResetPoint : public MONO_UIButtonController
     }
 
   public:
-    ControllerBarstepPosResetPoint(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepPosResetPoint(AppInstanceStore *const app_instance_store_,
+                                   std::uint8_t step_id_)
         : MONO_UIButtonController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_), _app_instance_store(app_instance_store_)
     {
@@ -602,7 +611,8 @@ class ControllerBarstepPosForceToAbsolute : public MONO_UIButtonController
     }
 
   public:
-    ControllerBarstepPosForceToAbsolute(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepPosForceToAbsolute(AppInstanceStore *const app_instance_store_,
+                                        std::uint8_t step_id_)
         : MONO_UIButtonController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -623,13 +633,13 @@ class ControllerBarstepUseChord : public MONO_UIButtonController
         return &selected_barstep.get().use_step_chord;
     }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
-        string_ = String(selected_barstep.get().chord_id + 1);
+        string_ = juce::String(selected_barstep.get().chord_id + 1);
     }
 
   public:
-    ControllerBarstepUseChord(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerBarstepUseChord(AppInstanceStore *const app_instance_store_, std::uint8_t step_id_)
         : MONO_UIButtonController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_)
     {
@@ -659,8 +669,8 @@ class ControllerBarstepCCValue : public MONO_UISliderController
     };
     */
   public:
-    ControllerBarstepCCValue(AppInstanceStore *const app_instance_store_, uint8 step_id_,
-                             uint8 cc_val_id_)
+    ControllerBarstepCCValue(AppInstanceStore *const app_instance_store_, std::uint8_t step_id_,
+                             std::uint8_t cc_val_id_)
         : MONO_UISliderController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_), _app_instance_store(app_instance_store_),
           _cc_val_id(cc_val_id_)
@@ -683,14 +693,14 @@ class ControllerBarstepCCEnable : public MONO_UIButtonController
         return &selected_barstep.get().cc_val(_cc_id).enable;
     }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
-        string_ = String(selected_barstep.get().cc_val(_cc_id).value);
+        string_ = juce::String(selected_barstep.get().cc_val(_cc_id).value);
     }
 
   public:
-    ControllerBarstepCCEnable(AppInstanceStore *const app_instance_store_, uint8 step_id_,
-                              uint8 cc_id_)
+    ControllerBarstepCCEnable(AppInstanceStore *const app_instance_store_, std::uint8_t step_id_,
+                              std::uint8_t cc_id_)
         : MONO_UIButtonController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_), _cc_id(cc_id_)
     {

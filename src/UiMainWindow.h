@@ -22,6 +22,7 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "App.h"
+#include <cstdint>
 
 class GstepAudioProcessor;
 
@@ -50,6 +51,7 @@ class UiEditorInputPopup;
 
 #include "UiColumnWrapper.h"
 #include "UiEditorFileManager.h"
+#include <juce_audio_processors/juce_audio_processors.h>
 //[/Headers]
 
 //==============================================================================
@@ -60,7 +62,9 @@ class UiEditorInputPopup;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class GstepAudioProcessorEditor : public AudioProcessorEditor, public Timer, public KeyListener
+class GstepAudioProcessorEditor : public juce::AudioProcessorEditor,
+                                  public juce::Timer,
+                                  public juce::KeyListener
 {
   public:
     //==============================================================================
@@ -86,32 +90,32 @@ class GstepAudioProcessorEditor : public AudioProcessorEditor, public Timer, pub
 
   public:
     bool force_repaint_all;
-    CriticalSection lock; // skipp unneded updates if one is pending
+    juce::CriticalSection lock; // skipp unneded updates if one is pending
   private:
-    uint8 parent_menu_bar_height;
+    std::uint8_t parent_menu_bar_height;
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
 
     // LAYOUT.h
-    OwnedArray<UiColumnWrapper> _columns_fixed_steps;
-    OwnedArray<OwnedArray<UiColumnWrapper>> _columns;
-    OwnedArray<UiColumnWrapper> _columns_fixed_bar;
-    Array<ModelBase *> _last_painted_selected_bar_models;
+    juce::OwnedArray<UiColumnWrapper> _columns_fixed_steps;
+    juce::OwnedArray<juce::OwnedArray<UiColumnWrapper>> _columns;
+    juce::OwnedArray<UiColumnWrapper> _columns_fixed_bar;
+    juce::Array<ModelBase *> _last_painted_selected_bar_models;
 
-    OwnedArray<LabelPopupWithLivetime> open_label_popups;
-    int8 last_painted_bar;
-    int8 last_painted_layer;
+    juce::OwnedArray<LabelPopupWithLivetime> open_label_popups;
+    std::int8_t last_painted_bar;
+    std::int8_t last_painted_layer;
 
     void visibilityChanged() override;
-    void get_step_area(Rectangle<int> &);
-    void get_bar_area(Rectangle<int> &);
-    void get_selecter_area(Rectangle<int> &, uint8 id);
+    void get_step_area(juce::Rectangle<int> &);
+    void get_bar_area(juce::Rectangle<int> &);
+    void get_selecter_area(juce::Rectangle<int> &, std::uint8_t id);
     bool refresh_bar_select_paint;
-    void refresh_selected_bar(Array<Component *> &components_to_repaint_);
+    void refresh_selected_bar(juce::Array<juce::Component *> &components_to_repaint_);
     void timerCallback() override;
     void check_paint_slider_value_popup();
-    void complex_paint(Graphics &g);
+    void complex_paint(juce::Graphics &g);
     void init_column_wrappers();
     void init_layer_controllers_until_steps();
     void init_layer_controllers_fixed_bar_part();
@@ -128,8 +132,8 @@ class GstepAudioProcessorEditor : public AudioProcessorEditor, public Timer, pub
     float height_propertion() const { return 1.f / APPDEF_UIUserData::WINDOW_HEIGHT * getHeight(); }
 
   private:
-    bool keyPressed(const KeyPress &key_, Component *originatingComponent_) override;
-    void mouseDown(const MouseEvent &e_) override;
+    bool keyPressed(const juce::KeyPress &key_, juce::Component *originatingComponent_) override;
+    void mouseDown(const juce::MouseEvent &e_) override;
 
   public:
     void set_layer_controllers_page(int layer_id, bool force = false);
@@ -139,11 +143,11 @@ class GstepAudioProcessorEditor : public AudioProcessorEditor, public Timer, pub
     UiEditorInputPopup *input_popup;
 
   public:
-    ScopedPointer<UiEditorRightMainwindows> _editor_right_mainwindow;
+    juce::ScopedPointer<UiEditorRightMainwindows> _editor_right_mainwindow;
 
   private:
-    ScopedPointer<MenuBarRight> _menue_bar_right;
-    ScopedPointer<MenuBarLeft> _menue_bar_left;
+    juce::ScopedPointer<MenuBarRight> _menue_bar_right;
+    juce::ScopedPointer<MenuBarLeft> _menue_bar_left;
 
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
@@ -176,25 +180,25 @@ class GstepAudioProcessorEditor : public AudioProcessorEditor, public Timer, pub
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
 
-    ScopedPointer<ResizableCornerComponent> resizer;
+    juce::ScopedPointer<juce::ResizableCornerComponent> resizer;
 
     /** *************************************************************** */
   public:
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    ComponentBoundsConstrainer resizeLimits;
+    juce::ComponentBoundsConstrainer resizeLimits;
 
   public:
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<ImageButton> midi_learn_focus;
-    ScopedPointer<Label> midi_cc_value;
+    juce::ScopedPointer<juce::ImageButton> midi_learn_focus;
+    juce::ScopedPointer<juce::Label> midi_cc_value;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GstepAudioProcessorEditor)

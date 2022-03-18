@@ -9,6 +9,8 @@
 */
 
 #include "mono_AudioDeviceManager.h"
+#include <juce_audio_basics/juce_audio_basics.h>
+#include <juce_audio_devices/juce_audio_devices.h>
 
 mono_AudioDeviceManager::mono_AudioDeviceManager()
     : main_input_thru(false), use_main_input_as_cc(false), cc_input_thru(false)
@@ -50,13 +52,13 @@ void mono_AudioDeviceManager::init()
 #endif
 }
 
-StringArray mono_AudioDeviceManager::get_available_ports(const String &port_ident_name_)
+juce::StringArray mono_AudioDeviceManager::get_available_ports(const juce::String &port_ident_name_)
 {
-    StringArray devices;
+    juce::StringArray devices;
 
     if (output_ident_names.contains(port_ident_name_))
     {
-        devices.addArray(MidiOutput::getDevices());
+        devices.addArray(juce::MidiOutput::getDevices());
 #ifndef JUCE_WINDOWS
         devices.add(VIRTUAL_PORT);
 #endif
@@ -67,7 +69,7 @@ StringArray mono_AudioDeviceManager::get_available_ports(const String &port_iden
     }
     else if (input_ident_names.contains(port_ident_name_))
     {
-        devices.addArray(MidiInput::getDevices());
+        devices.addArray(juce::MidiInput::getDevices());
 
 #ifndef JUCE_WINDOWS
         devices.add(VIRTUAL_PORT);
@@ -81,7 +83,8 @@ StringArray mono_AudioDeviceManager::get_available_ports(const String &port_iden
     return devices;
 }
 
-String mono_AudioDeviceManager::get_selected_device_name(const String &port_ident_name_) const
+juce::String
+mono_AudioDeviceManager::get_selected_device_name(const juce::String &port_ident_name_) const
 {
     // OUTPUTS
     if (port_ident_name_ == "SEND_MIDI_CC_FEEDBACK")
@@ -150,7 +153,7 @@ String mono_AudioDeviceManager::get_selected_device_name(const String &port_iden
     return "CLOSED";
 }
 
-bool mono_AudioDeviceManager::is_port_open(const String &port_ident_name_) const
+bool mono_AudioDeviceManager::is_port_open(const juce::String &port_ident_name_) const
 {
     // OUTPUTS
     if (port_ident_name_ == "SEND_MIDI_CC_FEEDBACK")
@@ -207,7 +210,7 @@ bool mono_AudioDeviceManager::is_port_open(const String &port_ident_name_) const
     return false;
 }
 
-void mono_AudioDeviceManager::get_messages_to_send_to_daw(MidiBuffer &midi_messages_)
+void mono_AudioDeviceManager::get_messages_to_send_to_daw(juce::MidiBuffer &midi_messages_)
 {
     if (cc_output)
         cc_output->send_messages_to_daw_and_clear(midi_messages_);
@@ -232,12 +235,13 @@ void mono_AudioDeviceManager::get_messages_to_send_to_daw(MidiBuffer &midi_messa
     }
 }
 
-void mono_AudioDeviceManager::open_port(const String &port_ident_name_, const String &device_name_)
+void mono_AudioDeviceManager::open_port(const juce::String &port_ident_name_,
+                                        const juce::String &device_name_)
 {
     // OUTPUT
     if (output_ident_names.contains(port_ident_name_))
     {
-        const StringArray port_names = get_available_ports(port_ident_name_);
+        const juce::StringArray port_names = get_available_ports(port_ident_name_);
         int device_index(device_name_ == VIRTUAL_PORT ? VIRTUAL_PORT_ID : UNKNOWN_PORT_ID);
         if (device_index == UNKNOWN_PORT_ID)
             device_index = port_names.indexOf(device_name_);
@@ -357,7 +361,7 @@ void mono_AudioDeviceManager::open_port(const String &port_ident_name_, const St
     // INPUT
     else if (input_ident_names.contains(port_ident_name_))
     {
-        const StringArray port_names = get_available_ports(port_ident_name_);
+        const juce::StringArray port_names = get_available_ports(port_ident_name_);
         int device_index(device_name_ == VIRTUAL_PORT ? VIRTUAL_PORT_ID : UNKNOWN_PORT_ID);
         if (device_index == UNKNOWN_PORT_ID)
             device_index = port_names.indexOf(device_name_);
@@ -391,13 +395,14 @@ void mono_AudioDeviceManager::send_lfo_message(int lfo_id_, const float *lfo_amp
     {
         midi_output_wrapper->lock();
         {
-            uint8 tmp_lfo_value = 255;
+            std::uint8_t tmp_lfo_value = 255;
             for (int i = 0; i != num_samples_; ++i)
             {
-                uint8 value = 127.0f * lfo_amps_[i];
+                std::uint8_t value = 127.0f * lfo_amps_[i];
                 if (value != tmp_lfo_value)
                 {
-                    midi_output_wrapper->add_message(MidiMessage::controllerEvent(1, 1, value), i);
+                    midi_output_wrapper->add_message(
+                        juce::MidiMessage::controllerEvent(1, 1, value), i);
                     tmp_lfo_value = value;
                 }
             }
@@ -420,13 +425,14 @@ void mono_AudioDeviceManager::send_adsr_message(int adsr_id_, const float *adsr_
     {
         midi_output_wrapper->lock();
         {
-            uint8 tmp_adsr_value = 255;
+            std::uint8_t tmp_adsr_value = 255;
             for (int i = 0; i != num_samples_; ++i)
             {
-                uint8 value = 127.0f * adsr_amps_[i];
+                std::uint8_t value = 127.0f * adsr_amps_[i];
                 if (value != tmp_adsr_value)
                 {
-                    midi_output_wrapper->add_message(MidiMessage::controllerEvent(1, 1, value), i);
+                    midi_output_wrapper->add_message(
+                        juce::MidiMessage::controllerEvent(1, 1, value), i);
                     tmp_adsr_value = value;
                 }
             }
@@ -439,17 +445,19 @@ void mono_AudioDeviceManager::send_adsr_message(int adsr_id_, const float *adsr_
 }
 NOINLINE void mono_AudioDeviceManager::save() const noexcept
 {
-    File folder = File::getSpecialLocation(File::SpecialLocationType::ROOT_FOLDER);
-    folder = File(folder.getFullPathName() + "/Monoplugs/Monolisa/");
+    juce::File folder =
+        juce::File::getSpecialLocation(juce::File::SpecialLocationType::ROOT_FOLDER);
+    folder = juce::File(folder.getFullPathName() + "/Monoplugs/Monolisa/");
     if (folder.createDirectory())
     {
 #ifdef IS_PLUGIN
-        File midi_file(File(folder.getFullPathName() + String("/") + "config.pmidi"));
+        File midi_file(File(folder.getFullPathName() + juce::String("/") + "config.pmidi"));
 #else
-        File midi_file(File(folder.getFullPathName() + String("/") + "config.midi"));
+        juce::File midi_file(
+            juce::File(folder.getFullPathName() + juce::String("/") + "config.midi"));
 #endif
 
-        XmlElement xml("MIDI-IO-CONFIG-1.0");
+        juce::XmlElement xml("MIDI-IO-CONFIG-1.0");
         if (main_input)
             xml.setAttribute("RECIEVE_MIDI_MAIN", main_input->name);
         if (cc_input)
@@ -483,13 +491,14 @@ NOINLINE void mono_AudioDeviceManager::save() const noexcept
 }
 NOINLINE void mono_AudioDeviceManager::read() noexcept
 {
-    File folder = File::getSpecialLocation(File::SpecialLocationType::ROOT_FOLDER);
+    juce::File folder =
+        juce::File::getSpecialLocation(juce::File::SpecialLocationType::ROOT_FOLDER);
 #ifdef IS_PLUGIN
     File midi_file = File(folder.getFullPathName() + "/Monoplugs/Monolisa/config.pmidi");
 #else
-    File midi_file = File(folder.getFullPathName() + "/Monoplugs/Monolisa/config.midi");
+    juce::File midi_file = juce::File(folder.getFullPathName() + "/Monoplugs/Monolisa/config.midi");
 #endif
-    ScopedPointer<XmlElement> xml = XmlDocument(midi_file).getDocumentElement();
+    auto xml = juce::XmlDocument(midi_file).getDocumentElement();
     if (xml)
     {
         if (xml->hasTagName("MIDI-IO-CONFIG-1.0"))

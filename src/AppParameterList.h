@@ -13,9 +13,8 @@
 
 // JUCE
 #ifdef B_STEP_STANDALONE
-#include "../../b-step-standalone/JuceLibraryCode/JuceHeader.h"
+// #include "../../b-step-standalone/JuceLibraryCode/JuceHeader.h"
 #else
-#include "../JuceLibraryCode/JuceHeader.h"
 #endif
 
 #include "Parameter.h"
@@ -176,10 +175,10 @@ struct APPDEF_ProcessorUserData
     static const char *parameter_name_short(int id);
     static const char *get_help_url(int id);
 
-    static Array<IDS> get_copyable_parameter_list() { return Array<IDS>(); }
-    static Array<IDS> get_project_parameter_list();
-    static Array<IDS> get_automation_parameter_list();
-    static Array<IDS> get_setup_parameter_list() { return Array<IDS>(); }
+    static juce::Array<IDS> get_copyable_parameter_list() { return juce::Array<IDS>(); }
+    static juce::Array<IDS> get_project_parameter_list();
+    static juce::Array<IDS> get_automation_parameter_list();
+    static juce::Array<IDS> get_setup_parameter_list() { return juce::Array<IDS>(); }
 
     /// INTERNAL TYPEDEFS
   private:
@@ -239,10 +238,10 @@ struct APPDEF_MIDIUserData
     static const char *parameter_name_short(int id);
     static const char *get_help_url(int id);
 
-    static Array<IDS> get_copyable_parameter_list() { return Array<IDS>(); }
-    static Array<IDS> get_setup_parameter_list() { return Array<IDS>(); }
-    static Array<IDS> get_automation_parameter_list() { return Array<IDS>(); }
-    static Array<IDS> get_project_parameter_list();
+    static juce::Array<IDS> get_copyable_parameter_list() { return juce::Array<IDS>(); }
+    static juce::Array<IDS> get_setup_parameter_list() { return juce::Array<IDS>(); }
+    static juce::Array<IDS> get_automation_parameter_list() { return juce::Array<IDS>(); }
+    static juce::Array<IDS> get_project_parameter_list();
 
     /// INTERNAL TYPEDEFS
   private:
@@ -314,10 +313,10 @@ struct APPDEF_Pattern
     static const char *parameter_name_short(int id);
     static const char *get_help_url(int id);
 
-    static Array<IDS> get_copyable_parameter_list();
-    static Array<IDS> get_project_parameter_list();
-    static Array<IDS> get_automation_parameter_list();
-    static Array<IDS> get_setup_parameter_list() { return Array<IDS>(); }
+    static juce::Array<IDS> get_copyable_parameter_list();
+    static juce::Array<IDS> get_project_parameter_list();
+    static juce::Array<IDS> get_automation_parameter_list();
+    static juce::Array<IDS> get_setup_parameter_list() { return juce::Array<IDS>(); }
 
     /// INTERNAL TYPEDEFS
   private:
@@ -359,10 +358,10 @@ struct APPDEF_ChordSet
         SUM_CHORDS = 6
     };
 
-    static Array<IDS> get_copyable_parameter_list() { return Array<IDS>(); }
-    static Array<IDS> get_project_parameter_list() { return Array<IDS>(); }
-    static Array<IDS> get_automation_parameter_list() { return Array<IDS>(); }
-    static Array<IDS> get_setup_parameter_list() { return Array<IDS>(); }
+    static juce::Array<IDS> get_copyable_parameter_list() { return juce::Array<IDS>(); }
+    static juce::Array<IDS> get_project_parameter_list() { return juce::Array<IDS>(); }
+    static juce::Array<IDS> get_automation_parameter_list() { return juce::Array<IDS>(); }
+    static juce::Array<IDS> get_setup_parameter_list() { return juce::Array<IDS>(); }
 
     static const char *const class_name;
 
@@ -401,10 +400,10 @@ struct APPDEF_Chord
     static const char *parameter_name_short(int id);
     static const char *get_help_url(int id);
 
-    static Array<IDS> get_copyable_parameter_list() { return Array<IDS>(); }
-    static Array<IDS> get_project_parameter_list();
-    static Array<IDS> get_automation_parameter_list();
-    static Array<IDS> get_setup_parameter_list() { return Array<IDS>(); }
+    static juce::Array<IDS> get_copyable_parameter_list() { return juce::Array<IDS>(); }
+    static juce::Array<IDS> get_project_parameter_list();
+    static juce::Array<IDS> get_automation_parameter_list();
+    static juce::Array<IDS> get_setup_parameter_list() { return juce::Array<IDS>(); }
 
     /// INTERNAL TYPEDEFS
   private:
@@ -460,10 +459,10 @@ struct APPDEF_Bar
     static const char *parameter_name_short(int id);
     static const char *get_help_url(int id);
 
-    static Array<IDS> get_copyable_parameter_list();
-    static Array<IDS> get_project_parameter_list();
-    static Array<IDS> get_automation_parameter_list();
-    static Array<IDS> get_setup_parameter_list() { return Array<IDS>(); }
+    static juce::Array<IDS> get_copyable_parameter_list();
+    static juce::Array<IDS> get_project_parameter_list();
+    static juce::Array<IDS> get_automation_parameter_list();
+    static juce::Array<IDS> get_setup_parameter_list() { return juce::Array<IDS>(); }
 
     /// INTERNAL TYPEDEFS
   private:
@@ -508,10 +507,10 @@ struct APPDEF_BarCCSet
     static const char *parameter_name_short(int id);
     static const char *get_help_url(int id);
 
-    static Array<IDS> get_copyable_parameter_list();
-    static Array<IDS> get_project_parameter_list();
-    static Array<IDS> get_automation_parameter_list() { return Array<IDS>(); }
-    static Array<IDS> get_setup_parameter_list() { return Array<IDS>(); }
+    static juce::Array<IDS> get_copyable_parameter_list();
+    static juce::Array<IDS> get_project_parameter_list();
+    static juce::Array<IDS> get_automation_parameter_list() { return juce::Array<IDS>(); }
+    static juce::Array<IDS> get_setup_parameter_list() { return juce::Array<IDS>(); }
 
     /// INTERNAL TYPEDEFS
   private:
@@ -573,14 +572,14 @@ struct APPDEF_BarStep
     static const char *parameter_name_short(int id);
     static const char *get_help_url(int id);
 
-    static Array<IDS> get_copyable_parameter_list();
-    static Array<IDS> get_project_parameter_list();
-    static Array<IDS> get_automation_parameter_list();
-    static Array<IDS> get_setup_parameter_list() { return Array<IDS>(); }
+    static juce::Array<IDS> get_copyable_parameter_list();
+    static juce::Array<IDS> get_project_parameter_list();
+    static juce::Array<IDS> get_automation_parameter_list();
+    static juce::Array<IDS> get_setup_parameter_list() { return juce::Array<IDS>(); }
 
     /// OTHER
-    static int16 trans_duration2clocks(int8 duration_);
-    static void duration2string(int16 duration_in_clocks_, String &string_);
+    static std::int16_t trans_duration2clocks(std::int8_t duration_);
+    static void duration2string(std::int16_t duration_in_clocks_, juce::String &string_);
 
     /// INTERNAL TYPEDEFS
   private:
@@ -645,10 +644,10 @@ struct APPDEF_BarStepCCVals
     static const char *parameter_name_short(int id);
     static const char *get_help_url(int id);
 
-    static Array<IDS> get_copyable_parameter_list();
-    static Array<IDS> get_project_parameter_list();
-    static Array<IDS> get_automation_parameter_list() { return Array<IDS>(); }
-    static Array<IDS> get_setup_parameter_list() { return Array<IDS>(); }
+    static juce::Array<IDS> get_copyable_parameter_list();
+    static juce::Array<IDS> get_project_parameter_list();
+    static juce::Array<IDS> get_automation_parameter_list() { return juce::Array<IDS>(); }
+    static juce::Array<IDS> get_setup_parameter_list() { return juce::Array<IDS>(); }
 
     /// INTERNAL TYPEDEFS
   private:
@@ -680,10 +679,10 @@ struct APPDEF_Barstring
     static const char *parameter_name_short(int id);
     static const char *get_help_url(int id);
 
-    static Array<IDS> get_copyable_parameter_list();
-    static Array<IDS> get_project_parameter_list();
-    static Array<IDS> get_automation_parameter_list() { return Array<IDS>(); }
-    static Array<IDS> get_setup_parameter_list() { return Array<IDS>(); }
+    static juce::Array<IDS> get_copyable_parameter_list();
+    static juce::Array<IDS> get_project_parameter_list();
+    static juce::Array<IDS> get_automation_parameter_list() { return juce::Array<IDS>(); }
+    static juce::Array<IDS> get_setup_parameter_list() { return juce::Array<IDS>(); }
 
     /// INTERNAL TYPEDEFS
   private:
@@ -714,10 +713,10 @@ struct APPDEF_Step
     static const char *parameter_name_short(int id);
     static const char *get_help_url(int id);
 
-    static Array<IDS> get_copyable_parameter_list();
-    static Array<IDS> get_project_parameter_list();
-    static Array<IDS> get_automation_parameter_list() { return Array<IDS>(); }
-    static Array<IDS> get_setup_parameter_list() { return Array<IDS>(); }
+    static juce::Array<IDS> get_copyable_parameter_list();
+    static juce::Array<IDS> get_project_parameter_list();
+    static juce::Array<IDS> get_automation_parameter_list() { return juce::Array<IDS>(); }
+    static juce::Array<IDS> get_setup_parameter_list() { return juce::Array<IDS>(); }
 
     /// INTERNAL TYPEDEFS
   private:
@@ -772,10 +771,10 @@ struct APPDEF_UIBarClipboardSettings
     static const char *parameter_name_short(int id);
     static const char *get_help_url(int id);
 
-    static Array<IDS> get_copyable_parameter_list() { return Array<IDS>(); }
-    static Array<IDS> get_project_parameter_list() { return Array<IDS>(); }
-    static Array<IDS> get_automation_parameter_list() { return Array<IDS>(); }
-    static Array<IDS> get_setup_parameter_list();
+    static juce::Array<IDS> get_copyable_parameter_list() { return juce::Array<IDS>(); }
+    static juce::Array<IDS> get_project_parameter_list() { return juce::Array<IDS>(); }
+    static juce::Array<IDS> get_automation_parameter_list() { return juce::Array<IDS>(); }
+    static juce::Array<IDS> get_setup_parameter_list();
 
     /// INTERNAL TYPEDEFS
   private:
@@ -855,10 +854,10 @@ struct APPDEF_UIUserData
     static const char *parameter_name_short(int id);
     static const char *get_help_url(int id);
 
-    static Array<IDS> get_copyable_parameter_list() { return Array<IDS>(); }
-    static Array<IDS> get_project_parameter_list();
-    static Array<IDS> get_automation_parameter_list();
-    static Array<IDS> get_setup_parameter_list();
+    static juce::Array<IDS> get_copyable_parameter_list() { return juce::Array<IDS>(); }
+    static juce::Array<IDS> get_project_parameter_list();
+    static juce::Array<IDS> get_automation_parameter_list();
+    static juce::Array<IDS> get_setup_parameter_list();
 
     /// INTERNAL TYPEDEFS
   private:

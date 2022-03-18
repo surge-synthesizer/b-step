@@ -16,13 +16,13 @@
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-void MIDIInToControllerHandler::change_listeners_value(const MidiMessage &message_)
+void MIDIInToControllerHandler::change_listeners_value(const juce::MidiMessage &message_)
 {
     // TYPE FILTER
     bool is_controller = false;
     bool is_note = false;
     bool is_sysex = false;
-    const uint8 *sysexdata;
+    const std::uint8_t *sysexdata;
     {
         bool is_listen_to_this_type = false;
         if (message_.isController() && _midi_message_type == LISTEN_TO_CONTROLLER)
@@ -41,8 +41,8 @@ void MIDIInToControllerHandler::change_listeners_value(const MidiMessage &messag
             is_listen_to_this_type = true;
             sysexdata = message_.getSysExData();
 
-            if (sysexdata[ARRAY_B2B_SYSEX_A] != uint8(MONOPLUGS_) ||
-                sysexdata[ARRAY_B2B_SYSEX_B] != uint8(MONOPLUGS_B_STEP))
+            if (sysexdata[ARRAY_B2B_SYSEX_A] != std::uint8_t(MONOPLUGS_) ||
+                sysexdata[ARRAY_B2B_SYSEX_B] != std::uint8_t(MONOPLUGS_B_STEP))
                 return;
         }
 
@@ -156,7 +156,7 @@ void MIDIInToControllerHandler::remove_listener(MONO_Controller *const listener_
 {
     _receivers.removeFirstMatchingValue(listener_);
 }
-void MIDIInToControllerHandler::get_new_feedback(Array<MidiMessage *> &messages_)
+void MIDIInToControllerHandler::get_new_feedback(juce::Array<juce::MidiMessage *> &messages_)
 {
     refresh_feedback_from_last_listener();
     if (_is_feedback_new)
@@ -208,28 +208,28 @@ void MIDIInToControllerHandler::update_feedback_message(float new_value_)
 {
     if (_midi_message_type == LISTEN_TO_NOTES)
     {
-        feed_back =
-            MidiMessage::noteOn(_listen_on_channel, _midi_controller_type, uint8(new_value_ * 127));
+        feed_back = juce::MidiMessage::noteOn(_listen_on_channel, _midi_controller_type,
+                                              std::uint8_t(new_value_ * 127));
     }
     else if (_midi_message_type == LISTEN_TO_CONTROLLER)
     {
-        feed_back = MidiMessage::controllerEvent(_listen_on_channel, int(_midi_controller_type),
-                                                 uint8(new_value_ * 127));
+        feed_back = juce::MidiMessage::controllerEvent(
+            _listen_on_channel, int(_midi_controller_type), std::uint8_t(new_value_ * 127));
     }
 
     _is_feedback_new = true;
 }
-void MIDIInToControllerHandler::update_remote_message(uint8 new_value_)
+void MIDIInToControllerHandler::update_remote_message(std::uint8_t new_value_)
 {
-    uint8 data[SYSEX_PACKAGE_SIZE];
+    std::uint8_t data[SYSEX_PACKAGE_SIZE];
 
-    data[ARRAY_B2B_SYSEX_A] = uint8(MONOPLUGS_);
-    data[ARRAY_B2B_SYSEX_B] = uint8(MONOPLUGS_B_STEP);
-    data[ARRAY_B2B_SYSEX_CHANNEL] = uint8(_listen_on_channel);
-    data[ARRAY_B2B_SYSEX_CONTROLLER] = uint8(_midi_controller_type);
-    data[ARRAY_B2B_SYSEX_VALUE] = uint8(new_value_);
+    data[ARRAY_B2B_SYSEX_A] = std::uint8_t(MONOPLUGS_);
+    data[ARRAY_B2B_SYSEX_B] = std::uint8_t(MONOPLUGS_B_STEP);
+    data[ARRAY_B2B_SYSEX_CHANNEL] = std::uint8_t(_listen_on_channel);
+    data[ARRAY_B2B_SYSEX_CONTROLLER] = std::uint8_t(_midi_controller_type);
+    data[ARRAY_B2B_SYSEX_VALUE] = std::uint8_t(new_value_);
 
-    feed_back = MidiMessage::createSysExMessage(data, sizeof(data));
+    feed_back = juce::MidiMessage::createSysExMessage(data, sizeof(data));
 
     _is_feedback_new = true;
 }
@@ -270,7 +270,7 @@ class LearningHistory
 {
     const MONO_Controller *const _controller;
 
-    Array<const MIDIInToControllerHandler *> midi2controller_handlers;
+    juce::Array<const MIDIInToControllerHandler *> midi2controller_handlers;
 
   public:
     inline bool operator==(const MONO_Controller *const controller_) const
@@ -304,14 +304,14 @@ class LearningHistory
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-void MIDIInToControllerMap::process(const MidiMessage &message_)
+void MIDIInToControllerMap::process(const juce::MidiMessage &message_)
 {
     if (_is_in_learning_mode)
         process_learn(message_);
     else
         process_in(message_);
 }
-void MIDIInToControllerMap::process_learn(const MidiMessage &message_)
+void MIDIInToControllerMap::process_learn(const juce::MidiMessage &message_)
 {
     if (_learning_controller)
     {
@@ -325,10 +325,10 @@ void MIDIInToControllerMap::process_learn(const MidiMessage &message_)
             return;
 
         // CHANNEL
-        int8 channel = message_.getChannel();
+        std::int8_t channel = message_.getChannel();
 
         // TYPE
-        int8 cc_type = message_.getControllerNumber(); // will be the note for notes!
+        std::int8_t cc_type = message_.getControllerNumber(); // will be the note for notes!
 
         MIDIInToControllerHandler handler(message_type, cc_type, channel);
 
@@ -380,7 +380,7 @@ void MIDIInToControllerMap::clean_for_mode_1_1(MONO_Controller *const controller
                                                const MIDIInToControllerHandler &handler_)
 {
     MIDIInToControllerHandler *registered_handler;
-    Array<MIDIInToControllerHandler *> handler_to_remove;
+    juce::Array<MIDIInToControllerHandler *> handler_to_remove;
     for (int i = 0; i != midi2controller_handlers.size(); ++i)
     {
         registered_handler = midi2controller_handlers.getUnchecked(i);
@@ -401,7 +401,7 @@ void MIDIInToControllerMap::clean_for_mode_N_1(MONO_Controller *const,
                                                const MIDIInToControllerHandler &handler_)
 {
     MIDIInToControllerHandler *registered_handler;
-    Array<MIDIInToControllerHandler *> handler_to_remove;
+    juce::Array<MIDIInToControllerHandler *> handler_to_remove;
     for (int i = 0; i != midi2controller_handlers.size(); ++i)
     {
         registered_handler = midi2controller_handlers.getUnchecked(i);
@@ -417,7 +417,7 @@ void MIDIInToControllerMap::clean_for_mode_1_N(MONO_Controller *const controller
                                                const MIDIInToControllerHandler &)
 {
     MIDIInToControllerHandler *registered_handler;
-    Array<MIDIInToControllerHandler *> handler_to_remove;
+    juce::Array<MIDIInToControllerHandler *> handler_to_remove;
     for (int i = 0; i != midi2controller_handlers.size(); ++i)
     {
         registered_handler = midi2controller_handlers.getUnchecked(i);
@@ -440,7 +440,8 @@ void MIDIInToControllerMap::remove_controllers_history(const MONO_Controller *co
         }
     }
 }
-void MIDIInToControllerMap::remove_handlers(Array<MIDIInToControllerHandler *> handler_to_remove_)
+void MIDIInToControllerMap::remove_handlers(
+    juce::Array<MIDIInToControllerHandler *> handler_to_remove_)
 {
     MIDIInToControllerHandler *handler_to_remove;
     for (int i = 0; i != handler_to_remove_.size(); ++i)
@@ -483,7 +484,7 @@ void MIDIInToControllerMap::add_to_history(const MONO_Controller *const controll
         _learning_history.add(history);
     }
 }
-void MIDIInToControllerMap::process_in(const MidiMessage &message_)
+void MIDIInToControllerMap::process_in(const juce::MidiMessage &message_)
 {
     // PRE MESSAGE FILTER
     if (message_.isController())
@@ -496,8 +497,8 @@ void MIDIInToControllerMap::process_in(const MidiMessage &message_)
         if (message_.getSysExDataSize() > SYSEX_PACKAGE_SIZE)
         {
             int bulk_size = message_.getSysExDataSize();
-            uint8 data[SYSEX_PACKAGE_SIZE];
-            const uint8 *sysex_bulk_data = message_.getSysExData();
+            std::uint8_t data[SYSEX_PACKAGE_SIZE];
+            const std::uint8_t *sysex_bulk_data = message_.getSysExData();
             data[ARRAY_B2B_SYSEX_A] = MONOPLUGS_;
             data[ARRAY_B2B_SYSEX_B] = MONOPLUGS_B_STEP;
             int sum_messages = (bulk_size - SYSEX_IDENT_SIZE) / SYSEX_DATA_SIZE;
@@ -508,7 +509,8 @@ void MIDIInToControllerMap::process_in(const MidiMessage &message_)
                 data[ARRAY_B2B_SYSEX_CONTROLLER] = sysex_bulk_data[i + 1];
                 data[ARRAY_B2B_SYSEX_VALUE] = sysex_bulk_data[i + 2];
 
-                MidiMessage message = MidiMessage::createSysExMessage(data, sizeof(data));
+                juce::MidiMessage message =
+                    juce::MidiMessage::createSysExMessage(data, sizeof(data));
 
                 MIDIInToControllerHandler *handler;
                 for (int i = 0; i != midi2controller_handlers.size(); ++i)
@@ -566,7 +568,7 @@ void MIDIInToControllerMap::force_feedback_refresh()
         handler->force_feedback_refresh();
     }
 }
-void MIDIInToControllerMap::get_feedback_messages(Array<MidiMessage *> &messages_) const
+void MIDIInToControllerMap::get_feedback_messages(juce::Array<juce::MidiMessage *> &messages_) const
 {
     MIDIInToControllerHandler *handler;
     for (int i = 0; i != midi2controller_handlers.size(); ++i)
@@ -575,10 +577,11 @@ void MIDIInToControllerMap::get_feedback_messages(Array<MidiMessage *> &messages
         handler->get_new_feedback(messages_);
     }
 }
-Array<const MIDIInToControllerHandler *> MIDIInToControllerMap::get_registerd_handlers2controller(
+juce::Array<const MIDIInToControllerHandler *>
+MIDIInToControllerMap::get_registerd_handlers2controller(
     const MONO_Controller *const controller_) const
 {
-    Array<const MIDIInToControllerHandler *> handlers;
+    juce::Array<const MIDIInToControllerHandler *> handlers;
     const MIDIInToControllerHandler *handler;
     for (int i = 0; i != midi2controller_handlers.size(); ++i)
     {
@@ -591,10 +594,10 @@ Array<const MIDIInToControllerHandler *> MIDIInToControllerMap::get_registerd_ha
 
     return std::move(handlers);
 }
-Array<const MIDIInToControllerHandler *>
+juce::Array<const MIDIInToControllerHandler *>
 MIDIInToControllerMap::get_registerd_handlers_for_learning_controller() const
 {
-    Array<const MIDIInToControllerHandler *> handlers;
+    juce::Array<const MIDIInToControllerHandler *> handlers;
     if (_learning_controller)
     {
         return std::move(get_registerd_handlers2controller(_learning_controller));
@@ -602,9 +605,9 @@ MIDIInToControllerMap::get_registerd_handlers_for_learning_controller() const
 
     return std::move(handlers);
 }
-int8 MIDIInToControllerMap::get_last_learned_cc_type(MONO_Controller *const controller_)
+std::int8_t MIDIInToControllerMap::get_last_learned_cc_type(MONO_Controller *const controller_)
 {
-    int8 cc_type = -1;
+    std::int8_t cc_type = -1;
     const LearningHistory *history;
     const MIDIInToControllerHandler *handler;
     for (int i = 0; i != _learning_history.size(); ++i)
@@ -624,16 +627,16 @@ int8 MIDIInToControllerMap::get_last_learned_cc_type(MONO_Controller *const cont
     return cc_type;
 }
 
-void MIDIInToControllerMap::export_midi_mappings_to(XmlElement &xml_) const
+void MIDIInToControllerMap::export_midi_mappings_to(juce::XmlElement &xml_) const
 {
-    String assign("Patch-");
-    XmlElement *controller_element = nullptr;
-    XmlElement *cc2controller_element = nullptr;
-    Array<MONO_Controller *> controllers = _app_instance_store->midi_mappable_controllers;
+    juce::String assign("Patch-");
+    juce::XmlElement *controller_element = nullptr;
+    juce::XmlElement *cc2controller_element = nullptr;
+    juce::Array<MONO_Controller *> controllers = _app_instance_store->midi_mappable_controllers;
     const MONO_Controller *controller;
-    Array<const MIDIInToControllerHandler *> handlers;
+    juce::Array<const MIDIInToControllerHandler *> handlers;
     const MIDIInToControllerHandler *handler;
-    String type;
+    juce::String type;
     for (int i = 0; i != controllers.size(); ++i)
     {
         controller = controllers.getUnchecked(i);
@@ -661,7 +664,7 @@ void MIDIInToControllerMap::export_midi_mappings_to(XmlElement &xml_) const
                                 type = "B2B";
 
                             cc2controller_element =
-                                controller_element->createNewChildElement(assign + String(i));
+                                controller_element->createNewChildElement(assign + juce::String(i));
                             cc2controller_element->setAttribute("Channel",
                                                                 handler->_listen_on_channel);
                             cc2controller_element->setAttribute("Type", type);
@@ -674,17 +677,17 @@ void MIDIInToControllerMap::export_midi_mappings_to(XmlElement &xml_) const
         }
     }
 }
-void MIDIInToControllerMap::import_midi_mappings_from(const XmlElement &xml_)
+void MIDIInToControllerMap::import_midi_mappings_from(const juce::XmlElement &xml_)
 {
     clean_history();
     clean_handlers();
 
-    XmlElement *controller_element = nullptr;
-    XmlElement *cc2controller_element = nullptr;
-    Array<MONO_Controller *> controllers = _app_instance_store->midi_mappable_controllers;
+    juce::XmlElement *controller_element = nullptr;
+    juce::XmlElement *cc2controller_element = nullptr;
+    juce::Array<MONO_Controller *> controllers = _app_instance_store->midi_mappable_controllers;
     MONO_Controller *controller;
     int channel;
-    String string_type;
+    juce::String string_type;
     int type;
     int number;
     int i;
@@ -735,8 +738,8 @@ void MIDIInToControllerMap::import_midi_mappings_from(const XmlElement &xml_)
 }
 void MIDIInToControllerMap::clean_history()
 {
-    Array<LearningHistory *> old_history = _learning_history;
-    _learning_history = Array<LearningHistory *>();
+    juce::Array<LearningHistory *> old_history = _learning_history;
+    _learning_history = juce::Array<LearningHistory *>();
     for (int i = 0; i != old_history.size(); ++i)
     {
         delete old_history.getUnchecked(i);
@@ -744,8 +747,8 @@ void MIDIInToControllerMap::clean_history()
 }
 void MIDIInToControllerMap::clean_handlers()
 {
-    Array<MIDIInToControllerHandler *> old_handlers = midi2controller_handlers;
-    midi2controller_handlers = Array<MIDIInToControllerHandler *>();
+    juce::Array<MIDIInToControllerHandler *> old_handlers = midi2controller_handlers;
+    midi2controller_handlers = juce::Array<MIDIInToControllerHandler *>();
     for (int i = 0; i != old_handlers.size(); ++i)
     {
         delete old_handlers.getUnchecked(i);

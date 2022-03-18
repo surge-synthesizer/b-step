@@ -6,8 +6,8 @@
   ==============================================================================
 */
 
-#ifndef __JUCE_HEADER_606E9AAF0379D62A__
-#define __JUCE_HEADER_606E9AAF0379D62A__
+#ifndef JUCE_HEADER_606E9AAF0379D62A_
+#define JUCE_HEADER_606E9AAF0379D62A_
 
 #include "App.h"
 
@@ -22,9 +22,9 @@ class UiEditorInputPopup
 
   private:
     UiEditor *parent_editor;
-    TextEditor *captured_editor;
+    juce::TextEditor *captured_editor;
 
-    void capture_editor(TextEditor *source_);
+    void capture_editor(juce::TextEditor *source_);
     void release_editor();
 
   public:
@@ -33,5 +33,4 @@ class UiEditorInputPopup
   private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorInputPopup)
 };
-
 #endif

@@ -41,7 +41,7 @@ class StepProcessor
     int _init_duration_offset;
 
     int _current_note_offset;
-    Array<int> _init_notes;
+    juce::Array<int> _init_notes;
     int _init_note_offset;
     bool _init_note_up_and_down;
     bool _last_note_up_and_down;
@@ -52,9 +52,9 @@ class StepProcessor
     bool _init_skip;
     bool _init_not_rolling;
 
-    Array<bool> _init_mute;
-    Array<bool> _is_string_processing_valid;
-    Array<bool> _is_original_data_already_processed;
+    juce::Array<bool> _init_mute;
+    juce::Array<bool> _is_string_processing_valid;
+    juce::Array<bool> _is_original_data_already_processed;
 
     /// PROCESSING
   public:
@@ -74,7 +74,7 @@ class StepProcessor
                 {
                     // INTERVAL
                     {
-                        int16 new_interval =
+                        std::int16_t new_interval =
                             APPDEF_BarStep::trans_duration2clocks(_init_interval) +
                             (APPDEF_BarStep::trans_duration2clocks(_init_interval_offset) *
                              _repeat_counter);
@@ -120,7 +120,7 @@ class StepProcessor
 
     /// INIT
   public:
-    inline void set_processing_valid(uint8 string_id_)
+    inline void set_processing_valid(std::uint8_t string_id_)
     {
         _has_processable_data = true;
         _is_string_processing_valid.getReference(string_id_) = true;
@@ -222,12 +222,12 @@ class StepProcessor
     }
 
   public:
-    inline void set_original_note(uint8 barsring_id_, uint8 note_)
+    inline void set_original_note(std::uint8_t barsring_id_, std::uint8_t note_)
     {
         _init_notes.getReference(barsring_id_) = note_ + _pattern.get_remote_offset();
     }
 
-    inline void set_step_was_not_muted(uint8 barsring_id_)
+    inline void set_step_was_not_muted(std::uint8_t barsring_id_)
     {
         _init_mute.getReference(barsring_id_) = false;
     }
@@ -251,7 +251,7 @@ class StepProcessor
         return true;
     }
 
-    inline bool is_original_data_to_play(uint8 barstring_id_) const
+    inline bool is_original_data_to_play(std::uint8_t barstring_id_) const
     {
         if (!_is_original_data_already_processed.getUnchecked(barstring_id_))
         {
@@ -283,7 +283,7 @@ class StepProcessor
         return _init_mute.getUnchecked(barstring_id_);
     }
 
-    inline bool is_a_repeat_to_play(uint8 barstring_id_) const
+    inline bool is_a_repeat_to_play(std::uint8_t barstring_id_) const
     {
         if (_repeat_counter == 0)
             return false;
@@ -301,8 +301,8 @@ class StepProcessor
                 if (_init_probability == 0)
                     return false;
 
-                Random::getSystemRandom().setSeedRandomly();
-                if (Random::getSystemRandom().nextInt(100) < _init_probability)
+                juce::Random::getSystemRandom().setSeedRandomly();
+                if (juce::Random::getSystemRandom().nextInt(100) < _init_probability)
                 {
                     return true;
                 }
@@ -317,13 +317,14 @@ class StepProcessor
 
     inline bool is_not_rolling_repeat() const { return _init_not_rolling; }
 
-    inline uint8 get_current_note(uint8 barstring_id_) const
+    inline std::uint8_t get_current_note(std::uint8_t barstring_id_) const
     {
-        uint8 note_with_offset = _init_notes.getUnchecked(barstring_id_) + _current_note_offset;
+        std::uint8_t note_with_offset =
+            _init_notes.getUnchecked(barstring_id_) + _current_note_offset;
         if (!_init_repeat_force_chord_notes)
         {
             // DEFINE THE SEARCH DIRECTION
-            uint8 search_direction;
+            std::uint8_t search_direction;
             if (_current_note_offset > 0)
             {
                 // WE SEARCH FIRST UP
@@ -351,20 +352,23 @@ class StepProcessor
         return note_with_offset;
     }
 
-    inline uint8 get_current_velocity() const { return _init_velocity + _current_velocity_offset; }
-
-    inline uint16 get_current_duration() const
+    inline std::uint8_t get_current_velocity() const
     {
-        int16 duration =
+        return _init_velocity + _current_velocity_offset;
+    }
+
+    inline std::uint16_t get_current_duration() const
+    {
+        std::int16_t duration =
             APPDEF_BarStep::trans_duration2clocks(_init_duration) + _current_duration_offset;
         if (duration < 1)
             duration = 1;
         return duration;
     }
 
-    inline uint8 get_current_repeat() const { return _repeat_counter; }
+    inline std::uint8_t get_current_repeat() const { return _repeat_counter; }
 
-    inline int8 get_current_repeat_as_countdown() const
+    inline std::int8_t get_current_repeat_as_countdown() const
     {
         if (_has_processable_data)
             return _repeat_as_count_down;
@@ -415,7 +419,7 @@ class BarStepPosProcessor
     const Bar *_source_bar;
 
     // TODO, we have to set this on in the VST from external
-    uint64 _absolute_step_counter;
+    std::uint64_t _absolute_step_counter;
 
     bool _init_play_revers;
     int _step_counter;
@@ -426,17 +430,17 @@ class BarStepPosProcessor
     int _init_sum_step_skips;
 
     int _last_processed_entry_point;
-    SortedSet<uint8> _processed_reset_point_ids;
+    juce::SortedSet<std::uint8_t> _processed_reset_point_ids;
 
     bool _is_bar_timeout;
 
     bool _tmp_is_forced_to_beat_next_step;
 
     /// PROCESS
-    Array<uint8> _checked_invalid_step_ids;
+    juce::Array<std::uint8_t> _checked_invalid_step_ids;
 
   public:
-    inline void process_current_step_pos(int64 absolute_vst_clock_)
+    inline void process_current_step_pos(std::int64_t absolute_vst_clock_)
     {
 #ifdef B_STEP_STANDALONE
         ++_absolute_step_counter;
@@ -481,8 +485,8 @@ class BarStepPosProcessor
             // count forward or free
             if (_source_bar->random_playback)
             {
-                Random::getSystemRandom().setSeedRandomly();
-                _step_counter = Random::getSystemRandom().nextInt(SUM_STEPS - 1);
+                juce::Random::getSystemRandom().setSeedRandomly();
+                _step_counter = juce::Random::getSystemRandom().nextInt(SUM_STEPS - 1);
 
                 if (_random_counter == SUM_STEPS - _init_sum_step_skips)
                 {
@@ -562,9 +566,9 @@ class BarStepPosProcessor
 
     /// GETTER
 
-    inline uint8 get_current_step_id() const { return _step_counter; }
+    inline std::uint8_t get_current_step_id() const { return _step_counter; }
 
-    inline bool is_step_reset_already_processed(uint8 step_id_) const
+    inline bool is_step_reset_already_processed(std::uint8_t step_id_) const
     {
         bool is_step_processed = false;
         if (_processed_reset_point_ids.contains(step_id_))
@@ -573,7 +577,10 @@ class BarStepPosProcessor
         return is_step_processed;
     }
 
-    inline bool is_current_processed_bar(uint8 bar_id_) const { return bar_id_ == _source_bar->id; }
+    inline bool is_current_processed_bar(std::uint8_t bar_id_) const
+    {
+        return bar_id_ == _source_bar->id;
+    }
 
     inline bool is_bar_timeout() const { return _is_bar_timeout; }
 
@@ -612,7 +619,7 @@ class BarProcessor
 {
     AppInstanceStore *const _app_instance_store;
 
-    OwnedArray<StepProcessor> _step_processors;
+    juce::OwnedArray<StepProcessor> _step_processors;
     BarStepPosProcessor _bar_step_pos_processor;
 
     const Bar *_source_bar;
@@ -627,12 +634,12 @@ class BarProcessor
             _step_processors.getUnchecked(i)->process_clock();
     }
 
-    inline void process_step(int64 vst_absolute_clock_pos_, bool force_first_step_ = true)
+    inline void process_step(std::int64_t vst_absolute_clock_pos_, bool force_first_step_ = true)
     {
         if (_my_time_is_over)
             return;
 
-        uint8 running_step_id = _bar_step_pos_processor.get_current_step_id();
+        std::uint8_t running_step_id = _bar_step_pos_processor.get_current_step_id();
         StepProcessor *step_processor = _step_processors.getUnchecked(running_step_id);
         bool find_the_next_step = true;
         {
@@ -651,7 +658,7 @@ class BarProcessor
                 }
                 else
                 {
-                    uint8 new_step_id = _bar_step_pos_processor.get_current_step_id();
+                    std::uint8_t new_step_id = _bar_step_pos_processor.get_current_step_id();
                     reset_step_processors_with_core_data_at(new_step_id);
                 }
             }
@@ -664,7 +671,7 @@ class BarProcessor
     {
         _source_bar = bar_;
         _bar_step_pos_processor.reset(bar_);
-        uint8 new_step_id = _bar_step_pos_processor.get_current_step_id();
+        std::uint8_t new_step_id = _bar_step_pos_processor.get_current_step_id();
         reset_step_processors_with_core_data_at(new_step_id);
 
         _my_time_is_over = false;
@@ -682,7 +689,7 @@ class BarProcessor
     }
 
   private:
-    void reset_step_processors_with_core_data_at(uint8 step_id_)
+    void reset_step_processors_with_core_data_at(std::uint8_t step_id_)
     {
         const BarStep *const barstep = &_source_bar->barstep(step_id_);
         StepProcessor *const step_midi_processor = _step_processors.getUnchecked(step_id_);
@@ -698,8 +705,8 @@ class BarProcessor
         else
             chord = &chord_set->chord(_source_bar->chord_id);
 
-        int16 note;
-        int16 root_note = 0;
+        std::int16_t note;
+        std::int16_t root_note = 0;
         root_note += pattern->octave_offset * OCTAVE_MULTIPLIER;
         root_note += barstep->octave_offset * OCTAVE_MULTIPLIER;
         root_note += _source_bar->octave_offset * OCTAVE_MULTIPLIER;
@@ -734,13 +741,13 @@ class BarProcessor
             {
                 step_midi_processor->set_step_was_not_muted(barstring_id);
 
-                uint8 probability = barstep->probability;
+                std::uint8_t probability = barstep->probability;
                 if (probability < 100)
                 {
                     if (probability > 0)
                     {
-                        Random::getSystemRandom().setSeedRandomly();
-                        if (Random::getSystemRandom().nextInt(100) < probability)
+                        juce::Random::getSystemRandom().setSeedRandomly();
+                        if (juce::Random::getSystemRandom().nextInt(100) < probability)
                             step_midi_processor->set_processing_valid(barstring_id);
                     }
                 }
@@ -754,12 +761,12 @@ class BarProcessor
   public:
     inline bool is_timeout() const { return _my_time_is_over; }
 
-    const StepProcessor *get_step_midi_processor(uint8 step_id_) const
+    const StepProcessor *get_step_midi_processor(std::uint8_t step_id_) const
     {
         return _step_processors.getUnchecked(step_id_);
     }
 
-    const OwnedArray<StepProcessor> &get_step_processors() const { return _step_processors; }
+    const juce::OwnedArray<StepProcessor> &get_step_processors() const { return _step_processors; }
 
     BarStepPosProcessor &get_bar_step_position_processor() { return _bar_step_pos_processor; }
 
@@ -798,24 +805,24 @@ class BarGroupProcessor
 
     const Pattern *_source_pattern;
 
-    const uint8 id;
+    const std::uint8_t id;
 
-    uint8 _current_bar_repeat;
-    uint8 _current_bar_id;
+    std::uint8_t _current_bar_repeat;
+    std::uint8_t _current_bar_id;
     bool _is_runing_in_solo_mode;
-    Array<uint8> _processed_reset_point_ids;
+    juce::Array<std::uint8_t> _processed_reset_point_ids;
     int _last_valid_bar_id;
 
-    uint8 _probabliy_next_bar;
-    Array<uint8> _probabliy_processed_reset_point_ids;
-    uint8 _probabliy_running_bar_repeat;
+    std::uint8_t _probabliy_next_bar;
+    juce::Array<std::uint8_t> _probabliy_processed_reset_point_ids;
+    std::uint8_t _probabliy_running_bar_repeat;
     int _probabliy_last_valid_bar_id;
 
     /// PROCESS
   public:
     inline void process_clock() { _bar_processor->process_clock(); }
 
-    inline void process_step(int64 vst_absolute_clock_pos_)
+    inline void process_step(std::int64_t vst_absolute_clock_pos_)
     {
         _bar_processor->process_step(vst_absolute_clock_pos_);
         if (_bar_processor->is_timeout())
@@ -858,11 +865,12 @@ class BarGroupProcessor
         }
     }
 
-    void process_new_bar_id(uint8 &from_bar_id_, int &last_valid_bar_id_, uint8 &bar_repeat_count_,
-                            Array<uint8> &process_reset_points_)
+    void process_new_bar_id(std::uint8_t &from_bar_id_, int &last_valid_bar_id_,
+                            std::uint8_t &bar_repeat_count_,
+                            juce::Array<std::uint8_t> &process_reset_points_)
     {
         // CHECK SOLO MODE
-        Array<uint8> solo_bar_ids;
+        juce::Array<std::uint8_t> solo_bar_ids;
         {
             for (int bar_id = 0; bar_id != SUM_BARS; ++bar_id)
             {
@@ -878,7 +886,7 @@ class BarGroupProcessor
                 _is_runing_in_solo_mode = false;
         }
 
-        Array<uint8> checked_invalid_bar_ids;
+        juce::Array<std::uint8_t> checked_invalid_bar_ids;
         const Bar *maybe_new_bar;
         from_bar_id_ += 1;
         if (from_bar_id_ >= SUM_BARS)
@@ -973,7 +981,7 @@ class BarGroupProcessor
         bar_repeat_count_ = 1;
     }
 
-    inline uint8 get_first_bar_in_group() const
+    inline std::uint8_t get_first_bar_in_group() const
     {
         for (int i = 0; i != SUM_BARS; ++i)
         {
@@ -1019,11 +1027,11 @@ class BarGroupProcessor
 
     /// GETTER
 
-    inline uint8 get_current_bar_id() const { return _current_bar_id; }
+    inline std::uint8_t get_current_bar_id() const { return _current_bar_id; }
 
-    inline uint8 get_current_bar_repeat() const { return _current_bar_repeat; }
+    inline std::uint8_t get_current_bar_repeat() const { return _current_bar_repeat; }
 
-    inline uint8 is_unprocessed_bar_reset(const Bar &bar_) const
+    inline std::uint8_t is_unprocessed_bar_reset(const Bar &bar_) const
     {
         bool is_unprocessed = false;
         if (bar_.pos_reset)
@@ -1033,35 +1041,35 @@ class BarGroupProcessor
         return is_unprocessed;
     }
 
-    inline int8 get_running_step_repeat_as_countdown_at(uint8 step_id_) const
+    inline std::int8_t get_running_step_repeat_as_countdown_at(std::uint8_t step_id_) const
     {
         return _bar_processor->get_step_midi_processor(step_id_)->get_current_repeat_as_countdown();
     }
 
-    inline int8 get_running_step_repeat_at(uint8 step_id_) const
+    inline std::int8_t get_running_step_repeat_at(std::uint8_t step_id_) const
     {
         return _bar_processor->get_step_midi_processor(step_id_)->get_current_repeat();
     }
 
-    inline int8 get_running_step_id() const
+    inline std::int8_t get_running_step_id() const
     {
         return _bar_processor->get_bar_step_position_processor().get_current_step_id();
     }
 
-    inline bool is_repeat_at_step_already_processed(uint8 step_id_) const
+    inline bool is_repeat_at_step_already_processed(std::uint8_t step_id_) const
     {
         return _bar_processor->get_bar_step_position_processor().is_step_reset_already_processed(
             step_id_);
     }
 
-    inline const OwnedArray<StepProcessor> &get_step_processors()
+    inline const juce::OwnedArray<StepProcessor> &get_step_processors()
     {
         return _bar_processor->get_step_processors();
     }
 
     inline BarProcessor *get_bar_processor() { return _bar_processor; }
 
-    inline uint8 get_next_bar_id()
+    inline std::uint8_t get_next_bar_id()
     {
         if (is_probability_data_changed())
         {
@@ -1077,8 +1085,8 @@ class BarGroupProcessor
     }
 
   private:
-    int8 last_skip;
-    int8 last_autochain_valid;
+    std::int8_t last_skip;
+    std::int8_t last_autochain_valid;
     bool is_probability_data_changed()
     {
         bool return_val = false;
@@ -1116,7 +1124,7 @@ class BarGroupProcessor
 
     /// BUILD
 
-    BarGroupProcessor(AppInstanceStore *const app_instance_store_, uint8 bar_group_id_);
+    BarGroupProcessor(AppInstanceStore *const app_instance_store_, std::uint8_t bar_group_id_);
 
     ~BarGroupProcessor() { delete _bar_processor; }
 
@@ -1124,7 +1132,7 @@ class BarGroupProcessor
 };
 
 BarGroupProcessor::BarGroupProcessor(AppInstanceStore *const app_instance_store_,
-                                     uint8 bar_group_id_)
+                                     std::uint8_t bar_group_id_)
     : _app_instance_store(app_instance_store_),
 
       _bar_processor(new BarProcessor(app_instance_store_)),
@@ -1153,7 +1161,7 @@ bool Sequencer::is_valid_for_auto_chain(const Step &step_) { return !step_.is_mu
 bool Sequencer::is_valid_for_auto_chain(const Barstring &barstring_)
 {
     bool is_valid = false;
-    for (uint8 step_id = 0; step_id != SUM_STEPS; ++step_id)
+    for (std::uint8_t step_id = 0; step_id != SUM_STEPS; ++step_id)
     {
         if (is_valid_for_auto_chain(barstring_.step(step_id)))
         {
@@ -1171,7 +1179,7 @@ bool Sequencer::is_valid_for_auto_chain(const Bar &bar_)
         return true;
 
     bool is_valid = false;
-    for (uint8 barstring_id = 0; barstring_id != SUM_STRINGS; ++barstring_id)
+    for (std::uint8_t barstring_id = 0; barstring_id != SUM_STRINGS; ++barstring_id)
     {
         if (is_valid_for_auto_chain(bar_.barstring(barstring_id)))
         {
@@ -1183,7 +1191,7 @@ bool Sequencer::is_valid_for_auto_chain(const Bar &bar_)
     return is_valid;
 }
 
-uint16 Sequencer::get_base_note_value(const Chord &chord_, uint8 string_id_)
+std::uint16_t Sequencer::get_base_note_value(const Chord &chord_, std::uint8_t string_id_)
 {
     switch (string_id_)
     {
@@ -1203,7 +1211,7 @@ uint16 Sequencer::get_base_note_value(const Chord &chord_, uint8 string_id_)
 
 /// PROCESS
 
-void Sequencer::process_clock_tick(int64 absolute_vst_clock_ = -1)
+void Sequencer::process_clock_tick(std::int64_t absolute_vst_clock_ = -1)
 {
     _is_position_zero = false;
 #ifndef B_STEP_STANDALONE
@@ -1236,8 +1244,8 @@ void Sequencer::process_clock_tick(int64 absolute_vst_clock_ = -1)
     }
 }
 
-void Sequencer::get_current_messages(Array<MIDIMessageWithDuration *> &messages_,
-                                     uint8 group_id_) const
+void Sequencer::get_current_messages(juce::Array<MIDIMessageWithDuration *> &messages_,
+                                     std::uint8_t group_id_) const
 {
     BarGroupProcessor *bar_group_processor;
     bar_group_processor = bar_group_processors.getUnchecked(group_id_);
@@ -1252,12 +1260,12 @@ void Sequencer::get_current_messages(Array<MIDIMessageWithDuration *> &messages_
         return;
 
     StepProcessor *step_midi_processor;
-    Array<StepProcessor *> step_processors;
+    juce::Array<StepProcessor *> step_processors;
     step_processors.addArray(bar_group_processor->get_step_processors());
-    uint8 note_value;
-    uint16 duration;
-    uint8 velocity;
-    MidiMessage *message;
+    std::uint8_t note_value;
+    std::uint16_t duration;
+    std::uint8_t velocity;
+    juce::MidiMessage *message;
     for (int i = 0; i != SUM_STEPS; ++i)
     {
         step_midi_processor = step_processors.getUnchecked(i);
@@ -1270,9 +1278,9 @@ void Sequencer::get_current_messages(Array<MIDIMessageWithDuration *> &messages_
                     duration = step_midi_processor->get_current_duration();
                     velocity = step_midi_processor->get_current_velocity();
                     note_value = step_midi_processor->get_current_note(barstring_id);
-                    message = new MidiMessage(
-                        MidiMessage::noteOn(1, // CHANNEL WILL BE SET BY MessageProcessor
-                                            uint8(note_value), uint8(velocity)));
+                    message = new juce::MidiMessage(juce::MidiMessage::noteOn(
+                        1, // CHANNEL WILL BE SET BY MessageProcessor
+                        std::uint8_t(note_value), std::uint8_t(velocity)));
 
                     messages_.add(new MIDIMessageWithDuration(message, duration));
                 }
@@ -1280,8 +1288,8 @@ void Sequencer::get_current_messages(Array<MIDIMessageWithDuration *> &messages_
     }
 }
 
-void Sequencer::get_current_cc_messages(Array<MidiMessage *> &messages_, uint8 group_id_,
-                                        bool only_0_and_32_)
+void Sequencer::get_current_cc_messages(juce::Array<juce::MidiMessage *> &messages_,
+                                        std::uint8_t group_id_, bool only_0_and_32_)
 {
     if (_clock_counter % 6 != 0)
     {
@@ -1296,10 +1304,10 @@ void Sequencer::get_current_cc_messages(Array<MidiMessage *> &messages_, uint8 g
         return;
 
     const BarCCSet *cc_set;
-    const uint8 running_step_id = get_running_step_id(group_id_);
+    const std::uint8_t running_step_id = get_running_step_id(group_id_);
     const BarStep *barstep = &bar->barstep(running_step_id);
     const BarStepCCVals *cc_val;
-    MidiMessage message;
+    juce::MidiMessage message;
     for (int cc_set_id = APPDEF_Bar::CC_SET_START_INDEX; cc_set_id != Bar::appdeff_t::SUM_CC_SETS;
          ++cc_set_id)
     {
@@ -1317,16 +1325,17 @@ void Sequencer::get_current_cc_messages(Array<MidiMessage *> &messages_, uint8 g
             {
                 OUT("CC " << bar << " " << int(group_id_));
 
-                message =
-                    MidiMessage::controllerEvent(1, // channel will be set by message processor
-                                                 cc_set->cc_type, cc_val->value);
-                messages_.add(new MidiMessage(message));
+                message = juce::MidiMessage::controllerEvent(
+                    1, // channel will be set by message processor
+                    cc_set->cc_type, cc_val->value);
+                messages_.add(new juce::MidiMessage(message));
             }
         }
     }
 }
 
-void Sequencer::get_current_pc_messages(Array<MidiMessage *> &messages_, uint8 group_id_)
+void Sequencer::get_current_pc_messages(juce::Array<juce::MidiMessage *> &messages_,
+                                        std::uint8_t group_id_)
 {
     if (_clock_counter % 6 != 0)
     {
@@ -1340,18 +1349,18 @@ void Sequencer::get_current_pc_messages(Array<MidiMessage *> &messages_, uint8 g
     if (bar->group != int(group_id_))
         return;
 
-    const uint8 running_step_id = get_running_step_id(group_id_);
+    const std::uint8_t running_step_id = get_running_step_id(group_id_);
     const BarStep *barstep = &bar->barstep(running_step_id);
     const BarStepCCVals *cc_val;
-    MidiMessage message;
+    juce::MidiMessage message;
     cc_val = &barstep->cc_val(APPDEF_Bar::PROGRAMM_CHANGE_INDEX);
     if (cc_val->enable)
     {
         OUT("PC " << int(_clock_counter) << " " << int(group_id_));
 
-        message = MidiMessage::programChange(1, // channel will be set by message processor
-                                             cc_val->value);
-        messages_.add(new MidiMessage(message));
+        message = juce::MidiMessage::programChange(1, // channel will be set by message processor
+                                                   cc_val->value);
+        messages_.add(new juce::MidiMessage(message));
     }
 }
 
@@ -1384,12 +1393,12 @@ void Sequencer::force_to_beat_at_next_step()
 
 /// GETTER
 
-uint8 Sequencer::get_running_bar_id(uint8 bar_group_id_) const
+std::uint8_t Sequencer::get_running_bar_id(std::uint8_t bar_group_id_) const
 {
     return bar_group_processors.getUnchecked(bar_group_id_)->get_current_bar_id();
 }
 
-bool Sequencer::is_bar_id_running(uint8 bar_group_id_, uint8 bar_id_) const
+bool Sequencer::is_bar_id_running(std::uint8_t bar_group_id_, std::uint8_t bar_id_) const
 {
     if (bar_group_processors.getUnchecked(bar_group_id_)->get_current_bar_id() == bar_id_)
         return true;
@@ -1410,34 +1419,36 @@ bool Sequencer::is_bar_id_running(uint8 bar_group_id_, uint8 bar_id_) const
     return is_a_running_bar;
 }
 
-uint8 Sequencer::get_running_bar_repeat(uint8 bar_group_id_) const
+std::uint8_t Sequencer::get_running_bar_repeat(std::uint8_t bar_group_id_) const
 {
     return bar_group_processors.getUnchecked(bar_group_id_)->get_current_bar_repeat();
 }
 
-uint8 Sequencer::is_unprocessed_bar_reset(const Bar &bar_) const
+std::uint8_t Sequencer::is_unprocessed_bar_reset(const Bar &bar_) const
 {
     return bar_group_processors.getUnchecked(bar_.group)->is_unprocessed_bar_reset(bar_);
 }
 
-uint8 Sequencer::get_running_step_id(uint8 bar_group_id_) const
+std::uint8_t Sequencer::get_running_step_id(std::uint8_t bar_group_id_) const
 {
     return bar_group_processors.getUnchecked(bar_group_id_)->get_running_step_id();
 }
 
-bool Sequencer::is_step_repeat_already_processed(uint8 bar_group_id_, uint8 step_id_) const
+bool Sequencer::is_step_repeat_already_processed(std::uint8_t bar_group_id_,
+                                                 std::uint8_t step_id_) const
 {
     return bar_group_processors.getUnchecked(bar_group_id_)
         ->is_repeat_at_step_already_processed(step_id_);
 }
 
-int8 Sequencer::get_running_step_repeat_as_count_down(uint8 bar_group_id_, uint8 step_id_) const
+std::int8_t Sequencer::get_running_step_repeat_as_count_down(std::uint8_t bar_group_id_,
+                                                             std::uint8_t step_id_) const
 {
     return bar_group_processors.getUnchecked(bar_group_id_)
         ->get_running_step_repeat_as_countdown_at(step_id_);
 }
 
-uint8 Sequencer::get_probabliy_next_bar(uint8 bar_group_id_) const
+std::uint8_t Sequencer::get_probabliy_next_bar(std::uint8_t bar_group_id_) const
 {
     return bar_group_processors.getUnchecked(bar_group_id_)->get_next_bar_id();
 }

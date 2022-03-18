@@ -22,6 +22,7 @@
 #include "PluginProcessor.h"
 #include "UiMainWindow.h"
 #include "version.h"
+#include "BinaryData.h"
 //[/Headers]
 
 #include "UiEditorAbout.h"
@@ -134,77 +135,81 @@ void UiEditorAbout::print_debug(String text)
 UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-About"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(au_button = new ImageButton(String()));
+    addAndMakeVisible(au_button = new juce::ImageButton(juce::String()));
 
     au_button->setImages(false, true, true,
-                         ImageCache::getFromMemory(au_logo_100x_png, au_logo_100x_pngSize), 1.000f,
-                         Colour(0x00000000), Image(), 1.000f, Colour(0x00000000), Image(), 1.000f,
-                         Colour(0x00000000));
-    addAndMakeVisible(vst_button = new ImageButton(String()));
+                         juce::ImageCache::getFromMemory(au_logo_100x_png, au_logo_100x_pngSize),
+                         1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
+                         juce::Colour(0x00000000), juce::Image(), 1.000f, juce::Colour(0x00000000));
+    addAndMakeVisible(vst_button = new juce::ImageButton(juce::String()));
 
     vst_button->setImages(false, true, true,
-                          ImageCache::getFromMemory(vst_logo_100x_png, vst_logo_100x_pngSize),
-                          1.000f, Colour(0x00000000), Image(), 1.000f, Colour(0x00000000), Image(),
-                          1.000f, Colour(0x00000000));
-    addAndMakeVisible(hyperlinkButton8 =
-                          new HyperlinkButton(String(), URL("http://b-step.monoplugs.com")));
+                          juce::ImageCache::getFromMemory(vst_logo_100x_png, vst_logo_100x_pngSize),
+                          1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
+                          juce::Colour(0x00000000), juce::Image(), 1.000f,
+                          juce::Colour(0x00000000));
+    addAndMakeVisible(hyperlinkButton8 = new juce::HyperlinkButton(
+                          juce::String(), juce::URL("http://b-step.monoplugs.com")));
     hyperlinkButton8->setTooltip(TRANS("http://b-step.monoplugs.com"));
-    hyperlinkButton8->setColour(HyperlinkButton::textColourId, Colour(0xffffdd00));
+    hyperlinkButton8->setColour(juce::HyperlinkButton::textColourId, juce::Colour(0xffffdd00));
 
-    addAndMakeVisible(video_1 = new HyperlinkButton(TRANS("http://B-Step.Monoplugs.com"),
-                                                    URL("http://b-step.monoplugs.com")));
+    addAndMakeVisible(video_1 =
+                          new juce::HyperlinkButton(TRANS("http://B-Step.Monoplugs.com"),
+                                                    juce::URL("http://b-step.monoplugs.com")));
     video_1->setTooltip(TRANS("http://b-step.monoplugs.com"));
     video_1->setButtonText(TRANS("http://B-Step.Monoplugs.com"));
-    video_1->setColour(HyperlinkButton::textColourId, Colours::aliceblue);
+    video_1->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 
-    addAndMakeVisible(video_2 = new HyperlinkButton(TRANS("http://Forum.Monoplugs.com"),
-                                                    URL("http://forum.monoplugs.com")));
+    addAndMakeVisible(video_2 = new juce::HyperlinkButton(TRANS("http://Forum.Monoplugs.com"),
+                                                          juce::URL("http://forum.monoplugs.com")));
     video_2->setTooltip(TRANS("http://forum.monoplugs.com"));
     video_2->setButtonText(TRANS("http://Forum.Monoplugs.com"));
-    video_2->setColour(HyperlinkButton::textColourId, Colours::aliceblue);
+    video_2->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 
-    addAndMakeVisible(video_3 =
-                          new HyperlinkButton(TRANS("http://B-Step.Monoplugs.com/Manual/"),
-                                              URL("http://b-step-manual-redirect.monoplugs.com/")));
+    addAndMakeVisible(video_3 = new juce::HyperlinkButton(
+                          TRANS("http://B-Step.Monoplugs.com/Manual/"),
+                          juce::URL("http://b-step-manual-redirect.monoplugs.com/")));
     video_3->setTooltip(TRANS("http://b-step-manual-redirect.monoplugs.com/"));
     video_3->setButtonText(TRANS("http://B-Step.Monoplugs.com/Manual/"));
-    video_3->setColour(HyperlinkButton::textColourId, Colours::aliceblue);
+    video_3->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 
-    addAndMakeVisible(video_4 = new HyperlinkButton(TRANS("https://www.youtube.com/monoplugs"),
-                                                    URL("https://www.youtube.com/user/monotomys")));
+    addAndMakeVisible(
+        video_4 = new juce::HyperlinkButton(TRANS("https://www.youtube.com/monoplugs"),
+                                            juce::URL("https://www.youtube.com/user/monotomys")));
     video_4->setTooltip(TRANS("https://www.youtube.com/user/monotomys"));
     video_4->setButtonText(TRANS("https://www.youtube.com/monoplugs"));
-    video_4->setColour(HyperlinkButton::textColourId, Colours::aliceblue);
+    video_4->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 
-    addAndMakeVisible(video_5 = new HyperlinkButton(TRANS("info@Monoplugs.com : B-Step 2"),
-                                                    URL("mailto:info@monoplugs.com")));
+    addAndMakeVisible(video_5 = new juce::HyperlinkButton(TRANS("info@Monoplugs.com : B-Step 2"),
+                                                          juce::URL("mailto:info@monoplugs.com")));
     video_5->setTooltip(TRANS("mailto:info@monoplugs.com"));
     video_5->setButtonText(TRANS("info@Monoplugs.com : B-Step 2"));
-    video_5->setColour(HyperlinkButton::textColourId, Colours::aliceblue);
+    video_5->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 
-    addAndMakeVisible(debug_out = new TextEditor(String()));
+    addAndMakeVisible(debug_out = new juce::TextEditor(juce::String()));
     debug_out->setMultiLine(true);
     debug_out->setReturnKeyStartsNewLine(false);
     debug_out->setReadOnly(false);
     debug_out->setScrollbarsShown(true);
     debug_out->setCaretVisible(true);
     debug_out->setPopupMenuEnabled(true);
-    debug_out->setColour(TextEditor::textColourId, Colours::aqua);
-    debug_out->setColour(TextEditor::backgroundColourId, Colours::black);
-    debug_out->setColour(TextEditor::outlineColourId, Colours::red);
-    debug_out->setColour(TextEditor::shadowColourId, Colours::red);
-    debug_out->setColour(CaretComponent::caretColourId, Colours::aqua);
+    debug_out->setColour(juce::TextEditor::textColourId, juce::Colours::aqua);
+    debug_out->setColour(juce::TextEditor::backgroundColourId, juce::Colours::black);
+    debug_out->setColour(juce::TextEditor::outlineColourId, juce::Colours::red);
+    debug_out->setColour(juce::TextEditor::shadowColourId, juce::Colours::red);
+    debug_out->setColour(juce::CaretComponent::caretColourId, juce::Colours::aqua);
     debug_out->setText(TRANS("\n"));
 
     addAndMakeVisible(toolbar = new UiEditorToolbar(this, true, false, false));
 
-    addAndMakeVisible(open_debug = new ImageButton(String()));
+    addAndMakeVisible(open_debug = new juce::ImageButton(juce::String()));
     open_debug->addListener(this);
 
-    open_debug->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000), Image(), 1.000f,
-                          Colour(0x00000000), Image(), 1.000f, Colour(0x00000000));
-    cachedImage_aboutbox_png = ImageCache::getFromMemory(aboutbox_png, aboutbox_pngSize);
-    cachedImage_b_logo_png = ImageCache::getFromMemory(b_logo_png, b_logo_pngSize);
+    open_debug->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
+                          juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
+                          juce::Colour(0x00000000));
+    cachedImage_aboutbox_png = juce::ImageCache::getFromMemory(aboutbox_png, aboutbox_pngSize);
+    cachedImage_b_logo_png = juce::ImageCache::getFromMemory(b_logo_png, b_logo_pngSize);
 
     //[UserPreSize]
 #ifndef DEVELOPMENT
@@ -220,31 +225,32 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
         Font(Typeface::createSystemTypefaceFor(reinterpret_cast<const void *>(&android_font), 21));
 #else
     bool state = true;
-    Font oswald_font = Font(Typeface::createSystemTypefaceFor(BinaryData::OswaldRegular_ttf,
-                                                              BinaryData::OswaldRegular_ttfSize));
+    juce::Font oswald_font = juce::Font(juce::Typeface::createSystemTypefaceFor(
+        BinaryData::OswaldRegular_ttf, BinaryData::OswaldRegular_ttfSize));
 #endif
-    video_1->setFont(oswald_font, state, Justification::left);
-    video_2->setFont(oswald_font, state, Justification::left);
-    video_3->setFont(oswald_font, state, Justification::left);
-    video_4->setFont(oswald_font, state, Justification::left);
-    video_5->setFont(oswald_font, state, Justification::left);
+    video_1->setFont(oswald_font, state, juce::Justification::left);
+    video_2->setFont(oswald_font, state, juce::Justification::left);
+    video_3->setFont(oswald_font, state, juce::Justification::left);
+    video_4->setFont(oswald_font, state, juce::Justification::left);
+    video_5->setFont(oswald_font, state, juce::Justification::left);
 
     setOpaque(true);
 
     is_demo = false;
 
-    String additional_info;
+    juce::String additional_info;
 #ifndef B_STEP_STANDALONE
-    additional_info = PluginHostType().getHostDescription();
+    additional_info = juce::PluginHostType().getHostDescription();
     additional_info += " ";
 #endif
-    additional_info += SystemStats::getOperatingSystemName();
+    additional_info += juce::SystemStats::getOperatingSystemName();
 
-    video_5->setButtonText(TRANS("info@Monoplugs.com : B-Step ") +
-                           String(ProjectInfo::versionString));
-    video_5->setURL(URL(String("mailto:info@monoplugs.com?subject=B-Step ") +
-                        ProjectInfo::versionString + String(" (") + additional_info +
-                        String(") : ")));
+    video_5->setButtonText(
+        TRANS("info@Monoplugs.com : B-Step ")); // + String(ProjectInfo::versionString));
+
+    video_5->setURL(juce::URL(
+        juce::String("mailto:info@monoplugs.com?subject=B-Step ") //+ProjectInfo::versionString
+        + juce::String(" (") + additional_info + juce::String(") : ")));
 
     debug_out->setVisible(false);
 
@@ -266,7 +272,7 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
     au_button->setVisible(false);
 #else
     if (_app_instance_store->audio_processor->wrapperType ==
-        AudioProcessor::WrapperType::wrapperType_AudioUnit)
+        juce::AudioProcessor::WrapperType::wrapperType_AudioUnit)
     {
         vst_button->setVisible(false);
         is_au = true;
@@ -308,52 +314,53 @@ UiEditorAbout::~UiEditorAbout()
 }
 
 //==============================================================================
-void UiEditorAbout::paint(Graphics &g)
+void UiEditorAbout::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     if (false)
     {
         //[/UserPrePaint]
 
-        g.setColour(Colours::black);
+        g.setColour(juce::Colours::black);
         g.drawImage(cachedImage_aboutbox_png, 0, 0, proportionOfWidth(1.0000f),
                     proportionOfHeight(1.0000f), 0, 0, cachedImage_aboutbox_png.getWidth(),
                     cachedImage_aboutbox_png.getHeight());
 
-        g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
         g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-        g.setColour(Colours::black);
-        g.drawImageWithin(cachedImage_b_logo_png, proportionOfWidth(-0.0394f), 0,
-                          proportionOfWidth(1.0789f), proportionOfHeight(0.3704f),
-                          RectanglePlacement::centred | RectanglePlacement::onlyReduceInSize,
-                          false);
+        g.setColour(juce::Colours::black);
+        g.drawImageWithin(
+            cachedImage_b_logo_png, proportionOfWidth(-0.0394f), 0, proportionOfWidth(1.0789f),
+            proportionOfHeight(0.3704f),
+            juce::RectanglePlacement::centred | juce::RectanglePlacement::onlyReduceInSize, false);
 
-        g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-        g.setFont(Font(11.20f, Font::plain));
+        g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        g.setFont(juce::Font(11.20f, juce::Font::plain));
         g.drawText(TRANS("VST is a trademark of Steinberg Media Technologies GmbH"),
                    (getWidth() / 2) - (proportionOfWidth(0.9002f) / 2),
                    proportionOfHeight(0.9907f) - proportionOfHeight(0.0630f),
-                   proportionOfWidth(0.9002f), proportionOfHeight(0.0630f), Justification::centred,
-                   true);
+                   proportionOfWidth(0.9002f), proportionOfHeight(0.0630f),
+                   juce::Justification::centred, true);
 
         //[UserPaint] Add your own custom painting code here..
     }
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     g.drawImage(cachedImage_aboutbox_png, 0, 0, proportionOfWidth(1.0000f),
                 proportionOfHeight(1.0000f), 0, 0, cachedImage_aboutbox_png.getWidth(),
                 cachedImage_aboutbox_png.getHeight());
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    g.setColour(Colours::black);
-    g.drawImageWithin(cachedImage_b_logo_png, proportionOfWidth(-0.0394f), 0,
-                      proportionOfWidth(1.0789f), proportionOfHeight(0.3704f),
-                      RectanglePlacement::centred | RectanglePlacement::onlyReduceInSize, false);
+    g.setColour(juce::Colours::black);
+    g.drawImageWithin(
+        cachedImage_b_logo_png, proportionOfWidth(-0.0394f), 0, proportionOfWidth(1.0789f),
+        proportionOfHeight(0.3704f),
+        juce::RectanglePlacement::centred | juce::RectanglePlacement::onlyReduceInSize, false);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 #ifdef B_STEP_STANDALONE
     g.drawText(BUILD_INFO + String("B-Step ") + ProjectInfo::versionString,
                proportionOfWidth(0.0500f), proportionOfHeight(0.9f), proportionOfWidth(0.9000f), 30,
@@ -361,38 +368,38 @@ void UiEditorAbout::paint(Graphics &g)
 #else
     if (is_au)
     {
-        g.drawText(BUILD_INFO + String("V") + ProjectInfo::versionString +
+        g.drawText(BUILD_INFO + juce::String("V") + // ProjectInfo::versionString +
                        " | AudioUnits is a trademark of Apple Computer, Inc.",
                    (getWidth() / 2) - ((proportionOfWidth(0.9002f)) / 2),
                    proportionOfHeight(0.9907f) - proportionOfHeight(0.0630f),
-                   proportionOfWidth(0.9002f), proportionOfHeight(0.0630f), Justification::centred,
-                   true);
+                   proportionOfWidth(0.9002f), proportionOfHeight(0.0630f),
+                   juce::Justification::centred, true);
     }
     else
     {
-        g.drawText(BUILD_INFO + String("V") + ProjectInfo::versionString +
+        g.drawText(BUILD_INFO + juce::String("V") + // ProjectInfo::versionString +
                        " | VST is a trademark of Steinberg Media Technologies GmbH",
                    (getWidth() / 2) - ((proportionOfWidth(0.9002f)) / 2),
                    proportionOfHeight(0.9907f) - proportionOfHeight(0.0630f),
-                   proportionOfWidth(0.9002f), proportionOfHeight(0.0630f), Justification::centred,
-                   true);
+                   proportionOfWidth(0.9002f), proportionOfHeight(0.0630f),
+                   juce::Justification::centred, true);
     }
 #endif
     return;
 
-    g.setColour(Colour(0xff161616));
+    g.setColour(juce::Colour(0xff161616));
     g.fillRoundedRectangle(2.0f, 2.0f, static_cast<float>(getWidth() - 4),
                            static_cast<float>(getHeight() - 4), 10.000f);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.drawRoundedRectangle(2.0f, 2.0f, static_cast<float>(getWidth() - 4),
                            static_cast<float>(getHeight() - 4), 10.000f, 2.000f);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     g.drawImageWithin(cachedImage_b_logo_png, proportionOfWidth(0.5000f) - ((432) / 2),
-                      92 - ((200) / 2), 432, 200, RectanglePlacement::centred, false);
+                      92 - ((200) / 2), 432, 200, juce::RectanglePlacement::centred, false);
 
-    ResizableWindow::moved();
+    juce::ResizableWindow::moved();
     //[/UserPaint]
 }
 
@@ -427,11 +434,11 @@ void UiEditorAbout::resized()
     open_debug->setBounds(proportionOfWidth(0.0186f), proportionOfHeight(0.6963f),
                           proportionOfWidth(0.8538f), proportionOfHeight(0.2963f));
     //[UserResized] Add your own custom resize handling here..
-    ResizableWindow::resized();
+    juce::ResizableWindow::resized();
     //[/UserResized]
 }
 
-void UiEditorAbout::buttonClicked(Button *buttonThatWasClicked)
+void UiEditorAbout::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]

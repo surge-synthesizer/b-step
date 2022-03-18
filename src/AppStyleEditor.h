@@ -23,7 +23,9 @@
 //[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
+#include <juce_gui_extra/juce_gui_extra.h>
 class AppInstanceStore;
+
 //[/Headers]
 
 //==============================================================================
@@ -35,9 +37,9 @@ class AppInstanceStore;
                                                                     //[/Comments]
 */
 class UiEditorAppStyler : public UiEditor,
-                          public Timer,
-                          public Button::Listener,
-                          public Label::Listener
+                          public juce::Timer,
+                          public juce::Button::Listener,
+                          public juce::Label::Listener
 {
   public:
     //==============================================================================
@@ -47,8 +49,8 @@ class UiEditorAppStyler : public UiEditor,
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
-    uint32 *target_color;
-    uint32 last_col_refresh;
+    std::uint32_t *target_color;
+    std::uint32_t last_col_refresh;
 
     void timerCallback() override;
     void on_close_clicked() override;
@@ -57,55 +59,55 @@ class UiEditorAppStyler : public UiEditor,
     void on_save_clicked() override;
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
-    void buttonClicked(Button *buttonThatWasClicked) override;
-    void labelTextChanged(Label *labelThatHasChanged) override;
+    void buttonClicked(juce::Button *buttonThatWasClicked) override;
+    void labelTextChanged(juce::Label *labelThatHasChanged) override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<UiEditorToolbar> toolbar;
-    ScopedPointer<ColourSelector> colour_selector;
-    ScopedPointer<TextButton> col_1;
-    ScopedPointer<TextButton> col_3;
-    ScopedPointer<TextButton> col_4;
-    ScopedPointer<TextButton> col_5;
-    ScopedPointer<TextButton> col_6;
-    ScopedPointer<TextButton> col_7;
-    ScopedPointer<TextButton> col_8;
-    ScopedPointer<TextButton> col_9;
-    ScopedPointer<TextButton> col_10;
-    ScopedPointer<TextButton> col_11;
-    ScopedPointer<TextButton> col_12;
-    ScopedPointer<TextButton> col_13;
-    ScopedPointer<TextButton> col_14;
-    ScopedPointer<TextButton> col_15;
-    ScopedPointer<TextButton> col_16;
-    ScopedPointer<Label> label_current_color;
-    ScopedPointer<TextButton> copy;
-    ScopedPointer<TextButton> past;
-    ScopedPointer<TextButton> col_17;
-    ScopedPointer<TextButton> col_18;
-    ScopedPointer<TextButton> col_19;
-    ScopedPointer<TextButton> rand;
-    ScopedPointer<Label> list;
-    ScopedPointer<TextButton> col_2;
-    ScopedPointer<TextButton> col_20;
-    ScopedPointer<TextButton> col_21;
-    ScopedPointer<TextButton> col_22;
-    ScopedPointer<TextButton> col_23;
-    ScopedPointer<TextButton> style_1;
-    ScopedPointer<TextButton> style_3;
-    ScopedPointer<TextButton> style_4;
-    ScopedPointer<TextButton> style_5;
-    ScopedPointer<TextButton> button_info;
-    ScopedPointer<TextButton> col_master;
-    ScopedPointer<TextButton> reset;
-    ScopedPointer<TextButton> rand2;
-    ScopedPointer<TextButton> style_6;
+    juce::ScopedPointer<UiEditorToolbar> toolbar;
+    juce::ScopedPointer<juce::ColourSelector> colour_selector;
+    juce::ScopedPointer<juce::TextButton> col_1;
+    juce::ScopedPointer<juce::TextButton> col_3;
+    juce::ScopedPointer<juce::TextButton> col_4;
+    juce::ScopedPointer<juce::TextButton> col_5;
+    juce::ScopedPointer<juce::TextButton> col_6;
+    juce::ScopedPointer<juce::TextButton> col_7;
+    juce::ScopedPointer<juce::TextButton> col_8;
+    juce::ScopedPointer<juce::TextButton> col_9;
+    juce::ScopedPointer<juce::TextButton> col_10;
+    juce::ScopedPointer<juce::TextButton> col_11;
+    juce::ScopedPointer<juce::TextButton> col_12;
+    juce::ScopedPointer<juce::TextButton> col_13;
+    juce::ScopedPointer<juce::TextButton> col_14;
+    juce::ScopedPointer<juce::TextButton> col_15;
+    juce::ScopedPointer<juce::TextButton> col_16;
+    juce::ScopedPointer<juce::Label> label_current_color;
+    juce::ScopedPointer<juce::TextButton> copy;
+    juce::ScopedPointer<juce::TextButton> past;
+    juce::ScopedPointer<juce::TextButton> col_17;
+    juce::ScopedPointer<juce::TextButton> col_18;
+    juce::ScopedPointer<juce::TextButton> col_19;
+    juce::ScopedPointer<juce::TextButton> rand;
+    juce::ScopedPointer<juce::Label> list;
+    juce::ScopedPointer<juce::TextButton> col_2;
+    juce::ScopedPointer<juce::TextButton> col_20;
+    juce::ScopedPointer<juce::TextButton> col_21;
+    juce::ScopedPointer<juce::TextButton> col_22;
+    juce::ScopedPointer<juce::TextButton> col_23;
+    juce::ScopedPointer<juce::TextButton> style_1;
+    juce::ScopedPointer<juce::TextButton> style_3;
+    juce::ScopedPointer<juce::TextButton> style_4;
+    juce::ScopedPointer<juce::TextButton> style_5;
+    juce::ScopedPointer<juce::TextButton> button_info;
+    juce::ScopedPointer<juce::TextButton> col_master;
+    juce::ScopedPointer<juce::TextButton> reset;
+    juce::ScopedPointer<juce::TextButton> rand2;
+    juce::ScopedPointer<juce::TextButton> style_6;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorAppStyler)

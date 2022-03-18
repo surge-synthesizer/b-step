@@ -30,13 +30,13 @@
 void UiDualDownload::timerCallback()
 {
     // UPDATE UI
-    data_progress->setValue(_listener->get_data_percentage(), dontSendNotification);
-    audio_progress->setValue(_listener->get_audio_percentage(), dontSendNotification);
+    data_progress->setValue(_listener->get_data_percentage(), juce::dontSendNotification);
+    audio_progress->setValue(_listener->get_audio_percentage(), juce::dontSendNotification);
 
-    data_percent->setText(String(int(_listener->get_data_percentage() * 100)) + "%",
-                          dontSendNotification);
-    audio_percent->setText(String(int(_listener->get_audio_percentage() * 100)) + "%",
-                           dontSendNotification);
+    data_percent->setText(juce::String(int(_listener->get_data_percentage() * 100)) + "%",
+                          juce::dontSendNotification);
+    audio_percent->setText(juce::String(int(_listener->get_audio_percentage() * 100)) + "%",
+                           juce::dontSendNotification);
 
     bool is_all_complete = _listener->is_complete();
     if (is_all_complete)
@@ -67,148 +67,150 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
                                UiDualDownloadListener *const listener_)
     : UiEditor("B-Downloader"), _app_instance_store(app_instance_store_), _listener(listener_)
 {
-    addAndMakeVisible(ok = new TextButton(String()));
+    addAndMakeVisible(ok = new juce::TextButton(juce::String()));
     ok->setExplicitFocusOrder(2);
     ok->setButtonText(TRANS("OK / LOAD PROJECT"));
-    ok->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                          Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    ok->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                          juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     ok->addListener(this);
-    ok->setColour(TextButton::buttonColourId, Colours::black);
-    ok->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
-    ok->setColour(TextButton::textColourOnId, Colours::chartreuse);
-    ok->setColour(TextButton::textColourOffId, Colours::chartreuse);
+    ok->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    ok->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
+    ok->setColour(juce::TextButton::textColourOnId, juce::Colours::chartreuse);
+    ok->setColour(juce::TextButton::textColourOffId, juce::Colours::chartreuse);
 
-    addAndMakeVisible(close = new TextButton(String()));
+    addAndMakeVisible(close = new juce::TextButton(juce::String()));
     close->setExplicitFocusOrder(3);
     close->setButtonText(TRANS("CLOSE"));
-    close->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                             Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    close->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                             juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     close->addListener(this);
-    close->setColour(TextButton::buttonColourId, Colours::black);
-    close->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
-    close->setColour(TextButton::textColourOnId, Colours::cornflowerblue);
-    close->setColour(TextButton::textColourOffId, Colours::cornflowerblue);
+    close->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    close->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
+    close->setColour(juce::TextButton::textColourOnId, juce::Colours::cornflowerblue);
+    close->setColour(juce::TextButton::textColourOffId, juce::Colours::cornflowerblue);
 
-    addAndMakeVisible(data_progress = new Slider(String()));
+    addAndMakeVisible(data_progress = new juce::Slider(juce::String()));
     data_progress->setRange(0, 1, 0);
-    data_progress->setSliderStyle(Slider::LinearHorizontal);
-    data_progress->setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
-    data_progress->setColour(Slider::trackColourId, Colours::aquamarine);
+    data_progress->setSliderStyle(juce::Slider::LinearHorizontal);
+    data_progress->setTextBoxStyle(juce::Slider::NoTextBox, false, 80, 20);
+    data_progress->setColour(juce::Slider::trackColourId, juce::Colours::aquamarine);
     data_progress->addListener(this);
 
-    addAndMakeVisible(cancel_data = new TextButton(String()));
+    addAndMakeVisible(cancel_data = new juce::TextButton(juce::String()));
     cancel_data->setExplicitFocusOrder(2);
     cancel_data->setButtonText(TRANS("CANCEL"));
-    cancel_data->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                   Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    cancel_data->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                                   juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     cancel_data->addListener(this);
-    cancel_data->setColour(TextButton::buttonColourId, Colours::black);
-    cancel_data->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
-    cancel_data->setColour(TextButton::textColourOnId, Colours::chartreuse);
-    cancel_data->setColour(TextButton::textColourOffId, Colours::red);
+    cancel_data->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    cancel_data->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
+    cancel_data->setColour(juce::TextButton::textColourOnId, juce::Colours::chartreuse);
+    cancel_data->setColour(juce::TextButton::textColourOffId, juce::Colours::red);
 
-    addAndMakeVisible(audio_progress = new Slider(String()));
+    addAndMakeVisible(audio_progress = new juce::Slider(juce::String()));
     audio_progress->setRange(0, 1, 0);
-    audio_progress->setSliderStyle(Slider::LinearHorizontal);
-    audio_progress->setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
-    audio_progress->setColour(Slider::trackColourId, Colours::aquamarine);
+    audio_progress->setSliderStyle(juce::Slider::LinearHorizontal);
+    audio_progress->setTextBoxStyle(juce::Slider::NoTextBox, false, 80, 20);
+    audio_progress->setColour(juce::Slider::trackColourId, juce::Colours::aquamarine);
     audio_progress->addListener(this);
 
-    addAndMakeVisible(data_info = new Label(String(), TRANS("DOWNLOADING DATA FILE:")));
-    data_info->setFont(Font("Oswald", 18.00f, Font::plain));
-    data_info->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(data_info = new juce::Label(juce::String(), TRANS("DOWNLOADING DATA FILE:")));
+    data_info->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
+    data_info->setJustificationType(juce::Justification::centredLeft);
     data_info->setEditable(false, false, false);
-    data_info->setColour(Label::textColourId,
-                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    data_info->setColour(TextEditor::textColourId, Colours::black);
-    data_info->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    data_info->setColour(juce::Label::textColourId,
+                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    data_info->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    data_info->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(data_name = new Label(String(), TRANS("XYZ")));
-    data_name->setFont(Font("Oswald", 18.00f, Font::plain));
-    data_name->setJustificationType(Justification::centred);
+    addAndMakeVisible(data_name = new juce::Label(juce::String(), TRANS("XYZ")));
+    data_name->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
+    data_name->setJustificationType(juce::Justification::centred);
     data_name->setEditable(false, false, false);
-    data_name->setColour(Label::textColourId, Colours::aqua);
-    data_name->setColour(TextEditor::textColourId, Colours::black);
-    data_name->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    data_name->setColour(juce::Label::textColourId, juce::Colours::aqua);
+    data_name->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    data_name->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     addAndMakeVisible(
-        old_info_2 = new Label(
-            String(),
+        old_info_2 = new juce::Label(
+            juce::String(),
             TRANS("After download you will find this project in \"Presets (downloads)\"")));
-    old_info_2->setFont(Font("Oswald", 18.00f, Font::plain));
-    old_info_2->setJustificationType(Justification::topLeft);
+    old_info_2->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
+    old_info_2->setJustificationType(juce::Justification::topLeft);
     old_info_2->setEditable(false, false, false);
-    old_info_2->setColour(Label::textColourId, Colours::red);
-    old_info_2->setColour(TextEditor::textColourId, Colours::black);
-    old_info_2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    old_info_2->setColour(juce::Label::textColourId, juce::Colours::red);
+    old_info_2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    old_info_2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(old_info_3 = new Label(String(), TRANS("NOTE:")));
-    old_info_3->setFont(Font("Oswald", 18.00f, Font::plain));
-    old_info_3->setJustificationType(Justification::topLeft);
+    addAndMakeVisible(old_info_3 = new juce::Label(juce::String(), TRANS("NOTE:")));
+    old_info_3->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
+    old_info_3->setJustificationType(juce::Justification::topLeft);
     old_info_3->setEditable(false, false, false);
-    old_info_3->setColour(Label::textColourId, Colours::red);
-    old_info_3->setColour(TextEditor::textColourId, Colours::black);
-    old_info_3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    old_info_3->setColour(juce::Label::textColourId, juce::Colours::red);
+    old_info_3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    old_info_3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(
-        titel7 = new Label(String(), TRANS("DOWNLOADING FILES TO \"PRESETS (downloads)\"")));
-    titel7->setFont(Font("Oswald", 25.00f, Font::bold));
-    titel7->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(titel7 = new juce::Label(
+                          juce::String(), TRANS("DOWNLOADING FILES TO \"PRESETS (downloads)\"")));
+    titel7->setFont(juce::Font("Oswald", 25.00f, juce::Font::bold));
+    titel7->setJustificationType(juce::Justification::centredLeft);
     titel7->setEditable(false, false, false);
-    titel7->setColour(Label::textColourId,
-                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    titel7->setColour(TextEditor::textColourId, Colours::black);
-    titel7->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    titel7->setColour(juce::Label::textColourId,
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    titel7->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    titel7->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(chancel_audio = new TextButton(String()));
+    addAndMakeVisible(chancel_audio = new juce::TextButton(juce::String()));
     chancel_audio->setExplicitFocusOrder(2);
     chancel_audio->setButtonText(TRANS("CANCEL"));
-    chancel_audio->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                     Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    chancel_audio->setConnectedEdges(juce::Button::ConnectedOnLeft |
+                                     juce::Button::ConnectedOnRight | juce::Button::ConnectedOnTop |
+                                     juce::Button::ConnectedOnBottom);
     chancel_audio->addListener(this);
-    chancel_audio->setColour(TextButton::buttonColourId, Colours::black);
-    chancel_audio->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
-    chancel_audio->setColour(TextButton::textColourOnId, Colours::red);
-    chancel_audio->setColour(TextButton::textColourOffId, Colours::red);
+    chancel_audio->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    chancel_audio->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
+    chancel_audio->setColour(juce::TextButton::textColourOnId, juce::Colours::red);
+    chancel_audio->setColour(juce::TextButton::textColourOffId, juce::Colours::red);
 
-    addAndMakeVisible(audio_info = new Label(String(), TRANS("DOWNLOADING AUDIO FILE:")));
-    audio_info->setFont(Font("Oswald", 18.00f, Font::plain));
-    audio_info->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(audio_info =
+                          new juce::Label(juce::String(), TRANS("DOWNLOADING AUDIO FILE:")));
+    audio_info->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
+    audio_info->setJustificationType(juce::Justification::centredLeft);
     audio_info->setEditable(false, false, false);
-    audio_info->setColour(Label::textColourId,
-                          Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    audio_info->setColour(TextEditor::textColourId, Colours::black);
-    audio_info->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    audio_info->setColour(juce::Label::textColourId,
+                          juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    audio_info->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    audio_info->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(audio_name = new Label(String(), TRANS("XYZ")));
-    audio_name->setFont(Font("Oswald", 18.00f, Font::plain));
-    audio_name->setJustificationType(Justification::centred);
+    addAndMakeVisible(audio_name = new juce::Label(juce::String(), TRANS("XYZ")));
+    audio_name->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
+    audio_name->setJustificationType(juce::Justification::centred);
     audio_name->setEditable(false, false, false);
-    audio_name->setColour(Label::textColourId, Colours::aqua);
-    audio_name->setColour(TextEditor::textColourId, Colours::black);
-    audio_name->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    audio_name->setColour(juce::Label::textColourId, juce::Colours::aqua);
+    audio_name->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    audio_name->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(data_percent = new Label(String(), TRANS("0%")));
-    data_percent->setFont(Font("Oswald", 18.00f, Font::plain));
-    data_percent->setJustificationType(Justification::centred);
+    addAndMakeVisible(data_percent = new juce::Label(juce::String(), TRANS("0%")));
+    data_percent->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
+    data_percent->setJustificationType(juce::Justification::centred);
     data_percent->setEditable(false, false, false);
-    data_percent->setColour(Label::textColourId, Colours::aqua);
-    data_percent->setColour(TextEditor::textColourId, Colours::black);
-    data_percent->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    data_percent->setColour(juce::Label::textColourId, juce::Colours::aqua);
+    data_percent->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    data_percent->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(audio_percent = new Label(String(), TRANS("0%")));
-    audio_percent->setFont(Font("Oswald", 18.00f, Font::plain));
-    audio_percent->setJustificationType(Justification::centred);
+    addAndMakeVisible(audio_percent = new juce::Label(juce::String(), TRANS("0%")));
+    audio_percent->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
+    audio_percent->setJustificationType(juce::Justification::centred);
     audio_percent->setEditable(false, false, false);
-    audio_percent->setColour(Label::textColourId, Colours::aqua);
-    audio_percent->setColour(TextEditor::textColourId, Colours::black);
-    audio_percent->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    audio_percent->setColour(juce::Label::textColourId, juce::Colours::aqua);
+    audio_percent->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    audio_percent->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     addAndMakeVisible(toolbar = new UiEditorToolbar(this, false, true, false));
 
     //[UserPreSize]
     /*
-    project_name->setText(project_name_,dontSendNotification);
+    project_name->setText(project_name_,juce::dontSendNotification);
 
     if( ! _listener->get_old_audio_file().existsAsFile() )
     {
@@ -225,7 +227,7 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
 
     //[Constructor] You can add your own custom stuff here..
     center_relative_and_make_visible(
-        reinterpret_cast<Component *const>(_app_instance_store->editor));
+        reinterpret_cast<juce::Component *const>(_app_instance_store->editor));
     // setAlwaysOnTop(true);
     enterModalState(true);
     //[/Constructor]
@@ -234,7 +236,7 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
 UiDualDownload::~UiDualDownload()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
-    MessageManagerLock mmLock;
+    juce::MessageManagerLock mmLock;
     //[/Destructor_pre]
 
     ok = nullptr;
@@ -259,21 +261,21 @@ UiDualDownload::~UiDualDownload()
 }
 
 //==============================================================================
-void UiDualDownload::paint(Graphics &g)
+void UiDualDownload::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll(Colours::white);
+    g.fillAll(juce::Colours::white);
 
-    g.setColour(Colour(0xff161616));
+    g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
     //[UserPaint] Add your own custom painting code here..
-    ResizableWindow::moved();
+    juce::ResizableWindow::moved();
     //[/UserPaint]
 }
 
@@ -319,11 +321,11 @@ void UiDualDownload::resized()
     toolbar->setBounds(getWidth() - proportionOfWidth(0.1136f), proportionOfHeight(-0.1738f),
                        proportionOfWidth(0.1136f), proportionOfHeight(0.6557f));
     //[UserResized] Add your own custom resize handling here..
-    ResizableWindow::resized();
+    juce::ResizableWindow::resized();
     //[/UserResized]
 }
 
-void UiDualDownload::buttonClicked(Button *buttonThatWasClicked)
+void UiDualDownload::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -359,7 +361,7 @@ void UiDualDownload::buttonClicked(Button *buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiDualDownload::sliderValueChanged(Slider *sliderThatWasMoved)
+void UiDualDownload::sliderValueChanged(juce::Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]

@@ -23,6 +23,7 @@
 //[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
+
 //[/Headers]
 
 //==============================================================================
@@ -33,7 +34,7 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiQuestionIsYourFriend : public UiEditor, public Button::Listener
+class UiQuestionIsYourFriend : public UiEditor, public juce::Button::Listener
 {
   public:
     //==============================================================================
@@ -47,9 +48,9 @@ class UiQuestionIsYourFriend : public UiEditor, public Button::Listener
     void on_close_clicked() override;
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
-    void buttonClicked(Button *buttonThatWasClicked) override;
+    void buttonClicked(juce::Button *buttonThatWasClicked) override;
 
     // Binary resources:
     static const char *question_svg;
@@ -60,10 +61,10 @@ class UiQuestionIsYourFriend : public UiEditor, public Button::Listener
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Label> label;
-    ScopedPointer<TextButton> save;
-    ScopedPointer<TextEditor> textEditor;
-    ScopedPointer<Drawable> drawable1;
+    juce::ScopedPointer<juce::Label> label;
+    juce::ScopedPointer<juce::TextButton> save;
+    juce::ScopedPointer<juce::TextEditor> textEditor;
+    juce::ScopedPointer<juce::Drawable> drawable1;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiQuestionIsYourFriend)

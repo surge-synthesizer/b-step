@@ -71,7 +71,7 @@ class BarObserver : protected SelectedBarObserver
     AppInstanceStore *const _app_instance_store;
 
   public:
-    const uint8 _bar_id;
+    const std::uint8_t _bar_id;
 
     Bar &get_bar() const { return _app_instance_store->pattern.bar(_bar_id); }
 
@@ -82,7 +82,7 @@ class BarObserver : protected SelectedBarObserver
         return _app_instance_store->sequencer.is_bar_id_running(get().group, _bar_id);
     }
 
-    uint8 get_running_bar_repeat() const
+    std::uint8_t get_running_bar_repeat() const
     {
         return _app_instance_store->sequencer.get_running_bar_repeat(get().group);
     }
@@ -96,7 +96,7 @@ class BarObserver : protected SelectedBarObserver
 
     void set_selected_bar() const { _app_instance_store->editor_config.selected_bar_id = _bar_id; }
 
-    BarObserver(AppInstanceStore *const app_instance_store_, uint8 bar_id_)
+    BarObserver(AppInstanceStore *const app_instance_store_, std::uint8_t bar_id_)
         : SelectedBarObserver(app_instance_store_), _app_instance_store(app_instance_store_),
           _bar_id(bar_id_)
     {
@@ -111,7 +111,7 @@ class SelectedBarstringObserver : public SelectedBarObserver
     AppInstanceStore *const _app_instance_store;
 
   public:
-    uint8 barstring_id;
+    std::uint8_t barstring_id;
 
     inline Barstring &get_selected_barstring() const
     {
@@ -120,7 +120,8 @@ class SelectedBarstringObserver : public SelectedBarObserver
 
     inline Barstring &get() const { return get_selected_bar().barstring(barstring_id); }
 
-    SelectedBarstringObserver(AppInstanceStore *const app_instance_store_, uint8 barstring_id_)
+    SelectedBarstringObserver(AppInstanceStore *const app_instance_store_,
+                              std::uint8_t barstring_id_)
         : SelectedBarObserver(app_instance_store_), _app_instance_store(app_instance_store_),
           barstring_id(barstring_id_)
     {
@@ -135,12 +136,12 @@ class SelectedBarstepObserver : public SelectedBarObserver
     AppInstanceStore *const _app_instance_store;
 
   public:
-    const uint8 step_id;
+    const std::uint8_t step_id;
     inline BarStep &get_selected_barstep() const { return get_selected_bar().barstep(step_id); }
 
     inline BarStep &get() const { return get_selected_bar().barstep(step_id); }
 
-    uint8 get_running_repeat_as_count_down() const
+    std::uint8_t get_running_repeat_as_count_down() const
     {
         return _app_instance_store->sequencer.get_running_step_repeat_as_count_down(
             SelectedBarObserver::get().group, step_id);
@@ -158,13 +159,13 @@ class SelectedBarstepObserver : public SelectedBarObserver
             _app_instance_store->sequencer.get_running_bar_id(SelectedBarObserver::get().group));
     }
 
-    uint8 is_running_step_id() const
+    std::uint8_t is_running_step_id() const
     {
         return _app_instance_store->sequencer.get_running_step_id(
                    SelectedBarObserver::get().group) == step_id;
     }
 
-    SelectedBarstepObserver(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    SelectedBarstepObserver(AppInstanceStore *const app_instance_store_, std::uint8_t step_id_)
         : SelectedBarObserver(app_instance_store_), _app_instance_store(app_instance_store_),
           step_id(step_id_)
     {
@@ -182,14 +183,14 @@ class SelectedStepObserver : public SelectedBarstringObserver
     inline Step &get_selected_step() const { return get_selected_barstring().step(step_id); }
 
   public:
-    uint8 step_id;
+    std::uint8_t step_id;
 
     inline Step &get() const { return get_selected_barstring().step(step_id); }
 
     inline BarStep &get_selected_barstep() const { return get_selected_bar().barstep(step_id); }
 
-    SelectedStepObserver(AppInstanceStore *const app_instance_store_, uint8 barstring_id_,
-                         uint8 step_id_)
+    SelectedStepObserver(AppInstanceStore *const app_instance_store_, std::uint8_t barstring_id_,
+                         std::uint8_t step_id_)
         : SelectedBarstringObserver(app_instance_store_, barstring_id_),
           _app_instance_store(app_instance_store_), step_id(step_id_)
     {

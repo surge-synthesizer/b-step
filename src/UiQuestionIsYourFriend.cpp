@@ -35,42 +35,42 @@ void UiQuestionIsYourFriend::on_close_clicked()
 UiQuestionIsYourFriend::UiQuestionIsYourFriend(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-Question"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(label = new Label(String(), TRANS("NEED HELP?")));
-    label->setFont(Font("Oswald", 33.10f, Font::plain));
-    label->setJustificationType(Justification::centred);
+    addAndMakeVisible(label = new juce::Label(juce::String(), TRANS("NEED HELP?")));
+    label->setFont(juce::Font("Oswald", 33.10f, juce::Font::plain));
+    label->setJustificationType(juce::Justification::centred);
     label->setEditable(false, false, false);
-    label->setColour(Label::textColourId,
-                     Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label->setColour(TextEditor::textColourId, Colours::black);
-    label->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label->setColour(juce::Label::textColourId,
+                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(save = new TextButton(String()));
+    addAndMakeVisible(save = new juce::TextButton(juce::String()));
     save->setButtonText(TRANS("OK, DON\'T SHOW AGAIN"));
-    save->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                            Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    save->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                            juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     save->addListener(this);
-    save->setColour(TextButton::buttonColourId, Colours::black);
-    save->setColour(TextButton::textColourOffId, Colours::chartreuse);
+    save->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    save->setColour(juce::TextButton::textColourOffId, juce::Colours::chartreuse);
 
-    addAndMakeVisible(textEditor = new TextEditor(String()));
+    addAndMakeVisible(textEditor = new juce::TextEditor(juce::String()));
     textEditor->setMultiLine(true);
     textEditor->setReturnKeyStartsNewLine(false);
     textEditor->setReadOnly(true);
     textEditor->setScrollbarsShown(false);
     textEditor->setCaretVisible(false);
     textEditor->setPopupMenuEnabled(false);
-    textEditor->setColour(TextEditor::textColourId,
-                          Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    textEditor->setColour(TextEditor::backgroundColourId, Colour(0x00ffff23));
-    textEditor->setColour(TextEditor::highlightColourId, Colour(0x001111ee));
-    textEditor->setColour(TextEditor::shadowColourId, Colour(0x00000000));
-    textEditor->setColour(CaretComponent::caretColourId, Colour(0x00000000));
+    textEditor->setColour(juce::TextEditor::textColourId,
+                          juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    textEditor->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00ffff23));
+    textEditor->setColour(juce::TextEditor::highlightColourId, juce::Colour(0x001111ee));
+    textEditor->setColour(juce::TextEditor::shadowColourId, juce::Colour(0x00000000));
+    textEditor->setColour(juce::CaretComponent::caretColourId, juce::Colour(0x00000000));
     textEditor->setText(TRANS("The question mark is your friend!\n"
                               "\n"
                               "If you need some help drag the question mark (right menu bar) to "
                               "any element on the user interface and get the info you need."));
 
-    drawable1 = Drawable::createFromImageData(question_svg, question_svgSize).release();
+    drawable1 = juce::Drawable::createFromImageData(question_svg, question_svgSize).release();
 
     //[UserPreSize]
     GLOBAL_VALUE_HOLDER::getInstance()->QUESTION_WAS_UP = true;
@@ -101,24 +101,24 @@ UiQuestionIsYourFriend::~UiQuestionIsYourFriend()
 }
 
 //==============================================================================
-void UiQuestionIsYourFriend::paint(Graphics &g)
+void UiQuestionIsYourFriend::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll(Colour(0xff161616));
+    g.fillAll(juce::Colour(0xff161616));
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.drawRect(0, 0, proportionOfWidth(1.0000f), proportionOfHeight(1.0000f), 2);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     jassert(drawable1 != 0);
     if (drawable1 != 0)
         drawable1->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.3233f), proportionOfHeight(0.2057f),
-                             proportionOfWidth(0.3333f), proportionOfHeight(0.2286f)),
-            RectanglePlacement::centred, 1.000f);
+            juce::Rectangle<float>(proportionOfWidth(0.3233f), proportionOfHeight(0.2057f),
+                                   proportionOfWidth(0.3333f), proportionOfHeight(0.2286f)),
+            juce::RectanglePlacement::centred, 1.000f);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -140,7 +140,7 @@ void UiQuestionIsYourFriend::resized()
     //[/UserResized]
 }
 
-void UiQuestionIsYourFriend::buttonClicked(Button *buttonThatWasClicked)
+void UiQuestionIsYourFriend::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]

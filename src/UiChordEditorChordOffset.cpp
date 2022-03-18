@@ -30,7 +30,7 @@
 class ControllerChordOffset : public MONO_UISliderController
 {
     AppInstanceStore *const _app_instance_store;
-    const uint8 _chord_id;
+    const std::uint8_t _chord_id;
     UiLabel *const _label;
 
     ChordSet &selected_chordset() const { return _app_instance_store->pattern.selected_chordset(); }
@@ -44,7 +44,7 @@ class ControllerChordOffset : public MONO_UISliderController
     void on_value_changed(int v_) override
     {
         selected_chordset().chord(_chord_id).offset_all = v_;
-        _label->set_text(String(selected_chordset().chord(_chord_id).offset_all));
+        _label->set_text(juce::String(selected_chordset().chord(_chord_id).offset_all));
     }
 
     int get_range_max() override { return selected_chordset().chord(_chord_id).offset_all.MAX; }
@@ -52,23 +52,23 @@ class ControllerChordOffset : public MONO_UISliderController
     int get_range_min() override { return selected_chordset().chord(_chord_id).offset_all.MIN; }
 
   public:
-    ControllerChordOffset(AppInstanceStore *const app_instance_store_, uint8 chord_id_,
+    ControllerChordOffset(AppInstanceStore *const app_instance_store_, std::uint8_t chord_id_,
                           UiLabel *const label_)
         : MONO_UISliderController(app_instance_store_), _app_instance_store(app_instance_store_),
           _chord_id(chord_id_), _label(label_)
     {
-        _label->set_text(String(selected_chordset().chord(_chord_id).offset_all));
+        _label->set_text(juce::String(selected_chordset().chord(_chord_id).offset_all));
     }
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ControllerChordOffset)
 };
 
-void UiChordEditorChordOffset::refresh_ui(Array<Component *> &components_to_repaint_)
+void UiChordEditorChordOffset::refresh_ui(juce::Array<juce::Component *> &components_to_repaint_)
 {
     slider->get_components_to_repaint(components_to_repaint_);
 
     if (is_your_value_changed_since_last_request())
-        label->set_text(String(slider->get_controller()->get_value()));
+        label->set_text(juce::String(slider->get_controller()->get_value()));
 }
 
 bool UiChordEditorChordOffset::is_your_value_changed_since_last_request()
@@ -86,7 +86,7 @@ bool UiChordEditorChordOffset::is_your_value_changed_since_last_request()
 
 //==============================================================================
 UiChordEditorChordOffset::UiChordEditorChordOffset(AppInstanceStore *const app_instance_store_,
-                                                   uint8 chord_id_)
+                                                   std::uint8_t chord_id_)
     : _app_instance_store(app_instance_store_)
 {
     addAndMakeVisible(label = new UiLabel("E", _app_instance_store->style_popup_editor_octave));
@@ -122,14 +122,14 @@ UiChordEditorChordOffset::~UiChordEditorChordOffset()
 }
 
 //==============================================================================
-void UiChordEditorChordOffset::paint(Graphics &g)
+void UiChordEditorChordOffset::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-    g.fillAll(Colour(_app_instance_store->style_popup_editor->get_background_color()));
+    g.fillAll(juce::Colour(_app_instance_store->style_popup_editor->get_background_color()));
     return;
     //[/UserPrePaint]
 
-    g.fillAll(Colour(0xff161616));
+    g.fillAll(juce::Colour(0xff161616));
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -157,7 +157,7 @@ void UiChordEditorChordOffset::resized()
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="UiChordEditorChordOffset"
-                 componentName="" parentClasses="public Component" constructorParams="AppInstanceStore* const app_instance_store_,uint8 chord_id_"
+                 componentName="" parentClasses="public Component" constructorParams="AppInstanceStore* const app_instance_store_,std::uint8_t chord_id_"
                  variableInitialisers="_app_instance_store(app_instance_store_)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="1" initialWidth="80" initialHeight="40">

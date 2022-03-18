@@ -30,17 +30,17 @@ void UiEditorMIDIIO::refresh()
 {
     for (int i = 0; i < getNumChildComponents(); ++i)
     {
-        if (ComboBox *combo_box = dynamic_cast<ComboBox *>(getChildComponent(i)))
+        if (juce::ComboBox *combo_box = dynamic_cast<juce::ComboBox *>(getChildComponent(i)))
         {
             // PORTS
             if (combo_box->getTextWhenNoChoicesAvailable() == "NO DEVICE CONNECTED")
             {
-                combo_box->clear(dontSendNotification);
+                combo_box->clear(juce::dontSendNotification);
                 combo_box->addItemList(
                     _audio_device_manager->get_available_ports(combo_box->getName()), 2);
                 combo_box->setText(
                     _audio_device_manager->get_selected_device_name(combo_box->getName()),
-                    dontSendNotification);
+                    juce::dontSendNotification);
                 if (_audio_device_manager->is_port_open(combo_box->getName()))
                 {
                     // TODO change colour
@@ -50,10 +50,10 @@ void UiEditorMIDIIO::refresh()
             // CHANNELS
             else if (combo_box->getTextWhenNoChoicesAvailable() == "OMNI")
             {
-                combo_box->clear(dontSendNotification);
+                combo_box->clear(juce::dontSendNotification);
                 for (int i = 0 + 1; i != 16 + 1; ++i)
                 {
-                    combo_box->addItem(String(i), i);
+                    combo_box->addItem(juce::String(i), i);
                 }
             }
 
@@ -70,456 +70,459 @@ UiEditorMIDIIO::UiEditorMIDIIO(mono_AudioDeviceManager *const audio_device_manag
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    addAndMakeVisible(label_7 = new Label(String(), TRANS("RECEIVE CC:")));
-    label_7->setFont(Font(30.00f, Font::plain));
-    label_7->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_7 = new juce::Label(juce::String(), TRANS("RECEIVE CC:")));
+    label_7->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_7->setJustificationType(juce::Justification::centredLeft);
     label_7->setEditable(false, false, false);
-    label_7->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_7->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_7->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_7->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_7->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_7->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(combo_input_main = new ComboBox("RECIEVE_MIDI_MAIN"));
+    addAndMakeVisible(combo_input_main = new juce::ComboBox("RECIEVE_MIDI_MAIN"));
     combo_input_main->setEditableText(false);
-    combo_input_main->setJustificationType(Justification::centredLeft);
+    combo_input_main->setJustificationType(juce::Justification::centredLeft);
     combo_input_main->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
     combo_input_main->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
     combo_input_main->addListener(this);
 
-    addAndMakeVisible(combo_input_main_channel = new ComboBox(String()));
+    addAndMakeVisible(combo_input_main_channel = new juce::ComboBox(juce::String()));
     combo_input_main_channel->setEditableText(false);
-    combo_input_main_channel->setJustificationType(Justification::centredLeft);
+    combo_input_main_channel->setJustificationType(juce::Justification::centredLeft);
     combo_input_main_channel->setTextWhenNothingSelected(TRANS("CH"));
     combo_input_main_channel->setTextWhenNoChoicesAvailable(TRANS("OMNI"));
     combo_input_main_channel->addListener(this);
 
-    addAndMakeVisible(label_1 = new Label(String(), TRANS("PORT")));
-    label_1->setFont(Font(30.00f, Font::plain));
-    label_1->setJustificationType(Justification::centred);
+    addAndMakeVisible(label_1 = new juce::Label(juce::String(), TRANS("PORT")));
+    label_1->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_1->setJustificationType(juce::Justification::centred);
     label_1->setEditable(false, false, false);
-    label_1->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_1->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_1->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_1->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_1->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_1->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_3 = new Label(String(), TRANS("INPUT:")));
-    label_3->setFont(Font(30.00f, Font::plain));
-    label_3->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_3 = new juce::Label(juce::String(), TRANS("INPUT:")));
+    label_3->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_3->setJustificationType(juce::Justification::centredLeft);
     label_3->setEditable(false, false, false);
-    label_3->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_3->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_3->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_3->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_input_main_thru = new ToggleButton(String()));
+    addAndMakeVisible(toggle_input_main_thru = new juce::ToggleButton(juce::String()));
     toggle_input_main_thru->addListener(this);
 
-    addAndMakeVisible(label_4 = new Label(String(), TRANS("THRU:")));
-    label_4->setFont(Font(30.00f, Font::plain));
-    label_4->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_4 = new juce::Label(juce::String(), TRANS("THRU:")));
+    label_4->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_4->setJustificationType(juce::Justification::centredLeft);
     label_4->setEditable(false, false, false);
-    label_4->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_4->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_4->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_4->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_4->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_4->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_5 = new Label(String(), TRANS("THRU:")));
-    label_5->setFont(Font(30.00f, Font::plain));
-    label_5->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_5 = new juce::Label(juce::String(), TRANS("THRU:")));
+    label_5->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_5->setJustificationType(juce::Justification::centredLeft);
     label_5->setEditable(false, false, false);
-    label_5->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_5->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_5->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_5->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_5->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_5->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(combo_output_thru = new ComboBox("SEND_MIDI_THRU"));
+    addAndMakeVisible(combo_output_thru = new juce::ComboBox("SEND_MIDI_THRU"));
     combo_output_thru->setEditableText(false);
-    combo_output_thru->setJustificationType(Justification::centredLeft);
+    combo_output_thru->setJustificationType(juce::Justification::centredLeft);
     combo_output_thru->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
     combo_output_thru->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
     combo_output_thru->addListener(this);
 
-    addAndMakeVisible(label_6 = new Label(String(), TRANS("CC IN:")));
-    label_6->setFont(Font(30.00f, Font::plain));
-    label_6->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_6 = new juce::Label(juce::String(), TRANS("CC IN:")));
+    label_6->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_6->setJustificationType(juce::Justification::centredLeft);
     label_6->setEditable(false, false, false);
-    label_6->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_6->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_6->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_6->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_6->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_6->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(combo_input_cc = new ComboBox("RECIEVE_CC"));
+    addAndMakeVisible(combo_input_cc = new juce::ComboBox("RECIEVE_CC"));
     combo_input_cc->setEditableText(false);
-    combo_input_cc->setJustificationType(Justification::centredLeft);
+    combo_input_cc->setJustificationType(juce::Justification::centredLeft);
     combo_input_cc->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
     combo_input_cc->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
     combo_input_cc->addListener(this);
 
-    addAndMakeVisible(toggle_input_main_cc = new ToggleButton(String()));
+    addAndMakeVisible(toggle_input_main_cc = new juce::ToggleButton(juce::String()));
     toggle_input_main_cc->addListener(this);
 
-    addAndMakeVisible(toggle_input_cc_thru = new ToggleButton(String()));
+    addAndMakeVisible(toggle_input_cc_thru = new juce::ToggleButton(juce::String()));
     toggle_input_cc_thru->addListener(this);
 
-    addAndMakeVisible(label_8 = new Label(String(), TRANS("THRU:")));
-    label_8->setFont(Font(30.00f, Font::plain));
-    label_8->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_8 = new juce::Label(juce::String(), TRANS("THRU:")));
+    label_8->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_8->setJustificationType(juce::Justification::centredLeft);
     label_8->setEditable(false, false, false);
-    label_8->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_8->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_8->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_8->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_8->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_8->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_9 = new Label(String(), TRANS("CC FB (OUT):")));
-    label_9->setFont(Font(30.00f, Font::plain));
-    label_9->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_9 = new juce::Label(juce::String(), TRANS("CC FB (OUT):")));
+    label_9->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_9->setJustificationType(juce::Justification::centredLeft);
     label_9->setEditable(false, false, false);
-    label_9->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_9->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_9->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_9->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_9->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_9->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(combo_output_cc = new ComboBox("SEND_MIDI_CC_FEEDBACK"));
+    addAndMakeVisible(combo_output_cc = new juce::ComboBox("SEND_MIDI_CC_FEEDBACK"));
     combo_output_cc->setEditableText(false);
-    combo_output_cc->setJustificationType(Justification::centredLeft);
+    combo_output_cc->setJustificationType(juce::Justification::centredLeft);
     combo_output_cc->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
     combo_output_cc->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
     combo_output_cc->addListener(this);
 
-    addAndMakeVisible(toggle_output_cc_mute = new ToggleButton(String()));
+    addAndMakeVisible(toggle_output_cc_mute = new juce::ToggleButton(juce::String()));
     toggle_output_cc_mute->addListener(this);
 
-    addAndMakeVisible(toggle_output_thru_mute = new ToggleButton(String()));
+    addAndMakeVisible(toggle_output_thru_mute = new juce::ToggleButton(juce::String()));
     toggle_output_thru_mute->addListener(this);
 
-    addAndMakeVisible(label_11 = new Label(String(), TRANS("LFO 1:")));
-    label_11->setFont(Font(30.00f, Font::plain));
-    label_11->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_11 = new juce::Label(juce::String(), TRANS("LFO 1:")));
+    label_11->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_11->setJustificationType(juce::Justification::centredLeft);
     label_11->setEditable(false, false, false);
-    label_11->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_11->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_11->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_11->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_11->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_11->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(combo_output_lfo_1 = new ComboBox("SEND_MIDI_LFO_1"));
+    addAndMakeVisible(combo_output_lfo_1 = new juce::ComboBox("SEND_MIDI_LFO_1"));
     combo_output_lfo_1->setEditableText(false);
-    combo_output_lfo_1->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_1->setJustificationType(juce::Justification::centredLeft);
     combo_output_lfo_1->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
     combo_output_lfo_1->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
     combo_output_lfo_1->addListener(this);
 
-    addAndMakeVisible(combo_output_lfo_channel_1 = new ComboBox(String()));
+    addAndMakeVisible(combo_output_lfo_channel_1 = new juce::ComboBox(juce::String()));
     combo_output_lfo_channel_1->setEditableText(false);
-    combo_output_lfo_channel_1->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_channel_1->setJustificationType(juce::Justification::centredLeft);
     combo_output_lfo_channel_1->setTextWhenNothingSelected(TRANS("CH"));
     combo_output_lfo_channel_1->setTextWhenNoChoicesAvailable(TRANS("OMNI"));
     combo_output_lfo_channel_1->addListener(this);
 
-    addAndMakeVisible(label_12 = new Label(String(), TRANS("CC-NR")));
-    label_12->setFont(Font(30.00f, Font::plain));
-    label_12->setJustificationType(Justification::centred);
+    addAndMakeVisible(label_12 = new juce::Label(juce::String(), TRANS("CC-NR")));
+    label_12->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_12->setJustificationType(juce::Justification::centred);
     label_12->setEditable(false, false, false);
-    label_12->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_12->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_12->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_12->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_12->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_12->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_output_lfo_mute_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_output_lfo_mute_1 = new juce::ToggleButton(juce::String()));
     toggle_output_lfo_mute_1->addListener(this);
 
-    addAndMakeVisible(combo_output_lfo_number_1 = new ComboBox(String()));
+    addAndMakeVisible(combo_output_lfo_number_1 = new juce::ComboBox(juce::String()));
     combo_output_lfo_number_1->setEditableText(false);
-    combo_output_lfo_number_1->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_number_1->setJustificationType(juce::Justification::centredLeft);
     combo_output_lfo_number_1->setTextWhenNothingSelected(TRANS("T"));
     combo_output_lfo_number_1->setTextWhenNoChoicesAvailable(TRANS("EMPTY BANK"));
     combo_output_lfo_number_1->addListener(this);
 
-    addAndMakeVisible(label_15 = new Label(String(), TRANS("LFO 2:")));
-    label_15->setFont(Font(30.00f, Font::plain));
-    label_15->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_15 = new juce::Label(juce::String(), TRANS("LFO 2:")));
+    label_15->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_15->setJustificationType(juce::Justification::centredLeft);
     label_15->setEditable(false, false, false);
-    label_15->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_15->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_15->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_15->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_15->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_15->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(combo_output_lfo_2 = new ComboBox("SEND_MIDI_LFO_2"));
+    addAndMakeVisible(combo_output_lfo_2 = new juce::ComboBox("SEND_MIDI_LFO_2"));
     combo_output_lfo_2->setEditableText(false);
-    combo_output_lfo_2->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_2->setJustificationType(juce::Justification::centredLeft);
     combo_output_lfo_2->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
     combo_output_lfo_2->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
     combo_output_lfo_2->addListener(this);
 
-    addAndMakeVisible(combo_output_lfo_channel_2 = new ComboBox(String()));
+    addAndMakeVisible(combo_output_lfo_channel_2 = new juce::ComboBox(juce::String()));
     combo_output_lfo_channel_2->setEditableText(false);
-    combo_output_lfo_channel_2->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_channel_2->setJustificationType(juce::Justification::centredLeft);
     combo_output_lfo_channel_2->setTextWhenNothingSelected(TRANS("CH"));
     combo_output_lfo_channel_2->setTextWhenNoChoicesAvailable(TRANS("OMNI"));
     combo_output_lfo_channel_2->addListener(this);
 
-    addAndMakeVisible(toggle_output_lfo_mute_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_output_lfo_mute_2 = new juce::ToggleButton(juce::String()));
     toggle_output_lfo_mute_2->addListener(this);
 
-    addAndMakeVisible(combo_output_lfo_number_2 = new ComboBox(String()));
+    addAndMakeVisible(combo_output_lfo_number_2 = new juce::ComboBox(juce::String()));
     combo_output_lfo_number_2->setEditableText(false);
-    combo_output_lfo_number_2->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_number_2->setJustificationType(juce::Justification::centredLeft);
     combo_output_lfo_number_2->setTextWhenNothingSelected(TRANS("NR"));
     combo_output_lfo_number_2->setTextWhenNoChoicesAvailable(TRANS("EMPTY BANK"));
     combo_output_lfo_number_2->addListener(this);
 
-    addAndMakeVisible(label_16 = new Label(String(), TRANS("LFO 3:")));
-    label_16->setFont(Font(30.00f, Font::plain));
-    label_16->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_16 = new juce::Label(juce::String(), TRANS("LFO 3:")));
+    label_16->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_16->setJustificationType(juce::Justification::centredLeft);
     label_16->setEditable(false, false, false);
-    label_16->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_16->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_16->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_16->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_16->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_16->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(combo_output_lfo_3 = new ComboBox("SEND_MIDI_LFO_3"));
+    addAndMakeVisible(combo_output_lfo_3 = new juce::ComboBox("SEND_MIDI_LFO_3"));
     combo_output_lfo_3->setEditableText(false);
-    combo_output_lfo_3->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_3->setJustificationType(juce::Justification::centredLeft);
     combo_output_lfo_3->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
     combo_output_lfo_3->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
     combo_output_lfo_3->addListener(this);
 
-    addAndMakeVisible(combo_output_lfo_channel_3 = new ComboBox(String()));
+    addAndMakeVisible(combo_output_lfo_channel_3 = new juce::ComboBox(juce::String()));
     combo_output_lfo_channel_3->setEditableText(false);
-    combo_output_lfo_channel_3->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_channel_3->setJustificationType(juce::Justification::centredLeft);
     combo_output_lfo_channel_3->setTextWhenNothingSelected(TRANS("CH"));
     combo_output_lfo_channel_3->setTextWhenNoChoicesAvailable(TRANS("OMNI"));
     combo_output_lfo_channel_3->addListener(this);
 
-    addAndMakeVisible(toggle_output_lfo_mute_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_output_lfo_mute_3 = new juce::ToggleButton(juce::String()));
     toggle_output_lfo_mute_3->addListener(this);
 
-    addAndMakeVisible(combo_output_lfo_number_3 = new ComboBox(String()));
+    addAndMakeVisible(combo_output_lfo_number_3 = new juce::ComboBox(juce::String()));
     combo_output_lfo_number_3->setEditableText(false);
-    combo_output_lfo_number_3->setJustificationType(Justification::centredLeft);
+    combo_output_lfo_number_3->setJustificationType(juce::Justification::centredLeft);
     combo_output_lfo_number_3->setTextWhenNothingSelected(TRANS("NR"));
     combo_output_lfo_number_3->setTextWhenNoChoicesAvailable(TRANS("EMPTY BANK"));
     combo_output_lfo_number_3->addListener(this);
 
-    addAndMakeVisible(toggle_output_lfo_mute_5 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_output_lfo_mute_5 = new juce::ToggleButton(juce::String()));
     toggle_output_lfo_mute_5->addListener(this);
 
-    addAndMakeVisible(label_19 = new Label(String(), TRANS("F-ADSR 1:")));
-    label_19->setFont(Font(30.00f, Font::plain));
-    label_19->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_19 = new juce::Label(juce::String(), TRANS("F-ADSR 1:")));
+    label_19->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_19->setJustificationType(juce::Justification::centredLeft);
     label_19->setEditable(false, false, false);
-    label_19->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_19->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_19->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_19->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_19->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_19->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(combo_output_adsr_1 = new ComboBox("SEND_MIDI_F_ADSR_1"));
+    addAndMakeVisible(combo_output_adsr_1 = new juce::ComboBox("SEND_MIDI_F_ADSR_1"));
     combo_output_adsr_1->setEditableText(false);
-    combo_output_adsr_1->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_1->setJustificationType(juce::Justification::centredLeft);
     combo_output_adsr_1->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
     combo_output_adsr_1->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
     combo_output_adsr_1->addListener(this);
 
-    addAndMakeVisible(combo_output_adsr_channel_1 = new ComboBox(String()));
+    addAndMakeVisible(combo_output_adsr_channel_1 = new juce::ComboBox(juce::String()));
     combo_output_adsr_channel_1->setEditableText(false);
-    combo_output_adsr_channel_1->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_channel_1->setJustificationType(juce::Justification::centredLeft);
     combo_output_adsr_channel_1->setTextWhenNothingSelected(TRANS("CH"));
     combo_output_adsr_channel_1->setTextWhenNoChoicesAvailable(TRANS("OMNI"));
     combo_output_adsr_channel_1->addListener(this);
 
-    addAndMakeVisible(toggle_output_adsr_mute_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_output_adsr_mute_1 = new juce::ToggleButton(juce::String()));
     toggle_output_adsr_mute_1->addListener(this);
 
-    addAndMakeVisible(combo_output_adsr_number_1 = new ComboBox(String()));
+    addAndMakeVisible(combo_output_adsr_number_1 = new juce::ComboBox(juce::String()));
     combo_output_adsr_number_1->setEditableText(false);
-    combo_output_adsr_number_1->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_number_1->setJustificationType(juce::Justification::centredLeft);
     combo_output_adsr_number_1->setTextWhenNothingSelected(TRANS("NR"));
     combo_output_adsr_number_1->setTextWhenNoChoicesAvailable(TRANS("EMPTY BANK"));
     combo_output_adsr_number_1->addListener(this);
 
-    addAndMakeVisible(label_20 = new Label(String(), TRANS("F-ADSR 2:")));
-    label_20->setFont(Font(30.00f, Font::plain));
-    label_20->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_20 = new juce::Label(juce::String(), TRANS("F-ADSR 2:")));
+    label_20->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_20->setJustificationType(juce::Justification::centredLeft);
     label_20->setEditable(false, false, false);
-    label_20->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_20->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_20->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_20->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_20->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_20->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(combo_output_adsr_2 = new ComboBox("SEND_MIDI_F_ADSR_2"));
+    addAndMakeVisible(combo_output_adsr_2 = new juce::ComboBox("SEND_MIDI_F_ADSR_2"));
     combo_output_adsr_2->setEditableText(false);
-    combo_output_adsr_2->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_2->setJustificationType(juce::Justification::centredLeft);
     combo_output_adsr_2->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
     combo_output_adsr_2->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
     combo_output_adsr_2->addListener(this);
 
-    addAndMakeVisible(combo_output_adsr_channel_2 = new ComboBox(String()));
+    addAndMakeVisible(combo_output_adsr_channel_2 = new juce::ComboBox(juce::String()));
     combo_output_adsr_channel_2->setEditableText(false);
-    combo_output_adsr_channel_2->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_channel_2->setJustificationType(juce::Justification::centredLeft);
     combo_output_adsr_channel_2->setTextWhenNothingSelected(TRANS("CH"));
     combo_output_adsr_channel_2->setTextWhenNoChoicesAvailable(TRANS("OMNI"));
     combo_output_adsr_channel_2->addListener(this);
 
-    addAndMakeVisible(toggle_output_adsr_mute_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_output_adsr_mute_2 = new juce::ToggleButton(juce::String()));
     toggle_output_adsr_mute_2->addListener(this);
 
-    addAndMakeVisible(combo_output_adsr_number_2 = new ComboBox(String()));
+    addAndMakeVisible(combo_output_adsr_number_2 = new juce::ComboBox(juce::String()));
     combo_output_adsr_number_2->setEditableText(false);
-    combo_output_adsr_number_2->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_number_2->setJustificationType(juce::Justification::centredLeft);
     combo_output_adsr_number_2->setTextWhenNothingSelected(TRANS("NR"));
     combo_output_adsr_number_2->setTextWhenNoChoicesAvailable(TRANS("EMPTY BANK"));
     combo_output_adsr_number_2->addListener(this);
 
-    addAndMakeVisible(label_21 = new Label(String(), TRANS("F-ADSR 2:")));
-    label_21->setFont(Font(30.00f, Font::plain));
-    label_21->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_21 = new juce::Label(juce::String(), TRANS("F-ADSR 2:")));
+    label_21->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_21->setJustificationType(juce::Justification::centredLeft);
     label_21->setEditable(false, false, false);
-    label_21->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_21->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_21->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_21->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_21->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_21->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(combo_output_adsr_3 = new ComboBox("SEND_MIDI_F_ADSR_3"));
+    addAndMakeVisible(combo_output_adsr_3 = new juce::ComboBox("SEND_MIDI_F_ADSR_3"));
     combo_output_adsr_3->setEditableText(false);
-    combo_output_adsr_3->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_3->setJustificationType(juce::Justification::centredLeft);
     combo_output_adsr_3->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
     combo_output_adsr_3->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
     combo_output_adsr_3->addListener(this);
 
-    addAndMakeVisible(combo_output_adsr_channel_3 = new ComboBox(String()));
+    addAndMakeVisible(combo_output_adsr_channel_3 = new juce::ComboBox(juce::String()));
     combo_output_adsr_channel_3->setEditableText(false);
-    combo_output_adsr_channel_3->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_channel_3->setJustificationType(juce::Justification::centredLeft);
     combo_output_adsr_channel_3->setTextWhenNothingSelected(TRANS("CH"));
     combo_output_adsr_channel_3->setTextWhenNoChoicesAvailable(TRANS("OMNI"));
     combo_output_adsr_channel_3->addListener(this);
 
-    addAndMakeVisible(toggle_output_adsr_mute_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_output_adsr_mute_3 = new juce::ToggleButton(juce::String()));
     toggle_output_adsr_mute_3->addListener(this);
 
-    addAndMakeVisible(combo_output_adsr_number_3 = new ComboBox(String()));
+    addAndMakeVisible(combo_output_adsr_number_3 = new juce::ComboBox(juce::String()));
     combo_output_adsr_number_3->setEditableText(false);
-    combo_output_adsr_number_3->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_number_3->setJustificationType(juce::Justification::centredLeft);
     combo_output_adsr_number_3->setTextWhenNothingSelected(TRANS("NR"));
     combo_output_adsr_number_3->setTextWhenNoChoicesAvailable(TRANS("EMPTY BANK"));
     combo_output_adsr_number_3->addListener(this);
 
-    addAndMakeVisible(label_22 = new Label(String(), TRANS("ADSR:")));
-    label_22->setFont(Font(30.00f, Font::plain));
-    label_22->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_22 = new juce::Label(juce::String(), TRANS("ADSR:")));
+    label_22->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_22->setJustificationType(juce::Justification::centredLeft);
     label_22->setEditable(false, false, false);
-    label_22->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_22->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_22->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_22->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_22->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_22->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(combo_output_adsr_4 = new ComboBox("SEND_MIDI_ADSR"));
+    addAndMakeVisible(combo_output_adsr_4 = new juce::ComboBox("SEND_MIDI_ADSR"));
     combo_output_adsr_4->setEditableText(false);
-    combo_output_adsr_4->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_4->setJustificationType(juce::Justification::centredLeft);
     combo_output_adsr_4->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
     combo_output_adsr_4->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
     combo_output_adsr_4->addListener(this);
 
-    addAndMakeVisible(combo_output_adsr_channel_4 = new ComboBox(String()));
+    addAndMakeVisible(combo_output_adsr_channel_4 = new juce::ComboBox(juce::String()));
     combo_output_adsr_channel_4->setEditableText(false);
-    combo_output_adsr_channel_4->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_channel_4->setJustificationType(juce::Justification::centredLeft);
     combo_output_adsr_channel_4->setTextWhenNothingSelected(TRANS("CH"));
     combo_output_adsr_channel_4->setTextWhenNoChoicesAvailable(TRANS("OMNI"));
     combo_output_adsr_channel_4->addListener(this);
 
-    addAndMakeVisible(toggle_output_adsr_mute_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_output_adsr_mute_4 = new juce::ToggleButton(juce::String()));
     toggle_output_adsr_mute_4->addListener(this);
 
-    addAndMakeVisible(combo_output_adsr_number_4 = new ComboBox(String()));
+    addAndMakeVisible(combo_output_adsr_number_4 = new juce::ComboBox(juce::String()));
     combo_output_adsr_number_4->setEditableText(false);
-    combo_output_adsr_number_4->setJustificationType(Justification::centredLeft);
+    combo_output_adsr_number_4->setJustificationType(juce::Justification::centredLeft);
     combo_output_adsr_number_4->setTextWhenNothingSelected(TRANS("NR"));
     combo_output_adsr_number_4->setTextWhenNoChoicesAvailable(TRANS("EMPTY BANK"));
     combo_output_adsr_number_4->addListener(this);
 
-    addAndMakeVisible(label_23 = new Label(String(), TRANS("CLOCK:")));
-    label_23->setFont(Font(30.00f, Font::plain));
-    label_23->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_23 = new juce::Label(juce::String(), TRANS("CLOCK:")));
+    label_23->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_23->setJustificationType(juce::Justification::centredLeft);
     label_23->setEditable(false, false, false);
-    label_23->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_23->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_23->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_23->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_23->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_23->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(combo_output_clock = new ComboBox("SEND_MIDI_CLOCK"));
+    addAndMakeVisible(combo_output_clock = new juce::ComboBox("SEND_MIDI_CLOCK"));
     combo_output_clock->setEditableText(false);
-    combo_output_clock->setJustificationType(Justification::centredLeft);
+    combo_output_clock->setJustificationType(juce::Justification::centredLeft);
     combo_output_clock->setTextWhenNothingSelected(TRANS("SELECT A DEVICE"));
     combo_output_clock->setTextWhenNoChoicesAvailable(TRANS("NO DEVICE CONNECTED"));
     combo_output_clock->addListener(this);
 
-    addAndMakeVisible(toggle_output_clock_mute = new ToggleButton(String()));
+    addAndMakeVisible(toggle_output_clock_mute = new juce::ToggleButton(juce::String()));
     toggle_output_clock_mute->addListener(this);
 
-    addAndMakeVisible(label_32 = new Label(String(), TRANS("INPUT:")));
-    label_32->setFont(Font(30.00f, Font::plain));
-    label_32->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_32 = new juce::Label(juce::String(), TRANS("INPUT:")));
+    label_32->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_32->setJustificationType(juce::Justification::centredLeft);
     label_32->setEditable(false, false, false);
-    label_32->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_32->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_32->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_32->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_32->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_32->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_33 = new Label(String(), TRANS("OUTPUT:")));
-    label_33->setFont(Font(30.00f, Font::plain));
-    label_33->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_33 = new juce::Label(juce::String(), TRANS("OUTPUT:")));
+    label_33->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_33->setJustificationType(juce::Justification::centredLeft);
     label_33->setEditable(false, false, false);
-    label_33->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_33->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_33->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_33->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_33->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_33->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_34 = new Label(String(), TRANS("PORT")));
-    label_34->setFont(Font(30.00f, Font::plain));
-    label_34->setJustificationType(Justification::centred);
+    addAndMakeVisible(label_34 = new juce::Label(juce::String(), TRANS("PORT")));
+    label_34->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_34->setJustificationType(juce::Justification::centred);
     label_34->setEditable(false, false, false);
-    label_34->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_34->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_34->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_34->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_34->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_34->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_35 = new Label(String(), TRANS("CH")));
-    label_35->setFont(Font(30.00f, Font::plain));
-    label_35->setJustificationType(Justification::centred);
+    addAndMakeVisible(label_35 = new juce::Label(juce::String(), TRANS("CH")));
+    label_35->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_35->setJustificationType(juce::Justification::centred);
     label_35->setEditable(false, false, false);
-    label_35->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_35->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_35->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_35->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_35->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_35->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_13 = new Label(String(), TRANS("MUTE")));
-    label_13->setFont(Font(30.00f, Font::plain));
-    label_13->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_13 = new juce::Label(juce::String(), TRANS("MUTE")));
+    label_13->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_13->setJustificationType(juce::Justification::centredLeft);
     label_13->setEditable(false, false, false);
-    label_13->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_13->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_13->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_13->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_13->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_13->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(close = new TextButton(String()));
+    addAndMakeVisible(close = new juce::TextButton(juce::String()));
     close->setButtonText(TRANS("ESC X"));
     close->addListener(this);
-    close->setColour(TextButton::buttonColourId, Colours::red);
-    close->setColour(TextButton::buttonOnColourId, Colours::red);
-    close->setColour(TextButton::textColourOnId, Colours::black);
-    close->setColour(TextButton::textColourOffId, Colours::black);
+    close->setColour(juce::TextButton::buttonColourId, juce::Colours::red);
+    close->setColour(juce::TextButton::buttonOnColourId, juce::Colours::red);
+    close->setColour(juce::TextButton::textColourOnId, juce::Colours::black);
+    close->setColour(juce::TextButton::textColourOffId, juce::Colours::black);
 
-    addAndMakeVisible(label_38 = new Label(String(), TRANS("CC INPUT PICKUP OFFSET")));
-    label_38->setFont(Font(15.00f, Font::plain));
-    label_38->setJustificationType(Justification::centred);
+    addAndMakeVisible(label_38 = new juce::Label(juce::String(), TRANS("CC INPUT PICKUP OFFSET")));
+    label_38->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_38->setJustificationType(juce::Justification::centred);
     label_38->setEditable(false, false, false);
-    label_38->setColour(Label::textColourId, Colours::yellow);
-    label_38->setColour(TextEditor::textColourId, Colours::black);
-    label_38->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_38->setColour(juce::Label::textColourId, juce::Colours::yellow);
+    label_38->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_38->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(slider_midi_pickup = new Slider("0"));
+    addAndMakeVisible(slider_midi_pickup = new juce::Slider("0"));
     slider_midi_pickup->setRange(0, 1000, 1);
-    slider_midi_pickup->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    slider_midi_pickup->setTextBoxStyle(Slider::TextBoxBelow, false, 80, 20);
-    slider_midi_pickup->setColour(Slider::rotarySliderFillColourId, Colours::yellow);
-    slider_midi_pickup->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff161616));
-    slider_midi_pickup->setColour(Slider::textBoxTextColourId, Colours::yellow);
-    slider_midi_pickup->setColour(Slider::textBoxBackgroundColourId, Colour(0xff161616));
+    slider_midi_pickup->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    slider_midi_pickup->setTextBoxStyle(juce::Slider::TextBoxBelow, false, 80, 20);
+    slider_midi_pickup->setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::yellow);
+    slider_midi_pickup->setColour(juce::Slider::rotarySliderOutlineColourId,
+                                  juce::Colour(0xff161616));
+    slider_midi_pickup->setColour(juce::Slider::textBoxTextColourId, juce::Colours::yellow);
+    slider_midi_pickup->setColour(juce::Slider::textBoxBackgroundColourId,
+                                  juce::Colour(0xff161616));
     slider_midi_pickup->addListener(this);
 
-    addAndMakeVisible(button_midi_learn = new TextButton(String()));
+    addAndMakeVisible(button_midi_learn = new juce::TextButton(juce::String()));
     button_midi_learn->setButtonText(TRANS("REFRESH"));
     button_midi_learn->addListener(this);
-    button_midi_learn->setColour(TextButton::buttonColourId, Colours::black);
-    button_midi_learn->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_midi_learn->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_midi_learn->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_midi_learn->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_midi_learn->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(label_17 = new Label(String(), TRANS("MUTE")));
-    label_17->setFont(Font(30.00f, Font::plain));
-    label_17->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_17 = new juce::Label(juce::String(), TRANS("MUTE")));
+    label_17->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_17->setJustificationType(juce::Justification::centredLeft);
     label_17->setEditable(false, false, false);
-    label_17->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_17->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_17->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_17->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_17->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_17->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     //[UserPreSize]
-    slider_midi_pickup->setValue(DATA(synth_data).midi_pickup_offset * 1000, dontSendNotification);
+    slider_midi_pickup->setValue(DATA(synth_data).midi_pickup_offset * 1000,
+                                 juce::dontSendNotification);
     refresh();
     //[/UserPreSize]
 
@@ -608,13 +611,13 @@ UiEditorMIDIIO::~UiEditorMIDIIO()
 }
 
 //==============================================================================
-void UiEditorMIDIIO::paint(Graphics &g)
+void UiEditorMIDIIO::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
 #include "UiDynamicSizeStart.h"
     //[/UserPrePaint]
 
-    g.fillAll(Colours::black);
+    g.fillAll(juce::Colours::black);
 
     g.setColour(Colour(0xffff3b00));
     g.drawRect(0, 0, 1040, 500, 2);
@@ -713,7 +716,7 @@ void UiEditorMIDIIO::resized()
     //[/UserResized]
 }
 
-void UiEditorMIDIIO::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
+void UiEditorMIDIIO::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
 {
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]
@@ -884,7 +887,7 @@ void UiEditorMIDIIO::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
     //[/UsercomboBoxChanged_Post]
 }
 
-void UiEditorMIDIIO::buttonClicked(Button *buttonThatWasClicked)
+void UiEditorMIDIIO::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -978,7 +981,7 @@ void UiEditorMIDIIO::buttonClicked(Button *buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiEditorMIDIIO::sliderValueChanged(Slider *sliderThatWasMoved)
+void UiEditorMIDIIO::sliderValueChanged(juce::Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
@@ -994,11 +997,11 @@ void UiEditorMIDIIO::sliderValueChanged(Slider *sliderThatWasMoved)
     //[/UsersliderValueChanged_Post]
 }
 
-bool UiEditorMIDIIO::keyPressed(const KeyPress &key)
+bool UiEditorMIDIIO::keyPressed(const juce::KeyPress &key)
 {
     //[UserCode_keyPressed] -- Add your code here...
     bool success = false;
-    if (key == KeyPress::escapeKey)
+    if (key == juce::KeyPress::escapeKey)
     {
         AppInstanceStore::getInstance()->editor->editor_midiio = nullptr;
         return true;
@@ -1290,7 +1293,7 @@ BEGIN_JUCER_METADATA
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="0" id="65a4c85262fddcd2" memberName="slider_midi_pickup"
-          virtualName="Slider" explicitFocusOrder="0" pos="40 300r 60 70"
+          virtualName="juce::Slider" explicitFocusOrder="0" pos="40 300r 60 70"
           rotarysliderfill="ffffff00" rotaryslideroutline="ff161616" textboxtext="ffffff00"
           textboxbkgd="ff161616" min="0" max="1000" int="1" style="RotaryHorizontalVerticalDrag"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"

@@ -1,0 +1,2 @@
+# Damit mod_mime die neue Dateierweiterung erkennt:
+AddHandler php53-cgi .php

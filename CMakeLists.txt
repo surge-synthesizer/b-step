@@ -2,9 +2,11 @@
 
 cmake_minimum_required(VERSION 3.15)
 
-project("B-Step" VERSION 2.1 LANGUAGES C CXX ASM)
+project("B-Step" VERSION 2.1.0 LANGUAGES C CXX ASM)
 
 option(BSTEP_COPY_PLUGIN_AFTER_BUILD "Copy JUCE Plugins after built" OFF)
+option(BSTEP_RELIABLE_VERSION_INFO "Update version info on every build (off: generate only at configuration time)" ON)
+
 
 add_subdirectory(libs/JUCE)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -41,8 +43,31 @@ juce_add_plugin(B-Step
 
 juce_generate_juce_header(B-Step)
 
+if (BSTEP_RELIABLE_VERSION_INFO)
+    message(STATUS "VERSION IS ${CMAKE_PROJECT_VERSION_MAJOR} ${CMAKE_PROJECT_VERSION_MINOR}")
+    add_custom_target(version-info BYPRODUCTS ${CMAKE_BINARY_DIR}/geninclude/version.cpp
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+            COMMAND ${CMAKE_COMMAND} -D CMAKE_PROJECT_VERSION_MAJOR=${CMAKE_PROJECT_VERSION_MAJOR}
+            -D CMAKE_PROJECT_VERSION_MINOR=${CMAKE_PROJECT_VERSION_MINOR}
+            -D BSTEPSRC=${CMAKE_SOURCE_DIR} -D BSTEPBLD=${CMAKE_BINARY_DIR}
+            -D AZURE_PIPELINE=${AZURE_PIPELINE}
+            -D WIN32=${WIN32}
+            -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+            -D CMAKE_CXX_COMPILER_ID=${CMAKE_CXX_COMPILER_ID}
+            -D CMAKE_CXX_COMPILER_VERSION=${CMAKE_CXX_COMPILER_VERSION}
+            -P ${CMAKE_SOURCE_DIR}/cmake/versiontools.cmake
+            )
+    add_dependencies(${PROJECT_NAME} version-info)
+else ()
+    set(BSTEPSRC ${CMAKE_SOURCE_DIR})
+    set(BSTEPBLD ${CMAKE_BINARY_DIR})
+    include(${CMAKE_SOURCE_DIR}/cmake/versiontools.cmake)
+endif ()
 
-message(STATUS "FIXME - We obvioulsy over-glob here")
+target_sources(${PROJECT_NAME} PRIVATE ${CMAKE_BINARY_DIR}/geninclude/version.cpp)
+
+
+message(STATUS " FIXME - We obvioulsy over-glob here")
 file(GLOB_RECURSE BSTEP_RESOURCES
         LIST_DIRECTORIES false
         ${CMAKE_SOURCE_DIR}/resources/*)
@@ -83,8 +108,11 @@ target_compile_definitions(B-Step
         FIXMEPORT=jassertfalse
         )
 
+target_include_directories(B-Step PRIVATE src)
+
 target_sources(B-Step
         PRIVATE
+
 
         "src/AppInstanceStore.cpp"
         "src/AppParameterList.cpp"
@@ -201,7 +229,7 @@ set(CLANG_FORMAT_DIRS src)
 set(CLANG_FORMAT_EXTS cpp h)
 foreach (dir ${CLANG_FORMAT_DIRS})
     foreach (ext ${CLANG_FORMAT_EXTS})
-        list(APPEND CLANG_FORMAT_GLOBS "':(glob)${dir}/**/*.${ext}'")
+        list(APPEND CLANG_FORMAT_GLOBS "': (glob) ${dir}/**/*.${ext}' ")
     endforeach ()
 endforeach ()
 add_custom_command(TARGET code-quality-pipeline-checks

@@ -165,20 +165,23 @@ class GstepAudioProcessor : public ProcessorUserData,
 
     /// AUTOMATION PARAMETERS
 
+  public:
     PodParameterBase &get_automatable_parameter(int i_);
     const PodParameterBase &get_automatable_parameter(int i_) const;
 
     // TODO change params, void updateHostDisplay();
-
-    int getNumParameters() override;
-    bool isParameterAutomatable(int parameterIndex) const override;
-    float getParameter(int index_) override;
-    void setParameter(int index_, float value_) override;
-    const String getParameterName(int index_) override;
-    const String getParameterText(int index_) override;
-    String getParameterLabel(int index) const override;
-    int getParameterNumSteps(int index_) override;
-    float getParameterDefaultValue(int index_) override;
+    int internalParameterCount();
+    /*
+        int getNumParameters() override;
+        bool isParameterAutomatable(int parameterIndex) const override;
+        float getParameter(int index_) override;
+        void setParameter(int index_, float value_) override;
+        const String getParameterName(int index_) override;
+        const String getParameterText(int index_) override;
+        String getParameterLabel(int index) const override;
+        int getParameterNumSteps(int index_) override;
+        float getParameterDefaultValue(int index_) override;
+    */
 
     /// LOAD AND SAVE
   private:

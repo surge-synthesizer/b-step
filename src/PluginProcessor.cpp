@@ -1656,7 +1656,7 @@ void GstepAudioProcessor::reset()
 // ********************************************************************************************
 // ********************************************************************************************
 // ********************************************************************************************
-int GstepAudioProcessor::getNumParameters()
+int GstepAudioProcessor::internalParameterCount()
 {
     int counter = 13 + 1;
 
@@ -1681,8 +1681,6 @@ int GstepAudioProcessor::getNumParameters()
     }
     return counter;
 }
-
-bool GstepAudioProcessor::isParameterAutomatable(int) const { return true; }
 
 template <int inside> inline static int fits(int source_)
 {
@@ -1889,6 +1887,7 @@ const PodParameterBase &GstepAudioProcessor::get_automatable_parameter(int i_) c
     return pattern.bar(0).mute;
 }
 
+#if OLD_PARAMS
 float GstepAudioProcessor::getParameter(int i_)
 {
     return get_automatable_parameter(i_).in_percent();
@@ -1923,6 +1922,7 @@ void GstepAudioProcessor::setParameter(int i_, float value_)
 {
     get_automatable_parameter(i_).set_from_percent(value_);
 }
+#endif
 
 void GstepAudioProcessor::getStateInformation(MemoryBlock &destData)
 {
@@ -2004,6 +2004,35 @@ AudioProcessorEditor *GstepAudioProcessor::createEditor()
 
 AudioProcessor *JUCE_CALLTYPE createPluginFilter() { return new GstepAudioProcessor(); }
 
+struct BStepJuceWrappingParameter : juce::AudioProcessorParameter,
+                                    PodParameterBase::NotifiableWrapper
+{
+    GstepAudioProcessor *processor;
+    int idx;
+    BStepJuceWrappingParameter(GstepAudioProcessor *p, uint32_t i) : processor(p), idx(i)
+    {
+        ap().wrapper = this;
+    }
+
+    void begin() override { beginChangeGesture(); }
+    void end() override { endChangeGesture(); }
+    void notify(float f) override { sendValueChangedMessageToListeners(f); }
+
+    PodParameterBase &ap() const { return processor->get_automatable_parameter(idx); }
+    float getValue() const override { return ap().in_percent(); }
+    void setValue(float newValue) override { ap().set_from_percent(newValue); }
+    float getDefaultValue() const override { return ap().default_value_in_percent(); }
+    // NAME is the display name and chan change
+    String getName(int maximumStringLength) const override
+    {
+        return ap().name().substring(0, maximumStringLength);
+    }
+    // LABEL is the internal ID and must be stable for
+    // DAW streaming sessions to work
+    String getLabel() const override { return ap().get_param_short_ident(); }
+    float getValueForText(const String &text) const override { return 0; }
+};
+
 // ********************************************************************************************
 // ********************************************************************************************
 // ********************************************************************************************
@@ -2084,6 +2113,11 @@ GstepAudioProcessor::GstepAudioProcessor()
     sounds..
     */
 #endif
+
+    for (auto i = 0; i < internalParameterCount(); ++i)
+    {
+        addParameter(new BStepJuceWrappingParameter(this, i));
+    }
 }
 
 // ********************************************************************************************

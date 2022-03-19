@@ -61,7 +61,10 @@ class MONO_UIButtonController : public MONO_Controller
         if (param)
         {
 #ifndef IS_REMOTE_CONTROLLER
+            param->beginChangeGesture();
             param->invert();
+            param->notifyCurrent();
+            param->endChangeGesture();
 #else
             param->set_remote_value(param->value() == 1 ? 0 : 1);
 #endif
@@ -74,7 +77,9 @@ class MONO_UIButtonController : public MONO_Controller
         if (param)
         {
 #ifndef IS_REMOTE_CONTROLLER
-            param->set_value(v_);
+            param->beginChangeGesture();
+            param->set_value_notifying_host(v_);
+            param->endChangeGesture();
 #else
             param->set_remote_value(v_);
 #endif
@@ -219,13 +224,27 @@ class MONO_UISliderController : public MONO_Controller
             _app_instance_store->midi_in_map.set_learning(this);
         }
         else
+        {
             _app_instance_store->editor_config.slider_controller_is_down = this;
+            auto *param = get_parameter();
+            if (param)
+            {
+                param->beginChangeGesture();
+            }
+        }
     }
 
     void on_mouse_up(const MouseEvent &) override
     {
         if (_app_instance_store->editor_config.slider_controller_is_down == this)
+        {
             _app_instance_store->editor_config.slider_controller_is_down = nullptr;
+            auto *param = get_parameter();
+            if (param)
+            {
+                param->endChangeGesture();
+            }
+        }
     }
 
     virtual void get_label_text_top(String &string_) const override
@@ -243,7 +262,7 @@ class MONO_UISliderController : public MONO_Controller
         if (param)
         {
 #ifndef IS_REMOTE_CONTROLLER
-            param->set_value(v_);
+            param->set_value_notifying_host(v_);
 #else
             param->set_remote_value(v_);
 #endif

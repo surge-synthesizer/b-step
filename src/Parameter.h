@@ -139,15 +139,51 @@ class PodParameterBase
         return _value;
     }
 
+    struct NotifiableWrapper
+    {
+        virtual ~NotifiableWrapper() = default;
+        virtual void begin() = 0;
+        virtual void end() = 0;
+        virtual void notify(float f) = 0;
+    };
+    NotifiableWrapper *wrapper{nullptr};
+    inline void beginChangeGesture()
+    {
+        if (wrapper)
+            wrapper->begin();
+    }
+    inline void endChangeGesture()
+    {
+        if (wrapper)
+            wrapper->end();
+    }
+    inline pod_type set_value_notifying_host(pod_type value_)
+    {
+        try_set_value(value_);
+        notifyCurrent();
+        return _value;
+    }
+    void notifyCurrent()
+    {
+        if (wrapper)
+            wrapper->notify(in_percent());
+    }
+
     inline pod_type set_value(pod_type value_)
     {
         try_set_value(value_);
         return _value;
     }
 
+    inline bool isBoolean()
+    {
+        // FIXME - this compare is super gross
+        return MIN == false && MAX == true;
+    }
+
     inline pod_type invert()
     {
-        if (MIN == false && MAX == true)
+        if (isBoolean())
         {
             try_set_value(!_value);
             return _value;
@@ -169,7 +205,14 @@ class PodParameterBase
     // 0 to 1.0f
     inline float set_from_percent(float percent_)
     {
-        try_set_value(percent_ * (MAX - MIN) + MIN);
+        if (isBoolean())
+        {
+            try_set_value(percent_ > 0.5f ? true : false);
+        }
+        else
+        {
+            try_set_value(percent_ * (MAX - MIN) + MIN);
+        }
         return in_percent();
     }
 

@@ -20,8 +20,6 @@
 #ifndef cythar_ticker_h_included
 #define cythar_ticker_h_included
 
-#ifdef B_STEP_STANDALONE
-
 #include "App.h"
 
 class Ticker;
@@ -42,7 +40,7 @@ class TickLoop
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
   public:
-    struct MyTimer : public HighResolutionTimer
+    struct MyTimer : public juce::HighResolutionTimer
     {
         Ticker *const _ticker;
         void hiResTimerCallback() override;
@@ -87,7 +85,7 @@ class Ticker
     void do_tick_loop();
     void do_notify_loop();
 
-    struct Executer : public Thread
+    struct Executer : public juce::Thread
     {
         Ticker *const _ticker;
         void run() override;
@@ -117,7 +115,5 @@ inline int bpm_to_microsec(float bpm_) noexcept
     float microsec_per_clock = 60000000.f / (24.f * bpm_);
     return floor(microsec_per_clock + 0.5);
 }
-
-#endif
 
 #endif // cythar_ticker_h_included

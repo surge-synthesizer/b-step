@@ -1,4 +1,3 @@
-#ifdef B_STEP_STANDALONE
 
 #include "ticker.h"
 
@@ -70,24 +69,13 @@ void TickLoop::MyTimer::hiResTimerCallback()
     if (_new_usec_per_tick != _usec_per_tick)
     {
         _usec_per_tick = _new_usec_per_tick;
-#ifdef JUCE_WINDOWS
         startTimer(floor(_usec_per_tick / 1000));
-#else
-        startTimerMicro(_usec_per_tick);
-#endif
     }
 }
 
 void TickLoop::stop() { active_timer.stopTimer(); }
 
-void TickLoop::start()
-{
-#ifdef JUCE_WINDOWS
-    active_timer.startTimer(floor(_usec_per_tick / 1000));
-#else
-    active_timer.startTimerMicro(_usec_per_tick);
-#endif
-}
+void TickLoop::start() { active_timer.startTimer(floor(_usec_per_tick / 1000)); }
 
 TickLoop::~TickLoop()
 {
@@ -101,5 +89,3 @@ Ticker::Executer::Executer(Ticker *const ticker_) : Thread("B-Step Sender"), _ti
 }
 
 void Ticker::Executer::run() { _ticker->on_tick_precalculate(); }
-
-#endif

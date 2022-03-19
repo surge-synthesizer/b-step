@@ -12,10 +12,6 @@
 #define APPPARAMETERLIST_H_INCLUDED
 
 // JUCE
-#ifdef B_STEP_STANDALONE
-// #include "../../b-step-standalone/JuceLibraryCode/JuceHeader.h"
-#else
-#endif
 
 #include "Parameter.h"
 

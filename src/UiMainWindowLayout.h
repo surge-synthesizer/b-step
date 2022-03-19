@@ -115,7 +115,7 @@ enum POSITIONS_LAYER_OLDSCOOL
 // ************************************************************************************************
 inline void GstepAudioProcessorEditor::auto_resize_to_user_area()
 {
-#ifndef B_STEP_STANDALONE
+#ifndef PRIOR_CODE_FROM_STANDALONE
     resizeLimits.setSizeLimits(
         float(APPDEF_UIUserData::WINDOW_WIDTH) / 2, float(APPDEF_UIUserData::WINDOW_HEIGHT) / 2,
         APPDEF_UIUserData::WINDOW_WIDTH * 20, APPDEF_UIUserData::WINDOW_HEIGHT * 20);
@@ -149,44 +149,13 @@ inline void GstepAudioProcessorEditor::auto_resize_to_user_area()
     {
         if (height_factor > width_factor)
         {
-#ifdef B_STEP_STANDALONE
-            DocumentWindow *parent = dynamic_cast<DocumentWindow *>(getParentComponent());
-            int y_border =
-                parent->getTitleBarHeight() + parent->getBorderThickness().getTopAndBottom();
-            parent->getConstrainer()->setFixedAspectRatio(float(APPDEF_UIUserData::WINDOW_WIDTH) /
-                                                          (APPDEF_UIUserData::WINDOW_HEIGHT + 28));
-            parent->centreWithSize(width_factor * APPDEF_UIUserData::WINDOW_WIDTH * 0.95,
-                                   width_factor * (APPDEF_UIUserData::WINDOW_HEIGHT + 28) * 0.95);
-
-            parent->getConstrainer()->setSizeLimits(
-                float(APPDEF_UIUserData::WINDOW_WIDTH) / 2,
-                float(APPDEF_UIUserData::WINDOW_HEIGHT + 28) / 2,
-                APPDEF_UIUserData::WINDOW_WIDTH * 20, (APPDEF_UIUserData::WINDOW_HEIGHT + 28) * 20);
-#else
             centreWithSize(width_factor * APPDEF_UIUserData::WINDOW_WIDTH * 0.95,
                            width_factor * APPDEF_UIUserData::WINDOW_HEIGHT * 0.95);
-
-#endif
         }
         else
         {
-#ifdef B_STEP_STANDALONE
-            DocumentWindow *parent = dynamic_cast<DocumentWindow *>(getParentComponent());
-            int y_border =
-                parent->getTitleBarHeight() + parent->getBorderThickness().getTopAndBottom();
-            parent->getConstrainer()->setFixedAspectRatio(float(APPDEF_UIUserData::WINDOW_WIDTH) /
-                                                          (APPDEF_UIUserData::WINDOW_HEIGHT + 28));
-            parent->centreWithSize(height_factor * APPDEF_UIUserData::WINDOW_WIDTH * 0.95,
-                                   height_factor * (APPDEF_UIUserData::WINDOW_HEIGHT + 28) * 0.95);
-
-            parent->getConstrainer()->setSizeLimits(
-                float(APPDEF_UIUserData::WINDOW_WIDTH) / 2,
-                float((APPDEF_UIUserData::WINDOW_HEIGHT + 28)) / 2,
-                APPDEF_UIUserData::WINDOW_WIDTH * 20, (APPDEF_UIUserData::WINDOW_HEIGHT + 28) * 20);
-#else
             centreWithSize(height_factor * APPDEF_UIUserData::WINDOW_WIDTH * 0.95,
                            height_factor * APPDEF_UIUserData::WINDOW_HEIGHT * 0.95);
-#endif
         }
 
         default_width = getWidth();
@@ -194,23 +163,9 @@ inline void GstepAudioProcessorEditor::auto_resize_to_user_area()
     }
     else
     {
-#ifdef B_STEP_STANDALONE
-        DocumentWindow *parent = dynamic_cast<DocumentWindow *>(getParentComponent());
-        int y_border = parent->getTitleBarHeight() + parent->getBorderThickness().getTopAndBottom();
-        parent->getConstrainer()->setFixedAspectRatio(float(APPDEF_UIUserData::WINDOW_WIDTH) /
-                                                      (APPDEF_UIUserData::WINDOW_HEIGHT + 28));
-        parent->centreWithSize(width, (APPDEF_UIUserData::WINDOW_HEIGHT + 28) *
-                                          (1.f / APPDEF_UIUserData::WINDOW_WIDTH * width));
-
-        parent->getConstrainer()->setSizeLimits(float(APPDEF_UIUserData::WINDOW_WIDTH) / 2,
-                                                float(APPDEF_UIUserData::WINDOW_HEIGHT + 28) / 2,
-                                                APPDEF_UIUserData::WINDOW_WIDTH * 20,
-                                                (APPDEF_UIUserData::WINDOW_HEIGHT + 28) * 20);
-#else
         setBounds(0, 0, width,
                   APPDEF_UIUserData::WINDOW_HEIGHT *
                       (1.f / APPDEF_UIUserData::WINDOW_WIDTH * width));
-#endif
     }
 }
 
@@ -594,11 +549,9 @@ inline void GstepAudioProcessorEditor::timerCallback()
                 "OPEN LOG FOLDER", "IGNORE", this);
 
             juce::String additional_info;
-#ifndef B_STEP_STANDALONE
-            additional_info = PluginHostType().getHostDescription();
+            additional_info = juce::PluginHostType().getHostDescription();
             additional_info += " ";
-#endif
-            additional_info += SystemStats::getOperatingSystemName();
+            additional_info += juce::SystemStats::getOperatingSystemName();
             if (answer == 1)
             {
                 URL(juce::String(
@@ -617,11 +570,13 @@ inline void GstepAudioProcessorEditor::timerCallback()
 #endif // LOG_THE_EVENTS_TO_FILE
         {
 
-#if B_STEP_STANDALONE
-            setVisible(true);
-            if (getParentComponent())
-                getParentComponent()->setVisible(true);
-#endif
+            if (bstepIsStandalone)
+            {
+                setVisible(true);
+                if (getParentComponent())
+                    getParentComponent()->setVisible(true);
+            }
+
             if (!GLOBAL_VALUE_HOLDER::getInstance()->QUESTION_WAS_UP)
             {
                 _app_instance_store->editor_config.question_editor =

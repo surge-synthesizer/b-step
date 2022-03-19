@@ -2,12 +2,7 @@
 #define MIDI_CC_INCLUDED
 
 // JUCE
-#ifdef B_STEP_STANDALONE
-// #include "../../b-step-standalone/JuceLibraryCode/JuceHeader.h"
 #include <juce_core/juce_core.h>
-#else
-#include <juce_core/juce_core.h>
-#endif
 
 struct MIDICC
 {

@@ -32,103 +32,9 @@ void UiEditorAbout::on_close_clicked()
 {
     _app_instance_store->editor_config.about_winodow = nullptr;
 }
-#ifndef B_STEP_STANDALONE
+
 static bool is_au;
-#endif
 
-#ifdef DEVELOPMENT
-#include "FileIO.h"
-struct Parser : public Timer
-{
-    String complete_data;
-    String new_data;
-    TextEditor *const _editor;
-    CriticalSection append_lock;
-
-    bool print_to_file;
-    const File logfile;
-
-    void append(const String &data_)
-    {
-        append_lock.enter();
-        new_data += "\n" + data_;
-        append_lock.exit();
-    }
-
-    CriticalSection parse_lock;
-    void timerCallback() override
-    {
-        if (append_lock.tryEnter())
-        {
-            // CLEAN BUFFER
-            String new_data_copy;
-            if (new_data != "")
-            {
-                new_data_copy = new_data;
-                new_data = "";
-                append_lock.exit();
-            }
-            else
-            {
-                append_lock.exit();
-                return;
-            }
-
-            // PARSE NEW STUFF
-            if (parse_lock.tryEnter())
-            {
-                complete_data += new_data_copy;
-
-#define LOGSIZE 500000
-                if (complete_data.length() > LOGSIZE)
-                    complete_data = complete_data.substring(complete_data.length() - LOGSIZE,
-                                                            complete_data.length());
-
-                _editor->setText(complete_data);
-                _editor->moveCaretToEnd();
-
-                if (print_to_file)
-                    logfile.appendText(new_data_copy);
-
-                parse_lock.exit();
-            }
-        }
-    }
-
-    Parser(TextEditor *editor_)
-        : _editor(editor_), logfile(get_app_folder().getChildFile("debug.txt")), print_to_file(true)
-    {
-        if (!AlertWindow::showOkCancelBox(
-                AlertWindow::QuestionIcon, "DELETE OLD LOG FILE?",
-                "Delete the old log file? Else add the new stuff at the bottom", "Keep and append",
-                "Delete and create new"))
-            logfile.deleteFile();
-
-        if (!AlertWindow::showOkCancelBox(AlertWindow::QuestionIcon, "WRITE TO DEBUG FILE?",
-                                          "Default ON", "YES", "NO, JUST PARSE"))
-            print_to_file = false;
-
-        logfile.appendText("\n\n\n---- NEW LOG SESSION ----\n\n\n");
-
-        startTimer(50);
-    }
-
-    ~Parser()
-    {
-        stopTimer();
-
-        parse_lock.exit();
-        append_lock.exit();
-
-        new_data = "";
-    }
-};
-void UiEditorAbout::print_debug(String text)
-{
-    if (debug_parser && !is_on_shutdown)
-        debug_parser->append(text);
-}
-#endif
 //[/MiscUserDefs]
 
 //==============================================================================
@@ -239,10 +145,12 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
     is_demo = false;
 
     juce::String additional_info;
-#ifndef B_STEP_STANDALONE
-    additional_info = juce::PluginHostType().getHostDescription();
-    additional_info += " ";
-#endif
+
+    if (!bstepIsStandalone)
+    {
+        additional_info = juce::PluginHostType().getHostDescription();
+        additional_info += " ";
+    }
     additional_info += juce::SystemStats::getOperatingSystemName();
 
     video_5->setButtonText(
@@ -267,10 +175,11 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
     setSize(431, 540);
 
     //[Constructor] You can add your own custom stuff here..
-#ifdef B_STEP_STANDALONE
-    vst_button->setVisible(false);
-    au_button->setVisible(false);
-#else
+    if (bstepIsStandalone)
+    {
+        vst_button->setVisible(false);
+        au_button->setVisible(false);
+    }
     if (_app_instance_store->audio_processor->wrapperType ==
         juce::AudioProcessor::WrapperType::wrapperType_AudioUnit)
     {
@@ -282,7 +191,6 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
         au_button->setVisible(false);
         is_au = false;
     }
-#endif
 
     center_relative_and_make_visible(_app_instance_store->editor);
     //[/Constructor]
@@ -291,10 +199,6 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
 UiEditorAbout::~UiEditorAbout()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
-#ifdef DEVELOPMENT
-    is_on_shutdown = true;
-    debug_parser = nullptr;
-#endif
     //[/Destructor_pre]
 
     au_button = nullptr;
@@ -361,11 +265,12 @@ void UiEditorAbout::paint(juce::Graphics &g)
         juce::RectanglePlacement::centred | juce::RectanglePlacement::onlyReduceInSize, false);
 
     g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-#ifdef B_STEP_STANDALONE
-    g.drawText(BUILD_INFO + String("B-Step ") + ProjectInfo::versionString,
-               proportionOfWidth(0.0500f), proportionOfHeight(0.9f), proportionOfWidth(0.9000f), 30,
-               Justification::centred, true);
-#else
+    if (bstepIsStandalone)
+    {
+        g.drawText(BUILD_INFO + juce::String("B-Step ") + BStep::Build::FullVersionStr,
+                   proportionOfWidth(0.0500f), proportionOfHeight(0.9f), proportionOfWidth(0.9000f),
+                   30, juce::Justification::centred, true);
+    }
     if (is_au)
     {
         g.drawText(BUILD_INFO + juce::String("V") + // ProjectInfo::versionString +
@@ -384,7 +289,6 @@ void UiEditorAbout::paint(juce::Graphics &g)
                    proportionOfWidth(0.9002f), proportionOfHeight(0.0630f),
                    juce::Justification::centred, true);
     }
-#endif
     return;
 
     g.setColour(juce::Colour(0xff161616));

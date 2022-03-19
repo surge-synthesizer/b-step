@@ -2,14 +2,8 @@
 #define APP_INSTANCE_STORE_INCLUDED
 
 // JUCE
-#ifdef B_STEP_STANDALONE
-// #include "../../b-step-standalone/JuceLibraryCode/JuceHeader.h"
 #include <juce_core/juce_core.h>
 #include <juce_graphics/juce_graphics.h>
-#else
-#include <juce_core/juce_core.h>
-#include <juce_graphics/juce_graphics.h>
-#endif
 
 // ************************************************************************************************
 // ************************************************************************************************

@@ -1283,11 +1283,14 @@ void UIHtmlView::buttonClicked(juce::Button *buttonThatWasClicked)
     else if (buttonThatWasClicked == mail)
     {
         //[UserButtonCode_mail] -- add your button handler code here..
+
         juce::String additional_info;
-#ifndef B_STEP_STANDALONE
-        additional_info = juce::PluginHostType().getHostDescription();
-        additional_info += " ";
-#endif
+
+        if (!bstepIsStandalone)
+        {
+            additional_info = juce::PluginHostType().getHostDescription();
+            additional_info += " ";
+        }
         additional_info += juce::SystemStats::getOperatingSystemName();
 
         juce::String subject("Q: B-Step ");

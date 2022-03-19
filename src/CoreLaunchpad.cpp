@@ -857,7 +857,6 @@ void Launchpad::process(const juce::MidiMessage &message_)
             switch (controller_value)
             {
             case FIXED_LAUNCHPAD_TOP_UP_CARLA_FIX:;
-#ifndef B_STEP_STANDALONE
             case FIXED_LAUNCHPAD_TOP_UP:
                 if (_app_instance_store->audio_processor->speed ==
                     APPDEF_ProcessorUserData::SPEED_HALF)
@@ -887,7 +886,6 @@ void Launchpad::process(const juce::MidiMessage &message_)
                     _app_instance_store->audio_processor->speed =
                         APPDEF_ProcessorUserData::SPEED_HALF;
                 break;
-#endif
             case FIXED_LAUNCHPAD_TOP_LEFT_CARLA_FIX:;
             case FIXED_LAUNCHPAD_TOP_LEFT:
                 _app_instance_store->editor_config.selected_bar_id =

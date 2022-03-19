@@ -435,10 +435,8 @@ class MidiOutputObject : public MidiIOObject<juce::MidiOutput>
 
         _is_succesful_opend = success;
 
-#ifndef B_STEP_STANDALONE
-        if (_midi_port)
+        if (!bstepIsStandalone && _midi_port)
             _midi_port->startBackgroundThread();
-#endif
 
         if (!success)
             MIDI_ERROR_LOG("Error open MIDI Out port: " + _port_name +
@@ -460,13 +458,12 @@ class MidiOutputObject : public MidiIOObject<juce::MidiOutput>
 
         if (_midi_port)
         {
-#ifndef B_STEP_STANDALONE
-            _midi_port->clearAllPendingMessages();
-            _midi_port->stopBackgroundThread();
-#endif
-            /*MidiOutput* tmp = _midi_port;
-            _midi_port = nullptr;
-            delete tmp;*/
+            if (bstepIsStandalone)
+            {
+                _midi_port->clearAllPendingMessages();
+                _midi_port->stopBackgroundThread();
+            }
+
             _midi_port.reset();
         }
 
@@ -478,42 +475,37 @@ class MidiOutputObject : public MidiIOObject<juce::MidiOutput>
     // function have to call in the processBlock!
     void send_message(const juce::MidiMessage &message_, bool use_sample_timestamp = false)
     {
-#ifndef B_STEP_STANDALONE
-        if (_is_in_host_handling)
+        if (!bstepIsStandalone && _is_in_host_handling)
         {
             if (_app_instance_store->audio_processor->_current_buffer)
             {
                 _app_instance_store->audio_processor->_current_buffer->addEvent(
                     message_, _app_instance_store->audio_processor->_current_vst_samples_delay);
+                return;
             }
         }
-        else
-#endif
+
+        if (close_lock.tryEnter())
         {
-            if (close_lock.tryEnter())
+            if (!bstepIsStandalone && use_sample_timestamp)
             {
-#ifndef B_STEP_STANDALONE
-                if (use_sample_timestamp)
-                {
-                    juce::MidiBuffer buffer;
-                    buffer.addEvent(
-                        message_, _app_instance_store->audio_processor->_current_vst_samples_delay);
-                    if (_midi_port)
-                        _midi_port->sendBlockOfMessages(
-                            buffer,
-                            juce::Time::getMillisecondCounter() +
-                                _app_instance_store->audio_processor->latency_corretion_ms,
-                            _app_instance_store->audio_processor->_current_sample_rate);
-                }
-                else
-#endif
-                {
-                    if (_midi_port)
-                        _midi_port->sendMessageNow(message_);
-                }
+                juce::MidiBuffer buffer;
+                buffer.addEvent(message_,
+                                _app_instance_store->audio_processor->_current_vst_samples_delay);
+                if (_midi_port)
+                    _midi_port->sendBlockOfMessages(
+                        buffer,
+                        juce::Time::getMillisecondCounter() +
+                            _app_instance_store->audio_processor->latency_corretion_ms,
+                        _app_instance_store->audio_processor->_current_sample_rate);
             }
-            close_lock.exit();
+            else
+            {
+                if (_midi_port)
+                    _midi_port->sendMessageNow(message_);
+            }
         }
+        close_lock.exit();
     }
 };
 

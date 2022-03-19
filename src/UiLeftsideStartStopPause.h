@@ -52,15 +52,18 @@ class UiLeftsideStartStopPause : public SubeditorBase
     }
     void init_styles(AppInstanceStore *const store_)
     {
-#ifndef B_STEP_STANDALONE
-        button_play->set_style(store_->style_global_area_stop);
-        button_pause->set_style(store_->style_global_area_stop);
-        button_stop->set_style(store_->style_global_area_stop);
-#else
-        button_play->set_style(store_->style_global_area_chord);
-        button_pause->set_style(store_->style_global_area_octave);
-        button_stop->set_style(store_->style_global_area_stop);
-#endif
+        if (!bstepIsStandalone)
+        {
+            button_play->set_style(store_->style_global_area_stop);
+            button_pause->set_style(store_->style_global_area_stop);
+            button_stop->set_style(store_->style_global_area_stop);
+        }
+        else
+        {
+            button_play->set_style(store_->style_global_area_chord);
+            button_pause->set_style(store_->style_global_area_octave);
+            button_stop->set_style(store_->style_global_area_stop);
+        }
     }
 
     void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_) override;

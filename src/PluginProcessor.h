@@ -47,11 +47,10 @@ class DemoTimer : public Timer, public Component
 // ********************************************************************************************
 class MessageProcessor;
 class VSTClockProcessor;
-#ifndef B_STEP_STANDALONE
 class MidiOutputObject;
 class AudioRecorder;
 class SensingTimer;
-#endif
+
 class GstepAudioProcessor : public ProcessorUserData,
                             public MIDIUserData,
                             public juce::AudioProcessor,

@@ -169,7 +169,7 @@ target_sources(B-Step
         "src/UiQuestionIsYourFriend.cpp"
         "src/UiSettings.cpp"
         "src/UiTextImExport.cpp"
-        "src/ticker.cpp"
+        src/ticker.cpp
         )
 
 

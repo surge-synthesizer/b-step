@@ -1216,15 +1216,18 @@ struct PresetItem : public juce::TreeViewItem,
                             new juce::MemoryInputStream(_audio_data, _audio_data_size, false));
                     // FROM URL STREAM
                     else if (_audio_url != juce::URL(ERROR))
-#ifdef B_STEP_STANDALONE
+                    {
+                        if (bstepIsStandalone)
+                        {
 #ifndef LINUX
-                        AUDIO_PLAYER_PTR->loadFileIntoTransport(_audio_url.createInputStream(
-                            false, nullptr, nullptr, juce::String(), 4000))
+                            AUDIO_PLAYER_PTR->loadFileIntoTransport(
+                                _audio_url
+                                    .createInputStream(false, nullptr, nullptr, juce::String(),
+                                                       4000)
+                                    .release());
 #endif
-                            ;
-#else
-                        ;
-#endif
+                        }
+                    }
                     // FROM FILE
                     else
                         AUDIO_PLAYER_PTR->loadFileIntoTransport(_audio_file);

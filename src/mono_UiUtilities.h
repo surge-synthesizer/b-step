@@ -27,15 +27,17 @@ class ParameterReference
     bool operator!=(const ParameterReference &other_) const { return other_._base != _base; }
     mono_ParameterCompatibilityBase *get_param() const { return _base; }
 
-    void init_value_slider(Slider *const slider_, float = DONT_OVERRIDE_SLIDER_VALUE) const;
-    void write_value_to(Slider *const slider_) const;
-    void read_value_from(const Slider *const slider_);
+    void init_value_slider(juce::Slider *const slider_, float = DONT_OVERRIDE_SLIDER_VALUE) const;
+    void write_value_to(juce::Slider *const slider_) const;
+    void read_value_from(const juce::Slider *const slider_);
     float get_value() const;
     void invert();
 
-    void init_modulation_slider(Slider *const slider_, bool is_modulation_slider_centered_) const;
-    void write_modulation_to(Slider *const slider_, bool is_modulation_slider_centered_) const;
-    void read_modulation_from(const Slider *const slider_);
+    void init_modulation_slider(juce::Slider *const slider_,
+                                bool is_modulation_slider_centered_) const;
+    void write_modulation_to(juce::Slider *const slider_,
+                             bool is_modulation_slider_centered_) const;
+    void read_modulation_from(const juce::Slider *const slider_);
     float get_modulation() const;
     float get_last_modulation() const;
     bool has_modulation() const;

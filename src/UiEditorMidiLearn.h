@@ -36,7 +36,9 @@ class UiLabel;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorMidiLearn : public UiEditor, public Button::Listener, public ComboBox::Listener
+class UiEditorMidiLearn : public UiEditor,
+                          public juce::Button::Listener,
+                          public juce::ComboBox::Listener
 {
   public:
     //==============================================================================
@@ -71,10 +73,10 @@ class UiEditorMidiLearn : public UiEditor, public Button::Listener, public Combo
   private:
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
-    void buttonClicked(Button *buttonThatWasClicked) override;
-    void comboBoxChanged(ComboBox *comboBoxThatHasChanged) override;
+    void buttonClicked(juce::Button *buttonThatWasClicked) override;
+    void comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged) override;
 
     // Binary resources:
     static const char *trash_svg;
@@ -85,17 +87,17 @@ class UiEditorMidiLearn : public UiEditor, public Button::Listener, public Combo
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Label> label_target;
-    ScopedPointer<TextButton> delete_asignment;
-    ScopedPointer<ComboBox> cb_midi_learn_mode;
-    ScopedPointer<ComboBox> cb_midi_assigns;
-    ScopedPointer<UiEditorToolbar> toolbar;
-    ScopedPointer<Label> label_target3;
-    ScopedPointer<Label> label_target8;
-    ScopedPointer<ImageButton> button_remove_all_mappings;
-    ScopedPointer<TextButton> button_info;
-    ScopedPointer<Label> label;
-    ScopedPointer<Drawable> drawable1;
+    juce::ScopedPointer<juce::Label> label_target;
+    juce::ScopedPointer<juce::TextButton> delete_asignment;
+    juce::ScopedPointer<juce::ComboBox> cb_midi_learn_mode;
+    juce::ScopedPointer<juce::ComboBox> cb_midi_assigns;
+    juce::ScopedPointer<UiEditorToolbar> toolbar;
+    juce::ScopedPointer<juce::Label> label_target3;
+    juce::ScopedPointer<juce::Label> label_target8;
+    juce::ScopedPointer<juce::ImageButton> button_remove_all_mappings;
+    juce::ScopedPointer<juce::TextButton> button_info;
+    juce::ScopedPointer<juce::Label> label;
+    juce::ScopedPointer<juce::Drawable> drawable1;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorMidiLearn)

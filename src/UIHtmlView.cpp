@@ -20,6 +20,7 @@
 //[Headers] You can add your own extra header files here...
 #include "UiLookAndFeel.h"
 #include "UiSettings.h"
+#include "BinaryData.h"
 
 // TODO FUTURE UPDATED (after 2.1)
 // add a introduction date
@@ -36,8 +37,8 @@
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 #define CHECK_THREAD_EXIT(return_value)                                                            \
-    if (Thread::getCurrentThread())                                                                \
-        if (Thread::getCurrentThread()->threadShouldExit())                                        \
+    if (juce::Thread::getCurrentThread())                                                          \
+        if (juce::Thread::getCurrentThread()->threadShouldExit())                                  \
     return_value
 
 class HTMLPArser
@@ -49,12 +50,12 @@ class HTMLPArser
     // TAGS WITH START AND END
     struct TagPair
     {
-        const String start;
-        const String end;
+        const juce::String start;
+        const juce::String end;
 
         const bool is_closed_tag;
 
-        TagPair(String start_, String end_, bool is_closed_tag_)
+        TagPair(juce::String start_, juce::String end_, bool is_closed_tag_)
             : start(start_), end(end_), is_closed_tag(is_closed_tag_)
         {
         }
@@ -66,7 +67,7 @@ class HTMLPArser
     TagPair _tag_img;
     TagPair _tag_a;
 
-    static void clean_conten_data(String &data_)
+    static void clean_conten_data(juce::String &data_)
     {
         data_ = data_.fromFirstOccurrenceOf("<!-- __CONTENT__ -->", false, true);
         data_ = data_.upToFirstOccurrenceOf("<!-- __CONTENTEO__ -->", false, true);
@@ -84,7 +85,7 @@ class HTMLPArser
 
         remove_empty_tags(data_);
     }
-    static void clean_nav_data(String &data_)
+    static void clean_nav_data(juce::String &data_)
     {
         data_ = data_.fromFirstOccurrenceOf("<!-- __NAV__ -->", false, true);
         data_ = data_.upToFirstOccurrenceOf("<!-- __NAVEO__ -->", false, true);
@@ -97,12 +98,12 @@ class HTMLPArser
         replace_simple_tags(data_);
         remove_empty_tags(data_);
     }
-    static void clean_comment_blocks(String &data_)
+    static void clean_comment_blocks(juce::String &data_)
     {
         TagPair comments("<!--", "-->", false);
         remove_begin_tag(comments, data_);
     }
-    static void clean(String &data_)
+    static void clean(juce::String &data_)
     {
         TagPair script("<script", "</script>", false);
         remove_begin_tag(script, data_);
@@ -119,7 +120,7 @@ class HTMLPArser
         TagPair div("<div", ">", false);
         remove_begin_tag(div, data_);
     }
-    static void replace_simple_tags(String &string_)
+    static void replace_simple_tags(juce::String &string_)
     {
         string_ = string_.replace("<p><br /></p>", "", true);
         string_ = string_.replace("<br />", "\n", true);
@@ -160,7 +161,7 @@ class HTMLPArser
         string_ = string_.replace("\n\n\n", "\n\n", true);
         string_ = string_.replace("\n\n\n\n", "\n\n", true);
     }
-    static void replace_trailing_error_tags(String &string_)
+    static void replace_trailing_error_tags(juce::String &string_)
     {
         if (string_.substring(0, 4) == "</p>")
             string_ = string_.fromFirstOccurrenceOf("</p>", false, true);
@@ -181,9 +182,9 @@ class HTMLPArser
         if (string_.substring(0, 5) == "</h6>")
             string_ = string_.fromFirstOccurrenceOf("</h6>", false, true);
     }
-    static void replace_link_tags(String &data_)
+    static void replace_link_tags(juce::String &data_)
     {
-        String result;
+        juce::String result;
 
         bool is_a_link_inside = data_.contains("<a");
         while (is_a_link_inside)
@@ -200,9 +201,9 @@ class HTMLPArser
         result += data_;
         data_ = result;
     }
-    static void remove_begin_tag(TagPair &tag, String &data_)
+    static void remove_begin_tag(TagPair &tag, juce::String &data_)
     {
-        String result;
+        juce::String result;
 
         bool is_a_tag_inside = data_.contains(tag.start);
         while (is_a_tag_inside)
@@ -219,7 +220,7 @@ class HTMLPArser
         result += data_;
         data_ = result;
     }
-    static void remove_empty_tags(String &data_)
+    static void remove_empty_tags(juce::String &data_)
     {
         data_ = data_.replace("<p></p>", "", true);
         data_ = data_.replace("<ul></ul>", "", true);
@@ -246,7 +247,7 @@ class HTMLPArser
     };
 
     // EXCLUDE THE LINE e.g. -> <p> ... </p> and return true if this was a success for the tags
-    static bool get_line_for(String &data_, const TagPair &tage_pair_, String &result_)
+    static bool get_line_for(juce::String &data_, const TagPair &tage_pair_, juce::String &result_)
     {
         // check if this is the tag we are looking for
         if (data_.substring(0, tage_pair_.start.length()) == tage_pair_.start)
@@ -263,9 +264,9 @@ class HTMLPArser
         return false;
     }
 
-    TAGS get_next_parent_tag_line(String &data_, String &result_)
+    TAGS get_next_parent_tag_line(juce::String &data_, juce::String &result_)
     {
-        String tmp;
+        juce::String tmp;
         while (true)
         {
             data_ = data_.fromFirstOccurrenceOf("<", true, true);
@@ -278,8 +279,8 @@ class HTMLPArser
             else
                 for (int i = 1; i != 7; ++i)
                 {
-                    TagPair h_tag(_tag_h.start + String(i), _tag_h.end + String(i) + String(">"),
-                                  false);
+                    TagPair h_tag(_tag_h.start + juce::String(i),
+                                  _tag_h.end + juce::String(i) + juce::String(">"), false);
                     if (get_line_for(data_, h_tag, result_))
                         return static_cast<TAGS>(i);
                 }
@@ -293,14 +294,14 @@ class HTMLPArser
         }
     }
 
-    void parse_p(String &data_, int size_, int white_spaces_)
+    void parse_p(juce::String &data_, int size_, int white_spaces_)
     {
         while (data_ != "")
         {
             // parse until "<"
             if (data_.contains("<"))
             {
-                String tmp(data_.upToFirstOccurrenceOf("<", false, false));
+                juce::String tmp(data_.upToFirstOccurrenceOf("<", false, false));
                 if (tmp != "")
                 {
                     // OUT("::: PARSE SUB TEXT UNTIL '<' :: " << tmp );
@@ -330,7 +331,7 @@ class HTMLPArser
     }
 
     // image strings are closes and can be put away
-    void parse_image(String &data_)
+    void parse_image(juce::String &data_)
     {
         // exclude the link
         data_ = data_.fromFirstOccurrenceOf("src=\"", false, false);
@@ -340,12 +341,12 @@ class HTMLPArser
         _view->add_image(data_, _show_content);
     }
 
-    void decode_content(String &data_)
+    void decode_content(juce::String &data_)
     {
         // OUT( "DECODE CONTENT ::: " << data_ << " ::: CONTENT END");
         while (data_.length())
         {
-            String result;
+            juce::String result;
             TAGS tag = get_next_parent_tag_line(data_, result);
 
             if (tag <= IS_H_6)
@@ -358,7 +359,7 @@ class HTMLPArser
                     parse_p(result, 7, 3);
                     break;
                 case IS_LI:
-                    parse_p(result = String("- ") + result, 7, 10);
+                    parse_p(result = juce::String("- ") + result, 7, 10);
                     break;
                 case IS_IMG:
                     parse_image(result);
@@ -375,16 +376,16 @@ class HTMLPArser
         }
     }
 
-    void decode_nav(String &data_, bool download_complete_nav_content_)
+    void decode_nav(juce::String &data_, bool download_complete_nav_content_)
     {
         // OUT( "DECODE NAV ::: " << data_ << " ::: NAV END");
         int ul_deepnes = -1;
         while (data_.length())
         {
-            URL url;
-            String name;
+            juce::URL url;
+            juce::String name;
 
-            String tmp(data_.upToFirstOccurrenceOf("href=\"", false, false));
+            juce::String tmp(data_.upToFirstOccurrenceOf("href=\"", false, false));
 
             // set the deepnes
             if (tmp.contains("<ul>"))
@@ -396,7 +397,7 @@ class HTMLPArser
 
             // get the link and name
             data_ = data_.fromFirstOccurrenceOf("href=\"", false, false);
-            url = URL(data_.upToFirstOccurrenceOf("\"", false, false));
+            url = juce::URL(data_.upToFirstOccurrenceOf("\"", false, false));
             data_ = data_.fromFirstOccurrenceOf(">", false, false);
             name = data_.upToFirstOccurrenceOf("</a>", false, false);
             data_ = data_.fromFirstOccurrenceOf("</a>", false, false);
@@ -411,7 +412,7 @@ class HTMLPArser
         }
     }
 
-    static void backward_replacement(String &data_)
+    static void backward_replacement(juce::String &data_)
     {
         data_ = data_.replace("⇒⇒", ">>", true);
         data_ = data_.replace("⇐⇐", "<<", true);
@@ -420,7 +421,7 @@ class HTMLPArser
     }
 
   public:
-    HTMLPArser(String &data_, UIHtmlView *const view_, bool parse_nav_,
+    HTMLPArser(juce::String &data_, UIHtmlView *const view_, bool parse_nav_,
                bool download_complete_nav_content_, bool show_content_)
         : _view(view_), _show_content(show_content_), _has_live_only_content(false),
 
@@ -430,7 +431,7 @@ class HTMLPArser
     {
         if (parse_nav_ || download_complete_nav_content_)
         {
-            String nav_data = data_;
+            juce::String nav_data = data_;
             clean_nav_data(nav_data);
             decode_nav(nav_data, download_complete_nav_content_);
             backward_replacement(nav_data);
@@ -450,7 +451,7 @@ class HTMLPArser
                     "This part has video or similar content which is only available in a "
                     "webbrowser. Click \"OPEN ONLINE VERSION\" at the right-bottom to open this "
                     "part in your default webbrowser.\n\n",
-                    6, 0, _show_content, Colour(0xff919191));
+                    6, 0, _show_content, juce::Colour(0xff919191));
 
             decode_content(data_);
             backward_replacement(data_);
@@ -460,16 +461,16 @@ class HTMLPArser
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(HTMLPArser)
 };
 
-class NavItem : public TreeViewItem
+class NavItem : public juce::TreeViewItem
 {
     UIHtmlView *const _html_view;
 
-    String const _name;
-    URL const _url;
+    juce::String const _name;
+    juce::URL const _url;
 
-    ScopedPointer<Label> _label;
+    juce::ScopedPointer<juce::Label> _label;
 
-    String getUniqueName() const override { return _url.toString(false); }
+    juce::String getUniqueName() const override { return _url.toString(false); }
 
     bool mightContainSubItems() override { return getNumSubItems(); }
 
@@ -507,29 +508,29 @@ class NavItem : public TreeViewItem
         }
     }
 
-    void itemClicked(const MouseEvent &e) override { setSelected(true, true); }
+    void itemClicked(const juce::MouseEvent &e) override { setSelected(true, true); }
 
     void itemSelectionChanged(bool isNowSelected) override
     {
-        _label->setColour(Label::textColourId,
+        _label->setColour(juce::Label::textColourId,
                           isNowSelected
-                              ? Colours::yellow
-                              : Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              ? juce::Colours::yellow
+                              : juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
         if (isNowSelected)
             click();
     }
 
-    virtual void paintItem(Graphics &g, int width, int height) override
+    virtual void paintItem(juce::Graphics &g, int width, int height) override
     {
         _label->setBounds(0, 0, width, height);
     }
 
-    std::unique_ptr<Component> createItemComponent() override
+    std::unique_ptr<juce::Component> createItemComponent() override
     {
         float heigh_prop = 1.f / 600 * _html_view->getHeight();
         float width_prop = 1.f / 900 * _html_view->getWidth();
 
-        auto comp = std::make_unique<Component>();
+        auto comp = std::make_unique<juce::Component>();
         comp->setBounds(0, 0, width_prop * 200, heigh_prop * 25);
         _label->setBounds(0, 0, width_prop * 200, heigh_prop * 25);
         comp->setVisible(true);
@@ -539,14 +540,14 @@ class NavItem : public TreeViewItem
     }
 
   public:
-    NavItem(UIHtmlView *const html_view_, const String &name_, const URL &url_)
+    NavItem(UIHtmlView *const html_view_, const juce::String &name_, const juce::URL &url_)
         : _html_view(html_view_), _name(name_), _url(url_), _label(nullptr)
     {
         float heigh_prop = 1.f / 600 * _html_view->getHeight();
         float width_prop = 1.f / 900 * _html_view->getWidth();
 
-        _label = new Label();
-        _label->setText(_name, dontSendNotification);
+        _label = new juce::Label();
+        _label->setText(_name, juce::dontSendNotification);
         _label->setVisible(true);
         _label->setBounds(0, 0, width_prop * 200, heigh_prop * 25);
         _label->setInterceptsMouseClicks(false, false);
@@ -556,13 +557,13 @@ class NavItem : public TreeViewItem
 
     ~NavItem() { _html_view->items.removeFirstMatchingValue(this); }
 
-    const URL &get_url() const { return _url; }
-    const String &get_title() const { return _name; }
+    const juce::URL &get_url() const { return _url; }
+    const juce::String &get_title() const { return _name; }
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(NavItem)
 };
 
-bool UIHtmlView::try_open_url(const URL &source_)
+bool UIHtmlView::try_open_url(const juce::URL &source_)
 {
     if (pending_download)
         return false;
@@ -588,7 +589,7 @@ void UIHtmlView::handleAsyncUpdate()
     select_item_with_url(load_async_url);
 }
 
-bool UIHtmlView::open_url(const URL &source_, bool and_download_complete_nav_content_,
+bool UIHtmlView::open_url(const juce::URL &source_, bool and_download_complete_nav_content_,
                           bool show_content_)
 {
     CHECK_THREAD_EXIT({
@@ -602,13 +603,13 @@ bool UIHtmlView::open_url(const URL &source_, bool and_download_complete_nav_con
         return true;
     }
 
-    ScopedLock locked(lock);
+    juce::ScopedLock locked(lock);
     can_something_selected = false;
     current_url = source_;
 
     if (show_content_)
     {
-        MessageManagerLock lock;
+        juce::MessageManagerLock lock;
 
         current_height = 0;
         content_wrapper->removeAllChildren();
@@ -618,7 +619,7 @@ bool UIHtmlView::open_url(const URL &source_, bool and_download_complete_nav_con
         images.clear(true);
     }
 
-    String data;
+    juce::String data;
 
     // CHECK IF IT ALREAD EXIST AND USE CACHE OR CREATE CACHE
     // IGNORE ANNOUNCEMENTS
@@ -628,14 +629,14 @@ bool UIHtmlView::open_url(const URL &source_, bool and_download_complete_nav_con
             "latest-downloads")
         reload_from_server = true;
 
-    String cache_path = current_url.toString(false);
+    juce::String cache_path = current_url.toString(false);
     cache_path = cache_path.fromFirstOccurrenceOf(".com/", false, true);
     current_cache_folder = get_manual_folder().getChildFile(cache_path);
     current_cache_folder.createDirectory();
-    File current_cache(current_cache_folder.getChildFile("cache"));
+    juce::File current_cache(current_cache_folder.getChildFile("cache"));
     if (reload_from_server)
     {
-        URL online_test(MANUAL_URL + "is-online");
+        juce::URL online_test(MANUAL_URL + "is-online");
         if (online_test.readEntireTextStream().contains("<!-- IS-ONLINE -->"))
             current_cache.deleteFile();
     }
@@ -670,9 +671,9 @@ bool UIHtmlView::open_url(const URL &source_, bool and_download_complete_nav_con
     {
         add_text_part("Error, can not download: " +
                           source_.toString(false).fromLastOccurrenceOf("/", false, false),
-                      6, 0, true, Colour(0xffff0000));
+                      6, 0, true, juce::Colour(0xffff0000));
         add_text_part("Please try to re-download later or download the offline version.", 4, 10,
-                      true, Colour(0xffff0000));
+                      true, juce::Colour(0xffff0000));
 
         return_value = false;
     }
@@ -685,7 +686,7 @@ bool UIHtmlView::open_url(const URL &source_, bool and_download_complete_nav_con
     return return_value;
 }
 
-bool UIHtmlView::open_question_mark_content(const URL &request_for_, bool force_redownload_)
+bool UIHtmlView::open_question_mark_content(const juce::URL &request_for_, bool force_redownload_)
 {
     if (!get_manual_folder().exists() || force_redownload_)
     {
@@ -693,9 +694,10 @@ bool UIHtmlView::open_question_mark_content(const URL &request_for_, bool force_
         {
             clear_all_views();
 
-            add_text_part("B-STEP MANUAL", 1, 0, true, Colours::yellowgreen);
-            String message("You can download the embedded manual by clicking \"DOWNLOAD COMPLETE "
-                           "MANUAL\" at the left-bottom of this window.");
+            add_text_part("B-STEP MANUAL", 1, 0, true, juce::Colours::yellowgreen);
+            juce::String message(
+                "You can download the embedded manual by clicking \"DOWNLOAD COMPLETE "
+                "MANUAL\" at the left-bottom of this window.");
 
             message += "\n";
             message += "\n";
@@ -707,30 +709,31 @@ bool UIHtmlView::open_question_mark_content(const URL &request_for_, bool force_
                        "any time you like.";
             message += "\n";
             message += "\n";
-            add_text_part(message, 5, 10, true, Colours::white);
+            add_text_part(message, 5, 10, true, juce::Colours::white);
 
             message = "";
             message +=
                 "If your computer is never online you can download the manual on the forum: ";
-            add_text_part(message, 5, 10, true, Colours::skyblue);
+            add_text_part(message, 5, 10, true, juce::Colours::skyblue);
             message = "";
             message += "http://forum.monoplugs.com/offline";
-            add_text_part(message, 5, 10, true, Colours::skyblue, true);
+            add_text_part(message, 5, 10, true, juce::Colours::skyblue, true);
         }
 
-        String ok_answer =
+        juce::String ok_answer =
             !force_redownload_ ? "YES, DOWNLOAD NOW (recommended)." : "YES, RE-DOWNLOAD NOW.";
-        if (AlertWindow::showOkCancelBox(AlertWindow::QuestionIcon, "DOWNLOAD THE MANUAL?",
-                                         "Would you like to download the complete manual now? It "
-                                         "need less than 10 megabyte on your disk.",
-                                         ok_answer, "NO, NOT NOW", this))
+        if (juce::AlertWindow::showOkCancelBox(
+                juce::AlertWindow::QuestionIcon, "DOWNLOAD THE MANUAL?",
+                "Would you like to download the complete manual now? It "
+                "need less than 10 megabyte on your disk.",
+                ok_answer, "NO, NOT NOW", this))
         {
             if (force_redownload_)
                 get_manual_folder().deleteRecursively();
             get_manual_folder().createDirectory();
 
             bool is_online = false;
-            URL online_test(MANUAL_URL + "is-online");
+            juce::URL online_test(MANUAL_URL + "is-online");
             if (online_test.readEntireTextStream().contains("<!-- IS-ONLINE -->"))
                 is_online = true;
 
@@ -744,7 +747,7 @@ bool UIHtmlView::open_question_mark_content(const URL &request_for_, bool force_
                     struct UpdateThread : public AutonomThread
                     {
                         UIHtmlView *const _view;
-                        const URL _url_to_load_after;
+                        const juce::URL _url_to_load_after;
                         void run()
                         {
                             _view->open_url(MANUAL_URL, true, false);
@@ -752,7 +755,7 @@ bool UIHtmlView::open_question_mark_content(const URL &request_for_, bool force_
                             _view->triggerAsyncUpdate();
                             selfkill();
                         }
-                        UpdateThread(UIHtmlView *view_, const URL &url_to_load_after_)
+                        UpdateThread(UIHtmlView *view_, const juce::URL &url_to_load_after_)
                             : AutonomThread("B-Manual-Updater"), _view(view_),
                               _url_to_load_after(url_to_load_after_)
                         {
@@ -772,10 +775,11 @@ bool UIHtmlView::open_question_mark_content(const URL &request_for_, bool force_
                     return true;
                 }
             }
-            AlertWindow::showMessageBox(AlertWindow::WarningIcon, "ERROR",
-                                        "Can not connect to the manual server.\nMaybe the server "
-                                        "is down or your internet connection is broken.",
-                                        "OK", this);
+            juce::AlertWindow::showMessageBox(
+                juce::AlertWindow::WarningIcon, "ERROR",
+                "Can not connect to the manual server.\nMaybe the server "
+                "is down or your internet connection is broken.",
+                "OK", this);
 
             SESSION_ERROR_LOG("ERROR Can not connect to the manual server.");
 
@@ -798,15 +802,15 @@ enum
     PADDING_LEFT_RIGHT = 10
 };
 
-void UIHtmlView::select_item_with_url(const URL &url_)
+void UIHtmlView::select_item_with_url(const juce::URL &url_)
 {
     NavItem *child;
-    String look_for_url =
+    juce::String look_for_url =
         url_.toString(false).fromFirstOccurrenceOf(".com/", false, false); // remove redirect url;
     for (int i = 0; i != items.size(); ++i)
     {
         child = items.getUnchecked(i);
-        String child_url = child->get_url().toString(false).fromFirstOccurrenceOf(
+        juce::String child_url = child->get_url().toString(false).fromFirstOccurrenceOf(
             ".com/", false, false); // remove real url
         if (child_url == look_for_url)
         {
@@ -818,8 +822,8 @@ void UIHtmlView::select_item_with_url(const URL &url_)
 }
 
 #include "UiMainWindow.h"
-void UIHtmlView::add_text_part(const String &text_, int height_, int white_spaces_before_,
-                               bool show_content_, Colour col_, bool make_selectable_)
+void UIHtmlView::add_text_part(const juce::String &text_, int height_, int white_spaces_before_,
+                               bool show_content_, juce::Colour col_, bool make_selectable_)
 {
     CHECK_THREAD_EXIT({
         OUT("add_text_part");
@@ -828,7 +832,7 @@ void UIHtmlView::add_text_part(const String &text_, int height_, int white_space
     if (!show_content_)
         return;
 
-    TextEditor *editor = new TextEditor();
+    juce::TextEditor *editor = new juce::TextEditor();
     editor->setMultiLine(true);
     editor->setReturnKeyStartsNewLine(false);
     editor->setReadOnly(true);
@@ -839,22 +843,23 @@ void UIHtmlView::add_text_part(const String &text_, int height_, int white_space
         editor->setPopupMenuEnabled(true);
         editor->setInterceptsMouseClicks(false, false);
     }
-    editor->setColour(
-        TextEditor::textColourId,
-        (col_ == Colour(0x00000000) ? Colour(height_ < 7 ? 0xffE57A1F : 0xffffffff) : col_));
-    editor->setColour(TextEditor::backgroundColourId, Colour(0x00ffffff));
+    editor->setColour(juce::TextEditor::textColourId,
+                      (col_ == juce::Colour(0x00000000)
+                           ? juce::Colour(height_ < 7 ? 0xffE57A1F : 0xffffffff)
+                           : col_));
+    editor->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00ffffff));
     // editor->setColour (TextEditor::outlineColourId, Colour
     // (GLOBAL_VALUE_HOLDER::get().MASTER_COLOUR));
-    editor->setColour(TextEditor::shadowColourId, Colour(0x00000000));
-    editor->setColour(TextEditor::highlightColourId, Colours::yellow);
+    editor->setColour(juce::TextEditor::shadowColourId, juce::Colour(0x00000000));
+    editor->setColour(juce::TextEditor::highlightColourId, juce::Colours::yellow);
 
     float heigh_prop = 1.f / 600 * getHeight();
-    Font font = editor->getFont().withHeight(heigh_prop * (15 + (7 - height_) * 2));
+    juce::Font font = editor->getFont().withHeight(heigh_prop * (15 + (7 - height_) * 2));
     if (height_ < 5)
-        font.setStyleFlags(Font::bold);
+        font.setStyleFlags(juce::Font::bold);
     editor->setFont(font);
 
-    editor->setText(text_, dontSendNotification);
+    editor->setText(text_, juce::dontSendNotification);
 
     int padding_left = PADDING_LEFT_RIGHT + white_spaces_before_;
     editor->setSize(content_wrapper->getWidth() - white_spaces_before_, 100);
@@ -867,30 +872,31 @@ void UIHtmlView::add_text_part(const String &text_, int height_, int white_space
 
     editors.add(editor);
 }
-void UIHtmlView::add_image(const String &url_, bool show_content_)
+void UIHtmlView::add_image(const juce::String &url_, bool show_content_)
 {
     CHECK_THREAD_EXIT({
         OUT("add_image");
         return;
     });
     // CHECK IF ALREDY EXIST AND DOWNLOAD IF NOT
-    File image_cache_folder = get_manual_folder().getChildFile("images");
+    juce::File image_cache_folder = get_manual_folder().getChildFile("images");
     image_cache_folder.createDirectory();
-    File image_file = image_cache_folder.getChildFile(url_.fromLastOccurrenceOf("/", false, false));
+    juce::File image_file =
+        image_cache_folder.getChildFile(url_.fromLastOccurrenceOf("/", false, false));
 
-    Image image;
+    juce::Image image;
     if (image_file.existsAsFile())
     {
-        image = ImageCache::getFromFile(image_file);
-        ImageCache::setCacheTimeout(1000 * 60 * 3);
+        image = juce::ImageCache::getFromFile(image_file);
+        juce::ImageCache::setCacheTimeout(1000 * 60 * 3);
     }
     else
     {
-        MemoryBlock block;
-        URL(url_).readEntireBinaryStream(block);
+        juce::MemoryBlock block;
+        juce::URL(url_).readEntireBinaryStream(block);
         image_file.replaceWithData(block.getData(), block.getSize());
-        image = ImageCache::getFromMemory(block.getData(), block.getSize());
-        ImageCache::setCacheTimeout(1);
+        image = juce::ImageCache::getFromMemory(block.getData(), block.getSize());
+        juce::ImageCache::setCacheTimeout(1);
     }
 
     if (!show_content_)
@@ -899,10 +905,11 @@ void UIHtmlView::add_image(const String &url_, bool show_content_)
     float prop = 1.f / image.getWidth() * content_wrapper->getWidth();
     image = image.rescaled(image.getWidth() * prop, image.getHeight() * prop);
 
-    ImageButton *image_holder = new ImageButton(String());
+    juce::ImageButton *image_holder = new juce::ImageButton(juce::String());
     image_holder->setSize(image.getWidth(), image.getHeight());
-    image_holder->setImages(false, true, true, image, 1.000f, Colour(0x00000000), image, 1.000f,
-                            Colour(0x00000000), image, 1.000f, Colour(0x00000000));
+    image_holder->setImages(false, true, true, image, 1.000f, juce::Colour(0x00000000), image,
+                            1.000f, juce::Colour(0x00000000), image, 1.000f,
+                            juce::Colour(0x00000000));
     image_holder->setWantsKeyboardFocus(false);
     image_holder->setInterceptsMouseClicks(false, false);
     content_wrapper->addAndMakeVisible(image_holder);
@@ -915,7 +922,7 @@ void UIHtmlView::add_image(const String &url_, bool show_content_)
     images.add(image_holder);
 }
 
-void UIHtmlView::add_nav_link(const String &text_, const URL &target_, int deepness_,
+void UIHtmlView::add_nav_link(const juce::String &text_, const juce::URL &target_, int deepness_,
                               bool and_open_it_)
 {
     CHECK_THREAD_EXIT({
@@ -923,11 +930,11 @@ void UIHtmlView::add_nav_link(const String &text_, const URL &target_, int deepn
         return;
     });
 
-    String text = text_;
+    juce::String text = text_;
     if (text == "LATEST DOWNLOADS" || text_ == "NEWS")
         text += " (internet connection required)";
 
-    const MessageManagerLock mmLock;
+    const juce::MessageManagerLock mmLock;
     NavItem *new_item = new NavItem(this, text, target_);
     if (last_added_item)
     {
@@ -935,7 +942,7 @@ void UIHtmlView::add_nav_link(const String &text_, const URL &target_, int deepn
             treeView->getRootItem()->addSubItem(new_item);
         else if (deepness_ == last_deppnes)
         {
-            TreeViewItem *parent = last_added_item->getParentItem();
+            juce::TreeViewItem *parent = last_added_item->getParentItem();
             if (parent)
                 parent->addSubItem(new_item);
             else
@@ -945,7 +952,7 @@ void UIHtmlView::add_nav_link(const String &text_, const URL &target_, int deepn
             last_added_item->addSubItem(new_item);
         else if (deepness_ < last_deppnes)
         {
-            TreeViewItem *parent = last_added_item->getParentItem();
+            juce::TreeViewItem *parent = last_added_item->getParentItem();
             if (parent)
             {
                 parent = parent->getParentItem();
@@ -1009,73 +1016,73 @@ void UIHtmlView::on_close_clicked()
 UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-Manual"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(viewport = new Viewport(String()));
+    addAndMakeVisible(viewport = new juce::Viewport(juce::String()));
     viewport->setScrollBarsShown(true, false);
 
-    addAndMakeVisible(treeView = new TreeView("new treeview"));
-    treeView->setColour(TreeView::linesColourId, Colour(0x8aff3b00));
+    addAndMakeVisible(treeView = new juce::TreeView("new treeview"));
+    treeView->setColour(juce::TreeView::linesColourId, juce::Colour(0x8aff3b00));
 
     addAndMakeVisible(toolbar = new UiEditorToolbar(this, true, true, false));
 
-    addAndMakeVisible(update = new TextButton(String()));
+    addAndMakeVisible(update = new juce::TextButton(juce::String()));
     update->setButtonText(TRANS("RE-DOWNLOAD COMPLETE MANUAL"));
-    update->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                              Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    update->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                              juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     update->addListener(this);
 
-    addAndMakeVisible(forum = new TextButton(String()));
+    addAndMakeVisible(forum = new juce::TextButton(juce::String()));
     forum->setButtonText(TRANS("CHECK THE FORUM"));
-    forum->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                             Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    forum->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                             juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     forum->addListener(this);
 
-    addAndMakeVisible(label = new Label("new label", TRANS("QUESTIONS TO THIS POINT: ")));
-    label->setFont(Font(15.00f, Font::plain));
-    label->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label = new juce::Label("new label", TRANS("QUESTIONS TO THIS POINT: ")));
+    label->setFont(juce::Font(15.00f, juce::Font::plain));
+    label->setJustificationType(juce::Justification::centredRight);
     label->setEditable(false, false, false);
-    label->setColour(Label::textColourId,
-                     Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label->setColour(TextEditor::textColourId, Colours::black);
-    label->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label->setColour(juce::Label::textColourId,
+                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label2 = new Label("new label", TRANS("OR\n")));
-    label2->setFont(Font(15.00f, Font::plain));
-    label2->setJustificationType(Justification::centred);
+    addAndMakeVisible(label2 = new juce::Label("new label", TRANS("OR\n")));
+    label2->setFont(juce::Font(15.00f, juce::Font::plain));
+    label2->setJustificationType(juce::Justification::centred);
     label2->setEditable(false, false, false);
-    label2->setColour(Label::textColourId,
-                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label2->setColour(TextEditor::textColourId, Colours::black);
-    label2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label2->setColour(juce::Label::textColourId,
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(mail = new TextButton(String()));
+    addAndMakeVisible(mail = new juce::TextButton(juce::String()));
     mail->setButtonText(TRANS("CONTACT SUPPORT"));
-    mail->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                            Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    mail->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                            juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     mail->addListener(this);
 
-    addAndMakeVisible(label3 = new Label("new label", TRANS("|")));
-    label3->setFont(Font(15.00f, Font::plain));
-    label3->setJustificationType(Justification::centred);
+    addAndMakeVisible(label3 = new juce::Label("new label", TRANS("|")));
+    label3->setFont(juce::Font(15.00f, juce::Font::plain));
+    label3->setJustificationType(juce::Justification::centred);
     label3->setEditable(false, false, false);
-    label3->setColour(Label::textColourId,
-                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label3->setColour(TextEditor::textColourId, Colours::black);
-    label3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label3->setColour(juce::Label::textColourId,
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(online = new TextButton(String()));
+    addAndMakeVisible(online = new juce::TextButton(juce::String()));
     online->setButtonText(TRANS("OPEN ONLINE VERSION"));
-    online->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                              Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    online->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                              juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     online->addListener(this);
 
-    addAndMakeVisible(label4 = new Label("new label", TRANS("|")));
-    label4->setFont(Font(15.00f, Font::plain));
-    label4->setJustificationType(Justification::centred);
+    addAndMakeVisible(label4 = new juce::Label("new label", TRANS("|")));
+    label4->setFont(juce::Font(15.00f, juce::Font::plain));
+    label4->setJustificationType(juce::Justification::centred);
     label4->setEditable(false, false, false);
-    label4->setColour(Label::textColourId,
-                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label4->setColour(TextEditor::textColourId, Colours::black);
-    label4->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label4->setColour(juce::Label::textColourId,
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label4->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label4->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     addAndMakeVisible(tree_view_dragger = new FingerDrag(treeView->getViewport(), this));
 
@@ -1088,12 +1095,12 @@ UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
     pending_download = nullptr;
     can_something_selected = true;
     nav_is_parsed = false;
-    content_wrapper = new Component();
+    content_wrapper = new juce::Component();
 
     current_height = 0;
 
-    String root("ROOT");
-    URL url("TEST");
+    juce::String root("ROOT");
+    juce::URL url("TEST");
     treeView->setRootItem(new NavItem(this, root, url));
     treeView->setRootItemVisible(false);
 
@@ -1110,7 +1117,8 @@ UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
     content_wrapper->setVisible(true);
     viewport->setViewedComponent(content_wrapper, false);
 
-    center_relative_and_make_visible(reinterpret_cast<Component *>(_app_instance_store->editor));
+    center_relative_and_make_visible(
+        reinterpret_cast<juce::Component *>(_app_instance_store->editor));
     //[/Constructor]
 }
 
@@ -1140,23 +1148,23 @@ UIHtmlView::~UIHtmlView()
     viewport_dragger = nullptr;
 
     //[Destructor]. You can add your own custom destruction code here..
-    ImageCache::releaseUnusedImages();
+    juce::ImageCache::releaseUnusedImages();
     //[/Destructor]
 }
 
 //==============================================================================
-void UIHtmlView::paint(Graphics &g)
+void UIHtmlView::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll(Colour(0xff161616));
+    g.fillAll(juce::Colour(0xff161616));
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.drawRect(0, 0, proportionOfWidth(1.0000f), proportionOfHeight(1.0000f), 2);
 
     //[UserPaint] Add your own custom painting code here..
-    ResizableWindow::moved();
+    juce::ResizableWindow::moved();
     //[/UserPaint]
 }
 
@@ -1201,23 +1209,23 @@ void UIHtmlView::resized()
                                 proportionOfWidth(0.6222f), proportionOfHeight(0.8917f));
     //[UserResized] Add your own custom resize handling here..
 
-    ResizableWindow::resized();
+    juce::ResizableWindow::resized();
 
     int y = 0;
     int h = 0;
     int wrapper_w = viewport->getWidth() - viewport->getScrollBarThickness() - PADDING_LEFT_RIGHT;
     for (int i = 0; i < content_wrapper->getNumChildComponents(); ++i)
     {
-        Component *child = content_wrapper->getChildComponent(i);
-        TextEditor *text_child;
-        ImageButton *image_child;
-        if ((text_child = dynamic_cast<TextEditor *>(child)))
+        juce::Component *child = content_wrapper->getChildComponent(i);
+        juce::TextEditor *text_child;
+        juce::ImageButton *image_child;
+        if ((text_child = dynamic_cast<juce::TextEditor *>(child)))
         {
             text_child->setSize(wrapper_w - text_child->getX(), 0);
             h = text_child->getTextHeight();
             text_child->setBounds(text_child->getX(), y, wrapper_w - text_child->getX(), h);
         }
-        else if ((image_child = dynamic_cast<ImageButton *>(child)))
+        else if ((image_child = dynamic_cast<juce::ImageButton *>(child)))
         {
             float new_prop = 1.f / image_child->getWidth() * content_wrapper->getWidth();
 
@@ -1233,7 +1241,7 @@ void UIHtmlView::resized()
     //[/UserResized]
 }
 
-void UIHtmlView::buttonClicked(Button *buttonThatWasClicked)
+void UIHtmlView::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -1241,11 +1249,11 @@ void UIHtmlView::buttonClicked(Button *buttonThatWasClicked)
     if (buttonThatWasClicked == update)
     {
         //[UserButtonCode_update] -- add your button handler code here..
-        URL online_test(MANUAL_URL + "is-online");
+        juce::URL online_test(MANUAL_URL + "is-online");
         {
             if (online_test.readEntireTextStream().contains("<!-- IS-ONLINE -->"))
             {
-                URL url;
+                juce::URL url;
                 if (treeView->getSelectedItem(0))
                     url = reinterpret_cast<NavItem *>(treeView->getSelectedItem(0))->get_url();
                 else
@@ -1255,10 +1263,11 @@ void UIHtmlView::buttonClicked(Button *buttonThatWasClicked)
             }
             else
             {
-                AlertWindow::showMessageBox(AlertWindow::WarningIcon, "ERROR",
-                                            "Can not connect to the manual server.\nMaybe the "
-                                            "server is down or your internet connection is broken.",
-                                            "OK", this);
+                juce::AlertWindow::showMessageBox(
+                    juce::AlertWindow::WarningIcon, "ERROR",
+                    "Can not connect to the manual server.\nMaybe the "
+                    "server is down or your internet connection is broken.",
+                    "OK", this);
 
                 SESSION_ERROR_LOG("ERROR Can not connect to the manual server.");
             }
@@ -1268,34 +1277,36 @@ void UIHtmlView::buttonClicked(Button *buttonThatWasClicked)
     else if (buttonThatWasClicked == forum)
     {
         //[UserButtonCode_forum] -- add your button handler code here..
-        URL("http://forum.monoplugs.com/viewforum.php?f=47").launchInDefaultBrowser();
+        juce::URL("http://forum.monoplugs.com/viewforum.php?f=47").launchInDefaultBrowser();
         //[/UserButtonCode_forum]
     }
     else if (buttonThatWasClicked == mail)
     {
         //[UserButtonCode_mail] -- add your button handler code here..
-        String additional_info;
+        juce::String additional_info;
 #ifndef B_STEP_STANDALONE
-        additional_info = PluginHostType().getHostDescription();
+        additional_info = juce::PluginHostType().getHostDescription();
         additional_info += " ";
 #endif
-        additional_info += SystemStats::getOperatingSystemName();
+        additional_info += juce::SystemStats::getOperatingSystemName();
 
-        String subject("Q: B-Step ");
-        subject += String(ProjectInfo::versionString);
+        juce::String subject("Q: B-Step ");
+        // subject += String(ProjectInfo::versionString);
         subject += " (";
         subject += additional_info;
-        subject += String(")");
+        subject += juce::String(")");
         if (treeView->getSelectedItem(0))
         {
             NavItem *item = dynamic_cast<NavItem *>(treeView->getSelectedItem(0));
             if (item)
-                subject = subject + String(" : ") + item->get_title();
+                subject = subject + juce::String(" : ") + item->get_title();
 
-            URL(String("mailto:support@monoplugs.com?subject=") + subject).launchInDefaultBrowser();
+            juce::URL(juce::String("mailto:support@monoplugs.com?subject=") + subject)
+                .launchInDefaultBrowser();
         }
         else
-            URL(String("mailto:support@monoplugs.com?subject=") + subject).launchInDefaultBrowser();
+            juce::URL(juce::String("mailto:support@monoplugs.com?subject=") + subject)
+                .launchInDefaultBrowser();
         //[/UserButtonCode_mail]
     }
     else if (buttonThatWasClicked == online)
@@ -1308,7 +1319,7 @@ void UIHtmlView::buttonClicked(Button *buttonThatWasClicked)
                 item->get_url().launchInDefaultBrowser();
         }
         else
-            URL(MANUAL_URL).launchInDefaultBrowser();
+            juce::URL(MANUAL_URL).launchInDefaultBrowser();
         //[/UserButtonCode_online]
     }
 

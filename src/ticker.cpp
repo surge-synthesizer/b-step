@@ -33,7 +33,7 @@ void Ticker::break_event_loop()
             GLOBAL_ERROR_LOG("GENERATOR-THREAD CAN STOPPED" + String("\n"));
 }
 
-void Ticker::set_tick_interval_in_usec(int64 usec_per_tick_)
+void Ticker::set_tick_interval_in_usec(std::int64_t usec_per_tick_)
 {
     _new_usec_per_tick = usec_per_tick_;
 }

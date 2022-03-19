@@ -6,9 +6,10 @@
 PodParameterBase::PodParameterBase(pod_type value_, const unsigned int index_,
                                    const char *const param_ident_,
                                    const char *const param_unique_ident_,
-                                   const char *const help_url_, const String &param_short_ident_,
-                                   const String &name_, const pod_type min_, const pod_type max_,
-                                   const pod_type default_, int id_)
+                                   const char *const help_url_,
+                                   const juce::String &param_short_ident_,
+                                   const juce::String &name_, const pod_type min_,
+                                   const pod_type max_, const pod_type default_, int id_)
     : _value(value_),
 
       MIN(min_), MAX(max_),
@@ -43,7 +44,7 @@ PodParameterBase::PodParameterBase(pod_type value_, const unsigned int index_,
         _string_value.preallocateBytes(5);
     }
 
-    _string_value = String(_value);
+    _string_value = juce::String(_value);
 }
 
 PodParameterBase::~PodParameterBase() {}

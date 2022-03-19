@@ -22,7 +22,7 @@ UiButton::UiButton()
     setPaintingIsUnclipped(true);
 }
 #include INCLUDE_USER_DEBUG
-void UiButton::mouseDown(const MouseEvent &e_)
+void UiButton::mouseDown(const juce::MouseEvent &e_)
 {
     USER_OUT(LOG_BUTTON_EVENTS, "mouseDown @@@ ",
              _controller ? _controller->get_controller_name() : "unknown",
@@ -41,7 +41,7 @@ void UiButton::mouseDown(const MouseEvent &e_)
 
     is_mouse_down = true;
 
-    if (e_.mods == ModifierKeys::rightButtonModifier &&
+    if (e_.mods == juce::ModifierKeys::rightButtonModifier &&
         GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_AT_RIGHT_MOUSE)
     {
         if (GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_ENABLE)
@@ -52,7 +52,7 @@ void UiButton::mouseDown(const MouseEvent &e_)
         if (!GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_AT_RIGHT_MOUSE)
             startTimer(GLOBAL_VALUE_HOLDER::getInstance()->LONG_MOUSE_DOWN_INTERVAL);
 
-        if (e_.mods == ModifierKeys::leftButtonModifier &&
+        if (e_.mods == juce::ModifierKeys::leftButtonModifier &&
             GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_AT_RIGHT_MOUSE)
             //    if( _controller )
             //        if( _controller->are_you_simple_dragable() )
@@ -99,7 +99,7 @@ void UiButton::timerCallback()
                  "");
 }
 
-void UiButton::mouseUp(const MouseEvent &e_)
+void UiButton::mouseUp(const juce::MouseEvent &e_)
 {
     USER_OUT(LOG_BUTTON_EVENTS, "mouseUp @@@ ",
              _controller ? _controller->get_controller_name() : "unknown",
@@ -136,7 +136,7 @@ void UiButton::mouseUp(const MouseEvent &e_)
              "");
 }
 
-void UiButton::mouseMove(const MouseEvent &e_)
+void UiButton::mouseMove(const juce::MouseEvent &e_)
 {
     // USER_OUT( LOG_BUTTON_EVENTS, "mouseMove @@@ ", _controller ?
     // _controller->get_controller_name() : "unknown", _controller ? (_controller->get_parameter() ?
@@ -146,7 +146,7 @@ void UiButton::mouseMove(const MouseEvent &e_)
         _controller->on_mouse_move(e_);
 }
 
-void UiButton::mouseEnter(const MouseEvent &e_)
+void UiButton::mouseEnter(const juce::MouseEvent &e_)
 {
     // USER_OUT( LOG_BUTTON_EVENTS, "mouseEnter @@@ ", _controller ?
     // _controller->get_controller_name() : "unknown", _controller ? (_controller->get_parameter() ?
@@ -156,7 +156,7 @@ void UiButton::mouseEnter(const MouseEvent &e_)
         _controller->on_mouse_enter(e_);
 }
 
-void UiButton::mouseExit(const MouseEvent &e_)
+void UiButton::mouseExit(const juce::MouseEvent &e_)
 {
     // USER_OUT( LOG_BUTTON_EVENTS, "mouseEnter @@@ ", _controller ?
     // _controller->get_controller_name() : "unknown", _controller ? (_controller->get_parameter() ?
@@ -166,7 +166,7 @@ void UiButton::mouseExit(const MouseEvent &e_)
         _controller->on_mouse_exit(e_);
 }
 
-void UiButton::mouseDrag(const MouseEvent &e_)
+void UiButton::mouseDrag(const juce::MouseEvent &e_)
 {
     USER_OUT(LOG_BUTTON_EVENTS, "mouseDrag @@@ ",
              _controller ? _controller->get_controller_name() : "unknown",
@@ -243,7 +243,7 @@ void UiButton::mouseDrag(const MouseEvent &e_)
                         is_multi_drag_valid = false;
                         was_dragging = true;
 
-                        Image img(Image::RGB, 0, 0, false);
+                        juce::Image img(juce::Image::RGB, 0, 0, false);
                         drop_source = _controller->get_dragNdrop_source();
                         startDragging(_controller->get_dragNdrop_ident(), drop_source,
                                       _model->get_drag_image(img), true);
@@ -267,7 +267,7 @@ void UiButton::mouseDrag(const MouseEvent &e_)
                     is_multi_drag_valid = false;
                     was_dragging = true;
 
-                    Image img(Image::RGB, 0, 0, false);
+                    juce::Image img(juce::Image::RGB, 0, 0, false);
                     if (_controller->are_you_simple_dragable())
                     {
                         drop_source = _controller->get_dragNdrop_source();
@@ -291,7 +291,7 @@ void UiButton::mouseDrag(const MouseEvent &e_)
              "");
 }
 
-void UiButton::mouseDoubleClick(const MouseEvent &e_)
+void UiButton::mouseDoubleClick(const juce::MouseEvent &e_)
 {
     USER_OUT(LOG_BUTTON_EVENTS, "mouseDoubleClick @@@ ",
              _controller ? _controller->get_controller_name() : "unknown",
@@ -313,7 +313,7 @@ void UiButton::mouseDoubleClick(const MouseEvent &e_)
              "");
 }
 
-void UiButton::mouseWheelMove(const MouseEvent &e_, const MouseWheelDetails &wheel_)
+void UiButton::mouseWheelMove(const juce::MouseEvent &e_, const juce::MouseWheelDetails &wheel_)
 {
     USER_OUT(LOG_BUTTON_EVENTS, "mouseWheelMove @@@ ",
              _controller ? _controller->get_controller_name() : "unknown",
@@ -335,7 +335,7 @@ void UiButton::mouseWheelMove(const MouseEvent &e_, const MouseWheelDetails &whe
              "");
 }
 
-bool UiButton::isInterestedInDragSource(const DragAndDropTarget::SourceDetails &sd_)
+bool UiButton::isInterestedInDragSource(const juce::DragAndDropTarget::SourceDetails &sd_)
 {
     if (_controller)
         return _controller->is_interested_in_drag_source(sd_);
@@ -343,7 +343,7 @@ bool UiButton::isInterestedInDragSource(const DragAndDropTarget::SourceDetails &
     return false;
 }
 
-void UiButton::itemDropped(const DragAndDropTarget::SourceDetails &sd_)
+void UiButton::itemDropped(const juce::DragAndDropTarget::SourceDetails &sd_)
 {
     USER_OUT(LOG_BUTTON_EVENTS, "itemDropped @@@ ",
              _controller ? _controller->get_controller_name() : "unknown",
@@ -366,10 +366,10 @@ void UiButton::itemDropped(const DragAndDropTarget::SourceDetails &sd_)
              "");
 }
 
-void UiButton::dragOperationEnded(const DragAndDropTarget::SourceDetails &d)
+void UiButton::dragOperationEnded(const juce::DragAndDropTarget::SourceDetails &d)
 {
     drop_source = nullptr;
-    DragAndDropContainer::dragOperationEnded(d);
+    juce::DragAndDropContainer::dragOperationEnded(d);
 }
 
 void UiButton::triggerClick()
@@ -416,13 +416,13 @@ bool UiButton::refresh_foreground()
 
     bool should_be_repainted = false;
 
-    uint32 new_foreground_color = _controller->get_current_color_low();
-    uint32 new_foreground_color_1 = is_mouse_down
-                                        ? Colour(new_foreground_color).darker(0.2f).getARGB()
-                                        : Colour(new_foreground_color).brighter(0.1f).getARGB();
-    uint32 new_foreground_color_2 = is_mouse_down
-                                        ? Colour(new_foreground_color).brighter(0.1f).getARGB()
-                                        : Colour(new_foreground_color).darker(0.1f).getARGB();
+    std::uint32_t new_foreground_color = _controller->get_current_color_low();
+    std::uint32_t new_foreground_color_1 =
+        is_mouse_down ? juce::Colour(new_foreground_color).darker(0.2f).getARGB()
+                      : juce::Colour(new_foreground_color).brighter(0.1f).getARGB();
+    std::uint32_t new_foreground_color_2 =
+        is_mouse_down ? juce::Colour(new_foreground_color).brighter(0.1f).getARGB()
+                      : juce::Colour(new_foreground_color).darker(0.1f).getARGB();
     if (_foreground_color_1 != new_foreground_color_1)
     {
         _foreground_color_1 = new_foreground_color_1;
@@ -430,14 +430,14 @@ bool UiButton::refresh_foreground()
         should_be_repainted = true;
     }
 
-    uint32 new_outline_color = _model->_style->get_element_border_color();
+    std::uint32_t new_outline_color = _model->_style->get_element_border_color();
     if (_outline_color != new_outline_color)
     {
         _outline_color = new_outline_color;
         should_be_repainted = true;
     }
 
-    String new_value_as_label = HAS_NO_TEXT_VALUE;
+    juce::String new_value_as_label = HAS_NO_TEXT_VALUE;
     _controller->get_label_text(new_value_as_label);
     if (_text != new_value_as_label)
     {
@@ -448,7 +448,7 @@ bool UiButton::refresh_foreground()
     return should_be_repainted;
 }
 
-void UiButton::cache_paint(Graphics &g, uint32 background_colour_)
+void UiButton::cache_paint(juce::Graphics &g, std::uint32_t background_colour_)
 {
     // App Style Butto Paint
     if (!_controller)
@@ -481,19 +481,20 @@ void UiButton::cache_paint(Graphics &g, uint32 background_colour_)
 
         if (_model->get_style())
         {
-            g.fillAll(Colour(background_colour_));
+            g.fillAll(juce::Colour(background_colour_));
 
             float radius = 6.f * (1.f / 40 * width);
             float line = 1.5 * (1.f / 40 * width);
 
             // BUTON ITSELFT
-            g.setGradientFill(ColourGradient(Colour(_foreground_color_1), 0.0f, 0.0f,
-                                             Colour(_foreground_color_2), 0.0f, height, false));
+            g.setGradientFill(juce::ColourGradient(juce::Colour(_foreground_color_1), 0.0f, 0.0f,
+                                                   juce::Colour(_foreground_color_2), 0.0f, height,
+                                                   false));
             g.fillRoundedRectangle(1 + center_offset_x, 1 + center_offset_y, width - 2, height - 2,
                                    radius);
 
             // OUTLINE
-            g.setColour(Colour(_outline_color));
+            g.setColour(juce::Colour(_outline_color));
             g.drawRoundedRectangle(1 + center_offset_x, 1 + center_offset_y, width - 2, height - 2,
                                    radius, line);
         }
@@ -509,25 +510,26 @@ void UiButton::cache_paint(Graphics &g, uint32 background_colour_)
             {
                 // TODO hack for higher labels
                 if (_controller->is_rect_style_else_fill_area())
-                    AppStyle::paint_outline_label(g, *this, _text, style, Justification::centred,
-                                                  0.1, 0.1, 0.8, 0.8);
+                    AppStyle::paint_outline_label(g, *this, _text, style,
+                                                  juce::Justification::centred, 0.1, 0.1, 0.8, 0.8);
                 else
-                    AppStyle::paint_outline_label(g, *this, _text, style, Justification::centred,
-                                                  0.1, 0.1, 0.8, 0.8, false);
+                    AppStyle::paint_outline_label(g, *this, _text, style,
+                                                  juce::Justification::centred, 0.1, 0.1, 0.8, 0.8,
+                                                  false);
             }
         }
 
         // IMAGE IF EXIST
         {
-            const Image *const img = _controller->get_current_image();
+            const juce::Image *const img = _controller->get_current_image();
             if (img)
             {
                 g.drawImageWithin(*img, 1 + center_offset_x, 1 + center_offset_y, width - 2,
-                                  height - 2, RectanglePlacement::fillDestination, true);
+                                  height - 2, juce::RectanglePlacement::fillDestination, true);
             }
             else
             {
-                const Drawable *drawable = _controller->get_current_drawable();
+                const juce::Drawable *drawable = _controller->get_current_drawable();
                 if (drawable)
                 {
                     float inside_width = 0.5 * width;
@@ -536,16 +538,16 @@ void UiButton::cache_paint(Graphics &g, uint32 background_colour_)
                     float inside_center_offset_y = 0.5 * getHeight() - 0.5 * inside_height;
 
                     drawable->drawWithin(g,
-                                         Rectangle<float>(inside_center_offset_x,
-                                                          inside_center_offset_y, inside_width,
-                                                          inside_height),
-                                         RectanglePlacement::centred, 1);
+                                         juce::Rectangle<float>(inside_center_offset_x,
+                                                                inside_center_offset_y,
+                                                                inside_width, inside_height),
+                                         juce::RectanglePlacement::centred, 1);
                 }
             }
         }
     }
 }
 
-Component *UiButton::get_top_level_component() { return this; }
+juce::Component *UiButton::get_top_level_component() { return this; }
 
 void *UiButton::get_top_level_impl() { return this; }

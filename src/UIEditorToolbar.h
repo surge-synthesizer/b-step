@@ -26,7 +26,7 @@
 class AnimateMove;
 class UiEditorInputPopup;
 
-class UiEditor : public ResizableWindow
+class UiEditor : public juce::ResizableWindow
 {
     friend class UiEditorToolbar;
     virtual void on_load_clicked() {}
@@ -46,15 +46,15 @@ class UiEditor : public ResizableWindow
     AnimateMove *_animate_mover;
 
   protected:
-    UiEditor(String name = "B-Info");
+    UiEditor(juce::String name = "B-Info");
     ~UiEditor();
 
-    void center_relative_and_make_visible(Component *const parent_ = nullptr, bool resize_ = true,
-                                          bool make_labels_dragable_ = true);
-    void restore_XY(Point<int> &XY_);
+    void center_relative_and_make_visible(juce::Component *const parent_ = nullptr,
+                                          bool resize_ = true, bool make_labels_dragable_ = true);
+    void restore_XY(juce::Point<int> &XY_);
     void make_childs_dragable();
 
-    bool canModalEventBeSentToComponent(const Component *) override { return true; }
+    bool canModalEventBeSentToComponent(const juce::Component *) override { return true; }
 
   public:
     void animate_move(int y_to_move_);
@@ -70,7 +70,7 @@ class UiEditor : public ResizableWindow
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorToolbar : public Component, public Button::Listener
+class UiEditorToolbar : public juce::Component, public juce::Button::Listener
 {
   public:
     //==============================================================================
@@ -83,9 +83,9 @@ class UiEditorToolbar : public Component, public Button::Listener
     UiEditor *const _owner_editor;
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
-    void buttonClicked(Button *buttonThatWasClicked);
+    void buttonClicked(juce::Button *buttonThatWasClicked);
 
     // Binary resources:
     static const char *load_svg;
@@ -102,13 +102,13 @@ class UiEditorToolbar : public Component, public Button::Listener
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<ImageButton> close;
-    std::unique_ptr<ImageButton> load;
-    std::unique_ptr<ImageButton> save;
-    std::unique_ptr<Drawable> drawable1;
-    std::unique_ptr<Drawable> drawable2;
-    std::unique_ptr<Drawable> drawable3;
-    std::unique_ptr<Drawable> drawable4;
+    std::unique_ptr<juce::ImageButton> close;
+    std::unique_ptr<juce::ImageButton> load;
+    std::unique_ptr<juce::ImageButton> save;
+    std::unique_ptr<juce::Drawable> drawable1;
+    std::unique_ptr<juce::Drawable> drawable2;
+    std::unique_ptr<juce::Drawable> drawable3;
+    std::unique_ptr<juce::Drawable> drawable4;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorToolbar)

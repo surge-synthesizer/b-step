@@ -26,7 +26,7 @@
 #include "UiLeftsideLabelModel.h"
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-void UiLeftsideLabelModel::set_text(const String &text_) { _text = text_; }
+void UiLeftsideLabelModel::set_text(const juce::String &text_) { _text = text_; }
 
 void UiLeftsideLabelModel::on_style_set(AppStyle *const style_)
 {
@@ -38,7 +38,7 @@ void UiLeftsideLabelModel::on_style_set(AppStyle *const style_)
     model->set_style(style_);
 }
 
-void UiLeftsideLabelModel::refresh_ui(Array<Component *> &components_to_repaint_)
+void UiLeftsideLabelModel::refresh_ui(juce::Array<juce::Component *> &components_to_repaint_)
 {
     model->get_components_to_repaint(components_to_repaint_);
 
@@ -50,7 +50,7 @@ void UiLeftsideLabelModel::refresh_ui(Array<Component *> &components_to_repaint_
 }
 
 void UiLeftsideLabelModel::get_controllers_for_paint_popup(
-    Array<MONO_Controller *> &controllers_with_popup_)
+    juce::Array<MONO_Controller *> &controllers_with_popup_)
 {
     model->get_controllers_for_paint_popup(controllers_with_popup_);
 }
@@ -60,13 +60,14 @@ void UiLeftsideLabelModel::get_controllers_for_paint_popup(
 UiLeftsideLabelModel::UiLeftsideLabelModel(AppInstanceStore *const app_insteance_store_)
     : _app_insteance_store(app_insteance_store_)
 {
-    addAndMakeVisible(bg_button = new ImageButton(String()));
-    bg_button->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                 Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    addAndMakeVisible(bg_button = new juce::ImageButton(juce::String()));
+    bg_button->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                                 juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     bg_button->addListener(this);
 
-    bg_button->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000), Image(), 1.000f,
-                         Colour(0x00000000), Image(), 1.000f, Colour(0x00000000));
+    bg_button->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
+                         juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
+                         juce::Colour(0x00000000));
     addAndMakeVisible(model = new ModelBase());
 
     //[UserPreSize]
@@ -96,19 +97,19 @@ UiLeftsideLabelModel::~UiLeftsideLabelModel()
 }
 
 //==============================================================================
-void UiLeftsideLabelModel::paint(Graphics &g)
+void UiLeftsideLabelModel::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     if (_style)
-        g.fillAll(Colour(_style->get_foreground_color()));
+        g.fillAll(juce::Colour(_style->get_foreground_color()));
     // g.fillAll(Colour(0xffffffff));
 
-    AppStyle::paint_outline_label(g, *this, _text, _style, Justification::centred, 0.0588f, 0.1000f,
-                                  0.6177f, 0.8000f);
+    AppStyle::paint_outline_label(g, *this, _text, _style, juce::Justification::centred, 0.0588f,
+                                  0.1000f, 0.6177f, 0.8000f);
     return;
     //[/UserPrePaint]
 
-    g.fillAll(Colours::white);
+    g.fillAll(juce::Colours::white);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -126,7 +127,7 @@ void UiLeftsideLabelModel::resized()
     //[/UserResized]
 }
 
-void UiLeftsideLabelModel::buttonClicked(Button *buttonThatWasClicked)
+void UiLeftsideLabelModel::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]

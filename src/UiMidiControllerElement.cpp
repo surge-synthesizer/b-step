@@ -28,48 +28,48 @@
 //==============================================================================
 NewComponent::NewComponent()
 {
-    addAndMakeVisible(slider = new Slider("new slider"));
+    addAndMakeVisible(slider = new juce::Slider("new slider"));
     slider->setRange(0, 10, 0);
-    slider->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    slider->setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
-    slider->setColour(Slider::thumbColourId, Colours::yellow);
-    slider->setColour(Slider::rotarySliderFillColourId, Colours::yellow);
-    slider->setColour(Slider::rotarySliderOutlineColourId, Colours::yellow);
-    slider->setColour(Slider::textBoxTextColourId, Colours::white);
+    slider->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    slider->setTextBoxStyle(juce::Slider::NoTextBox, false, 80, 20);
+    slider->setColour(juce::Slider::thumbColourId, juce::Colours::yellow);
+    slider->setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::yellow);
+    slider->setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colours::yellow);
+    slider->setColour(juce::Slider::textBoxTextColourId, juce::Colours::white);
     slider->addListener(this);
 
-    addAndMakeVisible(comboBox = new ComboBox("new combo box"));
+    addAndMakeVisible(comboBox = new juce::ComboBox("new combo box"));
     comboBox->setEditableText(false);
-    comboBox->setJustificationType(Justification::centredLeft);
+    comboBox->setJustificationType(juce::Justification::centredLeft);
     comboBox->setTextWhenNothingSelected(TRANS("target"));
     comboBox->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     comboBox->addListener(this);
 
-    addAndMakeVisible(comboBox2 = new ComboBox("new combo box"));
+    addAndMakeVisible(comboBox2 = new juce::ComboBox("new combo box"));
     comboBox2->setEditableText(false);
-    comboBox2->setJustificationType(Justification::centredLeft);
+    comboBox2->setJustificationType(juce::Justification::centredLeft);
     comboBox2->setTextWhenNothingSelected(TRANS("button or rotary"));
     comboBox2->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     comboBox2->addListener(this);
 
-    addAndMakeVisible(comboBox3 = new ComboBox("new combo box"));
+    addAndMakeVisible(comboBox3 = new juce::ComboBox("new combo box"));
     comboBox3->setEditableText(false);
-    comboBox3->setJustificationType(Justification::centredLeft);
+    comboBox3->setJustificationType(juce::Justification::centredLeft);
     comboBox3->setTextWhenNothingSelected(TRANS("feedback def file"));
     comboBox3->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     comboBox3->addListener(this);
 
-    addAndMakeVisible(textButton = new TextButton(""));
+    addAndMakeVisible(textButton = new juce::TextButton(""));
     textButton->setButtonText(TRANS("copy"));
     textButton->addListener(this);
 
-    addAndMakeVisible(textButton2 = new TextButton(""));
+    addAndMakeVisible(textButton2 = new juce::TextButton(""));
     textButton2->setButtonText(TRANS("paste"));
     textButton2->addListener(this);
 
-    addAndMakeVisible(comboBox4 = new ComboBox("new combo box"));
+    addAndMakeVisible(comboBox4 = new juce::ComboBox("new combo box"));
     comboBox4->setEditableText(false);
-    comboBox4->setJustificationType(Justification::centredLeft);
+    comboBox4->setJustificationType(juce::Justification::centredLeft);
     comboBox4->setTextWhenNothingSelected(TRANS("id"));
     comboBox4->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     comboBox4->addListener(this);
@@ -101,12 +101,12 @@ NewComponent::~NewComponent()
 }
 
 //==============================================================================
-void NewComponent::paint(Graphics &g)
+void NewComponent::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll(Colours::black);
+    g.fillAll(juce::Colours::black);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -125,7 +125,7 @@ void NewComponent::resized()
     //[/UserResized]
 }
 
-void NewComponent::sliderValueChanged(Slider *sliderThatWasMoved)
+void NewComponent::sliderValueChanged(juce::Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
@@ -140,7 +140,7 @@ void NewComponent::sliderValueChanged(Slider *sliderThatWasMoved)
     //[/UsersliderValueChanged_Post]
 }
 
-void NewComponent::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
+void NewComponent::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
 {
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]
@@ -170,7 +170,7 @@ void NewComponent::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
     //[/UsercomboBoxChanged_Post]
 }
 
-void NewComponent::buttonClicked(Button *buttonThatWasClicked)
+void NewComponent::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]

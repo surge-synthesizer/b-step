@@ -20,22 +20,24 @@
 #include "UIEditorToolbar.h"
 #include "UiEditorInputPopup.h"
 
-void UiEditorInputPopup::capture_editor(TextEditor *source_)
+void UiEditorInputPopup::capture_editor(juce::TextEditor *source_)
 {
     release_editor();
 
     captured_editor = source_;
 
-    Component *parent_component = source_->getParentComponent();
+    juce::Component *parent_component = source_->getParentComponent();
     parent_editor = nullptr;
     while (parent_component)
     {
         parent_editor = dynamic_cast<UiEditor *>(parent_component);
         if (parent_editor)
         {
-            int desktop_height =
-                Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getHeight();
-            Rectangle<int> child_screen_bounds = source_->getScreenBounds();
+            int desktop_height = juce::Desktop::getInstance()
+                                     .getDisplays()
+                                     .getPrimaryDisplay()
+                                     ->userArea.getHeight();
+            juce::Rectangle<int> child_screen_bounds = source_->getScreenBounds();
             int top_y = desktop_height / 4 - source_->getHeight() / 2;
 
             parent_editor->animate_move(top_y - child_screen_bounds.getY());
@@ -60,10 +62,10 @@ void UiEditorInputPopup::release_editor()
 
 void UiEditorInputPopup::refresh_ui()
 {
-    Component *focus_component = Component::getCurrentlyFocusedComponent();
+    juce::Component *focus_component = juce::Component::getCurrentlyFocusedComponent();
     if (focus_component)
     {
-        TextEditor *editor = dynamic_cast<TextEditor *>(focus_component);
+        juce::TextEditor *editor = dynamic_cast<juce::TextEditor *>(focus_component);
         if (editor)
         {
             if (editor != captured_editor)

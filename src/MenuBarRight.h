@@ -39,7 +39,7 @@ class UIClipboard;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class MenuBarRight : public Component, public Button::Listener
+class MenuBarRight : public juce::Component, public juce::Button::Listener
 {
   public:
     //==============================================================================
@@ -52,10 +52,10 @@ class MenuBarRight : public Component, public Button::Listener
     AppInstanceStore *const _app_instance_store;
     GstepAudioProcessorEditor *const _main_window;
 
-    void mouseDown(const MouseEvent &e_) override;
+    void mouseDown(const juce::MouseEvent &e_) override;
 
-    int32 last_painted_colour;
-    Array<Drawable *> drawables;
+    std::int32_t last_painted_colour;
+    juce::Array<juce::Drawable *> drawables;
 
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
@@ -63,13 +63,13 @@ class MenuBarRight : public Component, public Button::Listener
 
     // UI REFRESH
   public:
-    void refresh_ui(Array<Component *> &components_to_repaint_);
+    void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_);
 
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
-    void buttonClicked(Button *buttonThatWasClicked) override;
+    void buttonClicked(juce::Button *buttonThatWasClicked) override;
 
     // Binary resources:
     static const char *load_svg;
@@ -98,36 +98,36 @@ class MenuBarRight : public Component, public Button::Listener
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<ImageButton> open_settings_editor;
-    ScopedPointer<ImageButton> do_midi_learn;
-    ScopedPointer<ImageButton> open_about_window;
-    ScopedPointer<ImageButton> save_preset;
-    ScopedPointer<ImageButton> panic;
-    ScopedPointer<ImageButton> load_preset;
-    ScopedPointer<UIRubber> button_rubber;
-    ScopedPointer<UIQuestion> button_question;
-    ScopedPointer<UIClipboard> button_clipboard_1;
-    ScopedPointer<UIClipboard> button_clipboard_2;
-    ScopedPointer<UIClipboard> button_clipboard_3;
-    ScopedPointer<UIClipboard> button_clipboard_4;
-    ScopedPointer<ImageButton> open_setup_editor;
-    ScopedPointer<ImageButton> clear_project;
-    ScopedPointer<ImageButton> open_styler;
-    ScopedPointer<Drawable> drawable1;
-    ScopedPointer<Drawable> drawable2;
-    ScopedPointer<Drawable> drawable3;
-    ScopedPointer<Drawable> drawable4;
-    ScopedPointer<Drawable> drawable5;
-    ScopedPointer<Drawable> drawable6;
-    ScopedPointer<Drawable> drawable7;
-    ScopedPointer<Drawable> drawable8;
-    ScopedPointer<Drawable> drawable9;
-    ScopedPointer<Drawable> drawable10;
-    ScopedPointer<Drawable> drawable11;
-    ScopedPointer<Drawable> drawable12;
-    ScopedPointer<Drawable> drawable13;
-    ScopedPointer<Drawable> drawable14;
-    ScopedPointer<Drawable> drawable15;
+    juce::ScopedPointer<juce::ImageButton> open_settings_editor;
+    juce::ScopedPointer<juce::ImageButton> do_midi_learn;
+    juce::ScopedPointer<juce::ImageButton> open_about_window;
+    juce::ScopedPointer<juce::ImageButton> save_preset;
+    juce::ScopedPointer<juce::ImageButton> panic;
+    juce::ScopedPointer<juce::ImageButton> load_preset;
+    juce::ScopedPointer<UIRubber> button_rubber;
+    juce::ScopedPointer<UIQuestion> button_question;
+    juce::ScopedPointer<UIClipboard> button_clipboard_1;
+    juce::ScopedPointer<UIClipboard> button_clipboard_2;
+    juce::ScopedPointer<UIClipboard> button_clipboard_3;
+    juce::ScopedPointer<UIClipboard> button_clipboard_4;
+    juce::ScopedPointer<juce::ImageButton> open_setup_editor;
+    juce::ScopedPointer<juce::ImageButton> clear_project;
+    juce::ScopedPointer<juce::ImageButton> open_styler;
+    juce::ScopedPointer<juce::Drawable> drawable1;
+    juce::ScopedPointer<juce::Drawable> drawable2;
+    juce::ScopedPointer<juce::Drawable> drawable3;
+    juce::ScopedPointer<juce::Drawable> drawable4;
+    juce::ScopedPointer<juce::Drawable> drawable5;
+    juce::ScopedPointer<juce::Drawable> drawable6;
+    juce::ScopedPointer<juce::Drawable> drawable7;
+    juce::ScopedPointer<juce::Drawable> drawable8;
+    juce::ScopedPointer<juce::Drawable> drawable9;
+    juce::ScopedPointer<juce::Drawable> drawable10;
+    juce::ScopedPointer<juce::Drawable> drawable11;
+    juce::ScopedPointer<juce::Drawable> drawable12;
+    juce::ScopedPointer<juce::Drawable> drawable13;
+    juce::ScopedPointer<juce::Drawable> drawable14;
+    juce::ScopedPointer<juce::Drawable> drawable15;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MenuBarRight)

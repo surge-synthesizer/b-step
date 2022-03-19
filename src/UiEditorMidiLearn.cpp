@@ -53,16 +53,16 @@ void UiEditorMidiLearn::load_select_midi_learn_mode()
     switch (_app_instance_store->midi_in_map.learn_mode)
     {
     case MIDIInToControllerMap::_1_1:
-        cb_midi_learn_mode->setSelectedId(1, NotificationType::dontSendNotification);
+        cb_midi_learn_mode->setSelectedId(1, juce::NotificationType::dontSendNotification);
         break;
     case MIDIInToControllerMap::_1_N:
-        cb_midi_learn_mode->setSelectedId(2, NotificationType::dontSendNotification);
+        cb_midi_learn_mode->setSelectedId(2, juce::NotificationType::dontSendNotification);
         break;
     case MIDIInToControllerMap::_N_1:
-        cb_midi_learn_mode->setSelectedId(3, NotificationType::dontSendNotification);
+        cb_midi_learn_mode->setSelectedId(3, juce::NotificationType::dontSendNotification);
         break;
     case MIDIInToControllerMap::_N_N:
-        cb_midi_learn_mode->setSelectedId(4, NotificationType::dontSendNotification);
+        cb_midi_learn_mode->setSelectedId(4, juce::NotificationType::dontSendNotification);
         break;
     default:
         cb_midi_learn_mode->setSelectedId(0);
@@ -74,10 +74,10 @@ void UiEditorMidiLearn::load_assignments()
     cb_midi_assigns->clear();
 
     const MIDIInToControllerMap &map = _app_instance_store->midi_in_map;
-    Array<const MIDIInToControllerHandler *> handlers =
+    juce::Array<const MIDIInToControllerHandler *> handlers =
         map.get_registerd_handlers_for_learning_controller();
     const MIDIInToControllerHandler *handler;
-    String text;
+    juce::String text;
     int i = 0;
     for (; i != handlers.size(); ++i)
     {
@@ -92,13 +92,13 @@ void UiEditorMidiLearn::load_assignments()
 
         // TYPE
         _current_number = handler->_midi_controller_type;
-        text += String(_current_number);
+        text += juce::String(_current_number);
 
-        text += String(" - ");
+        text += juce::String(" - ");
 
         // CHANNEL
         _current_channel = handler->_listen_on_channel;
-        text += String("Ch ") + String(_current_channel);
+        text += juce::String("Ch ") + juce::String(_current_channel);
 
         cb_midi_assigns->addItem(text, i + 1);
     }
@@ -112,7 +112,8 @@ void UiEditorMidiLearn::refresh_ui()
     MONO_Controller *const learning_controller = map.get_learning_controller();
     if (learning_controller)
     {
-        label_target->setText(learning_controller->get_controller_name(), dontSendNotification);
+        label_target->setText(learning_controller->get_controller_name(),
+                              juce::dontSendNotification);
     }
 
     if (map.get_change_counter() != _last_change_counter ||
@@ -163,80 +164,80 @@ void UiEditorMidiLearn::on_close_clicked()
 UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-MIDI-Learn"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(label_target = new Label(String(), TRANS("MIDI LEARN")));
-    label_target->setFont(Font(15.00f, Font::plain));
-    label_target->setJustificationType(Justification::centred);
+    addAndMakeVisible(label_target = new juce::Label(juce::String(), TRANS("MIDI LEARN")));
+    label_target->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_target->setJustificationType(juce::Justification::centred);
     label_target->setEditable(false, false, false);
-    label_target->setColour(Label::textColourId,
-                            Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_target->setColour(TextEditor::textColourId, Colours::black);
-    label_target->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_target->setColour(juce::Label::textColourId,
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_target->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_target->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(delete_asignment = new TextButton(String()));
+    addAndMakeVisible(delete_asignment = new juce::TextButton(juce::String()));
     delete_asignment->setButtonText(TRANS("remove last in list"));
     delete_asignment->addListener(this);
-    delete_asignment->setColour(TextButton::buttonColourId, Colours::red);
-    delete_asignment->setColour(TextButton::buttonOnColourId, Colours::red);
+    delete_asignment->setColour(juce::TextButton::buttonColourId, juce::Colours::red);
+    delete_asignment->setColour(juce::TextButton::buttonOnColourId, juce::Colours::red);
 
-    addAndMakeVisible(cb_midi_learn_mode = new ComboBox(String()));
+    addAndMakeVisible(cb_midi_learn_mode = new juce::ComboBox(juce::String()));
     cb_midi_learn_mode->setExplicitFocusOrder(4);
     cb_midi_learn_mode->setEditableText(false);
-    cb_midi_learn_mode->setJustificationType(Justification::centred);
+    cb_midi_learn_mode->setJustificationType(juce::Justification::centred);
     cb_midi_learn_mode->setTextWhenNothingSelected(TRANS("choose"));
     cb_midi_learn_mode->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_learn_mode->addListener(this);
 
-    addAndMakeVisible(cb_midi_assigns = new ComboBox(String()));
+    addAndMakeVisible(cb_midi_assigns = new juce::ComboBox(juce::String()));
     cb_midi_assigns->setExplicitFocusOrder(4);
     cb_midi_assigns->setEditableText(false);
-    cb_midi_assigns->setJustificationType(Justification::centred);
+    cb_midi_assigns->setJustificationType(juce::Justification::centred);
     cb_midi_assigns->setTextWhenNothingSelected(TRANS("nothing"));
     cb_midi_assigns->setTextWhenNoChoicesAvailable(TRANS("( nothing assigned )"));
     cb_midi_assigns->addListener(this);
 
     addAndMakeVisible(toolbar = new UiEditorToolbar(this));
 
-    addAndMakeVisible(label_target3 = new Label(String(), TRANS("Learn Mode")));
-    label_target3->setFont(Font(15.00f, Font::plain));
-    label_target3->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_target3 = new juce::Label(juce::String(), TRANS("Learn Mode")));
+    label_target3->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_target3->setJustificationType(juce::Justification::centredRight);
     label_target3->setEditable(false, false, false);
-    label_target3->setColour(Label::textColourId,
-                             Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_target3->setColour(TextEditor::textColourId, Colours::black);
-    label_target3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_target3->setColour(juce::Label::textColourId,
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_target3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_target3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_target8 = new Label(String(), TRANS("Assignments\n")));
-    label_target8->setFont(Font(15.00f, Font::plain));
-    label_target8->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_target8 = new juce::Label(juce::String(), TRANS("Assignments\n")));
+    label_target8->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_target8->setJustificationType(juce::Justification::centredRight);
     label_target8->setEditable(false, false, false);
-    label_target8->setColour(Label::textColourId,
-                             Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_target8->setColour(TextEditor::textColourId, Colours::black);
-    label_target8->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_target8->setColour(juce::Label::textColourId,
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_target8->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_target8->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(button_remove_all_mappings = new ImageButton(String()));
+    addAndMakeVisible(button_remove_all_mappings = new juce::ImageButton(juce::String()));
     button_remove_all_mappings->addListener(this);
 
-    button_remove_all_mappings->setImages(false, true, true, Image(), 1.000f, Colour(0x00000000),
-                                          Image(), 1.000f, Colour(0x00000000), Image(), 1.000f,
-                                          Colour(0x00000000));
-    addAndMakeVisible(button_info = new TextButton(String()));
+    button_remove_all_mappings->setImages(
+        false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
+        juce::Colour(0x00000000), juce::Image(), 1.000f, juce::Colour(0x00000000));
+    addAndMakeVisible(button_info = new juce::TextButton(juce::String()));
     button_info->setButtonText(TRANS("?"));
     button_info->addListener(this);
 
     addAndMakeVisible(
-        label = new Label("new label",
-                          TRANS("INFO: Select/click an element on the user interface then move a "
-                                "slider or push a button on your MIDI controller. Done.")));
-    label->setFont(Font(15.00f, Font::plain));
-    label->setJustificationType(Justification::centredLeft);
+        label = new juce::Label(
+            "new label", TRANS("INFO: Select/click an element on the user interface then move a "
+                               "slider or push a button on your MIDI controller. Done.")));
+    label->setFont(juce::Font(15.00f, juce::Font::plain));
+    label->setJustificationType(juce::Justification::centredLeft);
     label->setEditable(false, false, false);
-    label->setColour(Label::textColourId,
-                     Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label->setColour(TextEditor::textColourId, Colours::black);
-    label->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label->setColour(juce::Label::textColourId,
+                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    drawable1 = Drawable::createFromImageData(trash_svg, trash_svgSize).release();
+    drawable1 = juce::Drawable::createFromImageData(trash_svg, trash_svgSize).release();
 
     //[UserPreSize]
     setOpaque(true);
@@ -267,7 +268,7 @@ UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_
 UiEditorMidiLearn::~UiEditorMidiLearn()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
-    _app_instance_store->editor_config.XY_midi_learn_editor = Point<int>(getX(), getY());
+    _app_instance_store->editor_config.XY_midi_learn_editor = juce::Point<int>(getX(), getY());
 
     _app_instance_store->midi_in_map.set_learning(false);
     _app_instance_store->editor_config.controller_mid_learn = nullptr;
@@ -290,28 +291,28 @@ UiEditorMidiLearn::~UiEditorMidiLearn()
 }
 
 //==============================================================================
-void UiEditorMidiLearn::paint(Graphics &g)
+void UiEditorMidiLearn::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.setColour(Colour(0xff161616));
+    g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     jassert(drawable1 != 0);
     if (drawable1 != 0)
         drawable1->drawWithin(
             g,
-            Rectangle<float>(proportionOfWidth(0.8667f), proportionOfHeight(0.8000f),
-                             proportionOfWidth(0.1111f), proportionOfHeight(0.0960f)),
-            RectanglePlacement::centred, 1.000f);
+            juce::Rectangle<float>(proportionOfWidth(0.8667f), proportionOfHeight(0.8000f),
+                                   proportionOfWidth(0.1111f), proportionOfHeight(0.0960f)),
+            juce::RectanglePlacement::centred, 1.000f);
 
     //[UserPaint] Add your own custom painting code here..
-    ResizableWindow::moved();
+    juce::ResizableWindow::moved();
     //[/UserPaint]
 }
 
@@ -341,11 +342,11 @@ void UiEditorMidiLearn::resized()
     label->setBounds(proportionOfWidth(0.0556f), proportionOfHeight(0.7200f),
                      proportionOfWidth(0.7778f), proportionOfHeight(0.2000f));
     //[UserResized] Add your own custom resize handling here..
-    ResizableWindow::resized();
+    juce::ResizableWindow::resized();
     //[/UserResized]
 }
 
-void UiEditorMidiLearn::buttonClicked(Button *buttonThatWasClicked)
+void UiEditorMidiLearn::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -362,7 +363,7 @@ void UiEditorMidiLearn::buttonClicked(Button *buttonThatWasClicked)
     else if (buttonThatWasClicked == button_remove_all_mappings)
     {
         //[UserButtonCode_button_remove_all_mappings] -- add your button handler code here..
-        class CallbackManager : public ModalComponentManager::Callback
+        class CallbackManager : public juce::ModalComponentManager::Callback
         {
             MIDIInToControllerMap *const _map;
             UiEditorMidiLearn *const _editor;
@@ -389,8 +390,8 @@ void UiEditorMidiLearn::buttonClicked(Button *buttonThatWasClicked)
         };
 
         CallbackManager *callback = new CallbackManager(&_app_instance_store->midi_in_map, this);
-        AlertWindow::showOkCancelBox(
-            AlertWindow::WarningIcon, "Clear MIDI mappings?",
+        juce::AlertWindow::showOkCancelBox(
+            juce::AlertWindow::WarningIcon, "Clear MIDI mappings?",
             "This will delete all your assinged controllers! Press OK if you like to do it now!",
             "CLEAR ALL", "KEEP IT", _app_instance_store->editor, callback);
         //[/UserButtonCode_button_remove_all_mappings]
@@ -410,7 +411,7 @@ void UiEditorMidiLearn::buttonClicked(Button *buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiEditorMidiLearn::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
+void UiEditorMidiLearn::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
 {
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]

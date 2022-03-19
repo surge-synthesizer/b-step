@@ -44,20 +44,20 @@ class UiLeftsideModelLabel : public SubeditorBase
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
   private:
-    String _text;
+    juce::String _text;
 
   public:
-    void set_text(const String &text_) override;
+    void set_text(const juce::String &text_) override;
     void on_style_set(AppStyle *const style_) override;
 
     void set_controller(MONO_Controller *const controller_) { model->set_controller(controller_); }
 
-    void refresh_ui(Array<Component *> &components_to_repaint_) override;
-    void
-    get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_with_popup_) override;
+    void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_) override;
+    void get_controllers_for_paint_popup(
+        juce::Array<MONO_Controller *> &controllers_with_popup_) override;
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
 
   private:
@@ -65,7 +65,7 @@ class UiLeftsideModelLabel : public SubeditorBase
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<ModelBase> model;
+    juce::ScopedPointer<ModelBase> model;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiLeftsideModelLabel)

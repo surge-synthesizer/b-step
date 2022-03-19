@@ -29,31 +29,41 @@ void mono_AmpPainter::timerCallback() { repaint(); }
 void mono_AmpPainter::refresh_buttons()
 {
     ComponentColours colours = UiLookAndFeel::getInstance()->colours;
-    Colour button_on = colours.button_on_colour;
-    Colour button_off = colours.button_off_colour;
+    juce::Colour button_on = colours.button_on_colour;
+    juce::Colour button_off = colours.button_off_colour;
 
-    osc_1->setColour(TextButton::buttonColourId, show_osc[0] ? Colours::lightblue : button_off);
-    osc_2->setColour(TextButton::buttonColourId, show_osc[1] ? Colours::blueviolet : button_off);
-    osc_3->setColour(TextButton::buttonColourId, show_osc[2] ? Colours::violet : button_off);
+    osc_1->setColour(juce::TextButton::buttonColourId,
+                     show_osc[0] ? juce::Colours::lightblue : button_off);
+    osc_2->setColour(juce::TextButton::buttonColourId,
+                     show_osc[1] ? juce::Colours::blueviolet : button_off);
+    osc_3->setColour(juce::TextButton::buttonColourId,
+                     show_osc[2] ? juce::Colours::violet : button_off);
 
-    lfo_1->setColour(TextButton::buttonColourId, show_lfo[0] ? Colours::green : button_off);
-    lfo_2->setColour(TextButton::buttonColourId, show_lfo[1] ? Colours::greenyellow : button_off);
-    lfo_3->setColour(TextButton::buttonColourId, show_lfo[2] ? Colours::yellow : button_off);
+    lfo_1->setColour(juce::TextButton::buttonColourId,
+                     show_lfo[0] ? juce::Colours::green : button_off);
+    lfo_2->setColour(juce::TextButton::buttonColourId,
+                     show_lfo[1] ? juce::Colours::greenyellow : button_off);
+    lfo_3->setColour(juce::TextButton::buttonColourId,
+                     show_lfo[2] ? juce::Colours::yellow : button_off);
 
-    f_1->setColour(TextButton::buttonColourId, show_filter[0] ? Colours::red : button_off);
-    f_2->setColour(TextButton::buttonColourId, show_filter[1] ? Colours::orangered : button_off);
-    f_3->setColour(TextButton::buttonColourId, show_filter[2] ? Colours::orange : button_off);
+    f_1->setColour(juce::TextButton::buttonColourId,
+                   show_filter[0] ? juce::Colours::red : button_off);
+    f_2->setColour(juce::TextButton::buttonColourId,
+                   show_filter[1] ? juce::Colours::orangered : button_off);
+    f_3->setColour(juce::TextButton::buttonColourId,
+                   show_filter[2] ? juce::Colours::orange : button_off);
 
-    f_env_1->setColour(TextButton::buttonColourId, show_filter_env[0] ? Colours::red : button_off);
-    f_env_2->setColour(TextButton::buttonColourId,
-                       show_filter_env[1] ? Colours::orangered : button_off);
-    f_env_3->setColour(TextButton::buttonColourId,
-                       show_filter_env[2] ? Colours::orange : button_off);
+    f_env_1->setColour(juce::TextButton::buttonColourId,
+                       show_filter_env[0] ? juce::Colours::red : button_off);
+    f_env_2->setColour(juce::TextButton::buttonColourId,
+                       show_filter_env[1] ? juce::Colours::orangered : button_off);
+    f_env_3->setColour(juce::TextButton::buttonColourId,
+                       show_filter_env[2] ? juce::Colours::orange : button_off);
 
-    out->setColour(TextButton::buttonColourId,
+    out->setColour(juce::TextButton::buttonColourId,
                    show_out ? UiLookAndFeel::getInstance()->colours.slider_track_colour
                             : button_off);
-    out_env->setColour(TextButton::buttonColourId,
+    out_env->setColour(juce::TextButton::buttonColourId,
                        show_out_env
                            ? UiLookAndFeel::getInstance()->colours.slider_track_colour.darker()
                            : button_off);
@@ -67,68 +77,68 @@ mono_AmpPainter::mono_AmpPainter() : original_w(1000), original_h(400)
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    addAndMakeVisible(sl_osc_octave_3 = new Slider(String()));
+    addAndMakeVisible(sl_osc_octave_3 = new juce::Slider(juce::String()));
     sl_osc_octave_3->setRange(300, 44100, 1);
-    sl_osc_octave_3->setSliderStyle(Slider::LinearHorizontal);
-    sl_osc_octave_3->setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
-    sl_osc_octave_3->setColour(Slider::rotarySliderFillColourId, Colours::yellow);
-    sl_osc_octave_3->setColour(Slider::rotarySliderOutlineColourId, Colour(0xff161616));
-    sl_osc_octave_3->setColour(Slider::textBoxTextColourId, Colours::yellow);
+    sl_osc_octave_3->setSliderStyle(juce::Slider::LinearHorizontal);
+    sl_osc_octave_3->setTextBoxStyle(juce::Slider::NoTextBox, false, 80, 20);
+    sl_osc_octave_3->setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::yellow);
+    sl_osc_octave_3->setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colour(0xff161616));
+    sl_osc_octave_3->setColour(juce::Slider::textBoxTextColourId, juce::Colours::yellow);
     sl_osc_octave_3->addListener(this);
 
-    addAndMakeVisible(osc_1 = new TextButton("new button"));
+    addAndMakeVisible(osc_1 = new juce::TextButton("new button"));
     osc_1->setButtonText(TRANS("OSC 1"));
     osc_1->addListener(this);
 
-    addAndMakeVisible(osc_2 = new TextButton("new button"));
+    addAndMakeVisible(osc_2 = new juce::TextButton("new button"));
     osc_2->setButtonText(TRANS("OSC 2"));
     osc_2->addListener(this);
 
-    addAndMakeVisible(osc_3 = new TextButton("new button"));
+    addAndMakeVisible(osc_3 = new juce::TextButton("new button"));
     osc_3->setButtonText(TRANS("OSC 3"));
     osc_3->addListener(this);
 
-    addAndMakeVisible(lfo_1 = new TextButton("new button"));
+    addAndMakeVisible(lfo_1 = new juce::TextButton("new button"));
     lfo_1->setButtonText(TRANS("LFO 1"));
     lfo_1->addListener(this);
 
-    addAndMakeVisible(lfo_2 = new TextButton("new button"));
+    addAndMakeVisible(lfo_2 = new juce::TextButton("new button"));
     lfo_2->setButtonText(TRANS("LFO 2"));
     lfo_2->addListener(this);
 
-    addAndMakeVisible(lfo_3 = new TextButton("new button"));
+    addAndMakeVisible(lfo_3 = new juce::TextButton("new button"));
     lfo_3->setButtonText(TRANS("LFO 3"));
     lfo_3->addListener(this);
 
-    addAndMakeVisible(out = new TextButton("new button"));
+    addAndMakeVisible(out = new juce::TextButton("new button"));
     out->setButtonText(TRANS("OUT"));
     out->addListener(this);
 
-    addAndMakeVisible(f_1 = new TextButton("new button"));
+    addAndMakeVisible(f_1 = new juce::TextButton("new button"));
     f_1->setButtonText(TRANS("F 1"));
     f_1->addListener(this);
 
-    addAndMakeVisible(f_2 = new TextButton("new button"));
+    addAndMakeVisible(f_2 = new juce::TextButton("new button"));
     f_2->setButtonText(TRANS("F 2"));
     f_2->addListener(this);
 
-    addAndMakeVisible(f_3 = new TextButton("new button"));
+    addAndMakeVisible(f_3 = new juce::TextButton("new button"));
     f_3->setButtonText(TRANS("F 3"));
     f_3->addListener(this);
 
-    addAndMakeVisible(f_env_1 = new TextButton("new button"));
+    addAndMakeVisible(f_env_1 = new juce::TextButton("new button"));
     f_env_1->setButtonText(TRANS("F-ADSR 1"));
     f_env_1->addListener(this);
 
-    addAndMakeVisible(f_env_2 = new TextButton("new button"));
+    addAndMakeVisible(f_env_2 = new juce::TextButton("new button"));
     f_env_2->setButtonText(TRANS("F-ADSR 2"));
     f_env_2->addListener(this);
 
-    addAndMakeVisible(f_env_3 = new TextButton("new button"));
+    addAndMakeVisible(f_env_3 = new juce::TextButton("new button"));
     f_env_3->setButtonText(TRANS("F-ADSR 3"));
     f_env_3->addListener(this);
 
-    addAndMakeVisible(out_env = new TextButton("new button"));
+    addAndMakeVisible(out_env = new juce::TextButton("new button"));
     out_env->setButtonText(TRANS("O-ADSR"));
     out_env->addListener(this);
 
@@ -224,11 +234,11 @@ mono_AmpPainter::~mono_AmpPainter()
 }
 
 //==============================================================================
-void mono_AmpPainter::paint(Graphics &g)
+void mono_AmpPainter::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     {
-        g.fillAll(Colour(0xff101010));
+        g.fillAll(juce::Colour(0xff101010));
 
         // TODO MAKE INTS!
         const int size = sl_osc_octave_3->getValue();
@@ -242,9 +252,9 @@ void mono_AmpPainter::paint(Graphics &g)
         const int past_offaset = osc_values[0]->get_past_offset();
 
         {
-            Colour colour = Colour(0xff444444);
-            g.setGradientFill(ColourGradient(colour.darker(0.3f), 0.0f, 0.0f, Colour(0xff161617),
-                                             0.0f, height, false));
+            juce::Colour colour = juce::Colour(0xff444444);
+            g.setGradientFill(juce::ColourGradient(colour.darker(0.3f), 0.0f, 0.0f,
+                                                   juce::Colour(0xff161617), 0.0f, height, false));
             // g.setGradientFill (ColourGradient (color_1, 0.0f, 0.0f, color_1.darker (0.3f), 0.0f,
             // height, false));
             g.fillRoundedRectangle(proportionOfWidth(0.170f), proportionOfHeight(0.0375f),
@@ -261,17 +271,17 @@ void mono_AmpPainter::paint(Graphics &g)
 
         struct mono_AmpPainter
         {
-            static void exec(Graphics &g,
+            static void exec(juce::Graphics &g,
 
                              const int buffer_pos_, const float scale_,
 
                              const int x_offset_, const int y_center_, const int height_,
 
-                             const Colour &col_,
+                             const juce::Colour &col_,
 
                              EndlessBuffer<float> &source_buffer_, int num_samples_)
             {
-                const Colour col_fill(col_.withAlpha(0.1f));
+                const juce::Colour col_fill(col_.withAlpha(0.1f));
                 int last_x = -9999;
                 int last_y = -9999;
                 for (int sid = 0; sid < num_samples_; ++sid)
@@ -335,13 +345,13 @@ void mono_AmpPainter::paint(Graphics &g)
             EndlessBuffer<float> &values = *osc_values[osc_id];
             if (show_osc[osc_id])
             {
-                Colour col;
+                juce::Colour col;
                 if (osc_id == 0)
-                    col = Colours::lightblue;
+                    col = juce::Colours::lightblue;
                 else if (osc_id == 1)
-                    col = Colours::blueviolet;
+                    col = juce::Colours::blueviolet;
                 else
-                    col = Colours::violet;
+                    col = juce::Colours::violet;
 
                 mono_AmpPainter::exec(g,
 
@@ -358,13 +368,13 @@ void mono_AmpPainter::paint(Graphics &g)
             EndlessBuffer<float> &values = *lfo_values[lfo_id];
             if (show_lfo[lfo_id])
             {
-                Colour col;
+                juce::Colour col;
                 if (lfo_id == 0)
-                    col = Colours::green;
+                    col = juce::Colours::green;
                 else if (lfo_id == 1)
-                    col = Colours::greenyellow;
+                    col = juce::Colours::greenyellow;
                 else
-                    col = Colours::yellow;
+                    col = juce::Colours::yellow;
 
                 mono_AmpPainter::exec(g,
 
@@ -378,13 +388,13 @@ void mono_AmpPainter::paint(Graphics &g)
 
         for (int filter_id = 0; filter_id != lfo_values.size(); ++filter_id)
         {
-            Colour col;
+            juce::Colour col;
             if (filter_id == 0)
-                col = Colours::red;
+                col = juce::Colours::red;
             else if (filter_id == 1)
-                col = Colours::orangered;
+                col = juce::Colours::orangered;
             else
-                col = Colours::orange;
+                col = juce::Colours::orange;
 
             EndlessBuffer<float> &values = *filter_values[filter_id];
             if (show_filter[filter_id])
@@ -441,41 +451,41 @@ void mono_AmpPainter::paint(Graphics &g)
     return;
     //[/UserPrePaint]
 
-    g.fillAll(Colours::black);
+    g.fillAll(juce::Colours::black);
 
-    g.setGradientFill(
-        ColourGradient(Colour(0xff161616), static_cast<float>(proportionOfWidth(0.5000f)),
-                       static_cast<float>(proportionOfHeight(0.0375f)), Colour(0x00000000),
-                       static_cast<float>(proportionOfWidth(0.5000f)),
-                       static_cast<float>(proportionOfHeight(0.0625f)), false));
+    g.setGradientFill(juce::ColourGradient(
+        juce::Colour(0xff161616), static_cast<float>(proportionOfWidth(0.5000f)),
+        static_cast<float>(proportionOfHeight(0.0375f)), juce::Colour(0x00000000),
+        static_cast<float>(proportionOfWidth(0.5000f)),
+        static_cast<float>(proportionOfHeight(0.0625f)), false));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setGradientFill(
-        ColourGradient(Colour(0xff161616), static_cast<float>(proportionOfWidth(0.1700f)),
-                       static_cast<float>(proportionOfHeight(0.5000f)), Colour(0x00000000),
-                       static_cast<float>(proportionOfWidth(0.1800f)),
-                       static_cast<float>(proportionOfHeight(0.5000f)), false));
+    g.setGradientFill(juce::ColourGradient(
+        juce::Colour(0xff161616), static_cast<float>(proportionOfWidth(0.1700f)),
+        static_cast<float>(proportionOfHeight(0.5000f)), juce::Colour(0x00000000),
+        static_cast<float>(proportionOfWidth(0.1800f)),
+        static_cast<float>(proportionOfHeight(0.5000f)), false));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setGradientFill(
-        ColourGradient(Colour(0xff161616), static_cast<float>(proportionOfWidth(0.9850f)),
-                       static_cast<float>(proportionOfHeight(0.5000f)), Colour(0x00000000),
-                       static_cast<float>(proportionOfWidth(0.9750f)),
-                       static_cast<float>(proportionOfHeight(0.5000f)), false));
+    g.setGradientFill(juce::ColourGradient(
+        juce::Colour(0xff161616), static_cast<float>(proportionOfWidth(0.9850f)),
+        static_cast<float>(proportionOfHeight(0.5000f)), juce::Colour(0x00000000),
+        static_cast<float>(proportionOfWidth(0.9750f)),
+        static_cast<float>(proportionOfHeight(0.5000f)), false));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setGradientFill(
-        ColourGradient(Colour(0xff161616), static_cast<float>(proportionOfWidth(0.5000f)),
-                       static_cast<float>(proportionOfHeight(0.8625f)), Colour(0x00000000),
-                       static_cast<float>(proportionOfWidth(0.5000f)),
-                       static_cast<float>(proportionOfHeight(0.8375f)), false));
+    g.setGradientFill(juce::ColourGradient(
+        juce::Colour(0xff161616), static_cast<float>(proportionOfWidth(0.5000f)),
+        static_cast<float>(proportionOfHeight(0.8625f)), juce::Colour(0x00000000),
+        static_cast<float>(proportionOfWidth(0.5000f)),
+        static_cast<float>(proportionOfHeight(0.8375f)), false));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setGradientFill(ColourGradient(Colour(0xff2b3524),
-                                     static_cast<float>(proportionOfWidth(0.5750f)),
-                                     static_cast<float>(proportionOfHeight(1.5875f)),
-                                     Colours::black, static_cast<float>(proportionOfWidth(0.5750f)),
-                                     static_cast<float>(proportionOfHeight(0.0125f)), true));
+    g.setGradientFill(juce::ColourGradient(
+        juce::Colour(0xff2b3524), static_cast<float>(proportionOfWidth(0.5750f)),
+        static_cast<float>(proportionOfHeight(1.5875f)), juce::Colours::black,
+        static_cast<float>(proportionOfWidth(0.5750f)),
+        static_cast<float>(proportionOfHeight(0.0125f)), true));
     g.fillRect(proportionOfWidth(0.1650f), proportionOfHeight(0.0275f), proportionOfWidth(0.8250f),
                proportionOfHeight(0.8475f));
 
@@ -511,7 +521,7 @@ void mono_AmpPainter::resized()
     //[/UserResized]
 }
 
-void mono_AmpPainter::sliderValueChanged(Slider *sliderThatWasMoved)
+void mono_AmpPainter::sliderValueChanged(juce::Slider *sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
@@ -529,7 +539,7 @@ void mono_AmpPainter::sliderValueChanged(Slider *sliderThatWasMoved)
     //[/UsersliderValueChanged_Post]
 }
 
-void mono_AmpPainter::buttonClicked(Button *buttonThatWasClicked)
+void mono_AmpPainter::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]

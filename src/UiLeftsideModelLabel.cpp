@@ -24,7 +24,7 @@
 #include "UiLeftsideModelLabel.h"
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-void UiLeftsideModelLabel::set_text(const String &text_) { _text = text_; }
+void UiLeftsideModelLabel::set_text(const juce::String &text_) { _text = text_; }
 
 void UiLeftsideModelLabel::on_style_set(AppStyle *const style_)
 {
@@ -36,13 +36,13 @@ void UiLeftsideModelLabel::on_style_set(AppStyle *const style_)
     model->set_style(style_);
 }
 
-void UiLeftsideModelLabel::refresh_ui(Array<Component *> &components_to_repaint_)
+void UiLeftsideModelLabel::refresh_ui(juce::Array<juce::Component *> &components_to_repaint_)
 {
     model->get_components_to_repaint(components_to_repaint_);
 }
 
 void UiLeftsideModelLabel::get_controllers_for_paint_popup(
-    Array<MONO_Controller *> &controllers_with_popup_)
+    juce::Array<MONO_Controller *> &controllers_with_popup_)
 {
     model->get_controllers_for_paint_popup(controllers_with_popup_);
 }
@@ -78,18 +78,18 @@ UiLeftsideModelLabel::~UiLeftsideModelLabel()
 }
 
 //==============================================================================
-void UiLeftsideModelLabel::paint(Graphics &g)
+void UiLeftsideModelLabel::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     if (_style)
         if (_style->is_opaque())
-            g.fillAll(Colour(_style->get_foreground_color()));
-    AppStyle::paint_outline_label(g, *this, _text, _style, Justification::left, 0.3235f, 0.1000f,
-                                  0.6177f, 0.8000f);
+            g.fillAll(juce::Colour(_style->get_foreground_color()));
+    AppStyle::paint_outline_label(g, *this, _text, _style, juce::Justification::left, 0.3235f,
+                                  0.1000f, 0.6177f, 0.8000f);
     return;
     //[/UserPrePaint]
 
-    g.fillAll(Colours::white);
+    g.fillAll(juce::Colours::white);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]

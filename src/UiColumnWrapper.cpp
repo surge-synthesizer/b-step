@@ -47,7 +47,7 @@ void UiColumnWrapper::set_colum_editor(UiColumn16 *const column_editor_)
     addAndMakeVisible(column_editor = column_editor_);
 }
 
-void UiColumnWrapper::refresh_ui(Array<Component *> &components_to_repaint_)
+void UiColumnWrapper::refresh_ui(juce::Array<Component *> &components_to_repaint_)
 {
     if (column_editor)
         column_editor->refresh_ui(components_to_repaint_);
@@ -56,7 +56,7 @@ void UiColumnWrapper::refresh_ui(Array<Component *> &components_to_repaint_)
 }
 
 void UiColumnWrapper::get_controllers_for_paint_popup(
-    Array<MONO_Controller *> &controllers_with_popup_)
+    juce::Array<MONO_Controller *> &controllers_with_popup_)
 {
     if (column_editor)
         column_editor->get_controllers_for_paint_popup(controllers_with_popup_);
@@ -114,16 +114,16 @@ UiColumnWrapper::~UiColumnWrapper()
 }
 
 //==============================================================================
-void UiColumnWrapper::paint(Graphics &g)
+void UiColumnWrapper::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     if (_style)
         if (_style->is_wrapper_opaque())
-            g.fillAll(Colour(_style->get_foreground_color()));
+            g.fillAll(juce::Colour(_style->get_foreground_color()));
     return;
     //[/UserPrePaint]
 
-    g.fillAll(Colours::white);
+    g.fillAll(juce::Colours::white);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]

@@ -11,7 +11,7 @@
 #include "AppParameterList.h"
 
 #define RETURN_FULL_LIST                                                                           \
-    Array<IDS> list;                                                                               \
+    juce::Array<IDS> list;                                                                         \
                                                                                                    \
     for (int i = 0; i != LIST_SIZE; ++i)                                                           \
         list.add(static_cast<IDS>(i));                                                             \
@@ -115,11 +115,11 @@ const char *APPDEF_ProcessorUserData::get_help_url(int id)
         return "";
     }
 }
-Array<APPDEF_ProcessorUserData::IDS> APPDEF_ProcessorUserData::get_project_parameter_list()
+juce::Array<APPDEF_ProcessorUserData::IDS> APPDEF_ProcessorUserData::get_project_parameter_list()
 {
     RETURN_FULL_LIST;
 }
-Array<APPDEF_ProcessorUserData::IDS> APPDEF_ProcessorUserData::get_automation_parameter_list()
+juce::Array<APPDEF_ProcessorUserData::IDS> APPDEF_ProcessorUserData::get_automation_parameter_list()
 {
     RETURN_FULL_LIST;
 }
@@ -185,7 +185,7 @@ const char *APPDEF_MIDIUserData::parameter_name_short(int id)
     }
 }
 const char *APPDEF_MIDIUserData::get_help_url(int) { return ""; }
-Array<APPDEF_MIDIUserData::IDS> APPDEF_MIDIUserData::get_project_parameter_list()
+juce::Array<APPDEF_MIDIUserData::IDS> APPDEF_MIDIUserData::get_project_parameter_list()
 {
     RETURN_FULL_LIST;
 }
@@ -287,9 +287,12 @@ const char *APPDEF_Pattern::get_help_url(int id)
         return "";
     }
 }
-Array<APPDEF_Pattern::IDS> APPDEF_Pattern::get_copyable_parameter_list() { RETURN_FULL_LIST; }
-Array<APPDEF_Pattern::IDS> APPDEF_Pattern::get_project_parameter_list() { RETURN_FULL_LIST; }
-Array<APPDEF_Pattern::IDS> APPDEF_Pattern::get_automation_parameter_list() { RETURN_FULL_LIST; }
+juce::Array<APPDEF_Pattern::IDS> APPDEF_Pattern::get_copyable_parameter_list() { RETURN_FULL_LIST; }
+juce::Array<APPDEF_Pattern::IDS> APPDEF_Pattern::get_project_parameter_list() { RETURN_FULL_LIST; }
+juce::Array<APPDEF_Pattern::IDS> APPDEF_Pattern::get_automation_parameter_list()
+{
+    RETURN_FULL_LIST;
+}
 
 // ************************************************************************************************
 // ************************************************************************************************
@@ -352,8 +355,8 @@ const char *APPDEF_Chord::get_help_url(int id)
         return "";
     }
 }
-Array<APPDEF_Chord::IDS> APPDEF_Chord::get_project_parameter_list() { RETURN_FULL_LIST; }
-Array<APPDEF_Chord::IDS> APPDEF_Chord::get_automation_parameter_list() { RETURN_FULL_LIST; }
+juce::Array<APPDEF_Chord::IDS> APPDEF_Chord::get_project_parameter_list() { RETURN_FULL_LIST; }
+juce::Array<APPDEF_Chord::IDS> APPDEF_Chord::get_automation_parameter_list() { RETURN_FULL_LIST; }
 
 // ************************************************************************************************
 // ************************************************************************************************
@@ -450,17 +453,17 @@ const char *APPDEF_Bar::get_help_url(int id)
         return "";
     }
 }
-Array<APPDEF_Bar::IDS> APPDEF_Bar::get_copyable_parameter_list()
+juce::Array<APPDEF_Bar::IDS> APPDEF_Bar::get_copyable_parameter_list()
 {
-    Array<IDS> list;
+    juce::Array<IDS> list;
 
     list.add(I_PLAY_REVERSE);
     list.add(I_PLAY_RANDOM);
 
     return std::move(list);
 }
-Array<APPDEF_Bar::IDS> APPDEF_Bar::get_project_parameter_list() { RETURN_FULL_LIST; }
-Array<APPDEF_Bar::IDS> APPDEF_Bar::get_automation_parameter_list() { RETURN_FULL_LIST; }
+juce::Array<APPDEF_Bar::IDS> APPDEF_Bar::get_project_parameter_list() { RETURN_FULL_LIST; }
+juce::Array<APPDEF_Bar::IDS> APPDEF_Bar::get_automation_parameter_list() { RETURN_FULL_LIST; }
 
 // ************************************************************************************************
 // ************************************************************************************************
@@ -499,8 +502,14 @@ const char *APPDEF_BarCCSet::get_help_url(int id)
         return "";
     }
 }
-Array<APPDEF_BarCCSet::IDS> APPDEF_BarCCSet::get_copyable_parameter_list() { RETURN_FULL_LIST; }
-Array<APPDEF_BarCCSet::IDS> APPDEF_BarCCSet::get_project_parameter_list() { RETURN_FULL_LIST; }
+juce::Array<APPDEF_BarCCSet::IDS> APPDEF_BarCCSet::get_copyable_parameter_list()
+{
+    RETURN_FULL_LIST;
+}
+juce::Array<APPDEF_BarCCSet::IDS> APPDEF_BarCCSet::get_project_parameter_list()
+{
+    RETURN_FULL_LIST;
+}
 
 // ************************************************************************************************
 // ************************************************************************************************
@@ -676,9 +685,12 @@ const char *APPDEF_BarStep::get_help_url(int id)
         return "";
     }
 }
-Array<APPDEF_BarStep::IDS> APPDEF_BarStep::get_copyable_parameter_list() { RETURN_FULL_LIST; }
-Array<APPDEF_BarStep::IDS> APPDEF_BarStep::get_project_parameter_list() { RETURN_FULL_LIST; }
-Array<APPDEF_BarStep::IDS> APPDEF_BarStep::get_automation_parameter_list() { RETURN_FULL_LIST; }
+juce::Array<APPDEF_BarStep::IDS> APPDEF_BarStep::get_copyable_parameter_list() { RETURN_FULL_LIST; }
+juce::Array<APPDEF_BarStep::IDS> APPDEF_BarStep::get_project_parameter_list() { RETURN_FULL_LIST; }
+juce::Array<APPDEF_BarStep::IDS> APPDEF_BarStep::get_automation_parameter_list()
+{
+    RETURN_FULL_LIST;
+}
 
 // ************************************************************************************************
 // ************************************************************************************************
@@ -723,11 +735,11 @@ const char *APPDEF_BarStepCCVals::get_help_url(int id)
         return "";
     }
 }
-Array<APPDEF_BarStepCCVals::IDS> APPDEF_BarStepCCVals::get_copyable_parameter_list()
+juce::Array<APPDEF_BarStepCCVals::IDS> APPDEF_BarStepCCVals::get_copyable_parameter_list()
 {
     RETURN_FULL_LIST;
 }
-Array<APPDEF_BarStepCCVals::IDS> APPDEF_BarStepCCVals::get_project_parameter_list()
+juce::Array<APPDEF_BarStepCCVals::IDS> APPDEF_BarStepCCVals::get_project_parameter_list()
 {
     RETURN_FULL_LIST;
 }
@@ -769,8 +781,14 @@ const char *APPDEF_Barstring::get_help_url(int id)
         return "";
     }
 }
-Array<APPDEF_Barstring::IDS> APPDEF_Barstring::get_copyable_parameter_list() { RETURN_FULL_LIST; }
-Array<APPDEF_Barstring::IDS> APPDEF_Barstring::get_project_parameter_list() { RETURN_FULL_LIST; }
+juce::Array<APPDEF_Barstring::IDS> APPDEF_Barstring::get_copyable_parameter_list()
+{
+    RETURN_FULL_LIST;
+}
+juce::Array<APPDEF_Barstring::IDS> APPDEF_Barstring::get_project_parameter_list()
+{
+    RETURN_FULL_LIST;
+}
 
 // ************************************************************************************************
 // ************************************************************************************************
@@ -807,8 +825,8 @@ const char *APPDEF_Step::get_help_url(int id)
         return "";
     }
 }
-Array<APPDEF_Step::IDS> APPDEF_Step::get_copyable_parameter_list() { RETURN_FULL_LIST; }
-Array<APPDEF_Step::IDS> APPDEF_Step::get_project_parameter_list() { RETURN_FULL_LIST; }
+juce::Array<APPDEF_Step::IDS> APPDEF_Step::get_copyable_parameter_list() { RETURN_FULL_LIST; }
+juce::Array<APPDEF_Step::IDS> APPDEF_Step::get_project_parameter_list() { RETURN_FULL_LIST; }
 
 // ************************************************************************************************
 // ************************************************************************************************
@@ -876,9 +894,9 @@ const char *APPDEF_UIUserData::get_help_url(int id)
         return "";
     }
 }
-Array<APPDEF_UIUserData::IDS> APPDEF_UIUserData::get_project_parameter_list()
+juce::Array<APPDEF_UIUserData::IDS> APPDEF_UIUserData::get_project_parameter_list()
 {
-    Array<IDS> list;
+    juce::Array<IDS> list;
 
     // list.add( I_SELECTED_BAR_ID );
     list.add(I_USER_MODE);
@@ -892,17 +910,17 @@ Array<APPDEF_UIUserData::IDS> APPDEF_UIUserData::get_project_parameter_list()
 
     return std::move(list);
 }
-Array<APPDEF_UIUserData::IDS> APPDEF_UIUserData::get_automation_parameter_list()
+juce::Array<APPDEF_UIUserData::IDS> APPDEF_UIUserData::get_automation_parameter_list()
 {
-    Array<IDS> list;
+    juce::Array<IDS> list;
 
     list.add(I_SELECTED_BAR_ID);
 
     return std::move(list);
 }
-Array<APPDEF_UIUserData::IDS> APPDEF_UIUserData::get_setup_parameter_list()
+juce::Array<APPDEF_UIUserData::IDS> APPDEF_UIUserData::get_setup_parameter_list()
 {
-    Array<IDS> list;
+    juce::Array<IDS> list;
 
     return std::move(list);
 }
@@ -983,7 +1001,8 @@ const char *APPDEF_UIBarClipboardSettings::get_help_url(int)
 {
     return "experts/snapshots-and-the-clipboard";
 }
-Array<APPDEF_UIBarClipboardSettings::IDS> APPDEF_UIBarClipboardSettings::get_setup_parameter_list()
+juce::Array<APPDEF_UIBarClipboardSettings::IDS>
+APPDEF_UIBarClipboardSettings::get_setup_parameter_list()
 {
     RETURN_FULL_LIST;
 }
@@ -991,13 +1010,13 @@ Array<APPDEF_UIBarClipboardSettings::IDS> APPDEF_UIBarClipboardSettings::get_set
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-int16 APPDEF_BarStep::trans_duration2clocks(int8 duration_)
+std::int16_t APPDEF_BarStep::trans_duration2clocks(std::int8_t duration_)
 {
-    int8 smaller_zero_multiplyer = 1;
+    std::int8_t smaller_zero_multiplyer = 1;
     if (duration_ < 0)
         smaller_zero_multiplyer = -1;
 
-    int16 value_in_clocks = 0;
+    std::int16_t value_in_clocks = 0;
 
     switch (duration_ * smaller_zero_multiplyer)
     {
@@ -1086,7 +1105,7 @@ int16 APPDEF_BarStep::trans_duration2clocks(int8 duration_)
 
     return value_in_clocks * smaller_zero_multiplyer;
 }
-void APPDEF_BarStep::duration2string(int16 duration_in_clocks_, String &string_)
+void APPDEF_BarStep::duration2string(std::int16_t duration_in_clocks_, juce::String &string_)
 {
     bool is_smaller_zero = false;
     if (duration_in_clocks_ < 0)
@@ -1180,5 +1199,5 @@ void APPDEF_BarStep::duration2string(int16 duration_in_clocks_, String &string_)
     }
 
     if (is_smaller_zero)
-        string_ = String("-") + string_;
+        string_ = juce::String("-") + string_;
 }

@@ -3,19 +3,19 @@
 
 #include "UiMainWindow.h"
 #include "MIDILearn.h"
-
+#include "BinaryData.h"
 void ControllerMIDILearn::refresh_ui()
 {
     MIDIInToControllerMap &map = _app_instance_store->midi_in_map;
     MONO_Controller *const learning_controller = map.get_learning_controller();
     if (learning_controller)
     {
-        const Component *const learning_view = learning_controller->get_ui_peer();
+        const juce::Component *const learning_view = learning_controller->get_ui_peer();
         if (learning_view)
         {
             int cc_type = map.get_last_learned_cc_type(learning_controller);
 
-            Rectangle<int> pos;
+            juce::Rectangle<int> pos;
             pos = learning_view->localAreaToGlobal(learning_view->getLocalBounds());
             pos.setX(pos.getX() - _app_instance_store->editor->getScreenX());
             pos.setY(pos.getY() - _app_instance_store->editor->getScreenY());
@@ -34,8 +34,8 @@ void ControllerMIDILearn::refresh_ui()
             _midi_learn_focus->setBounds(pos);
             _midi_cc_value->setBounds(pos);
 
-            _midi_cc_value->setText(String(cc_type), dontSendNotification);
-            _midi_learn_focus->setToggleState(true, dontSendNotification);
+            _midi_cc_value->setText(juce::String(cc_type), juce::dontSendNotification);
+            _midi_learn_focus->setToggleState(true, juce::dontSendNotification);
         }
     }
     else
@@ -47,20 +47,21 @@ void ControllerMIDILearn::refresh_ui()
 ControllerMIDILearn::~ControllerMIDILearn() {}
 
 ControllerMIDILearn::ControllerMIDILearn(AppInstanceStore *const app_instance_store_,
-                                         ImageButton *const midi_learn_focus_,
-                                         Label *const midi_cc_value_)
+                                         juce::ImageButton *const midi_learn_focus_,
+                                         juce::Label *const midi_cc_value_)
     : _app_instance_store(app_instance_store_), _midi_learn_focus(midi_learn_focus_),
       _midi_cc_value(midi_cc_value_)
 {
-    _midi_learn_focus->setToggleState(false, dontSendNotification);
+    _midi_learn_focus->setToggleState(false, juce::dontSendNotification);
 
-    Drawable *drawable =
-        Drawable::createFromImageData(BinaryData::select_svg, BinaryData::select_svgSize).release();
-    Image image = drawable->createComponentSnapshot(drawable->getBounds());
+    juce::Drawable *drawable =
+        juce::Drawable::createFromImageData(BinaryData::select_svg, BinaryData::select_svgSize)
+            .release();
+    juce::Image image = drawable->createComponentSnapshot(drawable->getBounds());
     _midi_learn_focus->setImages(
-        true, true, true, image, 1, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR),
-        image, 1, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR), image, 1,
-        Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        true, true, true, image, 1, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR),
+        image, 1, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR), image, 1,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
     _midi_learn_focus->toFront(false);
     _midi_cc_value->toFront(false);

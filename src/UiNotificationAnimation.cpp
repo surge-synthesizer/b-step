@@ -36,31 +36,33 @@ void UiNotificationAnimation::timerCallback()
     if (alpha <= 0)
     {
         stopTimer();
-        text->setColour(Label::textColourId, root_color.withAlpha(uint8(0)));
+        text->setColour(juce::Label::textColourId, root_color.withAlpha(std::uint8_t(0)));
     }
     else
-        text->setColour(Label::textColourId, root_color.withAlpha(uint8(alpha)));
+        text->setColour(juce::Label::textColourId, root_color.withAlpha(std::uint8_t(alpha)));
 }
 
 void UiNotificationAnimation::set_text_and_run(const char *text_,
                                                int state_ /* 0=fail,1=ok,2=neutral*/)
 {
-    String text(text_);
+    juce::String text(text_);
     set_text_and_run(text, state_);
 }
 
-void UiNotificationAnimation::set_text_and_run(String &text_, int state_ /* 0=fail,1=ok,2=neutral*/)
+void UiNotificationAnimation::set_text_and_run(juce::String &text_,
+                                               int state_ /* 0=fail,1=ok,2=neutral*/)
 {
     stopTimer();
 
     alpha = 0;
     is_rising = true;
 
-    MessageManagerLock mmLock;
+    juce::MessageManagerLock mmLock;
 
-    root_color = state_ ? (state_ == 1 ? Colours::chartreuse : Colours::blue) : Colours::red;
-    text->setColour(Label::textColourId, root_color.withAlpha(uint8(0)));
-    text->setText(text_, dontSendNotification);
+    root_color = state_ ? (state_ == 1 ? juce::Colours::chartreuse : juce::Colours::blue)
+                        : juce::Colours::red;
+    text->setColour(juce::Label::textColourId, root_color.withAlpha(std::uint8_t(0)));
+    text->setText(text_, juce::dontSendNotification);
 
     startTimer(15);
 }
@@ -69,17 +71,17 @@ void UiNotificationAnimation::set_text_and_run(String &text_, int state_ /* 0=fa
 //==============================================================================
 UiNotificationAnimation::UiNotificationAnimation()
 {
-    addAndMakeVisible(text = new Label(String(), TRANS("OK")));
-    text->setFont(Font("Oswald", 230.00f, Font::bold));
-    text->setJustificationType(Justification::centred);
+    addAndMakeVisible(text = new juce::Label(juce::String(), TRANS("OK")));
+    text->setFont(juce::Font("Oswald", 230.00f, juce::Font::bold));
+    text->setJustificationType(juce::Justification::centred);
     text->setEditable(false, false, false);
-    text->setColour(Label::textColourId, Colours::chartreuse);
-    text->setColour(TextEditor::textColourId, Colour(0x00000000));
-    text->setColour(TextEditor::backgroundColourId, Colour(0xff161616));
-    text->setColour(TextEditor::highlightColourId, Colour(0x001111ee));
+    text->setColour(juce::Label::textColourId, juce::Colours::chartreuse);
+    text->setColour(juce::TextEditor::textColourId, juce::Colour(0x00000000));
+    text->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0xff161616));
+    text->setColour(juce::TextEditor::highlightColourId, juce::Colour(0x001111ee));
 
     //[UserPreSize]
-    text->setColour(Label::textColourId, Colour(0x00000000));
+    text->setColour(juce::Label::textColourId, juce::Colour(0x00000000));
     //[/UserPreSize]
 
     setSize(400, 200);
@@ -102,7 +104,7 @@ UiNotificationAnimation::~UiNotificationAnimation()
 }
 
 //==============================================================================
-void UiNotificationAnimation::paint(Graphics &g)
+void UiNotificationAnimation::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]

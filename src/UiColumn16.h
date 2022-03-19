@@ -22,6 +22,7 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "UiColumnWrapper.h"
+#include <cstdint>
 //[/Headers]
 
 //==============================================================================
@@ -42,19 +43,19 @@ class UiColumn16 : public SubeditorBase
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
   private:
-    const Array<ModelBase *> models;
-    const Array<ModelBase *> &get_event_receiveable_models() override { return models; }
+    const juce::Array<ModelBase *> models;
+    const juce::Array<ModelBase *> &get_event_receiveable_models() override { return models; }
 
   public:
     // TODO deprecated
-    void set_controllers(const OwnedArray<MONO_Controller> &controllers_)
+    void set_controllers(const juce::OwnedArray<MONO_Controller> &controllers_)
     {
         for (unsigned int i = 0; i != 16; ++i)
         {
             models.getUnchecked(i)->set_controller(controllers_.getUnchecked(i));
         }
     }
-    void set_controllers(const Array<MONO_Controller *> &controllers_)
+    void set_controllers(const juce::Array<MONO_Controller *> &controllers_)
     {
         MONO_Controller *controller_to_set;
         ModelBase *model_to_change;
@@ -71,16 +72,16 @@ class UiColumn16 : public SubeditorBase
         }
     }
 
-    void refresh_ui(Array<Component *> &components_to_repaint_) override;
-    void
-    get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_with_popup_) override;
+    void refresh_ui(juce::Array<Component *> &components_to_repaint_) override;
+    void get_controllers_for_paint_popup(
+        juce::Array<MONO_Controller *> &controllers_with_popup_) override;
     void on_style_set(AppStyle *const style_) override;
     void set_background_style(AppStyle *const style_) override;
 
-    ModelBase *get_model(uint8 id) override { return models.getUnchecked(id); };
+    ModelBase *get_model(std::uint8_t id) override { return models.getUnchecked(id); };
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
 
   private:
@@ -88,22 +89,22 @@ class UiColumn16 : public SubeditorBase
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<ModelBase> elem_0;
-    ScopedPointer<ModelBase> elem_1;
-    ScopedPointer<ModelBase> elem_2;
-    ScopedPointer<ModelBase> elem_3;
-    ScopedPointer<ModelBase> elem_4;
-    ScopedPointer<ModelBase> elem_5;
-    ScopedPointer<ModelBase> elem_6;
-    ScopedPointer<ModelBase> elem_7;
-    ScopedPointer<ModelBase> elem_8;
-    ScopedPointer<ModelBase> elem_9;
-    ScopedPointer<ModelBase> elem_10;
-    ScopedPointer<ModelBase> elem_11;
-    ScopedPointer<ModelBase> elem_12;
-    ScopedPointer<ModelBase> elem_13;
-    ScopedPointer<ModelBase> elem_14;
-    ScopedPointer<ModelBase> elem_15;
+    juce::ScopedPointer<ModelBase> elem_0;
+    juce::ScopedPointer<ModelBase> elem_1;
+    juce::ScopedPointer<ModelBase> elem_2;
+    juce::ScopedPointer<ModelBase> elem_3;
+    juce::ScopedPointer<ModelBase> elem_4;
+    juce::ScopedPointer<ModelBase> elem_5;
+    juce::ScopedPointer<ModelBase> elem_6;
+    juce::ScopedPointer<ModelBase> elem_7;
+    juce::ScopedPointer<ModelBase> elem_8;
+    juce::ScopedPointer<ModelBase> elem_9;
+    juce::ScopedPointer<ModelBase> elem_10;
+    juce::ScopedPointer<ModelBase> elem_11;
+    juce::ScopedPointer<ModelBase> elem_12;
+    juce::ScopedPointer<ModelBase> elem_13;
+    juce::ScopedPointer<ModelBase> elem_14;
+    juce::ScopedPointer<ModelBase> elem_15;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiColumn16)

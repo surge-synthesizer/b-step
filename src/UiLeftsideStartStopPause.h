@@ -63,10 +63,10 @@ class UiLeftsideStartStopPause : public SubeditorBase
 #endif
     }
 
-    void refresh_ui(Array<Component *> &components_to_repaint_) override;
+    void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_) override;
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
 
   private:
@@ -74,9 +74,9 @@ class UiLeftsideStartStopPause : public SubeditorBase
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<ModelBase> button_play;
-    ScopedPointer<ModelBase> button_pause;
-    ScopedPointer<ModelBase> button_stop;
+    juce::ScopedPointer<ModelBase> button_play;
+    juce::ScopedPointer<ModelBase> button_pause;
+    juce::ScopedPointer<ModelBase> button_stop;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiLeftsideStartStopPause)

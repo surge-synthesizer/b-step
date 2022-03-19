@@ -35,7 +35,7 @@ class NavItem;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UIHtmlView : public UiEditor, public Button::Listener, public AsyncUpdater
+class UIHtmlView : public UiEditor, public juce::Button::Listener, public juce::AsyncUpdater
 {
   public:
     //==============================================================================
@@ -46,43 +46,43 @@ class UIHtmlView : public UiEditor, public Button::Listener, public AsyncUpdater
     //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
 
-    URL load_async_url;
+    juce::URL load_async_url;
     virtual void handleAsyncUpdate() override;
     void on_close_clicked() override;
 
-    Thread *pending_download;
+    juce::Thread *pending_download;
 
   public:
-    bool try_open_url(const URL &source_);
+    bool try_open_url(const juce::URL &source_);
     bool try_open_question_mark();
 
   private:
     friend class HTMLPArser;
     friend class NavItem;
-    bool open_url(const URL &source_, bool and_download_complete_nav_content_ = false,
+    bool open_url(const juce::URL &source_, bool and_download_complete_nav_content_ = false,
                   bool show_content_ = true);
-    bool open_question_mark_content(const URL &request_for_ = MANUAL_URL + "beginner/tools",
+    bool open_question_mark_content(const juce::URL &request_for_ = MANUAL_URL + "beginner/tools",
                                     bool force_redownload_ = false);
-    void select_item_with_url(const URL &url_);
-    CriticalSection lock;
+    void select_item_with_url(const juce::URL &url_);
+    juce::CriticalSection lock;
     int nav_is_parsed;
-    URL current_url;
-    File current_cache_folder;
+    juce::URL current_url;
+    juce::File current_cache_folder;
     int current_height;
-    void add_text_part(const String &text_, int height_ /* 7 text, 1 title, 2 title (h2) */,
+    void add_text_part(const juce::String &text_, int height_ /* 7 text, 1 title, 2 title (h2) */,
                        int white_spaces_before_, bool show_content_,
-                       Colour col_ = Colour(0x00000000), bool make_selectable = false);
-    void add_image(const String &url_, bool show_content_);
+                       juce::Colour col_ = juce::Colour(0x00000000), bool make_selectable = false);
+    void add_image(const juce::String &url_, bool show_content_);
 
     NavItem *last_added_item;
     int last_deppnes;
-    void add_nav_link(const String &text_, const URL &target_, int deepness_,
+    void add_nav_link(const juce::String &text_, const juce::URL &target_, int deepness_,
                       bool and_open_it = false);
 
     Component *content_wrapper;
-    OwnedArray<TextEditor> editors;
-    OwnedArray<ImageButton> images;
-    Array<NavItem *> items;
+    juce::OwnedArray<juce::TextEditor> editors;
+    juce::OwnedArray<juce::ImageButton> images;
+    juce::Array<NavItem *> items;
 
     void clear_all_views();
     void block_views(bool block_);
@@ -90,28 +90,28 @@ class UIHtmlView : public UiEditor, public Button::Listener, public AsyncUpdater
     volatile bool can_something_selected;
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
-    void buttonClicked(Button *buttonThatWasClicked) override;
+    void buttonClicked(juce::Button *buttonThatWasClicked) override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Viewport> viewport;
-    ScopedPointer<TreeView> treeView;
-    ScopedPointer<UiEditorToolbar> toolbar;
-    ScopedPointer<TextButton> update;
-    ScopedPointer<TextButton> forum;
-    ScopedPointer<Label> label;
-    ScopedPointer<Label> label2;
-    ScopedPointer<TextButton> mail;
-    ScopedPointer<Label> label3;
-    ScopedPointer<TextButton> online;
-    ScopedPointer<Label> label4;
-    ScopedPointer<FingerDrag> tree_view_dragger;
-    ScopedPointer<FingerDrag> viewport_dragger;
+    juce::ScopedPointer<juce::Viewport> viewport;
+    juce::ScopedPointer<juce::TreeView> treeView;
+    juce::ScopedPointer<UiEditorToolbar> toolbar;
+    juce::ScopedPointer<juce::TextButton> update;
+    juce::ScopedPointer<juce::TextButton> forum;
+    juce::ScopedPointer<juce::Label> label;
+    juce::ScopedPointer<juce::Label> label2;
+    juce::ScopedPointer<juce::TextButton> mail;
+    juce::ScopedPointer<juce::Label> label3;
+    juce::ScopedPointer<juce::TextButton> online;
+    juce::ScopedPointer<juce::Label> label4;
+    juce::ScopedPointer<FingerDrag> tree_view_dragger;
+    juce::ScopedPointer<FingerDrag> viewport_dragger;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UIHtmlView)

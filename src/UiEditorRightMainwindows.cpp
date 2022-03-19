@@ -33,7 +33,7 @@
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-void UiEditorRightMainwindows::refresh_ui(Array<Component *> &components_to_repaint_)
+void UiEditorRightMainwindows::refresh_ui(juce::Array<juce::Component *> &components_to_repaint_)
 {
     pattern_gstring_offset_0->get_components_to_repaint(components_to_repaint_);
     pattern_gstring_offset_1->get_components_to_repaint(components_to_repaint_);
@@ -54,7 +54,7 @@ void UiEditorRightMainwindows::refresh_ui(Array<Component *> &components_to_repa
     button_chord_editor4->get_components_to_repaint(components_to_repaint_);
     button_chord_editor5->get_components_to_repaint(components_to_repaint_);
 
-    label_current_bpm->set_text(String(slider_bpm->get_controller()->get_value()) + " BPM");
+    label_current_bpm->set_text(juce::String(slider_bpm->get_controller()->get_value()) + " BPM");
 
     UiLabel *label;
     for (int i = 0; i != _labels.size(); ++i)
@@ -66,7 +66,7 @@ void UiEditorRightMainwindows::refresh_ui(Array<Component *> &components_to_repa
 }
 
 void UiEditorRightMainwindows::get_controllers_for_paint_popup(
-    Array<MONO_Controller *> &controllers_that_need_a_popup)
+    juce::Array<MONO_Controller *> &controllers_that_need_a_popup)
 {
     pattern_oktave->get_controllers_for_paint_popup(controllers_that_need_a_popup);
     pattern_chord->get_controllers_for_paint_popup(controllers_that_need_a_popup);
@@ -207,23 +207,23 @@ UiEditorRightMainwindows::UiEditorRightMainwindows(AppInstanceStore *const app_i
     _labels.add(lbl_version3);
     _labels.add(lbl_version4);
 
-    lbl_bar_chord4->justification = Justification::centred;
-    lbl_bar_chord3->justification = Justification::centred;
-    lbl_bar_chord2->justification = Justification::centred;
-    lbl_set_2->justification = Justification::centred;
-    lbl_set_1->justification = Justification::centred;
-    lbl_set_7->justification = Justification::centred;
-    lbl_set_8->justification = Justification::centred;
-    lbl_set_9->justification = Justification::centred;
-    lbl_set_4->justification = Justification::centred;
-    lbl_set_3->justification = Justification::centred;
-    lbl_set_6->justification = Justification::centred;
-    lbl_version->justification = Justification::centred;
-    lbl_version->justification = Justification::centred;
-    lbl_version2->justification = Justification::centred;
-    lbl_version3->justification = Justification::centred;
-    lbl_version4->justification = Justification::centred;
-    label_current_bpm->justification = Justification::left;
+    lbl_bar_chord4->justification = juce::Justification::centred;
+    lbl_bar_chord3->justification = juce::Justification::centred;
+    lbl_bar_chord2->justification = juce::Justification::centred;
+    lbl_set_2->justification = juce::Justification::centred;
+    lbl_set_1->justification = juce::Justification::centred;
+    lbl_set_7->justification = juce::Justification::centred;
+    lbl_set_8->justification = juce::Justification::centred;
+    lbl_set_9->justification = juce::Justification::centred;
+    lbl_set_4->justification = juce::Justification::centred;
+    lbl_set_3->justification = juce::Justification::centred;
+    lbl_set_6->justification = juce::Justification::centred;
+    lbl_version->justification = juce::Justification::centred;
+    lbl_version->justification = juce::Justification::centred;
+    lbl_version2->justification = juce::Justification::centred;
+    lbl_version3->justification = juce::Justification::centred;
+    lbl_version4->justification = juce::Justification::centred;
+    label_current_bpm->justification = juce::Justification::left;
 
     pattern_chord->setOpaque(true);
     lbl_set_1->set_manual_opaque(false);
@@ -299,14 +299,14 @@ UiEditorRightMainwindows::~UiEditorRightMainwindows()
 }
 
 //==============================================================================
-void UiEditorRightMainwindows::paint(Graphics &g)
+void UiEditorRightMainwindows::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-    g.fillAll(Colour(_app_instance_store->style_global_area->get_foreground_color()));
+    g.fillAll(juce::Colour(_app_instance_store->style_global_area->get_foreground_color()));
     return;
     //[/UserPrePaint]
 
-    g.fillAll(Colour(0xff111111));
+    g.fillAll(juce::Colour(0xff111111));
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]

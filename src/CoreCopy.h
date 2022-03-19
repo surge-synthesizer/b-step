@@ -13,7 +13,7 @@
 // ************************************************************************************************
 // TODO dont create new bars each time, use an existing one by copy to minimize memory allocation
 // and resize arrays
-struct BarStepCopySourceData : public Component
+struct BarStepCopySourceData : public juce::Component
 {
     const Bar *const copy_source_bar;
     const BarStep *const copy_source_barstep;
@@ -31,7 +31,7 @@ struct BarStepCopySourceData : public Component
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-struct BarCopySourceData : public Component
+struct BarCopySourceData : public juce::Component
 {
     const Bar *const copy_source_bar;
     bool is_multi_drag;
@@ -71,7 +71,8 @@ struct CoreCopy
 {
     template <class T> static void by_copyable_def(const T &source_, T &target_)
     {
-        Array<typename T::appdeff_t::IDS> param_list = T::appdeff_t::get_copyable_parameter_list();
+        juce::Array<typename T::appdeff_t::IDS> param_list =
+            T::appdeff_t::get_copyable_parameter_list();
 
         typename T::appdeff_t::IDS param_id;
         for (int i = 0; i != param_list.size(); ++i)
@@ -180,7 +181,8 @@ struct CoreCopy
 
             if (source_->is_copy_layer_7)
             {
-                for (uint8 cc_val_id = 0; cc_val_id != BarStep::appdeff_t::SUM_CC_VALS; ++cc_val_id)
+                for (std::uint8_t cc_val_id = 0; cc_val_id != BarStep::appdeff_t::SUM_CC_VALS;
+                     ++cc_val_id)
                     target_barstep.cc_val(cc_val_id) = source_barstep.cc_val(cc_val_id);
             }
         }
@@ -204,7 +206,7 @@ struct CoreCopy
 
         if (source_->is_copy_layer_7)
         {
-            for (uint8 cc_set_id = 0; cc_set_id != Bar::appdeff_t::SUM_CC_SETS; ++cc_set_id)
+            for (std::uint8_t cc_set_id = 0; cc_set_id != Bar::appdeff_t::SUM_CC_SETS; ++cc_set_id)
                 target_bar_.cc_set(cc_set_id) = source_bar.cc_set(cc_set_id);
         }
 

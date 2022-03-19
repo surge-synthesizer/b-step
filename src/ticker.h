@@ -103,7 +103,7 @@ class Ticker
     void break_event_loop();
     bool is_executing();
 
-    void set_tick_interval_in_usec(int64 usec_per_tick_);
+    void set_tick_interval_in_usec(std::int64_t usec_per_tick_);
 
     Ticker();
     virtual ~Ticker();

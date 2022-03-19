@@ -21,7 +21,8 @@
 #define __JUCE_HEADER_BE41B261562DCF2__
 
 //[Headers]     -- You can add your own extra header files here --
-#include "JuceHeader.h"
+#include <juce_gui_basics/juce_gui_basics.h>
+
 class UiEditorSynthLite;
 class MIDIControl;
 //[/Headers]
@@ -34,7 +35,9 @@ class MIDIControl;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorSynthLitePopup : public Component, public ComboBox::Listener, public Button::Listener
+class UiEditorSynthLitePopup : public juce::Component,
+                               public juce::ComboBox::Listener,
+                               public juce::Button::Listener
 {
   public:
     //==============================================================================
@@ -43,7 +46,7 @@ class UiEditorSynthLitePopup : public Component, public ComboBox::Listener, publ
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    void set_element_to_show(Component *const);
+    void set_element_to_show(juce::Component *const);
     void refresh();
 
     UiEditorSynthLite *const parent;
@@ -51,22 +54,22 @@ class UiEditorSynthLitePopup : public Component, public ComboBox::Listener, publ
     MIDIControl *_midi_control;
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
-    void comboBoxChanged(ComboBox *comboBoxThatHasChanged);
-    void buttonClicked(Button *buttonThatWasClicked);
-    bool keyPressed(const KeyPress &key);
+    void comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged);
+    void buttonClicked(juce::Button *buttonThatWasClicked);
+    bool keyPressed(const juce::KeyPress &key);
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<ComboBox> combo_midi_listen_type;
-    ScopedPointer<ComboBox> combo_midi_number;
-    ScopedPointer<TextButton> close;
-    ScopedPointer<ComboBox> combo_midi_channel;
-    Path internalPath1;
+    juce::ScopedPointer<juce::ComboBox> combo_midi_listen_type;
+    juce::ScopedPointer<juce::ComboBox> combo_midi_number;
+    juce::ScopedPointer<juce::TextButton> close;
+    juce::ScopedPointer<juce::ComboBox> combo_midi_channel;
+    juce::Path internalPath1;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorSynthLitePopup)

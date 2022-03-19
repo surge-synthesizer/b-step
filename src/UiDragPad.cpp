@@ -18,6 +18,7 @@
 */
 
 //[Headers] You can add your own extra header files here...
+#include "UiEditorColours.h"
 #include "UiLookAndFeel.h"
 #include "SynthData.h"
 //[/Headers]
@@ -25,13 +26,13 @@
 #include "UiDragPad.h"
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-class DragPad : public Component
+class DragPad : public juce::Component
 {
     UiDragPad *const parent;
 
-    void mouseDrag(const MouseEvent &event)
+    void mouseDrag(const juce::MouseEvent &event)
     {
-        Point<int> current_position = event.getPosition();
+        juce::Point<int> current_position = event.getPosition();
 
         // bool success = false;
 
@@ -138,11 +139,11 @@ UiDragPad::~UiDragPad()
 }
 
 //==============================================================================
-void UiDragPad::paint(Graphics &g)
+void UiDragPad::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     ComponentColours colours = UiLookAndFeel::getInstance()->colours;
-    Colour orange_replacement = colours.bg_lines;
+    juce::Colour orange_replacement = colours.bg_lines;
     orange_replacement.getARGB();
 #define Colour(x) ((x == 0xffff3b00) ? orange_replacement : Colour(x))
 

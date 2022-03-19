@@ -30,6 +30,7 @@
 */
 
 #include "dRowAudio_GraphicalComponent.h"
+#include "AppParameterList.h"
 
 GraphicalComponent::GraphicalComponent()
     : paused(false), needToProcess(true), sleepTime(5), numSamples(1024)
@@ -71,7 +72,7 @@ void GraphicalComponent::copySamples(const float *values, int numSamples_)
     }
 
     // lock whilst copying
-    ScopedLock sl(lock);
+    juce::ScopedLock sl(lock);
     memcpy(samples, values, numSamples * sizeof(float));
 
     needToProcess = true;
@@ -87,7 +88,7 @@ void GraphicalComponent::copySamples(float **values, int numSamples_, int numCha
     }
 
     // lock whilst copying
-    ScopedLock sl(lock);
+    juce::ScopedLock sl(lock);
 
     if (numChannels == 1)
     {

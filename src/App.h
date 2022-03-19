@@ -41,7 +41,7 @@ class AppInstanceStore;
 
 #else // RELEASE
 
-#define BUILD_INFO String("")
+#define BUILD_INFO juce::String("")
 //#	define USE_A_SYNTH 1             // in development
 //#	define USE_STANDALONE_SYNTH 1	 // in development
 //#	define USE_PLUGIN_PROCESS_BLOCK 1
@@ -88,7 +88,7 @@ class AppInstanceStore;
 
 #ifdef DEBUG
 #define OUT_LOG(name)                                                                              \
-    std::cout << Time::getCurrentTime().formatted("%H:%M:%S") << " :: " << name << std::endl
+    std::cout << juce::Time::getCurrentTime().formatted("%H:%M:%S") << " :: " << name << std::endl
 #else
 #define OUT_LOG(name)
 #endif
@@ -126,14 +126,14 @@ class AppInstanceStore;
 
 // JUCE
 #ifdef B_STEP_STANDALONE
-#include "../../b-step-standalone/JuceLibraryCode/JuceHeader.h"
+// #include "../../b-step-standalone/JuceLibraryCode/JuceHeader.h"
 #include "../../b-step-standalone/JuceLibraryCode/BinaryData.h"
 #else
-#include "../JuceLibraryCode/JuceHeader.h"
 // #	include "../../b-step-standalone/JuceLibraryCode/BinaryData.h" // MANAGE ALL INCLUDES FROM
 // THE STANDALONE PROJECT!
 #endif
-
+#include <juce_core/juce_core.h>
+#include <juce_gui_basics/juce_gui_basics.h>
 // --------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------
@@ -158,90 +158,91 @@ class AppInstanceStore;
 #define APP_ROOT_FOLDER "/b-step"
 #endif
 
-inline static File get_app_folder(const String &sub_dirs_ = "")
+inline static juce::File get_app_folder(const juce::String &sub_dirs_ = "")
 {
-    File file = File(File::getSpecialLocation(File::PLATFORM_B_FOLDER).getFullPathName() +
-                     String(APP_ROOT_FOLDER + sub_dirs_))
-                    .getFullPathName();
+    juce::File file =
+        juce::File(juce::File::getSpecialLocation(juce::File::PLATFORM_B_FOLDER).getFullPathName() +
+                   juce::String(APP_ROOT_FOLDER + sub_dirs_))
+            .getFullPathName();
 
     return file;
 }
 
-inline static File get_downloads_folder(bool create_if_not_exist_ = false)
+inline static juce::File get_downloads_folder(bool create_if_not_exist_ = false)
 {
-    File folder = get_app_folder().getChildFile("downloads");
+    juce::File folder = get_app_folder().getChildFile("downloads");
 
     if (create_if_not_exist_)
         folder.createDirectory();
 
     return folder;
 }
-inline static File get_log_folder(bool create_if_not_exist_ = false)
+inline static juce::File get_log_folder(bool create_if_not_exist_ = false)
 {
-    File folder = get_app_folder().getChildFile("log");
+    juce::File folder = get_app_folder().getChildFile("log");
 
     if (create_if_not_exist_)
         folder.createDirectory();
 
     return folder;
 }
-inline static File get_session_folder(bool create_if_not_exist_ = false)
+inline static juce::File get_session_folder(bool create_if_not_exist_ = false)
 {
-    File folder = get_app_folder().getChildFile("session");
+    juce::File folder = get_app_folder().getChildFile("session");
 
     if (create_if_not_exist_)
         folder.createDirectory();
 
     return folder;
 }
-inline static File get_projects_folder(bool create_if_not_exist_ = false)
+inline static juce::File get_projects_folder(bool create_if_not_exist_ = false)
 {
-    File folder = get_app_folder().getChildFile("projects");
+    juce::File folder = get_app_folder().getChildFile("projects");
 
     if (create_if_not_exist_)
         folder.createDirectory();
 
     return folder;
 }
-inline static File get_snapshots_folder(bool create_if_not_exist_ = false)
+inline static juce::File get_snapshots_folder(bool create_if_not_exist_ = false)
 {
-    File folder = get_app_folder().getChildFile("snapshots");
+    juce::File folder = get_app_folder().getChildFile("snapshots");
 
     if (create_if_not_exist_)
         folder.createDirectory();
 
     return folder;
 }
-inline static File get_chordset_folder(bool create_if_not_exist_ = false)
+inline static juce::File get_chordset_folder(bool create_if_not_exist_ = false)
 {
-    File folder = get_app_folder().getChildFile("chordsets");
+    juce::File folder = get_app_folder().getChildFile("chordsets");
 
     if (create_if_not_exist_)
         folder.createDirectory();
 
     return folder;
 }
-inline static File get_mappings_folder(bool create_if_not_exist_ = false)
+inline static juce::File get_mappings_folder(bool create_if_not_exist_ = false)
 {
-    File folder = get_app_folder().getChildFile("mappings");
+    juce::File folder = get_app_folder().getChildFile("mappings");
 
     if (create_if_not_exist_)
         folder.createDirectory();
 
     return folder;
 }
-inline static File get_colours_folder(bool create_if_not_exist_ = false)
+inline static juce::File get_colours_folder(bool create_if_not_exist_ = false)
 {
-    File folder = get_app_folder().getChildFile("colours");
+    juce::File folder = get_app_folder().getChildFile("colours");
 
     if (create_if_not_exist_)
         folder.createDirectory();
 
     return folder;
 }
-inline static File get_manual_folder(bool create_if_not_exist_ = false)
+inline static juce::File get_manual_folder(bool create_if_not_exist_ = false)
 {
-    File folder = get_app_folder().getChildFile("manual");
+    juce::File folder = get_app_folder().getChildFile("manual");
 
     if (create_if_not_exist_)
         folder.createDirectory();
@@ -265,14 +266,14 @@ class RAII_POST
   public:
     RAII_POST(const char *const type_, const char *const class_) : _type(type_), _class(class_)
     {
-        OUT_LOG(_type + String("::") + _class);
-        if (String(_type) == "DOWN")
+        OUT_LOG(_type + juce::String("::") + _class);
+        if (juce::String(_type) == "DOWN")
             SESSION_ERROR_LOG(_type + String("::") + _class + String("\n"));
     }
     ~RAII_POST()
     {
-        OUT_LOG(_type + String("::") + _class + String("::DONE"));
-        if (String(_type) == "DOWN")
+        OUT_LOG(_type + juce::String("::") + _class + juce::String("::DONE"));
+        if (juce::String(_type) == "DOWN")
             SESSION_ERROR_LOG(_type + String("::") + _class + String("::DONE\n"));
     }
 };
@@ -319,32 +320,33 @@ struct AlertHandler
 
     ALERT_TYPES _type;
 
-    AlertWindow::AlertIconType _icon;
+    juce::AlertWindow::AlertIconType _icon;
 
-    String _title;
-    String _message;
-    String _button_1;
-    String _button_2;
-    String _button_3;
+    juce::String _title;
+    juce::String _message;
+    juce::String _button_1;
+    juce::String _button_2;
+    juce::String _button_3;
 
     operator bool() const
     {
         switch (_type)
         {
         case TWO_BUTTON_BOX:
-            return AlertWindow::showOkCancelBox(_icon, _title, _message, _button_1, _button_2);
+            return juce::AlertWindow::showOkCancelBox(_icon, _title, _message, _button_1,
+                                                      _button_2);
         case TREE_BUTTON_BOX:
-            return AlertWindow::showYesNoCancelBox(_icon, _title, _message, _button_1, _button_2,
-                                                   _button_3);
+            return juce::AlertWindow::showYesNoCancelBox(_icon, _title, _message, _button_1,
+                                                         _button_2, _button_3);
         default:
-            AlertWindow::showMessageBoxAsync(_icon, _title, _message, _button_1);
+            juce::AlertWindow::showMessageBoxAsync(_icon, _title, _message, _button_1);
             return true;
         };
     }
 
-    AlertHandler(ALERT_TYPES type_, AlertWindow::AlertIconType icon_, String &title_,
-                 String &message_, String button_1_ = "", String button_2_ = "",
-                 String button_3_ = "")
+    AlertHandler(ALERT_TYPES type_, juce::AlertWindow::AlertIconType icon_, juce::String &title_,
+                 juce::String &message_, juce::String button_1_ = "", juce::String button_2_ = "",
+                 juce::String button_3_ = "")
         : _type(type_), _icon(icon_), _title(title_), _message(message_), _button_1(button_1_),
           _button_2(button_2_), _button_3(button_3_)
     {
@@ -374,7 +376,7 @@ struct AlertHandler
 // --------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------
 
-static const String MANUAL_URL("http://b-step-manual-redirect.monoplugs.com/");
+static const juce::String MANUAL_URL("http://b-step-manual-redirect.monoplugs.com/");
 
 // --------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------
@@ -382,7 +384,7 @@ static const String MANUAL_URL("http://b-step-manual-redirect.monoplugs.com/");
 // --------------------------------------------------------------------------------------------
 
 // THREAD WITH THE OPTION TO KILL ITSELF
-class AutonomThread : public Thread, public AsyncUpdater
+class AutonomThread : public juce::Thread, public juce::AsyncUpdater
 {
     virtual void handleAsyncUpdate() override
     {
@@ -396,7 +398,7 @@ class AutonomThread : public Thread, public AsyncUpdater
   protected:
     void selfkill() { triggerAsyncUpdate(); }
 
-    AutonomThread(const String &name_) : Thread(name_) {}
+    AutonomThread(const juce::String &name_) : juce::Thread(name_) {}
 
     virtual ~AutonomThread() {}
 };
@@ -411,11 +413,11 @@ class AutonomThread : public Thread, public AsyncUpdater
 // --------------------------------------------------------------------------------------------
 
 #define INCLUDE_USER_DEBUG "_USER_DEBUG_HEADERS.h"
-struct GLOBAL_VALUE_HOLDER : public DeletedAtShutdown
+struct GLOBAL_VALUE_HOLDER : public juce::DeletedAtShutdown
 {
-    int8 INSTANCES;
+    std::int8_t INSTANCES;
 
-    int16 LONG_MOUSE_DOWN_INTERVAL;
+    std::int16_t LONG_MOUSE_DOWN_INTERVAL;
     float MULTIDRAG_SENSITIVITY;
     float SIMPLEDRAG_SENSITIVITY;
     bool MULTIDRAG_ENABLE;
@@ -427,7 +429,7 @@ struct GLOBAL_VALUE_HOLDER : public DeletedAtShutdown
     bool QUESTION_WAS_UP;
     bool WHATS_NEW_WAS_UP;
 
-    uint32 MASTER_COLOUR;
+    std::uint32_t MASTER_COLOUR;
 
 #ifdef LOG_THE_EVENTS_TO_FILE
     bool SESSION_FILE_WAS_STILL_PRESENT;
@@ -447,7 +449,7 @@ struct GLOBAL_VALUE_HOLDER : public DeletedAtShutdown
 
     //// LOAD AND SAVE
   public:
-    void save_to(XmlElement &xml) const
+    void save_to(juce::XmlElement &xml) const
     {
         xml.setAttribute("multidrag_time", LONG_MOUSE_DOWN_INTERVAL);
         xml.setAttribute("multidrag_sens", MULTIDRAG_SENSITIVITY);
@@ -461,7 +463,7 @@ struct GLOBAL_VALUE_HOLDER : public DeletedAtShutdown
         xml.setAttribute("question_was_up", QUESTION_WAS_UP);
     }
 
-    void load_from(const XmlElement &xml)
+    void load_from(const juce::XmlElement &xml)
     {
         LONG_MOUSE_DOWN_INTERVAL = xml.getIntAttribute("multidrag_time", 750);
         MULTIDRAG_SENSITIVITY = xml.getDoubleAttribute("multidrag_sens", 0.2);
@@ -483,17 +485,17 @@ struct GLOBAL_VALUE_HOLDER : public DeletedAtShutdown
 // --------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------
 
-class FingerDrag : public Component
+class FingerDrag : public juce::Component
 {
-    Component *_root_view;
-    Viewport *view;
+    juce::Component *_root_view;
+    juce::Viewport *view;
 
-    Point<int> _start_drag_position;
+    juce::Point<int> _start_drag_position;
 
     bool is_mouse_down;
     bool is_dragging;
 
-    void mouseDown(const MouseEvent &e_) override
+    void mouseDown(const juce::MouseEvent &e_) override
     {
         if (is_mouse_down)
             return;
@@ -503,14 +505,14 @@ class FingerDrag : public Component
         int this_x = this->getScreenPosition().getX();
         int this_y = this->getScreenPosition().getY();
 
-        if (dynamic_cast<ScrollBar *>(
-                Desktop::getInstance().getMainMouseSource().getComponentUnderMouse()))
+        if (dynamic_cast<juce::ScrollBar *>(
+                juce::Desktop::getInstance().getMainMouseSource().getComponentUnderMouse()))
             return;
-        else if (dynamic_cast<ScrollBar *>(Component::getCurrentlyFocusedComponent()))
+        else if (dynamic_cast<juce::ScrollBar *>(juce::Component::getCurrentlyFocusedComponent()))
             return;
 
         // CHECK IF THE ROOT OF ALL FOCUSED COMPONENT IS THE FILE BROWSER
-        Component *component = Component::getCurrentlyFocusedComponent();
+        juce::Component *component = juce::Component::getCurrentlyFocusedComponent();
         bool we_have_focus = false;
         while (component)
         {
@@ -532,13 +534,13 @@ class FingerDrag : public Component
                 }
         }
     }
-    void mouseUp(const MouseEvent &) override
+    void mouseUp(const juce::MouseEvent &) override
     {
         is_mouse_down = false;
         is_dragging = false;
         setInterceptsMouseClicks(false, false);
     }
-    void mouseDrag(const MouseEvent &e_) override
+    void mouseDrag(const juce::MouseEvent &e_) override
     {
         if (!is_mouse_down)
             return;
@@ -560,13 +562,13 @@ class FingerDrag : public Component
     }
 
   public:
-    FingerDrag(Viewport *view_to_move_, Component *root_view_)
+    FingerDrag(juce::Viewport *view_to_move_, juce::Component *root_view_)
         : _root_view(root_view_), view(view_to_move_), is_mouse_down(false), is_dragging(false)
     {
-        Desktop::getInstance().addGlobalMouseListener(this);
+        juce::Desktop::getInstance().addGlobalMouseListener(this);
         setInterceptsMouseClicks(false, false);
     }
-    ~FingerDrag() { Desktop::getInstance().removeGlobalMouseListener(this); }
+    ~FingerDrag() { juce::Desktop::getInstance().removeGlobalMouseListener(this); }
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FingerDrag)
 };

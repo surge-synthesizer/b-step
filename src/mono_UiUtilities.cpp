@@ -10,6 +10,7 @@
 
 #include "mono_UiUtilities.h"
 #include "UiLookAndFeel.h"
+#include "mono_ModulationSlider.h"
 
 // ==============================================================================
 ParameterReference::ParameterReference(
@@ -20,7 +21,8 @@ ParameterReference::ParameterReference(
 
 ParameterReference::operator bool() const { return _base; }
 
-void ParameterReference::init_value_slider(Slider *const slider_, float min_value_override) const
+void ParameterReference::init_value_slider(juce::Slider *const slider_,
+                                           float min_value_override) const
 {
     if (min_value_override == DONT_OVERRIDE_SLIDER_VALUE)
         slider_->setRange(_base->min_unscaled(), _base->max_unscaled(), _base->slider_interval());
@@ -31,17 +33,17 @@ void ParameterReference::init_value_slider(Slider *const slider_, float min_valu
     slider_->setPopupMenuEnabled(true);
     write_value_to(slider_);
 }
-void ParameterReference::write_value_to(Slider *const slider_) const
+void ParameterReference::write_value_to(juce::Slider *const slider_) const
 {
-    slider_->setValue(_base->get_scaled_value() * _base->scale(), dontSendNotification);
+    slider_->setValue(_base->get_scaled_value() * _base->scale(), juce::dontSendNotification);
 }
-void ParameterReference::read_value_from(const Slider *const slider_)
+void ParameterReference::read_value_from(const juce::Slider *const slider_)
 {
     _base->set_scaled_value(slider_->getValue() / _base->scale());
 }
 float ParameterReference::get_value() const { return _base->get_scaled_value() / _base->scale(); }
 void ParameterReference::invert() { _base->set_scaled_value(!_base->get_scaled_value()); }
-void ParameterReference::init_modulation_slider(Slider *const slider_,
+void ParameterReference::init_modulation_slider(juce::Slider *const slider_,
                                                 bool is_modulation_slider_centered_) const
 {
     slider_->setRange(-100, MODULATION_AMOUNT_MAX, 0.1);
@@ -49,7 +51,7 @@ void ParameterReference::init_modulation_slider(Slider *const slider_,
     slider_->setPopupMenuEnabled(true);
     write_modulation_to(slider_, is_modulation_slider_centered_);
 }
-void ParameterReference::write_modulation_to(Slider *const slider_,
+void ParameterReference::write_modulation_to(juce::Slider *const slider_,
                                              bool is_modulation_slider_centered_) const
 {
     const float modulation_value = _base->get_modulation_amount();
@@ -72,9 +74,9 @@ void ParameterReference::write_modulation_to(Slider *const slider_,
         modulation_slider_style = MODULATION_SLIDER_MOVES_WITH_MASTER_FROM_ZERO;
 
     slider_->setRotaryParameters(scaled_value, modulation_slider_style, true);
-    slider_->setValue(modulation_value * MODULATION_AMOUNT_MAX, dontSendNotification);
+    slider_->setValue(modulation_value * MODULATION_AMOUNT_MAX, juce::dontSendNotification);
 }
-void ParameterReference::read_modulation_from(const Slider *const slider_)
+void ParameterReference::read_modulation_from(const juce::Slider *const slider_)
 {
     _base->set_modulation_amount(slider_->getValue() / MODULATION_AMOUNT_MAX);
 }

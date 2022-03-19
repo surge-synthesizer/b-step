@@ -31,8 +31,8 @@ template <class type, int max_size = MAX_BUFFER_SIZE> class EndlessBuffer
     int past_offset;
 
     int size;
-    Array<type, DummyCriticalSection, max_size> data;
-    Array<bool, DummyCriticalSection, max_size> switch_positions;
+    juce::Array<type, juce::DummyCriticalSection, max_size> data;
+    juce::Array<bool, juce::DummyCriticalSection, max_size> switch_positions;
 
   public:
     void add(type value_, bool is_switch_ = true)
@@ -115,10 +115,10 @@ template <class type, int max_size = MAX_BUFFER_SIZE> class EndlessBuffer
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class mono_AmpPainter : public Component,
-                        public Timer,
-                        public Slider::Listener,
-                        public Button::Listener
+class mono_AmpPainter : public juce::Component,
+                        public juce::Timer,
+                        public juce::Slider::Listener,
+                        public juce::Button::Listener
 {
   public:
     //==============================================================================
@@ -132,24 +132,24 @@ class mono_AmpPainter : public Component,
 
     int resizer;
 
-    OwnedArray<EndlessBuffer<float>> osc_values;
-    Array<bool> show_osc;
+    juce::OwnedArray<EndlessBuffer<float>> osc_values;
+    juce::Array<bool> show_osc;
     inline void add_osc(int id_, float value_, bool is_switch_)
     {
         osc_values.getUnchecked(id_)->add(value_, is_switch_);
     };
 
-    OwnedArray<EndlessBuffer<float>> lfo_values;
-    Array<bool> show_lfo;
+    juce::OwnedArray<EndlessBuffer<float>> lfo_values;
+    juce::Array<bool> show_lfo;
     bool show_lfo_mix;
     inline void add_lfo(int id_, float value_) { lfo_values.getUnchecked(id_)->add(value_); }
 
-    OwnedArray<EndlessBuffer<float>> filter_values;
-    Array<bool> show_filter;
+    juce::OwnedArray<EndlessBuffer<float>> filter_values;
+    juce::Array<bool> show_filter;
     void add_filter(int id_, const float *values_, int num_samples_) noexcept;
 
-    OwnedArray<EndlessBuffer<float>> filter_env_values;
-    Array<bool> show_filter_env;
+    juce::OwnedArray<EndlessBuffer<float>> filter_env_values;
+    juce::Array<bool> show_filter_env;
     void add_filter_env(int id_, const float *values_, int num_samples_) noexcept;
 
     EndlessBuffer<float> values;
@@ -162,37 +162,37 @@ class mono_AmpPainter : public Component,
 
     void timerCallback() override;
 
-    Array<EndlessBuffer<float> *> buffers;
+    juce::Array<EndlessBuffer<float> *> buffers;
 
     void refresh_buttons();
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
-    void sliderValueChanged(Slider *sliderThatWasMoved);
-    void buttonClicked(Button *buttonThatWasClicked);
+    void sliderValueChanged(juce::Slider *sliderThatWasMoved);
+    void buttonClicked(juce::Button *buttonThatWasClicked);
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Slider> sl_osc_octave_3;
-    ScopedPointer<TextButton> osc_1;
-    ScopedPointer<TextButton> osc_2;
-    ScopedPointer<TextButton> osc_3;
-    ScopedPointer<TextButton> lfo_1;
-    ScopedPointer<TextButton> lfo_2;
-    ScopedPointer<TextButton> lfo_3;
-    ScopedPointer<TextButton> out;
-    ScopedPointer<TextButton> f_1;
-    ScopedPointer<TextButton> f_2;
-    ScopedPointer<TextButton> f_3;
-    ScopedPointer<TextButton> f_env_1;
-    ScopedPointer<TextButton> f_env_2;
-    ScopedPointer<TextButton> f_env_3;
-    ScopedPointer<TextButton> out_env;
-    ScopedPointer<Component> drawing_area;
+    juce::ScopedPointer<juce::Slider> sl_osc_octave_3;
+    juce::ScopedPointer<juce::TextButton> osc_1;
+    juce::ScopedPointer<juce::TextButton> osc_2;
+    juce::ScopedPointer<juce::TextButton> osc_3;
+    juce::ScopedPointer<juce::TextButton> lfo_1;
+    juce::ScopedPointer<juce::TextButton> lfo_2;
+    juce::ScopedPointer<juce::TextButton> lfo_3;
+    juce::ScopedPointer<juce::TextButton> out;
+    juce::ScopedPointer<juce::TextButton> f_1;
+    juce::ScopedPointer<juce::TextButton> f_2;
+    juce::ScopedPointer<juce::TextButton> f_3;
+    juce::ScopedPointer<juce::TextButton> f_env_1;
+    juce::ScopedPointer<juce::TextButton> f_env_2;
+    juce::ScopedPointer<juce::TextButton> f_env_3;
+    juce::ScopedPointer<juce::TextButton> out_env;
+    juce::ScopedPointer<juce::Component> drawing_area;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(mono_AmpPainter)

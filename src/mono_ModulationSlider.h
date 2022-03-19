@@ -24,31 +24,31 @@
 #include "App.h"
 #include "mono_UiUtilities.h"
 
-typedef Array<float> snap_map_t;
+typedef juce::Array<float> snap_map_t;
 
 class mono_ModulationSlider;
-class SnapSlider : public Slider
+class SnapSlider : public juce::Slider
 {
     friend class mono_ModulationSlider;
     mono_ModulationSlider *owner;
 
-    void mouseEnter(const MouseEvent &event) override;
-    void mouseExit(const MouseEvent &event) override;
+    void mouseEnter(const juce::MouseEvent &event) override;
+    void mouseExit(const juce::MouseEvent &event) override;
 
   public:
-    SnapSlider(const String &name_) : Slider(name_) {}
+    juce::String SnapSlider(const juce::String &name_) : juce::Slider(name_) {}
 };
 
 // THIS SLIDER IS LEFT TO RIGHT IF THE NAME IS "3"
-class Left2MiddleSlider : public Slider
+class Left2MiddleSlider : public juce::Slider
 {
-    Slider *_peer_behind;
+    juce::Slider *_peer_behind;
 
     friend class mono_ModulationSlider;
     mono_ModulationSlider *owner;
 
-    void mouseEnter(const MouseEvent &event) override;
-    void mouseExit(const MouseEvent &event) override;
+    void mouseEnter(const juce::MouseEvent &event) override;
+    void mouseExit(const juce::MouseEvent &event);
 
   public:
     bool hitTest(int x, int) override
@@ -67,15 +67,18 @@ class Left2MiddleSlider : public Slider
         return true;
     }
 
-    void set_peer_behind(Slider *peer_behind_) { _peer_behind = peer_behind_; }
+    void set_peer_behind(juce::Slider *peer_behind_) { _peer_behind = peer_behind_; }
 
-    Left2MiddleSlider(const String &componentName) : Slider(componentName), _peer_behind(nullptr) {}
+    Left2MiddleSlider(const juce::String &componentName)
+        : juce::Slider(componentName), _peer_behind(nullptr)
+    {
+    }
 };
 
 // THIS SLIDER IS ALWAYS MIDDLE TO RIGHT
-class Middle2RightSlider : public Slider
+class Middle2RightSlider : public juce::Slider
 {
-    Slider *_peer_behind;
+    juce::Slider *_peer_behind;
 
   public:
     bool hitTest(int x, int) override
@@ -91,9 +94,10 @@ class Middle2RightSlider : public Slider
         return true;
     }
 
-    void set_peer_behind(Slider *peer_behind_) { _peer_behind = peer_behind_; }
+    void set_peer_behind(juce::Slider *peer_behind_) { _peer_behind = peer_behind_; }
 
-    Middle2RightSlider(const String &componentName) : Slider(componentName), _peer_behind(nullptr)
+    Middle2RightSlider(const juce::String &componentName)
+        : juce::Slider(componentName), _peer_behind(nullptr)
     {
     }
 };
@@ -107,7 +111,7 @@ enum
 };
 struct ModulationSliderConfigBase
 {
-    virtual StringRef get_bottom_button_text() const { return ""; }
+    virtual juce::StringRef get_bottom_button_text() const { return ""; }
     virtual bool get_is_bottom_button_text_dynamic() const { return false; }
     virtual mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const
     {
@@ -118,15 +122,15 @@ struct ModulationSliderConfigBase
         return get_parameter_compatibility_base();
     }
 
-    virtual StringRef get_botton_button_switch_text() const { return ""; }
+    virtual juce::StringRef get_botton_button_switch_text() const { return ""; }
 
-    virtual StringRef get_top_button_text() const { return ""; }
+    virtual juce::StringRef get_top_button_text() const { return ""; }
     virtual mono_ParameterCompatibilityBase *get_button_parameter_compatibility_base() const
     {
         return nullptr;
     }
     virtual float get_top_button_amp() const { return NO_TOP_BUTTON_AMP; }
-    virtual StringArray get_modulation_source_list() const { return StringArray(); }
+    virtual juce::StringArray get_modulation_source_list() const { return juce::StringArray(); }
 
     virtual bool is_modulation_slider_centered() const { return false; }
 
@@ -144,8 +148,8 @@ struct ModulationSliderConfigBase
     {
         return DEFAULT_SHOW_SLIDER_VAL_ON_CHANGE;
     }
-    virtual String get_top_value() const { return ""; }
-    virtual StringRef get_top_suffix() const { return ""; }
+    virtual juce::String get_top_value() const { return ""; }
+    virtual juce::StringRef get_top_suffix() const { return ""; }
     virtual ~ModulationSliderConfigBase() {}
 };
 
@@ -159,10 +163,10 @@ struct ModulationSliderConfigBase
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class mono_ModulationSlider : public Component,
+class mono_ModulationSlider : public juce::Component,
                               public mono_UiRefreshable,
-                              public Slider::Listener,
-                              public Button::Listener
+                              public juce::Slider::Listener,
+                              public juce::Button::Listener
 {
   public:
     //==============================================================================
@@ -189,36 +193,36 @@ class mono_ModulationSlider : public Component,
     float last_painted_mod_slider_val;
 
     void refresh();
-    void sliderClicked(Slider *s_) override;
+    void sliderClicked(juce::Slider *s_) override;
 
   public:
-    void sliderValueEnter(Slider *s_);
-    void sliderValueExit(Slider *s_);
-    void sliderModEnter(Slider *s_);
-    void sliderModExit(Slider *s_);
+    void sliderValueEnter(juce::Slider *s_);
+    void sliderValueExit(juce::Slider *s_);
+    void sliderModEnter(juce::Slider *s_);
+    void sliderModExit(juce::Slider *s_);
 
   public:
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
-    void sliderValueChanged(Slider *sliderThatWasMoved);
-    void buttonClicked(Button *buttonThatWasClicked);
-    bool keyPressed(const KeyPress &key);
+    void sliderValueChanged(juce::Slider *sliderThatWasMoved);
+    void buttonClicked(juce::Button *buttonThatWasClicked);
+    bool keyPressed(const juce::KeyPress &key);
     bool keyStateChanged(const bool isKeyDown);
-    void modifierKeysChanged(const ModifierKeys &modifiers);
+    void modifierKeysChanged(const juce::ModifierKeys &modifiers);
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<SnapSlider> slider_value;
-    ScopedPointer<TextButton> button_switch;
-    ScopedPointer<Left2MiddleSlider> slider_modulation;
-    ScopedPointer<Label> label;
-    ScopedPointer<TextButton> button_modulator;
-    ScopedPointer<Label> label_top;
+    juce::ScopedPointer<SnapSlider> slider_value;
+    juce::ScopedPointer<juce::TextButton> button_switch;
+    juce::ScopedPointer<Left2MiddleSlider> slider_modulation;
+    juce::ScopedPointer<juce::Label> label;
+    juce::ScopedPointer<juce::TextButton> button_modulator;
+    juce::ScopedPointer<juce::Label> label_top;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(mono_ModulationSlider)

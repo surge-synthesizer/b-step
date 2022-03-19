@@ -123,7 +123,7 @@ class SegmentedMeter : public GraphicalComponent
 
     //==============================================================================
     /**	Draws the meter. */
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
 
     /**	@internal
      */
@@ -141,7 +141,7 @@ class SegmentedMeter : public GraphicalComponent
      */
     virtual void process();
 
-    uint32 my_red, my_yellow, my_green;
+    std::uint32_t my_red, my_yellow, my_green;
 
   private:
     //==============================================================================
@@ -154,7 +154,7 @@ class SegmentedMeter : public GraphicalComponent
     StateVariable<float> level;
     bool needsRepaint;
 
-    Image onImage, offImage;
+    juce::Image onImage, offImage;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SegmentedMeter);

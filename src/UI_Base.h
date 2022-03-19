@@ -16,14 +16,14 @@ class UIBase
   protected:
     MONO_Controller *_controller;
     ModelBase *_model;
-    String _text;
+    juce::String _text;
 
   private: // THIS CAN BE USED BY MODEL
     void set_controller(MONO_Controller *const controller_, ModelBase *model_);
     virtual void resized(int, int) {}
-    virtual Component *get_top_level_component() = 0;
+    virtual juce::Component *get_top_level_component() = 0;
     virtual void *get_top_level_impl() = 0;
-    virtual void cache_paint(Graphics &g_, uint32 background_colour_) = 0;
+    virtual void cache_paint(juce::Graphics &g_, std::uint32_t background_colour_) = 0;
 
     virtual bool refresh_foreground() { return false; };
 

@@ -34,8 +34,8 @@
 
 struct ScalesBase
 {
-    virtual bool is(int8 value_) = 0;
-    virtual int8 tune_offset() = 0;
+    virtual bool is(std::int8_t value_) = 0;
+    virtual std::int8_t tune_offset() = 0;
 
     virtual ~ScalesBase(){};
 
@@ -44,7 +44,7 @@ struct ScalesBase
 
 struct MAJOR : public ScalesBase
 {
-    bool is(int8 value_) override
+    bool is(std::int8_t value_) override
     {
         switch (value_ % OCTAVE_MULTIPLIER)
         {
@@ -68,11 +68,11 @@ struct MAJOR : public ScalesBase
         }
     }
 
-    int8 tune_offset() override { return TUNE_OFFSET_C; }
+    std::int8_t tune_offset() override { return TUNE_OFFSET_C; }
 };
 struct HARMONIC_MINOR : public ScalesBase
 {
-    bool is(int8 value_) override
+    bool is(std::int8_t value_) override
     {
         switch (value_ % OCTAVE_MULTIPLIER)
         {
@@ -96,11 +96,11 @@ struct HARMONIC_MINOR : public ScalesBase
         }
     }
 
-    int8 tune_offset() override { return TUNE_OFFSET_C; }
+    std::int8_t tune_offset() override { return TUNE_OFFSET_C; }
 };
 struct MELODIC_MINOR : public ScalesBase
 {
-    bool is(int8 value_) override
+    bool is(std::int8_t value_) override
     {
         switch (value_ % OCTAVE_MULTIPLIER)
         {
@@ -124,11 +124,11 @@ struct MELODIC_MINOR : public ScalesBase
         }
     }
 
-    int8 tune_offset() override { return TUNE_OFFSET_A; }
+    std::int8_t tune_offset() override { return TUNE_OFFSET_A; }
 };
 struct HUNGARIAN_MINOR : public ScalesBase
 {
-    bool is(int8 value_) override
+    bool is(std::int8_t value_) override
     {
         switch (value_ % OCTAVE_MULTIPLIER)
         {
@@ -152,11 +152,11 @@ struct HUNGARIAN_MINOR : public ScalesBase
         }
     }
 
-    int8 tune_offset() override { return TUNE_OFFSET_A; }
+    std::int8_t tune_offset() override { return TUNE_OFFSET_A; }
 };
 struct HEPTATONIC : public ScalesBase
 {
-    bool is(int8 value_) override
+    bool is(std::int8_t value_) override
     {
         switch (value_ % OCTAVE_MULTIPLIER)
         {
@@ -180,11 +180,11 @@ struct HEPTATONIC : public ScalesBase
         }
     }
 
-    int8 tune_offset() override { return TUNE_OFFSET_A; }
+    std::int8_t tune_offset() override { return TUNE_OFFSET_A; }
 };
 struct JAZZ_MINOR : public ScalesBase
 {
-    bool is(int8 value_) override
+    bool is(std::int8_t value_) override
     {
         switch (value_ % OCTAVE_MULTIPLIER)
         {
@@ -208,11 +208,11 @@ struct JAZZ_MINOR : public ScalesBase
         }
     }
 
-    int8 tune_offset() override { return TUNE_OFFSET_A; }
+    std::int8_t tune_offset() override { return TUNE_OFFSET_A; }
 };
 struct DOUBLE_HARMONIC : public ScalesBase
 {
-    bool is(int8 value_) override
+    bool is(std::int8_t value_) override
     {
         switch (value_ % OCTAVE_MULTIPLIER)
         {
@@ -236,11 +236,11 @@ struct DOUBLE_HARMONIC : public ScalesBase
         }
     }
 
-    int8 tune_offset() override { return TUNE_OFFSET_C; }
+    std::int8_t tune_offset() override { return TUNE_OFFSET_C; }
 };
 struct HARMONIC_MAJOR : public ScalesBase
 {
-    bool is(int8 value_) override
+    bool is(std::int8_t value_) override
     {
         switch (value_ % OCTAVE_MULTIPLIER)
         {
@@ -264,11 +264,11 @@ struct HARMONIC_MAJOR : public ScalesBase
         }
     }
 
-    int8 tune_offset() override { return TUNE_OFFSET_C; }
+    std::int8_t tune_offset() override { return TUNE_OFFSET_C; }
 };
 struct HUNGARIAN_GYPSY : public ScalesBase
 {
-    bool is(int8 value_) override
+    bool is(std::int8_t value_) override
     {
         switch (value_ % OCTAVE_MULTIPLIER)
         {
@@ -294,11 +294,11 @@ struct HUNGARIAN_GYPSY : public ScalesBase
         }
     }
 
-    int8 tune_offset() override { return TUNE_OFFSET_A; }
+    std::int8_t tune_offset() override { return TUNE_OFFSET_A; }
 };
 struct PHRYGIAN_DOMINANT : public ScalesBase
 {
-    bool is(int8 value_) override
+    bool is(std::int8_t value_) override
     {
         switch (value_ % OCTAVE_MULTIPLIER)
         {
@@ -322,11 +322,11 @@ struct PHRYGIAN_DOMINANT : public ScalesBase
         }
     }
 
-    int8 tune_offset() override { return TUNE_OFFSET_C; }
+    std::int8_t tune_offset() override { return TUNE_OFFSET_C; }
 };
 struct OCTATONIC : public ScalesBase
 {
-    bool is(int8 value_) override
+    bool is(std::int8_t value_) override
     {
         switch (value_ % OCTAVE_MULTIPLIER)
         {
@@ -350,11 +350,11 @@ struct OCTATONIC : public ScalesBase
         }
     }
 
-    int8 tune_offset() override { return TUNE_OFFSET_D; }
+    std::int8_t tune_offset() override { return TUNE_OFFSET_D; }
 };
 struct PENTATONIC_MAJOR : public ScalesBase
 {
-    bool is(int8 value_) override
+    bool is(std::int8_t value_) override
     {
         switch (value_ % OCTAVE_MULTIPLIER)
         {
@@ -374,14 +374,14 @@ struct PENTATONIC_MAJOR : public ScalesBase
         }
     }
 
-    int8 tune_offset() override { return TUNE_OFFSET_C; }
+    std::int8_t tune_offset() override { return TUNE_OFFSET_C; }
 };
 
 struct ScalesList
 {
-    static Array<String> get()
+    static juce::Array<juce::String> get()
     {
-        Array<String> names;
+        juce::Array<juce::String> names;
         names.add("Major");
         names.add("Harmonic Minor");
         names.add("Melodic Minor");
@@ -398,7 +398,7 @@ struct ScalesList
         return names;
     }
 
-    static ScalesBase *get(uint8 index)
+    static ScalesBase *get(std::uint8_t index)
     {
         switch (index)
         {
@@ -433,17 +433,18 @@ struct ScalesList
     }
 };
 
-static inline Array<int8> get_random_chord(uint8 index_)
+static inline juce::Array<std::int8_t> get_random_chord(std::uint8_t index_)
 {
-    Array<int8> chord_notes;
-    int8 random_note;
+    juce::Array<std::int8_t> chord_notes;
+    std::int8_t random_note;
     bool success;
     ScalesBase *scale = ScalesList::get(index_);
     while (chord_notes.size() != 4)
     {
         // GEN
-        Random::getSystemRandom().setSeedRandomly();
-        random_note = Random::getSystemRandom().nextInt(OCTAVE_MULTIPLIER) - OCTAVE_MULTIPLIER / 2;
+        juce::Random::getSystemRandom().setSeedRandomly();
+        random_note =
+            juce::Random::getSystemRandom().nextInt(OCTAVE_MULTIPLIER) - OCTAVE_MULTIPLIER / 2;
 
         // CHECK
         switch (chord_notes.size())

@@ -32,178 +32,198 @@ void UiEditorMorph::refresh()
 {
     // MORPH 1
     {
-        const Array<int> &selections_1 = DATA(synth_data).get_active_morph_selections(0);
+        const juce::Array<int> &selections_1 = DATA(synth_data).get_active_morph_selections(0);
         toggle_all_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ALL),
-                                     dontSendNotification);
+                                     juce::dontSendNotification);
         toggle_main_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::MAIN),
-                                      dontSendNotification);
+                                      juce::dontSendNotification);
         toggle_filters_1->setToggleState(
-            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FILTERS), dontSendNotification);
+            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FILTERS),
+            juce::dontSendNotification);
         toggle_filter_1_1->setToggleState(
-            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_1), dontSendNotification);
+            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_1),
+            juce::dontSendNotification);
         toggle_filter_2_1->setToggleState(
-            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_2), dontSendNotification);
+            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_2),
+            juce::dontSendNotification);
         toggle_filter_3_1->setToggleState(
-            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_3), dontSendNotification);
+            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_3),
+            juce::dontSendNotification);
         toggle_oscs_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::OSCS),
-                                      dontSendNotification);
+                                      juce::dontSendNotification);
         toggle_osc_1_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_1),
-                                       dontSendNotification);
+                                       juce::dontSendNotification);
         toggle_osc_2_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_2),
-                                       dontSendNotification);
+                                       juce::dontSendNotification);
         toggle_osc_3_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_3),
-                                       dontSendNotification);
+                                       juce::dontSendNotification);
         toggle_fm_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FM),
-                                    dontSendNotification);
+                                    juce::dontSendNotification);
         toggle_effects_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::FX),
-                                         dontSendNotification);
+                                         juce::dontSendNotification);
         toggle_arp_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ARP),
-                                     dontSendNotification);
+                                     juce::dontSendNotification);
         toggle_arp_notes_1->setToggleState(
-            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE), dontSendNotification);
+            selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE),
+            juce::dontSendNotification);
         toggle_arp_velocity_1->setToggleState(
             selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY),
-            dontSendNotification);
+            juce::dontSendNotification);
         toggle_arp_glide_shuffle_1->setToggleState(
             selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE),
-            dontSendNotification);
+            juce::dontSendNotification);
         toggle_arp_switchs_1->setToggleState(
             selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS),
-            dontSendNotification);
+            juce::dontSendNotification);
         toggle_eq_1->setToggleState(selections_1.contains(SynthData::MORPH_SELCTIONS_IDS::EQ),
-                                    dontSendNotification);
+                                    juce::dontSendNotification);
     }
 
     // MORPH 2
     {
-        const Array<int> &selections_2 = DATA(synth_data).get_active_morph_selections(1);
+        const juce::Array<int> &selections_2 = DATA(synth_data).get_active_morph_selections(1);
         toggle_all_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ALL),
-                                     dontSendNotification);
+                                     juce::dontSendNotification);
         toggle_main_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::MAIN),
-                                      dontSendNotification);
+                                      juce::dontSendNotification);
         toggle_filters_2->setToggleState(
-            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FILTERS), dontSendNotification);
+            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FILTERS),
+            juce::dontSendNotification);
         toggle_filter_1_2->setToggleState(
-            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_1), dontSendNotification);
+            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_1),
+            juce::dontSendNotification);
         toggle_filter_2_2->setToggleState(
-            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_2), dontSendNotification);
+            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_2),
+            juce::dontSendNotification);
         toggle_filter_3_2->setToggleState(
-            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_3), dontSendNotification);
+            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_3),
+            juce::dontSendNotification);
         toggle_oscs_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::OSCS),
-                                      dontSendNotification);
+                                      juce::dontSendNotification);
         toggle_osc_1_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_1),
-                                       dontSendNotification);
+                                       juce::dontSendNotification);
         toggle_osc_2_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_2),
-                                       dontSendNotification);
+                                       juce::dontSendNotification);
         toggle_osc_3_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_3),
-                                       dontSendNotification);
+                                       juce::dontSendNotification);
         toggle_fm_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FM),
-                                    dontSendNotification);
+                                    juce::dontSendNotification);
         toggle_effects_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::FX),
-                                         dontSendNotification);
+                                         juce::dontSendNotification);
         toggle_arp_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ARP),
-                                     dontSendNotification);
+                                     juce::dontSendNotification);
         toggle_arp_notes_2->setToggleState(
-            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE), dontSendNotification);
+            selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE),
+            juce::dontSendNotification);
         toggle_arp_velocity_2->setToggleState(
             selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY),
-            dontSendNotification);
+            juce::dontSendNotification);
         toggle_arp_glide_shuffle_2->setToggleState(
             selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE),
-            dontSendNotification);
+            juce::dontSendNotification);
         toggle_arp_switchs_2->setToggleState(
             selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS),
-            dontSendNotification);
+            juce::dontSendNotification);
         toggle_eq_2->setToggleState(selections_2.contains(SynthData::MORPH_SELCTIONS_IDS::EQ),
-                                    dontSendNotification);
+                                    juce::dontSendNotification);
     }
 
     // MORPH 3
     {
-        const Array<int> &selections_3 = DATA(synth_data).get_active_morph_selections(2);
+        const juce::Array<int> &selections_3 = DATA(synth_data).get_active_morph_selections(2);
         toggle_all_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ALL),
-                                     dontSendNotification);
+                                     juce::dontSendNotification);
         toggle_main_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::MAIN),
-                                      dontSendNotification);
+                                      juce::dontSendNotification);
         toggle_filters_3->setToggleState(
-            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FILTERS), dontSendNotification);
+            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FILTERS),
+            juce::dontSendNotification);
         toggle_filter_1_3->setToggleState(
-            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_1), dontSendNotification);
+            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_1),
+            juce::dontSendNotification);
         toggle_filter_2_3->setToggleState(
-            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_2), dontSendNotification);
+            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_2),
+            juce::dontSendNotification);
         toggle_filter_3_3->setToggleState(
-            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_3), dontSendNotification);
+            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_3),
+            juce::dontSendNotification);
         toggle_oscs_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::OSCS),
-                                      dontSendNotification);
+                                      juce::dontSendNotification);
         toggle_osc_1_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_1),
-                                       dontSendNotification);
+                                       juce::dontSendNotification);
         toggle_osc_2_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_2),
-                                       dontSendNotification);
+                                       juce::dontSendNotification);
         toggle_osc_3_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_3),
-                                       dontSendNotification);
+                                       juce::dontSendNotification);
         toggle_fm_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FM),
-                                    dontSendNotification);
+                                    juce::dontSendNotification);
         toggle_effects_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::FX),
-                                         dontSendNotification);
+                                         juce::dontSendNotification);
         toggle_arp_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ARP),
-                                     dontSendNotification);
+                                     juce::dontSendNotification);
         toggle_arp_notes_3->setToggleState(
-            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE), dontSendNotification);
+            selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE),
+            juce::dontSendNotification);
         toggle_arp_velocity_3->setToggleState(
             selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY),
-            dontSendNotification);
+            juce::dontSendNotification);
         toggle_arp_glide_shuffle_3->setToggleState(
             selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE),
-            dontSendNotification);
+            juce::dontSendNotification);
         toggle_arp_switchs_3->setToggleState(
             selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS),
-            dontSendNotification);
+            juce::dontSendNotification);
         toggle_eq_3->setToggleState(selections_3.contains(SynthData::MORPH_SELCTIONS_IDS::EQ),
-                                    dontSendNotification);
+                                    juce::dontSendNotification);
     }
 
     // MORPH 4
     {
-        const Array<int> &selections_4 = DATA(synth_data).get_active_morph_selections(3);
+        const juce::Array<int> &selections_4 = DATA(synth_data).get_active_morph_selections(3);
         toggle_all_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ALL),
-                                     dontSendNotification);
+                                     juce::dontSendNotification);
         toggle_main_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::MAIN),
-                                      dontSendNotification);
+                                      juce::dontSendNotification);
         toggle_filters_4->setToggleState(
-            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FILTERS), dontSendNotification);
+            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FILTERS),
+            juce::dontSendNotification);
         toggle_filter_1_4->setToggleState(
-            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_1), dontSendNotification);
+            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_1),
+            juce::dontSendNotification);
         toggle_filter_2_4->setToggleState(
-            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_2), dontSendNotification);
+            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_2),
+            juce::dontSendNotification);
         toggle_filter_3_4->setToggleState(
-            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_3), dontSendNotification);
+            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FILTER_3),
+            juce::dontSendNotification);
         toggle_oscs_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::OSCS),
-                                      dontSendNotification);
+                                      juce::dontSendNotification);
         toggle_osc_1_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_1),
-                                       dontSendNotification);
+                                       juce::dontSendNotification);
         toggle_osc_2_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_2),
-                                       dontSendNotification);
+                                       juce::dontSendNotification);
         toggle_osc_3_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::OSC_3),
-                                       dontSendNotification);
+                                       juce::dontSendNotification);
         toggle_fm_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FM),
-                                    dontSendNotification);
+                                    juce::dontSendNotification);
         toggle_effects_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::FX),
-                                         dontSendNotification);
+                                         juce::dontSendNotification);
         toggle_arp_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ARP),
-                                     dontSendNotification);
+                                     juce::dontSendNotification);
         toggle_arp_notes_4->setToggleState(
-            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE), dontSendNotification);
+            selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_TUNE),
+            juce::dontSendNotification);
         toggle_arp_velocity_4->setToggleState(
             selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_VELOCITY),
-            dontSendNotification);
+            juce::dontSendNotification);
         toggle_arp_glide_shuffle_4->setToggleState(
             selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_GLIDE_SHUFFLE),
-            dontSendNotification);
+            juce::dontSendNotification);
         toggle_arp_switchs_4->setToggleState(
             selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::ARP_SWITCHS),
-            dontSendNotification);
+            juce::dontSendNotification);
         toggle_eq_4->setToggleState(selections_4.contains(SynthData::MORPH_SELCTIONS_IDS::EQ),
-                                    dontSendNotification);
+                                    juce::dontSendNotification);
     }
 }
 //[/MiscUserDefs]
@@ -222,575 +242,577 @@ UiEditorMorph::UiEditorMorph() : original_w(350), original_h(720)
 
     addAndMakeVisible(hit_area_through = new Component());
 
-    addAndMakeVisible(label_g_1 = new Label(String(), TRANS("MORPH 1")));
-    label_g_1->setFont(Font(30.00f, Font::plain));
-    label_g_1->setJustificationType(Justification::centred);
+    addAndMakeVisible(label_g_1 = new juce::Label(String(), TRANS("MORPH 1")));
+    label_g_1->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_g_1->setJustificationType(juce::Justification::centred);
     label_g_1->setEditable(false, false, false);
-    label_g_1->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_g_1->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_g_1->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_g_1->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_g_1->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_g_1->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_1 = new Label(String(), TRANS("ALL")));
-    label_1->setFont(Font(30.00f, Font::plain));
-    label_1->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_1 = new juce::Label(String(), TRANS("ALL")));
+    label_1->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_1->setJustificationType(juce::Justification::centredRight);
     label_1->setEditable(false, false, false);
-    label_1->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_1->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_1->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_1->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_1->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_1->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_2 = new Label(String(), TRANS("FILTERS")));
-    label_2->setFont(Font(30.00f, Font::plain));
-    label_2->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_2 = new juce::Label(String(), TRANS("FILTERS")));
+    label_2->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_2->setJustificationType(juce::Justification::centredRight);
     label_2->setEditable(false, false, false);
-    label_2->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_2->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_2->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_2->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_all_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_all_1 = new juce::ToggleButton(String()));
     toggle_all_1->addListener(this);
 
-    addAndMakeVisible(label_3 = new Label(String(), TRANS("F1")));
-    label_3->setFont(Font(30.00f, Font::plain));
-    label_3->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_3 = new juce::Label(String(), TRANS("F1")));
+    label_3->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_3->setJustificationType(juce::Justification::centredRight);
     label_3->setEditable(false, false, false);
-    label_3->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_3->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_3->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_3->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_filters_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_filters_1 = new juce::ToggleButton(String()));
     toggle_filters_1->addListener(this);
 
-    addAndMakeVisible(toggle_filter_1_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_filter_1_1 = new juce::ToggleButton(String()));
     toggle_filter_1_1->addListener(this);
 
-    addAndMakeVisible(label_4 = new Label(String(), TRANS("F2")));
-    label_4->setFont(Font(30.00f, Font::plain));
-    label_4->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_4 = new juce::Label(String(), TRANS("F2")));
+    label_4->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_4->setJustificationType(juce::Justification::centredRight);
     label_4->setEditable(false, false, false);
-    label_4->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_4->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_4->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_4->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_4->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_4->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_filter_2_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_filter_2_1 = new juce::ToggleButton(String()));
     toggle_filter_2_1->addListener(this);
 
-    addAndMakeVisible(label_5 = new Label(String(), TRANS("F3")));
-    label_5->setFont(Font(30.00f, Font::plain));
-    label_5->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_5 = new juce::Label(String(), TRANS("F3")));
+    label_5->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_5->setJustificationType(juce::Justification::centredRight);
     label_5->setEditable(false, false, false);
-    label_5->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_5->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_5->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_5->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_5->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_5->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_filter_3_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_filter_3_1 = new juce::ToggleButton(String()));
     toggle_filter_3_1->addListener(this);
 
-    addAndMakeVisible(label_6 = new Label(String(), TRANS("OSC\'s")));
-    label_6->setFont(Font(30.00f, Font::plain));
-    label_6->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_6 = new juce::Label(String(), TRANS("OSC\'s")));
+    label_6->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_6->setJustificationType(juce::Justification::centredRight);
     label_6->setEditable(false, false, false);
-    label_6->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_6->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_6->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_6->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_6->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_6->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_7 = new Label(String(), TRANS("O1")));
-    label_7->setFont(Font(30.00f, Font::plain));
-    label_7->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_7 = new juce::Label(String(), TRANS("O1")));
+    label_7->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_7->setJustificationType(juce::Justification::centredRight);
     label_7->setEditable(false, false, false);
-    label_7->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_7->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_7->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_7->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_7->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_7->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_oscs_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_oscs_1 = new juce::ToggleButton(String()));
     toggle_oscs_1->addListener(this);
 
-    addAndMakeVisible(toggle_osc_1_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_osc_1_1 = new juce::ToggleButton(String()));
     toggle_osc_1_1->addListener(this);
 
-    addAndMakeVisible(label_8 = new Label(String(), TRANS("O2")));
-    label_8->setFont(Font(30.00f, Font::plain));
-    label_8->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_8 = new juce::Label(String(), TRANS("O2")));
+    label_8->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_8->setJustificationType(juce::Justification::centredRight);
     label_8->setEditable(false, false, false);
-    label_8->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_8->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_8->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_8->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_8->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_8->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_osc_2_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_osc_2_1 = new juce::ToggleButton(String()));
     toggle_osc_2_1->addListener(this);
 
-    addAndMakeVisible(label_9 = new Label(String(), TRANS("O3")));
-    label_9->setFont(Font(30.00f, Font::plain));
-    label_9->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_9 = new juce::Label(String(), TRANS("O3")));
+    label_9->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_9->setJustificationType(juce::Justification::centredRight);
     label_9->setEditable(false, false, false);
-    label_9->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_9->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_9->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_9->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_9->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_9->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_osc_3_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_osc_3_1 = new juce::ToggleButton(String()));
     toggle_osc_3_1->addListener(this);
 
-    addAndMakeVisible(label_10 = new Label(String(), TRANS("FM")));
-    label_10->setFont(Font(30.00f, Font::plain));
-    label_10->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_10 = new juce::Label(String(), TRANS("FM")));
+    label_10->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_10->setJustificationType(juce::Justification::centredRight);
     label_10->setEditable(false, false, false);
-    label_10->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_10->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_10->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_10->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_10->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_10->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_fm_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_fm_1 = new juce::ToggleButton(String()));
     toggle_fm_1->addListener(this);
 
-    addAndMakeVisible(label_11 = new Label(String(), TRANS("FX")));
-    label_11->setFont(Font(30.00f, Font::plain));
-    label_11->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_11 = new juce::Label(String(), TRANS("FX")));
+    label_11->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_11->setJustificationType(juce::Justification::centredRight);
     label_11->setEditable(false, false, false);
-    label_11->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_11->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_11->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_11->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_11->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_11->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_effects_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_effects_1 = new juce::ToggleButton(String()));
     toggle_effects_1->addListener(this);
 
-    addAndMakeVisible(label_15 = new Label(String(), TRANS("ARP")));
-    label_15->setFont(Font(30.00f, Font::plain));
-    label_15->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_15 = new juce::Label(String(), TRANS("ARP")));
+    label_15->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_15->setJustificationType(juce::Justification::centredRight);
     label_15->setEditable(false, false, false);
-    label_15->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_15->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_15->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_15->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_15->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_15->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_arp_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_1 = new juce::ToggleButton(String()));
     toggle_arp_1->addListener(this);
 
-    addAndMakeVisible(label_16 = new Label(String(), TRANS("TUNE")));
-    label_16->setFont(Font(30.00f, Font::plain));
-    label_16->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_16 = new juce::Label(String(), TRANS("TUNE")));
+    label_16->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_16->setJustificationType(juce::Justification::centredRight);
     label_16->setEditable(false, false, false);
-    label_16->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_16->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_16->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_16->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_16->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_16->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_arp_notes_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_notes_1 = new juce::ToggleButton(String()));
     toggle_arp_notes_1->addListener(this);
 
-    addAndMakeVisible(label_17 = new Label(String(), TRANS("VELOCITY")));
-    label_17->setFont(Font(30.00f, Font::plain));
-    label_17->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_17 = new juce::Label(String(), TRANS("VELOCITY")));
+    label_17->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_17->setJustificationType(juce::Justification::centredRight);
     label_17->setEditable(false, false, false);
-    label_17->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_17->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_17->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_17->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_17->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_17->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_arp_velocity_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_velocity_1 = new juce::ToggleButton(String()));
     toggle_arp_velocity_1->addListener(this);
 
-    addAndMakeVisible(label_18 = new Label(String(), TRANS("GLIDE/SHFL")));
-    label_18->setFont(Font(30.00f, Font::plain));
-    label_18->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_18 = new juce::Label(String(), TRANS("GLIDE/SHFL")));
+    label_18->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_18->setJustificationType(juce::Justification::centredRight);
     label_18->setEditable(false, false, false);
-    label_18->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_18->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_18->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_18->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_18->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_18->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_arp_glide_shuffle_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_glide_shuffle_1 = new juce::ToggleButton(String()));
     toggle_arp_glide_shuffle_1->addListener(this);
 
-    addAndMakeVisible(label_20 = new Label(String(), TRANS("EQ")));
-    label_20->setFont(Font(30.00f, Font::plain));
-    label_20->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_20 = new juce::Label(String(), TRANS("EQ")));
+    label_20->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_20->setJustificationType(juce::Justification::centredRight);
     label_20->setEditable(false, false, false);
-    label_20->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_20->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_20->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_20->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_20->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_20->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_eq_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_eq_1 = new juce::ToggleButton(String()));
     toggle_eq_1->addListener(this);
 
-    addAndMakeVisible(label_g_2 = new Label(String(), TRANS("MORPH 2")));
-    label_g_2->setFont(Font(30.00f, Font::plain));
-    label_g_2->setJustificationType(Justification::centred);
+    addAndMakeVisible(label_g_2 = new juce::Label(String(), TRANS("MORPH 2")));
+    label_g_2->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_g_2->setJustificationType(juce::Justification::centred);
     label_g_2->setEditable(false, false, false);
-    label_g_2->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_g_2->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_g_2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_g_2->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_g_2->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_g_2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_g_3 = new Label(String(), TRANS("MORPH 3")));
-    label_g_3->setFont(Font(30.00f, Font::plain));
-    label_g_3->setJustificationType(Justification::centred);
+    addAndMakeVisible(label_g_3 = new juce::Label(String(), TRANS("MORPH 3")));
+    label_g_3->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_g_3->setJustificationType(juce::Justification::centred);
     label_g_3->setEditable(false, false, false);
-    label_g_3->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_g_3->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_g_3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_g_3->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_g_3->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_g_3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_g_4 = new Label(String(), TRANS("MORPH 4")));
-    label_g_4->setFont(Font(30.00f, Font::plain));
-    label_g_4->setJustificationType(Justification::centred);
+    addAndMakeVisible(label_g_4 = new juce::Label(String(), TRANS("MORPH 4")));
+    label_g_4->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_g_4->setJustificationType(juce::Justification::centred);
     label_g_4->setEditable(false, false, false);
-    label_g_4->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_g_4->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_g_4->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_g_4->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_g_4->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_g_4->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(combo_morph_group_1 = new ComboBox(String()));
+    addAndMakeVisible(combo_morph_group_1 = new juce::ComboBox(String()));
     combo_morph_group_1->setEditableText(true);
-    combo_morph_group_1->setJustificationType(Justification::centredLeft);
+    combo_morph_group_1->setJustificationType(juce::Justification::centredLeft);
     combo_morph_group_1->setTextWhenNothingSelected(TRANS("PRESET"));
     combo_morph_group_1->setTextWhenNoChoicesAvailable(TRANS("-"));
     combo_morph_group_1->addListener(this);
 
-    addAndMakeVisible(combo_morph_group_2 = new ComboBox(String()));
+    addAndMakeVisible(combo_morph_group_2 = new juce::ComboBox(String()));
     combo_morph_group_2->setEditableText(true);
-    combo_morph_group_2->setJustificationType(Justification::centredLeft);
+    combo_morph_group_2->setJustificationType(juce::Justification::centredLeft);
     combo_morph_group_2->setTextWhenNothingSelected(TRANS("PRESET"));
     combo_morph_group_2->setTextWhenNoChoicesAvailable(TRANS("-"));
     combo_morph_group_2->addListener(this);
 
-    addAndMakeVisible(combo_morph_group_3 = new ComboBox(String()));
+    addAndMakeVisible(combo_morph_group_3 = new juce::ComboBox(String()));
     combo_morph_group_3->setEditableText(true);
-    combo_morph_group_3->setJustificationType(Justification::centredLeft);
+    combo_morph_group_3->setJustificationType(juce::Justification::centredLeft);
     combo_morph_group_3->setTextWhenNothingSelected(TRANS("PRESET"));
     combo_morph_group_3->setTextWhenNoChoicesAvailable(TRANS("-"));
     combo_morph_group_3->addListener(this);
 
-    addAndMakeVisible(combo_morph_group_4 = new ComboBox(String()));
+    addAndMakeVisible(combo_morph_group_4 = new juce::ComboBox(String()));
     combo_morph_group_4->setEditableText(true);
-    combo_morph_group_4->setJustificationType(Justification::centredLeft);
+    combo_morph_group_4->setJustificationType(juce::Justification::centredLeft);
     combo_morph_group_4->setTextWhenNothingSelected(TRANS("PRESET"));
     combo_morph_group_4->setTextWhenNoChoicesAvailable(TRANS("-"));
     combo_morph_group_4->addListener(this);
 
-    addAndMakeVisible(combo_morph_group_5 = new ComboBox(String()));
+    addAndMakeVisible(combo_morph_group_5 = new juce::ComboBox(String()));
     combo_morph_group_5->setEditableText(true);
-    combo_morph_group_5->setJustificationType(Justification::centredLeft);
+    combo_morph_group_5->setJustificationType(juce::Justification::centredLeft);
     combo_morph_group_5->setTextWhenNothingSelected(TRANS("PRESET"));
     combo_morph_group_5->setTextWhenNoChoicesAvailable(TRANS("-"));
     combo_morph_group_5->addListener(this);
 
-    addAndMakeVisible(combo_morph_group_6 = new ComboBox(String()));
+    addAndMakeVisible(combo_morph_group_6 = new juce::ComboBox(String()));
     combo_morph_group_6->setEditableText(true);
-    combo_morph_group_6->setJustificationType(Justification::centredLeft);
+    combo_morph_group_6->setJustificationType(juce::Justification::centredLeft);
     combo_morph_group_6->setTextWhenNothingSelected(TRANS("PRESET"));
     combo_morph_group_6->setTextWhenNoChoicesAvailable(TRANS("-"));
     combo_morph_group_6->addListener(this);
 
-    addAndMakeVisible(combo_morph_group_7 = new ComboBox(String()));
+    addAndMakeVisible(combo_morph_group_7 = new juce::ComboBox(String()));
     combo_morph_group_7->setEditableText(true);
-    combo_morph_group_7->setJustificationType(Justification::centredLeft);
+    combo_morph_group_7->setJustificationType(juce::Justification::centredLeft);
     combo_morph_group_7->setTextWhenNothingSelected(TRANS("PRESET"));
     combo_morph_group_7->setTextWhenNoChoicesAvailable(TRANS("-"));
     combo_morph_group_7->addListener(this);
 
-    addAndMakeVisible(combo_morph_group_8 = new ComboBox(String()));
+    addAndMakeVisible(combo_morph_group_8 = new juce::ComboBox(String()));
     combo_morph_group_8->setEditableText(true);
-    combo_morph_group_8->setJustificationType(Justification::centredLeft);
+    combo_morph_group_8->setJustificationType(juce::Justification::centredLeft);
     combo_morph_group_8->setTextWhenNothingSelected(TRANS("PRESET"));
     combo_morph_group_8->setTextWhenNoChoicesAvailable(TRANS("-"));
     combo_morph_group_8->addListener(this);
 
-    addAndMakeVisible(label_19 = new Label(String(), TRANS("LOAD LEFT")));
-    label_19->setFont(Font(30.00f, Font::plain));
-    label_19->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_19 = new juce::Label(String(), TRANS("LOAD LEFT")));
+    label_19->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_19->setJustificationType(juce::Justification::centredLeft);
     label_19->setEditable(false, false, false);
-    label_19->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_19->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_19->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_19->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_19->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_19->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_21 = new Label(String(), TRANS("LOAD RIGHT")));
-    label_21->setFont(Font(30.00f, Font::plain));
-    label_21->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_21 = new juce::Label(String(), TRANS("LOAD RIGHT")));
+    label_21->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_21->setJustificationType(juce::Justification::centredLeft);
     label_21->setEditable(false, false, false);
-    label_21->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_21->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_21->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_21->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_21->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_21->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_all_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_all_2 = new juce::ToggleButton(String()));
     toggle_all_2->addListener(this);
 
-    addAndMakeVisible(toggle_filters_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_filters_2 = new juce::ToggleButton(String()));
     toggle_filters_2->addListener(this);
 
-    addAndMakeVisible(toggle_filter_1_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_filter_1_2 = new juce::ToggleButton(String()));
     toggle_filter_1_2->addListener(this);
 
-    addAndMakeVisible(toggle_filter_2_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_filter_2_2 = new juce::ToggleButton(String()));
     toggle_filter_2_2->addListener(this);
 
-    addAndMakeVisible(toggle_filter_3_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_filter_3_2 = new juce::ToggleButton(String()));
     toggle_filter_3_2->addListener(this);
 
-    addAndMakeVisible(toggle_oscs_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_oscs_2 = new juce::ToggleButton(String()));
     toggle_oscs_2->addListener(this);
 
-    addAndMakeVisible(toggle_osc_1_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_osc_1_2 = new juce::ToggleButton(String()));
     toggle_osc_1_2->addListener(this);
 
-    addAndMakeVisible(toggle_osc_2_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_osc_2_2 = new juce::ToggleButton(String()));
     toggle_osc_2_2->addListener(this);
 
-    addAndMakeVisible(toggle_osc_3_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_osc_3_2 = new juce::ToggleButton(String()));
     toggle_osc_3_2->addListener(this);
 
-    addAndMakeVisible(toggle_fm_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_fm_2 = new juce::ToggleButton(String()));
     toggle_fm_2->addListener(this);
 
-    addAndMakeVisible(toggle_effects_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_effects_2 = new juce::ToggleButton(String()));
     toggle_effects_2->addListener(this);
 
-    addAndMakeVisible(toggle_arp_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_2 = new juce::ToggleButton(String()));
     toggle_arp_2->addListener(this);
 
-    addAndMakeVisible(toggle_arp_notes_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_notes_2 = new juce::ToggleButton(String()));
     toggle_arp_notes_2->addListener(this);
 
-    addAndMakeVisible(toggle_arp_velocity_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_velocity_2 = new juce::ToggleButton(String()));
     toggle_arp_velocity_2->addListener(this);
 
-    addAndMakeVisible(toggle_arp_glide_shuffle_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_glide_shuffle_2 = new juce::ToggleButton(String()));
     toggle_arp_glide_shuffle_2->addListener(this);
 
-    addAndMakeVisible(toggle_eq_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_eq_2 = new juce::ToggleButton(String()));
     toggle_eq_2->addListener(this);
 
-    addAndMakeVisible(toggle_all_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_all_3 = new juce::ToggleButton(String()));
     toggle_all_3->addListener(this);
 
-    addAndMakeVisible(toggle_filters_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_filters_3 = new juce::ToggleButton(String()));
     toggle_filters_3->addListener(this);
 
-    addAndMakeVisible(toggle_filter_1_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_filter_1_3 = new juce::ToggleButton(String()));
     toggle_filter_1_3->addListener(this);
 
-    addAndMakeVisible(toggle_filter_2_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_filter_2_3 = new juce::ToggleButton(String()));
     toggle_filter_2_3->addListener(this);
 
-    addAndMakeVisible(toggle_filter_3_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_filter_3_3 = new juce::ToggleButton(String()));
     toggle_filter_3_3->addListener(this);
 
-    addAndMakeVisible(toggle_oscs_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_oscs_3 = new juce::ToggleButton(String()));
     toggle_oscs_3->addListener(this);
 
-    addAndMakeVisible(toggle_osc_1_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_osc_1_3 = new juce::ToggleButton(String()));
     toggle_osc_1_3->addListener(this);
 
-    addAndMakeVisible(toggle_osc_2_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_osc_2_3 = new juce::ToggleButton(String()));
     toggle_osc_2_3->addListener(this);
 
-    addAndMakeVisible(toggle_osc_3_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_osc_3_3 = new juce::ToggleButton(String()));
     toggle_osc_3_3->addListener(this);
 
-    addAndMakeVisible(toggle_fm_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_fm_3 = new juce::ToggleButton(String()));
     toggle_fm_3->addListener(this);
 
-    addAndMakeVisible(toggle_effects_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_effects_3 = new juce::ToggleButton(String()));
     toggle_effects_3->addListener(this);
 
-    addAndMakeVisible(toggle_arp_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_3 = new juce::ToggleButton(String()));
     toggle_arp_3->addListener(this);
 
-    addAndMakeVisible(toggle_arp_notes_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_notes_3 = new juce::ToggleButton(String()));
     toggle_arp_notes_3->addListener(this);
 
-    addAndMakeVisible(toggle_arp_velocity_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_velocity_3 = new juce::ToggleButton(String()));
     toggle_arp_velocity_3->addListener(this);
 
-    addAndMakeVisible(toggle_arp_glide_shuffle_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_glide_shuffle_3 = new juce::ToggleButton(String()));
     toggle_arp_glide_shuffle_3->addListener(this);
 
-    addAndMakeVisible(toggle_eq_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_eq_3 = new juce::ToggleButton(String()));
     toggle_eq_3->addListener(this);
 
-    addAndMakeVisible(toggle_all_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_all_4 = new juce::ToggleButton(String()));
     toggle_all_4->addListener(this);
 
-    addAndMakeVisible(toggle_filters_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_filters_4 = new juce::ToggleButton(String()));
     toggle_filters_4->addListener(this);
 
-    addAndMakeVisible(toggle_filter_1_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_filter_1_4 = new juce::ToggleButton(String()));
     toggle_filter_1_4->addListener(this);
 
-    addAndMakeVisible(toggle_filter_2_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_filter_2_4 = new juce::ToggleButton(String()));
     toggle_filter_2_4->addListener(this);
 
-    addAndMakeVisible(toggle_filter_3_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_filter_3_4 = new juce::ToggleButton(String()));
     toggle_filter_3_4->addListener(this);
 
-    addAndMakeVisible(toggle_oscs_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_oscs_4 = new juce::ToggleButton(String()));
     toggle_oscs_4->addListener(this);
 
-    addAndMakeVisible(toggle_osc_1_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_osc_1_4 = new juce::ToggleButton(String()));
     toggle_osc_1_4->addListener(this);
 
-    addAndMakeVisible(toggle_osc_2_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_osc_2_4 = new juce::ToggleButton(String()));
     toggle_osc_2_4->addListener(this);
 
-    addAndMakeVisible(toggle_osc_3_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_osc_3_4 = new juce::ToggleButton(String()));
     toggle_osc_3_4->addListener(this);
 
-    addAndMakeVisible(toggle_fm_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_fm_4 = new juce::ToggleButton(String()));
     toggle_fm_4->addListener(this);
 
-    addAndMakeVisible(toggle_effects_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_effects_4 = new juce::ToggleButton(String()));
     toggle_effects_4->addListener(this);
 
-    addAndMakeVisible(toggle_arp_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_4 = new juce::ToggleButton(String()));
     toggle_arp_4->addListener(this);
 
-    addAndMakeVisible(toggle_arp_notes_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_notes_4 = new juce::ToggleButton(String()));
     toggle_arp_notes_4->addListener(this);
 
-    addAndMakeVisible(toggle_arp_velocity_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_velocity_4 = new juce::ToggleButton(String()));
     toggle_arp_velocity_4->addListener(this);
 
-    addAndMakeVisible(toggle_arp_glide_shuffle_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_glide_shuffle_4 = new juce::ToggleButton(String()));
     toggle_arp_glide_shuffle_4->addListener(this);
 
-    addAndMakeVisible(toggle_eq_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_eq_4 = new juce::ToggleButton(String()));
     toggle_eq_4->addListener(this);
 
-    addAndMakeVisible(label_12 = new Label(String(), TRANS("MAIN")));
-    label_12->setFont(Font(30.00f, Font::plain));
-    label_12->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_12 = new juce::Label(String(), TRANS("MAIN")));
+    label_12->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_12->setJustificationType(juce::Justification::centredRight);
     label_12->setEditable(false, false, false);
-    label_12->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_12->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_12->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_12->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_12->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_12->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_main_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_main_1 = new juce::ToggleButton(String()));
     toggle_main_1->addListener(this);
 
-    addAndMakeVisible(toggle_main_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_main_2 = new juce::ToggleButton(String()));
     toggle_main_2->addListener(this);
 
-    addAndMakeVisible(toggle_main_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_main_3 = new juce::ToggleButton(String()));
     toggle_main_3->addListener(this);
 
-    addAndMakeVisible(toggle_main_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_main_4 = new juce::ToggleButton(String()));
     toggle_main_4->addListener(this);
 
-    addAndMakeVisible(label_13 = new Label(String(), TRANS("SET LEFT")));
-    label_13->setFont(Font(30.00f, Font::plain));
-    label_13->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_13 = new juce::Label(String(), TRANS("SET LEFT")));
+    label_13->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_13->setJustificationType(juce::Justification::centredLeft);
     label_13->setEditable(false, false, false);
-    label_13->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_13->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_13->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_13->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_13->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_13->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(button_set_left_1 = new TextButton(String()));
+    addAndMakeVisible(button_set_left_1 = new juce::TextButton(String()));
     button_set_left_1->setButtonText(TRANS("CURRENT"));
     button_set_left_1->addListener(this);
-    button_set_left_1->setColour(TextButton::buttonColourId, Colours::black);
-    button_set_left_1->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_set_left_1->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_set_left_1->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_set_left_1->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_set_left_1->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_set_left_2 = new TextButton(String()));
+    addAndMakeVisible(button_set_left_2 = new juce::TextButton(String()));
     button_set_left_2->setButtonText(TRANS("CURRENT"));
     button_set_left_2->addListener(this);
-    button_set_left_2->setColour(TextButton::buttonColourId, Colours::black);
-    button_set_left_2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_set_left_2->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_set_left_2->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_set_left_2->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_set_left_2->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_set_left_3 = new TextButton(String()));
+    addAndMakeVisible(button_set_left_3 = new juce::TextButton(String()));
     button_set_left_3->setButtonText(TRANS("CURRENT"));
     button_set_left_3->addListener(this);
-    button_set_left_3->setColour(TextButton::buttonColourId, Colours::black);
-    button_set_left_3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_set_left_3->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_set_left_3->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_set_left_3->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_set_left_3->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_set_left_4 = new TextButton(String()));
+    addAndMakeVisible(button_set_left_4 = new juce::TextButton(String()));
     button_set_left_4->setButtonText(TRANS("CURRENT"));
     button_set_left_4->addListener(this);
-    button_set_left_4->setColour(TextButton::buttonColourId, Colours::black);
-    button_set_left_4->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_set_left_4->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_set_left_4->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_set_left_4->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_set_left_4->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(label_14 = new Label(String(), TRANS("SET RIGHT")));
-    label_14->setFont(Font(30.00f, Font::plain));
-    label_14->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label_14 = new juce::Label(String(), TRANS("SET RIGHT")));
+    label_14->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_14->setJustificationType(juce::Justification::centredLeft);
     label_14->setEditable(false, false, false);
-    label_14->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_14->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_14->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_14->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_14->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_14->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(button_set_right_1 = new TextButton(String()));
+    addAndMakeVisible(button_set_right_1 = new juce::TextButton(String()));
     button_set_right_1->setButtonText(TRANS("CURRENT"));
     button_set_right_1->addListener(this);
-    button_set_right_1->setColour(TextButton::buttonColourId, Colours::black);
-    button_set_right_1->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_set_right_1->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_set_right_1->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_set_right_1->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_set_right_1->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_set_right_2 = new TextButton(String()));
+    addAndMakeVisible(button_set_right_2 = new juce::TextButton(String()));
     button_set_right_2->setButtonText(TRANS("CURRENT"));
     button_set_right_2->addListener(this);
-    button_set_right_2->setColour(TextButton::buttonColourId, Colours::black);
-    button_set_right_2->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_set_right_2->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_set_right_2->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_set_right_2->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_set_right_2->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_set_right_3 = new TextButton(String()));
+    addAndMakeVisible(button_set_right_3 = new juce::TextButton(String()));
     button_set_right_3->setButtonText(TRANS("CURRENT"));
     button_set_right_3->addListener(this);
-    button_set_right_3->setColour(TextButton::buttonColourId, Colours::black);
-    button_set_right_3->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_set_right_3->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_set_right_3->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_set_right_3->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_set_right_3->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_set_right_4 = new TextButton(String()));
+    addAndMakeVisible(button_set_right_4 = new juce::TextButton(String()));
     button_set_right_4->setButtonText(TRANS("CURRENT"));
     button_set_right_4->addListener(this);
-    button_set_right_4->setColour(TextButton::buttonColourId, Colours::black);
-    button_set_right_4->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_set_right_4->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_set_right_4->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_set_right_4->setColour(juce::TextButton::textColourOnId, juce::Colour(0xffff3b00));
+    button_set_right_4->setColour(juce::TextButton::textColourOffId, juce::Colours::yellow);
 
-    addAndMakeVisible(button_set_all_from_current = new TextButton(String()));
+    addAndMakeVisible(button_set_all_from_current = new juce::TextButton(String()));
     button_set_all_from_current->setButtonText(TRANS("SET ALL TO CURRENT"));
     button_set_all_from_current->addListener(this);
-    button_set_all_from_current->setColour(TextButton::buttonColourId, Colours::black);
-    button_set_all_from_current->setColour(TextButton::textColourOnId, Colour(0xffff3b00));
-    button_set_all_from_current->setColour(TextButton::textColourOffId, Colours::yellow);
+    button_set_all_from_current->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    button_set_all_from_current->setColour(juce::TextButton::textColourOnId,
+                                           juce::Colour(0xffff3b00));
+    button_set_all_from_current->setColour(juce::TextButton::textColourOffId,
+                                           juce::Colours::yellow);
 
     addAndMakeVisible(track_pad = new UiDragPad());
 
-    addAndMakeVisible(label_23 = new Label(String(), TRANS("SWITCHS")));
-    label_23->setFont(Font(30.00f, Font::plain));
-    label_23->setJustificationType(Justification::centredRight);
+    addAndMakeVisible(label_23 = new juce::Label(String(), TRANS("SWITCHS")));
+    label_23->setFont(juce::Font(30.00f, juce::Font::plain));
+    label_23->setJustificationType(juce::Justification::centredRight);
     label_23->setEditable(false, false, false);
-    label_23->setColour(Label::textColourId, Colour(0xffff3b00));
-    label_23->setColour(TextEditor::textColourId, Colour(0xffff3b00));
-    label_23->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label_23->setColour(juce::Label::textColourId, juce::Colour(0xffff3b00));
+    label_23->setColour(juce::TextEditor::textColourId, juce::Colour(0xffff3b00));
+    label_23->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_arp_switchs_1 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_switchs_1 = new juce::ToggleButton(String()));
     toggle_arp_switchs_1->addListener(this);
 
-    addAndMakeVisible(toggle_arp_switchs_2 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_switchs_2 = new juce::ToggleButton(String()));
     toggle_arp_switchs_2->addListener(this);
 
-    addAndMakeVisible(toggle_arp_switchs_3 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_switchs_3 = new juce::ToggleButton(String()));
     toggle_arp_switchs_3->addListener(this);
 
-    addAndMakeVisible(toggle_arp_switchs_4 = new ToggleButton(String()));
+    addAndMakeVisible(toggle_arp_switchs_4 = new juce::ToggleButton(String()));
     toggle_arp_switchs_4->addListener(this);
 
-    addAndMakeVisible(close = new TextButton(String()));
+    addAndMakeVisible(close = new juce::TextButton(String()));
     close->setButtonText(TRANS("ESC X"));
     close->addListener(this);
-    close->setColour(TextButton::buttonColourId, Colours::red);
-    close->setColour(TextButton::buttonOnColourId, Colours::red);
-    close->setColour(TextButton::textColourOnId, Colours::black);
-    close->setColour(TextButton::textColourOffId, Colours::black);
+    close->setColour(juce::TextButton::buttonColourId, juce::Colours::red);
+    close->setColour(juce::TextButton::buttonOnColourId, juce::Colours::red);
+    close->setColour(juce::TextButton::textColourOnId, juce::Colours::black);
+    close->setColour(juce::TextButton::textColourOffId, juce::Colours::black);
 
     //[UserPreSize]
     this->setInterceptsMouseClicks(false, true);
     hit_area_through->setInterceptsMouseClicks(false, false);
 
-    Colour button_off = UiLookAndFeel::getInstance()->colours.button_off_colour;
-    button_set_left_1->setColour(TextButton::buttonColourId, button_off);
-    button_set_left_2->setColour(TextButton::buttonColourId, button_off);
-    button_set_left_3->setColour(TextButton::buttonColourId, button_off);
-    button_set_left_4->setColour(TextButton::buttonColourId, button_off);
-    button_set_right_1->setColour(TextButton::buttonColourId, button_off);
-    button_set_right_2->setColour(TextButton::buttonColourId, button_off);
-    button_set_right_3->setColour(TextButton::buttonColourId, button_off);
-    button_set_right_4->setColour(TextButton::buttonColourId, button_off);
-    button_set_all_from_current->setColour(TextButton::buttonColourId, button_off);
+    juce::Colour button_off = UiLookAndFeel::getInstance()->colours.button_off_colour;
+    button_set_left_1->setColour(juce::TextButton::buttonColourId, button_off);
+    button_set_left_2->setColour(juce::TextButton::buttonColourId, button_off);
+    button_set_left_3->setColour(juce::TextButton::buttonColourId, button_off);
+    button_set_left_4->setColour(juce::TextButton::buttonColourId, button_off);
+    button_set_right_1->setColour(juce::TextButton::buttonColourId, button_off);
+    button_set_right_2->setColour(juce::TextButton::buttonColourId, button_off);
+    button_set_right_3->setColour(juce::TextButton::buttonColourId, button_off);
+    button_set_right_4->setColour(juce::TextButton::buttonColourId, button_off);
+    button_set_all_from_current->setColour(juce::TextButton::buttonColourId, button_off);
 
-    Array<ComboBox *> morph_combos;
+    juce::Array<juce::ComboBox *> morph_combos;
     morph_combos.add(combo_morph_group_1);
     morph_combos.add(combo_morph_group_2);
     morph_combos.add(combo_morph_group_3);
@@ -801,15 +823,15 @@ UiEditorMorph::UiEditorMorph() : original_w(350), original_h(720)
     morph_combos.add(combo_morph_group_8);
     for (int i = 0; i != morph_combos.size(); ++i)
     {
-        ComboBox *box = morph_combos.getUnchecked(i);
+        juce::ComboBox *box = morph_combos.getUnchecked(i);
         for (int bank_id = 0; bank_id != 4; ++bank_id)
         {
-            String bank = bank_id == 0 ? "A" : bank_id == 1 ? "B" : bank_id == 2 ? "C" : "D";
+            juce::String bank = bank_id == 0 ? "A" : bank_id == 1 ? "B" : bank_id == 2 ? "C" : "D";
             if (i > 3)
-                box->addSectionHeading(String("Load programm to LEFT from bank: ") + bank);
+                box->addSectionHeading(juce::String("Load programm to LEFT from bank: ") + bank);
             else
-                box->addSectionHeading(String("Load programm to RIGHT from bank: ") + bank);
-            StringArray morph_program_names(DATA(synth_data).get_programms(bank_id));
+                box->addSectionHeading(juce::String("Load programm to RIGHT from bank: ") + bank);
+            juce::StringArray morph_program_names(DATA(synth_data).get_programms(bank_id));
 
             int start_index = box->getNumItems() + 1;
             box->addItemList(morph_program_names, start_index);
@@ -818,7 +840,7 @@ UiEditorMorph::UiEditorMorph() : original_w(350), original_h(720)
                 bank_start_indexs.add(start_index);
         }
 
-        box->setSelectedItemIndex(0, dontSendNotification);
+        box->setSelectedItemIndex(0, juce::dontSendNotification);
     }
 
     for (int i = 0; i < getNumChildComponents(); ++i)
@@ -965,291 +987,291 @@ UiEditorMorph::~UiEditorMorph()
 }
 
 //==============================================================================
-void UiEditorMorph::paint(Graphics &g)
+void UiEditorMorph::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
 #include "UiDynamicSizeStart.h"
     //[/UserPrePaint]
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     g.fillRect(0, 0, 350, 480);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     g.fillRect(50, 720 - 110, 300, 110);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     g.fillRect(0, 720 - 260, 80, 260);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(106.0f, 40.0f, 1.0f, 273.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(106.0f, 173.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(106.0f, 193.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(106.0f, 93.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(106.0f, 273.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(106.0f, 293.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(106.0f, 313.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(116.0f, 100.0f, 1.0f, 54.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(116.0f, 113.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(116.0f, 133.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(116.0f, 153.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(116.0f, 200.0f, 1.0f, 54.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(116.0f, 233.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(116.0f, 253.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(116.0f, 213.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(115.0f, 320.0f, 1.0f, 74.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(116.0f, 353.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(116.0f, 373.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(116.0f, 333.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(80.0f, 40.0f, 50.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(166.0f, 40.0f, 1.0f, 273.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(166.0f, 173.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(166.0f, 193.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(166.0f, 93.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(166.0f, 273.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(166.0f, 293.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(166.0f, 313.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(176.0f, 100.0f, 1.0f, 54.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(176.0f, 113.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(176.0f, 133.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(176.0f, 153.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(176.0f, 200.0f, 1.0f, 54.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(176.0f, 233.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(176.0f, 253.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(176.0f, 213.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(175.0f, 320.0f, 1.0f, 74.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(176.0f, 353.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(176.0f, 373.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(176.0f, 333.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(140.0f, 40.0f, 50.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(226.0f, 40.0f, 1.0f, 273.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(226.0f, 173.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(226.0f, 193.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(226.0f, 93.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(226.0f, 273.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(226.0f, 293.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(226.0f, 313.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(236.0f, 100.0f, 1.0f, 54.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(236.0f, 113.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(236.0f, 133.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(236.0f, 153.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(236.0f, 200.0f, 1.0f, 54.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(236.0f, 233.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(236.0f, 253.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(236.0f, 213.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(235.0f, 320.0f, 1.0f, 74.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(236.0f, 353.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(236.0f, 373.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(236.0f, 333.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(200.0f, 40.0f, 50.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(286.0f, 40.0f, 1.0f, 273.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(286.0f, 173.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(286.0f, 193.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(286.0f, 93.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(286.0f, 273.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(286.0f, 293.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(286.0f, 313.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(296.0f, 100.0f, 1.0f, 54.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(296.0f, 113.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(296.0f, 133.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(296.0f, 153.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(296.0f, 200.0f, 1.0f, 54.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(296.0f, 233.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(296.0f, 253.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(296.0f, 213.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(295.0f, 320.0f, 1.0f, 74.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(296.0f, 353.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(296.0f, 373.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(296.0f, 333.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(260.0f, 40.0f, 50.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(106.0f, 73.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(166.0f, 73.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(226.0f, 73.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(286.0f, 73.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(116.0f, 393.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(176.0f, 393.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(236.0f, 393.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(296.0f, 393.0f, 5.0f, 1.0f, 1.000f);
 
-    g.setColour(Colour(0xffff3b00));
-    g.strokePath(internalPath1,
-                 PathStrokeType(1.000f, PathStrokeType::mitered, PathStrokeType::rounded));
+    g.setColour(juce::Colour(0xffff3b00));
+    g.strokePath(internalPath1, juce::PathStrokeType(1.000f, juce::PathStrokeType::mitered,
+                                                     juce::PathStrokeType::rounded));
 
-    g.setColour(Colour(0xffff3b00));
-    g.strokePath(internalPath2, PathStrokeType(2.000f));
+    g.setColour(juce::Colour(0xffff3b00));
+    g.strokePath(internalPath2, juce::PathStrokeType(2.000f));
 
     //[UserPaint] Add your own custom painting code here..
 
@@ -1401,7 +1423,7 @@ void UiEditorMorph::resized()
     //[/UserResized]
 }
 
-void UiEditorMorph::buttonClicked(Button *buttonThatWasClicked)
+void UiEditorMorph::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -1916,7 +1938,7 @@ void UiEditorMorph::buttonClicked(Button *buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
-void UiEditorMorph::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
+void UiEditorMorph::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
 {
     //[UsercomboBoxChanged_Pre]
     int bank;
@@ -2000,11 +2022,11 @@ void UiEditorMorph::comboBoxChanged(ComboBox *comboBoxThatHasChanged)
     //[/UsercomboBoxChanged_Post]
 }
 
-bool UiEditorMorph::keyPressed(const KeyPress &key)
+bool UiEditorMorph::keyPressed(const juce::KeyPress &key)
 {
     //[UserCode_keyPressed] -- Add your code here...
     bool success = false;
-    if (key == KeyPress::escapeKey)
+    if (key == juce::KeyPress::escapeKey)
     {
         AppInstanceStore::getInstance()->editor->editor_morph = nullptr;
         return true;

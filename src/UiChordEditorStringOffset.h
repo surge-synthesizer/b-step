@@ -37,26 +37,27 @@ class MONO_Controller;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiChordEditorStringOffset : public Component
+class UiChordEditorStringOffset : public juce::Component
 {
   public:
     //==============================================================================
-    UiChordEditorStringOffset(AppInstanceStore *const app_instance_store_, uint8 chord_id_,
-                              uint8 barstring_id_);
+    UiChordEditorStringOffset(AppInstanceStore *const app_instance_store_, std::uint8_t chord_id_,
+                              std::uint8_t barstring_id_);
     ~UiChordEditorStringOffset();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
 
-    void refresh_ui(Array<Component *> &components_to_repaint_);
-    void get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_that_need_a_popup);
+    void refresh_ui(juce::Array<Component *> &components_to_repaint_);
+    void
+    get_controllers_for_paint_popup(juce::Array<MONO_Controller *> &controllers_that_need_a_popup);
 
     void repaint_label();
     void set_style(AppStyle *const);
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
 
   private:
@@ -64,8 +65,8 @@ class UiChordEditorStringOffset : public Component
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Label> label;
-    ScopedPointer<ModelBase> slider;
+    juce::ScopedPointer<juce::Label> label;
+    juce::ScopedPointer<ModelBase> slider;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiChordEditorStringOffset)

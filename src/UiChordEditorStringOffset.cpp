@@ -31,9 +31,9 @@
 class ControllerStringOffset : public MONO_UISliderController
 {
     AppInstanceStore *const _app_instance_store;
-    const uint8 _chord_id;
-    const uint8 _barstring_id;
-    Label *const _label;
+    const std::uint8_t _chord_id;
+    const std::uint8_t _barstring_id;
+    juce::Label *const _label;
 
     IS_NOT_MIDI_LEARNABLE
 
@@ -65,7 +65,7 @@ class ControllerStringOffset : public MONO_UISliderController
     void repaint_label() const
     {
         // TODO wrong value
-        uint8 note_value =
+        std::uint8_t note_value =
             Sequencer::get_base_note_value(selected_chordset().chord(_chord_id), _barstring_id) +
             _app_instance_store->pattern.note_offset +
             _app_instance_store->pattern.octave_offset * OCTAVE_MULTIPLIER;
@@ -74,22 +74,23 @@ class ControllerStringOffset : public MONO_UISliderController
         {
             if (_app_instance_store->editor_config.current_chord_view ==
                 APPDEF_UIUserData::SHOW_CHORDS)
-                _label->setText(
-                    String(MidiMessage::getMidiNoteName(note_value, true, false, false)),
-                    dontSendNotification);
+                _label->setText(juce::String(juce::MidiMessage::getMidiNoteName(note_value, true,
+                                                                                false, false)),
+                                juce::dontSendNotification);
             else
                 _label->setText(
                     _app_instance_store->editor_config.drum_names.getUnchecked(note_value),
-                    dontSendNotification);
+                    juce::dontSendNotification);
         }
         else
-            _label->setText("-x-", dontSendNotification);
+            _label->setText("-x-", juce::dontSendNotification);
 
-        _label->setColour(Label::textColourId, Colour(get_model()->get_style()->get_font_color()));
+        _label->setColour(juce::Label::textColourId,
+                          juce::Colour(get_model()->get_style()->get_font_color()));
     }
 
-    ControllerStringOffset(AppInstanceStore *const app_instance_store_, uint8 chord_id_,
-                           uint8 _barstring_id_, Label *const label_)
+    ControllerStringOffset(AppInstanceStore *const app_instance_store_, std::uint8_t chord_id_,
+                           std::uint8_t _barstring_id_, juce::Label *const label_)
         : MONO_UISliderController(app_instance_store_), _app_instance_store(app_instance_store_),
           _chord_id(chord_id_), _barstring_id(_barstring_id_), _label(label_)
     {
@@ -98,13 +99,13 @@ class ControllerStringOffset : public MONO_UISliderController
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ControllerStringOffset)
 };
 
-void UiChordEditorStringOffset::refresh_ui(Array<Component *> &components_to_repaint_)
+void UiChordEditorStringOffset::refresh_ui(juce::Array<juce::Component *> &components_to_repaint_)
 {
     slider->get_components_to_repaint(components_to_repaint_);
 }
 
 void UiChordEditorStringOffset::get_controllers_for_paint_popup(
-    Array<MONO_Controller *> &controllers_that_need_a_popup)
+    juce::Array<MONO_Controller *> &controllers_that_need_a_popup)
 {
     slider->get_controllers_for_paint_popup(controllers_that_need_a_popup);
 }
@@ -118,7 +119,7 @@ void UiChordEditorStringOffset::set_style(AppStyle *const style_)
 {
     slider->set_style(style_);
     if (style_)
-        label->setColour(Label::textColourId, Colour(style_->get_foreground_color()));
+        label->setColour(juce::Label::textColourId, juce::Colour(style_->get_foreground_color()));
 
     repaint_label();
 }
@@ -126,17 +127,18 @@ void UiChordEditorStringOffset::set_style(AppStyle *const style_)
 
 //==============================================================================
 UiChordEditorStringOffset::UiChordEditorStringOffset(AppInstanceStore *const app_instance_store_,
-                                                     uint8 chord_id_, uint8 barstring_id_)
+                                                     std::uint8_t chord_id_,
+                                                     std::uint8_t barstring_id_)
     : _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(label = new Label(String(), String()));
-    label->setFont(Font(15.00f, Font::plain));
-    label->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label = new juce::Label(juce::String(), juce::String()));
+    label->setFont(juce::Font(15.00f, juce::Font::plain));
+    label->setJustificationType(juce::Justification::centredLeft);
     label->setEditable(false, false, false);
-    label->setColour(Label::textColourId,
-                     Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label->setColour(TextEditor::textColourId, Colours::black);
-    label->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label->setColour(juce::Label::textColourId,
+                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     addAndMakeVisible(slider =
                           new ModelBase(new ControllerStringOffset(_app_instance_store, chord_id_,
@@ -169,14 +171,14 @@ UiChordEditorStringOffset::~UiChordEditorStringOffset()
 }
 
 //==============================================================================
-void UiChordEditorStringOffset::paint(Graphics &g)
+void UiChordEditorStringOffset::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-    g.fillAll(Colour(_app_instance_store->style_popup_editor->get_background_color()));
+    g.fillAll(juce::Colour(_app_instance_store->style_popup_editor->get_background_color()));
     return;
     //[/UserPrePaint]
 
-    g.fillAll(Colour(0xff161616));
+    g.fillAll(juce::Colour(0xff161616));
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -204,7 +206,7 @@ void UiChordEditorStringOffset::resized()
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="UiChordEditorStringOffset"
-                 componentName="" parentClasses="public Component" constructorParams="AppInstanceStore* const app_instance_store_,uint8 chord_id_, uint8 barstring_id_"
+                 componentName="" parentClasses="public Component" constructorParams="AppInstanceStore* const app_instance_store_,std::uint8_t chord_id_, std::uint8_t barstring_id_"
                  variableInitialisers="_app_instance_store(app_instance_store_)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="1" initialWidth="80" initialHeight="40">

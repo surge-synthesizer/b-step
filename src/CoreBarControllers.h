@@ -13,6 +13,7 @@
 #include "CoreObservers.h"
 #include "ControllerConfig.h"
 #include "CoreCopy.h"
+#include <juce_core/juce_core.h>
 
 // ************************************************************************************************
 // ************************************************************************************************
@@ -27,7 +28,8 @@ class ControllerBarstringOctave : public MONO_UISliderController
     }
 
   public:
-    ControllerBarstringOctave(AppInstanceStore *const app_instance_store_, uint8 barstring_id_)
+    ControllerBarstringOctave(AppInstanceStore *const app_instance_store_,
+                              std::uint8_t barstring_id_)
         : MONO_UISliderController(app_instance_store_),
           selected_barstring(app_instance_store_, barstring_id_)
     {
@@ -51,10 +53,10 @@ class ControllerStepLight : public MONO_UIButtonController
     // DEFAULT DRAG AND DROP!
     bool are_you_simple_dragable() override { return true; }
 
-    String _dragNdrop_ident;
-    String &get_dragNdrop_ident() override { return _dragNdrop_ident; }
+    juce::String _dragNdrop_ident;
+    juce::String &get_dragNdrop_ident() override { return _dragNdrop_ident; }
 
-    Component *get_dragNdrop_source() override
+    juce::Component *get_dragNdrop_source() override
     {
         BarStepCopySourceData *source = new BarStepCopySourceData(
             &selected_barstep.get_selected_bar(), &selected_barstep.get(), is_multidrag_source);
@@ -64,7 +66,7 @@ class ControllerStepLight : public MONO_UIButtonController
     }
 
     bool is_interested_in_drag_source(
-        const DragAndDropTarget::SourceDetails &dragSourceDetails_) override
+        const juce::DragAndDropTarget::SourceDetails &dragSourceDetails_) override
     {
         if (dragSourceDetails_.sourceComponent.get()->getName().compare("TlR") == 0)
         {
@@ -81,7 +83,7 @@ class ControllerStepLight : public MONO_UIButtonController
         }
         else if (dragSourceDetails_.description.toString().compare(get_dragNdrop_ident()) == 0)
         {
-            Component *source_component = dragSourceDetails_.sourceComponent.get();
+            juce::Component *source_component = dragSourceDetails_.sourceComponent.get();
             if (source_component)
             {
                 BarStepCopySourceData *step_copy_source =
@@ -95,8 +97,8 @@ class ControllerStepLight : public MONO_UIButtonController
                         selected_barstep.get() = *step_copy_source->copy_source_barstep;
 
                         // copy steps
-                        uint8 target_step_id = selected_barstep.get().id;
-                        uint8 source_step_id = step_copy_source->copy_source_barstep->id;
+                        std::uint8_t target_step_id = selected_barstep.get().id;
+                        std::uint8_t source_step_id = step_copy_source->copy_source_barstep->id;
                         for (int barstring_id = 0; barstring_id != SUM_STRINGS; ++barstring_id)
                         {
                             selected_barstep.get_selected_bar()
@@ -113,7 +115,7 @@ class ControllerStepLight : public MONO_UIButtonController
         return false;
     }
 
-    void item_dropped_top(const DragAndDropTarget::SourceDetails &dragSourceDetails_) override
+    void item_dropped_top(const juce::DragAndDropTarget::SourceDetails &dragSourceDetails_) override
     {
         if (dragSourceDetails_.description.toString().compare(get_dragNdrop_ident()) == 0)
         {
@@ -125,37 +127,37 @@ class ControllerStepLight : public MONO_UIButtonController
         }
     }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
         if (selected_barstep.get().skip)
         {
-            string_ = String("S");
+            string_ = juce::String("S");
             return;
         }
 
         if (is_step_muted_on_any_way())
         {
-            string_ = String("M");
+            string_ = juce::String("M");
             return;
         }
 
-        int8 current_step_repeat = selected_barstep.get_running_repeat_as_count_down();
+        std::int8_t current_step_repeat = selected_barstep.get_running_repeat_as_count_down();
         if (current_step_repeat > 0)
         {
-            string_ = String(current_step_repeat);
+            string_ = juce::String(current_step_repeat);
             return;
         }
 
         const Bar &running_bar = selected_barstep.get_running_bar();
         if (running_bar.barstep(selected_barstep.step_id).pos_entry_point)
         {
-            string_ = String(">>");
+            string_ = juce::String(">>");
             return;
         }
         else if (running_bar.barstep(selected_barstep.step_id).pos_reset_point)
             if (!selected_barstep.is_repeat_at_step_already_processed())
             {
-                string_ = String("<<");
+                string_ = juce::String("<<");
                 return;
             }
 
@@ -212,7 +214,7 @@ class ControllerStepLight : public MONO_UIButtonController
         return STATES::OFF_1;
     }
 
-    uint32 get_current_color() const override
+    std::uint32_t get_current_color() const override
     {
         if (_model)
         {
@@ -236,7 +238,7 @@ class ControllerStepLight : public MONO_UIButtonController
         return 0x00000000;
     }
 
-    uint32 get_runing_color() const
+    std::uint32_t get_runing_color() const
     {
         switch (selected_barstep.get_selected_bar().group)
         {
@@ -264,7 +266,7 @@ class ControllerStepLight : public MONO_UIButtonController
         return true;
     }
 
-    String &get_multi_dragNdrop_ident() override { return get_dragNdrop_ident(); }
+    juce::String &get_multi_dragNdrop_ident() override { return get_dragNdrop_ident(); }
 
     // RUBBER
     bool are_you_rubberable() override { return true; }
@@ -284,7 +286,7 @@ class ControllerStepLight : public MONO_UIButtonController
         }
     }
 
-    const String get_help_url() override
+    const juce::String get_help_url() override
     {
         return MANUAL_URL + "advanced-users/the-runlight-more-than-left-to-right";
     }
@@ -292,7 +294,7 @@ class ControllerStepLight : public MONO_UIButtonController
     void on_clicked_top() override { selected_barstep.get().mute.invert(); }
 
   public:
-    ControllerStepLight(AppInstanceStore *const app_instance_store_, uint8 step_id_)
+    ControllerStepLight(AppInstanceStore *const app_instance_store_, std::uint8_t step_id_)
         : MONO_UIButtonController(app_instance_store_),
           selected_barstep(app_instance_store_, step_id_), _app_instance_store(app_instance_store_),
           is_multidrag_source(false), _dragNdrop_ident(BARSTEP_DRAG_N_DROP_IDENT)
@@ -319,31 +321,31 @@ class ControllerBarSelect : public MONO_UIButtonController
 
     void on_param_via_changed() const override { bar.set_selected_bar(); }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
         if (bar.is_running_bar())
         {
-            uint8 running_repeat = bar.get_running_bar_repeat();
+            std::uint8_t running_repeat = bar.get_running_bar_repeat();
             if (running_repeat > 1)
-                string_ = String(running_repeat);
+                string_ = juce::String(running_repeat);
             else if (_app_instance_store->sequencer.is_unprocessed_bar_reset(bar.get()))
-                string_ = String("<<");
+                string_ = juce::String("<<");
             else
                 /// TODO HAS NO TEXT VALUE IS THE STRING INIT FROM THE CALLER
-                string_ = String(HAS_NO_TEXT_VALUE);
+                string_ = juce::String(HAS_NO_TEXT_VALUE);
         }
         else if (_app_instance_store->sequencer.is_unprocessed_bar_reset(bar.get()))
-            string_ = String("<<");
+            string_ = juce::String("<<");
         else if (bar.is_probabliy_next_bar())
-            string_ = String("N");
+            string_ = juce::String("N");
         else if (bar.get().skip)
-            string_ = String("S");
+            string_ = juce::String("S");
         else if (bar.get().mute)
-            string_ = String("M");
+            string_ = juce::String("M");
         else if (bar.get().solo || Sequencer::is_valid_for_auto_chain(bar.get()))
-            string_ = String("-");
+            string_ = juce::String("-");
         else
-            string_ = String(HAS_NO_TEXT_VALUE);
+            string_ = juce::String(HAS_NO_TEXT_VALUE);
     }
 
     bool is_bar_muted_on_any_way() const
@@ -372,7 +374,7 @@ class ControllerBarSelect : public MONO_UIButtonController
         return STATES::OFF_1;
     }
 
-    uint32 get_current_color() const override
+    std::uint32_t get_current_color() const override
     {
         if (_model)
         {
@@ -396,7 +398,7 @@ class ControllerBarSelect : public MONO_UIButtonController
         return 0x00000000;
     }
 
-    uint32 get_runing_color() const
+    std::uint32_t get_runing_color() const
     {
         switch (bar.get().group)
         {
@@ -449,10 +451,10 @@ class ControllerBarSelect : public MONO_UIButtonController
     // DEFAULT DRAG AND DROP!
     bool are_you_simple_dragable() override { return true; }
 
-    String _dragNdrop_ident;
-    String &get_dragNdrop_ident() override { return _dragNdrop_ident; }
+    juce::String _dragNdrop_ident;
+    juce::String &get_dragNdrop_ident() override { return _dragNdrop_ident; }
 
-    Component *get_dragNdrop_source() override
+    juce::Component *get_dragNdrop_source() override
     {
         BarCopySourceData *source = new BarCopySourceData(&bar.get(), is_multidrag_source);
         is_multidrag_source = false;
@@ -460,7 +462,7 @@ class ControllerBarSelect : public MONO_UIButtonController
     }
 
     bool is_interested_in_drag_source(
-        const DragAndDropTarget::SourceDetails &dragSourceDetails_) override
+        const juce::DragAndDropTarget::SourceDetails &dragSourceDetails_) override
     {
         if (dragSourceDetails_.sourceComponent.get()->getName().compare("TlR") == 0)
         {
@@ -477,7 +479,7 @@ class ControllerBarSelect : public MONO_UIButtonController
         }
         else if (dragSourceDetails_.description.toString().compare(get_dragNdrop_ident()) == 0)
         {
-            Component *source = dragSourceDetails_.sourceComponent.get();
+            juce::Component *source = dragSourceDetails_.sourceComponent.get();
             if (source)
             {
                 BarCopySourceData *bar_copy_source = dynamic_cast<BarCopySourceData *>(source);
@@ -495,7 +497,7 @@ class ControllerBarSelect : public MONO_UIButtonController
         else if (dragSourceDetails_.description.toString().compare(
                      BAR_CLIPBOARD_DRAG_N_DROP_IDENT) == 0)
         {
-            Component *source = dragSourceDetails_.sourceComponent.get();
+            juce::Component *source = dragSourceDetails_.sourceComponent.get();
             if (source)
             {
                 return true;
@@ -504,7 +506,7 @@ class ControllerBarSelect : public MONO_UIButtonController
 
         return false;
     }
-    void item_dropped_top(const DragAndDropTarget::SourceDetails &dragSourceDetails_) override
+    void item_dropped_top(const juce::DragAndDropTarget::SourceDetails &dragSourceDetails_) override
     {
         if (dragSourceDetails_.description.toString().compare(get_dragNdrop_ident()) == 0)
         {
@@ -535,12 +537,12 @@ class ControllerBarSelect : public MONO_UIButtonController
         return true;
     }
 
-    String &get_multi_dragNdrop_ident() override { return get_dragNdrop_ident(); }
+    juce::String &get_multi_dragNdrop_ident() override { return get_dragNdrop_ident(); }
 
     // RUBBER
     bool are_you_rubberable() override { return true; }
 
-    const String get_help_url() override
+    const juce::String get_help_url() override
     {
         return MANUAL_URL + "beginner/basic-functions/bar-selection-and-bar-copy";
     }
@@ -553,7 +555,7 @@ class ControllerBarSelect : public MONO_UIButtonController
     }
 
   public:
-    ControllerBarSelect(AppInstanceStore *const app_instance_store_, uint8 bar_id_)
+    ControllerBarSelect(AppInstanceStore *const app_instance_store_, std::uint8_t bar_id_)
         : MONO_UIButtonController(app_instance_store_), bar(app_instance_store_, bar_id_),
           _app_instance_store(app_instance_store_), is_multidrag_source(false),
           _dragNdrop_ident(BAR_DRAG_N_DROP_IDENT)
@@ -574,7 +576,7 @@ class ControllerBarChainmute : public MONO_UIButtonController
     PodParameterBase *get_parameter() const override { return &bar.get().force_chain; }
 
   public:
-    ControllerBarChainmute(AppInstanceStore *const app_instance_store_, uint8 bar_id_)
+    ControllerBarChainmute(AppInstanceStore *const app_instance_store_, std::uint8_t bar_id_)
         : MONO_UIButtonController(app_instance_store_), bar(app_instance_store_, bar_id_),
           _app_instance_store(app_instance_store_)
     {
@@ -593,7 +595,7 @@ class ControllerBarOctave : public MONO_UISliderController
     PodParameterBase *get_parameter() const override { return &bar.get().octave_offset; }
 
   public:
-    ControllerBarOctave(AppInstanceStore *const app_instance_store_, uint8 bar_id_)
+    ControllerBarOctave(AppInstanceStore *const app_instance_store_, std::uint8_t bar_id_)
         : MONO_UISliderController(app_instance_store_), bar(app_instance_store_, bar_id_)
     {
     }
@@ -610,13 +612,13 @@ class ControllerBarChord : public MONO_UISliderController
 
     PodParameterBase *get_parameter() const override { return &bar.get().chord_id; }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
-        string_ = String(bar.get().chord_id + 1);
+        string_ = juce::String(bar.get().chord_id + 1);
     }
 
   public:
-    ControllerBarChord(AppInstanceStore *const app_instance_store_, uint8 bar_id_)
+    ControllerBarChord(AppInstanceStore *const app_instance_store_, std::uint8_t bar_id_)
         : MONO_UISliderController(app_instance_store_), bar(app_instance_store_, bar_id_)
     {
     }
@@ -633,10 +635,13 @@ class ControllerBarRepeat : public MONO_UISliderController
 
     PodParameterBase *get_parameter() const override { return &bar.get().repeats; }
 
-    void get_label_text_top(String &string_) const override { string_ = String(bar.get().repeats); }
+    void get_label_text_top(juce::String &string_) const override
+    {
+        string_ = juce::String(bar.get().repeats);
+    }
 
   public:
-    ControllerBarRepeat(AppInstanceStore *const app_instance_store_, uint8 bar_id_)
+    ControllerBarRepeat(AppInstanceStore *const app_instance_store_, std::uint8_t bar_id_)
         : MONO_UISliderController(app_instance_store_), bar(app_instance_store_, bar_id_)
     {
     }
@@ -655,13 +660,13 @@ class ControllerBarCCType : public MONO_UISliderController
         return &selected_bar.get().cc_set(_cc_set_id).cc_type;
     }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
-        string_ = String(selected_bar.get().cc_set(_cc_set_id).cc_type);
+        string_ = juce::String(selected_bar.get().cc_set(_cc_set_id).cc_type);
     }
 
   public:
-    ControllerBarCCType(AppInstanceStore *const app_instance_store_, uint8 cc_set_id_)
+    ControllerBarCCType(AppInstanceStore *const app_instance_store_, std::uint8_t cc_set_id_)
         : MONO_UISliderController(app_instance_store_), selected_bar(app_instance_store_),
           _cc_set_id(cc_set_id_)
     {
@@ -680,7 +685,7 @@ class ControllerBarSongReset : public MONO_UIButtonController
     virtual PodParameterBase *get_parameter() const override { return &bar.get().pos_reset; }
 
   public:
-    ControllerBarSongReset(AppInstanceStore *const app_instance_store_, uint8 bar_id_)
+    ControllerBarSongReset(AppInstanceStore *const app_instance_store_, std::uint8_t bar_id_)
         : MONO_UIButtonController(app_instance_store_), bar(app_instance_store_, bar_id_)
     {
     }
@@ -696,7 +701,7 @@ class ControllerBarSongEntry : public MONO_UIButtonController
     virtual PodParameterBase *get_parameter() const override { return &bar.get().pos_reset; }
 
   public:
-    ControllerBarSongEntry(AppInstanceStore *const app_instance_store_, uint8 bar_id_)
+    ControllerBarSongEntry(AppInstanceStore *const app_instance_store_, std::uint8_t bar_id_)
         : MONO_UIButtonController(app_instance_store_), bar(app_instance_store_, bar_id_)
     {
     }
@@ -714,7 +719,7 @@ class ControllerBarSkip : public MONO_UIButtonController
     PodParameterBase *get_parameter() const override { return &bar.get().skip; }
 
   public:
-    ControllerBarSkip(AppInstanceStore *const app_instance_store_, uint8 bar_id_)
+    ControllerBarSkip(AppInstanceStore *const app_instance_store_, std::uint8_t bar_id_)
         : MONO_UIButtonController(app_instance_store_), bar(app_instance_store_, bar_id_)
     {
     }
@@ -732,7 +737,7 @@ class ControllerBarMute : public MONO_UIButtonController
     PodParameterBase *get_parameter() const override { return &bar.get().mute; }
 
   public:
-    ControllerBarMute(AppInstanceStore *const app_instance_store_, uint8 bar_id_)
+    ControllerBarMute(AppInstanceStore *const app_instance_store_, std::uint8_t bar_id_)
         : MONO_UIButtonController(app_instance_store_), bar(app_instance_store_, bar_id_)
     {
     }
@@ -751,12 +756,12 @@ class ControllerBarSolo : public MONO_UIButtonController
 
     void on_clicked_top() override { bar.get().solo.invert(); }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
         if (bar.get().group > 0)
-            string_ = String("|") + String(bar.get().group + 1) + String("|");
+            string_ = juce::String("|") + juce::String(bar.get().group + 1) + juce::String("|");
         else
-            string_ = String(HAS_NO_TEXT_VALUE);
+            string_ = juce::String(HAS_NO_TEXT_VALUE);
     }
 
     AppStyle *get_custom_label_style() const override
@@ -777,7 +782,7 @@ class ControllerBarSolo : public MONO_UIButtonController
     }
 
   public:
-    ControllerBarSolo(AppInstanceStore *const app_instance_store_, uint8 bar_id_)
+    ControllerBarSolo(AppInstanceStore *const app_instance_store_, std::uint8_t bar_id_)
         : MONO_UIButtonController(app_instance_store_), bar(app_instance_store_, bar_id_)
     {
     }
@@ -795,7 +800,7 @@ class ControllerBarPlayReverse : public MONO_UIButtonController
     PodParameterBase *get_parameter() const override { return &bar.get().play_reverse; }
 
   public:
-    ControllerBarPlayReverse(AppInstanceStore *const app_instance_store_, uint8 bar_id_)
+    ControllerBarPlayReverse(AppInstanceStore *const app_instance_store_, std::uint8_t bar_id_)
         : MONO_UIButtonController(app_instance_store_), bar(app_instance_store_, bar_id_)
     {
     }
@@ -813,7 +818,7 @@ class ControllerBarPlayRandom : public MONO_UIButtonController
     PodParameterBase *get_parameter() const override { return &bar.get().random_playback; }
 
   public:
-    ControllerBarPlayRandom(AppInstanceStore *const app_instance_store_, uint8 bar_id_)
+    ControllerBarPlayRandom(AppInstanceStore *const app_instance_store_, std::uint8_t bar_id_)
         : MONO_UIButtonController(app_instance_store_), bar(app_instance_store_, bar_id_)
     {
     }
@@ -823,7 +828,7 @@ class ControllerBarPlayRandom : public MONO_UIButtonController
 // ************************************************************************************************
 // ************************************************************************************************
 // TODO is no more needed, but function will be used by the rubber tool
-class ControllerBarReset2Default : public MONO_UIButtonController, public Timer
+class ControllerBarReset2Default : public MONO_UIButtonController, public juce::Timer
 {
     BarObserver bar;
     AppInstanceStore *const _app_instance_store;
@@ -838,12 +843,12 @@ class ControllerBarReset2Default : public MONO_UIButtonController, public Timer
     USE_DEFAULT_MULTI_DRAG
     void on_value_changed(int) override { on_clicked_top(); }
 
-    unsigned int get_current_state() const override { return Timer::isTimerRunning(); }
+    unsigned int get_current_state() const override { return juce::Timer::isTimerRunning(); }
 
     void timerCallback() override { stopTimer(); }
 
   public:
-    ControllerBarReset2Default(AppInstanceStore *const app_instance_store_, uint8 bar_id_)
+    ControllerBarReset2Default(AppInstanceStore *const app_instance_store_, std::uint8_t bar_id_)
         : MONO_UIButtonController(app_instance_store_), bar(app_instance_store_, bar_id_),
           _app_instance_store(app_instance_store_)
     {
@@ -862,15 +867,15 @@ class ControllerBarTriggerPoint : public MONO_UISliderController
 
     PodParameterBase *get_parameter() const override { return &bar.get().group; }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
         if (bar.get().group == -1)
-            string_ = String("off");
+            string_ = juce::String("off");
         else
-            string_ = String("|") + String(bar.get().group + 1) + String("|");
+            string_ = juce::String("|") + juce::String(bar.get().group + 1) + juce::String("|");
     }
 
-    uint32 get_current_color() const override
+    std::uint32_t get_current_color() const override
     {
         switch (bar.get().group)
         {
@@ -888,7 +893,7 @@ class ControllerBarTriggerPoint : public MONO_UISliderController
     }
 
   public:
-    ControllerBarTriggerPoint(AppInstanceStore *const app_instance_store_, uint8 bar_id_)
+    ControllerBarTriggerPoint(AppInstanceStore *const app_instance_store_, std::uint8_t bar_id_)
         : MONO_UISliderController(app_instance_store_), _app_instance_store(app_instance_store_),
           bar(app_instance_store_, bar_id_)
     {
@@ -902,8 +907,8 @@ class ControllerBarStepShift : public MONO_UISliderController
 {
     BarObserver bar;
     AppInstanceStore *const _app_instance_store;
-    int8 tmp_last_copy_offset;
-    CriticalSection lock;
+    std::int8_t tmp_last_copy_offset;
+    juce::CriticalSection lock;
 
     bool is_still_in_progress;
 
@@ -911,9 +916,9 @@ class ControllerBarStepShift : public MONO_UISliderController
     {
         bar.set_selected_bar();
 
-        const ScopedLock myScopedLock(lock);
+        const juce::ScopedLock myScopedLock(lock);
 
-        int8 offset = 0;
+        std::int8_t offset = 0;
         if (v_ > tmp_last_copy_offset && v_ <= 15)
             offset = 1;
         else if (v_ < tmp_last_copy_offset && v_ >= -15)
@@ -923,7 +928,7 @@ class ControllerBarStepShift : public MONO_UISliderController
 
         tmp_last_copy_offset += offset;
 
-        Array<bool> tmp_source_mutes;
+        juce::Array<bool> tmp_source_mutes;
 
         // copy alg
         int count_from = 0;
@@ -937,17 +942,17 @@ class ControllerBarStepShift : public MONO_UISliderController
             count_up_or_down = -1;
 
         // get the first source
-        for (uint8 barstring_id = 0; barstring_id != SUM_STRINGS; ++barstring_id)
+        for (std::uint8_t barstring_id = 0; barstring_id != SUM_STRINGS; ++barstring_id)
         {
             tmp_source_mutes.add(bar.get().barstring(barstring_id).step(count_from).is_mute);
         }
 
         // copy all
-        for (int8 source_step_id = count_from; source_step_id != count_to;
+        for (std::int8_t source_step_id = count_from; source_step_id != count_to;
              source_step_id += count_up_or_down)
         {
-            Array<bool> tmp_target_mutes;
-            int8 target_step_id = source_step_id + offset;
+            juce::Array<bool> tmp_target_mutes;
+            std::int8_t target_step_id = source_step_id + offset;
             if (target_step_id >= SUM_STEPS) // close loop up direction
                 target_step_id = target_step_id - SUM_STEPS;
             else if (target_step_id < 0) // close loop down direction
@@ -972,7 +977,7 @@ class ControllerBarStepShift : public MONO_UISliderController
     int get_range_min() override { return -15; }
 
   public:
-    ControllerBarStepShift(AppInstanceStore *const app_instance_store_, uint8 bar_id_)
+    ControllerBarStepShift(AppInstanceStore *const app_instance_store_, std::uint8_t bar_id_)
         : MONO_UISliderController(app_instance_store_), bar(app_instance_store_, bar_id_),
           _app_instance_store(app_instance_store_), tmp_last_copy_offset(0)
     {

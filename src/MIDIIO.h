@@ -14,13 +14,17 @@
 #include "App.h"
 #include "PluginProcessor.h"
 
+#include <cstdint>
+#include <juce_audio_basics/juce_audio_basics.h>
+#include <juce_audio_devices/juce_audio_devices.h>
+
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
 class MIDIInListener
 {
   public:
-    virtual void process(const MidiMessage &message_) = 0;
+    virtual void process(const juce::MidiMessage &message_) = 0;
 
   protected:
     virtual ~MIDIInListener() {}
@@ -54,8 +58,8 @@ template <class port_type> class MidiIOObject
   protected:
     AppInstanceStore *const _app_instance_store;
     std::unique_ptr<port_type> _midi_port;
-    String _port_name;
-    String _standalone_portname;
+    juce::String _port_name;
+    juce::String _standalone_portname;
     int _at_dev_index;
     bool _is_succesful_opend;
     bool _is_in_host_handling;
@@ -84,7 +88,7 @@ template <class port_type> class MidiIOObject
 
     //// Interface
   public:
-    void set_port_name(const String &name_, int at_dev_index_)
+    void set_port_name(const juce::String &name_, int at_dev_index_)
     {
         _port_name = name_;
         _at_dev_index = at_dev_index_;
@@ -118,7 +122,7 @@ template <class port_type> class MidiIOObject
         }
     }
 
-    static bool is_device_at_index_available(const String &name_, int at_dev_index_)
+    static bool is_device_at_index_available(const juce::String &name_, int at_dev_index_)
     {
         if (name_.compare(IN_HOST_MIDI_HANDLING) == 0)
             return true;
@@ -132,7 +136,7 @@ template <class port_type> class MidiIOObject
         if (at_dev_index_ <= 0)
             return false;
 
-        StringArray ports = port_type::getDevices();
+        juce::StringArray ports = port_type::getDevices();
 
         if (ports[at_dev_index_] == name_)
         {
@@ -142,9 +146,9 @@ template <class port_type> class MidiIOObject
     }
 
     // -1 == not found
-    static int get_port_index_at_Nth_index(const String &name_, int Nth_index_)
+    static int get_port_index_at_Nth_index(const juce::String &name_, int Nth_index_)
     {
-        StringArray ports = port_type::getDevices();
+        juce::StringArray ports = port_type::getDevices();
 
         int Nth_counter = -1;
         for (int i = 0; i != ports.size(); ++i)
@@ -178,15 +182,18 @@ template <class port_type> class MidiIOObject
         _is_succesful_opend = false;
     }
 
-    const String &port_name() const { return _port_name; }
-    const String &standalone_portname() const { return _standalone_portname; }
-    void set_standalone_portname(const String &port_name_) { _standalone_portname = port_name_; }
+    const juce::String &port_name() const { return _port_name; }
+    const juce::String &standalone_portname() const { return _standalone_portname; }
+    void set_standalone_portname(const juce::String &port_name_)
+    {
+        _standalone_portname = port_name_;
+    }
     bool is_open() const { return _is_succesful_opend; }
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiIOObject)
 };
 
-class MidiInputObject : public MidiIOObject<MidiInput>, public MidiInputCallback
+class MidiInputObject : public MidiIOObject<juce::MidiInput>, public juce::MidiInputCallback
 {
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
@@ -205,7 +212,7 @@ class MidiInputObject : public MidiIOObject<MidiInput>, public MidiInputCallback
     MidiInputObject(); //->delete
   public:
     MidiInputObject(AppInstanceStore *const app_instance_store_, MIDIInListener *const receiver_)
-        : MidiIOObject<MidiInput>(app_instance_store_), _receiver(receiver_)
+        : MidiIOObject<juce::MidiInput>(app_instance_store_), _receiver(receiver_)
     {
         BOOT(MidiInputObject);
     }
@@ -221,7 +228,8 @@ class MidiInputObject : public MidiIOObject<MidiInput>, public MidiInputCallback
 
     //// Interface
   private:
-    void handleIncomingMidiMessage(MidiInput *source, const MidiMessage &message) override
+    void handleIncomingMidiMessage(juce::MidiInput *source,
+                                   const juce::MidiMessage &message) override
     {
         if (source == _midi_port.get())
         {
@@ -231,7 +239,7 @@ class MidiInputObject : public MidiIOObject<MidiInput>, public MidiInputCallback
     }
 
   public:
-    void process(const MidiMessage &message)
+    void process(const juce::MidiMessage &message)
     {
         handleIncomingMidiMessage(_midi_port.get(), message);
     }
@@ -259,26 +267,27 @@ class MidiInputObject : public MidiIOObject<MidiInput>, public MidiInputCallback
         DBG(_port_name);
         if (_port_name != VIRTUAL_PORT)
         {
-            if (_at_dev_index < MidiInput::getDevices().size())
+            if (_at_dev_index < juce::MidiInput::getDevices().size())
             {
-                _midi_port = MidiInput::openDevice(_at_dev_index, this);
+                _midi_port = juce::MidiInput::openDevice(_at_dev_index, this);
 
                 if (_midi_port)
                 {
                     DBG(_port_name);
-                    _midi_port->setName(String("B-Step receive @ ") + _port_name);
+                    _midi_port->setName(juce::String("B-Step receive @ ") + _port_name);
                     DBG("success");
                     _midi_port->start();
                     success = true;
                 }
                 else if (_app_instance_store->editor)
                 {
-                    AlertWindow::showMessageBox(
-                        AlertWindow::WarningIcon, "ERROR OPEN PORT!",
-                        String("Can NOT open port: ") + _port_name +
-                            String("\nPlease make sure the port is free and NOT in use by your DAW "
-                                   "or another application."),
-                        "Ok", reinterpret_cast<Component *>(_app_instance_store->editor));
+                    juce::AlertWindow::showMessageBox(
+                        juce::AlertWindow::WarningIcon, "ERROR OPEN PORT!",
+                        juce::String("Can NOT open port: ") + _port_name +
+                            juce::String(
+                                "\nPlease make sure the port is free and NOT in use by your DAW "
+                                "or another application."),
+                        "Ok", reinterpret_cast<juce::Component *>(_app_instance_store->editor));
                 }
             }
         }
@@ -287,7 +296,7 @@ class MidiInputObject : public MidiIOObject<MidiInput>, public MidiInputCallback
         else
         {
             DBG("try virtual IN");
-            _midi_port = MidiInput::createNewDevice("B-Step", this);
+            _midi_port = juce::MidiInput::createNewDevice("B-Step", this);
             if (_midi_port)
             {
                 DBG(_port_name);
@@ -327,7 +336,7 @@ class MidiInputObject : public MidiIOObject<MidiInput>, public MidiInputCallback
     }
 };
 
-class MidiOutputObject : public MidiIOObject<MidiOutput>
+class MidiOutputObject : public MidiIOObject<juce::MidiOutput>
 {
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
@@ -342,7 +351,7 @@ class MidiOutputObject : public MidiIOObject<MidiOutput>
     //// CTOR
   public:
     MidiOutputObject(AppInstanceStore *const app_instance_store_)
-        : MidiIOObject<MidiOutput>(app_instance_store_)
+        : MidiIOObject<juce::MidiOutput>(app_instance_store_)
     {
         BOOT(MidiOutputObject);
     }
@@ -385,9 +394,9 @@ class MidiOutputObject : public MidiIOObject<MidiOutput>
         bool success = false;
         if (_port_name != VIRTUAL_PORT)
         {
-            if (_at_dev_index < MidiOutput::getDevices().size())
+            if (_at_dev_index < juce::MidiOutput::getDevices().size())
             {
-                _midi_port = MidiOutput::openDevice(_at_dev_index);
+                _midi_port = juce::MidiOutput::openDevice(_at_dev_index);
 
                 if (_midi_port)
                 {
@@ -398,12 +407,13 @@ class MidiOutputObject : public MidiIOObject<MidiOutput>
                 }
                 else if (_app_instance_store->editor)
                 {
-                    AlertWindow::showMessageBox(
-                        AlertWindow::WarningIcon, "ERROR OPEN PORT!",
-                        String("Can NOT open port: ") + _port_name +
-                            String("\nPlease make sure the port is free and NOT in use by your DAW "
-                                   "or another application."),
-                        "Ok", reinterpret_cast<Component *>(_app_instance_store->editor));
+                    juce::AlertWindow::showMessageBox(
+                        juce::AlertWindow::WarningIcon, "ERROR OPEN PORT!",
+                        juce::String("Can NOT open port: ") + _port_name +
+                            juce::String(
+                                "\nPlease make sure the port is free and NOT in use by your DAW "
+                                "or another application."),
+                        "Ok", reinterpret_cast<juce::Component *>(_app_instance_store->editor));
                 }
             }
         }
@@ -412,7 +422,7 @@ class MidiOutputObject : public MidiIOObject<MidiOutput>
         else
         {
             DBG("try virtual OUTPUT");
-            _midi_port = MidiOutput::createNewDevice("B-Step");
+            _midi_port = juce::MidiOutput::createNewDevice("B-Step");
             if (_midi_port)
             {
                 DBG("success");
@@ -437,14 +447,14 @@ class MidiOutputObject : public MidiIOObject<MidiOutput>
         return success;
     }
 
-    CriticalSection close_lock;
+    juce::CriticalSection close_lock;
     bool close_port() override
     {
         if (_port_name.compare(IN_HOST_MIDI_HANDLING) == 0 ||
             _port_name.compare(DISABLED_PORT) == 0)
             return true;
 
-        ScopedLock locked(close_lock);
+        juce::ScopedLock locked(close_lock);
 
         _is_succesful_opend = false;
 
@@ -466,7 +476,7 @@ class MidiOutputObject : public MidiIOObject<MidiOutput>
     // ATTENTION VST MODE: everything what you send over this dev VIA "in host handling" expected
     // that there is the current buffer setted in the AUDIO-PROCESSOR. So that also means that that
     // function have to call in the processBlock!
-    void send_message(const MidiMessage &message_, bool use_sample_timestamp = false)
+    void send_message(const juce::MidiMessage &message_, bool use_sample_timestamp = false)
     {
 #ifndef B_STEP_STANDALONE
         if (_is_in_host_handling)
@@ -485,13 +495,13 @@ class MidiOutputObject : public MidiIOObject<MidiOutput>
 #ifndef B_STEP_STANDALONE
                 if (use_sample_timestamp)
                 {
-                    MidiBuffer buffer;
+                    juce::MidiBuffer buffer;
                     buffer.addEvent(
                         message_, _app_instance_store->audio_processor->_current_vst_samples_delay);
                     if (_midi_port)
                         _midi_port->sendBlockOfMessages(
                             buffer,
-                            Time::getMillisecondCounter() +
+                            juce::Time::getMillisecondCounter() +
                                 _app_instance_store->audio_processor->latency_corretion_ms,
                             _app_instance_store->audio_processor->_current_sample_rate);
                 }
@@ -510,7 +520,7 @@ class MidiOutputObject : public MidiIOObject<MidiOutput>
 // HELPER FOR CHECKING IF THE PORT IS NOT USED MORE THAN TWO TIMES
 class MultiMIDIMessageOutputGuard
 {
-    Array<int> feeded_ports;
+    juce::Array<int> feeded_ports;
 
   public:
     inline bool is_port_valid_for_sending(MidiOutputObject *port_)
@@ -543,7 +553,7 @@ class MidiIOHandler
     // PROPERTIES
   private:
     AppInstanceStore *const _app_instance_store;
-    OwnedArray<MidiOutputObject> midi_outs;
+    juce::OwnedArray<MidiOutputObject> midi_outs;
 
   public:
     MidiInputObject midi_in;
@@ -565,12 +575,12 @@ class MidiIOHandler
         return is_enabled;
     }
 
-    MidiOutputObject &get_out_port(uint8 barstring_id)
+    MidiOutputObject &get_out_port(std::uint8_t barstring_id)
     {
         return *midi_outs.getUnchecked(barstring_id);
     }
 
-    MidiOutputObject &get_out_port_for_sending(uint8 barstring_id)
+    MidiOutputObject &get_out_port_for_sending(std::uint8_t barstring_id)
     {
         if (barstring_id > 0)
             if (midi_outs.getUnchecked(barstring_id)->use_master_midi_out())
@@ -607,10 +617,10 @@ class MidiIOHandler
 
     //// LOAD AND SAVE
   public:
-    void save_to(XmlElement &xml) const;
-    void load_from(const XmlElement &xml);
+    void save_to(juce::XmlElement &xml) const;
+    void load_from(const juce::XmlElement &xml);
 
-    void load_from_1_2(const XmlElement &xml);
+    void load_from_1_2(const juce::XmlElement &xml);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiIOHandler)
 };

@@ -23,6 +23,7 @@
 //[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
+#include <juce_audio_utils/juce_audio_utils.h>
 
 class AppInstanceStore;
 //[/Headers]
@@ -47,7 +48,7 @@ class UiEditorKeyboard : public UiEditor
     AppInstanceStore *const _app_instance_store;
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
 
   private:
@@ -55,7 +56,7 @@ class UiEditorKeyboard : public UiEditor
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<MidiKeyboardComponent> keyboard;
+    juce::ScopedPointer<juce::MidiKeyboardComponent> keyboard;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorKeyboard)

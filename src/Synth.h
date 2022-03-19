@@ -19,7 +19,7 @@
 forcedinline static float soft_clipping(float input_and_worker_) noexcept
 {
     // sample_ -= (sample_*sample_*sample_)/3.0f;
-    input_and_worker_ = (atan(input_and_worker_) __DEVIDE_BY(float_Pi)) * 2;
+    input_and_worker_ = (atan(input_and_worker_) __DEVIDE_BY(juce::MathConstants<float>::pi)) * 2;
 
     // TODO can be done by float vector
     if (input_and_worker_ > 1)

@@ -41,7 +41,7 @@ void UiEditorAppStyler::timerCallback()
         {
             target_color = _app_instance_store->editor_config.current_editable_colour;
             colour_selector->setCurrentColour(
-                Colour(*_app_instance_store->editor_config.current_editable_colour));
+                juce::Colour(*_app_instance_store->editor_config.current_editable_colour));
         }
     }
     else
@@ -50,9 +50,9 @@ void UiEditorAppStyler::timerCallback()
             &_app_instance_store->color_theme->elem_color_1;
         target_color = _app_instance_store->editor_config.current_editable_colour;
         colour_selector->setCurrentColour(
-            Colour(*_app_instance_store->editor_config.current_editable_colour));
+            juce::Colour(*_app_instance_store->editor_config.current_editable_colour));
         // last_col_refresh = *target_color;
-        // col_1->setColour( TextButton::buttonColourId,
+        // col_1->setColour( juce::TextButton::buttonColourId,
         // Colour(_app_instance_store->color_theme->elem_color_1) );
     }
 
@@ -79,63 +79,65 @@ void UiEditorAppStyler::timerCallback()
 
                 last_col_refresh = *target_color;
 
-                col_1->setColour(TextButton::buttonColourId,
-                                 Colour(_app_instance_store->color_theme->elem_color_1));
-                col_3->setColour(TextButton::buttonColourId,
-                                 Colour(_app_instance_store->color_theme->elem_color_3));
-                col_4->setColour(TextButton::buttonColourId,
-                                 Colour(_app_instance_store->color_theme->elem_color_4));
-                col_5->setColour(TextButton::buttonColourId,
-                                 Colour(_app_instance_store->color_theme->elem_color_5));
-                col_6->setColour(TextButton::buttonColourId,
-                                 Colour(_app_instance_store->color_theme->elem_color_6));
-                col_7->setColour(TextButton::buttonColourId,
-                                 Colour(_app_instance_store->color_theme->elem_color_7));
-                col_8->setColour(TextButton::buttonColourId,
-                                 Colour(_app_instance_store->color_theme->elem_color_8));
-                col_9->setColour(TextButton::buttonColourId,
-                                 Colour(_app_instance_store->color_theme->elem_color_9));
-                col_10->setColour(TextButton::buttonColourId,
-                                  Colour(_app_instance_store->color_theme->elem_color_10));
-                col_11->setColour(TextButton::buttonColourId,
-                                  Colour(_app_instance_store->color_theme->main_border));
-                col_12->setColour(TextButton::buttonColourId,
-                                  Colour(_app_instance_store->color_theme->main_bg));
-                col_13->setColour(TextButton::buttonColourId,
-                                  Colour(_app_instance_store->color_theme->bar_area_border));
-                col_14->setColour(TextButton::buttonColourId,
-                                  Colour(_app_instance_store->color_theme->bar_area_bg));
-                col_15->setColour(TextButton::buttonColourId,
-                                  Colour(_app_instance_store->color_theme->step_area_border));
-                col_16->setColour(TextButton::buttonColourId,
-                                  Colour(_app_instance_store->color_theme->step_area_bg));
-                col_17->setColour(TextButton::buttonColourId,
-                                  Colour(_app_instance_store->color_theme->main_step_bg));
-                col_18->setColour(TextButton::buttonColourId,
-                                  Colour(_app_instance_store->color_theme->bar_step_bg));
-                col_19->setColour(TextButton::buttonColourId,
-                                  Colour(_app_instance_store->color_theme->step_step_bg));
-                col_2->setColour(TextButton::buttonColourId,
-                                 Colour(_app_instance_store->color_theme->main_step_border));
-                col_20->setColour(TextButton::buttonColourId,
-                                  Colour(_app_instance_store->color_theme->bar_step_border));
-                col_21->setColour(TextButton::buttonColourId,
-                                  Colour(_app_instance_store->color_theme->step_step_border));
-                col_22->setColour(TextButton::buttonColourId,
-                                  Colour(_app_instance_store->color_theme->slider_knob_color));
-                col_23->setColour(TextButton::buttonColourId,
-                                  Colour(_app_instance_store->color_theme->slider_outline));
-                col_master->setColour(TextButton::buttonColourId,
-                                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                col_1->setColour(juce::TextButton::buttonColourId,
+                                 juce::Colour(_app_instance_store->color_theme->elem_color_1));
+                col_3->setColour(juce::TextButton::buttonColourId,
+                                 juce::Colour(_app_instance_store->color_theme->elem_color_3));
+                col_4->setColour(juce::TextButton::buttonColourId,
+                                 juce::Colour(_app_instance_store->color_theme->elem_color_4));
+                col_5->setColour(juce::TextButton::buttonColourId,
+                                 juce::Colour(_app_instance_store->color_theme->elem_color_5));
+                col_6->setColour(juce::TextButton::buttonColourId,
+                                 juce::Colour(_app_instance_store->color_theme->elem_color_6));
+                col_7->setColour(juce::TextButton::buttonColourId,
+                                 juce::Colour(_app_instance_store->color_theme->elem_color_7));
+                col_8->setColour(juce::TextButton::buttonColourId,
+                                 juce::Colour(_app_instance_store->color_theme->elem_color_8));
+                col_9->setColour(juce::TextButton::buttonColourId,
+                                 juce::Colour(_app_instance_store->color_theme->elem_color_9));
+                col_10->setColour(juce::TextButton::buttonColourId,
+                                  juce::Colour(_app_instance_store->color_theme->elem_color_10));
+                col_11->setColour(juce::TextButton::buttonColourId,
+                                  juce::Colour(_app_instance_store->color_theme->main_border));
+                col_12->setColour(juce::TextButton::buttonColourId,
+                                  juce::Colour(_app_instance_store->color_theme->main_bg));
+                col_13->setColour(juce::TextButton::buttonColourId,
+                                  juce::Colour(_app_instance_store->color_theme->bar_area_border));
+                col_14->setColour(juce::TextButton::buttonColourId,
+                                  juce::Colour(_app_instance_store->color_theme->bar_area_bg));
+                col_15->setColour(juce::TextButton::buttonColourId,
+                                  juce::Colour(_app_instance_store->color_theme->step_area_border));
+                col_16->setColour(juce::TextButton::buttonColourId,
+                                  juce::Colour(_app_instance_store->color_theme->step_area_bg));
+                col_17->setColour(juce::TextButton::buttonColourId,
+                                  juce::Colour(_app_instance_store->color_theme->main_step_bg));
+                col_18->setColour(juce::TextButton::buttonColourId,
+                                  juce::Colour(_app_instance_store->color_theme->bar_step_bg));
+                col_19->setColour(juce::TextButton::buttonColourId,
+                                  juce::Colour(_app_instance_store->color_theme->step_step_bg));
+                col_2->setColour(juce::TextButton::buttonColourId,
+                                 juce::Colour(_app_instance_store->color_theme->main_step_border));
+                col_20->setColour(juce::TextButton::buttonColourId,
+                                  juce::Colour(_app_instance_store->color_theme->bar_step_border));
+                col_21->setColour(juce::TextButton::buttonColourId,
+                                  juce::Colour(_app_instance_store->color_theme->step_step_border));
+                col_22->setColour(
+                    juce::TextButton::buttonColourId,
+                    juce::Colour(_app_instance_store->color_theme->slider_knob_color));
+                col_23->setColour(juce::TextButton::buttonColourId,
+                                  juce::Colour(_app_instance_store->color_theme->slider_outline));
+                col_master->setColour(
+                    juce::TextButton::buttonColourId,
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
                 if (!label_current_color->isBeingEdited())
                     label_current_color->setText(
-                        String(colour_selector->getCurrentColour().toString()),
-                        dontSendNotification);
+                        juce::String(colour_selector->getCurrentColour().toString()),
+                        juce::dontSendNotification);
 
                 if (!list->isBeingEdited())
                     list->setText(_app_instance_store->color_theme->get_color_list(),
-                                  dontSendNotification);
+                                  juce::dontSendNotification);
 
                 _app_instance_store->editor->force_repaint_all = true;
                 _app_instance_store->editor->repaint();
@@ -166,235 +168,237 @@ UiEditorAppStyler::UiEditorAppStyler(AppInstanceStore *const app_instance_store_
 {
     addAndMakeVisible(toolbar = new UiEditorToolbar(this, true, true, true));
 
-    addAndMakeVisible(colour_selector = new ColourSelector(ColourSelector::showSliders |
-                                                           ColourSelector::showColourspace));
+    addAndMakeVisible(colour_selector =
+                          new juce::ColourSelector(juce::ColourSelector::showSliders |
+                                                   juce::ColourSelector::showColourspace));
 
-    addAndMakeVisible(col_1 = new TextButton(String()));
+    addAndMakeVisible(col_1 = new juce::TextButton(juce::String()));
     col_1->setButtonText(TRANS("MUTE"));
     col_1->addListener(this);
-    col_1->setColour(TextButton::buttonColourId, Colours::green);
+    col_1->setColour(juce::TextButton::buttonColourId, juce::Colours::green);
 
-    addAndMakeVisible(col_3 = new TextButton(String()));
+    addAndMakeVisible(col_3 = new juce::TextButton(juce::String()));
     col_3->setButtonText(TRANS("SHUFFLE SKIP"));
     col_3->addListener(this);
 
-    addAndMakeVisible(col_4 = new TextButton(String()));
+    addAndMakeVisible(col_4 = new juce::TextButton(juce::String()));
     col_4->setButtonText(TRANS("EMPTY / NOT SET"));
     col_4->addListener(this);
 
-    addAndMakeVisible(col_5 = new TextButton(String()));
+    addAndMakeVisible(col_5 = new juce::TextButton(juce::String()));
     col_5->setButtonText(TRANS("RUNNING"));
     col_5->addListener(this);
 
-    addAndMakeVisible(col_6 = new TextButton(String()));
+    addAndMakeVisible(col_6 = new juce::TextButton(juce::String()));
     col_6->setButtonText(TRANS("SOLO"));
     col_6->addListener(this);
 
-    addAndMakeVisible(col_7 = new TextButton(String()));
+    addAndMakeVisible(col_7 = new juce::TextButton(juce::String()));
     col_7->setButtonText(TRANS("TRANSP. / OCTAVE"));
     col_7->addListener(this);
 
-    addAndMakeVisible(col_8 = new TextButton(String()));
+    addAndMakeVisible(col_8 = new juce::TextButton(juce::String()));
     col_8->setButtonText(TRANS("NOTE / CHORD"));
     col_8->addListener(this);
 
-    addAndMakeVisible(col_9 = new TextButton(String()));
+    addAndMakeVisible(col_9 = new juce::TextButton(juce::String()));
     col_9->setButtonText(TRANS("DURATION / REPEAT"));
     col_9->addListener(this);
 
-    addAndMakeVisible(col_10 = new TextButton(String()));
+    addAndMakeVisible(col_10 = new juce::TextButton(juce::String()));
     col_10->setButtonText(TRANS("VELOCITY / CC"));
     col_10->addListener(this);
 
-    addAndMakeVisible(col_11 = new TextButton(String()));
+    addAndMakeVisible(col_11 = new juce::TextButton(juce::String()));
     col_11->setButtonText(TRANS("GLOBAL BORDER"));
     col_11->addListener(this);
 
-    addAndMakeVisible(col_12 = new TextButton(String()));
+    addAndMakeVisible(col_12 = new juce::TextButton(juce::String()));
     col_12->setButtonText(TRANS("GLOBAL BG"));
     col_12->addListener(this);
 
-    addAndMakeVisible(col_13 = new TextButton(String()));
+    addAndMakeVisible(col_13 = new juce::TextButton(juce::String()));
     col_13->setButtonText(TRANS("BAR AREA BORDER"));
     col_13->addListener(this);
 
-    addAndMakeVisible(col_14 = new TextButton(String()));
+    addAndMakeVisible(col_14 = new juce::TextButton(juce::String()));
     col_14->setButtonText(TRANS("BAR AREA"));
     col_14->addListener(this);
 
-    addAndMakeVisible(col_15 = new TextButton(String()));
+    addAndMakeVisible(col_15 = new juce::TextButton(juce::String()));
     col_15->setButtonText(TRANS("STEP AREA BORDER"));
     col_15->addListener(this);
 
-    addAndMakeVisible(col_16 = new TextButton(String()));
+    addAndMakeVisible(col_16 = new juce::TextButton(juce::String()));
     col_16->setButtonText(TRANS("STEP AREA"));
     col_16->addListener(this);
 
-    addAndMakeVisible(label_current_color = new Label(String(), String()));
-    label_current_color->setFont(Font(15.00f, Font::plain));
-    label_current_color->setJustificationType(Justification::centred);
+    addAndMakeVisible(label_current_color = new juce::Label(juce::String(), juce::String()));
+    label_current_color->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_current_color->setJustificationType(juce::Justification::centred);
     label_current_color->setEditable(true, true, false);
-    label_current_color->setColour(Label::backgroundColourId, Colour(0xff161616));
-    label_current_color->setColour(Label::textColourId, Colours::aqua);
-    label_current_color->setColour(Label::outlineColourId, Colours::aqua);
-    label_current_color->setColour(TextEditor::textColourId, Colours::black);
-    label_current_color->setColour(TextEditor::backgroundColourId, Colour(0xffadadad));
+    label_current_color->setColour(juce::Label::backgroundColourId, juce::Colour(0xff161616));
+    label_current_color->setColour(juce::Label::textColourId, juce::Colours::aqua);
+    label_current_color->setColour(juce::Label::outlineColourId, juce::Colours::aqua);
+    label_current_color->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label_current_color->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0xffadadad));
     label_current_color->addListener(this);
 
-    addAndMakeVisible(copy = new TextButton(String()));
+    addAndMakeVisible(copy = new juce::TextButton(juce::String()));
     copy->setButtonText(TRANS("COPY"));
     copy->addListener(this);
 
-    addAndMakeVisible(past = new TextButton(String()));
+    addAndMakeVisible(past = new juce::TextButton(juce::String()));
     past->setButtonText(TRANS("PASTE"));
     past->addListener(this);
 
-    addAndMakeVisible(col_17 = new TextButton(String()));
+    addAndMakeVisible(col_17 = new juce::TextButton(juce::String()));
     col_17->setButtonText(TRANS("GLOBAL BUTTONS"));
     col_17->addListener(this);
 
-    addAndMakeVisible(col_18 = new TextButton(String()));
+    addAndMakeVisible(col_18 = new juce::TextButton(juce::String()));
     col_18->setButtonText(TRANS("BAR AREA BUTTONS"));
     col_18->addListener(this);
 
-    addAndMakeVisible(col_19 = new TextButton(String()));
+    addAndMakeVisible(col_19 = new juce::TextButton(juce::String()));
     col_19->setButtonText(TRANS("STEP AREA BUTTON"));
     col_19->addListener(this);
 
-    addAndMakeVisible(rand = new TextButton(String()));
+    addAndMakeVisible(rand = new juce::TextButton(juce::String()));
     rand->setButtonText(TRANS("RAND"));
     rand->addListener(this);
 
-    addAndMakeVisible(list = new Label(String(), String()));
-    list->setFont(Font(9.30f, Font::plain));
-    list->setJustificationType(Justification::topLeft);
+    addAndMakeVisible(list = new juce::Label(juce::String(), juce::String()));
+    list->setFont(juce::Font(9.30f, juce::Font::plain));
+    list->setJustificationType(juce::Justification::topLeft);
     list->setEditable(true, true, false);
-    list->setColour(Label::backgroundColourId, Colour(0xff161616));
-    list->setColour(Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    list->setColour(Label::outlineColourId,
-                    Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    list->setColour(TextEditor::textColourId, Colours::black);
-    list->setColour(TextEditor::backgroundColourId, Colour(0xffadadad));
+    list->setColour(juce::Label::backgroundColourId, juce::Colour(0xff161616));
+    list->setColour(juce::Label::textColourId,
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    list->setColour(juce::Label::outlineColourId,
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    list->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    list->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0xffadadad));
     list->addListener(this);
 
-    addAndMakeVisible(col_2 = new TextButton(String()));
+    addAndMakeVisible(col_2 = new juce::TextButton(juce::String()));
     col_2->setButtonText(TRANS("GLOBAL BTN BORDER"));
     col_2->addListener(this);
 
-    addAndMakeVisible(col_20 = new TextButton(String()));
+    addAndMakeVisible(col_20 = new juce::TextButton(juce::String()));
     col_20->setButtonText(TRANS("BAR BTN BORDER"));
     col_20->addListener(this);
 
-    addAndMakeVisible(col_21 = new TextButton(String()));
+    addAndMakeVisible(col_21 = new juce::TextButton(juce::String()));
     col_21->setButtonText(TRANS("STEP BTN BORDER"));
     col_21->addListener(this);
 
-    addAndMakeVisible(col_22 = new TextButton(String()));
+    addAndMakeVisible(col_22 = new juce::TextButton(juce::String()));
     col_22->setButtonText(TRANS("SLDER KNOB (OVERALL)"));
     col_22->addListener(this);
 
-    addAndMakeVisible(col_23 = new TextButton(String()));
+    addAndMakeVisible(col_23 = new juce::TextButton(juce::String()));
     col_23->setButtonText(TRANS("OUTLINE (OVERALL)"));
     col_23->addListener(this);
 
-    addAndMakeVisible(style_1 = new TextButton(String()));
+    addAndMakeVisible(style_1 = new juce::TextButton(juce::String()));
     style_1->setButtonText(TRANS("PRE 1"));
     style_1->addListener(this);
-    style_1->setColour(TextButton::buttonColourId, Colour(0xff080d0f));
-    style_1->setColour(TextButton::textColourOffId, Colour(0xff9b9dc8));
+    style_1->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff080d0f));
+    style_1->setColour(juce::TextButton::textColourOffId, juce::Colour(0xff9b9dc8));
 
-    addAndMakeVisible(style_3 = new TextButton(String()));
+    addAndMakeVisible(style_3 = new juce::TextButton(juce::String()));
     style_3->setButtonText(TRANS("PRE 3"));
     style_3->addListener(this);
-    style_3->setColour(TextButton::buttonColourId, Colour(0xff2b2b2b));
-    style_3->setColour(TextButton::textColourOffId, Colour(0xff3edde6));
+    style_3->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff2b2b2b));
+    style_3->setColour(juce::TextButton::textColourOffId, juce::Colour(0xff3edde6));
 
-    addAndMakeVisible(style_4 = new TextButton(String()));
+    addAndMakeVisible(style_4 = new juce::TextButton(juce::String()));
     style_4->setButtonText(TRANS("PRE 5"));
     style_4->addListener(this);
-    style_4->setColour(TextButton::buttonColourId, Colour(0xff595959));
-    style_4->setColour(TextButton::textColourOffId, Colour(0xffc9c9c9));
+    style_4->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff595959));
+    style_4->setColour(juce::TextButton::textColourOffId, juce::Colour(0xffc9c9c9));
 
-    addAndMakeVisible(style_5 = new TextButton(String()));
+    addAndMakeVisible(style_5 = new juce::TextButton(juce::String()));
     style_5->setButtonText(TRANS("PRE 4"));
     style_5->addListener(this);
-    style_5->setColour(TextButton::buttonColourId, Colour(0xff333333));
-    style_5->setColour(TextButton::textColourOffId, Colour(0xfffac48f));
+    style_5->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff333333));
+    style_5->setColour(juce::TextButton::textColourOffId, juce::Colour(0xfffac48f));
 
-    addAndMakeVisible(button_info = new TextButton(String()));
+    addAndMakeVisible(button_info = new juce::TextButton(juce::String()));
     button_info->setButtonText(TRANS("?"));
     button_info->addListener(this);
 
-    addAndMakeVisible(col_master = new TextButton(String()));
+    addAndMakeVisible(col_master = new juce::TextButton(juce::String()));
     col_master->setButtonText(TRANS("INFO (FONTS & BORDERS)"));
     col_master->addListener(this);
 
-    addAndMakeVisible(reset = new TextButton(String()));
+    addAndMakeVisible(reset = new juce::TextButton(juce::String()));
     reset->setButtonText(TRANS("RESET"));
     reset->addListener(this);
-    reset->setColour(TextButton::buttonColourId, Colour(0xff2e2017));
-    reset->setColour(TextButton::textColourOffId, Colour(0xfff98120));
+    reset->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff2e2017));
+    reset->setColour(juce::TextButton::textColourOffId, juce::Colour(0xfff98120));
 
-    addAndMakeVisible(rand2 = new TextButton(String()));
+    addAndMakeVisible(rand2 = new juce::TextButton(juce::String()));
     rand2->setButtonText(TRANS("SET AS APP DEFAULT"));
     rand2->addListener(this);
 
-    addAndMakeVisible(style_6 = new TextButton(String()));
+    addAndMakeVisible(style_6 = new juce::TextButton(juce::String()));
     style_6->setButtonText(TRANS("PRE 2"));
     style_6->addListener(this);
-    style_6->setColour(TextButton::buttonColourId, Colour(0xff2d2321));
-    style_6->setColour(TextButton::textColourOffId, Colour(0xffffc18b));
+    style_6->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff2d2321));
+    style_6->setColour(juce::TextButton::textColourOffId, juce::Colour(0xffffc18b));
 
     //[UserPreSize]
 
-    col_1->setColour(TextButton::buttonColourId,
-                     Colour(_app_instance_store->color_theme->elem_color_1));
-    col_4->setColour(TextButton::buttonColourId,
-                     Colour(_app_instance_store->color_theme->elem_color_4));
-    col_5->setColour(TextButton::buttonColourId,
-                     Colour(_app_instance_store->color_theme->elem_color_5));
-    col_6->setColour(TextButton::buttonColourId,
-                     Colour(_app_instance_store->color_theme->elem_color_6));
-    col_7->setColour(TextButton::buttonColourId,
-                     Colour(_app_instance_store->color_theme->elem_color_7));
-    col_8->setColour(TextButton::buttonColourId,
-                     Colour(_app_instance_store->color_theme->elem_color_8));
-    col_9->setColour(TextButton::buttonColourId,
-                     Colour(_app_instance_store->color_theme->elem_color_9));
-    col_10->setColour(TextButton::buttonColourId,
-                      Colour(_app_instance_store->color_theme->elem_color_10));
-    col_11->setColour(TextButton::buttonColourId,
-                      Colour(_app_instance_store->color_theme->main_border));
-    col_12->setColour(TextButton::buttonColourId,
-                      Colour(_app_instance_store->color_theme->main_bg));
-    col_13->setColour(TextButton::buttonColourId,
-                      Colour(_app_instance_store->color_theme->bar_area_border));
-    col_14->setColour(TextButton::buttonColourId,
-                      Colour(_app_instance_store->color_theme->bar_area_bg));
-    col_15->setColour(TextButton::buttonColourId,
-                      Colour(_app_instance_store->color_theme->step_area_border));
-    col_16->setColour(TextButton::buttonColourId,
-                      Colour(_app_instance_store->color_theme->step_area_bg));
-    col_17->setColour(TextButton::buttonColourId,
-                      Colour(_app_instance_store->color_theme->main_step_bg));
-    col_18->setColour(TextButton::buttonColourId,
-                      Colour(_app_instance_store->color_theme->bar_step_bg));
-    col_19->setColour(TextButton::buttonColourId,
-                      Colour(_app_instance_store->color_theme->step_step_bg));
-    col_2->setColour(TextButton::buttonColourId,
-                     Colour(_app_instance_store->color_theme->main_step_border));
-    col_20->setColour(TextButton::buttonColourId,
-                      Colour(_app_instance_store->color_theme->bar_step_border));
-    col_21->setColour(TextButton::buttonColourId,
-                      Colour(_app_instance_store->color_theme->step_step_border));
-    col_22->setColour(TextButton::buttonColourId,
-                      Colour(_app_instance_store->color_theme->slider_knob_color));
-    col_23->setColour(TextButton::buttonColourId,
-                      Colour(_app_instance_store->color_theme->slider_outline));
-    col_master->setColour(TextButton::buttonColourId,
-                          Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    col_1->setColour(juce::TextButton::buttonColourId,
+                     juce::Colour(_app_instance_store->color_theme->elem_color_1));
+    col_4->setColour(juce::TextButton::buttonColourId,
+                     juce::Colour(_app_instance_store->color_theme->elem_color_4));
+    col_5->setColour(juce::TextButton::buttonColourId,
+                     juce::Colour(_app_instance_store->color_theme->elem_color_5));
+    col_6->setColour(juce::TextButton::buttonColourId,
+                     juce::Colour(_app_instance_store->color_theme->elem_color_6));
+    col_7->setColour(juce::TextButton::buttonColourId,
+                     juce::Colour(_app_instance_store->color_theme->elem_color_7));
+    col_8->setColour(juce::TextButton::buttonColourId,
+                     juce::Colour(_app_instance_store->color_theme->elem_color_8));
+    col_9->setColour(juce::TextButton::buttonColourId,
+                     juce::Colour(_app_instance_store->color_theme->elem_color_9));
+    col_10->setColour(juce::TextButton::buttonColourId,
+                      juce::Colour(_app_instance_store->color_theme->elem_color_10));
+    col_11->setColour(juce::TextButton::buttonColourId,
+                      juce::Colour(_app_instance_store->color_theme->main_border));
+    col_12->setColour(juce::TextButton::buttonColourId,
+                      juce::Colour(_app_instance_store->color_theme->main_bg));
+    col_13->setColour(juce::TextButton::buttonColourId,
+                      juce::Colour(_app_instance_store->color_theme->bar_area_border));
+    col_14->setColour(juce::TextButton::buttonColourId,
+                      juce::Colour(_app_instance_store->color_theme->bar_area_bg));
+    col_15->setColour(juce::TextButton::buttonColourId,
+                      juce::Colour(_app_instance_store->color_theme->step_area_border));
+    col_16->setColour(juce::TextButton::buttonColourId,
+                      juce::Colour(_app_instance_store->color_theme->step_area_bg));
+    col_17->setColour(juce::TextButton::buttonColourId,
+                      juce::Colour(_app_instance_store->color_theme->main_step_bg));
+    col_18->setColour(juce::TextButton::buttonColourId,
+                      juce::Colour(_app_instance_store->color_theme->bar_step_bg));
+    col_19->setColour(juce::TextButton::buttonColourId,
+                      juce::Colour(_app_instance_store->color_theme->step_step_bg));
+    col_2->setColour(juce::TextButton::buttonColourId,
+                     juce::Colour(_app_instance_store->color_theme->main_step_border));
+    col_20->setColour(juce::TextButton::buttonColourId,
+                      juce::Colour(_app_instance_store->color_theme->bar_step_border));
+    col_21->setColour(juce::TextButton::buttonColourId,
+                      juce::Colour(_app_instance_store->color_theme->step_step_border));
+    col_22->setColour(juce::TextButton::buttonColourId,
+                      juce::Colour(_app_instance_store->color_theme->slider_knob_color));
+    col_23->setColour(juce::TextButton::buttonColourId,
+                      juce::Colour(_app_instance_store->color_theme->slider_outline));
+    col_master->setColour(juce::TextButton::buttonColourId,
+                          juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    colour_selector->setCurrentColour(Colour(_app_instance_store->color_theme->elem_color_1));
+    colour_selector->setCurrentColour(juce::Colour(_app_instance_store->color_theme->elem_color_1));
     target_color = &_app_instance_store->color_theme->elem_color_1;
 
     last_col_refresh = 0;
@@ -460,26 +464,26 @@ UiEditorAppStyler::~UiEditorAppStyler()
 }
 
 //==============================================================================
-void UiEditorAppStyler::paint(Graphics &g)
+void UiEditorAppStyler::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //
     //[/UserPrePaint]
 
-    g.fillAll(Colours::black);
+    g.fillAll(juce::Colours::black);
 
-    g.setColour(Colour(0xff161616));
+    g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.fillRoundedRectangle(20.0f, 418.0f, static_cast<float>(proportionOfWidth(0.8644f)), 1.0f,
                            10.000f);
 
     //[UserPaint] Add your own custom painting code here..
-    ResizableWindow::moved();
+    juce::ResizableWindow::moved();
     //[/UserPaint]
 }
 
@@ -567,11 +571,11 @@ void UiEditorAppStyler::resized()
     style_6->setBounds(proportionOfWidth(0.1186f), proportionOfHeight(0.8958f),
                        proportionOfWidth(0.0678f), proportionOfHeight(0.0625f));
     //[UserResized] Add your own custom resize handling here..
-    ResizableWindow::resized();
+    juce::ResizableWindow::resized();
     //[/UserResized]
 }
 
-void UiEditorAppStyler::buttonClicked(Button *buttonThatWasClicked)
+void UiEditorAppStyler::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
 
@@ -670,13 +674,13 @@ void UiEditorAppStyler::buttonClicked(Button *buttonThatWasClicked)
     else if (buttonThatWasClicked == copy)
     {
         //[UserButtonCode_copy] -- add your button handler code here..
-        SystemClipboard::copyTextToClipboard(list->getText());
+        juce::SystemClipboard::copyTextToClipboard(list->getText());
         //[/UserButtonCode_copy]
     }
     else if (buttonThatWasClicked == past)
     {
         //[UserButtonCode_past] -- add your button handler code here..
-        _app_instance_store->color_theme->set_theme(SystemClipboard::getTextFromClipboard());
+        _app_instance_store->color_theme->set_theme(juce::SystemClipboard::getTextFromClipboard());
 
         timerCallback();
         //[/UserButtonCode_past]
@@ -703,12 +707,12 @@ void UiEditorAppStyler::buttonClicked(Button *buttonThatWasClicked)
     {
         //[UserButtonCode_rand] -- add your button handler code here..
         float col;
-        Array<int> already_changed_colours;
+        juce::Array<int> already_changed_colours;
         int to_index = _app_instance_store->color_theme->color_list.size();
-        Range<int> range(0, to_index);
+        juce::Range<int> range(0, to_index);
         bool some_colours_left = true;
         int i;
-        Random rand(Time::currentTimeMillis());
+        juce::Random rand(juce::Time::currentTimeMillis());
         while (some_colours_left)
         {
             // FIND NEXT UNCHANGED COLOUR RANDOMLY
@@ -728,7 +732,7 @@ void UiEditorAppStyler::buttonClicked(Button *buttonThatWasClicked)
             col = rand.nextFloat();
 
             *_app_instance_store->color_theme->color_list.getUnchecked(i) =
-                Colour(col, col, rand.nextFloat(), 1.f).getARGB();
+                juce::Colour(col, col, rand.nextFloat(), 1.f).getARGB();
 
             if (already_changed_colours.size() == to_index - 1)
                 some_colours_left = false;
@@ -881,11 +885,11 @@ void UiEditorAppStyler::buttonClicked(Button *buttonThatWasClicked)
     }
 
     _app_instance_store->editor_config.current_editable_colour = target_color;
-    colour_selector->setCurrentColour(Colour(*target_color));
+    colour_selector->setCurrentColour(juce::Colour(*target_color));
     //[/UserbuttonClicked_Post]
 }
 
-void UiEditorAppStyler::labelTextChanged(Label *labelThatHasChanged)
+void UiEditorAppStyler::labelTextChanged(juce::Label *labelThatHasChanged)
 {
     //[UserlabelTextChanged_Pre]
     //[/UserlabelTextChanged_Pre]
@@ -894,7 +898,7 @@ void UiEditorAppStyler::labelTextChanged(Label *labelThatHasChanged)
     {
         //[UserLabelCode_label_current_color] -- add your label text handling code here..
         colour_selector->setCurrentColour(
-            Colour::fromString(String("0xFF") + label_current_color->getText()));
+            juce::Colour::fromString(juce::String("0xFF") + label_current_color->getText()));
         //[/UserLabelCode_label_current_color]
     }
     else if (labelThatHasChanged == list)

@@ -23,6 +23,7 @@
 //[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
+
 //[/Headers]
 
 //==============================================================================
@@ -33,7 +34,7 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiNotificationAnimation : public Component, public Timer
+class UiNotificationAnimation : public juce::Component, public juce::Timer
 {
   public:
     //==============================================================================
@@ -45,17 +46,17 @@ class UiNotificationAnimation : public Component, public Timer
   private:
     int alpha;
     bool is_rising;
-    Colour root_color;
+    juce::Colour root_color;
     void timerCallback();
 
   public:
     void set_text_and_run(const char *text_, int state_ /* 0=fail,1=ok,2=neutral*/);
-    void set_text_and_run(String &text_, int state_ /* 0=fail,1=ok,2=neutral*/);
+    void set_text_and_run(juce::String &text_, int state_ /* 0=fail,1=ok,2=neutral*/);
 
   private:
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
 
   private:
@@ -63,7 +64,7 @@ class UiNotificationAnimation : public Component, public Timer
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Label> text;
+    juce::ScopedPointer<juce::Label> text;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiNotificationAnimation)

@@ -92,7 +92,7 @@ enum LAUNCHPAD_ROWS
     SCROLL_OFFSET_PAGE_2 = 7
 };
 
-static inline uint8 get_launchpad_row_0_color(bool is_running_step_)
+static inline std::uint8_t get_launchpad_row_0_color(bool is_running_step_)
 {
     if (is_running_step_)
         return LAUNCHPAD_RED_FULL;
@@ -100,7 +100,7 @@ static inline uint8 get_launchpad_row_0_color(bool is_running_step_)
     return LAUNCHPAD_OFF;
 }
 
-static inline uint8 get_launchpad_steps_color(bool is_mute_)
+static inline std::uint8_t get_launchpad_steps_color(bool is_mute_)
 {
     if (is_mute_)
         return LAUNCHPAD_OFF;
@@ -108,7 +108,7 @@ static inline uint8 get_launchpad_steps_color(bool is_mute_)
     return LAUNCHPAD_YELLO_FULL;
 }
 
-static inline uint8 get_launchpad_running_step_color(bool is_running_)
+static inline std::uint8_t get_launchpad_running_step_color(bool is_running_)
 {
     if (is_running_)
         return LAUNCHPAD_RED_FULL;
@@ -116,7 +116,7 @@ static inline uint8 get_launchpad_running_step_color(bool is_running_)
     return LAUNCHPAD_OFF;
 }
 
-static inline uint8 get_launchpad_running_bar_color(bool is_running_)
+static inline std::uint8_t get_launchpad_running_bar_color(bool is_running_)
 {
     if (is_running_)
         return LAUNCHPAD_RED_FULL;
@@ -124,7 +124,7 @@ static inline uint8 get_launchpad_running_bar_color(bool is_running_)
     return LAUNCHPAD_OFF;
 }
 
-static inline uint8 get_launchpad_solo_bar_color(bool is_running_)
+static inline std::uint8_t get_launchpad_solo_bar_color(bool is_running_)
 {
     if (is_running_)
         return LAUNCHPAD_YELLO_FULL;
@@ -132,7 +132,7 @@ static inline uint8 get_launchpad_solo_bar_color(bool is_running_)
     return LAUNCHPAD_OFF;
 }
 
-static inline uint8 get_launchpad_selected_bar_color(bool is_selected_)
+static inline std::uint8_t get_launchpad_selected_bar_color(bool is_selected_)
 {
     if (is_selected_)
         return LAUNCHPAD_AMBER_FULL;
@@ -140,7 +140,7 @@ static inline uint8 get_launchpad_selected_bar_color(bool is_selected_)
     return LAUNCHPAD_OFF;
 }
 
-static inline uint8 get_launchpad_bar_chord_color_up(const Bar &bar_)
+static inline std::uint8_t get_launchpad_bar_chord_color_up(const Bar &bar_)
 {
     enum
     {
@@ -172,7 +172,7 @@ static inline uint8 get_launchpad_bar_chord_color_up(const Bar &bar_)
     }
 }
 
-static inline uint8 get_launchpad_bar_chord_color_down(const Bar &bar_)
+static inline std::uint8_t get_launchpad_bar_chord_color_down(const Bar &bar_)
 {
     enum
     {
@@ -204,7 +204,7 @@ static inline uint8 get_launchpad_bar_chord_color_down(const Bar &bar_)
     }
 }
 
-static inline uint8 get_launchpad_bar_octave_color_up(const Bar &bar_)
+static inline std::uint8_t get_launchpad_bar_octave_color_up(const Bar &bar_)
 {
     enum
     {
@@ -233,7 +233,7 @@ static inline uint8 get_launchpad_bar_octave_color_up(const Bar &bar_)
     }
 }
 
-static inline uint8 get_launchpad_bar_octave_color_down(const Bar &bar_)
+static inline std::uint8_t get_launchpad_bar_octave_color_down(const Bar &bar_)
 {
     enum
     {
@@ -262,7 +262,7 @@ static inline uint8 get_launchpad_bar_octave_color_down(const Bar &bar_)
     }
 }
 
-static inline uint8 get_launchpad_duration_color(uint8 duration_)
+static inline std::uint8_t get_launchpad_duration_color(std::uint8_t duration_)
 {
     if (duration_ <= 4)
         return LAUNCHPAD_RED_LOW;
@@ -273,7 +273,7 @@ static inline uint8 get_launchpad_duration_color(uint8 duration_)
     return LAUNCHPAD_RED_FULL;
 }
 
-static inline uint8 get_launchpad_velocity_color(uint8 velocity_)
+static inline std::uint8_t get_launchpad_velocity_color(std::uint8_t velocity_)
 {
     if (velocity_ <= 50)
         return LAUNCHPAD_AMBER_LOW;
@@ -284,7 +284,7 @@ static inline uint8 get_launchpad_velocity_color(uint8 velocity_)
     return LAUNCHPAD_AMBER_FULL;
 }
 
-static inline uint8 get_launchpad_bar_repeat_color(const Bar &bar_)
+static inline std::uint8_t get_launchpad_bar_repeat_color(const Bar &bar_)
 {
     switch (bar_.repeats)
     {
@@ -309,24 +309,33 @@ static inline uint8 get_launchpad_bar_repeat_color(const Bar &bar_)
     }
 }
 
-static inline uint8 get_mode_color() { return LAUNCHPAD_AMBER_FULL; }
+static inline std::uint8_t get_mode_color() { return LAUNCHPAD_AMBER_FULL; }
 
-static inline uint8 get_pressed_option_color() { return LAUNCHPAD_AMBER_FULL; }
+static inline std::uint8_t get_pressed_option_color() { return LAUNCHPAD_AMBER_FULL; }
 
-static inline uint8 get_mode_arrow_color() { return LAUNCHPAD_AMBER_LOW; }
+static inline std::uint8_t get_mode_arrow_color() { return LAUNCHPAD_AMBER_LOW; }
 
-static inline uint8 get_master_octave_up_color(const Pattern &) { return LAUNCHPAD_AMBER_MID; }
-static inline uint8 get_master_octave_down_color(const Pattern &) { return LAUNCHPAD_AMBER_LOW; }
+static inline std::uint8_t get_master_octave_up_color(const Pattern &)
+{
+    return LAUNCHPAD_AMBER_MID;
+}
+static inline std::uint8_t get_master_octave_down_color(const Pattern &)
+{
+    return LAUNCHPAD_AMBER_LOW;
+}
 
-static inline uint8 get_master_note_up_color(const Pattern &) { return LAUNCHPAD_RED_MID; }
-static inline uint8 get_master_note_down_color(const Pattern &) { return LAUNCHPAD_RED_LOW; }
-static inline uint8 get_master_chord_type_up_color(const Pattern &) { return LAUNCHPAD_GREEN_MID; }
-static inline uint8 get_master_chord_type_down_color(const Pattern &)
+static inline std::uint8_t get_master_note_up_color(const Pattern &) { return LAUNCHPAD_RED_MID; }
+static inline std::uint8_t get_master_note_down_color(const Pattern &) { return LAUNCHPAD_RED_LOW; }
+static inline std::uint8_t get_master_chord_type_up_color(const Pattern &)
+{
+    return LAUNCHPAD_GREEN_MID;
+}
+static inline std::uint8_t get_master_chord_type_down_color(const Pattern &)
 {
     return LAUNCHPAD_GREEN_LOW;
 }
 
-static inline uint8 get_speed_up_color(const ProcessorUserData &processor_data_)
+static inline std::uint8_t get_speed_up_color(const ProcessorUserData &processor_data_)
 {
     if (GstepAudioProcessor::ProcessorUserData::appdeff_t::SPEED_HALF == processor_data_.speed)
         return LAUNCHPAD_RED_LOW;
@@ -335,7 +344,7 @@ static inline uint8 get_speed_up_color(const ProcessorUserData &processor_data_)
     // DOUBLE
     return LAUNCHPAD_RED_FULL;
 }
-static inline uint8 get_speed_down_color(const ProcessorUserData &processor_data_)
+static inline std::uint8_t get_speed_down_color(const ProcessorUserData &processor_data_)
 {
     if (GstepAudioProcessor::ProcessorUserData::appdeff_t::SPEED_HALF == processor_data_.speed)
         return LAUNCHPAD_RED_FULL;
@@ -345,7 +354,7 @@ static inline uint8 get_speed_down_color(const ProcessorUserData &processor_data
     return LAUNCHPAD_RED_LOW;
 }
 
-static inline uint8 get_scroll_color(uint8 scoll_offset_)
+static inline std::uint8_t get_scroll_color(std::uint8_t scoll_offset_)
 {
     if (scoll_offset_ > SCROLL_OFFSET_PAGE_1)
         return LAUNCHPAD_GREEN_FULL;
@@ -361,7 +370,7 @@ static inline uint8 get_scroll_color(uint8 scoll_offset_)
 
 //// CTORS
 
-Launchpad::Launchpad(AppInstanceStore *const app_instance_store_, uint8 launchpad_id_)
+Launchpad::Launchpad(AppInstanceStore *const app_instance_store_, std::uint8_t launchpad_id_)
     : _app_instance_store(app_instance_store_),
 
       id(launchpad_id_),
@@ -373,10 +382,10 @@ Launchpad::Launchpad(AppInstanceStore *const app_instance_store_, uint8 launchpa
     BOOT(Launchpad)
 
     // MATRIX BUTTONS
-    for (uint8 row_id = 0; row_id != SUM_HARD_BUTTON_ROWS; ++row_id)
+    for (std::uint8_t row_id = 0; row_id != SUM_HARD_BUTTON_ROWS; ++row_id)
     {
-        Array<Button> row;
-        for (uint8 step_id = 0; step_id != SUM_HARD_BUTTON_STEPS; ++step_id)
+        juce::Array<Button> row;
+        for (std::uint8_t step_id = 0; step_id != SUM_HARD_BUTTON_STEPS; ++step_id)
         {
             row.add(Button(step_id + row_id * 16, -1));
         }
@@ -387,7 +396,7 @@ Launchpad::Launchpad(AppInstanceStore *const app_instance_store_, uint8 launchpa
     }
 
     // OPTION BUTTONS
-    for (uint8 step_id = 0; step_id != SUM_HARD_BUTTON_STEPS; ++step_id)
+    for (std::uint8_t step_id = 0; step_id != SUM_HARD_BUTTON_STEPS; ++step_id)
     {
         _buttons_right.add(ButtonRight(8 + step_id * 16, -1));
     }
@@ -399,30 +408,34 @@ Launchpad::Launchpad(AppInstanceStore *const app_instance_store_, uint8 launchpa
 
 //// CTORS
 
-Launchpad::Button::Button(uint8 hard_button_note_number_, int8)
+Launchpad::Button::Button(std::uint8_t hard_button_note_number_, std::int8_t)
     : cache_launchpad_controller_value(-1), // UNKNOWN
-      message(MidiMessage::noteOn(1, hard_button_note_number_, uint8(0))), is_pressed(false)
+      message(juce::MidiMessage::noteOn(1, hard_button_note_number_, std::uint8_t(0))),
+      is_pressed(false)
 {
 }
 
 // ********************************************************************************************
 
-Launchpad::ButtonRight::ButtonRight(uint8 hard_button_note_number_, int8 controller_value_)
+Launchpad::ButtonRight::ButtonRight(std::uint8_t hard_button_note_number_,
+                                    std::int8_t controller_value_)
     : Button(hard_button_note_number_, controller_value_), is_pressed(false)
 {
 }
 
 // ********************************************************************************************
 
-Launchpad::ButtonTop::ButtonTop(uint8 hard_button_note_number_, int8 controller_value_)
+Launchpad::ButtonTop::ButtonTop(std::uint8_t hard_button_note_number_,
+                                std::int8_t controller_value_)
     : Button(hard_button_note_number_, controller_value_)
 {
-    message = MidiMessage::controllerEvent(1, hard_button_note_number_, int(controller_value_));
+    message =
+        juce::MidiMessage::controllerEvent(1, hard_button_note_number_, int(controller_value_));
 }
 
 //// AND THE IMPL
 
-static inline uint8 get_releative_step_id(uint8 mode_, uint8 hard_step_id_)
+static inline std::uint8_t get_releative_step_id(std::uint8_t mode_, std::uint8_t hard_step_id_)
 {
     switch (mode_)
     {
@@ -437,9 +450,10 @@ static inline uint8 get_releative_step_id(uint8 mode_, uint8 hard_step_id_)
     }
 }
 
-void Launchpad::process_colormessage_for_button(uint8 color_, uint8 channel_,
+void Launchpad::process_colormessage_for_button(std::uint8_t color_, std::uint8_t channel_,
                                                 Launchpad::Button &button_,
-                                                Array<MidiMessage *> &messages_, bool force_)
+                                                juce::Array<juce::MidiMessage *> &messages_,
+                                                bool force_)
 {
     if (color_ != button_.cache_launchpad_controller_value)
     {
@@ -451,26 +465,27 @@ void Launchpad::process_colormessage_for_button(uint8 color_, uint8 channel_,
     }
 }
 
-void Launchpad::process_colormessage_CC_for_button(uint8 color_, uint8 channel_,
+void Launchpad::process_colormessage_CC_for_button(std::uint8_t color_, std::uint8_t channel_,
                                                    Launchpad::Button &button_,
-                                                   Array<MidiMessage *> &messages_, bool force_)
+                                                   juce::Array<juce::MidiMessage *> &messages_,
+                                                   bool force_)
 {
     if (color_ != button_.cache_launchpad_controller_value)
     {
-        button_.message = MidiMessage::controllerEvent(
+        button_.message = juce::MidiMessage::controllerEvent(
             channel_out, button_.message.getControllerNumber(), color_);
         button_.cache_launchpad_controller_value = color_;
         messages_.add(&button_.message);
     }
 }
 
-void Launchpad::get_updates(Array<MidiMessage *> &messages_)
+void Launchpad::get_updates(juce::Array<juce::MidiMessage *> &messages_)
 {
     const Bar &selected_bar =
         _app_instance_store->pattern.bar(_app_instance_store->editor_config.selected_bar_id);
     const Pattern &pattern = _app_instance_store->pattern;
 
-    for (uint8 hard_row_id = 0; hard_row_id != SUM_HARD_BUTTON_ROWS; ++hard_row_id)
+    for (std::uint8_t hard_row_id = 0; hard_row_id != SUM_HARD_BUTTON_ROWS; ++hard_row_id)
     {
         // OPTION BUTTONS TOP
         {
@@ -646,22 +661,23 @@ void Launchpad::get_updates(Array<MidiMessage *> &messages_)
 
         // MATRIX BUTTONS
         {
-            for (uint8 hard_step_id = 0; hard_step_id != SUM_HARD_BUTTON_STEPS; ++hard_step_id)
+            for (std::uint8_t hard_step_id = 0; hard_step_id != SUM_HARD_BUTTON_STEPS;
+                 ++hard_step_id)
             {
                 Button &button = _buttons.getReference(hard_row_id).getReference(hard_step_id);
 
-                const uint8 relative_row = hard_row_id + _current_scroll_offset;
-                const uint8 releative_step_id_ = get_releative_step_id(mode, hard_step_id);
+                const std::uint8_t relative_row = hard_row_id + _current_scroll_offset;
+                const std::uint8_t releative_step_id_ = get_releative_step_id(mode, hard_step_id);
 
                 // on session we handle the bar from 1 to 8 only on user_2 we take 9 to 16
-                const uint8 session_mode_bar_id =
+                const std::uint8_t session_mode_bar_id =
                     (mode == LAUNCHPAD_MODE_SESSION) ? hard_step_id : releative_step_id_;
 
                 if (hard_row_id == FIXED_LAUNCHPAD_ROW_STEP_RUNLIGHT)
                 {
                     // RUN LIGHT STEP
                     // TODO move to function start
-                    uint8 running_step_id =
+                    std::uint8_t running_step_id =
                         _app_instance_store->sequencer.get_running_step_id(0); // TODO, for groups?
                     if (releative_step_id_ == running_step_id)
                         process_colormessage_for_button(get_launchpad_running_step_color(true),
@@ -700,8 +716,9 @@ void Launchpad::get_updates(Array<MidiMessage *> &messages_)
                 // STEP BUTTONS ( every second step on session )
                 else if (relative_row <= RELEATIVE_LAUNCHPAD_END_ROW_STEPS)
                 {
-                    uint8 barstring_id = relative_row - 1; // remove simply the step light row
-                    uint8 current_step_color = get_launchpad_steps_color(
+                    std::uint8_t barstring_id =
+                        relative_row - 1; // remove simply the step light row
+                    std::uint8_t current_step_color = get_launchpad_steps_color(
                         selected_bar.barstring(barstring_id).step(releative_step_id_).is_mute);
                     process_colormessage_for_button(current_step_color, channel_out, button,
                                                     messages_);
@@ -710,7 +727,7 @@ void Launchpad::get_updates(Array<MidiMessage *> &messages_)
                 else if (relative_row == RELEATIVE_LAUNCHPAD_ROW_BAR_CHORD_UP)
                 {
                     Bar &bar = _app_instance_store->pattern.bar(session_mode_bar_id);
-                    uint8 current_chord_up_color = get_launchpad_bar_chord_color_up(bar);
+                    std::uint8_t current_chord_up_color = get_launchpad_bar_chord_color_up(bar);
                     process_colormessage_for_button(current_chord_up_color, channel_out, button,
                                                     messages_);
                 }
@@ -718,7 +735,7 @@ void Launchpad::get_updates(Array<MidiMessage *> &messages_)
                 else if (relative_row == RELEATIVE_LAUNCHPAD_ROW_BAR_CHORD_DOWN)
                 {
                     Bar &bar = _app_instance_store->pattern.bar(session_mode_bar_id);
-                    uint8 current_chord_down_color = get_launchpad_bar_chord_color_down(bar);
+                    std::uint8_t current_chord_down_color = get_launchpad_bar_chord_color_down(bar);
                     process_colormessage_for_button(current_chord_down_color, channel_out, button,
                                                     messages_);
                 }
@@ -726,7 +743,7 @@ void Launchpad::get_updates(Array<MidiMessage *> &messages_)
                 else if (relative_row == RELEATIVE_LAUNCHPAD_ROW_BAR_OCTAVE_UP)
                 {
                     Bar &bar = _app_instance_store->pattern.bar(session_mode_bar_id);
-                    uint8 current_chord_up_color = get_launchpad_bar_octave_color_up(bar);
+                    std::uint8_t current_chord_up_color = get_launchpad_bar_octave_color_up(bar);
                     process_colormessage_for_button(current_chord_up_color, channel_out, button,
                                                     messages_);
                 }
@@ -734,7 +751,8 @@ void Launchpad::get_updates(Array<MidiMessage *> &messages_)
                 else if (relative_row == RELEATIVE_LAUNCHPAD_ROW_BAR_OCTAVE_DOWN)
                 {
                     Bar &bar = _app_instance_store->pattern.bar(session_mode_bar_id);
-                    uint8 current_chord_down_color = get_launchpad_bar_octave_color_down(bar);
+                    std::uint8_t current_chord_down_color =
+                        get_launchpad_bar_octave_color_down(bar);
                     process_colormessage_for_button(current_chord_down_color, channel_out, button,
                                                     messages_);
                 }
@@ -746,7 +764,7 @@ void Launchpad::get_updates(Array<MidiMessage *> &messages_)
                 // DURATION
                 else if (relative_row == RELEATIVE_LAUNCHPAD_ROW_DURATION)
                 {
-                    uint8 current_duration_color = get_launchpad_duration_color(
+                    std::uint8_t current_duration_color = get_launchpad_duration_color(
                         selected_bar.barstep(releative_step_id_).duration);
                     process_colormessage_for_button(current_duration_color, channel_out, button,
                                                     messages_);
@@ -754,7 +772,7 @@ void Launchpad::get_updates(Array<MidiMessage *> &messages_)
                 // VELOCITY
                 else if (relative_row == RELEATIVE_LAUNCHPAD_ROW_VECLOCITY)
                 {
-                    uint8 current_velocity_color = get_launchpad_velocity_color(
+                    std::uint8_t current_velocity_color = get_launchpad_velocity_color(
                         selected_bar.barstep(releative_step_id_).velocity);
                     process_colormessage_for_button(current_velocity_color, channel_out, button,
                                                     messages_);
@@ -762,7 +780,7 @@ void Launchpad::get_updates(Array<MidiMessage *> &messages_)
                 // REPATS
                 else if (relative_row == RELEATIVE_LAUNCHPAD_ROW_REPATS)
                 {
-                    uint8 current_repeats_color = get_launchpad_bar_repeat_color(
+                    std::uint8_t current_repeats_color = get_launchpad_bar_repeat_color(
                         _app_instance_store->pattern.bar(session_mode_bar_id));
                     process_colormessage_for_button(current_repeats_color, channel_out, button,
                                                     messages_);
@@ -772,19 +790,19 @@ void Launchpad::get_updates(Array<MidiMessage *> &messages_)
     }
 }
 
-static inline uint8 get_pref_valid_autochain_bar_id(const Pattern &pattern_,
-                                                    unsigned int from_bar_id_)
+static inline std::uint8_t get_pref_valid_autochain_bar_id(const Pattern &pattern_,
+                                                           unsigned int from_bar_id_)
 {
     // check all bars from current + 1
     if (from_bar_id_ != 0)
-        for (uint8 bar_id = from_bar_id_ - 1; bar_id >= 0; --bar_id)
+        for (std::uint8_t bar_id = from_bar_id_ - 1; bar_id >= 0; --bar_id)
         {
             if (Sequencer::is_valid_for_auto_chain(pattern_.bar(bar_id)))
                 return bar_id;
         }
 
     // check all bars from 0 to current
-    for (uint8 bar_id = SUM_BARS - 1; bar_id != from_bar_id_ || bar_id > 0; --bar_id)
+    for (std::uint8_t bar_id = SUM_BARS - 1; bar_id != from_bar_id_ || bar_id > 0; --bar_id)
     {
         if (Sequencer::is_valid_for_auto_chain(pattern_.bar(bar_id)))
             return bar_id;
@@ -794,11 +812,11 @@ static inline uint8 get_pref_valid_autochain_bar_id(const Pattern &pattern_,
 
     return from_bar_id_;
 }
-static inline uint8 get_next_valid_autochain_bar_id(const Pattern &pattern_,
-                                                    unsigned int from_bar_id_)
+static inline std::uint8_t get_next_valid_autochain_bar_id(const Pattern &pattern_,
+                                                           unsigned int from_bar_id_)
 {
     // check all bars from current + 1
-    for (uint8 bar_id = from_bar_id_ + 1; bar_id < SUM_BARS; ++bar_id)
+    for (std::uint8_t bar_id = from_bar_id_ + 1; bar_id < SUM_BARS; ++bar_id)
     {
         if (Sequencer::is_valid_for_auto_chain(pattern_.bar(bar_id)))
             return bar_id;
@@ -806,7 +824,7 @@ static inline uint8 get_next_valid_autochain_bar_id(const Pattern &pattern_,
 
     // check all bars from 0 to current
     if (from_bar_id_ != 0)
-        for (uint8 bar_id = 0; bar_id != from_bar_id_; ++bar_id)
+        for (std::uint8_t bar_id = 0; bar_id != from_bar_id_; ++bar_id)
         {
             if (Sequencer::is_valid_for_auto_chain(pattern_.bar(bar_id)))
                 return bar_id;
@@ -820,7 +838,7 @@ static inline uint8 get_next_valid_autochain_bar_id(const Pattern &pattern_,
 // repeat
 // refresh on bottom right!
 // LEFT RIGHT SCROLL THROUGH CHAINABLE BARS!
-void Launchpad::process(const MidiMessage &message_)
+void Launchpad::process(const juce::MidiMessage &message_)
 {
     // check if we have the corrent channel
     // check the mode per pad
@@ -835,7 +853,7 @@ void Launchpad::process(const MidiMessage &message_)
     {
         if (message_.getControllerValue() != LAUNCHPAD_OFF)
         {
-            uint8 controller_value = message_.getControllerNumber();
+            std::uint8_t controller_value = message_.getControllerNumber();
             switch (controller_value)
             {
             case FIXED_LAUNCHPAD_TOP_UP_CARLA_FIX:;
@@ -909,18 +927,18 @@ void Launchpad::process(const MidiMessage &message_)
     // standard button handling
     else if (message_.isNoteOnOrOff())
     {
-        uint8 controller_number = message_.getControllerNumber();
+        std::uint8_t controller_number = message_.getControllerNumber();
 
-        const uint8 hard_button_step =
+        const std::uint8_t hard_button_step =
             controller_number % 16; // button 1:1 has value 0 --- button 3:1 has 33
-        const uint8 hard_button_row = (controller_number - hard_button_step) / 16;
+        const std::uint8_t hard_button_row = (controller_number - hard_button_step) / 16;
 
-        const uint8 relative_row = hard_button_row + _current_scroll_offset;
+        const std::uint8_t relative_row = hard_button_row + _current_scroll_offset;
 
-        const uint8 relative_button_id = get_releative_step_id(mode, hard_button_step);
+        const std::uint8_t relative_button_id = get_releative_step_id(mode, hard_button_step);
 
         // on session we handle the bar from 1 to 8 only on user_2 we take 9 to 16
-        const uint8 session_mode_bar_id =
+        const std::uint8_t session_mode_bar_id =
             (mode == LAUNCHPAD_MODE_SESSION) ? hard_button_step : relative_button_id;
 
         // PROCESSING
@@ -1031,7 +1049,7 @@ void Launchpad::process(const MidiMessage &message_)
                       //);
                 else if (hard_button_step != LAUNCHPAD_RIGHT_OPTION_COLUM)
                 {
-                    int8 bar_button_pressed = -1;
+                    std::int8_t bar_button_pressed = -1;
                     for (int id = 0;
                          id != _buttons.getReference(FIXED_LAUNCHPAD_ROW_STEP_BAR_SELECT).size();
                          ++id)
@@ -1062,7 +1080,8 @@ void Launchpad::process(const MidiMessage &message_)
                     Bar &selected_bar = _app_instance_store->pattern.bar(
                         _app_instance_store->editor_config.selected_bar_id);
 
-                    uint8 barstring_id = relative_row - 1; // remove simply the step light row
+                    std::uint8_t barstring_id =
+                        relative_row - 1; // remove simply the step light row
                     selected_bar.barstring(barstring_id).step(relative_button_id).is_mute.invert();
                 }
                 // BAR CHORD UP
@@ -1140,20 +1159,20 @@ void Launchpad::process(const MidiMessage &message_)
 
 void Launchpad::refresh_all_buttons()
 {
-    for (uint8 i = 0; i != _buttons.size(); ++i)
+    for (std::uint8_t i = 0; i != _buttons.size(); ++i)
     {
         _buttons_right.getReference(i).cache_launchpad_controller_value = -1;
         _buttons_top.getReference(i).cache_launchpad_controller_value = -1;
 
         auto &buttons = _buttons.getReference(i);
-        for (uint8 j = 0; j != buttons.size(); ++j)
+        for (std::uint8_t j = 0; j != buttons.size(); ++j)
             buttons.getReference(j).cache_launchpad_controller_value = -1;
     }
 }
 
-void Launchpad::all_buttons_off(Array<MidiMessage *> &messages_)
+void Launchpad::all_buttons_off(juce::Array<juce::MidiMessage *> &messages_)
 {
-    for (uint8 i = 0; i != _buttons.size(); ++i)
+    for (std::uint8_t i = 0; i != _buttons.size(); ++i)
     {
         _buttons_right.getReference(i).message.setVelocity(0);
         messages_.add(&_buttons_right.getReference(i).message);
@@ -1162,7 +1181,7 @@ void Launchpad::all_buttons_off(Array<MidiMessage *> &messages_)
         messages_.add(&_buttons_top.getReference(i).message);
 
         auto &buttons = _buttons.getReference(i);
-        for (uint8 j = 0; j != buttons.size(); ++j)
+        for (std::uint8_t j = 0; j != buttons.size(); ++j)
         {
             buttons.getReference(j).message.setVelocity(0);
             messages_.add(&buttons.getReference(j).message);

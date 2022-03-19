@@ -22,6 +22,7 @@
 #include "UiMainWindow.h"
 
 #include "UI_Tools.h"
+#include "BinaryData.h"
 
 // ************************************************************************************************
 // ************************************************************************************************
@@ -86,9 +87,10 @@ static void add_to_const_array(const array_t &array_, controller_t *const contro
     // NOTE, suboptimal but only need at app init
     const_cast<array_t &>(array_).minimiseStorageOverheads();
 }
-Array<MONO_Controller *> convert_to_array(const OwnedArray<MONO_Controller> &owned_array_)
+juce::Array<MONO_Controller *>
+convert_to_array(const juce::OwnedArray<MONO_Controller> &owned_array_)
 {
-    Array<MONO_Controller *> array;
+    juce::Array<MONO_Controller *> array;
     for (int i = 0; i != owned_array_.size(); ++i)
     {
         array.add(owned_array_.getUnchecked(i));
@@ -101,7 +103,7 @@ Array<MONO_Controller *> convert_to_array(const OwnedArray<MONO_Controller> &own
 UiLookAndFeel *init_lock_and_feel_hack()
 {
     GLOBAL_VALUE_HOLDER::getInstance()->INSTANCES++;
-    LookAndFeel::setDefaultLookAndFeel(UiLookAndFeel::getInstance());
+    juce::LookAndFeel::setDefaultLookAndFeel(UiLookAndFeel::getInstance());
     return nullptr;
 }
 
@@ -508,17 +510,17 @@ AppInstanceStore::AppInstanceStore(GstepAudioProcessor *const audio_processor_)
     _font =
         Font(Typeface::createSystemTypefaceFor(reinterpret_cast<const void *>(&android_font), 99));
 #else
-    subway_typeface = Typeface::createSystemTypefaceFor(BinaryData::FredokaOneRegular_ttf,
-                                                        BinaryData::FredokaOneRegular_ttfSize);
-    oswald_typeface = Typeface::createSystemTypefaceFor(BinaryData::OswaldRegular_ttf,
-                                                        BinaryData::OswaldRegular_ttfSize);
+    subway_typeface = juce::Typeface::createSystemTypefaceFor(
+        BinaryData::FredokaOneRegular_ttf, BinaryData::FredokaOneRegular_ttfSize);
+    oswald_typeface = juce::Typeface::createSystemTypefaceFor(BinaryData::OswaldRegular_ttf,
+                                                              BinaryData::OswaldRegular_ttfSize);
 #endif
 
     int font_size = 20;
 #ifdef JUCE_IOS
     font_size = 16;
 #endif
-    Font font = Font(subway_typeface).withHeight(font_size);
+    juce::Font font = juce::Font(subway_typeface).withHeight(font_size);
     for (int i = 0; i != styles.size(); ++i)
     {
         styles.getUnchecked(i)->set_font(font);
@@ -581,41 +583,42 @@ AppInstanceStore::~AppInstanceStore()
 // ************************************************************************************************
 #include "FileIO.h"
 
-#define SESSION_FILE String("last-session")
+#define SESSION_FILE juce::String("last-session")
 
-String AppInstanceStore::write(const XmlElement &xml_, const File &xml_doc) const
+juce::String AppInstanceStore::write(const juce::XmlElement &xml_, const juce::File &xml_doc) const
 {
-    String error;
+    juce::String error;
 
     if (!xml_.writeTo(xml_doc, {}))
     {
-        error += String("Can NOT write to file: ") + xml_doc.getFileName();
+        error += juce::String("Can NOT write to file: ") + xml_doc.getFileName();
         error += "\n";
         ALERT_LOG("Error whilst writing!", error);
     }
 
     return error;
 }
-String AppInstanceStore::read_error(const XmlElement *const xml_, const char *const should_version_)
+juce::String AppInstanceStore::read_error(const juce::XmlElement *const xml_,
+                                          const char *const should_version_)
 {
-    String error(String("Wrong file type. Can NOT read '" + xml_->getTagName() + String("' as '") +
-                        String(should_version_) + "'"));
+    juce::String error(juce::String("Wrong file type. Can NOT read '" + xml_->getTagName() +
+                                    juce::String("' as '") + juce::String(should_version_) + "'"));
     error += "\n";
     ALERT_LOG("Error whilst reading!", error);
 
     return error;
 }
-String AppInstanceStore::read_error_not_exist(const File &file_)
+juce::String AppInstanceStore::read_error_not_exist(const juce::File &file_)
 {
-    String error(String("File not exist. Can NOT read: '" + file_.getFullPathName()));
+    juce::String error(juce::String("File not exist. Can NOT read: '" + file_.getFullPathName()));
     error += "\n";
     ALERT_LOG("Error whilst reading!", error);
 
     return error;
 }
-String AppInstanceStore::read_error_hard()
+juce::String AppInstanceStore::read_error_hard()
 {
-    String error("File corrupt or incompatible.");
+    juce::String error("File corrupt or incompatible.");
     error += "\n";
     ALERT_LOG("Error whilst reading!", error);
 
@@ -627,9 +630,9 @@ String AppInstanceStore::read_error_hard()
 // ************************************************************************************************
 // ************************************************************************************************
 
-String AppInstanceStore::load_b_step_xml(XmlElement &xml)
+juce::String AppInstanceStore::load_b_step_xml(juce::XmlElement &xml)
 {
-    String error;
+    juce::String error;
 
     if (load_project(xml) == "")
         return "";
@@ -652,120 +655,126 @@ String AppInstanceStore::load_b_step_xml(XmlElement &xml)
 // ************************************************************************************************
 // ************************************************************************************************
 
-XmlElement *get_custom_project()
+juce::XmlElement *get_custom_project()
 {
-    XmlElement *xml = nullptr;
-    Random::getSystemRandom().setSeedRandomly();
-    int id = Random::getSystemRandom().nextInt(7);
+    juce::XmlElement *xml = nullptr;
+    juce::Random::getSystemRandom().setSeedRandomly();
+    int id = juce::Random::getSystemRandom().nextInt(7);
 
     switch (id)
     {
     case 0:
-        xml = XmlDocument::parse(MemoryInputStream(BinaryData::arpeggioA_b2proj,
-                                                   BinaryData::arpeggioA_b2projSize, false)
-                                     .readEntireStreamAsString())
+        xml = juce::XmlDocument::parse(juce::MemoryInputStream(BinaryData::arpeggioA_b2proj,
+                                                               BinaryData::arpeggioA_b2projSize,
+                                                               false)
+                                           .readEntireStreamAsString())
                   .release();
         break;
     case 1:
-        xml = XmlDocument::parse(MemoryInputStream(BinaryData::arpeggioB_b2proj,
-                                                   BinaryData::arpeggioB_b2projSize, false)
-                                     .readEntireStreamAsString())
+        xml = juce::XmlDocument::parse(juce::MemoryInputStream(BinaryData::arpeggioB_b2proj,
+                                                               BinaryData::arpeggioB_b2projSize,
+                                                               false)
+                                           .readEntireStreamAsString())
                   .release();
         break;
     case 2:
-        xml = XmlDocument::parse(MemoryInputStream(BinaryData::arpeggioD_b2proj,
-                                                   BinaryData::arpeggioD_b2projSize, false)
-                                     .readEntireStreamAsString())
+        xml = juce::XmlDocument::parse(juce::MemoryInputStream(BinaryData::arpeggioD_b2proj,
+                                                               BinaryData::arpeggioD_b2projSize,
+                                                               false)
+                                           .readEntireStreamAsString())
                   .release();
         break;
     case 3:
-        xml = XmlDocument::parse(
-                  MemoryInputStream(BinaryData::_1145_b2proj, BinaryData::_1145_b2projSize, false)
-                      .readEntireStreamAsString())
+        xml = juce::XmlDocument::parse(juce::MemoryInputStream(BinaryData::_1145_b2proj,
+                                                               BinaryData::_1145_b2projSize, false)
+                                           .readEntireStreamAsString())
                   .release();
         break;
     case 4:
-        xml = XmlDocument::parse(MemoryInputStream(BinaryData::_1225softSuffle_b2proj,
-                                                   BinaryData::_1225softSuffle_b2projSize, false)
-                                     .readEntireStreamAsString())
-                  .release();
-        break;
-    case 5:
-        xml = XmlDocument::parse(MemoryInputStream(BinaryData::_1564shuffle_b2proj,
-                                                   BinaryData::_1564shuffle_b2projSize, false)
-                                     .readEntireStreamAsString())
-                  .release();
-        break;
-    case 6:
-        xml = XmlDocument::parse(
-                  MemoryInputStream(BinaryData::andal_b2proj, BinaryData::andal_b2projSize, false)
+        xml = juce::XmlDocument::parse(
+                  juce::MemoryInputStream(BinaryData::_1225softSuffle_b2proj,
+                                          BinaryData::_1225softSuffle_b2projSize, false)
                       .readEntireStreamAsString())
                   .release();
         break;
-    default:
-        xml = XmlDocument::parse(MemoryInputStream(BinaryData::pachebel_b2proj,
-                                                   BinaryData::pachebel_b2projSize, false)
-                                     .readEntireStreamAsString())
+    case 5:
+        xml = juce::XmlDocument::parse(juce::MemoryInputStream(BinaryData::_1564shuffle_b2proj,
+                                                               BinaryData::_1564shuffle_b2projSize,
+                                                               false)
+                                           .readEntireStreamAsString())
                   .release();
+        break;
+    case 6:
+        xml = juce::XmlDocument::parse(juce::MemoryInputStream(BinaryData::andal_b2proj,
+                                                               BinaryData::andal_b2projSize, false)
+                                           .readEntireStreamAsString())
+                  .release();
+        break;
+    default:
+        xml =
+            juce::XmlDocument::parse(juce::MemoryInputStream(BinaryData::pachebel_b2proj,
+                                                             BinaryData::pachebel_b2projSize, false)
+                                         .readEntireStreamAsString())
+                .release();
         break;
     }
 
     return xml;
 }
 
-String AppInstanceStore::save_standalone()
+juce::String AppInstanceStore::save_standalone()
 {
-    String error;
+    juce::String error;
 
-    error += save_project(File(
+    error += save_project(juce::File(
         get_session_folder(true).getChildFile(SESSION_FILE + APPDEFF::project_file_extension)));
-    error += save_setup(
-        File(get_session_folder(true).getChildFile(SESSION_FILE + APPDEFF::setup_file_extension)));
+    error += save_setup(juce::File(
+        get_session_folder(true).getChildFile(SESSION_FILE + APPDEFF::setup_file_extension)));
 
     return error;
 }
 
-String AppInstanceStore::load_standalone()
+juce::String AppInstanceStore::load_standalone()
 {
-    String error;
+    juce::String error;
 
 #ifndef DEMO
-    error += load_project(
-        File(get_session_folder().getChildFile(SESSION_FILE + APPDEFF::project_file_extension)));
+    error += load_project(juce::File(
+        get_session_folder().getChildFile(SESSION_FILE + APPDEFF::project_file_extension)));
 #endif // END IF DEMO
-    error += load_setup(
-        File(get_session_folder().getChildFile(SESSION_FILE + APPDEFF::setup_file_extension)));
+    error += load_setup(juce::File(
+        get_session_folder().getChildFile(SESSION_FILE + APPDEFF::setup_file_extension)));
 
     return error;
 }
 
-String AppInstanceStore::save_plugin(XmlElement &xml_)
+juce::String AppInstanceStore::save_plugin(juce::XmlElement &xml_)
 {
-    String error;
+    juce::String error;
 
     // WRITE IN DAW PROJECT
     {
         error += save_project(xml_);
-        XmlElement *xml_setup = xml_.createNewChildElement(APPDEFF::setup_file_version);
+        juce::XmlElement *xml_setup = xml_.createNewChildElement(APPDEFF::setup_file_version);
         if (xml_setup)
             error += save_setup(*xml_setup);
 
-        XmlElement *midi_map = xml_.createNewChildElement(APPDEFF::mapping_file_version);
+        juce::XmlElement *midi_map = xml_.createNewChildElement(APPDEFF::mapping_file_version);
         if (midi_map)
             midi_in_map.export_midi_mappings_to(*midi_map);
     }
 
     return error;
 }
-String AppInstanceStore::load_plugin(const XmlElement &xml_)
+juce::String AppInstanceStore::load_plugin(const juce::XmlElement &xml_)
 {
-    String error;
+    juce::String error;
 
     // READ DAW PROJECT
     {
         error += load_project(xml_);
 
-        XmlElement *xml_setup =
+        juce::XmlElement *xml_setup =
             xml_.getChildByName("B-Setup-2.0"); // loads old settings from project, else use file
         if (xml_setup)
             error += load_setup(xml_setup);
@@ -775,7 +784,7 @@ String AppInstanceStore::load_plugin(const XmlElement &xml_)
 
     // NEW READ FROM FILE IF NOT SET IN PROJECT
     {
-        XmlElement *midi_map = xml_.getChildByName(APPDEFF::mapping_file_version);
+        juce::XmlElement *midi_map = xml_.getChildByName(APPDEFF::mapping_file_version);
         if (midi_map)
             error += load_midi_map(midi_map);
         // else if( (midi_map = xml_.getChildByName(APPDEFF::mapping_file_version)) )
@@ -789,9 +798,9 @@ String AppInstanceStore::load_plugin(const XmlElement &xml_)
     return error;
 }
 
-String AppInstanceStore::save_default_files()
+juce::String AppInstanceStore::save_default_files()
 {
-    String error;
+    juce::String error;
 
 #ifndef DEMO
 #ifdef B_STEP_STANDALONE
@@ -800,17 +809,17 @@ String AppInstanceStore::save_default_files()
 #endif // B_STEP_STANDALONE
 #endif // DEMO
 
-    error += save_defines(
-        File(get_session_folder(true).getChildFile(SESSION_FILE + APPDEFF::define_file_extension)));
-    error += save_global(
-        File(get_session_folder(true).getChildFile(SESSION_FILE + APPDEFF::global_file_extension)));
+    error += save_defines(juce::File(
+        get_session_folder(true).getChildFile(SESSION_FILE + APPDEFF::define_file_extension)));
+    error += save_global(juce::File(
+        get_session_folder(true).getChildFile(SESSION_FILE + APPDEFF::global_file_extension)));
 
     return error;
 }
 
-String AppInstanceStore::load_default_files()
+juce::String AppInstanceStore::load_default_files()
 {
-    String error;
+    juce::String error;
 
 #ifdef DEMO
     ScopedPointer<XmlElement> xml = get_custom_project();
@@ -823,16 +832,16 @@ String AppInstanceStore::load_default_files()
         File(get_session_folder().getChildFile(SESSION_FILE + APPDEFF::mapping_file_extension)));
 #endif // B_STEP_STANDALONE
 
-    error += load_defines(
-        File(get_session_folder().getChildFile(SESSION_FILE + APPDEFF::define_file_extension)));
-    error += load_global(
-        File(get_session_folder().getChildFile(SESSION_FILE + APPDEFF::global_file_extension)));
+    error += load_defines(juce::File(
+        get_session_folder().getChildFile(SESSION_FILE + APPDEFF::define_file_extension)));
+    error += load_global(juce::File(
+        get_session_folder().getChildFile(SESSION_FILE + APPDEFF::global_file_extension)));
 
-    File colour_theme(
+    juce::File colour_theme(
         get_session_folder().getChildFile(SESSION_FILE + APPDEFF::colortheme_file_extension));
     if (colour_theme.existsAsFile())
     {
-        String error2 = load_colour_theme(colour_theme);
+        juce::String error2 = load_colour_theme(colour_theme);
 
         if (error2 != "")
         {
@@ -856,26 +865,27 @@ String AppInstanceStore::load_default_files()
 // ************************************************************************************************
 // ************************************************************************************************
 
-String AppInstanceStore::save_midi_map(const File &xml_doc_) const
+juce::String AppInstanceStore::save_midi_map(const juce::File &xml_doc_) const
 {
-    File xml_doc = xml_doc_.withFileExtension(APPDEFF::mapping_file_extension);
-    XmlElement xml(APPDEFF::mapping_file_version);
+    juce::File xml_doc = xml_doc_.withFileExtension(APPDEFF::mapping_file_extension);
+    juce::XmlElement xml(APPDEFF::mapping_file_version);
 
     midi_in_map.export_midi_mappings_to(xml);
 
     return write(xml, xml_doc);
 }
-String AppInstanceStore::load_midi_map(const File &xml_doc_)
+juce::String AppInstanceStore::load_midi_map(const juce::File &xml_doc_)
 {
     if (!xml_doc_.existsAsFile())
         return read_error_not_exist(xml_doc_);
 
-    ScopedPointer<XmlElement> xml = XmlDocument(xml_doc_).getDocumentElement().release();
+    juce::ScopedPointer<juce::XmlElement> xml =
+        juce::XmlDocument(xml_doc_).getDocumentElement().release();
     return load_midi_map(xml);
 }
-String AppInstanceStore::load_midi_map(const XmlElement *xml)
+juce::String AppInstanceStore::load_midi_map(const juce::XmlElement *xml)
 {
-    String error;
+    juce::String error;
 
     if (xml)
     {
@@ -885,8 +895,8 @@ String AppInstanceStore::load_midi_map(const XmlElement *xml)
         }
         else if (xml->hasTagName("b-step-midi-map-1.2"))
         {
-            String title("Deprecated MIDI Mappings!");
-            String message("Your MIDI mappings are no more compatible with B-Step 2.x");
+            juce::String title("Deprecated MIDI Mappings!");
+            juce::String message("Your MIDI mappings are no more compatible with B-Step 2.x");
             ALERT_LOG(title, message);
 
             error += message;
@@ -905,13 +915,13 @@ String AppInstanceStore::load_midi_map(const XmlElement *xml)
 // ************************************************************************************************
 // ************************************************************************************************
 
-String AppInstanceStore::save_project(const File &xml_doc_) const
+juce::String AppInstanceStore::save_project(const juce::File &xml_doc_) const
 {
-    String error;
+    juce::String error;
 
 #ifndef DEMO
-    File xml_doc = xml_doc_.withFileExtension(APPDEFF::project_file_extension);
-    XmlElement xml(APPDEFF::project_file_version);
+    juce::File xml_doc = xml_doc_.withFileExtension(APPDEFF::project_file_extension);
+    juce::XmlElement xml(APPDEFF::project_file_version);
 
     error += save_project(xml);
     if (error == "")
@@ -920,14 +930,15 @@ String AppInstanceStore::save_project(const File &xml_doc_) const
 
     return error;
 }
-String AppInstanceStore::load_project(const File &xml_doc_)
+juce::String AppInstanceStore::load_project(const juce::File &xml_doc_)
 {
-    String error;
+    juce::String error;
 
     if (!xml_doc_.existsAsFile())
         return read_error_not_exist(xml_doc_);
 
-    ScopedPointer<XmlElement> xml = XmlDocument(xml_doc_).getDocumentElement().release();
+    juce::ScopedPointer<juce::XmlElement> xml =
+        juce::XmlDocument(xml_doc_).getDocumentElement().release();
     if (xml)
     {
         if ((error = load_project(*xml)) == "")
@@ -938,7 +949,7 @@ String AppInstanceStore::load_project(const File &xml_doc_)
 
     return error;
 }
-String AppInstanceStore::save_project(XmlElement &xml_) const
+juce::String AppInstanceStore::save_project(juce::XmlElement &xml_) const
 {
 #ifndef DEMO
     audio_processor->::ProcessorUserData::export_to(xml_);
@@ -950,9 +961,9 @@ String AppInstanceStore::save_project(XmlElement &xml_) const
     return "";
 }
 
-String AppInstanceStore::load_project(const XmlElement &xml_)
+juce::String AppInstanceStore::load_project(const juce::XmlElement &xml_)
 {
-    String error;
+    juce::String error;
 
     if (xml_.hasTagName(APPDEFF::project_file_version))
     {
@@ -960,14 +971,14 @@ String AppInstanceStore::load_project(const XmlElement &xml_)
         editor_config.import_from(xml_);
         pattern.import_from(xml_);
 
-        String theme = xml_.getStringAttribute("THEME", "FALSE");
+        juce::String theme = xml_.getStringAttribute("THEME", "FALSE");
         if (theme != "FALSE")
         {
             editor_config.current_editable_colour = nullptr;
             color_theme->set_theme(theme);
         }
         else
-            load_colour_theme(File(get_session_folder().getChildFile(
+            load_colour_theme(juce::File(get_session_folder().getChildFile(
                 SESSION_FILE + APPDEFF::colortheme_file_extension)));
 
         if (editor)
@@ -1004,9 +1015,10 @@ String AppInstanceStore::load_project(const XmlElement &xml_)
     }
     else if (xml_.hasTagName("b-step-1.1"))
     {
-        String title("Deprecated Project v1.1!");
-        String message("B-Step v1.1 projects are no more supported!\nTo import your old project "
-                       "load and save it with v1.2 and then load it with v2.x'");
+        juce::String title("Deprecated Project v1.1!");
+        juce::String message(
+            "B-Step v1.1 projects are no more supported!\nTo import your old project "
+            "load and save it with v1.2 and then load it with v2.x'");
         ALERT_LOG(title, message);
 
         error += message;
@@ -1024,7 +1036,7 @@ void AppInstanceStore::update_loaded_project_cache()
 {
     // CREATE A BACKUP OF THE CURRENT MEMORY PROJECT
     current_project_backup.clear();
-    XmlElement xml("mem");
+    juce::XmlElement xml("mem");
     save_project(xml);
     current_project_backup = xml.toString();
 }
@@ -1034,7 +1046,7 @@ bool AppInstanceStore::is_project_changed() const
     bool is_changed = false;
     if (current_project_backup != "")
     {
-        XmlElement xml("mem");
+        juce::XmlElement xml("mem");
         save_project(xml);
         is_changed = current_project_backup != xml.toString();
     }
@@ -1047,12 +1059,12 @@ bool AppInstanceStore::is_project_changed() const
 // ************************************************************************************************
 // ************************************************************************************************
 
-String AppInstanceStore::save_setup(const File &xml_doc_) const
+juce::String AppInstanceStore::save_setup(const juce::File &xml_doc_) const
 {
-    String error;
+    juce::String error;
 
-    File xml_doc = xml_doc_.withFileExtension(APPDEFF::setup_file_extension);
-    XmlElement xml(APPDEFF::setup_file_version);
+    juce::File xml_doc = xml_doc_.withFileExtension(APPDEFF::setup_file_extension);
+    juce::XmlElement xml(APPDEFF::setup_file_version);
 
     error += save_setup(xml);
     error += write(xml, xml_doc);
@@ -1060,7 +1072,7 @@ String AppInstanceStore::save_setup(const File &xml_doc_) const
     return error;
 }
 
-String AppInstanceStore::save_setup(XmlElement &xml) const
+juce::String AppInstanceStore::save_setup(juce::XmlElement &xml) const
 {
     // SAVES 2.1
     midi_io_handler.save_to(xml);
@@ -1075,17 +1087,18 @@ String AppInstanceStore::save_setup(XmlElement &xml) const
 
     return "";
 }
-String AppInstanceStore::load_setup(const File &xml_doc_)
+juce::String AppInstanceStore::load_setup(const juce::File &xml_doc_)
 {
     if (!xml_doc_.existsAsFile())
         return read_error_not_exist(xml_doc_);
 
-    ScopedPointer<XmlElement> xml = XmlDocument(xml_doc_).getDocumentElement().release();
+    juce::ScopedPointer<juce::XmlElement> xml =
+        juce::XmlDocument(xml_doc_).getDocumentElement().release();
     return load_setup(xml);
 }
-String AppInstanceStore::load_setup(const XmlElement *xml)
+juce::String AppInstanceStore::load_setup(const juce::XmlElement *xml)
 {
-    String error;
+    juce::String error;
 
     // LOADS 2.0 and 2.1
     if (xml)
@@ -1183,35 +1196,36 @@ String AppInstanceStore::load_setup(const XmlElement *xml)
 // ************************************************************************************************
 // ************************************************************************************************
 
-String AppInstanceStore::save_snapshot(const File &xml_doc_, const Bar &bar_) const
+juce::String AppInstanceStore::save_snapshot(const juce::File &xml_doc_, const Bar &bar_) const
 {
-    File xml_doc = xml_doc_.withFileExtension(APPDEFF::snapshot_file_extension);
-    XmlElement xml(APPDEFF::snapshot_file_version);
+    juce::File xml_doc = xml_doc_.withFileExtension(APPDEFF::snapshot_file_extension);
+    juce::XmlElement xml(APPDEFF::snapshot_file_version);
 
     bar_.export_to(xml, false);
 
     return write(xml, xml_doc);
 }
-String AppInstanceStore::load_snapshot(const File &xml_doc_, Bar &bar_)
+juce::String AppInstanceStore::load_snapshot(const juce::File &xml_doc_, Bar &bar_)
 {
     if (!xml_doc_.existsAsFile())
         return read_error_not_exist(xml_doc_);
 
-    ScopedPointer<XmlElement> xml = XmlDocument(xml_doc_).getDocumentElement().release();
+    juce::ScopedPointer<juce::XmlElement> xml =
+        juce::XmlDocument(xml_doc_).getDocumentElement().release();
     if (xml)
         return load_snapshot(*xml, bar_);
     else
         return read_error_hard();
 }
 
-String AppInstanceStore::save_snapshot(const File &file_) const
+juce::String AppInstanceStore::save_snapshot(const juce::File &file_) const
 {
     return save_snapshot(
         file_,
         *bar_copy_clipboards.getUnchecked(editor_config.selected_bar_clipboard_id)->stored_bar);
 }
 
-String AppInstanceStore::load_snapshot(const File &file_)
+juce::String AppInstanceStore::load_snapshot(const juce::File &file_)
 {
     if (!file_.existsAsFile())
         return read_error_not_exist(file_);
@@ -1221,16 +1235,16 @@ String AppInstanceStore::load_snapshot(const File &file_)
         *bar_copy_clipboards.getUnchecked(editor_config.selected_bar_clipboard_id)->stored_bar);
 }
 
-String AppInstanceStore::load_snapshot(XmlElement &xml_)
+juce::String AppInstanceStore::load_snapshot(juce::XmlElement &xml_)
 {
     return load_snapshot(
         xml_,
         *bar_copy_clipboards.getUnchecked(editor_config.selected_bar_clipboard_id)->stored_bar);
 }
 
-String AppInstanceStore::load_snapshot(XmlElement &xml_, Bar &bar_)
+juce::String AppInstanceStore::load_snapshot(juce::XmlElement &xml_, Bar &bar_)
 {
-    String error;
+    juce::String error;
 
     if (xml_.hasTagName(APPDEFF::snapshot_file_version))
         bar_.import_from(xml_, false);
@@ -1245,27 +1259,27 @@ String AppInstanceStore::load_snapshot(XmlElement &xml_, Bar &bar_)
 // ************************************************************************************************
 // ************************************************************************************************
 
-String AppInstanceStore::save_chordset(XmlElement &xml_) const
+juce::String AppInstanceStore::save_chordset(juce::XmlElement &xml_) const
 {
     pattern.selected_chordset().export_to(xml_, false);
 
     return "";
 }
-String AppInstanceStore::save_chordset(const File &xml_doc_) const
+juce::String AppInstanceStore::save_chordset(const juce::File &xml_doc_) const
 {
-    String error;
+    juce::String error;
 
-    File xml_doc = xml_doc_.withFileExtension(APPDEFF::chordset_file_extension);
-    XmlElement xml(APPDEFF::chordset_file_version);
+    juce::File xml_doc = xml_doc_.withFileExtension(APPDEFF::chordset_file_extension);
+    juce::XmlElement xml(APPDEFF::chordset_file_version);
 
     if ((error = save_chordset(xml)) == "")
         error += write(xml, xml_doc);
 
     return error;
 }
-String AppInstanceStore::load_chordset(const XmlElement &xml_)
+juce::String AppInstanceStore::load_chordset(const juce::XmlElement &xml_)
 {
-    String error;
+    juce::String error;
 
     if (xml_.hasTagName(APPDEFF::chordset_file_version))
     {
@@ -1281,12 +1295,13 @@ String AppInstanceStore::load_chordset(const XmlElement &xml_)
 
     return error;
 }
-String AppInstanceStore::load_chordset(const File &xml_doc_)
+juce::String AppInstanceStore::load_chordset(const juce::File &xml_doc_)
 {
     if (!xml_doc_.existsAsFile())
         return read_error_not_exist(xml_doc_);
 
-    ScopedPointer<XmlElement> xml = XmlDocument(xml_doc_).getDocumentElement().release();
+    juce::ScopedPointer<juce::XmlElement> xml =
+        juce::XmlDocument(xml_doc_).getDocumentElement().release();
     if (xml)
         return load_chordset(*xml);
     else
@@ -1298,38 +1313,38 @@ String AppInstanceStore::load_chordset(const File &xml_doc_)
 // ************************************************************************************************
 // ************************************************************************************************
 
-String AppInstanceStore::save_colour_theme(XmlElement &xml_) const
+juce::String AppInstanceStore::save_colour_theme(juce::XmlElement &xml_) const
 {
     xml_.setAttribute("THEME", color_theme->get_color_list());
 
     return "";
 }
 
-String AppInstanceStore::save_default_colour_theme() const
+juce::String AppInstanceStore::save_default_colour_theme() const
 {
-    return save_colour_theme(File(
+    return save_colour_theme(juce::File(
         get_session_folder(true).getChildFile(SESSION_FILE + APPDEFF::colortheme_file_extension)));
 }
 
-String AppInstanceStore::save_colour_theme(const File &xml_doc_) const
+juce::String AppInstanceStore::save_colour_theme(const juce::File &xml_doc_) const
 {
-    String error;
+    juce::String error;
 
-    File xml_doc = xml_doc_.withFileExtension(APPDEFF::colortheme_file_extension);
-    XmlElement xml(APPDEFF::colortheme_file_version);
+    juce::File xml_doc = xml_doc_.withFileExtension(APPDEFF::colortheme_file_extension);
+    juce::XmlElement xml(APPDEFF::colortheme_file_version);
 
     if ((error = save_colour_theme(xml)) == "")
         error += write(xml, xml_doc);
 
     return error;
 }
-String AppInstanceStore::load_colour_theme(const XmlElement &xml_)
+juce::String AppInstanceStore::load_colour_theme(const juce::XmlElement &xml_)
 {
-    String error;
+    juce::String error;
 
     if (xml_.hasTagName(APPDEFF::colortheme_file_version))
     {
-        String color_list = xml_.getStringAttribute("THEME", DEFAULT_COLOR_THEME);
+        juce::String color_list = xml_.getStringAttribute("THEME", DEFAULT_COLOR_THEME);
         if (color_list.length() > 20)
         {
             editor_config.current_editable_colour = nullptr;
@@ -1347,11 +1362,12 @@ String AppInstanceStore::load_colour_theme(const XmlElement &xml_)
 
     return error;
 }
-String AppInstanceStore::load_colour_theme(const File &xml_doc_)
+juce::String AppInstanceStore::load_colour_theme(const juce::File &xml_doc_)
 {
-    String error;
+    juce::String error;
 
-    ScopedPointer<XmlElement> xml = XmlDocument(xml_doc_).getDocumentElement().release();
+    juce::ScopedPointer<juce::XmlElement> xml =
+        juce::XmlDocument(xml_doc_).getDocumentElement().release();
     if (xml)
         error += load_colour_theme(*xml);
     else
@@ -1364,10 +1380,10 @@ String AppInstanceStore::load_colour_theme(const File &xml_doc_)
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-String AppInstanceStore::save_defines(const File &xml_doc_) const
+juce::String AppInstanceStore::save_defines(const juce::File &xml_doc_) const
 {
-    File xml_doc = xml_doc_.withFileExtension(APPDEFF::define_file_extension);
-    XmlElement xml(APPDEFF::define_file_version);
+    juce::File xml_doc = xml_doc_.withFileExtension(APPDEFF::define_file_extension);
+    juce::XmlElement xml(APPDEFF::define_file_version);
 
     do_you_know.export_to(xml);
 #ifdef DEMO
@@ -1380,11 +1396,12 @@ String AppInstanceStore::save_defines(const File &xml_doc_) const
     return write(xml, xml_doc);
 }
 
-String AppInstanceStore::load_defines(const File &xml_doc_)
+juce::String AppInstanceStore::load_defines(const juce::File &xml_doc_)
 {
-    String error;
+    juce::String error;
 
-    ScopedPointer<XmlElement> xml = XmlDocument(xml_doc_).getDocumentElement().release();
+    juce::ScopedPointer<juce::XmlElement> xml =
+        juce::XmlDocument(xml_doc_).getDocumentElement().release();
     if (xml)
     {
         if (xml->hasTagName(APPDEFF::define_file_version))
@@ -1399,7 +1416,7 @@ String AppInstanceStore::load_defines(const File &xml_doc_)
 #ifdef B_STEP_STANDALONE
             last_loaded_project = File(xml->getStringAttribute("LastProject", "FROM SCRATCH"));
 #else
-            last_loaded_project = File("DAW managed project");
+            last_loaded_project = juce::File("DAW managed project");
 #endif
 #endif
         }
@@ -1416,21 +1433,22 @@ String AppInstanceStore::load_defines(const File &xml_doc_)
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-String AppInstanceStore::save_global(const File &xml_doc_) const
+juce::String AppInstanceStore::save_global(const juce::File &xml_doc_) const
 {
-    File xml_doc = xml_doc_.withFileExtension(APPDEFF::global_file_extension);
-    XmlElement xml(APPDEFF::global_file_version);
+    juce::File xml_doc = xml_doc_.withFileExtension(APPDEFF::global_file_extension);
+    juce::XmlElement xml(APPDEFF::global_file_version);
 
     GLOBAL_VALUE_HOLDER::getInstance()->save_to(xml);
 
     return write(xml, xml_doc);
 }
 
-String AppInstanceStore::load_global(const File &xml_doc_)
+juce::String AppInstanceStore::load_global(const juce::File &xml_doc_)
 {
-    String error;
+    juce::String error;
 
-    ScopedPointer<XmlElement> xml = XmlDocument(xml_doc_).getDocumentElement().release();
+    juce::ScopedPointer<juce::XmlElement> xml =
+        juce::XmlDocument(xml_doc_).getDocumentElement().release();
     if (xml)
     {
         if (xml->hasTagName(APPDEFF::global_file_version))
@@ -1451,7 +1469,7 @@ String AppInstanceStore::load_global(const File &xml_doc_)
 class ControllerPlay : public MONO_UIButtonController
 {
     AppInstanceStore *_app_instance_store;
-    ScopedPointer<Drawable> _drawable;
+    juce::ScopedPointer<juce::Drawable> _drawable;
 
     IS_NOT_MIDI_LEARNABLE
 
@@ -1473,7 +1491,7 @@ class ControllerPlay : public MONO_UIButtonController
 #endif
     }
 
-    const Drawable *get_current_drawable() override
+    const juce::Drawable *get_current_drawable() override
     {
 #ifdef B_STEP_STANDALONE
         return _drawable;
@@ -1482,16 +1500,16 @@ class ControllerPlay : public MONO_UIButtonController
 #endif
     }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
 #ifndef B_STEP_STANDALONE
-        string_ = String("1/2");
+        string_ = juce::String("1/2");
 #else
         string_ = HAS_NO_TEXT_VALUE;
 #endif
     }
 
-    const String get_help_url() override
+    const juce::String get_help_url() override
     {
         return MANUAL_URL + "beginner/basic-functions/playback-speed-start-stop";
     }
@@ -1499,8 +1517,9 @@ class ControllerPlay : public MONO_UIButtonController
   public:
     ControllerPlay(AppInstanceStore *const app_instance_store_)
         : MONO_UIButtonController(app_instance_store_), _app_instance_store(app_instance_store_),
-          _drawable(Drawable::createFromImageData(BinaryData::play_svg, BinaryData::play_svgSize)
-                        .release())
+          _drawable(
+              juce::Drawable::createFromImageData(BinaryData::play_svg, BinaryData::play_svgSize)
+                  .release())
     {
     }
 };
@@ -1510,7 +1529,7 @@ class ControllerPlay : public MONO_UIButtonController
 class ControllerPause : public MONO_UIButtonController
 {
     AppInstanceStore *_app_instance_store;
-    ScopedPointer<Drawable> _drawable;
+    juce::ScopedPointer<juce::Drawable> _drawable;
 
     IS_NOT_MIDI_LEARNABLE
 
@@ -1533,7 +1552,7 @@ class ControllerPause : public MONO_UIButtonController
 #endif
     }
 
-    const Drawable *get_current_drawable() override
+    const juce::Drawable *get_current_drawable() override
     {
 #ifdef B_STEP_STANDALONE
         return _drawable;
@@ -1542,16 +1561,16 @@ class ControllerPause : public MONO_UIButtonController
 #endif
     }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
 #ifndef B_STEP_STANDALONE
-        string_ = String("1");
+        string_ = juce::String("1");
 #else
         string_ = HAS_NO_TEXT_VALUE;
 #endif
     }
 
-    const String get_help_url() override
+    const juce::String get_help_url() override
     {
         return MANUAL_URL + "beginner/basic-functions/playback-speed-start-stop";
     }
@@ -1559,8 +1578,9 @@ class ControllerPause : public MONO_UIButtonController
   public:
     ControllerPause(AppInstanceStore *const app_instance_store_)
         : MONO_UIButtonController(app_instance_store_), _app_instance_store(app_instance_store_),
-          _drawable(Drawable::createFromImageData(BinaryData::pause_svg, BinaryData::pause_svgSize)
-                        .release())
+          _drawable(
+              juce::Drawable::createFromImageData(BinaryData::pause_svg, BinaryData::pause_svgSize)
+                  .release())
     {
     }
 };
@@ -1570,7 +1590,7 @@ class ControllerPause : public MONO_UIButtonController
 class ControllerStop : public MONO_UIButtonController
 {
     AppInstanceStore *_app_instance_store;
-    ScopedPointer<Drawable> _drawable;
+    juce::ScopedPointer<juce::Drawable> _drawable;
 
     IS_NOT_MIDI_LEARNABLE
 
@@ -1593,7 +1613,7 @@ class ControllerStop : public MONO_UIButtonController
 #endif
     }
 
-    const Drawable *get_current_drawable() override
+    const juce::Drawable *get_current_drawable() override
     {
 #ifdef B_STEP_STANDALONE
         return _drawable;
@@ -1602,16 +1622,16 @@ class ControllerStop : public MONO_UIButtonController
 #endif
     }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
 #ifndef B_STEP_STANDALONE
-        string_ = String("x2");
+        string_ = juce::String("x2");
 #else
         string_ = HAS_NO_TEXT_VALUE;
 #endif
     }
 
-    const String get_help_url() override
+    const juce::String get_help_url() override
     {
         return MANUAL_URL + "beginner/basic-functions/playback-speed-start-stop";
     }
@@ -1619,8 +1639,9 @@ class ControllerStop : public MONO_UIButtonController
   public:
     ControllerStop(AppInstanceStore *const app_instance_store_)
         : MONO_UIButtonController(app_instance_store_), _app_instance_store(app_instance_store_),
-          _drawable(Drawable::createFromImageData(BinaryData::stop_svg, BinaryData::stop_svgSize)
-                        .release())
+          _drawable(
+              juce::Drawable::createFromImageData(BinaryData::stop_svg, BinaryData::stop_svgSize)
+                  .release())
     {
     }
 
@@ -1638,9 +1659,9 @@ class ControllerBPM : public MONO_UISliderController
         return &_app_instance_store->audio_processor->bpm;
     }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
-        string_ = String(_app_instance_store->audio_processor->bpm);
+        string_ = juce::String(_app_instance_store->audio_processor->bpm);
     }
 
     virtual bool paint_popup_above() const override { return false; }
@@ -1660,7 +1681,7 @@ class ControllerBPM : public MONO_UISliderController
 class ControllerMute : public MONO_UIButtonController
 {
     AppInstanceStore *_app_instance_store;
-    ScopedPointer<Drawable> _drawable;
+    juce::ScopedPointer<juce::Drawable> _drawable;
 
     PodParameterBase *get_parameter() const override
     {
@@ -1678,13 +1699,14 @@ class ControllerMute : public MONO_UIButtonController
         return _app_instance_store->audio_processor->is_mute;
     }
 
-    const Drawable *get_current_drawable() override { return _drawable; }
+    const juce::Drawable *get_current_drawable() override { return _drawable; }
 
   public:
     ControllerMute(AppInstanceStore *const app_instance_store_)
         : MONO_UIButtonController(app_instance_store_), _app_instance_store(app_instance_store_),
-          _drawable(Drawable::createFromImageData(BinaryData::mute_svg, BinaryData::mute_svgSize)
-                        .release())
+          _drawable(
+              juce::Drawable::createFromImageData(BinaryData::mute_svg, BinaryData::mute_svgSize)
+                  .release())
     {
     }
 
@@ -1702,7 +1724,7 @@ class ControllerSwingPosition : public MONO_UISliderController
         return &_app_instance_store->pattern.swing_position;
     }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
         if (_app_instance_store->pattern.swing_position == 0)
             string_ = "OFF";
@@ -1731,7 +1753,7 @@ class ControllerSwingDistanceOffset : public MONO_UISliderController
         return &_app_instance_store->pattern.swing_distance_offset;
     }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
         if (_app_instance_store->pattern.swing_distance_offset == 0)
         {
@@ -1760,7 +1782,7 @@ class ControllerSwingVelocityOffset : public MONO_UISliderController
         return &_app_instance_store->pattern.swing_velocity_offset;
     }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
         if (_app_instance_store->pattern.swing_velocity_offset == 0)
         {
@@ -1768,7 +1790,7 @@ class ControllerSwingVelocityOffset : public MONO_UISliderController
             return;
         }
 
-        string_ = String(_app_instance_store->pattern.swing_velocity_offset * -1);
+        string_ = juce::String(_app_instance_store->pattern.swing_velocity_offset * -1);
     }
 
   public:
@@ -1788,7 +1810,7 @@ class ControllerSwingDurationOffset : public MONO_UISliderController
         return &_app_instance_store->pattern.swing_duration_offset;
     }
 
-    void get_label_text_top(String &string_) const override
+    void get_label_text_top(juce::String &string_) const override
     {
         if (_app_instance_store->pattern.swing_duration_offset == 0)
         {
@@ -1797,7 +1819,7 @@ class ControllerSwingDurationOffset : public MONO_UISliderController
         }
 
         int value = _app_instance_store->pattern.swing_duration_offset;
-        String minus;
+        juce::String minus;
         if (value < 0)
         {
             minus = "-";
@@ -1822,7 +1844,7 @@ class ControllerSwingDurationOffset : public MONO_UISliderController
 class ControllerChordEditor : public MONO_UIButtonController
 {
     AppInstanceStore *const _app_instance_store;
-    ScopedPointer<Drawable> _drawable;
+    juce::ScopedPointer<juce::Drawable> _drawable;
 
     IS_NOT_MIDI_LEARNABLE
 
@@ -1840,15 +1862,16 @@ class ControllerChordEditor : public MONO_UIButtonController
         return false;
     }
 
-    const Drawable *get_current_drawable() override { return _drawable; }
+    const juce::Drawable *get_current_drawable() override { return _drawable; }
 
-    const String get_help_url() override { return MANUAL_URL + "beginner/the-chord-editor"; }
+    const juce::String get_help_url() override { return MANUAL_URL + "beginner/the-chord-editor"; }
 
   public:
     ControllerChordEditor(AppInstanceStore *const app_instance_store_)
         : MONO_UIButtonController(app_instance_store_), _app_instance_store(app_instance_store_),
-          _drawable(Drawable::createFromImageData(BinaryData::edit_svg, BinaryData::edit_svgSize)
-                        .release())
+          _drawable(
+              juce::Drawable::createFromImageData(BinaryData::edit_svg, BinaryData::edit_svgSize)
+                  .release())
     {
     }
 
@@ -1857,8 +1880,8 @@ class ControllerChordEditor : public MONO_UIButtonController
 
 class ControllerLayer : public MONO_UIButtonController
 {
-    const uint8 _layer_id;
-    const String _name;
+    const std::uint8_t _layer_id;
+    const juce::String _name;
 
     IS_NOT_MIDI_LEARNABLE
 
@@ -1875,15 +1898,18 @@ class ControllerLayer : public MONO_UIButtonController
 
     bool is_rect_style_else_fill_area() const override { return false; }
 
-    virtual void get_label_text_top(String &string_) const override { string_ = _name; }
+    virtual void get_label_text_top(juce::String &string_) const override { string_ = _name; }
 
     bool using_caching() const override { return false; }
 
-    const String get_help_url() override { return MANUAL_URL + "rookie/what-the-hell-are-layers"; }
+    const juce::String get_help_url() override
+    {
+        return MANUAL_URL + "rookie/what-the-hell-are-layers";
+    }
 
   public:
-    ControllerLayer(AppInstanceStore *const app_instance_store_, uint8 layer_id_,
-                    const String &name_)
+    ControllerLayer(AppInstanceStore *const app_instance_store_, std::uint8_t layer_id_,
+                    const juce::String &name_)
         : MONO_UIButtonController(app_instance_store_), _layer_id(layer_id_), _name(name_)
     {
     }
@@ -2007,13 +2033,14 @@ Controllers::ForBar::ForBar(AppInstanceStore *const store_)
     }
 }
 
-Controllers::ForBar::ForBarstring::ForBarstring(AppInstanceStore *const store_, uint8 barstring_id_)
+Controllers::ForBar::ForBarstring::ForBarstring(AppInstanceStore *const store_,
+                                                std::uint8_t barstring_id_)
     : octave(new ControllerBarstringOctave(store_, barstring_id_)), step(store_, barstring_id_)
 {
 }
 
 Controllers::ForBar::ForBarstring::ForStep::ForStep(AppInstanceStore *const store_,
-                                                    uint8 barstring_id_)
+                                                    std::uint8_t barstring_id_)
 {
     for (unsigned int step_id = 0; step_id != SUM_STEPS; ++step_id)
         add_to_const_array(mutes, new ControllerStepMute(store_, barstring_id_, step_id));

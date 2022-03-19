@@ -3,10 +3,11 @@
 
 #include "App.h"
 #include "PluginProcessor.h"
+#include <juce_audio_formats/juce_audio_formats.h>
 
-class AudioPlayer : public Component, public Timer, public Slider::Listener
+class AudioPlayer : public juce::Component, public juce::Timer, public juce::Slider::Listener
 {
-    Slider *_thumb;
+    juce::Slider *_thumb;
     GstepAudioProcessor *const _processor;
     int selected_device;
 
@@ -31,7 +32,7 @@ class AudioPlayer : public Component, public Timer, public Slider::Listener
 
             _supported_audio_format_names += formatManager.getKnownFormat(i)->getFormatName();
 
-            StringArray extensions = formatManager.getKnownFormat(i)->getFileExtensions();
+            juce::StringArray extensions = formatManager.getKnownFormat(i)->getFileExtensions();
             for (int j = 0; j != extensions.size(); ++j)
                 _supported_audio_format_extensions.add(extensions.getReference(j));
         }
@@ -88,7 +89,7 @@ class AudioPlayer : public Component, public Timer, public Slider::Listener
     }
 
   private:
-    AudioFormatManager formatManager;
+    juce::AudioFormatManager formatManager;
 #ifdef B_STEP_STANDALONE
     AudioDeviceManager deviceManager;
     TimeSliceThread thread;
@@ -98,13 +99,13 @@ class AudioPlayer : public Component, public Timer, public Slider::Listener
     ScopedPointer<AudioFormatReaderSource> currentAudioFileSource;
 #endif // B_STEP_STANDALONE
 
-    OwnedArray<AudioFormat> _supported_audio_formats;
-    String _supported_audio_format_names;
-    StringArray _supported_audio_format_extensions;
+    juce::OwnedArray<juce::AudioFormat> _supported_audio_formats;
+    juce::String _supported_audio_format_names;
+    juce::StringArray _supported_audio_format_extensions;
 
     //==============================================================================
   public:
-    String get_selected_device_name() const noexcept
+    juce::String get_selected_device_name() const noexcept
     {
 #ifdef B_STEP_STANDALONE
         if (deviceManager.getCurrentAudioDevice())
@@ -116,7 +117,7 @@ class AudioPlayer : public Component, public Timer, public Slider::Listener
 #endif // B_STEP_STANDALONE
     }
 
-    inline bool loadFileIntoTransport(InputStream *audioFileStream_)
+    inline bool loadFileIntoTransport(juce::InputStream *audioFileStream_)
     {
 #ifdef B_STEP_STANDALONE
         if (selected_device == -2)
@@ -129,7 +130,7 @@ class AudioPlayer : public Component, public Timer, public Slider::Listener
 #endif // B_STEP_STANDALONE
         FIXMEPORT;
         // AudioFormatReader* reader = formatManager.createReaderFor( audioFileStream_ );
-        AudioFormatReader *reader{nullptr};
+        juce::AudioFormatReader *reader{nullptr};
 #ifndef B_STEP_STANDALONE
         _processor->set_active_sample(reader);
 #endif
@@ -149,7 +150,7 @@ class AudioPlayer : public Component, public Timer, public Slider::Listener
         }
         return false;
     }
-    inline bool loadFileIntoTransport(const File &file_)
+    inline bool loadFileIntoTransport(const juce::File &file_)
     {
 #ifdef B_STEP_STANDALONE
         if (selected_device == -2)
@@ -160,7 +161,7 @@ class AudioPlayer : public Component, public Timer, public Slider::Listener
         transportSource.setSource(nullptr);
         currentAudioFileSource = nullptr;
 #endif // B_STEP_STANDALONE
-        AudioFormatReader *reader = formatManager.createReaderFor(file_);
+        juce::AudioFormatReader *reader = formatManager.createReaderFor(file_);
 #ifndef B_STEP_STANDALONE
         _processor->set_active_sample(reader);
 #endif
@@ -185,7 +186,7 @@ class AudioPlayer : public Component, public Timer, public Slider::Listener
 #endif // B_STEP_STANDALONE
     }
 
-    inline void play(Slider *const thumb_)
+    inline void play(juce::Slider *const thumb_)
     {
         if (selected_device == -2)
             return;
@@ -204,18 +205,18 @@ class AudioPlayer : public Component, public Timer, public Slider::Listener
 #else
             _thumb->setRange(0, _processor->get_sample_playback_length(), 1);
 #endif // B_STEP_STANDALONE
-            _thumb->setColour(Slider::thumbColourId, Colour(0xff7fff00));
+            _thumb->setColour(juce::Slider::thumbColourId, juce::Colour(0xff7fff00));
             _thumb->addListener(this);
         }
 
         startTimer(250);
     }
-    void unset_view(Slider *const thumb_)
+    void unset_view(juce::Slider *const thumb_)
     {
         if (_thumb == thumb_)
             _thumb = nullptr;
     }
-    void sliderValueChanged(Slider *thumb_) override
+    void sliderValueChanged(juce::Slider *thumb_) override
     {
         if (_thumb)
         {
@@ -248,8 +249,8 @@ class AudioPlayer : public Component, public Timer, public Slider::Listener
         if (_thumb)
         {
             _thumb->removeListener(this);
-            _thumb->setValue(0, dontSendNotification);
-            _thumb->setColour(Slider::thumbColourId, Colour(0xff313131));
+            _thumb->setValue(0, juce::dontSendNotification);
+            _thumb->setColour(juce::Slider::thumbColourId, juce::Colour(0xff313131));
             _thumb = nullptr;
         }
     }
@@ -272,14 +273,15 @@ class AudioPlayer : public Component, public Timer, public Slider::Listener
         if (transportSource.getCurrentPosition() >= transportSource.getLengthInSeconds())
             stop();
 #else
-            _thumb->setValue(_processor->get_sample_playback_position(), dontSendNotification);
+            _thumb->setValue(_processor->get_sample_playback_position(),
+                             juce::dontSendNotification);
 
         if (!_processor->is_playing_sample())
             stop();
 #endif // B_STEP_STANDALONE
     }
 
-    StringArray get_availabe_devices()
+    juce::StringArray get_availabe_devices()
     {
 #ifdef B_STEP_STANDALONE
         const OwnedArray<AudioIODeviceType> &devices = deviceManager.getAvailableDeviceTypes();
@@ -291,18 +293,21 @@ class AudioPlayer : public Component, public Timer, public Slider::Listener
 
         return names;
 #else
-        StringArray names;
+        juce::StringArray names;
         names.add("IN HOST");
         return names;
 #endif // B_STEP_STANDALONE
     }
 
-    const String &get_supported_audio_formats() const { return _supported_audio_format_names; }
-    const StringArray &get_supported_audio_extensions() const
+    const juce::String &get_supported_audio_formats() const
+    {
+        return _supported_audio_format_names;
+    }
+    const juce::StringArray &get_supported_audio_extensions() const
     {
         return _supported_audio_format_extensions;
     }
-    bool has_supported_audio_extension(const File &file_)
+    bool has_supported_audio_extension(const juce::File &file_)
     {
         for (int i = 0; i != _supported_audio_format_extensions.size(); ++i)
             if (file_.getFileExtension().compareIgnoreCase(

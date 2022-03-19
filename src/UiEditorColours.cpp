@@ -34,70 +34,71 @@ void UiEditorColourStyler::timerCallback()
 UiEditorColourStyler::UiEditorColourStyler(ComponentColours *const colours_)
     : _colours(colours_), editable_colour(&colours_->slider_text_colour)
 {
-    addAndMakeVisible(colour_selector = new ColourSelector(ColourSelector::showSliders |
-                                                           ColourSelector::showColourspace));
+    addAndMakeVisible(colour_selector =
+                          new juce::ColourSelector(juce::ColourSelector::showSliders |
+                                                   juce::ColourSelector::showColourspace));
 
-    addAndMakeVisible(col_1 = new TextButton(String()));
+    addAndMakeVisible(col_1 = new juce::TextButton(juce::String()));
     col_1->addListener(this);
 
-    addAndMakeVisible(style_1 = new TextButton(String()));
+    addAndMakeVisible(style_1 = new juce::TextButton(juce::String()));
     style_1->setButtonText(TRANS("PRE 1"));
     style_1->addListener(this);
-    style_1->setColour(TextButton::buttonColourId, Colour(0xff080d0f));
-    style_1->setColour(TextButton::textColourOffId, Colour(0xff9b9dc8));
+    style_1->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff080d0f));
+    style_1->setColour(juce::TextButton::textColourOffId, juce::Colour(0xff9b9dc8));
 
-    addAndMakeVisible(col_2 = new TextButton(String()));
+    addAndMakeVisible(col_2 = new juce::TextButton(juce::String()));
     col_2->addListener(this);
 
-    addAndMakeVisible(col_3 = new TextButton(String()));
+    addAndMakeVisible(col_3 = new juce::TextButton(juce::String()));
     col_3->addListener(this);
 
-    addAndMakeVisible(col_4 = new TextButton(String()));
+    addAndMakeVisible(col_4 = new juce::TextButton(juce::String()));
     col_4->addListener(this);
 
-    addAndMakeVisible(col_5 = new TextButton(String()));
+    addAndMakeVisible(col_5 = new juce::TextButton(juce::String()));
     col_5->addListener(this);
 
-    addAndMakeVisible(col_6 = new TextButton(String()));
+    addAndMakeVisible(col_6 = new juce::TextButton(juce::String()));
     col_6->addListener(this);
 
-    addAndMakeVisible(col_7 = new TextButton(String()));
+    addAndMakeVisible(col_7 = new juce::TextButton(juce::String()));
     col_7->addListener(this);
 
-    addAndMakeVisible(col_8 = new TextButton(String()));
+    addAndMakeVisible(col_8 = new juce::TextButton(juce::String()));
     col_8->addListener(this);
 
-    addAndMakeVisible(col_9 = new TextButton(String()));
+    addAndMakeVisible(col_9 = new juce::TextButton(juce::String()));
     col_9->addListener(this);
 
-    addAndMakeVisible(col_10 = new TextButton(String()));
+    addAndMakeVisible(col_10 = new juce::TextButton(juce::String()));
     col_10->addListener(this);
 
-    addAndMakeVisible(style_2 = new TextButton(String()));
+    addAndMakeVisible(style_2 = new juce::TextButton(juce::String()));
     style_2->setButtonText(TRANS("PRE 1"));
     style_2->addListener(this);
-    style_2->setColour(TextButton::buttonColourId, Colour(0xff080d0f));
-    style_2->setColour(TextButton::textColourOffId, Colour(0xff9b9dc8));
+    style_2->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff080d0f));
+    style_2->setColour(juce::TextButton::textColourOffId, juce::Colour(0xff9b9dc8));
 
-    addAndMakeVisible(style_3 = new TextButton(String()));
+    addAndMakeVisible(style_3 = new juce::TextButton(juce::String()));
     style_3->setButtonText(TRANS("PRE 1"));
     style_3->addListener(this);
-    style_3->setColour(TextButton::buttonColourId, Colour(0xff080d0f));
-    style_3->setColour(TextButton::textColourOffId, Colour(0xff9b9dc8));
+    style_3->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff080d0f));
+    style_3->setColour(juce::TextButton::textColourOffId, juce::Colour(0xff9b9dc8));
 
-    addAndMakeVisible(style_4 = new TextButton(String()));
+    addAndMakeVisible(style_4 = new juce::TextButton(juce::String()));
     style_4->setButtonText(TRANS("PRE 1"));
     style_4->addListener(this);
-    style_4->setColour(TextButton::buttonColourId, Colour(0xff080d0f));
-    style_4->setColour(TextButton::textColourOffId, Colour(0xff9b9dc8));
+    style_4->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff080d0f));
+    style_4->setColour(juce::TextButton::textColourOffId, juce::Colour(0xff9b9dc8));
 
-    addAndMakeVisible(style_5 = new TextButton(String()));
+    addAndMakeVisible(style_5 = new juce::TextButton(juce::String()));
     style_5->setButtonText(TRANS("PRE 1"));
     style_5->addListener(this);
-    style_5->setColour(TextButton::buttonColourId, Colour(0xff080d0f));
-    style_5->setColour(TextButton::textColourOffId, Colour(0xff9b9dc8));
+    style_5->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff080d0f));
+    style_5->setColour(juce::TextButton::textColourOffId, juce::Colour(0xff9b9dc8));
 
-    addAndMakeVisible(col_11 = new TextButton(String()));
+    addAndMakeVisible(col_11 = new juce::TextButton(juce::String()));
     col_11->addListener(this);
 
     //[UserPreSize]
@@ -140,21 +141,21 @@ UiEditorColourStyler::~UiEditorColourStyler()
 }
 
 //==============================================================================
-void UiEditorColourStyler::paint(Graphics &g)
+void UiEditorColourStyler::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //
     //[/UserPrePaint]
 
-    g.fillAll(Colours::black);
+    g.fillAll(juce::Colours::black);
 
-    g.setColour(Colour(0xff161616));
+    g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    g.setColour(Colour(0xffff3b00));
+    g.setColour(juce::Colour(0xffff3b00));
     g.fillRoundedRectangle(20.0f, 418.0f, static_cast<float>(proportionOfWidth(0.8644f)), 1.0f,
                            10.000f);
 
@@ -188,7 +189,7 @@ void UiEditorColourStyler::resized()
     //[/UserResized]
 }
 
-void UiEditorColourStyler::buttonClicked(Button *buttonThatWasClicked)
+void UiEditorColourStyler::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     stopTimer();

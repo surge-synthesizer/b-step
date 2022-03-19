@@ -123,10 +123,10 @@ class RuntimeListener
   public:
     NOINLINE virtual ~RuntimeListener();
 };
-class RuntimeNotifyer : public DeletedAtShutdown
+class RuntimeNotifyer : public juce::DeletedAtShutdown
 {
     friend class RuntimeListener;
-    Array<RuntimeListener *> listeners;
+    juce::Array<RuntimeListener *> listeners;
 
     double sample_rate;
     double sample_rate_1ths;
@@ -149,15 +149,15 @@ class RuntimeNotifyer : public DeletedAtShutdown
 //==============================================================================
 struct RuntimeInfo
 { /* TODO singleton */
-    int64 samples_since_start;
+    std::int64_t samples_since_start;
     double bpm;
 
     // TODO standalone only
     bool is_extern_synced;
     bool is_running;
     int clock_counter;
-    Array<int64> next_step_at_sample;
-    Array<int> next_step;
+    juce::Array<std::int64_t> next_step_at_sample;
+    juce::Array<int> next_step;
 
     NOINLINE RuntimeInfo();
     NOINLINE ~RuntimeInfo();
@@ -183,7 +183,8 @@ struct LFOData
     NOINLINE ~LFOData();
 
     // TODO can be static
-    NOINLINE void get_saveable_params(Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
+    NOINLINE void
+    get_saveable_params(juce::Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
 
   private:
     NOINLINE LFOData();
@@ -269,7 +270,8 @@ struct OSCData
     NOINLINE OSCData(int id_);
     NOINLINE ~OSCData();
 
-    NOINLINE void get_saveable_params(Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
+    NOINLINE void
+    get_saveable_params(juce::Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
 
   private:
     MONO_NOT_CTOR_COPYABLE(OSCData)
@@ -315,7 +317,8 @@ struct ENVData
     NOINLINE ENVData(int id_);
     NOINLINE virtual ~ENVData();
 
-    NOINLINE void get_saveable_params(Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
+    NOINLINE void
+    get_saveable_params(juce::Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
 
   private:
     MONO_NOT_CTOR_COPYABLE(ENVData)
@@ -364,7 +367,8 @@ struct ENVPresetDef
     NOINLINE ENVPresetDef(int id_);
     NOINLINE ~ENVPresetDef();
 
-    NOINLINE void get_saveable_params(Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
+    NOINLINE void
+    get_saveable_params(juce::Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
 
   private:
     MONO_NOT_CTOR_COPYABLE(ENVPresetDef)
@@ -421,7 +425,8 @@ struct ENVPresetData : public ENVData, mono_ParameterListener<float>
     NOINLINE ENVPresetData(int id_, ENVPresetDef *def_);
     NOINLINE ~ENVPresetData();
 
-    NOINLINE void get_saveable_params(Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
+    NOINLINE void
+    get_saveable_params(juce::Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
 
   private:
     MONO_NOT_CTOR_COPYABLE(ENVPresetData)
@@ -473,7 +478,7 @@ struct FilterData : mono_ParameterListener<float>
     typedef mono_Parameter<bool, true> modulate_gain_t;
     modulate_gain_t modulate_gain;
 
-    Array<ENVData *> input_env_datas;
+    juce::Array<ENVData *> input_env_datas;
     typedef mono_ParameterGlide<float, 0, -1000, 1000, 1000, 100> sustain_replacement_t;
     typedef mono_ParameterArray<sustain_replacement_t, SUM_INPUTS_PER_FILTER> input_sustain_array_t;
     input_sustain_array_t input_sustains;
@@ -527,10 +532,11 @@ struct FilterData : mono_ParameterListener<float>
     inline const FilterData &operator=(const FilterData &other_) noexcept;
 
     // ONLY ON INIT USED CTORS
-    NOINLINE FilterData(int id_, Array<ENVData *> &input_env_datas_);
+    NOINLINE FilterData(int id_, juce::Array<ENVData *> &input_env_datas_);
     NOINLINE ~FilterData();
 
-    NOINLINE void get_saveable_params(Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
+    NOINLINE void
+    get_saveable_params(juce::Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
 
   private:
     MONO_NOT_CTOR_COPYABLE(FilterData)
@@ -610,7 +616,8 @@ struct ArpSequencerData
     NOINLINE ArpSequencerData(int id_);
     NOINLINE ~ArpSequencerData();
 
-    NOINLINE void get_saveable_params(Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
+    NOINLINE void
+    get_saveable_params(juce::Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
 
   private:
     MONO_NOT_CTOR_COPYABLE(ArpSequencerData)
@@ -674,7 +681,8 @@ struct EQData : mono_ParameterListener<float>
     NOINLINE EQData(int id_, ENVPresetDef *const def_);
     NOINLINE ~EQData();
 
-    NOINLINE void get_saveable_params(Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
+    NOINLINE void
+    get_saveable_params(juce::Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
 
   private:
     MONO_NOT_CTOR_COPYABLE(EQData)
@@ -708,7 +716,8 @@ struct ReverbData
     NOINLINE ReverbData(int id_);
     NOINLINE ~ReverbData();
 
-    NOINLINE void get_saveable_params(Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
+    NOINLINE void
+    get_saveable_params(juce::Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
 
   private:
     NOINLINE ReverbData();
@@ -735,7 +744,7 @@ struct ChorusData : mono_ParameterListener<float>
 
     inline const ChorusData &operator=(const ChorusData &other_) noexcept;
 
-    ScopedPointer<ENVPresetData> modulation_env_data;
+    juce::ScopedPointer<ENVPresetData> modulation_env_data;
 
     void parameter_value_changed(mono_ParameterBase<float> *param_) noexcept override;
     void parameter_value_changed_always_notification(
@@ -745,7 +754,8 @@ struct ChorusData : mono_ParameterListener<float>
     NOINLINE ChorusData(int id_, ENVPresetDef *const def_);
     NOINLINE ~ChorusData();
 
-    NOINLINE void get_saveable_params(Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
+    NOINLINE void
+    get_saveable_params(juce::Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
 
   private:
     MONO_NOT_CTOR_COPYABLE(ChorusData)
@@ -789,28 +799,29 @@ struct SynthData : mono_ParameterListener<float>
     mono_Parameter<bool, false> ctrl;
     mono_Parameter<float, 200, 0, 1000, 1000, 100> midi_pickup_offset;
 
-    OwnedArray<LFOData> lfo_datas;
-    OwnedArray<OSCData> osc_datas;
-    OwnedArray<ENVPresetData> filter_input_env_datas;
-    ScopedPointer<ENVPresetDef> env_preset_def;
-    OwnedArray<FilterData> filter_datas;
-    ScopedPointer<EQData> eq_data;
-    OwnedArray<ENVData> env_datas;
-    ScopedPointer<ArpSequencerData> arp_sequencer_data;
-    ScopedPointer<ReverbData> reverb_data;
-    ScopedPointer<ChorusData> chorus_data;
+    juce::OwnedArray<LFOData> lfo_datas;
+    juce::OwnedArray<OSCData> osc_datas;
+    juce::OwnedArray<ENVPresetData> filter_input_env_datas;
+    juce::ScopedPointer<ENVPresetDef> env_preset_def;
+    juce::OwnedArray<FilterData> filter_datas;
+    juce::ScopedPointer<EQData> eq_data;
+    juce::OwnedArray<ENVData> env_datas;
+    juce::ScopedPointer<ArpSequencerData> arp_sequencer_data;
+    juce::ScopedPointer<ReverbData> reverb_data;
+    juce::ScopedPointer<ChorusData> chorus_data;
 
   public:
     inline const SynthData &operator=(const SynthData &other_) noexcept;
 
     // ==============================================================================
   private:
-    Array<mono_ParameterCompatibilityBase *> saveable_parameters;
-    NOINLINE void get_saveable_params(Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
+    juce::Array<mono_ParameterCompatibilityBase *> saveable_parameters;
+    NOINLINE void
+    get_saveable_params(juce::Array<mono_ParameterCompatibilityBase *> &params_) noexcept;
     NOINLINE void colect_saveable_parameters() noexcept;
 
   public:
-    Array<mono_ParameterCompatibilityBase *> &get_atomateable_parameters() noexcept
+    juce::Array<mono_ParameterCompatibilityBase *> &get_atomateable_parameters() noexcept
     {
         return saveable_parameters;
     }
@@ -863,7 +874,7 @@ struct SynthData : mono_ParameterListener<float>
     class MorpherSelection
     {
       public:
-        Array<int> active_morph_selections;
+        juce::Array<int> active_morph_selections;
 
         void activate(MORPH_SELCTIONS_IDS id_, OwnedArray<MorpherSelection> &peers_);
 
@@ -875,10 +886,10 @@ struct SynthData : mono_ParameterListener<float>
   public:
     void activate_morph_selection(int morpher_id_, MORPH_SELCTIONS_IDS id_,
                                   bool run_sync_morph_ = true);
-    const Array<int> &get_active_morph_selections(int morpher_id_) const;
+    const juce::Array<int> &get_active_morph_selections(int morpher_id_) const;
 
   private:
-    class MorphGroup : public Timer,
+    class MorphGroup : public juce::Timer,
                        mono_ParameterListener<float>,
                        mono_ParameterListener<bool>,
                        mono_ParameterListener<int>
@@ -888,11 +899,11 @@ struct SynthData : mono_ParameterListener<float>
         MorphGroup *left_morph_group;
         MorphGroup *right_morph_group;
 
-        Array<mono_ParameterBase<float> *> params;
+        juce::Array<mono_ParameterBase<float> *> params;
         float last_power_of_right;
-        Array<mono_ParameterBase<bool> *> switch_bool_params;
+        juce::Array<mono_ParameterBase<bool> *> switch_bool_params;
         bool current_switch;
-        Array<mono_ParameterBase<int> *> switch_int_params;
+        juce::Array<mono_ParameterBase<int> *> switch_int_params;
 
       public:
         NOINLINE void set_sources(SynthData *left_source_, SynthData *right_source_,
@@ -900,8 +911,8 @@ struct SynthData : mono_ParameterListener<float>
         inline void morph(float morph_amount_) noexcept;
         inline void morph_switchs(bool left_right_) noexcept;
 
-        Array<float> sync_param_deltas;
-        Array<float> sync_modulation_deltas;
+        juce::Array<float> sync_param_deltas;
+        juce::Array<float> sync_modulation_deltas;
         void run_sync_morph() noexcept;
         int current_callbacks;
         void timerCallback() override;
@@ -929,8 +940,8 @@ struct SynthData : mono_ParameterListener<float>
         morph_group_main, morph_group_arp_tune, morph_group_arp_velocity,
         morph_group_arp_glide_shuffle, morph_group_arp_switchs;
 
-    Array<MorphGroup *> morph_groups;
-    Array<Array<MorphGroup *>> morph_groups_per_morpher;
+    juce::Array<MorphGroup *> morph_groups;
+    juce::Array<juce::Array<MorphGroup *>> morph_groups_per_morpher;
     void parameter_value_changed(mono_ParameterBase<float> *param_) noexcept override;
 
     NOINLINE void init_morph_groups(DATA_TYPES data_type) noexcept;
@@ -967,8 +978,8 @@ struct SynthData : mono_ParameterListener<float>
     mono_Parameter<bool, true> animate_modulations;
 
   private:
-    StringArray banks;
-    Array<StringArray> program_names;
+    juce::StringArray banks;
+    juce::Array<StringArray> program_names;
 
     int current_program;
     int current_program_abs;
@@ -984,8 +995,8 @@ struct SynthData : mono_ParameterListener<float>
     NOINLINE const StringArray &get_programms(int bank_id_);
 
     int get_current_programm_id_abs() const;
-    const String &get_current_program_name_abs() const noexcept;
-    const String &get_program_name_abs(int id_) const noexcept;
+    const juce::String &get_current_program_name_abs() const noexcept;
+    const juce::String &get_program_name_abs(int id_) const noexcept;
 
     NOINLINE void set_current_bank(int bank_index_);
     NOINLINE void set_current_program(int programm_index_);
@@ -1022,19 +1033,19 @@ struct SynthData : mono_ParameterListener<float>
 // ==============================================================================
 class ENV;
 class MONOVoice;
-class mono_ParameterOwnerStore : public DeletedAtShutdown
+class mono_ParameterOwnerStore : public juce::DeletedAtShutdown
 {
 
   public:
     RuntimeInfo *runtime_info;
 
-    Array<LFOData *> lfo_datas;
-    Array<OSCData *> osc_datas;
-    Array<ENVPresetData *> filter_input_env_datas;
-    Array<FilterData *> filter_datas;
+    juce::Array<LFOData *> lfo_datas;
+    juce::Array<OSCData *> osc_datas;
+    juce::Array<ENVPresetData *> filter_input_env_datas;
+    juce::Array<FilterData *> filter_datas;
     ENVPresetDef *env_preset_def;
     EQData *eq_data;
-    Array<ENVData *> env_datas;
+    juce::Array<ENVData *> env_datas;
     ArpSequencerData *arp_data;
     ReverbData *reverb_data;
     ChorusData *chorus_data;
@@ -1045,7 +1056,7 @@ class mono_ParameterOwnerStore : public DeletedAtShutdown
 
     MONOVoice *voice;
 
-    static void get_full_adsr(float state_, Array<float> &curve, int &sustain_start_,
+    static void get_full_adsr(float state_, juce::Array<float> &curve, int &sustain_start_,
                               int &sustain_end_);
     static float get_flt_input_env_amp(int flt_id_, int input_id_);
     static float get_band_env_amp(int band_id_);
@@ -1081,7 +1092,7 @@ template <int num_channels> class mono_AudioSampleBuffer
     float **channels;
     int size;
     size_t allocatedBytes;
-    HeapBlock<char, true> allocatedData;
+    juce::HeapBlock<char, true> allocatedData;
     float *preallocatedChannelSpace[num_channels];
 
   public:
@@ -1202,7 +1213,7 @@ struct DataBuffer
     mono_AudioSampleBuffer<SUM_EQ_BANDS> eq_band_tmp;
 
     // REFERENCE TO THE BUFFER IN THE BLOCK
-    AudioSampleBuffer *final_output_buffers_l_r;
+    juce::AudioSampleBuffer *final_output_buffers_l_r;
 
     void resize_buffer_if_required(int min_size_required_) noexcept;
 

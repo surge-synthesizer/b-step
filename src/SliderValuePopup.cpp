@@ -25,7 +25,7 @@
 #include "SliderValuePopup.h"
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-void SliderValuePopup::set_text(String &text_)
+void SliderValuePopup::set_text(juce::String &text_)
 {
     if (_text.compare(text_) != 0)
     {
@@ -63,38 +63,38 @@ SliderValuePopup::~SliderValuePopup()
 }
 
 //==============================================================================
-void SliderValuePopup::paint(Graphics &g)
+void SliderValuePopup::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-    g.setColour(Colour(0xff111111));
+    g.setColour(juce::Colour(0xff111111));
     g.fillRoundedRectangle(1.0f, 1.0f, static_cast<float>(getWidth() - 2),
                            static_cast<float>(getHeight() - 2), 5.000f);
 
     if (_model)
         if (_model->get_style())
-            g.setColour(Colour(_model->get_style()->get_font_color()));
+            g.setColour(juce::Colour(_model->get_style()->get_font_color()));
 
     g.drawRoundedRectangle(1.0f, 1.0f, static_cast<float>(getWidth() - 2),
                            static_cast<float>(getHeight() - 2), 5.000f, 2.000f);
 
-    AppStyle::paint_outline_label(g, *this, _text, _model->get_style(), Justification::centred,
-                                  0.0588f, 0.1000f, 0.8824f, 0.8000f);
+    AppStyle::paint_outline_label(g, *this, _text, _model->get_style(),
+                                  juce::Justification::centred, 0.0588f, 0.1000f, 0.8824f, 0.8000f);
 
     return;
     //[/UserPrePaint]
 
-    g.setColour(Colour(0xff111111));
+    g.setColour(juce::Colour(0xff111111));
     g.fillRoundedRectangle(1.0f, 1.0f, static_cast<float>(getWidth() - 2),
                            static_cast<float>(getHeight() - 2), 5.000f);
 
-    g.setColour(Colours::yellow);
+    g.setColour(juce::Colours::yellow);
     g.drawRoundedRectangle(1.0f, 1.0f, static_cast<float>(getWidth() - 2),
                            static_cast<float>(getHeight() - 2), 5.000f, 2.000f);
 
-    g.setColour(Colours::yellow);
-    g.setFont(Font(22.00f, Font::bold));
+    g.setColour(juce::Colours::yellow);
+    g.setFont(juce::Font(22.00f, juce::Font::bold));
     g.drawText(TRANS("XXX"), 0, 0, proportionOfWidth(1.0000f), proportionOfHeight(1.0000f),
-               Justification::centred, true);
+               juce::Justification::centred, true);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]

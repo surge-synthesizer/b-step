@@ -4,33 +4,33 @@
 #include "UI_Base.h"
 
 class UiButton : public UIBase,
-                 public DragAndDropTarget,
-                 public DragAndDropContainer,
-                 public Component,
-                 public Timer
+                 public juce::DragAndDropTarget,
+                 public juce::DragAndDropContainer,
+                 public juce::Component,
+                 public juce::Timer
 {
     bool is_mouse_down;
     bool is_simple_drag_valid;
     bool is_multi_drag_valid;
     bool was_dragging;
 
-    ScopedPointer<Component> drop_source;
+    juce::ScopedPointer<juce::Component> drop_source;
 
   public:
-    void mouseDown(const MouseEvent &) override;
-    void mouseUp(const MouseEvent &e_) override;
-    void mouseMove(const MouseEvent &e_) override;
-    void mouseEnter(const MouseEvent &e_) override;
-    void mouseExit(const MouseEvent &e_) override;
-    void mouseDrag(const MouseEvent &e_) override;
-    void mouseDoubleClick(const MouseEvent &e_) override;
-    void mouseWheelMove(const MouseEvent &e_, const MouseWheelDetails &wheel_) override;
+    void mouseDown(const juce::MouseEvent &) override;
+    void mouseUp(const juce::MouseEvent &e_) override;
+    void mouseMove(const juce::MouseEvent &e_) override;
+    void mouseEnter(const juce::MouseEvent &e_) override;
+    void mouseExit(const juce::MouseEvent &e_) override;
+    void mouseDrag(const juce::MouseEvent &e_) override;
+    void mouseDoubleClick(const juce::MouseEvent &e_) override;
+    void mouseWheelMove(const juce::MouseEvent &e_, const juce::MouseWheelDetails &wheel_) override;
 
   private:
     bool isInterestedInDragSource(const SourceDetails &sd_) override;
     void itemDropped(const SourceDetails &sd_) override;
     void timerCallback() override;
-    void dragOperationEnded(const DragAndDropTarget::SourceDetails &) override;
+    void dragOperationEnded(const juce::DragAndDropTarget::SourceDetails &) override;
 
   public:
     void triggerClick();
@@ -39,14 +39,14 @@ class UiButton : public UIBase,
   private:
     void resized(int w_, int h_) override;
 
-    uint32 _foreground_color_1;
-    uint32 _foreground_color_2;
-    uint32 _outline_color;
+    std::uint32_t _foreground_color_1;
+    std::uint32_t _foreground_color_2;
+    std::uint32_t _outline_color;
     bool refresh_foreground() override;
-    void paint(Graphics &) override{};
-    void cache_paint(Graphics &g_, uint32 background_colour_) override;
+    void paint(juce::Graphics &) override{};
+    void cache_paint(juce::Graphics &g_, std::uint32_t background_colour_) override;
 
-    Component *get_top_level_component() override;
+    juce::Component *get_top_level_component() override;
     void *get_top_level_impl() override;
 
   public:

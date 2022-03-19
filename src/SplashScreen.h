@@ -34,7 +34,7 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class MySplashScreen : public Component
+class MySplashScreen : public juce::Component
 {
   public:
     //==============================================================================
@@ -45,7 +45,7 @@ class MySplashScreen : public Component
     //[UserMethods]     -- You can add your own custom methods in this section.
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
 
     // Binary resources:
@@ -57,7 +57,7 @@ class MySplashScreen : public Component
     //[/UserVariables]
 
     //==============================================================================
-    Image cachedImage_desktopsplash_png;
+    juce::Image cachedImage_desktopsplash_png;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MySplashScreen)

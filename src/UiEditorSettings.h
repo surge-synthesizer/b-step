@@ -37,9 +37,9 @@ class UiLabel;
                                                                     //[/Comments]
 */
 class UiEditorSettings : public UiEditor,
-                         public Button::Listener,
-                         public Slider::Listener,
-                         public ComboBox::Listener
+                         public juce::Button::Listener,
+                         public juce::Slider::Listener,
+                         public juce::ComboBox::Listener
 {
   public:
     //==============================================================================
@@ -51,7 +51,7 @@ class UiEditorSettings : public UiEditor,
     AppInstanceStore *const _app_instance_store;
 
     void fill_drop_downs();
-    void comboBoxMouseDown(ComboBox *comboBoxThatHasChanged);
+    void comboBoxMouseDown(juce::ComboBox *comboBoxThatHasChanged);
 
   public:
     void on_close_clicked() override;
@@ -69,76 +69,76 @@ class UiEditorSettings : public UiEditor,
   private:
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
-    void buttonClicked(Button *buttonThatWasClicked) override;
-    void sliderValueChanged(Slider *sliderThatWasMoved) override;
-    void comboBoxChanged(ComboBox *comboBoxThatHasChanged) override;
+    void buttonClicked(juce::Button *buttonThatWasClicked) override;
+    void sliderValueChanged(juce::Slider *sliderThatWasMoved) override;
+    void comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged) override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Label> label_latency_ms;
-    ScopedPointer<Label> lbl_clock_thru;
-    ScopedPointer<ToggleButton> tb_clock_thru;
-    ScopedPointer<Label> label_latency_clocks;
-    ScopedPointer<Label> label_midi_thru;
-    ScopedPointer<ToggleButton> tb_midi_thru_enable;
-    ScopedPointer<Slider> sl_latency_ms;
-    ScopedPointer<Slider> sl_latency_clocks;
-    ScopedPointer<Label> label_midi_learn_headline;
-    ScopedPointer<UiEditorToolbar> toolbar;
-    ScopedPointer<Label> label_midi_io_port_per_track;
-    ScopedPointer<Slider> sl_midi_out_channel;
-    ScopedPointer<Slider> sl_midi_in_channel_pad_1;
-    ScopedPointer<Slider> sl_midi_out_channel_pad_1;
-    ScopedPointer<Slider> sl_midi_in_channel_pad_2;
-    ScopedPointer<Slider> sl_midi_out_channel_pad_2;
-    ScopedPointer<TextButton> pb_refresh_pad_1;
-    ScopedPointer<TextButton> pb_refresh_pad_2;
-    ScopedPointer<ComboBox> cb_midi_pad_in_1;
-    ScopedPointer<ComboBox> cb_midi_pad_out_1;
-    ScopedPointer<ComboBox> cb_midi_pad_in_2;
-    ScopedPointer<ComboBox> cb_midi_pad_out_2;
-    ScopedPointer<ComboBox> cb_midi_in_port;
-    ScopedPointer<ComboBox> cb_midi_out_port;
-    ScopedPointer<Slider> sl_midi_in_channel;
-    ScopedPointer<ComboBox> cb_midi_learn_in_port;
-    ScopedPointer<ComboBox> cb_midi_learn_out_port;
-    ScopedPointer<TextButton> pb_refresh_feedback;
-    ScopedPointer<Label> label_midi_in_port;
-    ScopedPointer<Label> label_midi_out;
-    ScopedPointer<Label> label_master_slave_headline;
-    ScopedPointer<Label> label_midi_learn_in;
-    ScopedPointer<Label> label_midi_learn_out;
-    ScopedPointer<Label> label_launchpad_1_headline;
-    ScopedPointer<Label> label_midi_launchpad_1_in;
-    ScopedPointer<Label> label_midi_launchpad_1_out;
-    ScopedPointer<Label> label_launchpad_2_headline;
-    ScopedPointer<Label> label_midi_launchpad_2_in;
-    ScopedPointer<Label> label_midi_launchpad_2_out;
-    ScopedPointer<ComboBox> cb_midi_out_port_string_g;
-    ScopedPointer<Slider> sl_midi_out_channel_string_g;
-    ScopedPointer<Label> label_midi_out_string_g;
-    ScopedPointer<ComboBox> cb_midi_out_port_string_d;
-    ScopedPointer<Slider> sl_midi_out_channel_string_d;
-    ScopedPointer<Label> label_midi_out_string_d;
-    ScopedPointer<ComboBox> cb_midi_out_port_string_a;
-    ScopedPointer<Slider> sl_midi_out_channel_string_a;
-    ScopedPointer<Label> label_midi_out_string_a;
-    ScopedPointer<TextButton> pb_refresh_all;
-    ScopedPointer<ComboBox> cb_midi_out_port_b;
-    ScopedPointer<Slider> sl_midi_out_channel_b;
-    ScopedPointer<Label> label_midi_in_port_b;
-    ScopedPointer<Label> label_master_slave_headline2;
-    ScopedPointer<TextButton> button_info_master_out;
-    ScopedPointer<TextButton> button_info_master_input;
-    ScopedPointer<TextButton> button_info_midi_thru;
-    ScopedPointer<TextButton> button_info_sequence_out;
-    ScopedPointer<TextButton> button_info_cc_in;
-    ScopedPointer<TextButton> button_info_launchpad_in_1;
+    juce::ScopedPointer<juce::Label> label_latency_ms;
+    juce::ScopedPointer<juce::Label> lbl_clock_thru;
+    juce::ScopedPointer<juce::ToggleButton> tb_clock_thru;
+    juce::ScopedPointer<juce::Label> label_latency_clocks;
+    juce::ScopedPointer<juce::Label> label_midi_thru;
+    juce::ScopedPointer<juce::ToggleButton> tb_midi_thru_enable;
+    juce::ScopedPointer<juce::Slider> sl_latency_ms;
+    juce::ScopedPointer<juce::Slider> sl_latency_clocks;
+    juce::ScopedPointer<juce::Label> label_midi_learn_headline;
+    juce::ScopedPointer<UiEditorToolbar> toolbar;
+    juce::ScopedPointer<juce::Label> label_midi_io_port_per_track;
+    juce::ScopedPointer<juce::Slider> sl_midi_out_channel;
+    juce::ScopedPointer<juce::Slider> sl_midi_in_channel_pad_1;
+    juce::ScopedPointer<juce::Slider> sl_midi_out_channel_pad_1;
+    juce::ScopedPointer<juce::Slider> sl_midi_in_channel_pad_2;
+    juce::ScopedPointer<juce::Slider> sl_midi_out_channel_pad_2;
+    juce::ScopedPointer<juce::TextButton> pb_refresh_pad_1;
+    juce::ScopedPointer<juce::TextButton> pb_refresh_pad_2;
+    juce::ScopedPointer<juce::ComboBox> cb_midi_pad_in_1;
+    juce::ScopedPointer<juce::ComboBox> cb_midi_pad_out_1;
+    juce::ScopedPointer<juce::ComboBox> cb_midi_pad_in_2;
+    juce::ScopedPointer<juce::ComboBox> cb_midi_pad_out_2;
+    juce::ScopedPointer<juce::ComboBox> cb_midi_in_port;
+    juce::ScopedPointer<juce::ComboBox> cb_midi_out_port;
+    juce::ScopedPointer<juce::Slider> sl_midi_in_channel;
+    juce::ScopedPointer<juce::ComboBox> cb_midi_learn_in_port;
+    juce::ScopedPointer<juce::ComboBox> cb_midi_learn_out_port;
+    juce::ScopedPointer<juce::TextButton> pb_refresh_feedback;
+    juce::ScopedPointer<juce::Label> label_midi_in_port;
+    juce::ScopedPointer<juce::Label> label_midi_out;
+    juce::ScopedPointer<juce::Label> label_master_slave_headline;
+    juce::ScopedPointer<juce::Label> label_midi_learn_in;
+    juce::ScopedPointer<juce::Label> label_midi_learn_out;
+    juce::ScopedPointer<juce::Label> label_launchpad_1_headline;
+    juce::ScopedPointer<juce::Label> label_midi_launchpad_1_in;
+    juce::ScopedPointer<juce::Label> label_midi_launchpad_1_out;
+    juce::ScopedPointer<juce::Label> label_launchpad_2_headline;
+    juce::ScopedPointer<juce::Label> label_midi_launchpad_2_in;
+    juce::ScopedPointer<juce::Label> label_midi_launchpad_2_out;
+    juce::ScopedPointer<juce::ComboBox> cb_midi_out_port_string_g;
+    juce::ScopedPointer<juce::Slider> sl_midi_out_channel_string_g;
+    juce::ScopedPointer<juce::Label> label_midi_out_string_g;
+    juce::ScopedPointer<juce::ComboBox> cb_midi_out_port_string_d;
+    juce::ScopedPointer<juce::Slider> sl_midi_out_channel_string_d;
+    juce::ScopedPointer<juce::Label> label_midi_out_string_d;
+    juce::ScopedPointer<juce::ComboBox> cb_midi_out_port_string_a;
+    juce::ScopedPointer<juce::Slider> sl_midi_out_channel_string_a;
+    juce::ScopedPointer<juce::Label> label_midi_out_string_a;
+    juce::ScopedPointer<juce::TextButton> pb_refresh_all;
+    juce::ScopedPointer<juce::ComboBox> cb_midi_out_port_b;
+    juce::ScopedPointer<juce::Slider> sl_midi_out_channel_b;
+    juce::ScopedPointer<juce::Label> label_midi_in_port_b;
+    juce::ScopedPointer<juce::Label> label_master_slave_headline2;
+    juce::ScopedPointer<juce::TextButton> button_info_master_out;
+    juce::ScopedPointer<juce::TextButton> button_info_master_input;
+    juce::ScopedPointer<juce::TextButton> button_info_midi_thru;
+    juce::ScopedPointer<juce::TextButton> button_info_sequence_out;
+    juce::ScopedPointer<juce::TextButton> button_info_cc_in;
+    juce::ScopedPointer<juce::TextButton> button_info_launchpad_in_1;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorSettings)

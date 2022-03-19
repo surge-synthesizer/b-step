@@ -41,12 +41,12 @@ struct SubeditorBase : public MoveEvent2ChildsComponent
             on_style_set(_style);
         }
     }
-    virtual void set_text(const String &){};
+    virtual void set_text(const juce::String &){};
     virtual void on_style_set(AppStyle *const){};
     virtual void set_background_style(AppStyle *const) {}
-    virtual void refresh_ui(Array<Component *> &){};
-    virtual void get_controllers_for_paint_popup(Array<MONO_Controller *> &) {}
-    virtual ModelBase *get_model(uint8) { return nullptr; };
+    virtual void refresh_ui(juce::Array<juce::Component *> &){};
+    virtual void get_controllers_for_paint_popup(juce::Array<MONO_Controller *> &) {}
+    virtual ModelBase *get_model(std::uint8_t) { return nullptr; };
 
     SubeditorBase() : _style(nullptr) {}
     virtual ~SubeditorBase() {}
@@ -64,7 +64,7 @@ struct SubeditorBase : public MoveEvent2ChildsComponent
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiColumnWrapper : public Component
+class UiColumnWrapper : public juce::Component
 {
   public:
     //==============================================================================
@@ -83,16 +83,16 @@ class UiColumnWrapper : public Component
     void set_style(AppStyle *const style_);
 
     // the text will only be set if the wrapped leftside editor have an label
-    void set_text(const String &text_) { leftside_subeditor->set_text(text_); };
+    void set_text(const juce::String &text_) { leftside_subeditor->set_text(text_); };
 
     UiColumn16 *get_column_editor() { return column_editor; }
     SubeditorBase *get_leftside_editor() { return leftside_subeditor; }
 
-    void refresh_ui(Array<Component *> &components_to_repaint_);
-    void get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_with_popup_);
+    void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_);
+    void get_controllers_for_paint_popup(juce::Array<MONO_Controller *> &controllers_with_popup_);
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
 
   private:
@@ -100,8 +100,8 @@ class UiColumnWrapper : public Component
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<SubeditorBase> leftside_subeditor;
-    ScopedPointer<UiColumn16> column_editor;
+    juce::ScopedPointer<SubeditorBase> leftside_subeditor;
+    juce::ScopedPointer<UiColumn16> column_editor;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiColumnWrapper)

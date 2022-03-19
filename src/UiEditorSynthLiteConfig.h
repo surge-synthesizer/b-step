@@ -23,15 +23,15 @@ struct WAVESlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override { return "WAVE"; }
+    juce::StringRef get_bottom_button_text() const override { return "WAVE"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(osc_datas[id]->wave);
     }
 
-    StringRef get_botton_button_switch_text() const override { return "FM"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "FM"; }
 
-    StringRef get_top_button_text() const override
+    juce::StringRef get_top_button_text() const override
     {
         if (id == 0)
             return "MOD OFF";
@@ -54,14 +54,14 @@ struct WAVESlConfig : public ModulationSliderConfigBase
     {
         return SHOW_OWN_VALUE;
     }
-    String get_top_value() const override
+    juce::String get_top_value() const override
     {
         if (DATA(osc_datas[id]).fm_amount.midi_control->get_ctrl_mode())
-            return String(round0(DATA(osc_datas[id]).fm_amount * 100));
+            return juce::String(round0(DATA(osc_datas[id]).fm_amount * 100));
         else
-            return String(DATA(osc_datas[id]).wave);
+            return juce::String(DATA(osc_datas[id]).wave);
     }
-    StringRef get_top_suffix() const override
+    juce::StringRef get_top_suffix() const override
     {
         if (DATA(osc_datas[id]).fm_amount.midi_control->get_ctrl_mode())
             return "%";
@@ -78,17 +78,17 @@ struct OSCSlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    String bottom_text;
-    StringRef get_bottom_button_text() const override { return bottom_text; }
+    juce::String bottom_text;
+    juce::StringRef get_bottom_button_text() const override { return bottom_text; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(osc_datas[id]->octave);
     }
 
-    StringRef get_botton_button_switch_text() const override { return "MOD (%)"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "MOD (%)"; }
 
-    String top_text;
-    StringRef get_top_button_text() const override { return top_text; }
+    juce::String top_text;
+    juce::StringRef get_top_button_text() const override { return top_text; }
     mono_ParameterCompatibilityBase *get_button_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(osc_datas[id]->is_lfo_modulated);
@@ -98,20 +98,20 @@ struct OSCSlConfig : public ModulationSliderConfigBase
     {
         return SHOW_OWN_VALUE;
     }
-    String get_top_value() const override
+    juce::String get_top_value() const override
     {
         const float octave = DATA(osc_datas[id]).octave;
         if (DATA(osc_datas[id]).octave.midi_control->get_ctrl_mode())
-            return String(round0(DATA(osc_datas[id]).octave.get_modulation_amount() * 100));
+            return juce::String(round0(DATA(osc_datas[id]).octave.get_modulation_amount() * 100));
         else
         {
             if (octave < 10 and octave > -10)
-                return String(round001(octave));
+                return juce::String(round001(octave));
             else
-                return String(round01(octave));
+                return juce::String(round01(octave));
         }
     }
-    StringRef get_top_suffix() const override
+    juce::StringRef get_top_suffix() const override
     {
         if (DATA(osc_datas[id]).octave.midi_control->get_ctrl_mode())
             return "%";
@@ -119,7 +119,8 @@ struct OSCSlConfig : public ModulationSliderConfigBase
             return "#";
     }
     OSCSlConfig(int id_)
-        : id(id_), bottom_text("OSC " + String(id + 1)), top_text("LFO " + String(id + 1))
+        : id(id_), bottom_text("OSC " + juce::String(id + 1)),
+          top_text("LFO " + juce::String(id + 1))
     {
     }
 
@@ -131,15 +132,15 @@ struct OSCSlConfig : public ModulationSliderConfigBase
 //==============================================================================
 struct FMFreqSlConfig : public ModulationSliderConfigBase
 {
-    StringRef get_bottom_button_text() const override { return "FM FREQ"; }
+    juce::StringRef get_bottom_button_text() const override { return "FM FREQ"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(osc_datas[0]->fm_multi);
     }
 
-    StringRef get_botton_button_switch_text() const override { return "FM SWING"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "FM SWING"; }
 
-    StringRef get_top_button_text() const override { return "SYNC -"; }
+    juce::StringRef get_top_button_text() const override { return "SYNC -"; }
     mono_ParameterCompatibilityBase *get_button_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(osc_datas[0]->sync);
@@ -160,15 +161,15 @@ struct FMFreqSlConfig : public ModulationSliderConfigBase
 //==============================================================================
 struct FMAmountSlConfig : public ModulationSliderConfigBase
 {
-    StringRef get_bottom_button_text() const override { return "OSC PLUS"; }
+    juce::StringRef get_bottom_button_text() const override { return "OSC PLUS"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(osc_datas[0]->puls_width);
     }
 
-    StringRef get_botton_button_switch_text() const override { return "OSC SWITCH"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "OSC SWITCH"; }
 
-    StringRef get_top_button_text() const override { return "- SHOT"; }
+    juce::StringRef get_top_button_text() const override { return "- SHOT"; }
     mono_ParameterCompatibilityBase *get_button_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(osc_datas[0]->fm_wave);
@@ -183,12 +184,12 @@ struct FMAmountSlConfig : public ModulationSliderConfigBase
     {
         return SHOW_OWN_VALUE;
     }
-    String get_top_value() const override
+    juce::String get_top_value() const override
     {
         if (DATA(osc_datas[0]).puls_width.midi_control->get_ctrl_mode())
-            return String(DATA(osc_datas[0]).osc_switch);
+            return juce::String(DATA(osc_datas[0]).osc_switch);
         else
-            return String(DATA(osc_datas[0]).puls_width);
+            return juce::String(DATA(osc_datas[0]).puls_width);
     }
 
     FMAmountSlConfig() {}
@@ -204,17 +205,17 @@ struct InputSlConfig : public ModulationSliderConfigBase
     const int filter_id;
     const int input_id;
 
-    String bottom_text;
-    StringRef get_bottom_button_text() const override { return bottom_text; }
+    juce::String bottom_text;
+    juce::StringRef get_bottom_button_text() const override { return bottom_text; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(filter_datas[filter_id]->input_sustains[input_id]);
     }
 
-    String top_text;
-    StringRef get_botton_button_switch_text() const override { return top_text; }
+    juce::String top_text;
+    juce::StringRef get_botton_button_switch_text() const override { return top_text; }
 
-    StringRef get_top_button_text() const override { return "FIX IN"; }
+    juce::StringRef get_top_button_text() const override { return "FIX IN"; }
     mono_ParameterCompatibilityBase *get_button_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(filter_datas[filter_id]->input_holds[input_id]);
@@ -249,16 +250,17 @@ struct InputSlConfig : public ModulationSliderConfigBase
     {
         return SHOW_OWN_VALUE;
     }
-    String get_top_value() const override
+    juce::String get_top_value() const override
     {
         if (DATA(filter_input_env_datas[input_id + SUM_INPUTS_PER_FILTER * filter_id])
                 .state.midi_control->get_ctrl_mode())
-            return String(round001(
+            return juce::String(round001(
                 DATA(filter_input_env_datas[input_id + SUM_INPUTS_PER_FILTER * filter_id]).state));
         else
-            return String(round01(DATA(filter_datas[filter_id]).input_sustains[input_id] * 100));
+            return juce::String(
+                round01(DATA(filter_datas[filter_id]).input_sustains[input_id] * 100));
     }
-    StringRef get_top_suffix() const override
+    juce::StringRef get_top_suffix() const override
     {
         if (DATA(filter_input_env_datas[input_id + SUM_INPUTS_PER_FILTER * filter_id])
                 .state.midi_control->get_ctrl_mode())
@@ -277,8 +279,8 @@ struct InputSlConfig : public ModulationSliderConfigBase
     }
 
     InputSlConfig(int filter_id_, int input_id_)
-        : filter_id(filter_id_), input_id(input_id_), bottom_text("OSC " + String(input_id + 1)),
-          top_text("ADR")
+        : filter_id(filter_id_), input_id(input_id_),
+          bottom_text("OSC " + juce::String(input_id + 1)), top_text("ADR")
     {
     }
 
@@ -292,15 +294,15 @@ struct GForceSlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override { return "DESTROY"; }
+    juce::StringRef get_bottom_button_text() const override { return "DESTROY"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(filter_datas[id]->distortion);
     }
 
-    StringRef get_botton_button_switch_text() const override { return "MOD (%)"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "MOD (%)"; }
 
-    StringRef get_top_button_text() const override { return "MODUL"; }
+    juce::StringRef get_top_button_text() const override { return "MODUL"; }
     mono_ParameterCompatibilityBase *get_button_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(filter_datas[id]->modulate_distortion);
@@ -318,13 +320,13 @@ struct FAttackSlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override { return "ATTACK"; }
+    juce::StringRef get_bottom_button_text() const override { return "ATTACK"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(env_datas[id]->attack);
     }
 
-    StringRef get_botton_button_switch_text() const override { return "MAX T(ms)"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "MAX T(ms)"; }
     mono_ParameterCompatibilityBase *get_modulation_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(env_datas[id]->max_attack_time);
@@ -334,16 +336,16 @@ struct FAttackSlConfig : public ModulationSliderConfigBase
     {
         return SHOW_OWN_VALUE;
     }
-    String get_top_value() const override
+    juce::String get_top_value() const override
     {
         float value = DATA(env_datas[id]).attack * DATA(env_datas[id]).max_attack_time * 1000 +
                       MIN_ENV_CHANGE_TIME_IN_MS;
         if (value < 100)
-            return String(round01(value));
+            return juce::String(round01(value));
         else
-            return String(round0(value));
+            return juce::String(round0(value));
     }
-    StringRef get_top_suffix() const override { return "ms"; }
+    juce::StringRef get_top_suffix() const override { return "ms"; }
     FAttackSlConfig(int id_) : id(id_) {}
 
     JUCE_LEAK_DETECTOR(FAttackSlConfig)
@@ -353,12 +355,12 @@ struct FDecaySlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override { return "DECAY"; }
+    juce::StringRef get_bottom_button_text() const override { return "DECAY"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(env_datas[id]->decay);
     }
-    StringRef get_botton_button_switch_text() const override { return "MAX T(ms)"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "MAX T(ms)"; }
     mono_ParameterCompatibilityBase *get_modulation_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(env_datas[id]->max_decay_time);
@@ -368,18 +370,18 @@ struct FDecaySlConfig : public ModulationSliderConfigBase
     {
         return SHOW_OWN_VALUE;
     }
-    String get_top_value() const override
+    juce::String get_top_value() const override
     {
         float value = DATA(env_datas[id]).decay * DATA(env_datas[id]).max_decay_time * 1000 +
                       MIN_ENV_CHANGE_TIME_IN_MS;
         if (value < 0)
             return "OFF";
         else if (value < 100)
-            return String(round01(value));
+            return juce::String(round01(value));
         else
-            return String(round0(value));
+            return juce::String(round0(value));
     }
-    StringRef get_top_suffix() const override { return "ms"; }
+    juce::StringRef get_top_suffix() const override { return "ms"; }
     FDecaySlConfig(int id_) : id(id_) {}
 
     JUCE_LEAK_DETECTOR(FDecaySlConfig)
@@ -389,7 +391,7 @@ struct FSustainSlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override { return "SUSTAIN"; }
+    juce::StringRef get_bottom_button_text() const override { return "SUSTAIN"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(env_datas[id]->sustain);
@@ -399,15 +401,15 @@ struct FSustainSlConfig : public ModulationSliderConfigBase
     {
         return SHOW_OWN_VALUE;
     }
-    String get_top_value() const override
+    juce::String get_top_value() const override
     {
         float value = DATA(env_datas[id]).sustain * 100;
         if (value < 100)
-            return String(round01(value));
+            return juce::String(round01(value));
         else
-            return String(round0(value));
+            return juce::String(round0(value));
     }
-    StringRef get_top_suffix() const override { return "%"; }
+    juce::StringRef get_top_suffix() const override { return "%"; }
     FSustainSlConfig(int id_) : id(id_) {}
 
     JUCE_LEAK_DETECTOR(FSustainSlConfig)
@@ -417,7 +419,7 @@ struct FSustainTimeSlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override { return "SUS TIME"; }
+    juce::StringRef get_bottom_button_text() const override { return "SUS TIME"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(env_datas[id]->sustain_time);
@@ -427,17 +429,17 @@ struct FSustainTimeSlConfig : public ModulationSliderConfigBase
     {
         return SHOW_OWN_VALUE;
     }
-    String get_top_value() const override
+    juce::String get_top_value() const override
     {
         float value = DATA(env_datas[id]).sustain_time * 8.0f * 1000 + MIN_ENV_CHANGE_TIME_IN_MS;
         if (value < 100)
-            return String(round01(value));
+            return juce::String(round01(value));
         else if (value == 8000)
-            return String("unltd");
+            return juce::String("unltd");
         else
-            return String(round0(value));
+            return juce::String(round0(value));
     }
-    StringRef get_top_suffix() const override
+    juce::StringRef get_top_suffix() const override
     {
         if (DATA(env_datas[id]).sustain_time == 1)
             return "";
@@ -453,12 +455,12 @@ struct FReleaseSlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override { return "RELEASE"; }
+    juce::StringRef get_bottom_button_text() const override { return "RELEASE"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(env_datas[id]->release);
     }
-    StringRef get_botton_button_switch_text() const override { return "MAX T(ms)"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "MAX T(ms)"; }
     mono_ParameterCompatibilityBase *get_modulation_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(env_datas[id]->max_release_time);
@@ -468,16 +470,16 @@ struct FReleaseSlConfig : public ModulationSliderConfigBase
     {
         return SHOW_OWN_VALUE;
     }
-    String get_top_value() const override
+    juce::String get_top_value() const override
     {
         float value = DATA(env_datas[id]).release * DATA(env_datas[id]).max_release_time * 1000 +
                       MIN_ENV_CHANGE_TIME_IN_MS;
         if (value < 100)
-            return String(round01(value));
+            return juce::String(round01(value));
         else
-            return String(round0(value));
+            return juce::String(round0(value));
     }
-    StringRef get_top_suffix() const override { return "ms"; }
+    juce::StringRef get_top_suffix() const override { return "ms"; }
     FReleaseSlConfig(int id_) : id(id_) {}
 
     JUCE_LEAK_DETECTOR(FReleaseSlConfig)
@@ -490,7 +492,7 @@ struct EnvLfoSlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override { return "MOD MIX"; }
+    juce::StringRef get_bottom_button_text() const override { return "MOD MIX"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(filter_datas[id]->adsr_lfo_mix);
@@ -508,8 +510,8 @@ struct LFOSlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    String bottom_text;
-    StringRef get_bottom_button_text() const override { return bottom_text; }
+    juce::String bottom_text;
+    juce::StringRef get_bottom_button_text() const override { return bottom_text; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(lfo_datas[id]->speed);
@@ -518,7 +520,7 @@ struct LFOSlConfig : public ModulationSliderConfigBase
     {
         return SHOW_OWN_VALUE;
     }
-    String get_top_value() const override
+    juce::String get_top_value() const override
     {
         const float speed = DATA(lfo_datas[id]).speed;
         if (speed <= 6)
@@ -563,18 +565,18 @@ struct LFOSlConfig : public ModulationSliderConfigBase
                 return "1/128";
         else
         {
-            return MidiMessage::getMidiNoteName(frequencyToMidi(midiToFrequency(33 + speed - 18)),
-                                                true, true, 0);
+            return juce::MidiMessage::getMidiNoteName(
+                juce::frequencyToMidi(juce::midiToFrequency(33 + speed - 18)), true, true, 0);
         }
     }
-    StringRef get_top_suffix() const override
+    juce::StringRef get_top_suffix() const override
     {
         if (DATA(lfo_datas[id]).speed <= 17)
             return "th";
         else
             return "#";
     }
-    LFOSlConfig(int id_) : id(id_), bottom_text("LFO " + String(id + 1)) {}
+    LFOSlConfig(int id_) : id(id_), bottom_text("LFO " + juce::String(id + 1)) {}
 
     JUCE_LEAK_DETECTOR(LFOSlConfig)
 };
@@ -584,15 +586,15 @@ struct FCutoffSLConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override { return "CUTOFF"; }
+    juce::StringRef get_bottom_button_text() const override { return "CUTOFF"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(filter_datas[id]->cutoff);
     }
 
-    StringRef get_botton_button_switch_text() const override { return "MOD (%)"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "MOD (%)"; }
 
-    StringRef get_top_button_text() const override { return "MODUL"; }
+    juce::StringRef get_top_button_text() const override { return "MODUL"; }
     mono_ParameterCompatibilityBase *get_button_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(filter_datas[id]->modulate_cutoff);
@@ -607,15 +609,15 @@ struct FResonanceSLConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override { return "RESO"; }
+    juce::StringRef get_bottom_button_text() const override { return "RESO"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(filter_datas[id]->resonance);
     }
 
-    StringRef get_botton_button_switch_text() const override { return "MOD (%)"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "MOD (%)"; }
 
-    StringRef get_top_button_text() const override { return "MODUL"; }
+    juce::StringRef get_top_button_text() const override { return "MODUL"; }
     mono_ParameterCompatibilityBase *get_button_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(filter_datas[id]->modulate_resonance);
@@ -630,15 +632,15 @@ struct FGainSLConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override { return "GAIN"; }
+    juce::StringRef get_bottom_button_text() const override { return "GAIN"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(filter_datas[id]->gain);
     }
 
-    StringRef get_botton_button_switch_text() const override { return "MOD (%)"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "MOD (%)"; }
 
-    StringRef get_top_button_text() const override { return "MODUL"; }
+    juce::StringRef get_top_button_text() const override { return "MODUL"; }
     mono_ParameterCompatibilityBase *get_button_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(filter_datas[id]->modulate_gain);
@@ -656,15 +658,15 @@ struct FVolumeSlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override { return "VOLUME"; }
+    juce::StringRef get_bottom_button_text() const override { return "VOLUME"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(filter_datas[id]->output);
     }
 
-    StringRef get_botton_button_switch_text() const override { return "MOD (%)"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "MOD (%)"; }
 
-    StringRef get_top_button_text() const override { return "MODUL"; }
+    juce::StringRef get_top_button_text() const override { return "MODUL"; }
     mono_ParameterCompatibilityBase *get_button_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(filter_datas[id]->modulate_output);
@@ -685,11 +687,11 @@ struct BPMSlConfig : public ModulationSliderConfigBase
         return SYNTH_PARAM(synth_data->speed);
     }
     bool get_is_bottom_button_text_dynamic() const override { return true; }
-    StringRef get_bottom_button_text() const override
+    juce::StringRef get_bottom_button_text() const override
     {
-        return String(DATA(synth_data).speed) + String(" BPM");
+        return juce::String(DATA(synth_data).speed) + juce::String(" BPM");
     }
-    StringRef get_top_button_text() const override { return "SYNC"; }
+    juce::StringRef get_top_button_text() const override { return "SYNC"; }
     mono_ParameterCompatibilityBase *get_button_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(synth_data->sync);
@@ -706,7 +708,7 @@ struct FCompressorSlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override
+    juce::StringRef get_bottom_button_text() const override
     {
         if (id == 0)
             return "PEAK-BOOST";
@@ -726,7 +728,7 @@ struct FCompressorSlConfig : public ModulationSliderConfigBase
             return DONT_OVERRIDE_SLIDER_VALUE;
     }
 
-    StringRef get_botton_button_switch_text() const override { return "CLIPP"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "CLIPP"; }
 
     mono_ParameterCompatibilityBase *get_modulation_parameter_compatibility_base() const override
     {
@@ -747,12 +749,12 @@ struct AttackSlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override { return "ATTACK"; }
+    juce::StringRef get_bottom_button_text() const override { return "ATTACK"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(env_datas[id]->attack);
     }
-    StringRef get_botton_button_switch_text() const override { return "MAX T(ms)"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "MAX T(ms)"; }
     mono_ParameterCompatibilityBase *get_modulation_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(env_datas[id]->max_attack_time);
@@ -762,16 +764,16 @@ struct AttackSlConfig : public ModulationSliderConfigBase
     {
         return SHOW_OWN_VALUE;
     }
-    String get_top_value() const override
+    juce::String get_top_value() const override
     {
         float value = DATA(env_datas[id]).attack * DATA(env_datas[id]).max_attack_time * 1000 +
                       MIN_ENV_CHANGE_TIME_IN_MS;
         if (value < 100)
-            return String(round01(value));
+            return juce::String(round01(value));
         else
-            return String(round0(value));
+            return juce::String(round0(value));
     }
-    StringRef get_top_suffix() const override { return "ms"; }
+    juce::StringRef get_top_suffix() const override { return "ms"; }
     AttackSlConfig(int id_) : id(id_) {}
 
     JUCE_LEAK_DETECTOR(AttackSlConfig)
@@ -781,12 +783,12 @@ struct DecaySlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override { return "DECAY"; }
+    juce::StringRef get_bottom_button_text() const override { return "DECAY"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(env_datas[id]->decay);
     }
-    StringRef get_botton_button_switch_text() const override { return "MAX T(ms)"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "MAX T(ms)"; }
     mono_ParameterCompatibilityBase *get_modulation_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(env_datas[id]->max_decay_time);
@@ -796,18 +798,18 @@ struct DecaySlConfig : public ModulationSliderConfigBase
     {
         return SHOW_OWN_VALUE;
     }
-    String get_top_value() const override
+    juce::String get_top_value() const override
     {
         float value = DATA(env_datas[id]).decay * DATA(env_datas[id]).max_decay_time * 1000 +
                       MIN_ENV_CHANGE_TIME_IN_MS;
         if (value < 0)
             return "OFF";
         else if (value < 100)
-            return String(round01(value));
+            return juce::String(round01(value));
         else
-            return String(round0(value));
+            return juce::String(round0(value));
     }
-    StringRef get_top_suffix() const override { return "ms"; }
+    juce::StringRef get_top_suffix() const override { return "ms"; }
     DecaySlConfig(int id_) : id(id_) {}
 
     JUCE_LEAK_DETECTOR(DecaySlConfig)
@@ -817,7 +819,7 @@ struct SustainSlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override { return "SUSTAIN"; }
+    juce::StringRef get_bottom_button_text() const override { return "SUSTAIN"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(env_datas[id]->sustain);
@@ -828,15 +830,15 @@ struct SustainSlConfig : public ModulationSliderConfigBase
     {
         return SHOW_OWN_VALUE;
     }
-    String get_top_value() const override
+    juce::String get_top_value() const override
     {
         float value = DATA(env_datas[id]).sustain * 100;
         if (value < 100)
-            return String(round01(value));
+            return juce::String(round01(value));
         else
-            return String(round0(value));
+            return juce::String(round0(value));
     }
-    StringRef get_top_suffix() const override { return "%"; }
+    juce::StringRef get_top_suffix() const override { return "%"; }
     SustainSlConfig(int id_) : id(id_) {}
 
     JUCE_LEAK_DETECTOR(SustainSlConfig)
@@ -846,12 +848,12 @@ struct ReleaseSlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    StringRef get_bottom_button_text() const override { return "RELEASE"; }
+    juce::StringRef get_bottom_button_text() const override { return "RELEASE"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(env_datas[id]->release);
     }
-    StringRef get_botton_button_switch_text() const override { return "MAX T(ms)"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "MAX T(ms)"; }
     mono_ParameterCompatibilityBase *get_modulation_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(env_datas[id]->max_release_time);
@@ -861,16 +863,16 @@ struct ReleaseSlConfig : public ModulationSliderConfigBase
     {
         return SHOW_OWN_VALUE;
     }
-    String get_top_value() const override
+    juce::String get_top_value() const override
     {
         float value = DATA(env_datas[id]).release * DATA(env_datas[id]).max_release_time * 1000 +
                       MIN_ENV_CHANGE_TIME_IN_MS;
         if (value < 100)
-            return String(round01(value));
+            return juce::String(round01(value));
         else
-            return String(round0(value));
+            return juce::String(round0(value));
     }
-    StringRef get_top_suffix() const override { return "ms"; }
+    juce::StringRef get_top_suffix() const override { return "ms"; }
     ReleaseSlConfig(int id_) : id(id_) {}
 
     JUCE_LEAK_DETECTOR(ReleaseSlConfig)
@@ -881,7 +883,7 @@ struct ReleaseSlConfig : public ModulationSliderConfigBase
 //==============================================================================
 struct RRoomSlConfig : public ModulationSliderConfigBase
 {
-    StringRef get_bottom_button_text() const override { return "ROOM"; }
+    juce::StringRef get_bottom_button_text() const override { return "ROOM"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(reverb_data->room);
@@ -891,7 +893,7 @@ struct RRoomSlConfig : public ModulationSliderConfigBase
 //==============================================================================
 struct RWidthSlConfig : public ModulationSliderConfigBase
 {
-    StringRef get_bottom_button_text() const override { return "WIDTH"; }
+    juce::StringRef get_bottom_button_text() const override { return "WIDTH"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(reverb_data->width);
@@ -901,7 +903,7 @@ struct RWidthSlConfig : public ModulationSliderConfigBase
 //==============================================================================
 struct RDrySlConfig : public ModulationSliderConfigBase
 {
-    StringRef get_bottom_button_text() const override { return "WET|DRY"; }
+    juce::StringRef get_bottom_button_text() const override { return "WET|DRY"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(reverb_data->dry_wet_mix);
@@ -915,7 +917,7 @@ struct RDrySlConfig : public ModulationSliderConfigBase
 //==============================================================================
 struct DelaySlConfig : public ModulationSliderConfigBase
 {
-    StringRef get_bottom_button_text() const override { return "DELAY"; }
+    juce::StringRef get_bottom_button_text() const override { return "DELAY"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(synth_data->delay);
@@ -929,13 +931,13 @@ struct DelaySlConfig : public ModulationSliderConfigBase
 //==============================================================================
 struct CModSlConfig : public ModulationSliderConfigBase
 {
-    StringRef get_bottom_button_text() const override { return "CHORS"; }
+    juce::StringRef get_bottom_button_text() const override { return "CHORS"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(chorus_data->modulation);
     }
-    StringRef get_botton_button_switch_text() const override { return "ADR"; }
-    StringRef get_top_button_text() const override { return "FIX"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "ADR"; }
+    juce::StringRef get_top_button_text() const override { return "FIX"; }
     /*
     mono_ParameterCompatibilityBase* get_modulation_parameter_compatibility_base() const override {
     return SYNTH_PARAM(chorus_data->shine);
@@ -962,12 +964,12 @@ struct CModSlConfig : public ModulationSliderConfigBase
     {
         return SHOW_OWN_VALUE;
     }
-    String get_top_value() const override
+    juce::String get_top_value() const override
     {
         if (DATA(chorus_data).modulation.midi_control->get_ctrl_mode())
-            return String(round001(DATA(chorus_data).modulation_env_data->state));
+            return juce::String(round001(DATA(chorus_data).modulation_env_data->state));
         else
-            return String(round01(DATA(chorus_data).modulation * 100));
+            return juce::String(round01(DATA(chorus_data).modulation * 100));
     }
 
     mono_ParameterCompatibilityBase *get_modulation_parameter_compatibility_base() const override
@@ -983,7 +985,7 @@ struct CModSlConfig : public ModulationSliderConfigBase
 //==============================================================================
 struct BypassConfig : public ModulationSliderConfigBase
 {
-    StringRef get_bottom_button_text() const override { return "MIX"; }
+    juce::StringRef get_bottom_button_text() const override { return "MIX"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(synth_data->effect_bypass);
@@ -997,13 +999,13 @@ struct BypassConfig : public ModulationSliderConfigBase
 //==============================================================================
 struct VolumeConfig : public ModulationSliderConfigBase
 {
-    StringRef get_bottom_button_text() const override { return "VOLUME"; }
+    juce::StringRef get_bottom_button_text() const override { return "VOLUME"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(synth_data->volume);
     }
 
-    StringRef get_botton_button_switch_text() const override { return "CLIPP"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "CLIPP"; }
 
     mono_ParameterCompatibilityBase *get_modulation_parameter_compatibility_base() const override
     {
@@ -1018,14 +1020,14 @@ struct VolumeConfig : public ModulationSliderConfigBase
 //==============================================================================
 struct GlideConfig : public ModulationSliderConfigBase
 {
-    StringRef get_bottom_button_text() const override { return "N GLIDE"; }
+    juce::StringRef get_bottom_button_text() const override { return "N GLIDE"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(synth_data->glide);
     }
-    StringRef get_botton_button_switch_text() const override { return "V GLIDE"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "V GLIDE"; }
 
-    StringRef get_top_button_text() const override { return "BIND"; }
+    juce::StringRef get_top_button_text() const override { return "BIND"; }
     mono_ParameterCompatibilityBase *get_button_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(synth_data->arp_sequencer_data->connect);
@@ -1044,13 +1046,13 @@ struct GlideConfig : public ModulationSliderConfigBase
 //==============================================================================
 struct ShuffleConfig : public ModulationSliderConfigBase
 {
-    StringRef get_bottom_button_text() const override { return "SHUFL"; }
+    juce::StringRef get_bottom_button_text() const override { return "SHUFL"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(arp_data->shuffle);
     }
 
-    StringRef get_top_button_text() const override { return "ARP"; }
+    juce::StringRef get_top_button_text() const override { return "ARP"; }
     float get_top_button_amp() const override { return DATA(arp_data).is_on ? 1 : 0; }
     mono_ParameterCompatibilityBase *get_button_parameter_compatibility_base() const override
     {
@@ -1064,7 +1066,7 @@ struct ShuffleConfig : public ModulationSliderConfigBase
 //==============================================================================
 struct FColourSlConfig : public ModulationSliderConfigBase
 {
-    StringRef get_bottom_button_text() const override { return "SHAPE"; }
+    juce::StringRef get_bottom_button_text() const override { return "SHAPE"; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(synth_data->resonance);
@@ -1082,14 +1084,14 @@ struct EQSlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    String bottom_text;
-    StringRef get_bottom_button_text() const override { return bottom_text; }
+    juce::String bottom_text;
+    juce::StringRef get_bottom_button_text() const override { return bottom_text; }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(eq_data->velocity[id]);
     }
 
-    StringRef get_top_button_text() const override { return "FIX"; }
+    juce::StringRef get_top_button_text() const override { return "FIX"; }
     float get_top_button_amp() const override
     {
         float value = FIXED_TOP_BUTTON_COLOUR;
@@ -1107,7 +1109,7 @@ struct EQSlConfig : public ModulationSliderConfigBase
         return SYNTH_PARAM(eq_data->hold[id]);
     }
 
-    StringRef get_botton_button_switch_text() const override { return "ADR"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "ADR"; }
     mono_ParameterCompatibilityBase *get_modulation_parameter_compatibility_base() const override
     {
         return SYNTH_PARAM(eq_data->env_datas[id]->state);
@@ -1117,7 +1119,7 @@ struct EQSlConfig : public ModulationSliderConfigBase
     {
         const float frequency_low_pass = (62.5 / 2) * pow(2, id + 1);
         const float frequency_high_pass = frequency_low_pass / 2.0f;
-        bottom_text = String(frequency_high_pass) + String("Hz");
+        bottom_text = juce::String(frequency_high_pass) + juce::String("Hz");
     }
 
     JUCE_LEAK_DETECTOR(EQSlConfig)
@@ -1133,13 +1135,13 @@ struct ArpStepSlConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    String bottom_text;
-    StringRef get_bottom_button_text() const override
+    juce::String bottom_text;
+    juce::StringRef get_bottom_button_text() const override
     {
         if (id == 0)
             return bottom_text;
         else
-            return String(id + 1);
+            return juce::String(id + 1);
     }
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
@@ -1151,20 +1153,20 @@ struct ArpStepSlConfig : public ModulationSliderConfigBase
         return SYNTH_PARAM(arp_data->velocity[id]);
     }
 
-    StringRef get_botton_button_switch_text() const override { return "VELOCITY"; }
+    juce::StringRef get_botton_button_switch_text() const override { return "VELOCITY"; }
 
     ModulationSliderConfigBase::SHOW_TYPES show_slider_value_on_top_on_change() const override
     {
         return SHOW_OWN_VALUE;
     }
-    String get_top_value() const override
+    juce::String get_top_value() const override
     {
         if (DATA(arp_data).tune[id].midi_control->get_ctrl_mode())
-            return String(round01(DATA(arp_data).velocity[id] * 100));
+            return juce::String(round01(DATA(arp_data).velocity[id] * 100));
         else
-            return String(DATA(arp_data).tune[id]);
+            return juce::String(DATA(arp_data).tune[id]);
     }
-    StringRef get_top_suffix() const override
+    juce::StringRef get_top_suffix() const override
     {
         if (DATA(arp_data).tune[id].midi_control->get_ctrl_mode())
             return "%";
@@ -1172,7 +1174,7 @@ struct ArpStepSlConfig : public ModulationSliderConfigBase
             return "#";
     }
 
-    ArpStepSlConfig(int id_) : id(id_), bottom_text("STEP " + String(id + 1)) {}
+    ArpStepSlConfig(int id_) : id(id_), bottom_text("STEP " + juce::String(id + 1)) {}
 
     JUCE_LEAK_DETECTOR(ArpStepSlConfig)
 };
@@ -1181,7 +1183,7 @@ struct MorphSLConfig : public ModulationSliderConfigBase
 {
     const int id;
 
-    String bottom_text;
+    juce::String bottom_text;
 
     mono_ParameterCompatibilityBase *get_parameter_compatibility_base() const override
     {
@@ -1264,7 +1266,10 @@ struct MorphSLConfig : public ModulationSliderConfigBase
             //[/UserSliderCode_sl_morhp_mix]
         }
     */
-    MorphSLConfig(int id_) : id(id_) { bottom_text = String("TOGGL") + String(id_ + 1); }
+    MorphSLConfig(int id_) : id(id_)
+    {
+        bottom_text = juce::String("TOGGL") + juce::String(id_ + 1);
+    }
 
     JUCE_LEAK_DETECTOR(MorphSLConfig)
 };

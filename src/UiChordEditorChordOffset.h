@@ -36,23 +36,23 @@ class AppInstanceStore;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiChordEditorChordOffset : public Component
+class UiChordEditorChordOffset : public juce::Component
 {
   public:
     //==============================================================================
-    UiChordEditorChordOffset(AppInstanceStore *const app_instance_store_, uint8 chord_id_);
+    UiChordEditorChordOffset(AppInstanceStore *const app_instance_store_, std::uint8_t chord_id_);
     ~UiChordEditorChordOffset();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
 
-    void refresh_ui(Array<Component *> &components_to_repaint_);
-    int8 last_refreshed_offset_value;
+    void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_);
+    std::int8_t last_refreshed_offset_value;
     bool is_your_value_changed_since_last_request();
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
 
   private:
@@ -60,8 +60,8 @@ class UiChordEditorChordOffset : public Component
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<UiLabel> label;
-    ScopedPointer<ModelBase> slider;
+    juce::ScopedPointer<UiLabel> label;
+    juce::ScopedPointer<ModelBase> slider;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiChordEditorChordOffset)

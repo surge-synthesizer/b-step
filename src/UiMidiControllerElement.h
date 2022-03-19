@@ -22,6 +22,7 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "App.h"
+
 //[/Headers]
 
 //==============================================================================
@@ -32,10 +33,10 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class NewComponent : public Component,
-                     public Slider::Listener,
-                     public ComboBox::Listener,
-                     public Button::Listener
+class NewComponent : public juce::Component,
+                     public juce::Slider::Listener,
+                     public juce::ComboBox::Listener,
+                     public juce::Button::Listener
 {
   public:
     //==============================================================================
@@ -46,24 +47,24 @@ class NewComponent : public Component,
     //[UserMethods]     -- You can add your own custom methods in this section.
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
-    void sliderValueChanged(Slider *sliderThatWasMoved);
-    void comboBoxChanged(ComboBox *comboBoxThatHasChanged);
-    void buttonClicked(Button *buttonThatWasClicked);
+    void sliderValueChanged(juce::Slider *sliderThatWasMoved);
+    void comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged);
+    void buttonClicked(juce::Button *buttonThatWasClicked);
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Slider> slider;
-    ScopedPointer<ComboBox> comboBox;
-    ScopedPointer<ComboBox> comboBox2;
-    ScopedPointer<ComboBox> comboBox3;
-    ScopedPointer<TextButton> textButton;
-    ScopedPointer<TextButton> textButton2;
-    ScopedPointer<ComboBox> comboBox4;
+    juce::ScopedPointer<juce::Slider> slider;
+    juce::ScopedPointer<juce::ComboBox> comboBox;
+    juce::ScopedPointer<juce::ComboBox> comboBox2;
+    juce::ScopedPointer<juce::ComboBox> comboBox3;
+    juce::ScopedPointer<juce::TextButton> textButton;
+    juce::ScopedPointer<juce::TextButton> textButton2;
+    juce::ScopedPointer<juce::ComboBox> comboBox4;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(NewComponent)

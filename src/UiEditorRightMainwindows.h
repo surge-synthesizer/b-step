@@ -52,18 +52,19 @@ class UiEditorRightMainwindows : public MoveEvent2ChildsComponent
     AppInstanceStore *const _app_instance_store;
     GstepAudioProcessorEditor *const _main_window;
 
-    Array<ModelBase *> _models;
-    Array<UiLabel *> _labels;
+    juce::Array<ModelBase *> _models;
+    juce::Array<UiLabel *> _labels;
 
   public:
-    void refresh_ui(Array<Component *> &components_to_repaint_);
-    void get_controllers_for_paint_popup(Array<MONO_Controller *> &controllers_that_need_a_popup);
+    void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_);
+    void
+    get_controllers_for_paint_popup(juce::Array<MONO_Controller *> &controllers_that_need_a_popup);
 
   private:
-    virtual const Array<ModelBase *> &get_event_receiveable_models() { return _models; }
+    virtual const juce::Array<ModelBase *> &get_event_receiveable_models() { return _models; }
     //[/UserMethods]
 
-    void paint(Graphics &g);
+    void paint(juce::Graphics &g);
     void resized();
 
   private:
@@ -71,36 +72,36 @@ class UiEditorRightMainwindows : public MoveEvent2ChildsComponent
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<UiLabel> lbl_set_9;
-    ScopedPointer<UiLabel> lbl_bar_chord2;
-    ScopedPointer<UiLabel> lbl_bar_chord3;
-    ScopedPointer<UiLabel> lbl_bar_chord4;
-    ScopedPointer<ModelBase> pattern_gstring_offset_0;
-    ScopedPointer<ModelBase> pattern_gstring_offset_1;
-    ScopedPointer<ModelBase> pattern_gstring_offset_2;
-    ScopedPointer<ModelBase> pattern_gstring_offset_3;
-    ScopedPointer<ModelBase> pattern_chord;
-    ScopedPointer<ModelBase> pattern_note;
-    ScopedPointer<ModelBase> pattern_oktave;
-    ScopedPointer<UiLabel> lbl_version;
-    ScopedPointer<ModelBase> slider_bpm;
-    ScopedPointer<ModelBase> button_mute;
-    ScopedPointer<ModelBase> button_chord_editor;
-    ScopedPointer<UiLabel> lbl_set_1;
-    ScopedPointer<UiLabel> lbl_set_2;
-    ScopedPointer<UiLabel> lbl_set_7;
-    ScopedPointer<UiLabel> lbl_set_8;
-    ScopedPointer<UiLabel> lbl_set_4;
-    ScopedPointer<UiLabel> lbl_set_3;
-    ScopedPointer<UiLabel> lbl_set_6;
-    ScopedPointer<UiLabel> label_current_bpm;
-    ScopedPointer<ModelBase> button_chord_editor2;
-    ScopedPointer<ModelBase> button_chord_editor3;
-    ScopedPointer<ModelBase> button_chord_editor4;
-    ScopedPointer<ModelBase> button_chord_editor5;
-    ScopedPointer<UiLabel> lbl_version2;
-    ScopedPointer<UiLabel> lbl_version3;
-    ScopedPointer<UiLabel> lbl_version4;
+    juce::ScopedPointer<UiLabel> lbl_set_9;
+    juce::ScopedPointer<UiLabel> lbl_bar_chord2;
+    juce::ScopedPointer<UiLabel> lbl_bar_chord3;
+    juce::ScopedPointer<UiLabel> lbl_bar_chord4;
+    juce::ScopedPointer<ModelBase> pattern_gstring_offset_0;
+    juce::ScopedPointer<ModelBase> pattern_gstring_offset_1;
+    juce::ScopedPointer<ModelBase> pattern_gstring_offset_2;
+    juce::ScopedPointer<ModelBase> pattern_gstring_offset_3;
+    juce::ScopedPointer<ModelBase> pattern_chord;
+    juce::ScopedPointer<ModelBase> pattern_note;
+    juce::ScopedPointer<ModelBase> pattern_oktave;
+    juce::ScopedPointer<UiLabel> lbl_version;
+    juce::ScopedPointer<ModelBase> slider_bpm;
+    juce::ScopedPointer<ModelBase> button_mute;
+    juce::ScopedPointer<ModelBase> button_chord_editor;
+    juce::ScopedPointer<UiLabel> lbl_set_1;
+    juce::ScopedPointer<UiLabel> lbl_set_2;
+    juce::ScopedPointer<UiLabel> lbl_set_7;
+    juce::ScopedPointer<UiLabel> lbl_set_8;
+    juce::ScopedPointer<UiLabel> lbl_set_4;
+    juce::ScopedPointer<UiLabel> lbl_set_3;
+    juce::ScopedPointer<UiLabel> lbl_set_6;
+    juce::ScopedPointer<UiLabel> label_current_bpm;
+    juce::ScopedPointer<ModelBase> button_chord_editor2;
+    juce::ScopedPointer<ModelBase> button_chord_editor3;
+    juce::ScopedPointer<ModelBase> button_chord_editor4;
+    juce::ScopedPointer<ModelBase> button_chord_editor5;
+    juce::ScopedPointer<UiLabel> lbl_version2;
+    juce::ScopedPointer<UiLabel> lbl_version3;
+    juce::ScopedPointer<UiLabel> lbl_version4;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorRightMainwindows)

@@ -52,140 +52,143 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
                                UiTextImExportListener *const listener_)
     : _app_instance_store(app_instance_store_), _listener(listener_)
 {
-    addAndMakeVisible(titel = new Label(String(), TRANS("B-DATA-IMPORTER")));
-    titel->setFont(Font("Oswald", 25.00f, Font::plain));
-    titel->setJustificationType(Justification::centred);
+    addAndMakeVisible(titel = new juce::Label(juce::String(), TRANS("B-DATA-IMPORTER")));
+    titel->setFont(juce::Font("Oswald", 25.00f, juce::Font::plain));
+    titel->setJustificationType(juce::Justification::centred);
     titel->setEditable(false, false, false);
-    titel->setColour(Label::textColourId,
-                     Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    titel->setColour(TextEditor::textColourId, Colours::black);
-    titel->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    titel->setColour(juce::Label::textColourId,
+                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    titel->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    titel->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(ok = new TextButton(String()));
+    addAndMakeVisible(ok = new juce::TextButton(juce::String()));
     ok->setExplicitFocusOrder(2);
     ok->setButtonText(TRANS("IMPORT"));
-    ok->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                          Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    ok->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                          juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     ok->addListener(this);
-    ok->setColour(TextButton::buttonColourId, Colours::black);
-    ok->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
-    ok->setColour(TextButton::textColourOnId, Colours::chartreuse);
-    ok->setColour(TextButton::textColourOffId, Colours::chartreuse);
+    ok->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    ok->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
+    ok->setColour(juce::TextButton::textColourOnId, juce::Colours::chartreuse);
+    ok->setColour(juce::TextButton::textColourOffId, juce::Colours::chartreuse);
 
-    addAndMakeVisible(cancel = new TextButton(String()));
+    addAndMakeVisible(cancel = new juce::TextButton(juce::String()));
     cancel->setExplicitFocusOrder(3);
     cancel->setButtonText(TRANS("CANCEL"));
-    cancel->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                              Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    cancel->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                              juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     cancel->addListener(this);
-    cancel->setColour(TextButton::buttonColourId, Colours::black);
-    cancel->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
-    cancel->setColour(TextButton::textColourOnId, Colours::red);
-    cancel->setColour(TextButton::textColourOffId, Colours::red);
+    cancel->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    cancel->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
+    cancel->setColour(juce::TextButton::textColourOnId, juce::Colours::red);
+    cancel->setColour(juce::TextButton::textColourOffId, juce::Colours::red);
 
-    addAndMakeVisible(text = new TextEditor(String()));
+    addAndMakeVisible(text = new juce::TextEditor(juce::String()));
     text->setMultiLine(true);
     text->setReturnKeyStartsNewLine(false);
     text->setReadOnly(false);
     text->setScrollbarsShown(true);
     text->setCaretVisible(true);
     text->setPopupMenuEnabled(true);
-    text->setColour(TextEditor::textColourId, Colours::aqua);
-    text->setColour(TextEditor::backgroundColourId, Colour(0x00ffffff));
-    text->setColour(TextEditor::outlineColourId,
-                    Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    text->setColour(TextEditor::shadowColourId, Colour(0x00000000));
-    text->setText(String());
+    text->setColour(juce::TextEditor::textColourId, juce::Colours::aqua);
+    text->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00ffffff));
+    text->setColour(juce::TextEditor::outlineColourId,
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    text->setColour(juce::TextEditor::shadowColourId, juce::Colour(0x00000000));
+    text->setText(juce::String());
 
-    addAndMakeVisible(copy_past = new TextButton(String()));
+    addAndMakeVisible(copy_past = new juce::TextButton(juce::String()));
     copy_past->setExplicitFocusOrder(2);
     copy_past->setButtonText(TRANS("COPY"));
-    copy_past->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                 Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    copy_past->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                                 juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     copy_past->addListener(this);
-    copy_past->setColour(TextButton::buttonColourId, Colours::black);
-    copy_past->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
-    copy_past->setColour(TextButton::textColourOnId,
-                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    copy_past->setColour(TextButton::textColourOffId,
-                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    copy_past->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    copy_past->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
+    copy_past->setColour(juce::TextButton::textColourOnId,
+                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    copy_past->setColour(juce::TextButton::textColourOffId,
+                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(note = new Label(String(), String()));
-    note->setFont(Font(15.00f, Font::plain));
-    note->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(note = new juce::Label(juce::String(), juce::String()));
+    note->setFont(juce::Font(15.00f, juce::Font::plain));
+    note->setJustificationType(juce::Justification::centredLeft);
     note->setEditable(false, false, false);
-    note->setColour(Label::textColourId, Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    note->setColour(TextEditor::textColourId, Colours::black);
-    note->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    note->setColour(juce::Label::textColourId,
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    note->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    note->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(description = new Label(String(), TRANS("\n")));
-    description->setFont(Font(15.00f, Font::plain));
-    description->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(description = new juce::Label(juce::String(), TRANS("\n")));
+    description->setFont(juce::Font(15.00f, juce::Font::plain));
+    description->setJustificationType(juce::Justification::centredLeft);
     description->setEditable(false, false, false);
-    description->setColour(Label::textColourId,
-                           Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    description->setColour(TextEditor::textColourId, Colours::black);
-    description->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    description->setColour(juce::Label::textColourId,
+                           juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    description->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    description->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(send_mail = new TextButton(String()));
+    addAndMakeVisible(send_mail = new juce::TextButton(juce::String()));
     send_mail->setExplicitFocusOrder(3);
     send_mail->setButtonText(TRANS("SEND AS MAIL"));
-    send_mail->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                 Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    send_mail->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+                                 juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     send_mail->addListener(this);
-    send_mail->setColour(TextButton::buttonColourId, Colours::black);
-    send_mail->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
-    send_mail->setColour(TextButton::textColourOnId,
-                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    send_mail->setColour(TextButton::textColourOffId,
-                         Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    send_mail->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    send_mail->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
+    send_mail->setColour(juce::TextButton::textColourOnId,
+                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    send_mail->setColour(juce::TextButton::textColourOffId,
+                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(send_mail_to_monoplugs = new TextButton(String()));
+    addAndMakeVisible(send_mail_to_monoplugs = new juce::TextButton(juce::String()));
     send_mail_to_monoplugs->setExplicitFocusOrder(3);
     send_mail_to_monoplugs->setButtonText(
         TRANS("SEND AS MAIL TO MONOPLUGS AND SHARE IT ON THE ONLINE REPOSITORY"));
-    send_mail_to_monoplugs->setConnectedEdges(Button::ConnectedOnLeft | Button::ConnectedOnRight |
-                                              Button::ConnectedOnTop | Button::ConnectedOnBottom);
+    send_mail_to_monoplugs->setConnectedEdges(
+        juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
+        juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     send_mail_to_monoplugs->addListener(this);
-    send_mail_to_monoplugs->setColour(TextButton::buttonColourId, Colours::black);
-    send_mail_to_monoplugs->setColour(TextButton::buttonOnColourId, Colour(0x004444ff));
-    send_mail_to_monoplugs->setColour(TextButton::textColourOnId,
-                                      Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    send_mail_to_monoplugs->setColour(TextButton::textColourOffId, Colour(0xffff7000));
+    send_mail_to_monoplugs->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
+    send_mail_to_monoplugs->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
+    send_mail_to_monoplugs->setColour(
+        juce::TextButton::textColourOnId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    send_mail_to_monoplugs->setColour(juce::TextButton::textColourOffId, juce::Colour(0xffff7000));
 
-    addAndMakeVisible(button_info = new TextButton(String()));
+    addAndMakeVisible(button_info = new juce::TextButton(juce::String()));
     button_info->setButtonText(TRANS("?"));
     button_info->addListener(this);
 
     //[UserPreSize]
     _app_instance_store->editor_config.im_exporter_editor = this;
 
-    titel->setText(_listener->_title, dontSendNotification);
-    text->setText(_listener->_data, dontSendNotification);
+    titel->setText(_listener->_title, juce::dontSendNotification);
+    text->setText(_listener->_data, juce::dontSendNotification);
 
     if (_listener->_is_importer)
     {
         copy_past->setButtonText("PASTE");
         note->setText(
             "NOTE: an import does overwrite your current work - store it before importing!",
-            dontSendNotification);
+            juce::dontSendNotification);
         description->setText(
             "Copy any B-Step export from your mail (or where ever) and paste it here to import it.",
-            dontSendNotification);
+            juce::dontSendNotification);
         send_mail->setVisible(false);
     }
     else
     {
         copy_past->setButtonText("COPY");
-        text->setText(_listener->_data, dontSendNotification);
+        text->setText(_listener->_data, juce::dontSendNotification);
         cancel->setButtonText("CLOSE");
         ok->setVisible(false);
         note->setText(
             "NOTE: to export your current work you MUST save it to file before exporting!",
-            dontSendNotification);
+            juce::dontSendNotification);
         description->setText(
             "Copy the text below and paste it in your mail body or where ever you want.",
-            dontSendNotification);
+            juce::dontSendNotification);
     }
     //
     //[/UserPreSize]
@@ -193,7 +196,8 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     setSize(440, 600);
 
     //[Constructor] You can add your own custom stuff here..
-    center_relative_and_make_visible(reinterpret_cast<Component *>(_app_instance_store->editor));
+    center_relative_and_make_visible(
+        reinterpret_cast<juce::Component *>(_app_instance_store->editor));
 
     text->setWantsKeyboardFocus(false);
 
@@ -222,21 +226,21 @@ UiTextImExport::~UiTextImExport()
 }
 
 //==============================================================================
-void UiTextImExport::paint(Graphics &g)
+void UiTextImExport::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll(Colours::white);
+    g.fillAll(juce::Colours::white);
 
-    g.setColour(Colour(0xff161616));
+    g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
     //[UserPaint] Add your own custom painting code here..
-    ResizableWindow::moved();
+    juce::ResizableWindow::moved();
     //[/UserPaint]
 }
 
@@ -271,11 +275,11 @@ void UiTextImExport::resized()
     button_info->setBounds(proportionOfWidth(0.8864f), proportionOfHeight(0.0250f),
                            proportionOfWidth(0.0682f), proportionOfHeight(0.0500f));
     //[UserResized] Add your own custom resize handling here..
-    ResizableWindow::resized();
+    juce::ResizableWindow::resized();
     //[/UserResized]
 }
 
-void UiTextImExport::buttonClicked(Button *buttonThatWasClicked)
+void UiTextImExport::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -307,47 +311,54 @@ void UiTextImExport::buttonClicked(Button *buttonThatWasClicked)
         //[UserButtonCode_copy_past] -- add your button handler code here..
         if (_listener->_is_importer)
         {
-            String data_received =
-                SystemClipboard::getTextFromClipboard().replaceCharacters("#", "<");
+            juce::String data_received =
+                juce::SystemClipboard::getTextFromClipboard().replaceCharacters("#", "<");
             _listener->_data = data_received;
             text->setText(_listener->_data);
         }
         else
         {
-            String data_to_send = (_listener->_data.replaceCharacters("<", "#"));
-            SystemClipboard::copyTextToClipboard(data_to_send);
+            juce::String data_to_send = (_listener->_data.replaceCharacters("<", "#"));
+            juce::SystemClipboard::copyTextToClipboard(data_to_send);
         }
         //[/UserButtonCode_copy_past]
     }
     else if (buttonThatWasClicked == send_mail)
     {
         //[UserButtonCode_send_mail] -- add your button handler code here..
-        String data_to_send =
+        juce::String data_to_send =
             (_listener->_is_importer ? text->getText().replaceCharacters("<", "#")
                                      : _listener->_data.replaceCharacters("<", "#"));
-        URL(String("mailto:yourmail?body=") + data_to_send).launchInDefaultBrowser();
+        juce::URL(juce::String("mailto:yourmail?body=") + data_to_send).launchInDefaultBrowser();
         //[/UserButtonCode_send_mail]
     }
     else if (buttonThatWasClicked == send_mail_to_monoplugs)
     {
         //[UserButtonCode_send_mail_to_monoplugs] -- add your button handler code here..
-        String data_to_send =
+        juce::String data_to_send =
             (_listener->_is_importer ? text->getText().replaceCharacters("<", "#")
                                      : _listener->_data.replaceCharacters("<", "#"));
 
-        URL(String(
-                String("mailto:share@monoplugs.com?body=") +
-                String("THANKS FOR SHARING YOUR WORK!\n") +
-                String("IF YOU LIKE YOU CAN ADD SOME ADDITIONAL INFO LIKE YOUR ARTIST NAME,\n") +
-                String("WEBPAGE ETC, WHICH WE CAN PUBLISH WITH YOUR PROJECT OR FILE.\n\n") +
-                String("ADD YOUR INFO HERE: \n\n") + String("------------------------\n\n") +
-                String("TO GIVE US AN IDEA HOW IT CAN SOUND, YOU CAN ATTACH AN AUDIO SAMPLE "
-                       "FILE.\n\n") +
-                String("------------------------\n\n") +
-                String("WE WILL SEND YOU A MAIL WHEN YOUR FILE IS AVAILABLE ON THE REPOSITORY.\n") +
-                String("THANK YOU!\n\n") + String("------------------------\n") +
-                String("------------------------\n") + String("------------------------\n\n") +
-                String("YOUR EXPORTED DATA:\n")) +
+        juce::URL(
+            juce::String(
+                juce::String("mailto:share@monoplugs.com?body=") +
+                juce::String("THANKS FOR SHARING YOUR WORK!\n") +
+                juce::String(
+                    "IF YOU LIKE YOU CAN ADD SOME ADDITIONAL INFO LIKE YOUR ARTIST NAME,\n") +
+                juce::String("WEBPAGE ETC, WHICH WE CAN PUBLISH WITH YOUR PROJECT OR FILE.\n\n")
+
+                + juce::String("ADD YOUR INFO HERE: \n\n") +
+                juce::String("------------------------\n\n") +
+                juce::String("TO GIVE US AN IDEA HOW IT CAN SOUND, YOU CAN ATTACH AN AUDIO SAMPLE "
+                             "FILE.\n\n") +
+                juce::String("------------------------\n\n") +
+                juce::String(
+                    "WE WILL SEND YOU A MAIL WHEN YOUR FILE IS AVAILABLE ON THE REPOSITORY.\n")
+
+                + juce::String("THANK YOU!\n\n") + juce::String("------------------------\n") +
+                juce::String("------------------------\n") +
+                juce::String("------------------------\n\n") +
+                juce::String("YOUR EXPORTED DATA:\n")) +
             data_to_send)
             .launchInDefaultBrowser();
 

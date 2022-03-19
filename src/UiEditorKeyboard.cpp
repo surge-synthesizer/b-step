@@ -30,9 +30,9 @@
 UiEditorKeyboard::UiEditorKeyboard(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-MIDI-Keyboard"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(keyboard =
-                          new MidiKeyboardComponent(*_app_instance_store->audio_processor,
-                                                    MidiKeyboardComponent::horizontalKeyboard));
+    addAndMakeVisible(keyboard = new juce::MidiKeyboardComponent(
+                          *_app_instance_store->audio_processor,
+                          juce::MidiKeyboardComponent::horizontalKeyboard));
 
     //[UserPreSize]
 
@@ -60,17 +60,17 @@ UiEditorKeyboard::~UiEditorKeyboard()
 }
 
 //==============================================================================
-void UiEditorKeyboard::paint(Graphics &g)
+void UiEditorKeyboard::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll(Colour(0xff161616));
+    g.fillAll(juce::Colour(0xff161616));
 
-    g.setColour(Colour(0xff161616));
+    g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
     //[UserPaint] Add your own custom painting code here..

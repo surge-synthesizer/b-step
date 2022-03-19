@@ -38,7 +38,7 @@ OnePoleFilter::~OnePoleFilter() noexcept {}
 void OnePoleFilter::processSamples(float *const samples, const int numSamples) noexcept
 {
     // make sure sample values are locked
-    const ScopedLock sl(lock);
+    const juce::ScopedLock sl(lock);
 
     for (int i = 0; i < numSamples; ++i)
     {
@@ -49,12 +49,12 @@ void OnePoleFilter::processSamples(float *const samples, const int numSamples) n
 
 void OnePoleFilter::makeLowPass(const double sampleRate, const double frequency) noexcept
 {
-    const double w0 = 2.0 * double_Pi * (frequency / sampleRate);
+    const double w0 = 2.0 * juce::MathConstants<double>::pi * (frequency / sampleRate);
     const double cos_w0 = cos(w0);
 
     const double alpha = (2.0f - cos_w0) - sqrt((2.0 - cos_w0) * (2.0 - cos_w0) - 1.0);
 
-    const ScopedLock sl(lock);
+    const juce::ScopedLock sl(lock);
 
     b0 = 1.0f - (float)alpha;
     a1 = (float)alpha;
@@ -62,12 +62,12 @@ void OnePoleFilter::makeLowPass(const double sampleRate, const double frequency)
 
 void OnePoleFilter::makeHighPass(const double sampleRate, const double frequency) noexcept
 {
-    const double w0 = 2.0 * double_Pi * (frequency / sampleRate);
+    const double w0 = 2.0 * juce::MathConstants<double>::pi * (frequency / sampleRate);
     const double cos_w0 = cos(w0);
 
     const double alpha = (2.0 + cos_w0) - sqrt((2.0 + cos_w0) * (2.0 + cos_w0) - 1.0);
 
-    const ScopedLock sl(lock);
+    const juce::ScopedLock sl(lock);
 
     b0 = (float)alpha - 1.0f;
     a1 = (float)-alpha;

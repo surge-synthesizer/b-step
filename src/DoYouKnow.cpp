@@ -18,7 +18,8 @@ juce_ImplementSingleton(DoYouKnow)
     if (force)
     {
         CharPair message = get_message(id);
-        AlertWindow::showMessageBox(AlertWindow::InfoIcon, message.title, message.message, "Ok");
+        juce::AlertWindow::showMessageBox(juce::AlertWindow::InfoIcon, message.title,
+                                          message.message, "Ok");
 
         return true;
     }
@@ -27,9 +28,9 @@ juce_ImplementSingleton(DoYouKnow)
         if (!dont_show_agains.contains(id))
         {
             CharPair message = get_message(id);
-            int result = AlertWindow::showYesNoCancelBox(
-                AlertWindow::InfoIcon, "DO YOU KNOW?",
-                message.title + String("\n\n") + message.message, "OK",
+            int result = juce::AlertWindow::showYesNoCancelBox(
+                juce::AlertWindow::InfoIcon, "DO YOU KNOW?",
+                message.title + juce::String("\n\n") + message.message, "OK",
                 "DON'T SHOW THIS INFO AGAIN", "NEVER SHOW ANY INFO AGAIN");
             if (result == 2)
             {
@@ -96,7 +97,7 @@ DoYouKnow::CharPair DoYouKnow::get_message(DoYouKnow::MESSAGES id_)
     }
 }
 
-void DoYouKnow::export_to(XmlElement &xml) const
+void DoYouKnow::export_to(juce::XmlElement &xml) const
 {
     if (never_show_a_message)
         xml.setAttribute("NEVER_SHOW_AGAIN", never_show_a_message);
@@ -120,7 +121,7 @@ void DoYouKnow::export_to(XmlElement &xml) const
         xml.setAttribute("USE_VST_INSTEAD_OF_AU", true);
 }
 
-void DoYouKnow::import_from(const XmlElement &xml)
+void DoYouKnow::import_from(const juce::XmlElement &xml)
 {
     never_show_a_message = xml.getIntAttribute("NEVER_SHOW_AGAIN", false);
 

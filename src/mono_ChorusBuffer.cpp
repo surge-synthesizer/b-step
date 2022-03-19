@@ -10,7 +10,7 @@
 
 #include "mono_ChorusBuffer.h"
 
-Chorus::Chorus()
+Chorus::Chorus() noexcept
 {
     index[0] = 0;
     index[1] = 0;

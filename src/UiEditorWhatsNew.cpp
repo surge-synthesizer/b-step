@@ -41,225 +41,233 @@ void UiEditorWhatsNew::timerCallback()
 UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-WhatsNew"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(label22 = new Label(String(), TRANS("DON\'T SHOW AGAIN")));
-    label22->setFont(Font("Oswald", 22.00f, Font::plain));
-    label22->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label22 = new juce::Label(juce::String(), TRANS("DON\'T SHOW AGAIN")));
+    label22->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label22->setJustificationType(juce::Justification::centredLeft);
     label22->setEditable(false, false, false);
-    label22->setColour(Label::textColourId, Colour(0xff757575));
-    label22->setColour(TextEditor::textColourId, Colours::black);
-    label22->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label22->setColour(juce::Label::textColourId, juce::Colour(0xff757575));
+    label22->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label22->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(dont_show_again = new ToggleButton(String()));
+    addAndMakeVisible(dont_show_again = new juce::ToggleButton(juce::String()));
     dont_show_again->addListener(this);
 
-    addAndMakeVisible(label9 = new Label(String(), TRANS("WHAT\'S NEW IN B-STEP 2.1?")));
-    label9->setFont(Font("Oswald", 63.40f, Font::bold));
-    label9->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label9 =
+                          new juce::Label(juce::String(), TRANS("WHAT\'S NEW IN B-STEP 2.1?")));
+    label9->setFont(juce::Font("Oswald", 63.40f, juce::Font::bold));
+    label9->setJustificationType(juce::Justification::centredLeft);
     label9->setEditable(false, false, false);
-    label9->setColour(Label::textColourId, Colours::black);
-    label9->setColour(TextEditor::textColourId, Colours::black);
-    label9->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label9->setColour(juce::Label::textColourId, juce::Colours::black);
+    label9->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label9->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label2 = new Label(String(), TRANS("WHAT\'S NEW IN B-STEP 2.1?")));
-    label2->setFont(Font("Oswald", 63.40f, Font::bold));
-    label2->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label2 =
+                          new juce::Label(juce::String(), TRANS("WHAT\'S NEW IN B-STEP 2.1?")));
+    label2->setFont(juce::Font("Oswald", 63.40f, juce::Font::bold));
+    label2->setJustificationType(juce::Justification::centredLeft);
     label2->setEditable(false, false, false);
-    label2->setColour(Label::textColourId, Colour(0xffe57a1f));
-    label2->setColour(TextEditor::textColourId, Colours::black);
-    label2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label2->setColour(juce::Label::textColourId, juce::Colour(0xffe57a1f));
+    label2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(close = new TextButton(String()));
+    addAndMakeVisible(close = new juce::TextButton(juce::String()));
     close->setButtonText(TRANS("X"));
     close->addListener(this);
-    close->setColour(TextButton::buttonColourId, Colours::cornsilk);
+    close->setColour(juce::TextButton::buttonColourId, juce::Colours::cornsilk);
 
-    addAndMakeVisible(label3 = new Label(String(), TRANS("-> Colour Styler")));
-    label3->setFont(Font("Oswald", 22.00f, Font::plain));
-    label3->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label3 = new juce::Label(juce::String(), TRANS("-> Colour Styler")));
+    label3->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label3->setJustificationType(juce::Justification::centredLeft);
     label3->setEditable(false, false, false);
-    label3->setColour(Label::textColourId, Colour(0xff010000));
-    label3->setColour(TextEditor::textColourId, Colours::black);
-    label3->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label3->setColour(juce::Label::textColourId, juce::Colour(0xff010000));
+    label3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label4 = new Label(String(), TRANS("-> New Filemanager")));
-    label4->setFont(Font("Oswald", 22.00f, Font::plain));
-    label4->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label4 = new juce::Label(juce::String(), TRANS("-> New Filemanager")));
+    label4->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label4->setJustificationType(juce::Justification::centredLeft);
     label4->setEditable(false, false, false);
-    label4->setColour(Label::textColourId, Colour(0xff010000));
-    label4->setColour(TextEditor::textColourId, Colours::black);
-    label4->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label4->setColour(juce::Label::textColourId, juce::Colour(0xff010000));
+    label4->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label4->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label5 =
-                          new Label(String(), TRANS("---> Im- & Export Projects and other Data")));
-    label5->setFont(Font("Oswald", 22.00f, Font::plain));
-    label5->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label5 = new juce::Label(juce::String(),
+                                               TRANS("---> Im- & Export Projects and other Data")));
+    label5->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label5->setJustificationType(juce::Justification::centredLeft);
     label5->setEditable(false, false, false);
-    label5->setColour(Label::textColourId, Colour(0xff010000));
-    label5->setColour(TextEditor::textColourId, Colours::black);
-    label5->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label5->setColour(juce::Label::textColourId, juce::Colour(0xff010000));
+    label5->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label5->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     addAndMakeVisible(
-        label6 =
-            new Label(String(), TRANS("---> Download free Presets from the B-Step Repository")));
-    label6->setFont(Font("Oswald", 22.00f, Font::plain));
-    label6->setJustificationType(Justification::centredLeft);
+        label6 = new juce::Label(juce::String(),
+                                 TRANS("---> Download free Presets from the B-Step Repository")));
+    label6->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label6->setJustificationType(juce::Justification::centredLeft);
     label6->setEditable(false, false, false);
-    label6->setColour(Label::textColourId, Colour(0xff010000));
-    label6->setColour(TextEditor::textColourId, Colours::black);
-    label6->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
-
-    addAndMakeVisible(label7 = new Label(String(), TRANS("COLOUR STYLER: CREATE YOUR OWN STYLES")));
-    label7->setFont(Font("Oswald", 22.00f, Font::plain));
-    label7->setJustificationType(Justification::centredLeft);
-    label7->setEditable(false, false, false);
-    label7->setColour(Label::textColourId, Colour(0xffe57a1f));
-    label7->setColour(TextEditor::textColourId, Colours::black);
-    label7->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
-
-    addAndMakeVisible(label10 =
-                          new Label(String(), TRANS("---> Share your Projects on the Repository")));
-    label10->setFont(Font("Oswald", 22.00f, Font::plain));
-    label10->setJustificationType(Justification::centredLeft);
-    label10->setEditable(false, false, false);
-    label10->setColour(Label::textColourId, Colour(0xff010000));
-    label10->setColour(TextEditor::textColourId, Colours::black);
-    label10->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label6->setColour(juce::Label::textColourId, juce::Colour(0xff010000));
+    label6->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label6->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     addAndMakeVisible(
-        label11 = new Label(String(),
-                            TRANS("---> Provide Audio and Text Info to identify your Projects")));
-    label11->setFont(Font("Oswald", 22.00f, Font::plain));
-    label11->setJustificationType(Justification::centredLeft);
-    label11->setEditable(false, false, false);
-    label11->setColour(Label::textColourId, Colour(0xff010000));
-    label11->setColour(TextEditor::textColourId, Colours::black);
-    label11->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+        label7 = new juce::Label(juce::String(), TRANS("COLOUR STYLER: CREATE YOUR OWN STYLES")));
+    label7->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label7->setJustificationType(juce::Justification::centredLeft);
+    label7->setEditable(false, false, false);
+    label7->setColour(juce::Label::textColourId, juce::Colour(0xffe57a1f));
+    label7->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label7->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(open_styler = new TextButton(String()));
+    addAndMakeVisible(label10 = new juce::Label(
+                          juce::String(), TRANS("---> Share your Projects on the Repository")));
+    label10->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label10->setJustificationType(juce::Justification::centredLeft);
+    label10->setEditable(false, false, false);
+    label10->setColour(juce::Label::textColourId, juce::Colour(0xff010000));
+    label10->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label10->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
+
+    addAndMakeVisible(
+        label11 = new juce::Label(
+            juce::String(), TRANS("---> Provide Audio and Text Info to identify your Projects")));
+    label11->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label11->setJustificationType(juce::Justification::centredLeft);
+    label11->setEditable(false, false, false);
+    label11->setColour(juce::Label::textColourId, juce::Colour(0xff010000));
+    label11->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label11->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
+
+    addAndMakeVisible(open_styler = new juce::TextButton(juce::String()));
     open_styler->setButtonText(TRANS("OPEN THE STYLER"));
     open_styler->addListener(this);
-    open_styler->setColour(TextButton::buttonColourId,
-                           Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    open_styler->setColour(juce::TextButton::buttonColourId,
+                           juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(label12 = new Label(String(), TRANS("-> New Supported Hosts")));
-    label12->setFont(Font("Oswald", 22.00f, Font::plain));
-    label12->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label12 = new juce::Label(juce::String(), TRANS("-> New Supported Hosts")));
+    label12->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label12->setJustificationType(juce::Justification::centredLeft);
     label12->setEditable(false, false, false);
-    label12->setColour(Label::textColourId, Colour(0xff010000));
-    label12->setColour(TextEditor::textColourId, Colours::black);
-    label12->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label12->setColour(juce::Label::textColourId, juce::Colour(0xff010000));
+    label12->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label12->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label13 = new Label(String(), TRANS("---> Nuendo, Studio One, NI Maschine")));
-    label13->setFont(Font("Oswald", 22.00f, Font::plain));
-    label13->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(
+        label13 = new juce::Label(juce::String(), TRANS("---> Nuendo, Studio One, NI Maschine")));
+    label13->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label13->setJustificationType(juce::Justification::centredLeft);
     label13->setEditable(false, false, false);
-    label13->setColour(Label::textColourId, Colour(0xff010000));
-    label13->setColour(TextEditor::textColourId, Colours::black);
-    label13->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label13->setColour(juce::Label::textColourId, juce::Colour(0xff010000));
+    label13->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label13->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label8 = new Label(String(), TRANS("FILEMANAGER")));
-    label8->setFont(Font("Oswald", 22.00f, Font::plain));
-    label8->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label8 = new juce::Label(juce::String(), TRANS("FILEMANAGER")));
+    label8->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label8->setJustificationType(juce::Justification::centredLeft);
     label8->setEditable(false, false, false);
-    label8->setColour(Label::textColourId, Colour(0xffe57a1f));
-    label8->setColour(TextEditor::textColourId, Colours::black);
-    label8->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label8->setColour(juce::Label::textColourId, juce::Colour(0xffe57a1f));
+    label8->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label8->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(open_filemanager = new TextButton(String()));
+    addAndMakeVisible(open_filemanager = new juce::TextButton(juce::String()));
     open_filemanager->setButtonText(TRANS("OK, OPEN A PROJECT"));
     open_filemanager->addListener(this);
-    open_filemanager->setColour(TextButton::buttonColourId,
-                                Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    open_filemanager->setColour(juce::TextButton::buttonColourId,
+                                juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(label15 = new Label(String(), TRANS("BUG FIXES & IMPROVEMENTS")));
-    label15->setFont(Font("Oswald", 22.00f, Font::plain));
-    label15->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label15 = new juce::Label(juce::String(), TRANS("BUG FIXES & IMPROVEMENTS")));
+    label15->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label15->setJustificationType(juce::Justification::centredLeft);
     label15->setEditable(false, false, false);
-    label15->setColour(Label::textColourId, Colour(0xffe57a1f));
-    label15->setColour(TextEditor::textColourId, Colours::black);
-    label15->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label15->setColour(juce::Label::textColourId, juce::Colour(0xffe57a1f));
+    label15->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label15->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label16 = new Label(String(), TRANS("-> FIX: iPad MIDI sync issues")));
-    label16->setFont(Font("Oswald", 22.00f, Font::plain));
-    label16->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label16 =
+                          new juce::Label(juce::String(), TRANS("-> FIX: iPad MIDI sync issues")));
+    label16->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label16->setJustificationType(juce::Justification::centredLeft);
     label16->setEditable(false, false, false);
-    label16->setColour(Label::textColourId,
-                       Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label16->setColour(TextEditor::textColourId, Colours::black);
-    label16->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label16->setColour(juce::Label::textColourId,
+                       juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label16->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label16->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label17 =
-                          new Label(String(), TRANS("-> FIX: playback freeze in repeat mode")));
-    label17->setFont(Font("Oswald", 22.00f, Font::plain));
-    label17->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(
+        label17 = new juce::Label(juce::String(), TRANS("-> FIX: playback freeze in repeat mode")));
+    label17->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label17->setJustificationType(juce::Justification::centredLeft);
     label17->setEditable(false, false, false);
-    label17->setColour(Label::textColourId,
-                       Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label17->setColour(TextEditor::textColourId, Colours::black);
-    label17->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label17->setColour(juce::Label::textColourId,
+                       juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label17->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label17->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label18 = new Label(String(), TRANS("-> FIX: restore settings issues")));
-    label18->setFont(Font("Oswald", 22.00f, Font::plain));
-    label18->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(
+        label18 = new juce::Label(juce::String(), TRANS("-> FIX: restore settings issues")));
+    label18->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label18->setJustificationType(juce::Justification::centredLeft);
     label18->setEditable(false, false, false);
-    label18->setColour(Label::textColourId,
-                       Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label18->setColour(TextEditor::textColourId, Colours::black);
-    label18->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label18->setColour(juce::Label::textColourId,
+                       juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label18->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label18->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label19 = new Label(String(), TRANS("-> reduce CPU usage ")));
-    label19->setFont(Font("Oswald", 22.00f, Font::plain));
-    label19->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label19 = new juce::Label(juce::String(), TRANS("-> reduce CPU usage ")));
+    label19->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label19->setJustificationType(juce::Justification::centredLeft);
     label19->setEditable(false, false, false);
-    label19->setColour(Label::textColourId,
-                       Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label19->setColour(TextEditor::textColourId, Colours::black);
-    label19->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label19->setColour(juce::Label::textColourId,
+                       juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label19->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label19->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label20 = new Label(String(), TRANS("-> reduce RAM usage")));
-    label20->setFont(Font("Oswald", 22.00f, Font::plain));
-    label20->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label20 = new juce::Label(juce::String(), TRANS("-> reduce RAM usage")));
+    label20->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label20->setJustificationType(juce::Justification::centredLeft);
     label20->setEditable(false, false, false);
-    label20->setColour(Label::textColourId,
-                       Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label20->setColour(TextEditor::textColourId, Colours::black);
-    label20->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label20->setColour(juce::Label::textColourId,
+                       juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label20->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label20->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(open_log = new TextButton(String()));
+    addAndMakeVisible(open_log = new juce::TextButton(juce::String()));
     open_log->setButtonText(TRANS("OPEN THE COMPLETE LOG"));
     open_log->addListener(this);
-    open_log->setColour(TextButton::buttonColourId,
-                        Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    open_log->setColour(juce::TextButton::buttonColourId,
+                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(label21 = new Label(String(), TRANS("-> built in presets")));
-    label21->setFont(Font("Oswald", 22.00f, Font::plain));
-    label21->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label21 = new juce::Label(juce::String(), TRANS("-> built in presets")));
+    label21->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label21->setJustificationType(juce::Justification::centredLeft);
     label21->setEditable(false, false, false);
-    label21->setColour(Label::textColourId,
-                       Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label21->setColour(TextEditor::textColourId, Colours::black);
-    label21->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label21->setColour(juce::Label::textColourId,
+                       juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label21->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label21->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label14 = new Label(String(), TRANS("-> Embedded User Manual")));
-    label14->setFont(Font("Oswald", 22.00f, Font::plain));
-    label14->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(label14 = new juce::Label(juce::String(), TRANS("-> Embedded User Manual")));
+    label14->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label14->setJustificationType(juce::Justification::centredLeft);
     label14->setEditable(false, false, false);
-    label14->setColour(Label::textColourId, Colour(0xff010000));
-    label14->setColour(TextEditor::textColourId, Colours::black);
-    label14->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label14->setColour(juce::Label::textColourId, juce::Colour(0xff010000));
+    label14->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label14->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label23 = new Label(String(), TRANS("-> Basic AudioBus support on iOS")));
-    label23->setFont(Font("Oswald", 22.00f, Font::plain));
-    label23->setJustificationType(Justification::centredLeft);
+    addAndMakeVisible(
+        label23 = new juce::Label(juce::String(), TRANS("-> Basic AudioBus support on iOS")));
+    label23->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
+    label23->setJustificationType(juce::Justification::centredLeft);
     label23->setEditable(false, false, false);
-    label23->setColour(Label::textColourId, Colour(0xff010000));
-    label23->setColour(TextEditor::textColourId, Colours::black);
-    label23->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+    label23->setColour(juce::Label::textColourId, juce::Colour(0xff010000));
+    label23->setColour(juce::TextEditor::textColourId, juce::Colours::black);
+    label23->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    cachedImage_demobg_png2 = ImageCache::getFromMemory(demobg_png2, demobg_png2Size);
+    cachedImage_demobg_png2 = juce::ImageCache::getFromMemory(demobg_png2, demobg_png2Size);
     cachedImage_colourstyles_png =
-        ImageCache::getFromMemory(colourstyles_png, colourstyles_pngSize);
-    cachedImage_filemanager_png = ImageCache::getFromMemory(filemanager_png, filemanager_pngSize);
+        juce::ImageCache::getFromMemory(colourstyles_png, colourstyles_pngSize);
+    cachedImage_filemanager_png =
+        juce::ImageCache::getFromMemory(filemanager_png, filemanager_pngSize);
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -315,34 +323,34 @@ UiEditorWhatsNew::~UiEditorWhatsNew()
 }
 
 //==============================================================================
-void UiEditorWhatsNew::paint(Graphics &g)
+void UiEditorWhatsNew::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll(Colours::black);
+    g.fillAll(juce::Colours::black);
 
-    g.setColour(Colours::black);
+    g.setColour(juce::Colours::black);
     g.drawImageWithin(cachedImage_demobg_png2, 0, 0, proportionOfWidth(1.0000f),
-                      proportionOfHeight(1.0000f), RectanglePlacement::centred, false);
+                      proportionOfHeight(1.0000f), juce::RectanglePlacement::centred, false);
 
-    g.setColour(Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     g.drawRect(0, 0, proportionOfWidth(1.0000f), proportionOfHeight(1.0000f), 2);
 
-    g.setColour(Colours::black);
-    g.drawImageWithin(cachedImage_colourstyles_png, proportionOfWidth(0.0406f),
-                      proportionOfHeight(0.6601f), proportionOfWidth(0.3773f),
-                      proportionOfHeight(0.2528f),
-                      RectanglePlacement::centred | RectanglePlacement::onlyReduceInSize, false);
+    g.setColour(juce::Colours::black);
+    g.drawImageWithin(
+        cachedImage_colourstyles_png, proportionOfWidth(0.0406f), proportionOfHeight(0.6601f),
+        proportionOfWidth(0.3773f), proportionOfHeight(0.2528f),
+        juce::RectanglePlacement::centred | juce::RectanglePlacement::onlyReduceInSize, false);
 
-    g.setColour(Colours::black);
-    g.drawImageWithin(cachedImage_filemanager_png, proportionOfWidth(0.4706f),
-                      proportionOfHeight(0.6489f), proportionOfWidth(0.1704f),
-                      proportionOfHeight(0.2388f),
-                      RectanglePlacement::centred | RectanglePlacement::onlyReduceInSize, false);
+    g.setColour(juce::Colours::black);
+    g.drawImageWithin(
+        cachedImage_filemanager_png, proportionOfWidth(0.4706f), proportionOfHeight(0.6489f),
+        proportionOfWidth(0.1704f), proportionOfHeight(0.2388f),
+        juce::RectanglePlacement::centred | juce::RectanglePlacement::onlyReduceInSize, false);
 
     //[UserPaint] Add your own custom painting code here..
-    ResizableWindow::moved();
+    juce::ResizableWindow::moved();
     //[/UserPaint]
 }
 
@@ -407,11 +415,11 @@ void UiEditorWhatsNew::resized()
     label23->setBounds(proportionOfWidth(0.0406f), proportionOfHeight(0.5169f),
                        proportionOfWidth(0.5872f), proportionOfHeight(0.0534f));
     //[UserResized] Add your own custom resize handling here..
-    ResizableWindow::resized();
+    juce::ResizableWindow::resized();
     //[/UserResized]
 }
 
-void UiEditorWhatsNew::buttonClicked(Button *buttonThatWasClicked)
+void UiEditorWhatsNew::buttonClicked(juce::Button *buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]

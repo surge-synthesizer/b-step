@@ -54,10 +54,10 @@ class UiLeftsideCC : public SubeditorBase
         cc_type->set_controller(controller_);
     }
 
-    void refresh_ui(Array<Component *> &components_to_repaint_) override;
+    void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_) override;
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
 
   private:
@@ -66,8 +66,8 @@ class UiLeftsideCC : public SubeditorBase
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<ModelBase> cc_type;
-    ScopedPointer<UiLabel> cc_label;
+    juce::ScopedPointer<ModelBase> cc_type;
+    juce::ScopedPointer<UiLabel> cc_label;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiLeftsideCC)

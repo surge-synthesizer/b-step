@@ -36,7 +36,7 @@ class UiLabel;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class UiEditorSetup : public UiEditor, public Button::Listener, public Slider::Listener
+class UiEditorSetup : public UiEditor, public juce::Button::Listener, public juce::Slider::Listener
 {
   public:
     //==============================================================================
@@ -52,35 +52,35 @@ class UiEditorSetup : public UiEditor, public Button::Listener, public Slider::L
     void refresh_ui();
     //[/UserMethods]
 
-    void paint(Graphics &g) override;
+    void paint(juce::Graphics &g) override;
     void resized() override;
-    void buttonClicked(Button *buttonThatWasClicked) override;
-    void sliderValueChanged(Slider *sliderThatWasMoved) override;
+    void buttonClicked(juce::Button *buttonThatWasClicked) override;
+    void sliderValueChanged(juce::Slider *sliderThatWasMoved) override;
 
   private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Label> label_multidrag_on_off2;
-    ScopedPointer<Label> label_multidrag_on_off;
-    ScopedPointer<ToggleButton> tb_turn_multidrag_on_off;
-    ScopedPointer<ToggleButton> tb_switch_multidrag_mouse;
-    ScopedPointer<Label> label_switch_multidrag_mouse;
-    ScopedPointer<Label> label_playback_mode;
-    ScopedPointer<UiEditorToolbar> toolbar;
-    ScopedPointer<Label> label_multidrag_delay;
-    ScopedPointer<Label> label_ui_headline;
-    ScopedPointer<Slider> sl_multidrag_delay;
-    ScopedPointer<Label> label_multidrag_sensitivity;
-    ScopedPointer<Slider> sl_multidrag_sensitivity;
-    ScopedPointer<Label> label_simpledrag_sensitivity;
-    ScopedPointer<Slider> sl_simpledrag_sensitivity;
-    ScopedPointer<TextButton> button_info;
-    ScopedPointer<Slider> slider_playback_mode;
-    ScopedPointer<Label> label_ui_headline2;
-    ScopedPointer<ToggleButton> tb_turn_mousewheel_on_off;
-    ScopedPointer<TextButton> info_playback_modes;
+    juce::ScopedPointer<juce::Label> label_multidrag_on_off2;
+    juce::ScopedPointer<juce::Label> label_multidrag_on_off;
+    juce::ScopedPointer<juce::ToggleButton> tb_turn_multidrag_on_off;
+    juce::ScopedPointer<juce::ToggleButton> tb_switch_multidrag_mouse;
+    juce::ScopedPointer<juce::Label> label_switch_multidrag_mouse;
+    juce::ScopedPointer<juce::Label> label_playback_mode;
+    juce::ScopedPointer<UiEditorToolbar> toolbar;
+    juce::ScopedPointer<juce::Label> label_multidrag_delay;
+    juce::ScopedPointer<juce::Label> label_ui_headline;
+    juce::ScopedPointer<juce::Slider> sl_multidrag_delay;
+    juce::ScopedPointer<juce::Label> label_multidrag_sensitivity;
+    juce::ScopedPointer<juce::Slider> sl_multidrag_sensitivity;
+    juce::ScopedPointer<juce::Label> label_simpledrag_sensitivity;
+    juce::ScopedPointer<juce::Slider> sl_simpledrag_sensitivity;
+    juce::ScopedPointer<juce::TextButton> button_info;
+    juce::ScopedPointer<juce::Slider> slider_playback_mode;
+    juce::ScopedPointer<juce::Label> label_ui_headline2;
+    juce::ScopedPointer<juce::ToggleButton> tb_turn_mousewheel_on_off;
+    juce::ScopedPointer<juce::TextButton> info_playback_modes;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorSetup)

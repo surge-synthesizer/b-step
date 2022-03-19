@@ -1,6 +1,6 @@
 <a name="content"></a>
 
-# [B-Step Sequencer 2 - User Manual](http://b-step.monoplugs.com/manual)
+# [B-Step Sequencer 2 - User Manual](https://github.com/surge-synthesizer/b-step/blob/main/doc/manual/Readme.md#b-step-sequencer-2---user-manual)
 
 Last update: 31 of October 2014 - Version 2.0.2
 

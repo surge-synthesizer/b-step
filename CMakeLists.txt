@@ -41,8 +41,6 @@ juce_add_plugin(B-Step
         COPY_PLUGIN_AFTER_BUILD ${BSTEP_COPY_PLUGIN_AFTER_BUILD}
         )
 
-juce_generate_juce_header(B-Step)
-
 if (BSTEP_RELIABLE_VERSION_INFO)
     message(STATUS "VERSION IS ${CMAKE_PROJECT_VERSION_MAJOR} ${CMAKE_PROJECT_VERSION_MINOR}")
     add_custom_target(version-info BYPRODUCTS ${CMAKE_BINARY_DIR}/geninclude/version.cpp
@@ -76,32 +74,35 @@ juce_add_binary_data(B-Step-Binary SOURCES ${BSTEP_RESOURCES})
 
 target_compile_definitions(B-Step
         PUBLIC
-        JUCE_ALSA=enabled
-        JUCE_ASIO=disabled
-        JUCE_CHECK_MEMORY_LEAKS=disabled
-        JUCE_DIRECTSOUND=enabled
-        JUCE_ENABLE_LIVE_CONSTANT_EDITOR=disabled
-        JUCE_FORCE_DEBUG=disabled
-        JUCE_JACK=enabled
-        JUCE_LOG_ASSERTIONS=disabled
-        JUCE_PLUGINHOST_AU=disabled
-        JUCE_PLUGINHOST_VST3=disabled
-        JUCE_PLUGINHOST_VST=disabled
-        JUCE_QUICKTIME=disabled
-        JUCE_USE_ANDROID_OPENSLES=disabled
-        JUCE_USE_CDBURNER=disabled
-        JUCE_USE_CDREADER=disabled
-        JUCE_USE_COREIMAGE_LOADER=enabled
+        JUCE_ALSA=1
+        JUCE_ASIO=0
+        JUCE_CHECK_MEMORY_LEAKS=0
+        JUCE_DIRECTSOUND=1
+        JUCE_ENABLE_LIVE_CONSTANT_EDITOR=0
+        JUCE_FORCE_DEBUG=0
+        JUCE_JACK=1
+        JUCE_LOG_ASSERTIONS=0
+        JUCE_PLUGINHOST_AU=0
+        JUCE_PLUGINHOST_VST3=0
+        JUCE_PLUGINHOST_VST=0
+        JUCE_QUICKTIME=0
+        JUCE_USE_ANDROID_OPENSLES=0
+        JUCE_USE_CDBURNER=0
+        JUCE_USE_CDREADER=0
+        JUCE_USE_COREIMAGE_LOADER=1
         JUCE_USE_CURL=0
-        JUCE_USE_DIRECTWRITE=enabled
-        JUCE_USE_FLAC=enabled
-        JUCE_USE_LAME_AUDIO_FORMAT=disabled
-        JUCE_USE_MP3AUDIOFORMAT=enabled
-        JUCE_USE_OGGVORBIS=enabled
-        JUCE_USE_WINDOWS_MEDIA_FORMAT=enabled
-        JUCE_WASAPI=enabled
-        JUCE_WEB_BROWSER=disabled
+        JUCE_USE_DIRECTWRITE=1
+        JUCE_USE_FLAC=1
+        JUCE_USE_LAME_AUDIO_FORMAT=1
+        JUCE_USE_MP3AUDIOFORMAT=1
+        JUCE_USE_OGGVORBIS=1
+        JUCE_USE_WINDOWS_MEDIA_FORMAT=1
+        JUCE_WASAPI=1
+        JUCE_WEB_BROWSER=0
         JUCE_VST3_CAN_REPLACE_VST2=0
+
+        # Note if you are building the code under MIT you need a license to use JUCE to set this to 0
+        JUCE_DISPLAY_SPLASH_SCREEN=0
 
         JUCE_MODAL_LOOPS_PERMITTED=1
 

@@ -20,39 +20,42 @@ class AudioRecorder : public juce::AudioIODeviceCallback
     {
         BOOT(AudioRecorder);
 
-#ifdef B_STEP_STANDALONE
-        StringArray devices = get_availabe_devices();
-        if (devices.size())
-            selected_device = 0;
+        if (bstepIsStandalone)
+        {
+            auto devices = get_availabe_devices();
+            if (devices.size())
+                selected_device = 0;
 #ifdef JUCE_LINUX
-        // FIND JACK
-        for (int i = 0; i != devices.size(); ++i)
-        {
-            if (devices[i] == "JACK")
+            // FIND JACK
+            for (int i = 0; i != devices.size(); ++i)
             {
-                selected_device = i;
-                break;
+                if (devices[i] == "JACK")
+                {
+                    selected_device = i;
+                    break;
+                }
             }
-        }
 #endif
-        if (selected_device != -2)
-        {
-            set_audio_device(devices[selected_device]);
-        }
-#else
-        if (_app_instance_store->audio_processor->wrapperType !=
-            juce::AudioProcessor::WrapperType::wrapperType_AudioUnit)
-        {
-            set_audio_device(HOST_AUDIO_IN);
-            selected_device = -1;
+            if (selected_device != -2)
+            {
+                set_audio_device(devices[selected_device]);
+            }
         }
         else
         {
-            juce::StringArray devices = get_availabe_devices();
-            if (devices.size())
-                selected_device = 0;
+            if (_app_instance_store->audio_processor->wrapperType !=
+                juce::AudioProcessor::WrapperType::wrapperType_AudioUnit)
+            {
+                set_audio_device(HOST_AUDIO_IN);
+                selected_device = -1;
+            }
+            else
+            {
+                juce::StringArray devices = get_availabe_devices();
+                if (devices.size())
+                    selected_device = 0;
+            }
         }
-#endif
 
         backgroundThread.startThread();
     }
@@ -70,15 +73,14 @@ class AudioRecorder : public juce::AudioIODeviceCallback
 
     int get_selected_device_id()
     {
-#ifdef B_STEP_STANDALONE
-        return selected_device;
-#else
+        if (bstepIsStandalone)
+            return selected_device;
+
         if (_app_instance_store->audio_processor->wrapperType !=
             juce::AudioProcessor::WrapperType::wrapperType_AudioUnit)
             return selected_device + 1;
         else
             return selected_device;
-#endif
     }
 
     //==============================================================================
@@ -120,10 +122,8 @@ class AudioRecorder : public juce::AudioIODeviceCallback
                     // start using it..
                     const juce::ScopedLock sl(writerLock);
                     activeWriter = threadedWriter;
-#ifndef B_STEP_STANDALONE
-                    if (is_host_audio_recorder)
+                    if (!bstepIsStandalone && is_host_audio_recorder)
                         _app_instance_store->audio_processor->set_active_writer(activeWriter);
-#endif
                 }
             }
         }
@@ -135,9 +135,8 @@ class AudioRecorder : public juce::AudioIODeviceCallback
         {
             const juce::ScopedLock sl(writerLock);
 
-#ifndef B_STEP_STANDALONE
-            _app_instance_store->audio_processor->set_active_writer(nullptr);
-#endif
+            if (bstepIsStandalone)
+                _app_instance_store->audio_processor->set_active_writer(nullptr);
             activeWriter = nullptr;
         }
 
@@ -178,24 +177,22 @@ class AudioRecorder : public juce::AudioIODeviceCallback
             if (outputChannelData[i] != nullptr)
                 juce::FloatVectorOperations::clear(outputChannelData[i], numSamples);
     }
-#ifndef B_STEP_STANDALONE
     juce::AudioFormatWriter::ThreadedWriter *get_active_writer()
     {
-        if (is_host_audio_recorder)
+        if (bstepIsStandalone && is_host_audio_recorder)
             return activeWriter;
 
         return nullptr;
     }
-#endif
+
     juce::StringArray get_availabe_devices()
     {
         juce::StringArray names;
 
-#ifndef B_STEP_STANDALONE
         if (_app_instance_store->audio_processor->wrapperType !=
             juce::AudioProcessor::WrapperType::wrapperType_AudioUnit)
             names.add(HOST_AUDIO_IN);
-#endif
+
         const juce::OwnedArray<juce::AudioIODeviceType> &devices =
             deviceManager.getAvailableDeviceTypes();
         for (int i = 0; i < devices.size(); ++i)
@@ -212,8 +209,7 @@ class AudioRecorder : public juce::AudioIODeviceCallback
 
     void set_audio_device(const juce::String &device_name_)
     {
-#ifndef B_STEP_STANDALONE
-        if (device_name_ == HOST_AUDIO_IN)
+        if (!bstepIsStandalone && device_name_ == HOST_AUDIO_IN)
         {
             deviceManager.removeAudioCallback(this);
             sampleRate = _app_instance_store->audio_processor->getSampleRate();
@@ -221,7 +217,6 @@ class AudioRecorder : public juce::AudioIODeviceCallback
             selected_device = -1; // IN HOST
         }
         else
-#endif
         {
             juce::StringArray devices = get_availabe_devices();
             if (!devices.size())
@@ -256,10 +251,9 @@ class AudioRecorder : public juce::AudioIODeviceCallback
 
     juce::String get_selected_device_name() const noexcept
     {
-#ifndef B_STEP_STANDALONE
-        if (selected_device == -1)
+        if (!bstepIsStandalone && selected_device == -1)
             return HOST_AUDIO_IN;
-#endif
+
         if (deviceManager.getCurrentAudioDevice())
             return deviceManager.getCurrentAudioDevice()->getTypeName();
         else

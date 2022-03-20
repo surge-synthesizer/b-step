@@ -16,30 +16,11 @@
 // --------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------
 
-//#define DEMO 1
-//#define DEMO 0
-
 // PRE
 class AppInstanceStore;
-//#define TESTER_BUILD
 
-#ifdef TESTER_BUILD
-//#	define BUILD_INFO String(String("FEB-14
-//")+Time::getCompilationDate().formatted("%Y:%m:%d-%H:%M:%S" +String(" "))) #	define USE_A_SYNTH
-// 1             // in development #	define USE_STANDALONE_SYNTH 1	 // in development #
-// define USE_PLUGIN_PROCESS_BLOCK 1
-#define LOG_THE_EVENTS_TO_FILE 1
-#ifndef USE_PLUGIN_PROCESS_BLOCK
-#ifndef B_STEP_STANDALONE
-#define USE_PLUGIN_PROCESS_BLOCK 1
-#endif
-#endif
-
-//#	define USE_ACTIVE_SENSING 1      // to test
-#define USE_BIGGER_AREA_HACK 1 // to test
-#define DEVELOPMENT 1          //
-
-#else // RELEASE
+// This exists in AppInstanceStore.cpp
+extern int bstepIsStandalone;
 
 #define BUILD_INFO juce::String("")
 //#	define USE_A_SYNTH 1             // in development
@@ -47,10 +28,7 @@ class AppInstanceStore;
 //#	define USE_PLUGIN_PROCESS_BLOCK 1
 //#	define LOG_THE_EVENTS_TO_FILE 1
 #ifndef USE_PLUGIN_PROCESS_BLOCK
-#ifndef B_STEP_STANDALONE
 #define USE_PLUGIN_PROCESS_BLOCK 1
-#endif
-#endif
 
 //#	define USE_ACTIVE_SENSING 1      // to test
 #define USE_BIGGER_AREA_HACK 1 // to test
@@ -125,13 +103,6 @@ class AppInstanceStore;
 // --------------------------------------------------------------------------------------------
 
 // JUCE
-#ifdef B_STEP_STANDALONE
-// #include "../../b-step-standalone/JuceLibraryCode/JuceHeader.h"
-#include "../../b-step-standalone/JuceLibraryCode/BinaryData.h"
-#else
-// #	include "../../b-step-standalone/JuceLibraryCode/BinaryData.h" // MANAGE ALL INCLUDES FROM
-// THE STANDALONE PROJECT!
-#endif
 #include <juce_core/juce_core.h>
 #include <juce_gui_basics/juce_gui_basics.h>
 // --------------------------------------------------------------------------------------------

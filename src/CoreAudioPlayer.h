@@ -13,16 +13,19 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
 
   public:
     AudioPlayer(GstepAudioProcessor *const processor_)
-        : _thumb(nullptr), _processor(processor_)
-#ifdef B_STEP_STANDALONE
-          ,
-          selected_device(-2), deviceManager(), thread("B-Step Audio Player")
-#endif // B_STEP_STANDALONE
+        : _thumb(nullptr), _processor(processor_), thread("B-Step Audio Player")
     {
         BOOT(AudioPlayer);
-#ifndef B_STEP_STANDALONE
-        selected_device = 1;
-#endif
+
+        if (bstepIsStandalone)
+        {
+            selected_device = -2;
+        }
+        else
+        {
+            selected_device = 1;
+        }
+
         // audio setup
         formatManager.registerBasicFormats();
         for (int i = 0; i != formatManager.getNumKnownFormats(); ++i)
@@ -36,37 +39,39 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
             for (int j = 0; j != extensions.size(); ++j)
                 _supported_audio_format_extensions.add(extensions.getReference(j));
         }
-#ifdef B_STEP_STANDALONE
-        const OwnedArray<AudioIODeviceType> &devs = deviceManager.getAvailableDeviceTypes();
-        if (devs.size())
-            selected_device = 0;
+        if (bstepIsStandalone)
+        {
+            const juce::OwnedArray<juce::AudioIODeviceType> &devs =
+                deviceManager.getAvailableDeviceTypes();
+            if (devs.size())
+                selected_device = 0;
 #ifdef JUCE_LINUX
-        // FIND JACK
-        for (int i = 0; i != devs.size(); ++i)
-        {
-            AudioIODeviceType *dev = devs.getUnchecked(i);
-            if (dev->getTypeName() == "JACK")
-                if (dev->getDeviceNames().size())
-                {
-                    selected_device = i;
-                    break;
-                }
-        }
+            // FIND JACK
+            for (int i = 0; i != devs.size(); ++i)
+            {
+                auto *dev = devs.getUnchecked(i);
+                if (dev->getTypeName() == "JACK")
+                    if (dev->getDeviceNames().size())
+                    {
+                        selected_device = i;
+                        break;
+                    }
+            }
 #endif // JUCE_LINUX
-        if (selected_device != -2)
-        {
-            deviceManager.setCurrentAudioDeviceType(
-                devs.getUnchecked(selected_device)->getTypeName(), true);
-            if (deviceManager.initialise(0, 2, nullptr, false,
-                                         devs.getUnchecked(0)->getTypeName()) != "")
-                selected_device = -2;
+            if (selected_device != -2)
+            {
+                deviceManager.setCurrentAudioDeviceType(
+                    devs.getUnchecked(selected_device)->getTypeName(), true);
+                if (deviceManager.initialise(0, 2, nullptr, false,
+                                             devs.getUnchecked(0)->getTypeName()) != "")
+                    selected_device = -2;
+            }
+
+            thread.startThread(3);
+            deviceManager.addAudioCallback(&audioSourcePlayer);
+
+            audioSourcePlayer.setSource(&transportSource);
         }
-
-        thread.startThread(3);
-        deviceManager.addAudioCallback(&audioSourcePlayer);
-
-        audioSourcePlayer.setSource(&transportSource);
-#endif // B_STEP_STANDALONE
     }
 
     ~AudioPlayer()
@@ -76,28 +81,30 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
         formatManager.clearFormats();
 
         stop(true);
-#ifdef B_STEP_STANDALONE
-        transportSource.setSource(nullptr);
-        audioSourcePlayer.setSource(nullptr);
 
-        deviceManager.removeAudioCallback(&audioSourcePlayer);
+        if (bstepIsStandalone)
+        {
+            transportSource.setSource(nullptr);
+            audioSourcePlayer.setSource(nullptr);
 
-        if (thread.isThreadRunning())
-            if (thread.stopThread(500))
-                GLOBAL_ERROR_LOG("APl-THREAD CAN NOT STOPPED\n");
-#endif // B_STEP_STANDALONE
+            deviceManager.removeAudioCallback(&audioSourcePlayer);
+
+            FIXMEPORT; // REALLY thread.stopThread is gross
+            if (thread.isThreadRunning())
+                if (thread.stopThread(500))
+                    GLOBAL_ERROR_LOG("APl-THREAD CAN NOT STOPPED\n");
+        }
     }
 
   private:
     juce::AudioFormatManager formatManager;
-#ifdef B_STEP_STANDALONE
-    AudioDeviceManager deviceManager;
-    TimeSliceThread thread;
 
-    AudioSourcePlayer audioSourcePlayer;
-    AudioTransportSource transportSource;
-    ScopedPointer<AudioFormatReaderSource> currentAudioFileSource;
-#endif // B_STEP_STANDALONE
+    juce::AudioDeviceManager deviceManager;
+    juce::TimeSliceThread thread;
+
+    juce::AudioSourcePlayer audioSourcePlayer;
+    juce::AudioTransportSource transportSource;
+    juce::ScopedPointer<juce::AudioFormatReaderSource> currentAudioFileSource;
 
     juce::OwnedArray<juce::AudioFormat> _supported_audio_formats;
     juce::String _supported_audio_format_names;
@@ -107,19 +114,21 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
   public:
     juce::String get_selected_device_name() const noexcept
     {
-#ifdef B_STEP_STANDALONE
-        if (deviceManager.getCurrentAudioDevice())
-            return deviceManager.getCurrentAudioDevice()->getTypeName();
-        else
-            return "NO DEVICE READY";
-#else
+        if (bstepIsStandalone)
+        {
+            if (deviceManager.getCurrentAudioDevice())
+                return deviceManager.getCurrentAudioDevice()->getTypeName();
+            else
+                return "NO DEVICE READY";
+        }
         return "IN HOST";
-#endif // B_STEP_STANDALONE
     }
 
     inline bool loadFileIntoTransport(juce::InputStream *audioFileStream_)
     {
-#ifdef B_STEP_STANDALONE
+        FIXMEPORT;
+
+#ifdef B_UNPORTED_STANDALONE
         if (selected_device == -2)
             return false;
 
@@ -127,16 +136,16 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
         transportSource.stop();
         transportSource.setSource(nullptr);
         currentAudioFileSource = nullptr;
-#endif // B_STEP_STANDALONE
+#endif // B_UNPORTED_STANDALONE
         FIXMEPORT;
         // AudioFormatReader* reader = formatManager.createReaderFor( audioFileStream_ );
         juce::AudioFormatReader *reader{nullptr};
-#ifndef B_STEP_STANDALONE
+#ifndef B_UNPORTED_STANDALONE
         _processor->set_active_sample(reader);
 #endif
         if (reader)
         {
-#ifdef B_STEP_STANDALONE
+#ifdef B_UNPORTED_STANDALONE
             currentAudioFileSource = new AudioFormatReaderSource(reader, true);
 
             // ..and plug it into our transport source
@@ -145,14 +154,15 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
                 32768,               // tells it to buffer this many samples ahead
                 &thread,             // this is the background thread to use for reading-ahead
                 reader->sampleRate); // allows for sample rate correction
-#endif                               // B_STEP_STANDALONE
+#endif                               // B_UNPORTED_STANDALONE
             return true;
         }
         return false;
     }
     inline bool loadFileIntoTransport(const juce::File &file_)
     {
-#ifdef B_STEP_STANDALONE
+        FIXMEPORT;
+#ifdef B_UNPORTED_STANDALONE
         if (selected_device == -2)
             return false;
 
@@ -160,30 +170,30 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
         transportSource.stop();
         transportSource.setSource(nullptr);
         currentAudioFileSource = nullptr;
-#endif // B_STEP_STANDALONE
+#endif // B_UNPORTED_STANDALONE
         juce::AudioFormatReader *reader = formatManager.createReaderFor(file_);
-#ifndef B_STEP_STANDALONE
+#ifndef B_UNPORTED_STANDALONE
         _processor->set_active_sample(reader);
 #endif
         if (reader)
         {
-#ifdef B_STEP_STANDALONE
+#ifdef B_UNPORTED_STANDALONE
             currentAudioFileSource = new AudioFormatReaderSource(reader, true);
 
             // ..and plug it into our transport source
             transportSource.setSource(currentAudioFileSource, 0, nullptr,
                                       reader->sampleRate); // allows for sample rate correction
-#endif                                                     // B_STEP_STANDALONE
+#endif                                                     // B_UNPORTED_STANDALONE
             return true;
         }
-#ifdef B_STEP_STANDALONE
+#ifdef B_UNPORTED_STANDALONE
         else
         {
             return loadFileIntoTransport(new FileInputStream(file_));
         }
 #else
         return false;
-#endif // B_STEP_STANDALONE
+#endif // B_UNPORTED_STANDALONE
     }
 
     inline void play(juce::Slider *const thumb_)
@@ -192,19 +202,27 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
             return;
 
         _thumb = thumb_;
-#ifdef B_STEP_STANDALONE
-        transportSource.setPosition(0);
-        transportSource.start();
-#else
-        _processor->start_playback();
-#endif // B_STEP_STANDALONE
+
+        if (bstepIsStandalone)
+        {
+            transportSource.setPosition(0);
+            transportSource.start();
+        }
+        else
+        {
+            _processor->start_playback();
+        }
+
         if (_thumb)
         {
-#ifdef B_STEP_STANDALONE
-            _thumb->setRange(0, transportSource.getLengthInSeconds(), 1);
-#else
-            _thumb->setRange(0, _processor->get_sample_playback_length(), 1);
-#endif // B_STEP_STANDALONE
+            if (bstepIsStandalone)
+            {
+                _thumb->setRange(0, transportSource.getLengthInSeconds(), 1);
+            }
+            else
+            {
+                _thumb->setRange(0, _processor->get_sample_playback_length(), 1);
+            }
             _thumb->setColour(juce::Slider::thumbColourId, juce::Colour(0xff7fff00));
             _thumb->addListener(this);
         }
@@ -222,13 +240,16 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
         {
             if (_thumb == thumb_)
             {
-#ifdef B_STEP_STANDALONE
-                if (transportSource.isPlaying())
-                    transportSource.setPosition(thumb_->getValue());
-#else
-                if (_processor->is_playing_sample())
-                    _processor->change_playback_pos(thumb_->getValue());
-#endif // B_STEP_STANDALONE
+                if (bstepIsStandalone)
+                {
+                    if (transportSource.isPlaying())
+                        transportSource.setPosition(thumb_->getValue());
+                }
+                else
+                {
+                    if (_processor->is_playing_sample())
+                        _processor->change_playback_pos(thumb_->getValue());
+                }
             }
         }
     }
@@ -240,12 +261,16 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
 
         stopTimer();
 
-#ifdef B_STEP_STANDALONE
-        if (transportSource.isPlaying())
-            transportSource.stop();
-#else
-        _processor->stop_playback();
-#endif // B_STEP_STANDALONE
+        if (bstepIsStandalone)
+        {
+            if (transportSource.isPlaying())
+                transportSource.stop();
+        }
+        else
+        {
+            _processor->stop_playback();
+        }
+
         if (_thumb)
         {
             _thumb->removeListener(this);
@@ -257,46 +282,57 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
 
     inline bool is_playing()
     {
-#ifdef B_STEP_STANDALONE
-        return transportSource.isPlaying();
-#else
-        return _processor->is_playing_sample();
-#endif // B_STEP_STANDALONE
+        if (bstepIsStandalone)
+        {
+            return transportSource.isPlaying();
+        }
+        else
+        {
+            return _processor->is_playing_sample();
+        }
     }
 
     void timerCallback() override
     {
-        if (_thumb)
-#ifdef B_STEP_STANDALONE
-            _thumb->setValue(transportSource.getCurrentPosition(), dontSendNotification);
+        if (bstepIsStandalone)
+        {
+            if (_thumb)
+                _thumb->setValue(transportSource.getCurrentPosition(), juce::dontSendNotification);
 
-        if (transportSource.getCurrentPosition() >= transportSource.getLengthInSeconds())
-            stop();
-#else
-            _thumb->setValue(_processor->get_sample_playback_position(),
-                             juce::dontSendNotification);
+            if (transportSource.getCurrentPosition() >= transportSource.getLengthInSeconds())
+                stop();
+        }
+        else
+        {
+            if (_thumb)
+                _thumb->setValue(_processor->get_sample_playback_position(),
+                                 juce::dontSendNotification);
 
-        if (!_processor->is_playing_sample())
-            stop();
-#endif // B_STEP_STANDALONE
+            if (!_processor->is_playing_sample())
+                stop();
+        }
     }
 
     juce::StringArray get_availabe_devices()
     {
-#ifdef B_STEP_STANDALONE
-        const OwnedArray<AudioIODeviceType> &devices = deviceManager.getAvailableDeviceTypes();
-        StringArray names;
-        for (int i = 0; i != devices.size(); ++i)
+        if (bstepIsStandalone)
         {
-            names.add(devices.getUnchecked(i)->getTypeName());
-        }
+            const juce::OwnedArray<juce::AudioIODeviceType> &devices =
+                deviceManager.getAvailableDeviceTypes();
+            juce::StringArray names;
+            for (int i = 0; i != devices.size(); ++i)
+            {
+                names.add(devices.getUnchecked(i)->getTypeName());
+            }
 
-        return names;
-#else
-        juce::StringArray names;
-        names.add("IN HOST");
-        return names;
-#endif // B_STEP_STANDALONE
+            return names;
+        }
+        else
+        {
+            juce::StringArray names;
+            names.add("IN HOST");
+            return names;
+        }
     }
 
     const juce::String &get_supported_audio_formats() const

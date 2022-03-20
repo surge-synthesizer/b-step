@@ -185,10 +185,11 @@ UiEditorRightMainwindows::UiEditorRightMainwindows(AppInstanceStore *const app_i
                           new UiLabel("dura", _app_instance_store->style_global_area_duration));
 
     //[UserPreSize]
-#ifndef B_STEP_STANDALONE
-    label_current_bpm->setVisible(false);
-    slider_bpm->setVisible(false);
-#endif
+    if (bstepIsStandalone)
+    {
+        label_current_bpm->setVisible(false);
+        slider_bpm->setVisible(false);
+    }
 
     _labels.add(lbl_set_9);
     _labels.add(lbl_bar_chord2);

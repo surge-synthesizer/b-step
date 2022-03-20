@@ -7,7 +7,7 @@
 #include "CoreLaunchpad.h"
 #include "MIDIIO.h"
 
-#include "ticker.h"
+#include "version.h"
 
 #include "MIDILearn.h"
 
@@ -15,9 +15,11 @@
 #include "UiSettings.h"
 
 #include "DoYouKnow.h"
+#include "CoreAudioPlayer.h"
+#include "CoreAudioRecorder.h"
 
 #include <juce_events/juce_events.h>
-/// TODO make the ticker!
+#include "ticker.h"
 
 #include INCLUDE_USER_DEBUG
 
@@ -320,13 +322,10 @@ MessageStoreage::MessageStoreage()
 // ********************************************************************************************
 // ********************************************************************************************
 // TODO it collects messages if no port is selected
-class MessageProcessor :
-#ifdef B_STEP_STANDALONE
-    public Ticker,
-#endif
-    public MIDIInListener,
-    public juce::Timer,
-    public juce::MidiKeyboardStateListener
+class MessageProcessor : public Ticker,
+                         public MIDIInListener,
+                         public juce::Timer,
+                         public juce::MidiKeyboardStateListener
 {
   public:
     bool is_playing;
@@ -433,38 +432,39 @@ class MessageProcessor :
 
         _app_instance_store->audio_processor->processNextMidiEvent(last_in_message);
 
-#ifdef B_STEP_STANDALONE
-        if (message_.isMidiClock())
+        if (bstepIsStandalone)
         {
-            if ((is_playing || is_paused) && is_master)
-                return;
-
-            if (!is_playing || !is_paused)
+            if (message_.isMidiClock())
             {
-                is_master = false;
-                if (is_executing())
-                    break_event_loop();
-            }
+                if ((is_playing || is_paused) && is_master)
+                    return;
 
-            if (!is_master)
+                if (!is_playing || !is_paused)
+                {
+                    is_master = false;
+                    if (is_executing())
+                        break_event_loop();
+                }
+
+                if (!is_master)
+                {
+                    send_precalculated_messages();
+                    precalculate(true);
+                }
+            }
+            else if (message_.isMidiStart())
             {
-                send_precalculated_messages();
-                precalculate(true);
+                handle_incoming_start_event();
+            }
+            else if (message_.isMidiContinue())
+            {
+                handle_incoming_continue_event();
+            }
+            else if (message_.isMidiStop())
+            {
+                handle_incoming_stop_event();
             }
         }
-        else if (message_.isMidiStart())
-        {
-            handle_incoming_start_event();
-        }
-        else if (message_.isMidiContinue())
-        {
-            handle_incoming_continue_event();
-        }
-        else if (message_.isMidiStop())
-        {
-            handle_incoming_stop_event();
-        }
-#endif
     }
 
   private:
@@ -500,7 +500,6 @@ class MessageProcessor :
 
     /// MASTER PROCESS
   private:
-#ifdef B_STEP_STANDALONE
     inline void on_tick()
     {
         send_precalculated_messages();
@@ -519,22 +518,22 @@ class MessageProcessor :
 
         precalculate(true);
     }
-#endif
 
     /// SLAVE AND MASTER
   public:
     inline void precalculate(bool do_, std::int64_t absolute_vst_clock = -1)
     {
-#ifdef B_STEP_STANDALONE
-        if (is_playing)
-#endif
+        if (!bstepIsStandalone || is_playing)
         {
             // CLOCK LATENCY CORRECTION
-#ifndef B_STEP_STANDALONE
-            absolute_vst_clock += _app_instance_store->audio_processor->latency_corretion_clocks;
-            if (absolute_vst_clock < 0)
-                absolute_vst_clock = 0;
-#endif
+            if (!bstepIsStandalone)
+            {
+                absolute_vst_clock +=
+                    _app_instance_store->audio_processor->latency_corretion_clocks;
+                if (absolute_vst_clock < 0)
+                    absolute_vst_clock = 0;
+            }
+
             if (do_)
                 _sequencer.process_clock_tick(absolute_vst_clock); // + is clock faster
 
@@ -616,15 +615,8 @@ class MessageProcessor :
                                         _audio_processor.get_channel(group_id));
                                     duration_message->message->setNoteNumber(
                                         duration_message->message->getNoteNumber());
-#ifdef DEMO
-                                    // DEMO OVER HANDLING
-                                    if (_app_instance_store->editor_config.demo_time_is_over)
-                                    {
-                                        duration_message->message->setVelocity(0);
-                                        duration_message->message->setNoteNumber(1);
-                                    }
-#endif // DEMO
-       // NOTe PLAYBACK MODE, stops notes before a same note will be triggerd
+                                    // NOTe PLAYBACK MODE, stops notes before a same note will be
+                                    // triggerd
                                     running_midi_messages_per_group->set_same_messages_to_timeover(
                                         duration_message,
                                         _app_instance_store->audio_processor->note_playback_mode);
@@ -662,8 +654,7 @@ class MessageProcessor :
                 }
             }
         }
-#ifdef B_STEP_STANDALONE
-        else // CLEANUP IF STOPPED
+        else if (bstepIsStandalone) // CLEANUP IF STOPPED
         {
             MessageStoreage *running_midi_messages_per_group;
             for (int group_id = 0; group_id != BAR_GROUPS + MIDI_OUT_B; ++group_id)
@@ -674,7 +665,6 @@ class MessageProcessor :
                 running_midi_messages_per_group->count_down_duration();
             }
         }
-#endif
     }
 
   public:
@@ -686,20 +676,13 @@ class MessageProcessor :
         if (_sequencer.is_position_zero())
         {
             bool do_precalculate = false;
-#ifdef B_STEP_STANDALONE
-            if (is_playing)
-#else
-            do_precalculate = false;
-#endif
+            if (!bstepIsStandalone || is_playing)
             {
                 precalculate(do_precalculate);
             }
         }
 
         // SEND MESSAGES
-#ifdef B_STEP_STANDALONE
-        // if( is_playing )
-#endif
         {
             process_output();
         }
@@ -759,9 +742,11 @@ class MessageProcessor :
     }
 
   private:
-#ifdef B_STEP_STANDALONE
     void handle_incoming_start_event()
     {
+        if (!bstepIsStandalone)
+            return;
+
         if (is_playing)
             return;
 
@@ -781,11 +766,13 @@ class MessageProcessor :
 
         is_playing = true;
     }
-#endif
+
   public:
     void handle_user_start_event()
     {
-#ifdef B_STEP_STANDALONE
+        if (!bstepIsStandalone)
+            return;
+
         if (is_playing)
             return;
 
@@ -808,7 +795,6 @@ class MessageProcessor :
         }
 
         check_make_no_port_open_message();
-#endif
     }
 
   private:
@@ -825,9 +811,11 @@ class MessageProcessor :
     }
 
   private:
-#ifdef B_STEP_STANDALONE
     void handle_incoming_continue_event()
     {
+        if (!bstepIsStandalone)
+            return;
+
         if (is_playing)
             return;
 
@@ -838,11 +826,13 @@ class MessageProcessor :
         is_paused = false;
         is_stoped = false;
     }
-#endif
+
   public:
     void handle_user_pause_event()
     {
-#ifdef B_STEP_STANDALONE
+        if (!bstepIsStandalone)
+            return;
+
         if (is_playing)
         {
             is_playing = false;
@@ -856,11 +846,9 @@ class MessageProcessor :
         {
             handle_user_start_event();
         }
-#endif
     }
 
   private:
-#ifdef B_STEP_STANDALONE
     void handle_incoming_stop_event()
     {
         if (is_stoped || is_paused)
@@ -876,11 +864,13 @@ class MessageProcessor :
 
         stop_all_pending_notes();
     }
-#endif
+
   public:
     void handle_user_stop_event()
     {
-#ifdef B_STEP_STANDALONE
+        if (!bstepIsStandalone)
+            return;
+
         if (is_stoped)
         {
             stop_all_pending_notes();
@@ -896,13 +886,14 @@ class MessageProcessor :
         stop_all_pending_notes();
 
         _sequencer.hard_reset();
-#endif
     }
 
   private:
     void send_sync_message_to_all_ports(const juce::MidiMessage &message_)
     {
-#ifdef B_STEP_STANDALONE
+        if (!bstepIsStandalone)
+            return;
+
         MidiOutputObject *port;
         MultiMIDIMessageOutputGuard output_guard;
         MessageStoreage *running_midi_messages_per_group;
@@ -918,11 +909,12 @@ class MessageProcessor :
                     new juce::MidiMessage(message_), SINGLE_SHOT_MESSAGE));
             }
         }
-#endif
     }
     void send_sync_message_to_all_ports_NOW(const juce::MidiMessage &message_)
     {
-#ifdef B_STEP_STANDALONE
+        if (!bstepIsStandalone)
+            return;
+
         MidiOutputObject *port;
         MultiMIDIMessageOutputGuard output_guard;
         for (int i = 0; i != BAR_GROUPS + MIDI_OUT_B; ++i)
@@ -931,7 +923,6 @@ class MessageProcessor :
             if (output_guard.is_port_valid_for_sending(port))
                 port->send_message(message_);
         }
-#endif
     }
 
   public:
@@ -1040,13 +1031,11 @@ class MessageProcessor :
                 */
             }
         }
-#ifdef B_STEP_STANDALONE
-        if (!is_playing)
+        if (bstepIsStandalone && !is_playing)
             if (!is_paused)
             {
                 _sequencer.hard_reset();
             }
-#endif
         lock.exit();
     }
     void send_launchpad_messages(Launchpad &launchpad_, MidiOutputObject &midi_out_,
@@ -1115,12 +1104,13 @@ MessageProcessor::MessageProcessor(AppInstanceStore *const app_instance_store_)
         pressed_keys_store.add(false);
     pressed_keys_store.minimiseStorageOverheads();
 
-#ifdef B_STEP_STANDALONE
-    set_tick_interval_in_usec(bpm_to_microsec(_last_bpm));
-    startTimer(MIDI_CONTROLLER_REFRESH_RATE);
+    if (bstepIsStandalone)
+    {
+        set_tick_interval_in_usec(bpm_to_microsec(_last_bpm));
+        startTimer(MIDI_CONTROLLER_REFRESH_RATE);
 
-    exec_event_loop();
-#endif
+        exec_event_loop();
+    }
 
     // app_instance_store_->audio_processor->MidiKeyboardState::addListener(this);
 }
@@ -1129,10 +1119,9 @@ MessageProcessor::~MessageProcessor()
 {
     DOWN(MessageProcessor)
 
-#ifdef B_STEP_STANDALONE
-    if (is_executing())
+    if (bstepIsStandalone && is_executing())
         break_event_loop();
-#endif
+
     stop_all_pending_notes();
     process_output(true);
     shutdown_controllers();
@@ -1483,7 +1472,6 @@ const float defaultGain = 1.0f;
 const float defaultDelay = 0.5f;
 #endif // USE_A_SYNTH
 
-#ifndef B_STEP_STANDALONE
 class SensingTimer : public juce::Timer
 {
     void timerCallback() { ++callback_counter; }
@@ -1493,24 +1481,21 @@ class SensingTimer : public juce::Timer
 
     SensingTimer() : callback_counter(1) { startTimer(250); }
 };
-#endif
 
 void GstepAudioProcessor::processBlock(juce::AudioSampleBuffer &buffer_,
                                        juce::MidiBuffer &midi_messages_)
 {
-#ifdef B_STEP_STANDALONE
+    if (bstepIsStandalone)
+    {
+        // used to do this. think its wrong though!
+        // midi_messages_.clear();
+
+        if (_active_writer)
+            _active_writer->write((const float **)buffer_.getArrayOfReadPointers(),
+                                  buffer_.getNumSamples());
+    }
+
     buffer_.clear();
-    midi_messages_.clear();
-#ifdef USE_PLUGIN_PROCESS_BLOCK
-    return;
-#endif // USE_PLUGIN_PROCESS_BLOCK
-#else
-    if (_active_writer)
-        _active_writer->write((const float **)buffer_.getArrayOfReadPointers(),
-                              buffer_.getNumSamples());
-#endif // B_STEP_STANDALONE
-    buffer_.clear();
-#ifdef USE_PLUGIN_PROCESS_BLOCK
     /// TODO handle incoming messages
 
     juce::AudioPlayHead::CurrentPositionInfo pos;
@@ -1611,8 +1596,7 @@ void GstepAudioProcessor::processBlock(juce::AudioSampleBuffer &buffer_,
                 _sample_playback_position += buffer_.getNumSamples();
             }
         }
-#ifndef B_STEP_STANDALONE
-        if (sensing_timer)
+        if (!bstepIsStandalone && sensing_timer)
         {
             if (last_sensing != sensing_timer->callback_counter)
             {
@@ -1620,11 +1604,9 @@ void GstepAudioProcessor::processBlock(juce::AudioSampleBuffer &buffer_,
                 midi_messages_.addEvent(sensing_message, 0);
             }
         }
-#endif
     }
 
     _current_buffer = nullptr;
-#endif // USE_PLUGIN_PROCESS_BLOCK
 }
 
 // ********************************************************************************************
@@ -1903,43 +1885,6 @@ const PodParameterBase &GstepAudioProcessor::get_automatable_parameter(int i_) c
     return pattern.bar(0).mute;
 }
 
-#if OLD_PARAMS
-float GstepAudioProcessor::getParameter(int i_)
-{
-    return get_automatable_parameter(i_).in_percent();
-}
-
-const juce::String GstepAudioProcessor::getParameterText(int i_)
-{
-    return get_automatable_parameter(i_).as_string();
-}
-
-juce::String GstepAudioProcessor::getParameterLabel(int i_) const
-{
-    return get_automatable_parameter(i_).name();
-}
-
-int GstepAudioProcessor::getParameterNumSteps(int i_)
-{
-    return get_automatable_parameter(i_).num_steps();
-}
-
-float GstepAudioProcessor::getParameterDefaultValue(int i_)
-{
-    return get_automatable_parameter(i_).default_value_in_percent();
-}
-
-const juce::String GstepAudioProcessor::getParameterName(int i_)
-{
-    return get_automatable_parameter(i_).get_param_short_ident();
-}
-
-void GstepAudioProcessor::setParameter(int i_, float value_)
-{
-    get_automatable_parameter(i_).set_from_percent(value_);
-}
-#endif
-
 void GstepAudioProcessor::getStateInformation(juce::MemoryBlock &destData)
 {
     juce::XmlElement xml(APPDEFF::vst_file_version);
@@ -1969,14 +1914,7 @@ void GstepAudioProcessor::setStateInformation(const void *data, int sizeInBytes)
     }
 }
 
-const juce::String GstepAudioProcessor::getName() const
-{
-#ifdef B_STEP_STANDALONE
-    return "";
-#else
-    return JucePlugin_Name;
-#endif
-}
+const juce::String GstepAudioProcessor::getName() const { return JucePlugin_Name; }
 
 const juce::String GstepAudioProcessor::getInputChannelName(int) const
 {
@@ -2055,81 +1993,51 @@ struct BStepJuceWrappingParameter : juce::AudioProcessorParameter,
 GstepAudioProcessor::GstepAudioProcessor()
     : _current_buffer(nullptr), _app_instance_store(this),
       _message_processor(new MessageProcessor(&_app_instance_store))
-#ifndef B_STEP_STANDALONE
-      ,
-      _clock(new VSTClockProcessor(this)), _active_writer(nullptr), _current_vst_samples_delay(0),
-      _current_sample_rate(0), _sample_playback_position(0), _sample_playback_length(0),
-      _sample_started(false),
-      sensing_timer(juce::PluginHostType().isAbletonLive() ? (new SensingTimer()) : nullptr),
-      last_sensing(0)
-#endif
-#ifdef USE_A_SYNTH
-      ,
-      delayBuffer(2, 12000)
-#endif
-
-#ifdef DEMO
-      ,
-      demo_timer(&_app_instance_store)
-#endif // DEMO
 {
+    OUT_LOG(juce::String("B-STep Startup -  ") + BStep::Build::FullVersionStr);
+    if (wrapperType == wrapperType_Standalone)
+        bstepIsStandalone = true;
+    else
+        bstepIsStandalone = false;
+
+    if (!bstepIsStandalone)
+    {
+        _clock = new VSTClockProcessor(this);
+        _active_writer = nullptr;
+        _current_vst_samples_delay = 0;
+        _current_sample_rate = 0;
+        _sample_playback_position = 0;
+        _sample_playback_length = 0;
+        _sample_started = 0;
+        sensing_timer = juce::PluginHostType().isAbletonLive() ? (new SensingTimer()) : nullptr;
+        last_sensing = 0;
+    }
     BOOT(Processor);
 
-#ifdef USE_A_SYNTH
-    // Initialise the synth...
-    gain = defaultGain;
-    delay = defaultDelay;
-    delayPosition = 0;
-    for (int i = 4; --i >= 0;)
-        synth.addVoice(new SineWaveVoice()); // These voices will play our custom sine-wave sounds..
-
-    synth.addSound(new SineWaveSound());
-#endif
-
     _app_instance_store.load_default_files();
-#ifdef B_STEP_STANDALONE
-    _app_instance_store.load_standalone();
-#endif
+    if (bstepIsStandalone)
+        _app_instance_store.load_standalone();
 
-#ifdef DEBUG___________________
-    juce::String data;
-    for (int i = 0; i != getNumParameters(); ++i)
-    {
-        data += (juce::String("PARAMETER: ") + getParameterName(i) + juce::String(" (") +
-                 getParameterLabel(i) + juce::String(")") + juce::String("\n") +
-                 juce::String("DEFAULT VALUE:") + juce::String(getParameterDefaultValue(i)) +
-                 juce::String("\n") + juce::String("HELP URL:") + MANUAL_URL +
-                 juce::String(get_automatable_parameter(i).get_help_url()) + juce::String("\n") +
-                 juce::String("\n"));
-    }
-    OUT(data);
-#endif
     _app_instance_store.sequencer.hard_reset();
 
-#ifdef B_STEP_STANDALONE
-    _app_instance_store.midi_io_handler.midi_in._receiver = _message_processor;
+    if (bstepIsStandalone)
+    {
+        _app_instance_store.midi_io_handler.midi_in._receiver = _message_processor;
 #if JUCE_MAC || JUCE_LINUX || JUCE_IOS || RASPBERRY
-    MidiInputObject &inport = _app_instance_store.midi_io_handler.midi_in;
-    if (inport.port_name() == VIRTUAL_PORT)
-    {
-        if (!inport.is_open())
-            inport.open_port();
-    }
-    MidiOutputObject &output = _app_instance_store.midi_io_handler.get_out_port_for_sending(0);
-    if (output.port_name() == VIRTUAL_PORT)
-    {
-        if (!output.is_open())
-            output.open_port();
-    }
+        MidiInputObject &inport = _app_instance_store.midi_io_handler.midi_in;
+        if (inport.port_name() == VIRTUAL_PORT)
+        {
+            if (!inport.is_open())
+                inport.open_port();
+        }
+        MidiOutputObject &output = _app_instance_store.midi_io_handler.get_out_port_for_sending(0);
+        if (output.port_name() == VIRTUAL_PORT)
+        {
+            if (!output.is_open())
+                output.open_port();
+        }
 #endif
-#else
-    /*
-    // Initialise the synth...
-    for (int i = 0; i != SUM_STRINGS ; ++i)
-        synth.addVoice(new VocoderVoice());   // These voices will play our custom sine-wave
-    sounds..
-    */
-#endif
+    }
 
     for (auto i = 0; i < internalParameterCount(); ++i)
     {
@@ -2140,35 +2048,13 @@ GstepAudioProcessor::GstepAudioProcessor()
 // ********************************************************************************************
 // ********************************************************************************************
 // ********************************************************************************************
-#ifdef DEMO
-DemoTimer::DemoTimer(AppInstanceStore *const app_instance_store_)
-    : _app_instance_store(app_instance_store_)
-{
-    startTimer(1000 * SEC_PER_MIN * 30.5);
-}
 
-void DemoTimer::timerCallback()
-{
-    if (!_app_instance_store->editor_config.demo_window && _app_instance_store->editor)
-        _app_instance_store->editor_config.demo_window = new UiEditorDemo(_app_instance_store);
-
-    stopTimer();
-    _app_instance_store->editor_config.demo_time_is_over = true;
-}
-#endif // DEMO
-
-// ********************************************************************************************
-// ********************************************************************************************
-// ********************************************************************************************
-#include "CoreAudioPlayer.h"
-#include "CoreAudioRecorder.h"
 GstepAudioProcessor::~GstepAudioProcessor()
 {
     DOWN(Processor);
 
-#ifdef B_STEP_STANDALONE
-    _message_processor->break_event_loop();
-#endif
+    if (bstepIsStandalone)
+        _message_processor->break_event_loop();
     stop();
 
     if (_app_instance_store.audio_player)
@@ -2191,9 +2077,7 @@ GstepAudioProcessor::~GstepAudioProcessor()
     _app_instance_store.midi_io_handler.pad_2_in.close_port();
 
     _app_instance_store.save_default_files();
-#ifdef B_STEP_STANDALONE
     _app_instance_store.save_standalone();
-#endif
 
     // Thread::sleep(1000);
 

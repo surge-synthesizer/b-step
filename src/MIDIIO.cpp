@@ -31,22 +31,25 @@ MidiIOHandler::MidiIOHandler(AppInstanceStore *const app_instance_store_)
 
     midi_outs.minimiseStorageOverheads();
 
-#ifndef B_STEP_STANDALONE
-    midi_in.set_port_name(DISABLED_PORT, 0);
-    midi_outs.getUnchecked(0)->set_port_name(IN_HOST_MIDI_HANDLING, 0);
-    midi_outs.getUnchecked(1)->set_port_name(USE_MASTER_OUT, 0);
-    midi_outs.getUnchecked(2)->set_port_name(USE_MASTER_OUT, 0);
-    midi_outs.getUnchecked(3)->set_port_name(USE_MASTER_OUT, 0);
-    midi_outs.getUnchecked(4)->set_port_name(DISABLED_PORT, 0);
-#else
+    if (!bstepIsStandalone)
+    {
+        midi_in.set_port_name(DISABLED_PORT, 0);
+        midi_outs.getUnchecked(0)->set_port_name(IN_HOST_MIDI_HANDLING, 0);
+        midi_outs.getUnchecked(1)->set_port_name(USE_MASTER_OUT, 0);
+        midi_outs.getUnchecked(2)->set_port_name(USE_MASTER_OUT, 0);
+        midi_outs.getUnchecked(3)->set_port_name(USE_MASTER_OUT, 0);
+        midi_outs.getUnchecked(4)->set_port_name(DISABLED_PORT, 0);
+    }
+    else
+    {
 #if JUCE_MAC || JUCE_LINUX || JUCE_IOS || RASPBERRY
-    midi_outs.getUnchecked(0)->set_port_name(VIRTUAL_PORT, 0);
-    midi_in.set_port_name(VIRTUAL_PORT, 0);
+        midi_outs.getUnchecked(0)->set_port_name(VIRTUAL_PORT, 0);
+        midi_in.set_port_name(VIRTUAL_PORT, 0);
 #endif
-    midi_outs.getUnchecked(1)->set_port_name(USE_MASTER_OUT, 0);
-    midi_outs.getUnchecked(2)->set_port_name(USE_MASTER_OUT, 0);
-    midi_outs.getUnchecked(3)->set_port_name(USE_MASTER_OUT, 0);
-#endif
+        midi_outs.getUnchecked(1)->set_port_name(USE_MASTER_OUT, 0);
+        midi_outs.getUnchecked(2)->set_port_name(USE_MASTER_OUT, 0);
+        midi_outs.getUnchecked(3)->set_port_name(USE_MASTER_OUT, 0);
+    }
 }
 
 template <class port_type>
@@ -60,11 +63,7 @@ static inline void store_port(const juce::String &prefix_, juce::XmlElement &xml
 
 void MidiIOHandler::save_to(juce::XmlElement &xml) const
 {
-#ifdef B_STEP_STANDALONE
-    bool standalone_mod = true;
-#else
-    bool standalone_mod = false;
-#endif
+    bool standalone_mod = bstepIsStandalone;
 
     store_port(juce::String("MIDI-IN-PORT"), xml, midi_in, standalone_mod);
     store_port(juce::String("MIDI-OUT-PORT"), xml, *midi_outs.getUnchecked(0), standalone_mod);
@@ -104,10 +103,8 @@ static inline void open_load_port(const juce::String &prefix_, const juce::XmlEl
             port_name = VIRTUAL_PORT;
     }
 
-#ifdef B_STEP_STANDALONE
-    if (port_name == IN_HOST_MIDI_HANDLING)
+    if (bstepIsStandalone && port_name == IN_HOST_MIDI_HANDLING)
         return;
-#endif
 
     int last_port_index = xml.getIntAttribute(prefix_ + juce::String("-index"), -1);
     bool is_index_unchanged = port_type::is_device_at_index_available(port_name, last_port_index);
@@ -211,30 +208,33 @@ void MidiIOHandler::load_from_1_2(const juce::XmlElement &xml)
     // midi-pad2-out-port-status="0"		<--- deprecated
     // midi-pad2-out-port-inhost="0"
 
-#ifdef B_STEP_STANDALONE
-    open_load_port(juce::String("midi-in-port"), xml, midi_in, _app_instance_store->editor);
-    open_load_port(juce::String("midi-out-port"), xml, *midi_outs.getUnchecked(0),
-                   _app_instance_store->editor);
-    // open_load_port( juce::String("MIDI-OUT-PORT-G2"), xml, *midi_outs.getUnchecked(1) );
-    // open_load_port( juce::String("MIDI-OUT-PORT-G3"), xml, *midi_outs.getUnchecked(2) );
-    // open_load_port( juce::String("MIDI-OUT-PORT-G4"), xml, *midi_outs.getUnchecked(3) );
-#else
-    midi_in.set_port_name(DISABLED_PORT, 0);
-    midi_outs.getUnchecked(0)->set_port_name(IN_HOST_MIDI_HANDLING, 0);
-    midi_outs.getUnchecked(1)->set_port_name(IN_HOST_MIDI_HANDLING, 0);
-    midi_outs.getUnchecked(2)->set_port_name(IN_HOST_MIDI_HANDLING, 0);
-    midi_outs.getUnchecked(3)->set_port_name(IN_HOST_MIDI_HANDLING, 0);
-    midi_outs.getUnchecked(4)->set_port_name(DISABLED_PORT, 0);
+    if (bstepIsStandalone)
+    {
+        open_load_port(juce::String("midi-in-port"), xml, midi_in, _app_instance_store->editor);
+        open_load_port(juce::String("midi-out-port"), xml, *midi_outs.getUnchecked(0),
+                       _app_instance_store->editor);
+        // open_load_port( String("MIDI-OUT-PORT-G2"), xml, *midi_outs.getUnchecked(1) );
+        // open_load_port( String("MIDI-OUT-PORT-G3"), xml, *midi_outs.getUnchecked(2) );
+        // open_load_port( String("MIDI-OUT-PORT-G4"), xml, *midi_outs.getUnchecked(3) );
+    }
+    else
+    {
+        midi_in.set_port_name(DISABLED_PORT, 0);
+        midi_outs.getUnchecked(0)->set_port_name(IN_HOST_MIDI_HANDLING, 0);
+        midi_outs.getUnchecked(1)->set_port_name(IN_HOST_MIDI_HANDLING, 0);
+        midi_outs.getUnchecked(2)->set_port_name(IN_HOST_MIDI_HANDLING, 0);
+        midi_outs.getUnchecked(3)->set_port_name(IN_HOST_MIDI_HANDLING, 0);
+        midi_outs.getUnchecked(4)->set_port_name(DISABLED_PORT, 0);
 
-    midi_in.set_standalone_portname(
-        xml.getStringAttribute("midi-in-port-name", juce::String(DISABLED_PORT)));
-    midi_outs.getUnchecked(0)->set_standalone_portname(
-        xml.getStringAttribute("midi-out-port-name", juce::String(DISABLED_PORT)));
-    midi_outs.getUnchecked(1)->set_standalone_portname(DISABLED_PORT);
-    midi_outs.getUnchecked(2)->set_standalone_portname(DISABLED_PORT);
-    midi_outs.getUnchecked(3)->set_standalone_portname(DISABLED_PORT);
-    midi_outs.getUnchecked(4)->set_standalone_portname(DISABLED_PORT);
-#endif
+        midi_in.set_standalone_portname(
+            xml.getStringAttribute("midi-in-port-name", juce::String(DISABLED_PORT)));
+        midi_outs.getUnchecked(0)->set_standalone_portname(
+            xml.getStringAttribute("midi-out-port-name", juce::String(DISABLED_PORT)));
+        midi_outs.getUnchecked(1)->set_standalone_portname(DISABLED_PORT);
+        midi_outs.getUnchecked(2)->set_standalone_portname(DISABLED_PORT);
+        midi_outs.getUnchecked(3)->set_standalone_portname(DISABLED_PORT);
+        midi_outs.getUnchecked(4)->set_standalone_portname(DISABLED_PORT);
+    }
 
     open_load_port(juce::String("midi-learn-in-port"), xml, midi_learn_in,
                    _app_instance_store->editor);

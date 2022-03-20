@@ -28,6 +28,8 @@
 // ************************************************************************************************
 // ************************************************************************************************
 
+int bstepIsStandalone{false};
+
 #define DEFAULT_COLOR_THEME                                                                        \
     "ffd0222d,ffd0222d,ff140e0a,ffc9a376,fff98120,ffff7f2b,ff86983d,ff4dadb1,ffdfce89,ff94895b,"   \
     "ff2e2017,ffdfce89,ff412d21,ffb9ab72,ff281c14,ff2a1e16,ff281c14,ff38281d,ff191919,ff191919,"   \
@@ -738,10 +740,8 @@ juce::String AppInstanceStore::load_standalone()
 {
     juce::String error;
 
-#ifndef DEMO
     error += load_project(juce::File(
         get_session_folder().getChildFile(SESSION_FILE + APPDEFF::project_file_extension)));
-#endif // END IF DEMO
     error += load_setup(juce::File(
         get_session_folder().getChildFile(SESSION_FILE + APPDEFF::setup_file_extension)));
 
@@ -802,12 +802,11 @@ juce::String AppInstanceStore::save_default_files()
 {
     juce::String error;
 
-#ifndef DEMO
-#ifdef B_STEP_STANDALONE
-    error += save_midi_map(File(
-        get_session_folder(true).getChildFile(SESSION_FILE + APPDEFF::mapping_file_extension)));
-#endif // B_STEP_STANDALONE
-#endif // DEMO
+    if (bstepIsStandalone)
+    {
+        error += save_midi_map(juce::File(
+            get_session_folder(true).getChildFile(SESSION_FILE + APPDEFF::mapping_file_extension)));
+    }
 
     error += save_defines(juce::File(
         get_session_folder(true).getChildFile(SESSION_FILE + APPDEFF::define_file_extension)));
@@ -821,16 +820,11 @@ juce::String AppInstanceStore::load_default_files()
 {
     juce::String error;
 
-#ifdef DEMO
-    ScopedPointer<XmlElement> xml = get_custom_project();
-    if (xml)
-        error += load_project(*xml);
-#endif // END IF DEMO
-
-#ifdef B_STEP_STANDALONE
-    error += load_midi_map(
-        File(get_session_folder().getChildFile(SESSION_FILE + APPDEFF::mapping_file_extension)));
-#endif // B_STEP_STANDALONE
+    if (bstepIsStandalone)
+    {
+        error += load_midi_map(juce::File(
+            get_session_folder().getChildFile(SESSION_FILE + APPDEFF::mapping_file_extension)));
+    }
 
     error += load_defines(juce::File(
         get_session_folder().getChildFile(SESSION_FILE + APPDEFF::define_file_extension)));
@@ -1386,13 +1380,10 @@ juce::String AppInstanceStore::save_defines(const juce::File &xml_doc_) const
     juce::XmlElement xml(APPDEFF::define_file_version);
 
     do_you_know.export_to(xml);
-#ifdef DEMO
-    const_cast<File &>(last_loaded_project) = File("RANDOM PRESET");
-#else
-#ifdef B_STEP_STANDALONE
-    xml.setAttribute("LastProject", last_loaded_project.getFullPathName());
-#endif
-#endif
+    if (bstepIsStandalone)
+    {
+        xml.setAttribute("LastProject", last_loaded_project.getFullPathName());
+    }
     return write(xml, xml_doc);
 }
 
@@ -1410,15 +1401,15 @@ juce::String AppInstanceStore::load_defines(const juce::File &xml_doc_)
             {
                 do_you_know.import_from(*xml);
             }
-#ifdef DEMO
-            last_loaded_project = File("RANDOM PRESET");
-#else
-#ifdef B_STEP_STANDALONE
-            last_loaded_project = File(xml->getStringAttribute("LastProject", "FROM SCRATCH"));
-#else
-            last_loaded_project = juce::File("DAW managed project");
-#endif
-#endif
+            if (bstepIsStandalone)
+            {
+                last_loaded_project =
+                    juce::File(xml->getStringAttribute("LastProject", "FROM SCRATCH"));
+            }
+            else
+            {
+                last_loaded_project = juce::File("DAW managed project");
+            }
         }
         else
             error += read_error(xml, APPDEFF::define_file_version);
@@ -1475,38 +1466,40 @@ class ControllerPlay : public MONO_UIButtonController
 
     void on_clicked_top() override
     {
-#ifdef B_STEP_STANDALONE
-        _app_instance_store->audio_processor->play();
-#else
-        _app_instance_store->audio_processor->speed = APPDEF_ProcessorUserData::SPEED_HALF;
-#endif
+        if (bstepIsStandalone)
+        {
+            _app_instance_store->audio_processor->play();
+        }
+        else
+        {
+            _app_instance_store->audio_processor->speed = APPDEF_ProcessorUserData::SPEED_HALF;
+        }
     }
 
     unsigned int get_current_state() const override
     {
-#ifdef B_STEP_STANDALONE
-        return _app_instance_store->audio_processor->is_playing();
-#else
+        if (bstepIsStandalone)
+            return _app_instance_store->audio_processor->is_playing();
         return _app_instance_store->audio_processor->speed == APPDEF_ProcessorUserData::SPEED_HALF;
-#endif
     }
 
     const juce::Drawable *get_current_drawable() override
     {
-#ifdef B_STEP_STANDALONE
-        return _drawable;
-#else
+        if (bstepIsStandalone)
+            return _drawable;
         return nullptr;
-#endif
     }
 
     void get_label_text_top(juce::String &string_) const override
     {
-#ifndef B_STEP_STANDALONE
-        string_ = juce::String("1/2");
-#else
-        string_ = HAS_NO_TEXT_VALUE;
-#endif
+        if (!bstepIsStandalone)
+        {
+            string_ = juce::String("1/2");
+        }
+        else
+        {
+            string_ = HAS_NO_TEXT_VALUE;
+        }
     }
 
     const juce::String get_help_url() override
@@ -1535,39 +1528,37 @@ class ControllerPause : public MONO_UIButtonController
 
     void on_clicked_top() override
     {
-#ifdef B_STEP_STANDALONE
-        _app_instance_store->audio_processor->pause();
-#else
-        _app_instance_store->audio_processor->speed = APPDEF_ProcessorUserData::SPEED_NORMAL;
-#endif
+        if (bstepIsStandalone)
+        {
+            _app_instance_store->audio_processor->pause();
+        }
+        else
+        {
+            _app_instance_store->audio_processor->speed = APPDEF_ProcessorUserData::SPEED_NORMAL;
+        }
     }
 
     unsigned int get_current_state() const override
     {
-#ifdef B_STEP_STANDALONE
-        return _app_instance_store->audio_processor->is_paused();
-#else
+        if (bstepIsStandalone)
+            return _app_instance_store->audio_processor->is_paused();
         return _app_instance_store->audio_processor->speed ==
                APPDEF_ProcessorUserData::SPEED_NORMAL;
-#endif
     }
 
     const juce::Drawable *get_current_drawable() override
     {
-#ifdef B_STEP_STANDALONE
-        return _drawable;
-#else
+        if (bstepIsStandalone)
+            return _drawable;
         return nullptr;
-#endif
     }
 
     void get_label_text_top(juce::String &string_) const override
     {
-#ifndef B_STEP_STANDALONE
-        string_ = juce::String("1");
-#else
-        string_ = HAS_NO_TEXT_VALUE;
-#endif
+        if (!bstepIsStandalone)
+            string_ = juce::String("1");
+        else
+            string_ = HAS_NO_TEXT_VALUE;
     }
 
     const juce::String get_help_url() override
@@ -1596,39 +1587,34 @@ class ControllerStop : public MONO_UIButtonController
 
     void on_clicked_top() override
     {
-#ifdef B_STEP_STANDALONE
-        _app_instance_store->audio_processor->stop();
-#else
-        _app_instance_store->audio_processor->speed = APPDEF_ProcessorUserData::SPEED_DOUBLE;
-#endif
+        if (bstepIsStandalone)
+            _app_instance_store->audio_processor->stop();
+        else
+            _app_instance_store->audio_processor->speed = APPDEF_ProcessorUserData::SPEED_DOUBLE;
     }
 
     unsigned int get_current_state() const override
     {
-#ifdef B_STEP_STANDALONE
-        return _app_instance_store->audio_processor->is_stopped();
-#else
+        if (bstepIsStandalone)
+            return _app_instance_store->audio_processor->is_stopped();
+
         return _app_instance_store->audio_processor->speed ==
                APPDEF_ProcessorUserData::SPEED_DOUBLE;
-#endif
     }
 
     const juce::Drawable *get_current_drawable() override
     {
-#ifdef B_STEP_STANDALONE
-        return _drawable;
-#else
+        if (bstepIsStandalone)
+            return _drawable;
         return nullptr;
-#endif
     }
 
     void get_label_text_top(juce::String &string_) const override
     {
-#ifndef B_STEP_STANDALONE
-        string_ = juce::String("x2");
-#else
-        string_ = HAS_NO_TEXT_VALUE;
-#endif
+        if (!bstepIsStandalone)
+            string_ = juce::String("x2");
+        else
+            string_ = HAS_NO_TEXT_VALUE;
     }
 
     const juce::String get_help_url() override

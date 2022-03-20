@@ -178,9 +178,8 @@ static inline void add_as_kylistener_to_all_childs(juce::KeyListener *const list
 bool GstepAudioProcessorEditor::keyPressed(const juce::KeyPress &key_,
                                            juce::Component *originatingComponent_)
 {
-    if (key_ == key_.spaceKey)
+    if (key_ == key_.spaceKey && bstepIsStandalone)
     {
-#ifdef B_STEP_STANDALONE
         if (_app_instance_store->audio_processor->is_playing())
         {
             _app_instance_store->audio_processor->stop();
@@ -191,7 +190,6 @@ bool GstepAudioProcessorEditor::keyPressed(const juce::KeyPress &key_,
         }
 
         return true;
-#endif
     }
     else if (key_ == key_.escapeKey)
     {
@@ -249,18 +247,16 @@ bool GstepAudioProcessorEditor::keyPressed(const juce::KeyPress &key_,
         _app_instance_store->editor_config.selected_bar_id++;
         return true;
     }
-#ifdef B_STEP_STANDALONE
-    else if (key_ == key_.playKey)
+    else if (bstepIsStandalone && key_ == key_.playKey)
     {
         _app_instance_store->audio_processor->play();
         return true;
     }
-    else if (key_ == key_.stopKey)
+    else if (bstepIsStandalone && key_ == key_.stopKey)
     {
         _app_instance_store->audio_processor->stop();
         return true;
     }
-#endif
     else if (0 == key_.getTextDescription().compare("1") || key_ == key_.F1Key)
     {
         _app_instance_store->editor_config.selected_bar_id = 0;
@@ -349,37 +345,23 @@ bool GstepAudioProcessorEditor::keyPressed(const juce::KeyPress &key_,
         int desktop_height =
             juce::Desktop::getInstance().getDisplays().getPrimaryDisplay()->userArea.getHeight();
 
-#ifdef B_STEP_STANDALONE
-        int w = getParentComponent()->getWidth();
-        int h = getParentComponent()->getHeight();
-#else
         int w = getWidth();
         int h = getHeight();
-#endif
 
         w = w + 0.05 * w;
         h = h + 0.05 * h;
 
         if (h < desktop_height && w < desktop_width)
         {
-#ifdef B_STEP_STANDALONE
-            getParentComponent()->setSize(w, h);
-#else
             setSize(w, h);
-#endif
         }
 
         return true;
     }
     else if (key_.getTextDescription() == "ctrl + -")
     {
-#ifdef B_STEP_STANDALONE
-        int w = getParentComponent()->getWidth();
-        int h = getParentComponent()->getHeight();
-#else
         int w = getWidth();
         int h = getHeight();
-#endif
 
         w = w - 0.05 * w;
         h = h - 0.05 * h;
@@ -387,12 +369,7 @@ bool GstepAudioProcessorEditor::keyPressed(const juce::KeyPress &key_,
         if (h > float(APPDEF_UIUserData::WINDOW_HEIGHT) / 2 &&
             w > float(APPDEF_UIUserData::WINDOW_WIDTH) / 2)
         {
-#ifdef B_STEP_STANDALONE
-            getParentComponent()->setSize(w, h);
-            // setSize(w,h);
-#else
             setSize(w, h);
-#endif
         }
 
         return true;
@@ -400,21 +377,13 @@ bool GstepAudioProcessorEditor::keyPressed(const juce::KeyPress &key_,
     else if (key_.getTextDescription() == "ctrl + 0")
     {
         {
-#ifdef B_STEP_STANDALONE
-            getParentComponent()->setSize(default_width, default_height);
-#else
             setSize(default_width, default_height);
-#endif
         }
         return true;
     }
     else
     {
-#ifdef B_STEP_STANDALONE
-        return false;
-#else
-        return true;
-#endif
+        return !bstepIsStandalone;
     }
     return true;
 }
@@ -433,17 +402,7 @@ void GstepAudioProcessorEditor::mouseDown(const juce::MouseEvent &e_)
     }
 }
 
-void GstepAudioProcessorEditor::visibilityChanged()
-{
-#ifdef DEMO
-    if (isVisible())
-    {
-        if (_app_instance_store->editor_config.demo_time_is_over &&
-            !_app_instance_store->editor_config.demo_window)
-            _config->demo_window = new UiEditorDemo(_app_instance_store);
-    }
-#endif
-}
+void GstepAudioProcessorEditor::visibilityChanged() {}
 #include "UIHtmlView.h"
 //[/MiscUserDefs]
 
@@ -517,13 +476,7 @@ GstepAudioProcessorEditor::GstepAudioProcessorEditor(GstepAudioProcessor *proces
     //[Constructor] You can add your own custom stuff here..
 #endif // DO_NEVER_DEFINE_THIS
 
-#ifdef B_STEP_STANDALONE
-    resizer->setVisible(false);
-    resizer->setEnabled(false);
-#endif
-#ifndef B_STEP_STANDALONE
     auto_resize_to_user_area();
-#endif
 
     set_layer_controllers_page(_config->current_layer, true);
 
@@ -541,13 +494,7 @@ GstepAudioProcessorEditor::GstepAudioProcessorEditor(GstepAudioProcessor *proces
         _app_instance_store->audio_recorder = new AudioRecorder(_app_instance_store);
 #endif
 
-#ifndef B_STEP_STANDALONE
     startTimer(UI_REFRESH_RATE);
-#endif
-
-    //    if(_app_instance_store->audio_processor->wrapperType ==
-    //    AudioProcessor::WrapperType::wrapperType_AudioUnit)
-    //        _app_instance_store->do_you_know.show( DoYouKnow::USE_VST_INSTEAD_OF_AU, false );
     //[/Constructor]
 }
 

@@ -442,11 +442,14 @@ class BarStepPosProcessor
   public:
     inline void process_current_step_pos(std::int64_t absolute_vst_clock_)
     {
-#ifdef B_STEP_STANDALONE
-        ++_absolute_step_counter;
-#else
-        _absolute_step_counter = absolute_vst_clock_ % 96 / 6;
-#endif
+        if (bstepIsStandalone)
+        {
+            ++_absolute_step_counter;
+        }
+        else
+        {
+            _absolute_step_counter = absolute_vst_clock_ % 96 / 6;
+        }
         // ABSOLUT STEP FORCE
         if (_source_bar->barstep(_step_counter).pos_force_to_absolute_step ||
             _tmp_is_forced_to_beat_next_step)
@@ -1214,11 +1217,15 @@ std::uint16_t Sequencer::get_base_note_value(const Chord &chord_, std::uint8_t s
 void Sequencer::process_clock_tick(std::int64_t absolute_vst_clock_ = -1)
 {
     _is_position_zero = false;
-#ifndef B_STEP_STANDALONE
-    _clock_counter = 6 - absolute_vst_clock_ % 96 % 6;
-#else
-    _clock_counter++;
-#endif
+
+    if (!bstepIsStandalone)
+    {
+        _clock_counter = 6 - absolute_vst_clock_ % 96 % 6;
+    }
+    else
+    {
+        _clock_counter++;
+    }
     // 1/96th
     BarGroupProcessor *bar_group_processor;
     for (int group_id = 0; group_id != BAR_GROUPS; ++group_id)
@@ -1227,10 +1234,9 @@ void Sequencer::process_clock_tick(std::int64_t absolute_vst_clock_ = -1)
         bar_group_processor->process_clock();
     }
 
-#ifndef B_STEP_STANDALONE
-    if (absolute_vst_clock_ == 0)
+    if (!bstepIsStandalone && absolute_vst_clock_ == 0)
         return;
-#endif
+
     // 1/16th
     if (_clock_counter == 96 / 16)
     {

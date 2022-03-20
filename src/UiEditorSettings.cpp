@@ -129,37 +129,43 @@ void UiEditorSettings::fill_drop_downs()
         add_set_midi_port(cb_midi_learn_out_port, all_devs[i], i + index,
                           _app_instance_store->midi_io_handler.midi_learn_out);
     }
-#ifndef B_STEP_STANDALONE
-    add_set_midi_port(cb_midi_pad_out_1, IN_HOST_MIDI_HANDLING, i + index,
-                      _app_instance_store->midi_io_handler.pad_1_out);
-    add_set_midi_port(cb_midi_pad_out_2, IN_HOST_MIDI_HANDLING, i + index,
-                      _app_instance_store->midi_io_handler.pad_2_out);
-    add_set_midi_port(cb_midi_out_port, IN_HOST_MIDI_HANDLING, i + index,
-                      _app_instance_store->midi_io_handler.get_out_port(0));
-    add_set_midi_port(cb_midi_out_port_string_g, IN_HOST_MIDI_HANDLING, i + index,
-                      _app_instance_store->midi_io_handler.get_out_port(1));
-    add_set_midi_port(cb_midi_out_port_string_d, IN_HOST_MIDI_HANDLING, i + index,
-                      _app_instance_store->midi_io_handler.get_out_port(2));
-    add_set_midi_port(cb_midi_out_port_string_a, IN_HOST_MIDI_HANDLING, i + index,
-                      _app_instance_store->midi_io_handler.get_out_port(3));
-    add_set_midi_port(cb_midi_out_port_b, IN_HOST_MIDI_HANDLING, i + index,
-                      _app_instance_store->midi_io_handler.get_out_port(4));
-    add_set_midi_port(cb_midi_learn_out_port, IN_HOST_MIDI_HANDLING, i + index,
-                      _app_instance_store->midi_io_handler.midi_learn_out);
-#elif JUCE_LINUX || JUCE_MAC || JUCE_IOS || RASPBERRY
-    add_set_midi_port(cb_midi_out_port, VIRTUAL_PORT, i + index,
-                      _app_instance_store->midi_io_handler.get_out_port(0));
-    add_set_midi_port(cb_midi_out_port_string_g, VIRTUAL_PORT, i + index,
-                      _app_instance_store->midi_io_handler.get_out_port(1));
-    add_set_midi_port(cb_midi_out_port_string_d, VIRTUAL_PORT, i + index,
-                      _app_instance_store->midi_io_handler.get_out_port(2));
-    add_set_midi_port(cb_midi_out_port_string_a, VIRTUAL_PORT, i + index,
-                      _app_instance_store->midi_io_handler.get_out_port(3));
-    add_set_midi_port(cb_midi_out_port_b, VIRTUAL_PORT, i + index,
-                      _app_instance_store->midi_io_handler.get_out_port(4));
-    add_set_midi_port(cb_midi_learn_out_port, VIRTUAL_PORT, i + index,
-                      _app_instance_store->midi_io_handler.midi_learn_out);
+
+    if (!bstepIsStandalone)
+    {
+        add_set_midi_port(cb_midi_pad_out_1, IN_HOST_MIDI_HANDLING, i + index,
+                          _app_instance_store->midi_io_handler.pad_1_out);
+        add_set_midi_port(cb_midi_pad_out_2, IN_HOST_MIDI_HANDLING, i + index,
+                          _app_instance_store->midi_io_handler.pad_2_out);
+        add_set_midi_port(cb_midi_out_port, IN_HOST_MIDI_HANDLING, i + index,
+                          _app_instance_store->midi_io_handler.get_out_port(0));
+        add_set_midi_port(cb_midi_out_port_string_g, IN_HOST_MIDI_HANDLING, i + index,
+                          _app_instance_store->midi_io_handler.get_out_port(1));
+        add_set_midi_port(cb_midi_out_port_string_d, IN_HOST_MIDI_HANDLING, i + index,
+                          _app_instance_store->midi_io_handler.get_out_port(2));
+        add_set_midi_port(cb_midi_out_port_string_a, IN_HOST_MIDI_HANDLING, i + index,
+                          _app_instance_store->midi_io_handler.get_out_port(3));
+        add_set_midi_port(cb_midi_out_port_b, IN_HOST_MIDI_HANDLING, i + index,
+                          _app_instance_store->midi_io_handler.get_out_port(4));
+        add_set_midi_port(cb_midi_learn_out_port, IN_HOST_MIDI_HANDLING, i + index,
+                          _app_instance_store->midi_io_handler.midi_learn_out);
+    }
+    else
+    {
+#if !JUCE_WINDOWS
+        add_set_midi_port(cb_midi_out_port, VIRTUAL_PORT, i + index,
+                          _app_instance_store->midi_io_handler.get_out_port(0));
+        add_set_midi_port(cb_midi_out_port_string_g, VIRTUAL_PORT, i + index,
+                          _app_instance_store->midi_io_handler.get_out_port(1));
+        add_set_midi_port(cb_midi_out_port_string_d, VIRTUAL_PORT, i + index,
+                          _app_instance_store->midi_io_handler.get_out_port(2));
+        add_set_midi_port(cb_midi_out_port_string_a, VIRTUAL_PORT, i + index,
+                          _app_instance_store->midi_io_handler.get_out_port(3));
+        add_set_midi_port(cb_midi_out_port_b, VIRTUAL_PORT, i + index,
+                          _app_instance_store->midi_io_handler.get_out_port(4));
+        add_set_midi_port(cb_midi_learn_out_port, VIRTUAL_PORT, i + index,
+                          _app_instance_store->midi_io_handler.midi_learn_out);
 #endif
+    }
 
     // INPUTS
     juce::StringArray all_indevs = juce::MidiInput::getDevices();
@@ -185,21 +191,27 @@ void UiEditorSettings::fill_drop_downs()
         add_set_midi_port(cb_midi_learn_in_port, all_indevs[i], i + index,
                           _app_instance_store->midi_io_handler.midi_learn_in);
     }
-#ifndef B_STEP_STANDALONE
-    add_set_midi_port(cb_midi_pad_in_1, IN_HOST_MIDI_HANDLING, i + index,
-                      _app_instance_store->midi_io_handler.pad_1_in);
-    add_set_midi_port(cb_midi_pad_in_2, IN_HOST_MIDI_HANDLING, i + index,
-                      _app_instance_store->midi_io_handler.pad_2_in);
-    add_set_midi_port(cb_midi_in_port, IN_HOST_MIDI_HANDLING, i + index,
-                      _app_instance_store->midi_io_handler.midi_in);
-    add_set_midi_port(cb_midi_learn_in_port, IN_HOST_MIDI_HANDLING, i + index,
-                      _app_instance_store->midi_io_handler.midi_learn_in);
-#elif JUCE_LINUX || JUCE_MAC || JUCE_IOS || RASPBERRY
-    add_set_midi_port(cb_midi_in_port, VIRTUAL_PORT, i + index,
-                      _app_instance_store->midi_io_handler.midi_in);
-    add_set_midi_port(cb_midi_learn_in_port, VIRTUAL_PORT, i + index,
-                      _app_instance_store->midi_io_handler.midi_learn_in);
+
+    if (bstepIsStandalone)
+    {
+        add_set_midi_port(cb_midi_pad_in_1, IN_HOST_MIDI_HANDLING, i + index,
+                          _app_instance_store->midi_io_handler.pad_1_in);
+        add_set_midi_port(cb_midi_pad_in_2, IN_HOST_MIDI_HANDLING, i + index,
+                          _app_instance_store->midi_io_handler.pad_2_in);
+        add_set_midi_port(cb_midi_in_port, IN_HOST_MIDI_HANDLING, i + index,
+                          _app_instance_store->midi_io_handler.midi_in);
+        add_set_midi_port(cb_midi_learn_in_port, IN_HOST_MIDI_HANDLING, i + index,
+                          _app_instance_store->midi_io_handler.midi_learn_in);
+    }
+    else
+    {
+#ifndef JUCE_WINDOWS
+        add_set_midi_port(cb_midi_in_port, VIRTUAL_PORT, i + index,
+                          _app_instance_store->midi_io_handler.midi_in);
+        add_set_midi_port(cb_midi_learn_in_port, VIRTUAL_PORT, i + index,
+                          _app_instance_store->midi_io_handler.midi_learn_in);
 #endif
+    }
 }
 
 void UiEditorSettings::on_close_clicked()
@@ -757,23 +769,26 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
         cb_midi_out_port_string_g->setEnabled(false);
         cb_midi_out_port_string_d->setEnabled(false);
     */
-#ifndef B_STEP_STANDALONE
-    label_midi_in_port->setEnabled(false);
-    sl_midi_in_channel->setEnabled(false);
+    if (!bstepIsStandalone)
+    {
+        label_midi_in_port->setEnabled(false);
+        sl_midi_in_channel->setEnabled(false);
 
-    // TODO, set an other style
-    lbl_clock_thru->setColour(juce::Label::textColourId, juce::Colour(0xff515151));
+        // TODO, set an other style
+        lbl_clock_thru->setColour(juce::Label::textColourId, juce::Colour(0xff515151));
 
-    tb_clock_thru->setVisible(false);
-    tb_midi_thru_enable->setVisible(false);
-    lbl_clock_thru->setVisible(false);
-    label_midi_thru->setVisible(false);
-#else
-    sl_latency_clocks->setVisible(false);
-    sl_latency_ms->setVisible(false);
-    label_latency_clocks->setVisible(false);
-    label_latency_ms->setVisible(false);
-#endif
+        tb_clock_thru->setVisible(false);
+        tb_midi_thru_enable->setVisible(false);
+        lbl_clock_thru->setVisible(false);
+        label_midi_thru->setVisible(false);
+    }
+    else
+    {
+        sl_latency_clocks->setVisible(false);
+        sl_latency_ms->setVisible(false);
+        label_latency_clocks->setVisible(false);
+        label_latency_ms->setVisible(false);
+    }
 
     sl_midi_out_channel->setValue(_app_instance_store->audio_processor->channel_out,
                                   juce::NotificationType::dontSendNotification);

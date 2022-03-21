@@ -64,7 +64,7 @@ class UiNotificationAnimation : public juce::Component, public juce::Timer
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::Label> text;
+    std::unique_ptr<juce::Label> text;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiNotificationAnimation)

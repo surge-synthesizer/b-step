@@ -447,12 +447,18 @@ GstepAudioProcessorEditor::GstepAudioProcessorEditor(GstepAudioProcessor *proces
     init_column_wrappers();
     open_label_popups.ensureStorageAllocated(13);
 
-    addAndMakeVisible(_editor_right_mainwindow =
-                          new UiEditorRightMainwindows(_app_instance_store, this));
-    addAndMakeVisible(_menue_bar_right = new MenuBarRight(_app_instance_store, this));
-    addAndMakeVisible(_menue_bar_left = new MenuBarLeft(_app_instance_store, this));
+    _editor_right_mainwindow =
+        std::make_unique<UiEditorRightMainwindows>(_app_instance_store, this);
+    addAndMakeVisible(*_editor_right_mainwindow);
 
-    addAndMakeVisible(resizer = new juce::ResizableCornerComponent(this, &resizeLimits));
+    _menue_bar_right = std::make_unique<MenuBarRight>(_app_instance_store, this);
+    addAndMakeVisible(*_menue_bar_right);
+
+    _menue_bar_left = std::make_unique<MenuBarLeft>(_app_instance_store, this);
+    addAndMakeVisible(*_menue_bar_left);
+
+    resizer = std::make_unique<juce::ResizableCornerComponent>(this, &resizeLimits);
+    addAndMakeVisible(*resizer);
     addKeyListener(this);
 
     keyboard = new UiEditorKeyboard(_app_instance_store);

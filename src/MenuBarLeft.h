@@ -83,19 +83,19 @@ class MenuBarLeft : public juce::Component, public juce::Button::Listener
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<ModelBase> button_layer_1;
-    juce::ScopedPointer<ModelBase> button_layer_2;
-    juce::ScopedPointer<ModelBase> button_layer_3;
-    juce::ScopedPointer<ModelBase> button_layer_4;
-    juce::ScopedPointer<ModelBase> button_layer_5;
-    juce::ScopedPointer<ModelBase> button_layer_6;
-    juce::ScopedPointer<ModelBase> button_layer_7;
-    juce::ScopedPointer<juce::ImageButton> pb_lite_mode;
-    juce::ScopedPointer<juce::ImageButton> pb_semi_mode;
-    juce::ScopedPointer<juce::ImageButton> pb_pro_mode;
-    juce::ScopedPointer<juce::Drawable> drawable1;
-    juce::ScopedPointer<juce::Drawable> drawable2;
-    juce::ScopedPointer<juce::Drawable> drawable3;
+    std::unique_ptr<ModelBase> button_layer_1;
+    std::unique_ptr<ModelBase> button_layer_2;
+    std::unique_ptr<ModelBase> button_layer_3;
+    std::unique_ptr<ModelBase> button_layer_4;
+    std::unique_ptr<ModelBase> button_layer_5;
+    std::unique_ptr<ModelBase> button_layer_6;
+    std::unique_ptr<ModelBase> button_layer_7;
+    std::unique_ptr<juce::ImageButton> pb_lite_mode;
+    std::unique_ptr<juce::ImageButton> pb_semi_mode;
+    std::unique_ptr<juce::ImageButton> pb_pro_mode;
+    std::unique_ptr<juce::Drawable> drawable1;
+    std::unique_ptr<juce::Drawable> drawable2;
+    std::unique_ptr<juce::Drawable> drawable3;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MenuBarLeft)

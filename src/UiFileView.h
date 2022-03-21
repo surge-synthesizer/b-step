@@ -78,7 +78,7 @@ class UiFileView : public juce::TextButton,
         imageButton->addListener(listener_);
     }
     void show_slider(bool state) { player_slider->setVisible(state); }
-    juce::Slider *get_thumb() const { return player_slider; }
+    juce::Slider *get_thumb() const { return player_slider.get(); }
 
     int label_offset;
     void set_label_x_offset(int label_offset_) { label_offset = label_offset_; }
@@ -186,9 +186,9 @@ class UiFileView : public juce::TextButton,
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::TextEditor> label;
-    juce::ScopedPointer<juce::ImageButton> imageButton;
-    juce::ScopedPointer<juce::Slider> player_slider;
+    std::unique_ptr<juce::TextEditor> label;
+    std::unique_ptr<juce::ImageButton> imageButton;
+    std::unique_ptr<juce::Slider> player_slider;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiFileView)

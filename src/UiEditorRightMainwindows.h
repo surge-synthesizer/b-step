@@ -72,36 +72,36 @@ class UiEditorRightMainwindows : public MoveEvent2ChildsComponent
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<UiLabel> lbl_set_9;
-    juce::ScopedPointer<UiLabel> lbl_bar_chord2;
-    juce::ScopedPointer<UiLabel> lbl_bar_chord3;
-    juce::ScopedPointer<UiLabel> lbl_bar_chord4;
-    juce::ScopedPointer<ModelBase> pattern_gstring_offset_0;
-    juce::ScopedPointer<ModelBase> pattern_gstring_offset_1;
-    juce::ScopedPointer<ModelBase> pattern_gstring_offset_2;
-    juce::ScopedPointer<ModelBase> pattern_gstring_offset_3;
-    juce::ScopedPointer<ModelBase> pattern_chord;
-    juce::ScopedPointer<ModelBase> pattern_note;
-    juce::ScopedPointer<ModelBase> pattern_oktave;
-    juce::ScopedPointer<UiLabel> lbl_version;
-    juce::ScopedPointer<ModelBase> slider_bpm;
-    juce::ScopedPointer<ModelBase> button_mute;
-    juce::ScopedPointer<ModelBase> button_chord_editor;
-    juce::ScopedPointer<UiLabel> lbl_set_1;
-    juce::ScopedPointer<UiLabel> lbl_set_2;
-    juce::ScopedPointer<UiLabel> lbl_set_7;
-    juce::ScopedPointer<UiLabel> lbl_set_8;
-    juce::ScopedPointer<UiLabel> lbl_set_4;
-    juce::ScopedPointer<UiLabel> lbl_set_3;
-    juce::ScopedPointer<UiLabel> lbl_set_6;
-    juce::ScopedPointer<UiLabel> label_current_bpm;
-    juce::ScopedPointer<ModelBase> button_chord_editor2;
-    juce::ScopedPointer<ModelBase> button_chord_editor3;
-    juce::ScopedPointer<ModelBase> button_chord_editor4;
-    juce::ScopedPointer<ModelBase> button_chord_editor5;
-    juce::ScopedPointer<UiLabel> lbl_version2;
-    juce::ScopedPointer<UiLabel> lbl_version3;
-    juce::ScopedPointer<UiLabel> lbl_version4;
+    std::unique_ptr<UiLabel> lbl_set_9;
+    std::unique_ptr<UiLabel> lbl_bar_chord2;
+    std::unique_ptr<UiLabel> lbl_bar_chord3;
+    std::unique_ptr<UiLabel> lbl_bar_chord4;
+    std::unique_ptr<ModelBase> pattern_gstring_offset_0;
+    std::unique_ptr<ModelBase> pattern_gstring_offset_1;
+    std::unique_ptr<ModelBase> pattern_gstring_offset_2;
+    std::unique_ptr<ModelBase> pattern_gstring_offset_3;
+    std::unique_ptr<ModelBase> pattern_chord;
+    std::unique_ptr<ModelBase> pattern_note;
+    std::unique_ptr<ModelBase> pattern_oktave;
+    std::unique_ptr<UiLabel> lbl_version;
+    std::unique_ptr<ModelBase> slider_bpm;
+    std::unique_ptr<ModelBase> button_mute;
+    std::unique_ptr<ModelBase> button_chord_editor;
+    std::unique_ptr<UiLabel> lbl_set_1;
+    std::unique_ptr<UiLabel> lbl_set_2;
+    std::unique_ptr<UiLabel> lbl_set_7;
+    std::unique_ptr<UiLabel> lbl_set_8;
+    std::unique_ptr<UiLabel> lbl_set_4;
+    std::unique_ptr<UiLabel> lbl_set_3;
+    std::unique_ptr<UiLabel> lbl_set_6;
+    std::unique_ptr<UiLabel> label_current_bpm;
+    std::unique_ptr<ModelBase> button_chord_editor2;
+    std::unique_ptr<ModelBase> button_chord_editor3;
+    std::unique_ptr<ModelBase> button_chord_editor4;
+    std::unique_ptr<ModelBase> button_chord_editor5;
+    std::unique_ptr<UiLabel> lbl_version2;
+    std::unique_ptr<UiLabel> lbl_version3;
+    std::unique_ptr<UiLabel> lbl_version4;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorRightMainwindows)

@@ -51,7 +51,8 @@ void UiLeftsideModelLabel::get_controllers_for_paint_popup(
 //==============================================================================
 UiLeftsideModelLabel::UiLeftsideModelLabel()
 {
-    addAndMakeVisible(model = new ModelBase());
+    model = std::make_unique<ModelBase>();
+    addAndMakeVisible(*model);
 
     //[UserPreSize]
     _style = nullptr;

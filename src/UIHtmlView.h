@@ -99,19 +99,19 @@ class UIHtmlView : public UiEditor, public juce::Button::Listener, public juce::
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::Viewport> viewport;
-    juce::ScopedPointer<juce::TreeView> treeView;
-    juce::ScopedPointer<UiEditorToolbar> toolbar;
-    juce::ScopedPointer<juce::TextButton> update;
-    juce::ScopedPointer<juce::TextButton> forum;
-    juce::ScopedPointer<juce::Label> label;
-    juce::ScopedPointer<juce::Label> label2;
-    juce::ScopedPointer<juce::TextButton> mail;
-    juce::ScopedPointer<juce::Label> label3;
-    juce::ScopedPointer<juce::TextButton> online;
-    juce::ScopedPointer<juce::Label> label4;
-    juce::ScopedPointer<FingerDrag> tree_view_dragger;
-    juce::ScopedPointer<FingerDrag> viewport_dragger;
+    std::unique_ptr<juce::Viewport> viewport;
+    std::unique_ptr<juce::TreeView> treeView;
+    std::unique_ptr<UiEditorToolbar> toolbar;
+    std::unique_ptr<juce::TextButton> update;
+    std::unique_ptr<juce::TextButton> forum;
+    std::unique_ptr<juce::Label> label;
+    std::unique_ptr<juce::Label> label2;
+    std::unique_ptr<juce::TextButton> mail;
+    std::unique_ptr<juce::Label> label3;
+    std::unique_ptr<juce::TextButton> online;
+    std::unique_ptr<juce::Label> label4;
+    std::unique_ptr<FingerDrag> tree_view_dragger;
+    std::unique_ptr<FingerDrag> viewport_dragger;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UIHtmlView)

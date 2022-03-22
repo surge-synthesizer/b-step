@@ -139,33 +139,33 @@ class UiEditorFileManager : public UiEditor,
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::Label> label5;
-    juce::ScopedPointer<UiNotificationAnimation> info_animation;
-    juce::ScopedPointer<juce::TextButton> open;
-    juce::ScopedPointer<juce::TextButton> import;
-    juce::ScopedPointer<UiEditorToolbar> toolbar;
-    juce::ScopedPointer<juce::TextEditor> info;
-    juce::ScopedPointer<juce::Label> label;
-    juce::ScopedPointer<juce::Label> label2;
-    juce::ScopedPointer<juce::Label> path_view;
-    juce::ScopedPointer<juce::TextButton> play;
-    juce::ScopedPointer<juce::Label> label3;
-    juce::ScopedPointer<juce::TextButton> record;
-    juce::ScopedPointer<juce::TextButton> delete_audio;
-    juce::ScopedPointer<juce::TextButton> assign;
-    juce::ScopedPointer<juce::ComboBox> audio_source_devices;
-    juce::ScopedPointer<juce::TextButton> rename;
-    juce::ScopedPointer<juce::TextButton> delete_file;
-    juce::ScopedPointer<juce::ToggleButton> toggleButton;
-    juce::ScopedPointer<juce::TextButton> show_audio_dyk;
-    juce::ScopedPointer<juce::TextButton> show_info_dyk;
-    juce::ScopedPointer<juce::TextButton> save;
-    juce::ScopedPointer<juce::TreeView> treeView;
-    juce::ScopedPointer<juce::TextButton> export_;
-    juce::ScopedPointer<FingerDrag> finger_dragger;
-    juce::ScopedPointer<juce::TextButton> show_new_stuff;
-    juce::ScopedPointer<juce::TextButton> confirm_text_changes;
-    juce::ScopedPointer<juce::TextButton> cancel_text_changes;
+    std::unique_ptr<juce::Label> label5;
+    std::unique_ptr<UiNotificationAnimation> info_animation;
+    std::unique_ptr<juce::TextButton> open;
+    std::unique_ptr<juce::TextButton> import;
+    std::unique_ptr<UiEditorToolbar> toolbar;
+    std::unique_ptr<juce::TextEditor> info;
+    std::unique_ptr<juce::Label> label;
+    std::unique_ptr<juce::Label> label2;
+    std::unique_ptr<juce::Label> path_view;
+    std::unique_ptr<juce::TextButton> play;
+    std::unique_ptr<juce::Label> label3;
+    std::unique_ptr<juce::TextButton> record;
+    std::unique_ptr<juce::TextButton> delete_audio;
+    std::unique_ptr<juce::TextButton> assign;
+    std::unique_ptr<juce::ComboBox> audio_source_devices;
+    std::unique_ptr<juce::TextButton> rename;
+    std::unique_ptr<juce::TextButton> delete_file;
+    std::unique_ptr<juce::ToggleButton> toggleButton;
+    std::unique_ptr<juce::TextButton> show_audio_dyk;
+    std::unique_ptr<juce::TextButton> show_info_dyk;
+    std::unique_ptr<juce::TextButton> save;
+    std::unique_ptr<juce::TreeView> treeView;
+    std::unique_ptr<juce::TextButton> export_;
+    std::unique_ptr<FingerDrag> finger_dragger;
+    std::unique_ptr<juce::TextButton> show_new_stuff;
+    std::unique_ptr<juce::TextButton> confirm_text_changes;
+    std::unique_ptr<juce::TextButton> cancel_text_changes;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorFileManager)

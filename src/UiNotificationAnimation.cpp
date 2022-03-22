@@ -71,7 +71,8 @@ void UiNotificationAnimation::set_text_and_run(juce::String &text_,
 //==============================================================================
 UiNotificationAnimation::UiNotificationAnimation()
 {
-    addAndMakeVisible(text = new juce::Label(juce::String(), TRANS("OK")));
+    text = std::make_unique<juce::Label>(juce::String(), TRANS("OK"));
+    addAndMakeVisible(*text);
     text->setFont(juce::Font("Oswald", 230.00f, juce::Font::bold));
     text->setJustificationType(juce::Justification::centred);
     text->setEditable(false, false, false);

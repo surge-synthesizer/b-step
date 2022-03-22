@@ -98,36 +98,36 @@ class MenuBarRight : public juce::Component, public juce::Button::Listener
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::ImageButton> open_settings_editor;
-    juce::ScopedPointer<juce::ImageButton> do_midi_learn;
-    juce::ScopedPointer<juce::ImageButton> open_about_window;
-    juce::ScopedPointer<juce::ImageButton> save_preset;
-    juce::ScopedPointer<juce::ImageButton> panic;
-    juce::ScopedPointer<juce::ImageButton> load_preset;
-    juce::ScopedPointer<UIRubber> button_rubber;
-    juce::ScopedPointer<UIQuestion> button_question;
-    juce::ScopedPointer<UIClipboard> button_clipboard_1;
-    juce::ScopedPointer<UIClipboard> button_clipboard_2;
-    juce::ScopedPointer<UIClipboard> button_clipboard_3;
-    juce::ScopedPointer<UIClipboard> button_clipboard_4;
-    juce::ScopedPointer<juce::ImageButton> open_setup_editor;
-    juce::ScopedPointer<juce::ImageButton> clear_project;
-    juce::ScopedPointer<juce::ImageButton> open_styler;
-    juce::ScopedPointer<juce::Drawable> drawable1;
-    juce::ScopedPointer<juce::Drawable> drawable2;
-    juce::ScopedPointer<juce::Drawable> drawable3;
-    juce::ScopedPointer<juce::Drawable> drawable4;
-    juce::ScopedPointer<juce::Drawable> drawable5;
-    juce::ScopedPointer<juce::Drawable> drawable6;
-    juce::ScopedPointer<juce::Drawable> drawable7;
-    juce::ScopedPointer<juce::Drawable> drawable8;
-    juce::ScopedPointer<juce::Drawable> drawable9;
-    juce::ScopedPointer<juce::Drawable> drawable10;
-    juce::ScopedPointer<juce::Drawable> drawable11;
-    juce::ScopedPointer<juce::Drawable> drawable12;
-    juce::ScopedPointer<juce::Drawable> drawable13;
-    juce::ScopedPointer<juce::Drawable> drawable14;
-    juce::ScopedPointer<juce::Drawable> drawable15;
+    std::unique_ptr<juce::ImageButton> open_settings_editor;
+    std::unique_ptr<juce::ImageButton> do_midi_learn;
+    std::unique_ptr<juce::ImageButton> open_about_window;
+    std::unique_ptr<juce::ImageButton> save_preset;
+    std::unique_ptr<juce::ImageButton> panic;
+    std::unique_ptr<juce::ImageButton> load_preset;
+    std::unique_ptr<UIRubber> button_rubber;
+    std::unique_ptr<UIQuestion> button_question;
+    std::unique_ptr<UIClipboard> button_clipboard_1;
+    std::unique_ptr<UIClipboard> button_clipboard_2;
+    std::unique_ptr<UIClipboard> button_clipboard_3;
+    std::unique_ptr<UIClipboard> button_clipboard_4;
+    std::unique_ptr<juce::ImageButton> open_setup_editor;
+    std::unique_ptr<juce::ImageButton> clear_project;
+    std::unique_ptr<juce::ImageButton> open_styler;
+    std::unique_ptr<juce::Drawable> drawable1;
+    std::unique_ptr<juce::Drawable> drawable2;
+    std::unique_ptr<juce::Drawable> drawable3;
+    std::unique_ptr<juce::Drawable> drawable4;
+    std::unique_ptr<juce::Drawable> drawable5;
+    std::unique_ptr<juce::Drawable> drawable6;
+    std::unique_ptr<juce::Drawable> drawable7;
+    std::unique_ptr<juce::Drawable> drawable8;
+    std::unique_ptr<juce::Drawable> drawable9;
+    std::unique_ptr<juce::Drawable> drawable10;
+    std::unique_ptr<juce::Drawable> drawable11;
+    std::unique_ptr<juce::Drawable> drawable12;
+    std::unique_ptr<juce::Drawable> drawable13;
+    std::unique_ptr<juce::Drawable> drawable14;
+    std::unique_ptr<juce::Drawable> drawable15;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MenuBarRight)

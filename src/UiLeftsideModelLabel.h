@@ -65,7 +65,7 @@ class UiLeftsideModelLabel : public SubeditorBase
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<ModelBase> model;
+    std::unique_ptr<ModelBase> model;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiLeftsideModelLabel)

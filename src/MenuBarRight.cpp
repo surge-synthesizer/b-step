@@ -72,114 +72,129 @@ MenuBarRight::MenuBarRight(AppInstanceStore *const app_instance_store_,
                            GstepAudioProcessorEditor *const main_window_)
     : _app_instance_store(app_instance_store_), _main_window(main_window_)
 {
-    addAndMakeVisible(open_settings_editor = new juce::ImageButton(juce::String()));
+    open_settings_editor = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*open_settings_editor);
     open_settings_editor->addListener(this);
-
     open_settings_editor->setImages(
         false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
         juce::Colour(0x00000000), juce::Image(), 1.000f, juce::Colour(0x00000000));
-    addAndMakeVisible(do_midi_learn = new juce::ImageButton(juce::String()));
-    do_midi_learn->addListener(this);
 
+    do_midi_learn = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*do_midi_learn);
+    do_midi_learn->addListener(this);
     do_midi_learn->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
                              juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
                              juce::Colour(0x00000000));
-    addAndMakeVisible(open_about_window = new juce::ImageButton(juce::String()));
-    open_about_window->addListener(this);
 
+    open_about_window = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*open_about_window);
+    open_about_window->addListener(this);
     open_about_window->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
                                  juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(),
                                  1.000f, juce::Colour(0x00000000));
-    addAndMakeVisible(save_preset = new juce::ImageButton(juce::String()));
-    save_preset->addListener(this);
 
+    save_preset = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*save_preset);
+    save_preset->addListener(this);
     save_preset->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
                            juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
                            juce::Colour(0x00000000));
-    addAndMakeVisible(panic = new juce::ImageButton(juce::String()));
-    panic->addListener(this);
 
+    panic = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*panic);
+    panic->addListener(this);
     panic->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
                      juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
                      juce::Colour(0x00000000));
-    addAndMakeVisible(load_preset = new juce::ImageButton(juce::String()));
-    load_preset->addListener(this);
 
+    load_preset = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*load_preset);
+    load_preset->addListener(this);
     load_preset->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
                            juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
                            juce::Colour(0x00000000));
-    addAndMakeVisible(button_rubber = new UIRubber(juce::String()));
 
+    button_rubber = std::make_unique<UIRubber>(juce::String());
+    addAndMakeVisible(*button_rubber);
     button_rubber->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
                              juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
                              juce::Colour(0x00000000));
-    addAndMakeVisible(button_question = new UIQuestion(juce::String()));
 
+    button_question = std::make_unique<UIQuestion>(juce::String());
+    addAndMakeVisible(*button_question);
     button_question->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
                                juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(),
                                1.000f, juce::Colour(0x00000000));
-    addAndMakeVisible(button_clipboard_1 = new UIClipboard(_app_instance_store, _main_window, 0));
+
+    button_clipboard_1 = std::make_unique<UIClipboard>(_app_instance_store, _main_window, 0);
+    addAndMakeVisible(*button_clipboard_1);
     button_clipboard_1->setName("tool_clipboard_1");
 
-    addAndMakeVisible(button_clipboard_2 = new UIClipboard(_app_instance_store, _main_window, 1));
+    button_clipboard_2 = std::make_unique<UIClipboard>(_app_instance_store, _main_window, 1);
+    addAndMakeVisible(*button_clipboard_2);
     button_clipboard_2->setName("tool_clipboard_2");
 
-    addAndMakeVisible(button_clipboard_3 = new UIClipboard(_app_instance_store, _main_window, 2));
+    button_clipboard_3 = std::make_unique<UIClipboard>(_app_instance_store, _main_window, 2);
+    addAndMakeVisible(*button_clipboard_3);
     button_clipboard_3->setName("tool_clipboard_3");
 
-    addAndMakeVisible(button_clipboard_4 = new UIClipboard(_app_instance_store, _main_window, 3));
+    button_clipboard_4 = std::make_unique<UIClipboard>(_app_instance_store, _main_window, 3);
+    addAndMakeVisible(*button_clipboard_4);
     button_clipboard_4->setName("tool_clipboard_4");
 
-    addAndMakeVisible(open_setup_editor = new juce::ImageButton(juce::String()));
+    open_setup_editor = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*open_setup_editor);
     open_setup_editor->addListener(this);
-
     open_setup_editor->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
                                  juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(),
                                  1.000f, juce::Colour(0x00000000));
-    addAndMakeVisible(clear_project = new juce::ImageButton(juce::String()));
-    clear_project->addListener(this);
 
+    clear_project = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*clear_project);
+    clear_project->addListener(this);
     clear_project->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
                              juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
                              juce::Colour(0x00000000));
-    addAndMakeVisible(open_styler = new juce::ImageButton(juce::String()));
-    open_styler->addListener(this);
 
+    open_styler = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*open_styler);
+    open_styler->addListener(this);
     open_styler->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
                            juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
                            juce::Colour(0x00000000));
-    drawable1 = juce::Drawable::createFromImageData(load_svg, load_svgSize).release();
-    drawable2 = juce::Drawable::createFromImageData(save_svg, save_svgSize).release();
-    drawable3 = juce::Drawable::createFromImageData(learn_svg, learn_svgSize).release();
-    drawable4 = juce::Drawable::createFromImageData(connection_svg, connection_svgSize).release();
-    drawable5 = juce::Drawable::createFromImageData(info_svg, info_svgSize).release();
-    drawable6 = juce::Drawable::createFromImageData(panic_svg, panic_svgSize).release();
-    drawable7 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize).release();
-    drawable8 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize).release();
-    drawable9 = juce::Drawable::createFromImageData(settings_svg, settings_svgSize).release();
-    drawable10 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize).release();
-    drawable11 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize).release();
-    drawable12 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize).release();
-    drawable13 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize).release();
-    drawable14 = juce::Drawable::createFromImageData(trash_svg, trash_svgSize).release();
-    drawable15 = juce::Drawable::createFromImageData(paint_svg, paint_svgSize).release();
+
+    drawable1 = juce::Drawable::createFromImageData(load_svg, load_svgSize);
+    drawable2 = juce::Drawable::createFromImageData(save_svg, save_svgSize);
+    drawable3 = juce::Drawable::createFromImageData(learn_svg, learn_svgSize);
+    drawable4 = juce::Drawable::createFromImageData(connection_svg, connection_svgSize);
+    drawable5 = juce::Drawable::createFromImageData(info_svg, info_svgSize);
+    drawable6 = juce::Drawable::createFromImageData(panic_svg, panic_svgSize);
+    drawable7 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize);
+    drawable8 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize);
+    drawable9 = juce::Drawable::createFromImageData(settings_svg, settings_svgSize);
+    drawable10 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize);
+    drawable11 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize);
+    drawable12 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize);
+    drawable13 = juce::Drawable::createFromImageData(drag_svg, drag_svgSize);
+    drawable14 = juce::Drawable::createFromImageData(trash_svg, trash_svgSize);
+    drawable15 = juce::Drawable::createFromImageData(paint_svg, paint_svgSize);
 
     //[UserPreSize]
-    drawables.add(drawable1);
-    drawables.add(drawable2);
-    drawables.add(drawable3);
-    drawables.add(drawable4);
-    drawables.add(drawable5);
-    drawables.add(drawable6);
-    drawables.add(drawable7);
+    drawables.add(drawable1.get());
+    drawables.add(drawable2.get());
+    drawables.add(drawable3.get());
+    drawables.add(drawable4.get());
+    drawables.add(drawable5.get());
+    drawables.add(drawable6.get());
+    drawables.add(drawable7.get());
     // drawables.add( drawable8 );
-    drawables.add(drawable9);
-    drawables.add(drawable10);
-    drawables.add(drawable11);
-    drawables.add(drawable12);
-    drawables.add(drawable13);
-    drawables.add(drawable14);
-    drawables.add(drawable15);
+    drawables.add(drawable9.get());
+    drawables.add(drawable10.get());
+    drawables.add(drawable11.get());
+    drawables.add(drawable12.get());
+    drawables.add(drawable13.get());
+    drawables.add(drawable14.get());
+    drawables.add(drawable15.get());
 
     last_painted_colour = GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR;
 
@@ -448,19 +463,19 @@ void MenuBarRight::buttonClicked(juce::Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == open_settings_editor)
+    if (buttonThatWasClicked == open_settings_editor.get())
     {
         //[UserButtonCode_open_settings_editor] -- add your button handler code here..
         _main_window->open_settings_editor();
         //[/UserButtonCode_open_settings_editor]
     }
-    else if (buttonThatWasClicked == do_midi_learn)
+    else if (buttonThatWasClicked == do_midi_learn.get())
     {
         //[UserButtonCode_do_midi_learn] -- add your button handler code here..
         _main_window->open_midi_learn_editor();
         //[/UserButtonCode_do_midi_learn]
     }
-    else if (buttonThatWasClicked == open_about_window)
+    else if (buttonThatWasClicked == open_about_window.get())
     {
         //[UserButtonCode_open_about_window] -- add your button handler code here..
         if (!_app_instance_store->editor_config.about_winodow)
@@ -472,25 +487,25 @@ void MenuBarRight::buttonClicked(juce::Button *buttonThatWasClicked)
             _app_instance_store->editor_config.about_winodow = nullptr;
         //[/UserButtonCode_open_about_window]
     }
-    else if (buttonThatWasClicked == save_preset)
+    else if (buttonThatWasClicked == save_preset.get())
     {
         //[UserButtonCode_save_preset] -- add your button handler code here..
         _main_window->open_writer(VIEW_TYPE::PROJECTS);
         //[/UserButtonCode_save_preset]
     }
-    else if (buttonThatWasClicked == panic)
+    else if (buttonThatWasClicked == panic.get())
     {
         //[UserButtonCode_panic] -- add your button handler code here..
         _app_instance_store->audio_processor->panic();
         //[/UserButtonCode_panic]
     }
-    else if (buttonThatWasClicked == load_preset)
+    else if (buttonThatWasClicked == load_preset.get())
     {
         //[UserButtonCode_load_preset] -- add your button handler code here..
         _main_window->open_reader(VIEW_TYPE::PROJECTS);
         //[/UserButtonCode_load_preset]
     }
-    else if (buttonThatWasClicked == open_setup_editor)
+    else if (buttonThatWasClicked == open_setup_editor.get())
     {
         //[UserButtonCode_open_setup_editor] -- add your button handler code here..
         if (!_app_instance_store->editor_config.setup_editor)
@@ -500,7 +515,7 @@ void MenuBarRight::buttonClicked(juce::Button *buttonThatWasClicked)
             _app_instance_store->editor_config.setup_editor = nullptr;
         //[/UserButtonCode_open_setup_editor]
     }
-    else if (buttonThatWasClicked == clear_project)
+    else if (buttonThatWasClicked == clear_project.get())
     {
         //[UserButtonCode_clear_project] -- add your button handler code here..
         class CallbackManager : public juce::ModalComponentManager::Callback
@@ -532,7 +547,7 @@ void MenuBarRight::buttonClicked(juce::Button *buttonThatWasClicked)
                                            _app_instance_store->editor, callback);
         //[/UserButtonCode_clear_project]
     }
-    else if (buttonThatWasClicked == open_styler)
+    else if (buttonThatWasClicked == open_styler.get())
     {
         //[UserButtonCode_open_styler] -- add your button handler code here..
         if (!_app_instance_store->editor_config.style_editor)

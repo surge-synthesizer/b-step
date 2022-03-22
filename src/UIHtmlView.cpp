@@ -468,7 +468,7 @@ class NavItem : public juce::TreeViewItem
     juce::String const _name;
     juce::URL const _url;
 
-    juce::ScopedPointer<juce::Label> _label;
+    std::unique_ptr<juce::Label> _label;
 
     juce::String getUniqueName() const override { return _url.toString(false); }
 
@@ -535,7 +535,7 @@ class NavItem : public juce::TreeViewItem
         _label->setBounds(0, 0, width_prop * 200, heigh_prop * 25);
         comp->setVisible(true);
         comp->setInterceptsMouseClicks(false, false);
-        comp->addChildComponent(_label);
+        comp->addChildComponent(*_label);
         return comp;
     }
 
@@ -546,7 +546,7 @@ class NavItem : public juce::TreeViewItem
         float heigh_prop = 1.f / 600 * _html_view->getHeight();
         float width_prop = 1.f / 900 * _html_view->getWidth();
 
-        _label = new juce::Label();
+        _label = std::make_unique<juce::Label>();
         _label->setText(_name, juce::dontSendNotification);
         _label->setVisible(true);
         _label->setBounds(0, 0, width_prop * 200, heigh_prop * 25);
@@ -1016,27 +1016,33 @@ void UIHtmlView::on_close_clicked()
 UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-Manual"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(viewport = new juce::Viewport(juce::String()));
+    viewport = std::make_unique<juce::Viewport>("juce::String()");
+    addAndMakeVisible(*viewport);
     viewport->setScrollBarsShown(true, false);
 
-    addAndMakeVisible(treeView = new juce::TreeView("new treeview"));
+    treeView = std::make_unique<juce::TreeView>("new treeview");
+    addAndMakeVisible(*treeView);
     treeView->setColour(juce::TreeView::linesColourId, juce::Colour(0x8aff3b00));
 
-    addAndMakeVisible(toolbar = new UiEditorToolbar(this, true, true, false));
+    toolbar = std::make_unique<UiEditorToolbar>(this, true, true, false);
+    addAndMakeVisible(*toolbar);
 
-    addAndMakeVisible(update = new juce::TextButton(juce::String()));
+    update = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*update);
     update->setButtonText(TRANS("RE-DOWNLOAD COMPLETE MANUAL"));
     update->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
                               juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     update->addListener(this);
 
-    addAndMakeVisible(forum = new juce::TextButton(juce::String()));
+    forum = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*forum);
     forum->setButtonText(TRANS("CHECK THE FORUM"));
     forum->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
                              juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     forum->addListener(this);
 
-    addAndMakeVisible(label = new juce::Label("new label", TRANS("QUESTIONS TO THIS POINT: ")));
+    label = std::make_unique<juce::Label>("new label", TRANS("QUESTIONS TO THIS POINT: "));
+    addAndMakeVisible(*label);
     label->setFont(juce::Font(15.00f, juce::Font::plain));
     label->setJustificationType(juce::Justification::centredRight);
     label->setEditable(false, false, false);
@@ -1045,7 +1051,8 @@ UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
     label->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label2 = new juce::Label("new label", TRANS("OR\n")));
+    label2 = std::make_unique<juce::Label>("new label", TRANS("OR\n"));
+    addAndMakeVisible(*label2);
     label2->setFont(juce::Font(15.00f, juce::Font::plain));
     label2->setJustificationType(juce::Justification::centred);
     label2->setEditable(false, false, false);
@@ -1054,13 +1061,15 @@ UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
     label2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(mail = new juce::TextButton(juce::String()));
+    mail = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*mail);
     mail->setButtonText(TRANS("CONTACT SUPPORT"));
     mail->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
                             juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     mail->addListener(this);
 
-    addAndMakeVisible(label3 = new juce::Label("new label", TRANS("|")));
+    label3 = std::make_unique<juce::Label>("new label", TRANS("|"));
+    addAndMakeVisible(*label3);
     label3->setFont(juce::Font(15.00f, juce::Font::plain));
     label3->setJustificationType(juce::Justification::centred);
     label3->setEditable(false, false, false);
@@ -1069,13 +1078,15 @@ UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
     label3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(online = new juce::TextButton(juce::String()));
+    online = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*online);
     online->setButtonText(TRANS("OPEN ONLINE VERSION"));
     online->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
                               juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     online->addListener(this);
 
-    addAndMakeVisible(label4 = new juce::Label("new label", TRANS("|")));
+    label4 = std::make_unique<juce::Label>("new label", TRANS("|"));
+    addAndMakeVisible(*label4);
     label4->setFont(juce::Font(15.00f, juce::Font::plain));
     label4->setJustificationType(juce::Justification::centred);
     label4->setEditable(false, false, false);
@@ -1084,9 +1095,11 @@ UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
     label4->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label4->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(tree_view_dragger = new FingerDrag(treeView->getViewport(), this));
+    tree_view_dragger = std::make_unique<FingerDrag>(treeView->getViewport(), this);
+    addAndMakeVisible(*tree_view_dragger);
 
-    addAndMakeVisible(viewport_dragger = new FingerDrag(viewport, this));
+    viewport_dragger = std::make_unique<FingerDrag>(viewport.get(), this);
+    addAndMakeVisible(*viewport_dragger);
 
     //[UserPreSize]
     if (!get_manual_folder().exists())
@@ -1246,7 +1259,7 @@ void UIHtmlView::buttonClicked(juce::Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == update)
+    if (buttonThatWasClicked == update.get())
     {
         //[UserButtonCode_update] -- add your button handler code here..
         juce::URL online_test(MANUAL_URL + "is-online");
@@ -1274,13 +1287,13 @@ void UIHtmlView::buttonClicked(juce::Button *buttonThatWasClicked)
         }
         //[/UserButtonCode_update]
     }
-    else if (buttonThatWasClicked == forum)
+    else if (buttonThatWasClicked == forum.get())
     {
         //[UserButtonCode_forum] -- add your button handler code here..
         juce::URL("http://forum.monoplugs.com/viewforum.php?f=47").launchInDefaultBrowser();
         //[/UserButtonCode_forum]
     }
-    else if (buttonThatWasClicked == mail)
+    else if (buttonThatWasClicked == mail.get())
     {
         //[UserButtonCode_mail] -- add your button handler code here..
 
@@ -1312,7 +1325,7 @@ void UIHtmlView::buttonClicked(juce::Button *buttonThatWasClicked)
                 .launchInDefaultBrowser();
         //[/UserButtonCode_mail]
     }
-    else if (buttonThatWasClicked == online)
+    else if (buttonThatWasClicked == online.get())
     {
         //[UserButtonCode_online] -- add your button handler code here..
         if (treeView->getSelectedItem(0))

@@ -77,9 +77,9 @@ class UiLeftsideStartStopPause : public SubeditorBase
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<ModelBase> button_play;
-    juce::ScopedPointer<ModelBase> button_pause;
-    juce::ScopedPointer<ModelBase> button_stop;
+    std::unique_ptr<ModelBase> button_play;
+    std::unique_ptr<ModelBase> button_pause;
+    std::unique_ptr<ModelBase> button_stop;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiLeftsideStartStopPause)

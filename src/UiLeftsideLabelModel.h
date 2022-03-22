@@ -69,8 +69,8 @@ class UiLeftsideLabelModel : public SubeditorBase, public juce::Button::Listener
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::ImageButton> bg_button;
-    juce::ScopedPointer<ModelBase> model;
+    std::unique_ptr<juce::ImageButton> bg_button;
+    std::unique_ptr<ModelBase> model;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiLeftsideLabelModel)

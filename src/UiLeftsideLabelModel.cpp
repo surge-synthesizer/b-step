@@ -60,7 +60,8 @@ void UiLeftsideLabelModel::get_controllers_for_paint_popup(
 UiLeftsideLabelModel::UiLeftsideLabelModel(AppInstanceStore *const app_insteance_store_)
     : _app_insteance_store(app_insteance_store_)
 {
-    addAndMakeVisible(bg_button = new juce::ImageButton(juce::String()));
+    bg_button = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*bg_button);
     bg_button->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
                                  juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     bg_button->addListener(this);
@@ -68,7 +69,8 @@ UiLeftsideLabelModel::UiLeftsideLabelModel(AppInstanceStore *const app_insteance
     bg_button->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
                          juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
                          juce::Colour(0x00000000));
-    addAndMakeVisible(model = new ModelBase());
+    model = std::make_unique<ModelBase>();
+    addAndMakeVisible(*model);
 
     //[UserPreSize]
     _style = nullptr;
@@ -132,7 +134,7 @@ void UiLeftsideLabelModel::buttonClicked(juce::Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == bg_button)
+    if (buttonThatWasClicked == bg_button.get())
     {
         //[UserButtonCode_bg_button] -- add your button handler code here..
         _app_insteance_store->editor->open_chord_editor();

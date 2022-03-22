@@ -33,7 +33,8 @@ void UiFileView::set_label_text(const juce::String &label_text_)
 //==============================================================================
 UiFileView::UiFileView()
 {
-    addAndMakeVisible(label = new juce::TextEditor(juce::String()));
+    label = std::make_unique<juce::TextEditor>(juce::String());
+    addAndMakeVisible(*label);
     label->setMultiLine(false);
     label->setReturnKeyStartsNewLine(false);
     label->setReadOnly(false);
@@ -48,13 +49,15 @@ UiFileView::UiFileView()
     label->setColour(juce::CaretComponent::caretColourId, juce::Colours::aqua);
     label->setText(juce::String());
 
-    addAndMakeVisible(imageButton = new juce::ImageButton(juce::String()));
+    imageButton = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*imageButton);
     imageButton->addListener(this);
 
     imageButton->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
                            juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
                            juce::Colour(0x00000000));
-    addAndMakeVisible(player_slider = new juce::Slider(juce::String()));
+    player_slider = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*player_slider);
     player_slider->setRange(0, 10, 0);
     player_slider->setSliderStyle(juce::Slider::LinearHorizontal);
     player_slider->setTextBoxStyle(juce::Slider::NoTextBox, false, 30, 20);
@@ -137,7 +140,7 @@ void UiFileView::buttonClicked(juce::Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == imageButton)
+    if (buttonThatWasClicked == imageButton.get())
     {
         //[UserButtonCode_imageButton] -- add your button handler code here..
         //[/UserButtonCode_imageButton]
@@ -152,7 +155,7 @@ void UiFileView::sliderValueChanged(juce::Slider *sliderThatWasMoved)
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
 
-    if (sliderThatWasMoved == player_slider)
+    if (sliderThatWasMoved == player_slider.get())
     {
         //[UserSliderCode_player_slider] -- add your slider handling code here..
         //[/UserSliderCode_player_slider]

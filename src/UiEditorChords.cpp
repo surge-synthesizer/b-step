@@ -118,7 +118,7 @@ void UiEditorChords::set_selected_barchord_color()
             {
                 _ui_chords.getReference(last_running_chord_id)
                     .getReference(i)
-                    ->set_style(_app_instance_store->style_popup_editor_chord);
+                    ->set_style(_app_instance_store->style_popup_editor_chord.get());
             }
         }
         if (last_selected_preset_id != 99)
@@ -127,7 +127,7 @@ void UiEditorChords::set_selected_barchord_color()
             {
                 _ui_chords.getReference(last_selected_preset_id)
                     .getReference(i)
-                    ->set_style(_app_instance_store->style_popup_editor_chord);
+                    ->set_style(_app_instance_store->style_popup_editor_chord.get());
             }
         }
 
@@ -135,13 +135,13 @@ void UiEditorChords::set_selected_barchord_color()
         {
             _ui_chords.getReference(running_chord_id)
                 .getReference(i)
-                ->set_style(_app_instance_store->style_popup_editor_run);
+                ->set_style(_app_instance_store->style_popup_editor_run.get());
         }
         for (int i = 0; i != _ui_chords.getReference(selected_chord_id).size(); ++i)
         {
             _ui_chords.getReference(selected_chord_id)
                 .getReference(i)
-                ->set_style(_app_instance_store->style_popup_editor_mute);
+                ->set_style(_app_instance_store->style_popup_editor_mute.get());
         }
     }
 
@@ -151,20 +151,20 @@ void UiEditorChords::set_selected_barchord_color()
     std::uint8_t current_tune_offset = _app_instance_store->pattern.note_offset;
     if (last_tune_offset != current_tune_offset)
     {
-        set_preset_button_text(preset_0, 0);
-        set_preset_button_text(preset_1, 1);
-        set_preset_button_text(preset_2, 2);
-        set_preset_button_text(preset_3, 3);
-        set_preset_button_text(preset_4, 4);
-        set_preset_button_text(preset_5, 5);
-        set_preset_button_text(preset_6, 6);
-        set_preset_button_text(preset_7, 7);
-        set_preset_button_text(preset_8, 8);
-        set_preset_button_text(preset_9, 9);
-        set_preset_button_text(preset_10, 10);
-        set_preset_button_text(preset_11, 11);
-        set_preset_button_text(preset_12, 12);
-        set_preset_button_text(preset_13, 13);
+        set_preset_button_text(preset_0.get(), 0);
+        set_preset_button_text(preset_1.get(), 1);
+        set_preset_button_text(preset_2.get(), 2);
+        set_preset_button_text(preset_3.get(), 3);
+        set_preset_button_text(preset_4.get(), 4);
+        set_preset_button_text(preset_5.get(), 5);
+        set_preset_button_text(preset_6.get(), 6);
+        set_preset_button_text(preset_7.get(), 7);
+        set_preset_button_text(preset_8.get(), 8);
+        set_preset_button_text(preset_9.get(), 9);
+        set_preset_button_text(preset_10.get(), 10);
+        set_preset_button_text(preset_11.get(), 11);
+        set_preset_button_text(preset_12.get(), 12);
+        set_preset_button_text(preset_13.get(), 13);
 
         last_tune_offset = current_tune_offset;
     }
@@ -258,7 +258,8 @@ void UiEditorChords::on_close_clicked()
 UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-Chords"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(lbl_clock_thru = new juce::Label(juce::String(), TRANS("DRUMS\n")));
+    lbl_clock_thru = std::make_unique<juce::Label>(juce::String(), TRANS("DRUMS\n"));
+    addAndMakeVisible(*lbl_clock_thru);
     lbl_clock_thru->setFont(juce::Font(15.00f, juce::Font::plain));
     lbl_clock_thru->setJustificationType(juce::Justification::centred);
     lbl_clock_thru->setEditable(false, false, false);
@@ -267,37 +268,45 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     lbl_clock_thru->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     lbl_clock_thru->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(tb_drum_view = new juce::ToggleButton(juce::String()));
+    tb_drum_view = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*tb_drum_view);
     tb_drum_view->setExplicitFocusOrder(2);
     tb_drum_view->addListener(this);
     tb_drum_view->setColour(juce::ToggleButton::textColourId,
                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(target_chord_0 = new juce::ToggleButton(juce::String()));
+    target_chord_0 = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*target_chord_0);
     target_chord_0->setRadioGroupId(1);
     target_chord_0->addListener(this);
 
-    addAndMakeVisible(target_chord_1 = new juce::ToggleButton(juce::String()));
+    target_chord_1 = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*target_chord_1);
     target_chord_1->setRadioGroupId(1);
     target_chord_1->addListener(this);
 
-    addAndMakeVisible(target_chord_2 = new juce::ToggleButton(juce::String()));
+    target_chord_2 = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*target_chord_2);
     target_chord_2->setRadioGroupId(1);
     target_chord_2->addListener(this);
 
-    addAndMakeVisible(target_chord_3 = new juce::ToggleButton(juce::String()));
+    target_chord_3 = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*target_chord_3);
     target_chord_3->setRadioGroupId(1);
     target_chord_3->addListener(this);
 
-    addAndMakeVisible(target_chord_4 = new juce::ToggleButton(juce::String()));
+    target_chord_4 = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*target_chord_4);
     target_chord_4->setRadioGroupId(1);
     target_chord_4->addListener(this);
 
-    addAndMakeVisible(target_chord_5 = new juce::ToggleButton(juce::String()));
+    target_chord_5 = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*target_chord_5);
     target_chord_5->setRadioGroupId(1);
     target_chord_5->addListener(this);
 
-    addAndMakeVisible(label_string_g = new juce::Label(juce::String(), TRANS("STRING G")));
+    label_string_g = std::make_unique<juce::Label>(juce::String()), TRANS("STRING G");
+    addAndMakeVisible(*label_string_g);
     label_string_g->setFont(juce::Font(15.00f, juce::Font::plain));
     label_string_g->setJustificationType(juce::Justification::centredRight);
     label_string_g->setEditable(false, false, false);
@@ -306,67 +315,98 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     label_string_g->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_string_g->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(chord_offset_0_0 = new UiChordEditorStringOffset(_app_instance_store, 0, 0));
+    chord_offset_0_0 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 0, 0);
+    addAndMakeVisible(*chord_offset_0_0);
 
-    addAndMakeVisible(chord_offset_0_1 = new UiChordEditorStringOffset(_app_instance_store, 0, 1));
+    chord_offset_0_1 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 0, 1);
+    addAndMakeVisible(*chord_offset_0_1);
 
-    addAndMakeVisible(chord_offset_0_2 = new UiChordEditorStringOffset(_app_instance_store, 0, 2));
+    chord_offset_0_2 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 0, 2);
+    addAndMakeVisible(*chord_offset_0_2);
 
-    addAndMakeVisible(chord_offset_0_3 = new UiChordEditorStringOffset(_app_instance_store, 0, 3));
+    chord_offset_0_3 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 0, 3);
+    addAndMakeVisible(*chord_offset_0_3);
 
-    addAndMakeVisible(chord_offset_1_0 = new UiChordEditorStringOffset(_app_instance_store, 1, 0));
+    chord_offset_1_0 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 1, 0);
+    addAndMakeVisible(*chord_offset_1_0);
 
-    addAndMakeVisible(chord_offset_2_0 = new UiChordEditorStringOffset(_app_instance_store, 2, 0));
+    chord_offset_2_0 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 2, 0);
+    addAndMakeVisible(*chord_offset_2_0);
 
-    addAndMakeVisible(chord_offset_3_0 = new UiChordEditorStringOffset(_app_instance_store, 3, 0));
+    chord_offset_3_0 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 3, 0);
+    addAndMakeVisible(*chord_offset_3_0);
 
-    addAndMakeVisible(chord_offset_4_0 = new UiChordEditorStringOffset(_app_instance_store, 4, 0));
+    chord_offset_4_0 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 4, 0);
+    addAndMakeVisible(*chord_offset_4_0);
 
-    addAndMakeVisible(chord_offset_5_0 = new UiChordEditorStringOffset(_app_instance_store, 5, 0));
+    chord_offset_5_0 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 5, 0);
+    addAndMakeVisible(*chord_offset_5_0);
 
-    addAndMakeVisible(chord_offset_1_1 = new UiChordEditorStringOffset(_app_instance_store, 1, 1));
+    chord_offset_1_1 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 1, 1);
+    addAndMakeVisible(*chord_offset_1_1);
 
-    addAndMakeVisible(chord_offset_1_2 = new UiChordEditorStringOffset(_app_instance_store, 1, 2));
+    chord_offset_1_2 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 1, 2);
+    addAndMakeVisible(*chord_offset_1_2);
 
-    addAndMakeVisible(chord_offset_1_3 = new UiChordEditorStringOffset(_app_instance_store, 1, 3));
+    chord_offset_1_3 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 1, 3);
+    addAndMakeVisible(*chord_offset_1_3);
 
-    addAndMakeVisible(chord_offset_2_1 = new UiChordEditorStringOffset(_app_instance_store, 2, 1));
+    chord_offset_2_1 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 2, 1);
+    addAndMakeVisible(*chord_offset_2_1);
 
-    addAndMakeVisible(chord_offset_2_2 = new UiChordEditorStringOffset(_app_instance_store, 2, 2));
+    chord_offset_2_2 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 2, 2);
+    addAndMakeVisible(*chord_offset_2_2);
 
-    addAndMakeVisible(chord_offset_2_3 = new UiChordEditorStringOffset(_app_instance_store, 2, 3));
+    chord_offset_2_3 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 2, 3);
+    addAndMakeVisible(*chord_offset_2_3);
 
-    addAndMakeVisible(chord_offset_3_1 = new UiChordEditorStringOffset(_app_instance_store, 3, 1));
+    chord_offset_3_1 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 3, 1);
+    addAndMakeVisible(*chord_offset_3_1);
 
-    addAndMakeVisible(chord_offset_3_2 = new UiChordEditorStringOffset(_app_instance_store, 3, 2));
+    chord_offset_3_2 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 3, 2);
+    addAndMakeVisible(*chord_offset_3_2);
 
-    addAndMakeVisible(chord_offset_3_3 = new UiChordEditorStringOffset(_app_instance_store, 3, 3));
+    chord_offset_3_3 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 3, 3);
+    addAndMakeVisible(*chord_offset_3_3);
 
-    addAndMakeVisible(chord_offset_4_1 = new UiChordEditorStringOffset(_app_instance_store, 4, 1));
+    chord_offset_4_1 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 4, 1);
+    addAndMakeVisible(*chord_offset_4_1);
 
-    addAndMakeVisible(chord_offset_4_2 = new UiChordEditorStringOffset(_app_instance_store, 4, 2));
+    chord_offset_4_2 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 4, 2);
+    addAndMakeVisible(*chord_offset_4_2);
 
-    addAndMakeVisible(chord_offset_4_3 = new UiChordEditorStringOffset(_app_instance_store, 4, 3));
+    chord_offset_4_3 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 4, 3);
+    addAndMakeVisible(*chord_offset_4_3);
 
-    addAndMakeVisible(chord_offset_5_1 = new UiChordEditorStringOffset(_app_instance_store, 5, 1));
+    chord_offset_5_1 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 5, 1);
+    addAndMakeVisible(*chord_offset_5_1);
 
-    addAndMakeVisible(chord_offset_5_2 = new UiChordEditorStringOffset(_app_instance_store, 5, 2));
+    chord_offset_5_2 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 5, 2);
+    addAndMakeVisible(*chord_offset_5_2);
 
-    addAndMakeVisible(chord_offset_5_3 = new UiChordEditorStringOffset(_app_instance_store, 5, 3));
+    chord_offset_5_3 = std::make_unique<UiChordEditorStringOffset>(_app_instance_store, 5, 3);
+    addAndMakeVisible(*chord_offset_5_3);
 
-    addAndMakeVisible(chord_offset_0 = new UiChordEditorChordOffset(_app_instance_store, 0));
+    chord_offset_0 = std::make_unique<UiChordEditorChordOffset>(_app_instance_store, 0);
+    addAndMakeVisible(*chord_offset_0);
 
-    addAndMakeVisible(chord_offset_1 = new UiChordEditorChordOffset(_app_instance_store, 1));
+    chord_offset_1 = std::make_unique<UiChordEditorChordOffset>(_app_instance_store, 1);
+    addAndMakeVisible(*chord_offset_1);
 
-    addAndMakeVisible(chord_offset_2 = new UiChordEditorChordOffset(_app_instance_store, 2));
+    chord_offset_2 = std::make_unique<UiChordEditorChordOffset>(_app_instance_store, 2);
+    addAndMakeVisible(*chord_offset_2);
 
-    addAndMakeVisible(chord_offset_3 = new UiChordEditorChordOffset(_app_instance_store, 3));
+    chord_offset_3 = std::make_unique<UiChordEditorChordOffset>(_app_instance_store, 3);
+    addAndMakeVisible(*chord_offset_3);
 
-    addAndMakeVisible(chord_offset_4 = new UiChordEditorChordOffset(_app_instance_store, 4));
+    chord_offset_4 = std::make_unique<UiChordEditorChordOffset>(_app_instance_store, 4);
+    addAndMakeVisible(*chord_offset_4);
 
-    addAndMakeVisible(chord_offset_5 = new UiChordEditorChordOffset(_app_instance_store, 5));
+    chord_offset_5 = std::make_unique<UiChordEditorChordOffset>(_app_instance_store, 5);
+    addAndMakeVisible(*chord_offset_5);
 
-    addAndMakeVisible(label_string_d = new juce::Label(juce::String(), TRANS("D")));
+    label_string_d = std::make_unique<juce::Label>(juce::String(), TRANS("D"));
+    addAndMakeVisible(*label_string_d);
     label_string_d->setFont(juce::Font(15.00f, juce::Font::plain));
     label_string_d->setJustificationType(juce::Justification::centredRight);
     label_string_d->setEditable(false, false, false);
@@ -375,7 +415,8 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     label_string_d->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_string_d->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_string_a = new juce::Label(juce::String(), TRANS("A")));
+    label_string_a = std::make_unique<juce::Label>(juce::String(), TRANS("A"));
+    addAndMakeVisible(*label_string_a);
     label_string_a->setFont(juce::Font(15.00f, juce::Font::plain));
     label_string_a->setJustificationType(juce::Justification::centredRight);
     label_string_a->setEditable(false, false, false);
@@ -384,7 +425,8 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     label_string_a->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_string_a->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_string_e = new juce::Label(juce::String(), TRANS("E")));
+    label_string_e = std::make_unique<juce::Label>(juce::String(), TRANS("E"));
+    addAndMakeVisible(*label_string_e);
     label_string_e->setFont(juce::Font(15.00f, juce::Font::plain));
     label_string_e->setJustificationType(juce::Justification::centredRight);
     label_string_e->setEditable(false, false, false);
@@ -393,7 +435,8 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     label_string_e->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_string_e->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_transpose = new juce::Label(juce::String(), TRANS("Transpose\n")));
+    label_transpose = std::make_unique<juce::Label>(juce::String(), TRANS("Transpose\n"));
+    addAndMakeVisible(*label_transpose);
     label_transpose->setFont(juce::Font(15.00f, juce::Font::plain));
     label_transpose->setJustificationType(juce::Justification::centredRight);
     label_transpose->setEditable(false, false, false);
@@ -402,8 +445,8 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     label_transpose->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_transpose->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_preset_target =
-                          new juce::Label(juce::String(), TRANS("Preset Target")));
+    label_preset_target = std::make_unique<juce::Label>(juce::String(), TRANS("Preset Target"));
+    addAndMakeVisible(*label_preset_target);
     label_preset_target->setFont(juce::Font(15.00f, juce::Font::plain));
     label_preset_target->setJustificationType(juce::Justification::centredRight);
     label_preset_target->setEditable(false, false, false);
@@ -412,84 +455,99 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     label_preset_target->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_preset_target->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(preset_0 = new juce::TextButton(juce::String()));
+    preset_0 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*preset_0);
     preset_0->setButtonText(TRANS("A"));
     preset_0->addListener(this);
     preset_0->setColour(juce::TextButton::buttonColourId,
                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(preset_1 = new juce::TextButton(juce::String()));
+    preset_1 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*preset_1);
     preset_1->setButtonText(TRANS("B"));
     preset_1->addListener(this);
     preset_1->setColour(juce::TextButton::buttonColourId,
                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(preset_2 = new juce::TextButton(juce::String()));
+    preset_2 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*preset_2);
     preset_2->setButtonText(TRANS("C"));
     preset_2->addListener(this);
     preset_2->setColour(juce::TextButton::buttonColourId,
                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(preset_3 = new juce::TextButton(juce::String()));
+    preset_3 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*preset_3);
     preset_3->setButtonText(TRANS("D"));
     preset_3->addListener(this);
     preset_3->setColour(juce::TextButton::buttonColourId,
                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(preset_4 = new juce::TextButton(juce::String()));
+    preset_4 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*preset_4);
     preset_4->setButtonText(TRANS("E"));
     preset_4->addListener(this);
     preset_4->setColour(juce::TextButton::buttonColourId,
                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(preset_5 = new juce::TextButton(juce::String()));
+    preset_5 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*preset_5);
     preset_5->setButtonText(TRANS("F"));
     preset_5->addListener(this);
     preset_5->setColour(juce::TextButton::buttonColourId,
                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(preset_6 = new juce::TextButton(juce::String()));
+    preset_6 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*preset_6);
     preset_6->setButtonText(TRANS("G"));
     preset_6->addListener(this);
     preset_6->setColour(juce::TextButton::buttonColourId,
                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(preset_7 = new juce::TextButton(juce::String()));
+    preset_7 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*preset_7);
     preset_7->setButtonText(TRANS("A m"));
     preset_7->addListener(this);
     preset_7->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff003bff));
 
-    addAndMakeVisible(preset_8 = new juce::TextButton(juce::String()));
+    preset_8 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*preset_8);
     preset_8->setButtonText(TRANS("B m"));
     preset_8->addListener(this);
     preset_8->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff003bff));
 
-    addAndMakeVisible(preset_9 = new juce::TextButton(juce::String()));
+    preset_9 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*preset_9);
     preset_9->setButtonText(TRANS("C m"));
     preset_9->addListener(this);
     preset_9->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff003bff));
 
-    addAndMakeVisible(preset_10 = new juce::TextButton(juce::String()));
+    preset_10 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*preset_10);
     preset_10->setButtonText(TRANS("D m"));
     preset_10->addListener(this);
     preset_10->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff003bff));
 
-    addAndMakeVisible(preset_11 = new juce::TextButton(juce::String()));
+    preset_11 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*preset_11);
     preset_11->setButtonText(TRANS("E m"));
     preset_11->addListener(this);
     preset_11->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff003bff));
 
-    addAndMakeVisible(preset_12 = new juce::TextButton(juce::String()));
+    preset_12 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*preset_12);
     preset_12->setButtonText(TRANS("F m"));
     preset_12->addListener(this);
     preset_12->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff003bff));
 
-    addAndMakeVisible(preset_13 = new juce::TextButton(juce::String()));
+    preset_13 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*preset_13);
     preset_13->setButtonText(TRANS("G m"));
     preset_13->addListener(this);
     preset_13->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff003bff));
 
-    addAndMakeVisible(labe_chord_0 = new juce::Label(juce::String(), TRANS("CHORD 1\n")));
+    labe_chord_0 = std::make_unique<juce::Label>(juce::String(), TRANS("CHORD 1\n"));
+    addAndMakeVisible(*labe_chord_0);
     labe_chord_0->setFont(juce::Font(15.00f, juce::Font::plain));
     labe_chord_0->setJustificationType(juce::Justification::centred);
     labe_chord_0->setEditable(false, false, false);
@@ -498,7 +556,8 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     labe_chord_0->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     labe_chord_0->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(labe_chord_1 = new juce::Label(juce::String(), TRANS("2")));
+    labe_chord_1 = std::make_unique<juce::Label>(juce::String(), TRANS("2"));
+    addAndMakeVisible(*labe_chord_1);
     labe_chord_1->setFont(juce::Font(15.00f, juce::Font::plain));
     labe_chord_1->setJustificationType(juce::Justification::centred);
     labe_chord_1->setEditable(false, false, false);
@@ -507,7 +566,8 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     labe_chord_1->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     labe_chord_1->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(labe_chord_2 = new juce::Label(juce::String(), TRANS("3")));
+    labe_chord_2 = std::make_unique<juce::Label>(juce::String(), TRANS("3"));
+    addAndMakeVisible(*labe_chord_2);
     labe_chord_2->setFont(juce::Font(15.00f, juce::Font::plain));
     labe_chord_2->setJustificationType(juce::Justification::centred);
     labe_chord_2->setEditable(false, false, false);
@@ -516,7 +576,8 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     labe_chord_2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     labe_chord_2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(labe_chord_3 = new juce::Label(juce::String(), TRANS("4")));
+    labe_chord_3 = std::make_unique<juce::Label>(juce::String(), TRANS("4"));
+    addAndMakeVisible(*labe_chord_3);
     labe_chord_3->setFont(juce::Font(15.00f, juce::Font::plain));
     labe_chord_3->setJustificationType(juce::Justification::centred);
     labe_chord_3->setEditable(false, false, false);
@@ -525,7 +586,8 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     labe_chord_3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     labe_chord_3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(labe_chord_4 = new juce::Label(juce::String(), TRANS("5")));
+    labe_chord_4 = std::make_unique<juce::Label>(juce::String(), TRANS("5"));
+    addAndMakeVisible(*labe_chord_4);
     labe_chord_4->setFont(juce::Font(15.00f, juce::Font::plain));
     labe_chord_4->setJustificationType(juce::Justification::centred);
     labe_chord_4->setEditable(false, false, false);
@@ -534,7 +596,8 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     labe_chord_4->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     labe_chord_4->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(labe_chord_5 = new juce::Label(juce::String(), TRANS("6")));
+    labe_chord_5 = std::make_unique<juce::Label>(juce::String(), TRANS("6"));
+    addAndMakeVisible(*labe_chord_5);
     labe_chord_5->setFont(juce::Font(15.00f, juce::Font::plain));
     labe_chord_5->setJustificationType(juce::Justification::centred);
     labe_chord_5->setEditable(false, false, false);
@@ -543,71 +606,76 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     labe_chord_5->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     labe_chord_5->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(button_fill_all_from_scale = new juce::TextButton(juce::String()));
+    button_fill_all_from_scale = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*button_fill_all_from_scale);
     button_fill_all_from_scale->setButtonText(TRANS("Fill ALL Chords randomly from Scale"));
     button_fill_all_from_scale->addListener(this);
     button_fill_all_from_scale->setColour(
         juce::TextButton::buttonColourId,
         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(button_fill_target_from_scale = new juce::TextButton(juce::String()));
+    button_fill_target_from_scale = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*button_fill_target_from_scale);
     button_fill_target_from_scale->setButtonText(TRANS("Fill Target Chord randomly from Scale"));
     button_fill_target_from_scale->addListener(this);
     button_fill_target_from_scale->setColour(
         juce::TextButton::buttonColourId,
         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(combo_scales = new juce::ComboBox("new combo box"));
+    combo_scales = std::make_unique<juce::ComboBox>("new combo box");
+    addAndMakeVisible(*combo_scales);
     combo_scales->setEditableText(false);
     combo_scales->setJustificationType(juce::Justification::centredLeft);
     combo_scales->setTextWhenNothingSelected(juce::String());
     combo_scales->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     combo_scales->addListener(this);
 
-    addAndMakeVisible(toolbar = new UiEditorToolbar(this));
+    toolbar = std::make_unique<UiEditorToolbar>(this);
+    addAndMakeVisible(*toolbar);
 
-    addAndMakeVisible(button_info = new juce::TextButton(juce::String()));
+    button_info = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*button_info);
     button_info->setButtonText(TRANS("?"));
     button_info->addListener(this);
 
     //[UserPreSize]
-    _ui_string_offset_0.add(chord_offset_0_0);
-    _ui_string_offset_0.add(chord_offset_0_1);
-    _ui_string_offset_0.add(chord_offset_0_2);
-    _ui_string_offset_0.add(chord_offset_0_3);
+    _ui_string_offset_0.add(chord_offset_0_0.get());
+    _ui_string_offset_0.add(chord_offset_0_1.get());
+    _ui_string_offset_0.add(chord_offset_0_2.get());
+    _ui_string_offset_0.add(chord_offset_0_3.get());
     _ui_chords.add(_ui_string_offset_0);
-    _ui_string_offset_1.add(chord_offset_1_0);
-    _ui_string_offset_1.add(chord_offset_1_1);
-    _ui_string_offset_1.add(chord_offset_1_2);
-    _ui_string_offset_1.add(chord_offset_1_3);
+    _ui_string_offset_1.add(chord_offset_1_0.get());
+    _ui_string_offset_1.add(chord_offset_1_1.get());
+    _ui_string_offset_1.add(chord_offset_1_2.get());
+    _ui_string_offset_1.add(chord_offset_1_3.get());
     _ui_chords.add(_ui_string_offset_1);
-    _ui_string_offset_2.add(chord_offset_2_0);
-    _ui_string_offset_2.add(chord_offset_2_1);
-    _ui_string_offset_2.add(chord_offset_2_2);
-    _ui_string_offset_2.add(chord_offset_2_3);
+    _ui_string_offset_2.add(chord_offset_2_0.get());
+    _ui_string_offset_2.add(chord_offset_2_1.get());
+    _ui_string_offset_2.add(chord_offset_2_2.get());
+    _ui_string_offset_2.add(chord_offset_2_3.get());
     _ui_chords.add(_ui_string_offset_2);
-    _ui_string_offset_3.add(chord_offset_3_0);
-    _ui_string_offset_3.add(chord_offset_3_1);
-    _ui_string_offset_3.add(chord_offset_3_2);
-    _ui_string_offset_3.add(chord_offset_3_3);
+    _ui_string_offset_3.add(chord_offset_3_0.get());
+    _ui_string_offset_3.add(chord_offset_3_1.get());
+    _ui_string_offset_3.add(chord_offset_3_2.get());
+    _ui_string_offset_3.add(chord_offset_3_3.get());
     _ui_chords.add(_ui_string_offset_3);
-    _ui_string_offset_4.add(chord_offset_4_0);
-    _ui_string_offset_4.add(chord_offset_4_1);
-    _ui_string_offset_4.add(chord_offset_4_2);
-    _ui_string_offset_4.add(chord_offset_4_3);
+    _ui_string_offset_4.add(chord_offset_4_0.get());
+    _ui_string_offset_4.add(chord_offset_4_1.get());
+    _ui_string_offset_4.add(chord_offset_4_2.get());
+    _ui_string_offset_4.add(chord_offset_4_3.get());
     _ui_chords.add(_ui_string_offset_4);
-    _ui_string_offset_5.add(chord_offset_5_0);
-    _ui_string_offset_5.add(chord_offset_5_1);
-    _ui_string_offset_5.add(chord_offset_5_2);
-    _ui_string_offset_5.add(chord_offset_5_3);
+    _ui_string_offset_5.add(chord_offset_5_0.get());
+    _ui_string_offset_5.add(chord_offset_5_1.get());
+    _ui_string_offset_5.add(chord_offset_5_2.get());
+    _ui_string_offset_5.add(chord_offset_5_3.get());
     _ui_chords.add(_ui_string_offset_5);
 
-    _ui_chord_offset.add(chord_offset_0);
-    _ui_chord_offset.add(chord_offset_1);
-    _ui_chord_offset.add(chord_offset_2);
-    _ui_chord_offset.add(chord_offset_3);
-    _ui_chord_offset.add(chord_offset_4);
-    _ui_chord_offset.add(chord_offset_5);
+    _ui_chord_offset.add(chord_offset_0.get());
+    _ui_chord_offset.add(chord_offset_1.get());
+    _ui_chord_offset.add(chord_offset_2.get());
+    _ui_chord_offset.add(chord_offset_3.get());
+    _ui_chord_offset.add(chord_offset_4.get());
+    _ui_chord_offset.add(chord_offset_5.get());
 
     juce::Array<juce::String> names = ScalesList::get();
     for (int i = 0; i != names.size(); ++i)
@@ -990,134 +1058,134 @@ void UiEditorChords::buttonClicked(juce::Button *buttonThatWasClicked)
     Chord &target_chord = target_chord_set.chord(_selected_preset_chord);
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == tb_drum_view)
+    if (buttonThatWasClicked == tb_drum_view.get())
     {
         //[UserButtonCode_tb_drum_view] -- add your button handler code here..
         _app_instance_store->editor_config.current_chord_view =
             buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_tb_drum_view]
     }
-    else if (buttonThatWasClicked == target_chord_0)
+    else if (buttonThatWasClicked == target_chord_0.get())
     {
         //[UserButtonCode_target_chord_0] -- add your button handler code here..
         _selected_preset_chord = 0;
         //[/UserButtonCode_target_chord_0]
     }
-    else if (buttonThatWasClicked == target_chord_1)
+    else if (buttonThatWasClicked == target_chord_1.get())
     {
         //[UserButtonCode_target_chord_1] -- add your button handler code here..
         _selected_preset_chord = 1;
         //[/UserButtonCode_target_chord_1]
     }
-    else if (buttonThatWasClicked == target_chord_2)
+    else if (buttonThatWasClicked == target_chord_2.get())
     {
         //[UserButtonCode_target_chord_2] -- add your button handler code here..
         _selected_preset_chord = 2;
         //[/UserButtonCode_target_chord_2]
     }
-    else if (buttonThatWasClicked == target_chord_3)
+    else if (buttonThatWasClicked == target_chord_3.get())
     {
         //[UserButtonCode_target_chord_3] -- add your button handler code here..
         _selected_preset_chord = 3;
         //[/UserButtonCode_target_chord_3]
     }
-    else if (buttonThatWasClicked == target_chord_4)
+    else if (buttonThatWasClicked == target_chord_4.get())
     {
         //[UserButtonCode_target_chord_4] -- add your button handler code here..
         _selected_preset_chord = 4;
         //[/UserButtonCode_target_chord_4]
     }
-    else if (buttonThatWasClicked == target_chord_5)
+    else if (buttonThatWasClicked == target_chord_5.get())
     {
         //[UserButtonCode_target_chord_5] -- add your button handler code here..
         _selected_preset_chord = 5;
         //[/UserButtonCode_target_chord_5]
     }
-    else if (buttonThatWasClicked == preset_0)
+    else if (buttonThatWasClicked == preset_0.get())
     {
         //[UserButtonCode_preset_0] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::A_MAJOR));
         //[/UserButtonCode_preset_0]
     }
-    else if (buttonThatWasClicked == preset_1)
+    else if (buttonThatWasClicked == preset_1.get())
     {
         //[UserButtonCode_preset_1] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::B_MAJOR));
         //[/UserButtonCode_preset_1]
     }
-    else if (buttonThatWasClicked == preset_2)
+    else if (buttonThatWasClicked == preset_2.get())
     {
         //[UserButtonCode_preset_2] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::C_MAJOR));
         //[/UserButtonCode_preset_2]
     }
-    else if (buttonThatWasClicked == preset_3)
+    else if (buttonThatWasClicked == preset_3.get())
     {
         //[UserButtonCode_preset_3] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::D_MAJOR));
         //[/UserButtonCode_preset_3]
     }
-    else if (buttonThatWasClicked == preset_4)
+    else if (buttonThatWasClicked == preset_4.get())
     {
         //[UserButtonCode_preset_4] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::E_MAJOR));
         //[/UserButtonCode_preset_4]
     }
-    else if (buttonThatWasClicked == preset_5)
+    else if (buttonThatWasClicked == preset_5.get())
     {
         //[UserButtonCode_preset_5] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::F_MAJOR));
         //[/UserButtonCode_preset_5]
     }
-    else if (buttonThatWasClicked == preset_6)
+    else if (buttonThatWasClicked == preset_6.get())
     {
         //[UserButtonCode_preset_6] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::G_MAJOR));
         //[/UserButtonCode_preset_6]
     }
-    else if (buttonThatWasClicked == preset_7)
+    else if (buttonThatWasClicked == preset_7.get())
     {
         //[UserButtonCode_preset_7] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::A_MINOR));
         //[/UserButtonCode_preset_7]
     }
-    else if (buttonThatWasClicked == preset_8)
+    else if (buttonThatWasClicked == preset_8.get())
     {
         //[UserButtonCode_preset_8] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::B_MINOR));
         //[/UserButtonCode_preset_8]
     }
-    else if (buttonThatWasClicked == preset_9)
+    else if (buttonThatWasClicked == preset_9.get())
     {
         //[UserButtonCode_preset_9] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::C_MINOR));
         //[/UserButtonCode_preset_9]
     }
-    else if (buttonThatWasClicked == preset_10)
+    else if (buttonThatWasClicked == preset_10.get())
     {
         //[UserButtonCode_preset_10] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::D_MINOR));
         //[/UserButtonCode_preset_10]
     }
-    else if (buttonThatWasClicked == preset_11)
+    else if (buttonThatWasClicked == preset_11.get())
     {
         //[UserButtonCode_preset_11] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::E_MINOR));
         //[/UserButtonCode_preset_11]
     }
-    else if (buttonThatWasClicked == preset_12)
+    else if (buttonThatWasClicked == preset_12.get())
     {
         //[UserButtonCode_preset_12] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::F_MINOR));
         //[/UserButtonCode_preset_12]
     }
-    else if (buttonThatWasClicked == preset_13)
+    else if (buttonThatWasClicked == preset_13.get())
     {
         //[UserButtonCode_preset_13] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::G_MINOR));
         //[/UserButtonCode_preset_13]
     }
-    else if (buttonThatWasClicked == button_fill_all_from_scale)
+    else if (buttonThatWasClicked == button_fill_all_from_scale.get())
     {
         //[UserButtonCode_button_fill_all_from_scale] -- add your button handler code here..
         juce::Array<std::int8_t> offsets;
@@ -1130,7 +1198,7 @@ void UiEditorChords::buttonClicked(juce::Button *buttonThatWasClicked)
         }
         //[/UserButtonCode_button_fill_all_from_scale]
     }
-    else if (buttonThatWasClicked == button_fill_target_from_scale)
+    else if (buttonThatWasClicked == button_fill_target_from_scale.get())
     {
         //[UserButtonCode_button_fill_target_from_scale] -- add your button handler code here..
         if (combo_scales->getSelectedItemIndex() != -1)
@@ -1141,7 +1209,7 @@ void UiEditorChords::buttonClicked(juce::Button *buttonThatWasClicked)
         }
         //[/UserButtonCode_button_fill_target_from_scale]
     }
-    else if (buttonThatWasClicked == button_info)
+    else if (buttonThatWasClicked == button_info.get())
     {
         //[UserButtonCode_button_info] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
@@ -1161,7 +1229,7 @@ void UiEditorChords::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]
 
-    if (comboBoxThatHasChanged == combo_scales)
+    if (comboBoxThatHasChanged == combo_scales.get())
     {
         //[UserComboBoxCode_combo_scales] -- add your combo box handling code here..
         //[/UserComboBoxCode_combo_scales]

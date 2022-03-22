@@ -143,11 +143,11 @@ class GstepAudioProcessorEditor : public juce::AudioProcessorEditor,
     UiEditorInputPopup *input_popup;
 
   public:
-    juce::ScopedPointer<UiEditorRightMainwindows> _editor_right_mainwindow;
+    std::unique_ptr<UiEditorRightMainwindows> _editor_right_mainwindow;
 
   private:
-    juce::ScopedPointer<MenuBarRight> _menue_bar_right;
-    juce::ScopedPointer<MenuBarLeft> _menue_bar_left;
+    std::unique_ptr<MenuBarRight> _menue_bar_right;
+    std::unique_ptr<MenuBarLeft> _menue_bar_left;
 
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
@@ -180,7 +180,7 @@ class GstepAudioProcessorEditor : public juce::AudioProcessorEditor,
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
 
-    juce::ScopedPointer<juce::ResizableCornerComponent> resizer;
+    std::unique_ptr<juce::ResizableCornerComponent> resizer;
 
     /** *************************************************************** */
   public:

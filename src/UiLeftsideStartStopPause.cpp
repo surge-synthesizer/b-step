@@ -40,11 +40,14 @@ void UiLeftsideStartStopPause::refresh_ui(juce::Array<juce::Component *> &compon
 //==============================================================================
 UiLeftsideStartStopPause::UiLeftsideStartStopPause()
 {
-    addAndMakeVisible(button_play = new ModelBase());
+    button_play = std::make_unique<ModelBase>();
+    addAndMakeVisible(*button_play);
 
-    addAndMakeVisible(button_pause = new ModelBase());
+    button_pause = std::make_unique<ModelBase>();
+    addAndMakeVisible(*button_pause);
 
-    addAndMakeVisible(button_stop = new ModelBase());
+    button_stop = std::make_unique<ModelBase>();
+    addAndMakeVisible(*button_stop);
 
     //[UserPreSize]
     _style = nullptr;

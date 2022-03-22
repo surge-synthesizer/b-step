@@ -52,9 +52,9 @@ void MenuBarLeft::set_user_mode()
         button_layer_6->setVisible(false);
         button_layer_7->setVisible(false);
 
-        drawable1 = juce::Drawable::createFromImageData(_1starson_svg, _1starson_svgSize).release();
-        drawable2 = juce::Drawable::createFromImageData(_3stars_svg, _3stars_svgSize).release();
-        drawable3 = juce::Drawable::createFromImageData(_5stars_svg, _5stars_svgSize).release();
+        drawable1 = juce::Drawable::createFromImageData(_1starson_svg, _1starson_svgSize);
+        drawable2 = juce::Drawable::createFromImageData(_3stars_svg, _3stars_svgSize);
+        drawable3 = juce::Drawable::createFromImageData(_5stars_svg, _5stars_svgSize);
 
         if (_app_instance_store->editor_config.current_layer > 1)
             _main_window->set_layer_controllers_page(0);
@@ -69,9 +69,9 @@ void MenuBarLeft::set_user_mode()
         button_layer_6->setVisible(false);
         button_layer_7->setVisible(false);
 
-        drawable1 = juce::Drawable::createFromImageData(_1stars_svg, _1stars_svgSize).release();
-        drawable2 = juce::Drawable::createFromImageData(_3starson_svg, _3starson_svgSize).release();
-        drawable3 = juce::Drawable::createFromImageData(_5stars_svg, _5stars_svgSize).release();
+        drawable1 = juce::Drawable::createFromImageData(_1stars_svg, _1stars_svgSize);
+        drawable2 = juce::Drawable::createFromImageData(_3starson_svg, _3starson_svgSize);
+        drawable3 = juce::Drawable::createFromImageData(_5stars_svg, _5stars_svgSize);
 
         if (_app_instance_store->editor_config.current_layer > 3)
             _main_window->set_layer_controllers_page(3);
@@ -86,9 +86,9 @@ void MenuBarLeft::set_user_mode()
         button_layer_6->setVisible(true);
         button_layer_7->setVisible(true);
 
-        drawable1 = juce::Drawable::createFromImageData(_1stars_svg, _1stars_svgSize).release();
-        drawable2 = juce::Drawable::createFromImageData(_3stars_svg, _3stars_svgSize).release();
-        drawable3 = juce::Drawable::createFromImageData(_5starson_svg, _5starson_svgSize).release();
+        drawable1 = juce::Drawable::createFromImageData(_1stars_svg, _1stars_svgSize);
+        drawable2 = juce::Drawable::createFromImageData(_3stars_svg, _3stars_svgSize);
+        drawable3 = juce::Drawable::createFromImageData(_5starson_svg, _5starson_svgSize);
     }
 
     repaint(0, 0, getWidth(), getHeight());
@@ -100,44 +100,54 @@ MenuBarLeft::MenuBarLeft(AppInstanceStore *const app_instance_store_,
                          GstepAudioProcessorEditor *const main_window_)
     : _app_instance_store(app_instance_store_), _main_window(main_window_)
 {
-    addAndMakeVisible(button_layer_1 = new ModelBase());
+    button_layer_1 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*button_layer_1);
 
-    addAndMakeVisible(button_layer_2 = new ModelBase());
+    button_layer_2 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*button_layer_2);
 
-    addAndMakeVisible(button_layer_3 = new ModelBase());
+    button_layer_3 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*button_layer_3);
 
-    addAndMakeVisible(button_layer_4 = new ModelBase());
+    button_layer_4 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*button_layer_4);
 
-    addAndMakeVisible(button_layer_5 = new ModelBase());
+    button_layer_5 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*button_layer_5);
 
-    addAndMakeVisible(button_layer_6 = new ModelBase());
+    button_layer_6 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*button_layer_6);
 
-    addAndMakeVisible(button_layer_7 = new ModelBase());
+    button_layer_7 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*button_layer_7);
 
-    addAndMakeVisible(pb_lite_mode = new juce::ImageButton(juce::String()));
+    pb_lite_mode = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*pb_lite_mode);
     pb_lite_mode->setButtonText("");
     pb_lite_mode->addListener(this);
 
     pb_lite_mode->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
                             juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
                             juce::Colour(0x00000000));
-    addAndMakeVisible(pb_semi_mode = new juce::ImageButton(juce::String()));
+    pb_semi_mode = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*pb_semi_mode);
     pb_semi_mode->setButtonText("");
     pb_semi_mode->addListener(this);
 
     pb_semi_mode->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
                             juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
                             juce::Colour(0x00000000));
-    addAndMakeVisible(pb_pro_mode = new juce::ImageButton(juce::String()));
+    pb_pro_mode = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*pb_pro_mode);
     pb_pro_mode->setButtonText("");
     pb_pro_mode->addListener(this);
 
     pb_pro_mode->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
                            juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
                            juce::Colour(0x00000000));
-    drawable1 = juce::Drawable::createFromImageData(_1stars_svg, _1stars_svgSize).release();
-    drawable2 = juce::Drawable::createFromImageData(_3stars_svg, _3stars_svgSize).release();
-    drawable3 = juce::Drawable::createFromImageData(_5stars_svg, _5stars_svgSize).release();
+    drawable1 = juce::Drawable::createFromImageData(_1stars_svg, _1stars_svgSize);
+    drawable2 = juce::Drawable::createFromImageData(_3stars_svg, _3stars_svgSize);
+    drawable3 = juce::Drawable::createFromImageData(_5stars_svg, _5stars_svgSize);
 
     //[UserPreSize]
     setOpaque(true);
@@ -260,21 +270,21 @@ void MenuBarLeft::buttonClicked(juce::Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == pb_lite_mode)
+    if (buttonThatWasClicked == pb_lite_mode.get())
     {
         //[UserButtonCode_pb_lite_mode] -- add your button handler code here..
         _app_instance_store->editor_config.user_mode = 0;
         set_user_mode();
         //[/UserButtonCode_pb_lite_mode]
     }
-    else if (buttonThatWasClicked == pb_semi_mode)
+    else if (buttonThatWasClicked == pb_semi_mode.get())
     {
         //[UserButtonCode_pb_semi_mode] -- add your button handler code here..
         _app_instance_store->editor_config.user_mode = 1;
         set_user_mode();
         //[/UserButtonCode_pb_semi_mode]
     }
-    else if (buttonThatWasClicked == pb_pro_mode)
+    else if (buttonThatWasClicked == pb_pro_mode.get())
     {
         //[UserButtonCode_pb_pro_mode] -- add your button handler code here..
         _app_instance_store->editor_config.user_mode = 2;

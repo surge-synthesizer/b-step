@@ -28,7 +28,8 @@
 //==============================================================================
 NewComponent::NewComponent()
 {
-    addAndMakeVisible(slider = new juce::Slider("new slider"));
+    slider = std::make_unique<juce::Slider>("new slider");
+    addAndMakeVisible(*slider);
     slider->setRange(0, 10, 0);
     slider->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     slider->setTextBoxStyle(juce::Slider::NoTextBox, false, 80, 20);
@@ -38,36 +39,42 @@ NewComponent::NewComponent()
     slider->setColour(juce::Slider::textBoxTextColourId, juce::Colours::white);
     slider->addListener(this);
 
-    addAndMakeVisible(comboBox = new juce::ComboBox("new combo box"));
+    comboBox = std::make_unique<juce::ComboBox>("new combo box");
+    addAndMakeVisible(*comboBox);
     comboBox->setEditableText(false);
     comboBox->setJustificationType(juce::Justification::centredLeft);
     comboBox->setTextWhenNothingSelected(TRANS("target"));
     comboBox->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     comboBox->addListener(this);
 
-    addAndMakeVisible(comboBox2 = new juce::ComboBox("new combo box"));
+    comboBox2 = std::make_unique<juce::ComboBox>("new combo box");
+    addAndMakeVisible(*comboBox2);
     comboBox2->setEditableText(false);
     comboBox2->setJustificationType(juce::Justification::centredLeft);
     comboBox2->setTextWhenNothingSelected(TRANS("button or rotary"));
     comboBox2->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     comboBox2->addListener(this);
 
-    addAndMakeVisible(comboBox3 = new juce::ComboBox("new combo box"));
+    comboBox3 = std::make_unique<juce::ComboBox>("new combo box");
+    addAndMakeVisible(*comboBox3);
     comboBox3->setEditableText(false);
     comboBox3->setJustificationType(juce::Justification::centredLeft);
     comboBox3->setTextWhenNothingSelected(TRANS("feedback def file"));
     comboBox3->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     comboBox3->addListener(this);
 
-    addAndMakeVisible(textButton = new juce::TextButton(""));
+    textButton = std::make_unique<juce::TextButton>("");
+    addAndMakeVisible(*textButton);
     textButton->setButtonText(TRANS("copy"));
     textButton->addListener(this);
 
-    addAndMakeVisible(textButton2 = new juce::TextButton(""));
+    textButton2 = std::make_unique<juce::TextButton>("");
+    addAndMakeVisible(*textButton2);
     textButton2->setButtonText(TRANS("paste"));
     textButton2->addListener(this);
 
-    addAndMakeVisible(comboBox4 = new juce::ComboBox("new combo box"));
+    comboBox4 = std::make_unique<juce::ComboBox>("new combo box");
+    addAndMakeVisible(*comboBox4);
     comboBox4->setEditableText(false);
     comboBox4->setJustificationType(juce::Justification::centredLeft);
     comboBox4->setTextWhenNothingSelected(TRANS("id"));
@@ -130,7 +137,7 @@ void NewComponent::sliderValueChanged(juce::Slider *sliderThatWasMoved)
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
 
-    if (sliderThatWasMoved == slider)
+    if (sliderThatWasMoved == slider.get())
     {
         //[UserSliderCode_slider] -- add your slider handling code here..
         //[/UserSliderCode_slider]
@@ -145,22 +152,22 @@ void NewComponent::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]
 
-    if (comboBoxThatHasChanged == comboBox)
+    if (comboBoxThatHasChanged == comboBox.get())
     {
         //[UserComboBoxCode_comboBox] -- add your combo box handling code here..
         //[/UserComboBoxCode_comboBox]
     }
-    else if (comboBoxThatHasChanged == comboBox2)
+    else if (comboBoxThatHasChanged == comboBox2.get())
     {
         //[UserComboBoxCode_comboBox2] -- add your combo box handling code here..
         //[/UserComboBoxCode_comboBox2]
     }
-    else if (comboBoxThatHasChanged == comboBox3)
+    else if (comboBoxThatHasChanged == comboBox3.get())
     {
         //[UserComboBoxCode_comboBox3] -- add your combo box handling code here..
         //[/UserComboBoxCode_comboBox3]
     }
-    else if (comboBoxThatHasChanged == comboBox4)
+    else if (comboBoxThatHasChanged == comboBox4.get())
     {
         //[UserComboBoxCode_comboBox4] -- add your combo box handling code here..
         //[/UserComboBoxCode_comboBox4]
@@ -175,12 +182,12 @@ void NewComponent::buttonClicked(juce::Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == textButton)
+    if (buttonThatWasClicked == textButton.get())
     {
         //[UserButtonCode_textButton] -- add your button handler code here..
         //[/UserButtonCode_textButton]
     }
-    else if (buttonThatWasClicked == textButton2)
+    else if (buttonThatWasClicked == textButton2.get())
     {
         //[UserButtonCode_textButton2] -- add your button handler code here..
         //[/UserButtonCode_textButton2]

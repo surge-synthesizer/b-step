@@ -168,7 +168,7 @@ class ControllerStepLight : public MONO_UIButtonController
     {
         if (is_step_muted_on_any_way())
         {
-            return _app_instance_store->style_step_area_skip;
+            return _app_instance_store->style_step_area_skip.get();
         }
 
         const Bar &running_bar = selected_barstep.get_running_bar();
@@ -176,15 +176,15 @@ class ControllerStepLight : public MONO_UIButtonController
         {
             if (running_barstep.skip_repeat)
             {
-                return _app_instance_store->style_step_area_skip;
+                return _app_instance_store->style_step_area_skip.get();
             }
         }
         if (selected_barstep.get_running_repeat_as_count_down() > 0)
         {
             if (running_barstep.dont_roll_repeat)
-                return _app_instance_store->style_step_area_duration;
+                return _app_instance_store->style_step_area_duration.get();
             else
-                return _app_instance_store->style_step_area_run;
+                return _app_instance_store->style_step_area_run.get();
         }
 
         return nullptr;
@@ -419,28 +419,28 @@ class ControllerBarSelect : public MONO_UIButtonController
     {
         if (is_bar_muted_on_any_way())
         {
-            return _app_instance_store->style_bar_area_skip;
+            return _app_instance_store->style_bar_area_skip.get();
         }
 
         if (bar.is_running_bar())
         {
             if (bar.get_running_bar_repeat() > 1)
-                return _app_instance_store->style_bar_area_time;
+                return _app_instance_store->style_bar_area_time.get();
         }
 
         if (bar.is_probabliy_next_bar())
-            return _app_instance_store->style_bar_area_time;
+            return _app_instance_store->style_bar_area_time.get();
 
         if (_app_instance_store->sequencer.is_unprocessed_bar_reset(bar.get()))
         {
             if (bar.is_running_bar())
-                return _app_instance_store->style_bar_area_time;
+                return _app_instance_store->style_bar_area_time.get();
             else
-                return _app_instance_store->style_bar_area_run;
+                return _app_instance_store->style_bar_area_run.get();
         }
 
         if (Sequencer::is_valid_for_auto_chain(bar.get()))
-            return _app_instance_store->style_bar_area_mute;
+            return _app_instance_store->style_bar_area_mute.get();
 
         return nullptr;
     }
@@ -769,15 +769,15 @@ class ControllerBarSolo : public MONO_UIButtonController
         switch (bar.get().group)
         {
         case 0:
-            return _app_instance_store->style_bar_area_run;
+            return _app_instance_store->style_bar_area_run.get();
         case 1:
-            return _app_instance_store->style_bar_area_chord;
+            return _app_instance_store->style_bar_area_chord.get();
         case 2:
-            return _app_instance_store->style_bar_area_octave;
+            return _app_instance_store->style_bar_area_octave.get();
         case 3:
-            return _app_instance_store->style_bar_area_time;
+            return _app_instance_store->style_bar_area_time.get();
         default:
-            return _app_instance_store->style_bar_area_run;
+            return _app_instance_store->style_bar_area_run.get();
         }
     }
 

@@ -152,21 +152,21 @@ MenuBarLeft::MenuBarLeft(AppInstanceStore *const app_instance_store_,
     //[UserPreSize]
     setOpaque(true);
 
-    button_layer_1->set_controller(_app_instance_store->controller.pattern.layers_1);
-    button_layer_2->set_controller(_app_instance_store->controller.pattern.layers_2);
-    button_layer_3->set_controller(_app_instance_store->controller.pattern.layers_3);
-    button_layer_4->set_controller(_app_instance_store->controller.pattern.layers_4);
-    button_layer_5->set_controller(_app_instance_store->controller.pattern.layers_5);
-    button_layer_6->set_controller(_app_instance_store->controller.pattern.layers_6);
-    button_layer_7->set_controller(_app_instance_store->controller.pattern.layers_7);
+    button_layer_1->set_controller(_app_instance_store->controller.pattern.layers_1.get());
+    button_layer_2->set_controller(_app_instance_store->controller.pattern.layers_2.get());
+    button_layer_3->set_controller(_app_instance_store->controller.pattern.layers_3.get());
+    button_layer_4->set_controller(_app_instance_store->controller.pattern.layers_4.get());
+    button_layer_5->set_controller(_app_instance_store->controller.pattern.layers_5.get());
+    button_layer_6->set_controller(_app_instance_store->controller.pattern.layers_6.get());
+    button_layer_7->set_controller(_app_instance_store->controller.pattern.layers_7.get());
 
-    button_layer_1->set_style(_app_instance_store->style_menu_area_chord);
-    button_layer_2->set_style(_app_instance_store->style_menu_area_octave);
-    button_layer_3->set_style(_app_instance_store->style_menu_area_mute);
-    button_layer_4->set_style(_app_instance_store->style_menu_area_run);
-    button_layer_5->set_style(_app_instance_store->style_menu_area_duration);
-    button_layer_6->set_style(_app_instance_store->style_menu_area_duration);
-    button_layer_7->set_style(_app_instance_store->style_menu_area_velocity);
+    button_layer_1->set_style(_app_instance_store->style_menu_area_chord.get());
+    button_layer_2->set_style(_app_instance_store->style_menu_area_octave.get());
+    button_layer_3->set_style(_app_instance_store->style_menu_area_mute.get());
+    button_layer_4->set_style(_app_instance_store->style_menu_area_run.get());
+    button_layer_5->set_style(_app_instance_store->style_menu_area_duration.get());
+    button_layer_6->set_style(_app_instance_store->style_menu_area_duration.get());
+    button_layer_7->set_style(_app_instance_store->style_menu_area_velocity.get());
 
     set_user_mode();
 

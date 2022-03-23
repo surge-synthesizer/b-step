@@ -60,8 +60,8 @@ class UiChordEditorChordOffset : public juce::Component
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<UiLabel> label;
-    juce::ScopedPointer<ModelBase> slider;
+    std::unique_ptr<UiLabel> label;
+    std::unique_ptr<ModelBase> slider;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiChordEditorChordOffset)

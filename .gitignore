@@ -85,7 +85,8 @@ buildmac/
 buildwin/
 buildxt/
 build-arm/
-build_lv2
+build_lv2/
+build_vst2/
 buildiwyu/
 cmake-build-*/
 bwd/

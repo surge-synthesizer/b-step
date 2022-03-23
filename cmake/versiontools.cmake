@@ -55,7 +55,7 @@ endif ()
 
 cmake_host_system_information(RESULT BSTEP_BUILD_FQDN QUERY FQDN)
 
-message(STATUS "Setting up Shortcircuit XT version:")
+message(STATUS "Setting up B-Step version:")
 message(STATUS "  Git hash is ${GIT_COMMIT_HASH} and branch is ${GIT_BRANCH}")
 message(STATUS "  Build host is ${BSTEP_BUILD_FQDN}")
 message(STATUS "  Build architecture is ${BSTEP_BUILD_ARCH}")

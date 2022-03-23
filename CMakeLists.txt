@@ -7,10 +7,34 @@ project("B-Step" VERSION 2.1.0 LANGUAGES C CXX ASM)
 option(BSTEP_COPY_PLUGIN_AFTER_BUILD "Copy JUCE Plugins after built" OFF)
 option(BSTEP_RELIABLE_VERSION_INFO "Update version info on every build (off: generate only at configuration time)" ON)
 
+set(BSTEP_JUCE_PATH "${CMAKE_SOURCE_DIR}/libs/JUCE" CACHE STRING "Path to JUCE library source tree")
+add_subdirectory(${BSTEP_JUCE_PATH} ${CMAKE_BINARY_DIR}/JUCE EXCLUDE_FROM_ALL)
 
-add_subdirectory(libs/JUCE)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_CXX_STANDARD 17)
+set(BSTEP_JUCE_FORMATS VST3 Standalone)
+
+if (APPLE)
+  list(APPEND BSTEP_JUCE_FORMATS AU)
+endif()
+
+if(DEFINED ENV{VST2SDK_DIR})
+  file(TO_CMAKE_PATH "$ENV{VST2SDK_DIR}" JUCE_VST2_DIR)
+  juce_set_vst2_sdk_path(${JUCE_VST2_DIR})
+  list(APPEND BSTEP_JUCE_FORMATS VST)
+  message(STATUS "VST2 SDK path is $ENV{VST2SDK_DIR}")
+  # VST2 headers are invalid UTF-8
+  add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/wd4828>)
+endif()
+
+if(JUCE_SUPPORTS_LV2)
+  list(APPEND BSTEP_JUCE_FORMATS LV2)
+  message(STATUS "Including JUCE LV2 support. You will need the LV2 fork of JUCE!")
+  message(STATUS "Turning off deprecation warning to error, since JUCE LV2 uses deprecated APIs")
+  add_compile_options(-Wno-error=deprecated-declarations)
+endif()
+
+message(STATUS "Building B-Step in formats: ${BSTEP_JUCE_FORMATS}" )
 
 juce_add_plugin(B-Step
         VERSION "2.1"
@@ -20,10 +44,7 @@ juce_add_plugin(B-Step
         COMPANY_COPYRIGHT "Copyright Thomas Arndt and Authors in Github, 2010-2021"
         COMPANY_WEBSITE "http://surge-synth-team.org"
 
-        FORMATS
-        "VST3"
-        "AU"
-        "Standalone"
+        FORMATS ${BSTEP_JUCE_FORMATS}
 
         NEEDS_MIDI_INPUT TRUE
         NEEDS_MIDI_OUTPUT TRUE

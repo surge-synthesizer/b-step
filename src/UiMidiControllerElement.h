@@ -58,13 +58,13 @@ class NewComponent : public juce::Component,
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::Slider> slider;
-    juce::ScopedPointer<juce::ComboBox> comboBox;
-    juce::ScopedPointer<juce::ComboBox> comboBox2;
-    juce::ScopedPointer<juce::ComboBox> comboBox3;
-    juce::ScopedPointer<juce::TextButton> textButton;
-    juce::ScopedPointer<juce::TextButton> textButton2;
-    juce::ScopedPointer<juce::ComboBox> comboBox4;
+    std::unique_ptr<juce::Slider> slider;
+    std::unique_ptr<juce::ComboBox> comboBox;
+    std::unique_ptr<juce::ComboBox> comboBox2;
+    std::unique_ptr<juce::ComboBox> comboBox3;
+    std::unique_ptr<juce::TextButton> textButton;
+    std::unique_ptr<juce::TextButton> textButton2;
+    std::unique_ptr<juce::ComboBox> comboBox4;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(NewComponent)

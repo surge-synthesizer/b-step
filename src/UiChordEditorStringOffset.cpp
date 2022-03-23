@@ -131,7 +131,8 @@ UiChordEditorStringOffset::UiChordEditorStringOffset(AppInstanceStore *const app
                                                      std::uint8_t barstring_id_)
     : _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(label = new juce::Label(juce::String(), juce::String()));
+    label = std::make_unique<juce::Label>(juce::String(), juce::String());
+    addAndMakeVisible(*label);
     label->setFont(juce::Font(15.00f, juce::Font::plain));
     label->setJustificationType(juce::Justification::centredLeft);
     label->setEditable(false, false, false);
@@ -140,10 +141,10 @@ UiChordEditorStringOffset::UiChordEditorStringOffset(AppInstanceStore *const app
     label->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(slider =
-                          new ModelBase(new ControllerStringOffset(_app_instance_store, chord_id_,
-                                                                   barstring_id_, label),
-                                        _app_instance_store->style_popup_editor_chord));
+    slider = std::make_unique<ModelBase>(
+        new ControllerStringOffset(_app_instance_store, chord_id_, barstring_id_, label.get()),
+        _app_instance_store->style_popup_editor_chord.get());
+    addAndMakeVisible(*slider);
 
     //[UserPreSize]
     setOpaque(true);

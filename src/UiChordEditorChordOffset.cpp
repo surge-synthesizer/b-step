@@ -89,11 +89,13 @@ UiChordEditorChordOffset::UiChordEditorChordOffset(AppInstanceStore *const app_i
                                                    std::uint8_t chord_id_)
     : _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(label = new UiLabel("E", _app_instance_store->style_popup_editor_octave));
+    label = std::make_unique<UiLabel>("E", _app_instance_store->style_popup_editor_octave.get());
+    addAndMakeVisible(*label);
 
-    addAndMakeVisible(
-        slider = new ModelBase(new ControllerChordOffset(_app_instance_store, chord_id_, label),
-                               _app_instance_store->style_popup_editor_octave));
+    slider = std::make_unique<ModelBase>(
+        new ControllerChordOffset(_app_instance_store, chord_id_, label.get()),
+        _app_instance_store->style_popup_editor_octave.get());
+    addAndMakeVisible(*slider);
 
     //[UserPreSize]
     last_refreshed_offset_value = 99;

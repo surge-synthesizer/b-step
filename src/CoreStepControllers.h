@@ -69,7 +69,7 @@ class ControllerStepMute : public MONO_UIButtonController
 
     AppStyle *get_custom_label_style() const override
     {
-        return _app_instance_store->style_step_area_octave;
+        return _app_instance_store->style_step_area_octave.get();
     }
 
     std::uint32_t get_current_color() const override

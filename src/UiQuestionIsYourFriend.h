@@ -61,10 +61,10 @@ class UiQuestionIsYourFriend : public UiEditor, public juce::Button::Listener
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::Label> label;
-    juce::ScopedPointer<juce::TextButton> save;
-    juce::ScopedPointer<juce::TextEditor> textEditor;
-    juce::ScopedPointer<juce::Drawable> drawable1;
+    std::unique_ptr<juce::Label> label;
+    std::unique_ptr<juce::TextButton> save;
+    std::unique_ptr<juce::TextEditor> textEditor;
+    std::unique_ptr<juce::Drawable> drawable1;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiQuestionIsYourFriend)

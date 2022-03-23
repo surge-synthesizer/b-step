@@ -128,50 +128,50 @@ AppInstanceStore::AppInstanceStore(GstepAudioProcessor *const audio_processor_)
 
       do_you_know(*DoYouKnow::getInstance()),
 
-      color_theme(new ColorTheme()), style_step_area(new StyleStepArea(color_theme)),
-      style_step_area_mute(new StyleStepAreaMute(color_theme)),
-      style_step_area_octave(new StyleStepAreaOctave(color_theme)),
-      style_step_area_chord(new StyleStepAreaChord(color_theme)),
-      style_step_area_duration(new StyleStepAreaDuration(color_theme)),
-      style_step_area_velocity(new StyleStepAreaVelocity(color_theme)),
-      style_step_area_run(new StyleStepAreaRun(color_theme)),
-      style_step_area_skip(new StyleStepAreaSkip(color_theme)),
-      style_step_area_steps(new StyleStepAreaSteps(color_theme)),
+      color_theme(new ColorTheme()), style_step_area(new StyleStepArea(color_theme.get())),
+      style_step_area_mute(new StyleStepAreaMute(color_theme.get())),
+      style_step_area_octave(new StyleStepAreaOctave(color_theme.get())),
+      style_step_area_chord(new StyleStepAreaChord(color_theme.get())),
+      style_step_area_duration(new StyleStepAreaDuration(color_theme.get())),
+      style_step_area_velocity(new StyleStepAreaVelocity(color_theme.get())),
+      style_step_area_run(new StyleStepAreaRun(color_theme.get())),
+      style_step_area_skip(new StyleStepAreaSkip(color_theme.get())),
+      style_step_area_steps(new StyleStepAreaSteps(color_theme.get())),
 
-      style_bar_area(new StyleBarArea(color_theme)),
-      style_bar_area_solo(new StyleBarAreaSolo(color_theme)),
-      style_bar_area_time(new StyleBarAreaTime(color_theme)),
-      style_bar_area_skip(new StyleBarAreaSkip(color_theme)),
-      style_bar_area_run(new StyleBarAreaRun(color_theme)),
-      style_bar_area_chord(new StyleBarAreaChord(color_theme)),
-      style_bar_area_octave(new StyleBarAreaOctave(color_theme)),
-      style_bar_area_mute(new StyleBarAreaMute(color_theme)),
+      style_bar_area(new StyleBarArea(color_theme.get())),
+      style_bar_area_solo(new StyleBarAreaSolo(color_theme.get())),
+      style_bar_area_time(new StyleBarAreaTime(color_theme.get())),
+      style_bar_area_skip(new StyleBarAreaSkip(color_theme.get())),
+      style_bar_area_run(new StyleBarAreaRun(color_theme.get())),
+      style_bar_area_chord(new StyleBarAreaChord(color_theme.get())),
+      style_bar_area_octave(new StyleBarAreaOctave(color_theme.get())),
+      style_bar_area_mute(new StyleBarAreaMute(color_theme.get())),
 
-      style_global_area(new StyleGlobalArea(color_theme)),
-      style_global_area_run(new StyleGlobalAreaRun(color_theme)),
-      style_global_area_chord(new StyleGlobalAreaChord(color_theme)),
-      style_global_area_octave(new StyleGlobalAreaOctave(color_theme)),
-      style_global_area_notes(new StyleGlobalAreaNotes(color_theme)),
-      style_global_area_stop(new StyleGlobalAreaStop(color_theme)),
-      style_global_area_velocity(new StyleGlobalAreaVelocity(color_theme)),
-      style_global_area_duration(new StyleGlobalAreaDuration(color_theme)),
+      style_global_area(new StyleGlobalArea(color_theme.get())),
+      style_global_area_run(new StyleGlobalAreaRun(color_theme.get())),
+      style_global_area_chord(new StyleGlobalAreaChord(color_theme.get())),
+      style_global_area_octave(new StyleGlobalAreaOctave(color_theme.get())),
+      style_global_area_notes(new StyleGlobalAreaNotes(color_theme.get())),
+      style_global_area_stop(new StyleGlobalAreaStop(color_theme.get())),
+      style_global_area_velocity(new StyleGlobalAreaVelocity(color_theme.get())),
+      style_global_area_duration(new StyleGlobalAreaDuration(color_theme.get())),
 
-      style_menu_area(new StyleMenuArea(color_theme)),
-      style_menu_area_mute(new StyleMenuAreaMute(color_theme)),
-      style_menu_area_octave(new StyleMenuAreaOctave(color_theme)),
-      style_menu_area_chord(new StyleMenuAreaChord(color_theme)),
-      style_menu_area_duration(new StyleMenuAreaTime(color_theme)),
-      style_menu_area_velocity(new StyleMenuAreaVelocity(color_theme)),
-      style_menu_area_run(new StyleMenuAreaRun(color_theme)),
-      style_menu_area_skip(new StyleMenuAreaSkip(color_theme)),
+      style_menu_area(new StyleMenuArea(color_theme.get())),
+      style_menu_area_mute(new StyleMenuAreaMute(color_theme.get())),
+      style_menu_area_octave(new StyleMenuAreaOctave(color_theme.get())),
+      style_menu_area_chord(new StyleMenuAreaChord(color_theme.get())),
+      style_menu_area_duration(new StyleMenuAreaTime(color_theme.get())),
+      style_menu_area_velocity(new StyleMenuAreaVelocity(color_theme.get())),
+      style_menu_area_run(new StyleMenuAreaRun(color_theme.get())),
+      style_menu_area_skip(new StyleMenuAreaSkip(color_theme.get())),
 
-      style_popup_editor(new StylePopupEditor(color_theme)),
-      style_popup_editor_mute(new StylePopupEditorMute(color_theme)),
-      style_popup_editor_octave(new StylePopupEditorOctave(color_theme)),
-      style_popup_editor_chord(new StylePopupEditorChord(color_theme)),
-      style_popup_editor_velocity(new StylePopupEditorVelocity(color_theme)),
-      style_popup_editor_run(new StylePopupEditorRun(color_theme)),
-      style_popup_editor_skip(new StylePopupEditorSkip(color_theme))
+      style_popup_editor(new StylePopupEditor(color_theme.get())),
+      style_popup_editor_mute(new StylePopupEditorMute(color_theme.get())),
+      style_popup_editor_octave(new StylePopupEditorOctave(color_theme.get())),
+      style_popup_editor_chord(new StylePopupEditorChord(color_theme.get())),
+      style_popup_editor_velocity(new StylePopupEditorVelocity(color_theme.get())),
+      style_popup_editor_run(new StylePopupEditorRun(color_theme.get())),
+      style_popup_editor_skip(new StylePopupEditorSkip(color_theme.get()))
 {
     BOOT(AppInstanceStore);
 
@@ -188,45 +188,45 @@ AppInstanceStore::AppInstanceStore(GstepAudioProcessor *const audio_processor_)
 
     {
         layer_names_1.add("step copy");
-        layer_styles_1.add(style_global_area_run);
+        layer_styles_1.add(style_global_area_run.get());
         layer_1.add(convert_to_array(controller.bar.step_lights));
         layer_names_1.add("");
-        layer_styles_1.add(style_step_area_steps);
+        layer_styles_1.add(style_step_area_steps.get());
         layer_1.add(convert_to_array(controller.bar.barstring.getUnchecked(0)->step.mutes));
         layer_names_1.add("");
-        layer_styles_1.add(style_step_area_steps);
+        layer_styles_1.add(style_step_area_steps.get());
         layer_1.add(convert_to_array(controller.bar.barstring.getUnchecked(1)->step.mutes));
         layer_names_1.add("");
-        layer_styles_1.add(style_step_area_steps);
+        layer_styles_1.add(style_step_area_steps.get());
         layer_1.add(convert_to_array(controller.bar.barstring.getUnchecked(2)->step.mutes));
         layer_names_1.add("");
-        layer_styles_1.add(style_step_area_steps);
+        layer_styles_1.add(style_step_area_steps.get());
         layer_1.add(convert_to_array(controller.bar.barstring.getUnchecked(3)->step.mutes));
 
         layer_names_1.add("step duration");
-        layer_styles_1.add(style_step_area_duration);
+        layer_styles_1.add(style_step_area_duration.get());
         layer_1.add(convert_to_array(controller.bar.step_duration));
         layer_names_1.add("step velocity");
-        layer_styles_1.add(style_step_area_velocity);
+        layer_styles_1.add(style_step_area_velocity.get());
         layer_1.add(convert_to_array(controller.bar.step_velocity));
         layer_names_1.add("bar octave");
-        layer_styles_1.add(style_bar_area_octave);
+        layer_styles_1.add(style_bar_area_octave.get());
         layer_1.add(convert_to_array(controller.bar.octaves));
         layer_names_1.add("bar chord");
-        layer_styles_1.add(style_bar_area_chord);
+        layer_styles_1.add(style_bar_area_chord.get());
         layer_1.add(convert_to_array(controller.bar.chords));
         layer_names_1.add("bar repeat");
-        layer_styles_1.add(style_bar_area_time);
+        layer_styles_1.add(style_bar_area_time.get());
         layer_1.add(convert_to_array(controller.bar.repeats));
         layer_names_1.add("bar mute");
-        layer_styles_1.add(style_bar_area_mute);
+        layer_styles_1.add(style_bar_area_mute.get());
         layer_1.add(convert_to_array(controller.bar.mutes));
 
         layer_names_1.add("bar solo");
-        layer_styles_1.add(style_bar_area_solo);
+        layer_styles_1.add(style_bar_area_solo.get());
         layer_1.add(convert_to_array(controller.bar.solos));
         layer_names_1.add("select / copy");
-        layer_styles_1.add(style_bar_area_run);
+        layer_styles_1.add(style_bar_area_run.get());
         layer_1.add(convert_to_array(controller.bar.selects));
 
         layer_names_1.minimiseStorageOverheads();
@@ -245,22 +245,22 @@ AppInstanceStore::AppInstanceStore(GstepAudioProcessor *const audio_processor_)
         }
 
         layer_names_2.add("step octave");
-        layer_styles_2.add(style_step_area_octave);
+        layer_styles_2.add(style_step_area_octave.get());
         layer_2.add(convert_to_array(controller.bar.step_octave_offset));
         layer_names_2.add("step chord");
-        layer_styles_2.add(style_step_area_chord);
+        layer_styles_2.add(style_step_area_chord.get());
         layer_2.add(convert_to_array(controller.bar.step_chord_id));
         layer_names_2.add("use step chord");
-        layer_styles_2.add(style_step_area_chord);
+        layer_styles_2.add(style_step_area_chord.get());
         layer_2.add(convert_to_array(controller.bar.step_use_chord));
         layer_names_2.add("step delay >>");
-        layer_styles_2.add(style_step_area_run);
+        layer_styles_2.add(style_step_area_run.get());
         layer_2.add(convert_to_array(controller.bar.step_delay));
         layer_names_2.add("step copy");
-        layer_styles_2.add(style_step_area_velocity);
+        layer_styles_2.add(style_step_area_velocity.get());
         layer_2.add(convert_to_array(controller.bar.step_copy));
         layer_names_2.add("step clear");
-        layer_styles_2.add(style_step_area_skip);
+        layer_styles_2.add(style_step_area_skip.get());
         layer_2.add(convert_to_array(controller.bar.step_reset2default));
 
         for (int i = 11; i != 13; ++i)
@@ -285,22 +285,22 @@ AppInstanceStore::AppInstanceStore(GstepAudioProcessor *const audio_processor_)
         }
 
         layer_names_3.add("step probability");
-        layer_styles_3.add(style_step_area_mute);
+        layer_styles_3.add(style_step_area_mute.get());
         layer_3.add(convert_to_array(controller.bar.step_probability));
         layer_names_3.add("step mute");
-        layer_styles_3.add(style_step_area_mute);
+        layer_styles_3.add(style_step_area_mute.get());
         layer_3.add(convert_to_array(controller.bar.step_mute));
         layer_names_3.add("start pos");
-        layer_styles_3.add(style_step_area_run);
+        layer_styles_3.add(style_step_area_run.get());
         layer_3.add(convert_to_array(controller.bar.pos_entry_point));
         layer_names_3.add("restart pos");
-        layer_styles_3.add(style_step_area_run);
+        layer_styles_3.add(style_step_area_run.get());
         layer_3.add(convert_to_array(controller.bar.pos_reset_point));
         layer_names_3.add("force pos2beat");
-        layer_styles_3.add(style_step_area_run);
+        layer_styles_3.add(style_step_area_run.get());
         layer_3.add(convert_to_array(controller.bar.pos_force_absolute_step));
         layer_names_3.add("step skip");
-        layer_styles_3.add(style_step_area_skip);
+        layer_styles_3.add(style_step_area_skip.get());
         layer_3.add(convert_to_array(controller.bar.step_skip));
 
         for (int i = 11; i != 13; ++i)
@@ -325,22 +325,22 @@ AppInstanceStore::AppInstanceStore(GstepAudioProcessor *const audio_processor_)
         }
 
         layer_names_4.add("play reverse");
-        layer_styles_4.add(style_bar_area_time);
+        layer_styles_4.add(style_bar_area_time.get());
         layer_4.add(convert_to_array(controller.bar.play_reverses));
         layer_names_4.add("<< steps >>");
-        layer_styles_4.add(style_bar_area_skip);
+        layer_styles_4.add(style_bar_area_skip.get());
         layer_4.add(convert_to_array(controller.bar.bar_steps_shift));
         layer_names_4.add("force bar2chain");
-        layer_styles_4.add(style_bar_area_run);
+        layer_styles_4.add(style_bar_area_run.get());
         layer_4.add(convert_to_array(controller.bar.chain_mutes));
         layer_names_4.add("restart sequence");
-        layer_styles_4.add(style_bar_area_run);
+        layer_styles_4.add(style_bar_area_run.get());
         layer_4.add(convert_to_array(controller.bar.song_resets));
         layer_names_4.add("bar skip");
-        layer_styles_4.add(style_bar_area_skip);
+        layer_styles_4.add(style_bar_area_skip.get());
         layer_4.add(convert_to_array(controller.bar.skips));
         layer_names_4.add("sequence #");
-        layer_styles_4.add(style_bar_area_run);
+        layer_styles_4.add(style_bar_area_run.get());
         layer_4.add(convert_to_array(controller.bar.trigger_point));
 
         for (int i = 11; i != 13; ++i)
@@ -365,22 +365,22 @@ AppInstanceStore::AppInstanceStore(GstepAudioProcessor *const audio_processor_)
         }
 
         layer_names_5.add("step repeats");
-        layer_styles_5.add(style_step_area_duration);
+        layer_styles_5.add(style_step_area_duration.get());
         layer_5.add(convert_to_array(controller.bar.repeats_repeats));
         layer_names_5.add("don't roll rpt");
-        layer_styles_5.add(style_step_area_run);
+        layer_styles_5.add(style_step_area_run.get());
         layer_5.add(convert_to_array(controller.bar.repeats_roll));
         layer_names_5.add("rpt interval");
-        layer_styles_5.add(style_step_area_duration);
+        layer_styles_5.add(style_step_area_duration.get());
         layer_5.add(convert_to_array(controller.bar.repeat_distance));
         layer_names_5.add("rpt int. offs");
-        layer_styles_5.add(style_step_area_duration);
+        layer_styles_5.add(style_step_area_duration.get());
         layer_5.add(convert_to_array(controller.bar.repeats_distance_offset));
         layer_names_5.add("rpt duration offs");
-        layer_styles_5.add(style_step_area_duration);
+        layer_styles_5.add(style_step_area_duration.get());
         layer_5.add(convert_to_array(controller.bar.repeat_duration_offset));
         layer_names_5.add("skip repeat");
-        layer_styles_5.add(style_step_area_skip);
+        layer_styles_5.add(style_step_area_skip.get());
         layer_5.add(convert_to_array(controller.bar.repeat_is_used));
 
         for (int i = 11; i != 13; ++i)
@@ -405,22 +405,22 @@ AppInstanceStore::AppInstanceStore(GstepAudioProcessor *const audio_processor_)
         }
 
         layer_names_6.add("step repeats");
-        layer_styles_6.add(style_step_area_duration);
+        layer_styles_6.add(style_step_area_duration.get());
         layer_6.add(convert_to_array(controller.bar.repeats_repeats));
         layer_names_6.add("rpt velo offs");
-        layer_styles_6.add(style_step_area_velocity);
+        layer_styles_6.add(style_step_area_velocity.get());
         layer_6.add(convert_to_array(controller.bar.repeat_velocity_offset));
         layer_names_6.add("rpt note offs");
-        layer_styles_6.add(style_step_area_chord);
+        layer_styles_6.add(style_step_area_chord.get());
         layer_6.add(convert_to_array(controller.bar.repeat_note_offset));
         layer_names_6.add("note up'N'down");
-        layer_styles_6.add(style_step_area_chord);
+        layer_styles_6.add(style_step_area_chord.get());
         layer_6.add(convert_to_array(controller.bar.repeat_note_upNdown));
         layer_names_6.add("free notes");
-        layer_styles_6.add(style_step_area_chord);
+        layer_styles_6.add(style_step_area_chord.get());
         layer_6.add(convert_to_array(controller.bar.repeats_force_chord_notes));
         layer_names_6.add("rpt probability");
-        layer_styles_6.add(style_step_area_skip);
+        layer_styles_6.add(style_step_area_skip.get());
         layer_6.add(convert_to_array(controller.bar.repeats_probability));
 
         for (int i = 11; i != 13; ++i)
@@ -445,22 +445,22 @@ AppInstanceStore::AppInstanceStore(GstepAudioProcessor *const audio_processor_)
         }
 
         layer_names_7.add("program change");
-        layer_styles_7.add(style_step_area_chord);
+        layer_styles_7.add(style_step_area_chord.get());
         layer_7.add(convert_to_array(controller.bar.barstep_cc_vals_0));
         layer_names_7.add("send pc");
-        layer_styles_7.add(style_step_area_chord);
+        layer_styles_7.add(style_step_area_chord.get());
         layer_7.add(convert_to_array(controller.bar.barstep_cc_enabl_0));
         layer_names_7.add("");
-        layer_styles_7.add(style_step_area_velocity);
+        layer_styles_7.add(style_step_area_velocity.get());
         layer_7.add(convert_to_array(controller.bar.barstep_cc_vals_1));
         layer_names_7.add("send cc 1");
-        layer_styles_7.add(style_step_area_velocity);
+        layer_styles_7.add(style_step_area_velocity.get());
         layer_7.add(convert_to_array(controller.bar.barstep_cc_enabl_1));
         layer_names_7.add("");
-        layer_styles_7.add(style_step_area_velocity);
+        layer_styles_7.add(style_step_area_velocity.get());
         layer_7.add(convert_to_array(controller.bar.barstep_cc_vals_2));
         layer_names_7.add("send cc 2");
-        layer_styles_7.add(style_step_area_velocity);
+        layer_styles_7.add(style_step_area_velocity.get());
         layer_7.add(convert_to_array(controller.bar.barstep_cc_enabl_2));
 
         for (int i = 11; i != 13; ++i)
@@ -481,31 +481,31 @@ AppInstanceStore::AppInstanceStore(GstepAudioProcessor *const audio_processor_)
     layer_styles.minimiseStorageOverheads();
     layer_names.minimiseStorageOverheads();
 
-    styles.add(style_step_area);
-    styles.add(style_step_area_mute);
-    styles.add(style_step_area_octave);
-    styles.add(style_step_area_chord);
-    styles.add(style_step_area_duration);
-    styles.add(style_step_area_velocity);
-    styles.add(style_step_area_run);
-    styles.add(style_step_area_skip);
-    styles.add(style_step_area_steps);
-    styles.add(style_bar_area);
-    styles.add(style_bar_area_solo);
-    styles.add(style_bar_area_time);
-    styles.add(style_bar_area_skip);
-    styles.add(style_bar_area_run);
-    styles.add(style_bar_area_chord);
-    styles.add(style_bar_area_octave);
-    styles.add(style_bar_area_mute);
-    styles.add(style_global_area);
-    styles.add(style_global_area_run);
-    styles.add(style_global_area_chord);
-    styles.add(style_global_area_octave);
-    styles.add(style_global_area_notes);
-    styles.add(style_global_area_stop);
-    styles.add(style_global_area_velocity);
-    styles.add(style_global_area_duration);
+    styles.add(style_step_area.get());
+    styles.add(style_step_area_mute.get());
+    styles.add(style_step_area_octave.get());
+    styles.add(style_step_area_chord.get());
+    styles.add(style_step_area_duration.get());
+    styles.add(style_step_area_velocity.get());
+    styles.add(style_step_area_run.get());
+    styles.add(style_step_area_skip.get());
+    styles.add(style_step_area_steps.get());
+    styles.add(style_bar_area.get());
+    styles.add(style_bar_area_solo.get());
+    styles.add(style_bar_area_time.get());
+    styles.add(style_bar_area_skip.get());
+    styles.add(style_bar_area_run.get());
+    styles.add(style_bar_area_chord.get());
+    styles.add(style_bar_area_octave.get());
+    styles.add(style_bar_area_mute.get());
+    styles.add(style_global_area.get());
+    styles.add(style_global_area_run.get());
+    styles.add(style_global_area_chord.get());
+    styles.add(style_global_area_octave.get());
+    styles.add(style_global_area_notes.get());
+    styles.add(style_global_area_stop.get());
+    styles.add(style_global_area_velocity.get());
+    styles.add(style_global_area_duration.get());
 
 #ifdef JUCE_ANDROID
     Font android_font = Font("subway_black", 21, Font::italic);
@@ -1930,9 +1930,9 @@ Controllers::ForPattern::ForPattern(AppInstanceStore *const store_)
     for (unsigned int barstring_id = 0; barstring_id != SUM_STRINGS; ++barstring_id)
         add_to_const_array(string_octaves, new ControllerMasterStringOctave(store_, barstring_id));
 
-    play = new ControllerPlay(store_);
-    pause = new ControllerPause(store_);
-    stop = new ControllerStop(store_);
+    play = std::make_unique<ControllerPlay>(store_);
+    pause = std::make_unique<ControllerPause>(store_);
+    stop = std::make_unique<ControllerStop>(store_);
 }
 
 Controllers::ForBar::ForBar(AppInstanceStore *const store_)

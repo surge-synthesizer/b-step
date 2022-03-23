@@ -25,6 +25,7 @@
 //[/Headers]
 
 #include "UiTextImExport.h"
+#include <memory>
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 void UiTextImExport::timerCallback()
@@ -52,7 +53,8 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
                                UiTextImExportListener *const listener_)
     : _app_instance_store(app_instance_store_), _listener(listener_)
 {
-    addAndMakeVisible(titel = new juce::Label(juce::String(), TRANS("B-DATA-IMPORTER")));
+    titel = std::make_unique<juce::Label>(juce::String(), TRANS("B-DATA-IMPORTER"));
+    addAndMakeVisible(*titel);
     titel->setFont(juce::Font("Oswald", 25.00f, juce::Font::plain));
     titel->setJustificationType(juce::Justification::centred);
     titel->setEditable(false, false, false);
@@ -61,7 +63,8 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     titel->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     titel->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(ok = new juce::TextButton(juce::String()));
+    ok = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*ok);
     ok->setExplicitFocusOrder(2);
     ok->setButtonText(TRANS("IMPORT"));
     ok->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
@@ -72,7 +75,8 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     ok->setColour(juce::TextButton::textColourOnId, juce::Colours::chartreuse);
     ok->setColour(juce::TextButton::textColourOffId, juce::Colours::chartreuse);
 
-    addAndMakeVisible(cancel = new juce::TextButton(juce::String()));
+    cancel = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*cancel);
     cancel->setExplicitFocusOrder(3);
     cancel->setButtonText(TRANS("CANCEL"));
     cancel->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
@@ -83,7 +87,8 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     cancel->setColour(juce::TextButton::textColourOnId, juce::Colours::red);
     cancel->setColour(juce::TextButton::textColourOffId, juce::Colours::red);
 
-    addAndMakeVisible(text = new juce::TextEditor(juce::String()));
+    text = std::make_unique<juce::TextEditor>(juce::String());
+    addAndMakeVisible(*text);
     text->setMultiLine(true);
     text->setReturnKeyStartsNewLine(false);
     text->setReadOnly(false);
@@ -97,7 +102,8 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     text->setColour(juce::TextEditor::shadowColourId, juce::Colour(0x00000000));
     text->setText(juce::String());
 
-    addAndMakeVisible(copy_past = new juce::TextButton(juce::String()));
+    copy_past = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*copy_past);
     copy_past->setExplicitFocusOrder(2);
     copy_past->setButtonText(TRANS("COPY"));
     copy_past->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
@@ -110,7 +116,8 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     copy_past->setColour(juce::TextButton::textColourOffId,
                          juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(note = new juce::Label(juce::String(), juce::String()));
+    note = std::make_unique<juce::Label>(juce::String(), juce::String());
+    addAndMakeVisible(*note);
     note->setFont(juce::Font(15.00f, juce::Font::plain));
     note->setJustificationType(juce::Justification::centredLeft);
     note->setEditable(false, false, false);
@@ -119,7 +126,8 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     note->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     note->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(description = new juce::Label(juce::String(), TRANS("\n")));
+    description = std::make_unique<juce::Label>(juce::String(), TRANS("\n"));
+    addAndMakeVisible(*description);
     description->setFont(juce::Font(15.00f, juce::Font::plain));
     description->setJustificationType(juce::Justification::centredLeft);
     description->setEditable(false, false, false);
@@ -128,7 +136,8 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     description->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     description->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(send_mail = new juce::TextButton(juce::String()));
+    send_mail = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*send_mail);
     send_mail->setExplicitFocusOrder(3);
     send_mail->setButtonText(TRANS("SEND AS MAIL"));
     send_mail->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
@@ -141,7 +150,8 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     send_mail->setColour(juce::TextButton::textColourOffId,
                          juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(send_mail_to_monoplugs = new juce::TextButton(juce::String()));
+    send_mail_to_monoplugs = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*send_mail_to_monoplugs);
     send_mail_to_monoplugs->setExplicitFocusOrder(3);
     send_mail_to_monoplugs->setButtonText(
         TRANS("SEND AS MAIL TO MONOPLUGS AND SHARE IT ON THE ONLINE REPOSITORY"));
@@ -156,7 +166,8 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     send_mail_to_monoplugs->setColour(juce::TextButton::textColourOffId, juce::Colour(0xffff7000));
 
-    addAndMakeVisible(button_info = new juce::TextButton(juce::String()));
+    button_info = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*button_info);
     button_info->setButtonText(TRANS("?"));
     button_info->addListener(this);
 
@@ -284,7 +295,7 @@ void UiTextImExport::buttonClicked(juce::Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == ok)
+    if (buttonThatWasClicked == ok.get())
     {
         //[UserButtonCode_ok] -- add your button handler code here..
         _listener->_data = text->getText();
@@ -299,14 +310,14 @@ void UiTextImExport::buttonClicked(juce::Button *buttonThatWasClicked)
         }
         //[/UserButtonCode_ok]
     }
-    else if (buttonThatWasClicked == cancel)
+    else if (buttonThatWasClicked == cancel.get())
     {
         //[UserButtonCode_cancel] -- add your button handler code here..
         on_close_clicked();
         return;
         //[/UserButtonCode_cancel]
     }
-    else if (buttonThatWasClicked == copy_past)
+    else if (buttonThatWasClicked == copy_past.get())
     {
         //[UserButtonCode_copy_past] -- add your button handler code here..
         if (_listener->_is_importer)
@@ -323,7 +334,7 @@ void UiTextImExport::buttonClicked(juce::Button *buttonThatWasClicked)
         }
         //[/UserButtonCode_copy_past]
     }
-    else if (buttonThatWasClicked == send_mail)
+    else if (buttonThatWasClicked == send_mail.get())
     {
         //[UserButtonCode_send_mail] -- add your button handler code here..
         juce::String data_to_send =
@@ -332,7 +343,7 @@ void UiTextImExport::buttonClicked(juce::Button *buttonThatWasClicked)
         juce::URL(juce::String("mailto:yourmail?body=") + data_to_send).launchInDefaultBrowser();
         //[/UserButtonCode_send_mail]
     }
-    else if (buttonThatWasClicked == send_mail_to_monoplugs)
+    else if (buttonThatWasClicked == send_mail_to_monoplugs.get())
     {
         //[UserButtonCode_send_mail_to_monoplugs] -- add your button handler code here..
         juce::String data_to_send =
@@ -365,7 +376,7 @@ void UiTextImExport::buttonClicked(juce::Button *buttonThatWasClicked)
         std::cout << data_to_send << std::endl;
         //[/UserButtonCode_send_mail_to_monoplugs]
     }
-    else if (buttonThatWasClicked == button_info)
+    else if (buttonThatWasClicked == button_info.get())
     {
         //[UserButtonCode_button_info] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)

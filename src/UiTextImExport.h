@@ -108,16 +108,16 @@ class UiTextImExport : public UiEditor, public juce::Timer, public juce::Button:
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::Label> titel;
-    juce::ScopedPointer<juce::TextButton> ok;
-    juce::ScopedPointer<juce::TextButton> cancel;
-    juce::ScopedPointer<juce::TextEditor> text;
-    juce::ScopedPointer<juce::TextButton> copy_past;
-    juce::ScopedPointer<juce::Label> note;
-    juce::ScopedPointer<juce::Label> description;
-    juce::ScopedPointer<juce::TextButton> send_mail;
-    juce::ScopedPointer<juce::TextButton> send_mail_to_monoplugs;
-    juce::ScopedPointer<juce::TextButton> button_info;
+    std::unique_ptr<juce::Label> titel;
+    std::unique_ptr<juce::TextButton> ok;
+    std::unique_ptr<juce::TextButton> cancel;
+    std::unique_ptr<juce::TextEditor> text;
+    std::unique_ptr<juce::TextButton> copy_past;
+    std::unique_ptr<juce::Label> note;
+    std::unique_ptr<juce::Label> description;
+    std::unique_ptr<juce::TextButton> send_mail;
+    std::unique_ptr<juce::TextButton> send_mail_to_monoplugs;
+    std::unique_ptr<juce::TextButton> button_info;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiTextImExport)

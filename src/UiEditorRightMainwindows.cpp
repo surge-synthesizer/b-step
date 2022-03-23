@@ -92,123 +92,128 @@ UiEditorRightMainwindows::UiEditorRightMainwindows(AppInstanceStore *const app_i
                                                    GstepAudioProcessorEditor *const main_window_)
     : _app_instance_store(app_instance_store_), _main_window(main_window_)
 {
-    lbl_set_9 = std::make_unique<UiLabel>("E", _app_instance_store->style_global_area_octave);
+    lbl_set_9 = std::make_unique<UiLabel>("E", _app_instance_store->style_global_area_octave.get());
     addAndMakeVisible(*lbl_set_9);
 
     lbl_bar_chord2 =
-        std::make_unique<UiLabel>("chord set", _app_instance_store->style_global_area_chord);
+        std::make_unique<UiLabel>("chord set", _app_instance_store->style_global_area_chord.get());
     addAndMakeVisible(*lbl_bar_chord2);
 
     lbl_bar_chord3 =
-        std::make_unique<UiLabel>("tune", _app_instance_store->style_global_area_octave);
+        std::make_unique<UiLabel>("tune", _app_instance_store->style_global_area_octave.get());
     addAndMakeVisible(*lbl_bar_chord3);
 
     lbl_bar_chord4 =
-        std::make_unique<UiLabel>("octave", _app_instance_store->style_global_area_octave);
+        std::make_unique<UiLabel>("octave", _app_instance_store->style_global_area_octave.get());
     addAndMakeVisible(*lbl_bar_chord4);
 
     pattern_gstring_offset_0 =
         std::make_unique<ModelBase>(_app_instance_store->controller.pattern.string_octaves[0],
-                                    _app_instance_store->style_global_area_octave);
+                                    _app_instance_store->style_global_area_octave.get());
     addAndMakeVisible(*pattern_gstring_offset_0);
 
     pattern_gstring_offset_1 =
         std::make_unique<ModelBase>(_app_instance_store->controller.pattern.string_octaves[1],
-                                    _app_instance_store->style_global_area_octave);
+                                    _app_instance_store->style_global_area_octave.get());
     addAndMakeVisible(*pattern_gstring_offset_1);
 
     pattern_gstring_offset_2 =
         std::make_unique<ModelBase>(_app_instance_store->controller.pattern.string_octaves[2],
-                                    _app_instance_store->style_global_area_octave);
+                                    _app_instance_store->style_global_area_octave.get());
     addAndMakeVisible(*pattern_gstring_offset_2);
 
     pattern_gstring_offset_3 =
         std::make_unique<ModelBase>(_app_instance_store->controller.pattern.string_octaves[3],
-                                    _app_instance_store->style_global_area_octave);
+                                    _app_instance_store->style_global_area_octave.get());
     addAndMakeVisible(*pattern_gstring_offset_3);
 
-    pattern_chord = std::make_unique<ModelBase>(_app_instance_store->controller.pattern.chord,
-                                                _app_instance_store->style_global_area_chord);
+    pattern_chord = std::make_unique<ModelBase>(_app_instance_store->controller.pattern.chord.get(),
+                                                _app_instance_store->style_global_area_chord.get());
     addAndMakeVisible(*pattern_chord);
 
-    pattern_note = std::make_unique<ModelBase>(_app_instance_store->controller.pattern.note,
-                                               _app_instance_store->style_global_area_octave);
+    pattern_note = std::make_unique<ModelBase>(_app_instance_store->controller.pattern.note.get(),
+                                               _app_instance_store->style_global_area_octave.get());
     addAndMakeVisible(*pattern_note);
 
-    pattern_oktave = std::make_unique<ModelBase>(_app_instance_store->controller.pattern.octave,
-                                                 _app_instance_store->style_global_area_octave);
+    pattern_oktave =
+        std::make_unique<ModelBase>(_app_instance_store->controller.pattern.octave.get(),
+                                    _app_instance_store->style_global_area_octave.get());
     addAndMakeVisible(*pattern_oktave);
 
-    lbl_version = std::make_unique<UiLabel>("shfl", _app_instance_store->style_global_area_stop);
+    lbl_version =
+        std::make_unique<UiLabel>("shfl", _app_instance_store->style_global_area_stop.get());
     addAndMakeVisible(*lbl_version);
 
-    slider_bpm = std::make_unique<ModelBase>(_app_instance_store->controller.pattern.bpm,
-                                             _app_instance_store->style_global_area_run);
+    slider_bpm = std::make_unique<ModelBase>(_app_instance_store->controller.pattern.bpm.get(),
+                                             _app_instance_store->style_global_area_run.get());
     addAndMakeVisible(*slider_bpm);
 
-    button_mute = std::make_unique<ModelBase>(_app_instance_store->controller.pattern.mute,
-                                              _app_instance_store->style_global_area_stop);
+    button_mute = std::make_unique<ModelBase>(_app_instance_store->controller.pattern.mute.get(),
+                                              _app_instance_store->style_global_area_stop.get());
     addAndMakeVisible(*button_mute);
 
     button_chord_editor =
-        std::make_unique<ModelBase>(_app_instance_store->controller.pattern.open_chord_editor,
-                                    _app_instance_store->style_global_area_chord);
+        std::make_unique<ModelBase>(_app_instance_store->controller.pattern.open_chord_editor.get(),
+                                    _app_instance_store->style_global_area_chord.get());
     addAndMakeVisible(*button_chord_editor);
 
-    lbl_set_1 = std::make_unique<UiLabel>("1", _app_instance_store->style_global_area_chord);
+    lbl_set_1 = std::make_unique<UiLabel>("1", _app_instance_store->style_global_area_chord.get());
     addAndMakeVisible(*lbl_set_1);
 
-    lbl_set_2 = std::make_unique<UiLabel>("5", _app_instance_store->style_global_area_chord);
+    lbl_set_2 = std::make_unique<UiLabel>("5", _app_instance_store->style_global_area_chord.get());
     addAndMakeVisible(*lbl_set_2);
 
-    lbl_set_7 = std::make_unique<UiLabel>("A", _app_instance_store->style_global_area_octave);
+    lbl_set_7 = std::make_unique<UiLabel>("A", _app_instance_store->style_global_area_octave.get());
     addAndMakeVisible(*lbl_set_7);
 
-    lbl_set_8 = std::make_unique<UiLabel>("G#", _app_instance_store->style_global_area_octave);
+    lbl_set_8 =
+        std::make_unique<UiLabel>("G#", _app_instance_store->style_global_area_octave.get());
     addAndMakeVisible(*lbl_set_8);
 
-    lbl_set_4 = std::make_unique<UiLabel>("3", _app_instance_store->style_global_area_octave);
+    lbl_set_4 = std::make_unique<UiLabel>("3", _app_instance_store->style_global_area_octave.get());
     addAndMakeVisible(*lbl_set_4);
 
-    lbl_set_3 = std::make_unique<UiLabel>("-3", _app_instance_store->style_global_area_octave);
+    lbl_set_3 =
+        std::make_unique<UiLabel>("-3", _app_instance_store->style_global_area_octave.get());
     addAndMakeVisible(*lbl_set_3);
 
-    lbl_set_6 = std::make_unique<UiLabel>("0", _app_instance_store->style_global_area_octave);
+    lbl_set_6 = std::make_unique<UiLabel>("0", _app_instance_store->style_global_area_octave.get());
     addAndMakeVisible(*lbl_set_6);
 
     label_current_bpm =
-        std::make_unique<UiLabel>("BPM", _app_instance_store->style_global_area_run);
+        std::make_unique<UiLabel>("BPM", _app_instance_store->style_global_area_run.get());
     addAndMakeVisible(*label_current_bpm);
 
     button_chord_editor2 =
-        std::make_unique<ModelBase>(_app_instance_store->controller.pattern.swing_position,
-                                    _app_instance_store->style_global_area_stop);
+        std::make_unique<ModelBase>(_app_instance_store->controller.pattern.swing_position.get(),
+                                    _app_instance_store->style_global_area_stop.get());
     addAndMakeVisible(*button_chord_editor2);
 
     button_chord_editor3 =
-        std::make_unique<ModelBase>(_app_instance_store->controller.pattern.swing_dist_offset,
-                                    _app_instance_store->style_global_area_stop);
+        std::make_unique<ModelBase>(_app_instance_store->controller.pattern.swing_dist_offset.get(),
+                                    _app_instance_store->style_global_area_stop.get());
     addAndMakeVisible(*button_chord_editor3);
 
     button_chord_editor4 =
-        std::make_unique<ModelBase>(_app_instance_store->controller.pattern.swing_velo_offset,
-                                    _app_instance_store->style_global_area_velocity);
+        std::make_unique<ModelBase>(_app_instance_store->controller.pattern.swing_velo_offset.get(),
+                                    _app_instance_store->style_global_area_velocity.get());
     addAndMakeVisible(*button_chord_editor4);
 
     button_chord_editor5 =
-        std::make_unique<ModelBase>(_app_instance_store->controller.pattern.swing_dura_offset,
-                                    _app_instance_store->style_global_area_duration);
+        std::make_unique<ModelBase>(_app_instance_store->controller.pattern.swing_dura_offset.get(),
+                                    _app_instance_store->style_global_area_duration.get());
     addAndMakeVisible(*button_chord_editor5);
 
-    lbl_version2 = std::make_unique<UiLabel>(">>", _app_instance_store->style_global_area_stop);
+    lbl_version2 =
+        std::make_unique<UiLabel>(">>", _app_instance_store->style_global_area_stop.get());
     addAndMakeVisible(*lbl_version2);
 
     lbl_version3 =
-        std::make_unique<UiLabel>("velo", _app_instance_store->style_global_area_velocity);
+        std::make_unique<UiLabel>("velo", _app_instance_store->style_global_area_velocity.get());
     addAndMakeVisible(*lbl_version3);
 
     lbl_version4 =
-        std::make_unique<UiLabel>("dura", _app_instance_store->style_global_area_duration);
+        std::make_unique<UiLabel>("dura", _app_instance_store->style_global_area_duration.get());
     addAndMakeVisible(*lbl_version4);
 
     //[UserPreSize]

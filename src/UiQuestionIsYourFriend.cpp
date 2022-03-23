@@ -23,6 +23,7 @@
 //[/Headers]
 
 #include "UiQuestionIsYourFriend.h"
+#include <memory>
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 void UiQuestionIsYourFriend::on_close_clicked()
@@ -35,7 +36,8 @@ void UiQuestionIsYourFriend::on_close_clicked()
 UiQuestionIsYourFriend::UiQuestionIsYourFriend(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-Question"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(label = new juce::Label(juce::String(), TRANS("NEED HELP?")));
+    label = std::make_unique<juce::Label>(juce::String(), TRANS("NEED HELP?"));
+    addAndMakeVisible(*label);
     label->setFont(juce::Font("Oswald", 33.10f, juce::Font::plain));
     label->setJustificationType(juce::Justification::centred);
     label->setEditable(false, false, false);
@@ -44,7 +46,8 @@ UiQuestionIsYourFriend::UiQuestionIsYourFriend(AppInstanceStore *const app_insta
     label->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(save = new juce::TextButton(juce::String()));
+    save = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*save);
     save->setButtonText(TRANS("OK, DON\'T SHOW AGAIN"));
     save->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
                             juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
@@ -52,7 +55,8 @@ UiQuestionIsYourFriend::UiQuestionIsYourFriend(AppInstanceStore *const app_insta
     save->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
     save->setColour(juce::TextButton::textColourOffId, juce::Colours::chartreuse);
 
-    addAndMakeVisible(textEditor = new juce::TextEditor(juce::String()));
+    textEditor = std::make_unique<juce::TextEditor>(juce::String());
+    addAndMakeVisible(*textEditor);
     textEditor->setMultiLine(true);
     textEditor->setReturnKeyStartsNewLine(false);
     textEditor->setReadOnly(true);
@@ -70,7 +74,7 @@ UiQuestionIsYourFriend::UiQuestionIsYourFriend(AppInstanceStore *const app_insta
                               "If you need some help drag the question mark (right menu bar) to "
                               "any element on the user interface and get the info you need."));
 
-    drawable1 = juce::Drawable::createFromImageData(question_svg, question_svgSize).release();
+    drawable1 = juce::Drawable::createFromImageData(question_svg, question_svgSize);
 
     //[UserPreSize]
     GLOBAL_VALUE_HOLDER::getInstance()->QUESTION_WAS_UP = true;
@@ -145,7 +149,7 @@ void UiQuestionIsYourFriend::buttonClicked(juce::Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == save)
+    if (buttonThatWasClicked == save.get())
     {
         //[UserButtonCode_save] -- add your button handler code here..
         on_close_clicked();

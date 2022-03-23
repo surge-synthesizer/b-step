@@ -227,7 +227,7 @@ inline void GstepAudioProcessorEditor::refresh_selected_bar(
         for (int i = 0; i != _last_painted_selected_bar_models.size(); ++i)
         {
             _last_painted_selected_bar_models.getUnchecked(i)->set_background_style(
-                _app_instance_store->style_step_area);
+                _app_instance_store->style_step_area.get());
         }
 
         // THIS WILL JUST REPAINT THE SELECTER!!
@@ -770,12 +770,12 @@ inline void GstepAudioProcessorEditor::init_layer_controllers_until_steps()
     UiColumn16 *model_column = column_wrapper->get_column_editor();
     model_column->set_controllers(_app_instance_store->controller.bar.step_lights);
     UiLeftsideStartStopPause *start_stop_pause = new UiLeftsideStartStopPause();
-    start_stop_pause->set_controllers(_app_instance_store->controller.pattern.play,
-                                      _app_instance_store->controller.pattern.pause,
-                                      _app_instance_store->controller.pattern.stop);
+    start_stop_pause->set_controllers(_app_instance_store->controller.pattern.play.get(),
+                                      _app_instance_store->controller.pattern.pause.get(),
+                                      _app_instance_store->controller.pattern.stop.get());
     start_stop_pause->init_styles(_app_instance_store);
     column_wrapper->set_leftside_subeditor(start_stop_pause);
-    column_wrapper->set_style(_app_instance_store->style_global_area_run);
+    column_wrapper->set_style(_app_instance_store->style_global_area_run.get());
 
     column_wrapper = _columns_fixed_steps.getUnchecked(1);
     model_column = column_wrapper->get_column_editor();
@@ -784,13 +784,13 @@ inline void GstepAudioProcessorEditor::init_layer_controllers_until_steps()
     UiLeftsideLabelModel *leftside_label_model = new UiLeftsideLabelModel(_app_instance_store);
     leftside_label_model->set_text("1");
     leftside_label_model->set_controller(
-        _app_instance_store->controller.bar.barstring.getUnchecked(0)->octave);
+        _app_instance_store->controller.bar.barstring.getUnchecked(0)->octave.get());
     column_wrapper->set_leftside_subeditor(leftside_label_model);
-    column_wrapper->set_style(_app_instance_store->style_step_area_steps);
+    column_wrapper->set_style(_app_instance_store->style_step_area_steps.get());
     // TODO dirty hack for set the style if not good
     const_cast<ModelBase *>(
         _app_instance_store->controller.bar.barstring.getUnchecked(0)->octave->get_model())
-        ->set_style(_app_instance_store->style_step_area_octave);
+        ->set_style(_app_instance_store->style_step_area_octave.get());
 
     column_wrapper = _columns_fixed_steps.getUnchecked(2);
     model_column = column_wrapper->get_column_editor();
@@ -799,12 +799,12 @@ inline void GstepAudioProcessorEditor::init_layer_controllers_until_steps()
     leftside_label_model = new UiLeftsideLabelModel(_app_instance_store);
     leftside_label_model->set_text("2");
     leftside_label_model->set_controller(
-        _app_instance_store->controller.bar.barstring.getUnchecked(1)->octave);
+        _app_instance_store->controller.bar.barstring.getUnchecked(1)->octave.get());
     column_wrapper->set_leftside_subeditor(leftside_label_model);
-    column_wrapper->set_style(_app_instance_store->style_step_area_steps);
+    column_wrapper->set_style(_app_instance_store->style_step_area_steps.get());
     const_cast<ModelBase *>(
         _app_instance_store->controller.bar.barstring.getUnchecked(1)->octave->get_model())
-        ->set_style(_app_instance_store->style_step_area_octave);
+        ->set_style(_app_instance_store->style_step_area_octave.get());
 
     column_wrapper = _columns_fixed_steps.getUnchecked(3);
     model_column = column_wrapper->get_column_editor();
@@ -813,12 +813,12 @@ inline void GstepAudioProcessorEditor::init_layer_controllers_until_steps()
     leftside_label_model = new UiLeftsideLabelModel(_app_instance_store);
     leftside_label_model->set_text("3");
     leftside_label_model->set_controller(
-        _app_instance_store->controller.bar.barstring.getUnchecked(2)->octave);
+        _app_instance_store->controller.bar.barstring.getUnchecked(2)->octave.get());
     column_wrapper->set_leftside_subeditor(leftside_label_model);
-    column_wrapper->set_style(_app_instance_store->style_step_area_steps);
+    column_wrapper->set_style(_app_instance_store->style_step_area_steps.get());
     const_cast<ModelBase *>(
         _app_instance_store->controller.bar.barstring.getUnchecked(2)->octave->get_model())
-        ->set_style(_app_instance_store->style_step_area_octave);
+        ->set_style(_app_instance_store->style_step_area_octave.get());
 
     column_wrapper = _columns_fixed_steps.getUnchecked(4);
     model_column = column_wrapper->get_column_editor();
@@ -827,12 +827,12 @@ inline void GstepAudioProcessorEditor::init_layer_controllers_until_steps()
     leftside_label_model = new UiLeftsideLabelModel(_app_instance_store);
     leftside_label_model->set_text("4");
     leftside_label_model->set_controller(
-        _app_instance_store->controller.bar.barstring.getUnchecked(3)->octave);
+        _app_instance_store->controller.bar.barstring.getUnchecked(3)->octave.get());
     column_wrapper->set_leftside_subeditor(leftside_label_model);
-    column_wrapper->set_style(_app_instance_store->style_step_area_steps);
+    column_wrapper->set_style(_app_instance_store->style_step_area_steps.get());
     const_cast<ModelBase *>(
         _app_instance_store->controller.bar.barstring.getUnchecked(3)->octave->get_model())
-        ->set_style(_app_instance_store->style_step_area_octave);
+        ->set_style(_app_instance_store->style_step_area_octave.get());
 }
 
 inline void GstepAudioProcessorEditor::init_layer_controllers_fixed_bar_part()
@@ -843,7 +843,7 @@ inline void GstepAudioProcessorEditor::init_layer_controllers_fixed_bar_part()
     UiLeftsideLabel *leftside_label = new UiLeftsideLabel();
     leftside_label->set_text("bar solo");
     column_wrapper->set_leftside_subeditor(leftside_label);
-    column_wrapper->set_style(_app_instance_store->style_bar_area_solo);
+    column_wrapper->set_style(_app_instance_store->style_bar_area_solo.get());
 
     column_wrapper = _columns_fixed_bar.getUnchecked(1);
     model_column = column_wrapper->get_column_editor();
@@ -851,7 +851,7 @@ inline void GstepAudioProcessorEditor::init_layer_controllers_fixed_bar_part()
     leftside_label = new UiLeftsideLabel();
     leftside_label->set_text("select / copy");
     column_wrapper->set_leftside_subeditor(leftside_label);
-    column_wrapper->set_style(_app_instance_store->style_bar_area_run);
+    column_wrapper->set_style(_app_instance_store->style_bar_area_run.get());
 }
 
 inline void GstepAudioProcessorEditor::init_layer_controllers_page()
@@ -909,7 +909,7 @@ inline void GstepAudioProcessorEditor::init_layer_controllers_page_7()
     model_column->set_controllers(
         _app_instance_store->layer_controller.getReference(6).getUnchecked(col));
     UiLeftsideCC *leftside_cc = new UiLeftsideCC();
-    leftside_cc->set_cc_chooser_controller(_app_instance_store->controller.bar.bar_cc_type_1);
+    leftside_cc->set_cc_chooser_controller(_app_instance_store->controller.bar.bar_cc_type_1.get());
     column_wrapper->set_leftside_subeditor(leftside_cc);
     column_wrapper->set_style(_app_instance_store->layer_styles.getReference(6).getUnchecked(col));
 
@@ -929,7 +929,7 @@ inline void GstepAudioProcessorEditor::init_layer_controllers_page_7()
     model_column->set_controllers(
         _app_instance_store->layer_controller.getReference(6).getUnchecked(col));
     leftside_cc = new UiLeftsideCC();
-    leftside_cc->set_cc_chooser_controller(_app_instance_store->controller.bar.bar_cc_type_2);
+    leftside_cc->set_cc_chooser_controller(_app_instance_store->controller.bar.bar_cc_type_2.get());
     column_wrapper->set_leftside_subeditor(leftside_cc);
     column_wrapper->set_style(_app_instance_store->layer_styles.getReference(6).getUnchecked(col));
 

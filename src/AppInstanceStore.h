@@ -15,30 +15,30 @@ struct Controllers
 {
     struct ForPattern
     {
-        juce::ScopedPointer<MONO_Controller> octave;
-        juce::ScopedPointer<MONO_Controller> note;
-        juce::ScopedPointer<MONO_Controller> chord;
+        std::unique_ptr<MONO_Controller> octave;
+        std::unique_ptr<MONO_Controller> note;
+        std::unique_ptr<MONO_Controller> chord;
         const juce::OwnedArray<MONO_Controller> string_octaves;
 
-        juce::ScopedPointer<MONO_Controller> play;
-        juce::ScopedPointer<MONO_Controller> pause;
-        juce::ScopedPointer<MONO_Controller> stop;
+        std::unique_ptr<MONO_Controller> play;
+        std::unique_ptr<MONO_Controller> pause;
+        std::unique_ptr<MONO_Controller> stop;
 
-        juce::ScopedPointer<MONO_Controller> bpm;
-        juce::ScopedPointer<MONO_Controller> mute;
-        juce::ScopedPointer<MONO_Controller> swing_position;
-        juce::ScopedPointer<MONO_Controller> swing_dist_offset;
-        juce::ScopedPointer<MONO_Controller> swing_velo_offset;
-        juce::ScopedPointer<MONO_Controller> swing_dura_offset;
+        std::unique_ptr<MONO_Controller> bpm;
+        std::unique_ptr<MONO_Controller> mute;
+        std::unique_ptr<MONO_Controller> swing_position;
+        std::unique_ptr<MONO_Controller> swing_dist_offset;
+        std::unique_ptr<MONO_Controller> swing_velo_offset;
+        std::unique_ptr<MONO_Controller> swing_dura_offset;
 
-        juce::ScopedPointer<MONO_Controller> open_chord_editor;
-        juce::ScopedPointer<MONO_Controller> layers_1;
-        juce::ScopedPointer<MONO_Controller> layers_2;
-        juce::ScopedPointer<MONO_Controller> layers_3;
-        juce::ScopedPointer<MONO_Controller> layers_4;
-        juce::ScopedPointer<MONO_Controller> layers_5;
-        juce::ScopedPointer<MONO_Controller> layers_6;
-        juce::ScopedPointer<MONO_Controller> layers_7;
+        std::unique_ptr<MONO_Controller> open_chord_editor;
+        std::unique_ptr<MONO_Controller> layers_1;
+        std::unique_ptr<MONO_Controller> layers_2;
+        std::unique_ptr<MONO_Controller> layers_3;
+        std::unique_ptr<MONO_Controller> layers_4;
+        std::unique_ptr<MONO_Controller> layers_5;
+        std::unique_ptr<MONO_Controller> layers_6;
+        std::unique_ptr<MONO_Controller> layers_7;
 
         ForPattern(AppInstanceStore *const store_);
         //==============================================================================
@@ -93,9 +93,9 @@ struct Controllers
         const juce::OwnedArray<MONO_Controller> play_randoms;
         const juce::OwnedArray<MONO_Controller> trigger_point;
 
-        juce::ScopedPointer<MONO_Controller> bar_cc_type_0;
-        juce::ScopedPointer<MONO_Controller> bar_cc_type_1;
-        juce::ScopedPointer<MONO_Controller> bar_cc_type_2;
+        std::unique_ptr<MONO_Controller> bar_cc_type_0;
+        std::unique_ptr<MONO_Controller> bar_cc_type_1;
+        std::unique_ptr<MONO_Controller> bar_cc_type_2;
         const juce::OwnedArray<MONO_Controller> barstep_cc_vals_0;
         const juce::OwnedArray<MONO_Controller> barstep_cc_vals_1;
         const juce::OwnedArray<MONO_Controller> barstep_cc_vals_2;
@@ -105,7 +105,7 @@ struct Controllers
 
         struct ForBarstring
         {
-            juce::ScopedPointer<MONO_Controller> octave;
+            std::unique_ptr<MONO_Controller> octave;
             struct ForStep
             {
                 const juce::OwnedArray<MONO_Controller> mutes;
@@ -230,51 +230,51 @@ struct AppInstanceStore
     juce::Typeface::Ptr default_typeface;
     juce::Typeface::Ptr oswald_typeface;
 
-    juce::ScopedPointer<ColorTheme> color_theme;
-    juce::ScopedPointer<AppStyle> const style_step_area;
-    juce::ScopedPointer<AppStyle> const style_step_area_mute;
-    juce::ScopedPointer<AppStyle> const style_step_area_octave;
-    juce::ScopedPointer<AppStyle> const style_step_area_chord;
-    juce::ScopedPointer<AppStyle> const style_step_area_duration;
-    juce::ScopedPointer<AppStyle> const style_step_area_velocity;
-    juce::ScopedPointer<AppStyle> const style_step_area_run;
-    juce::ScopedPointer<AppStyle> const style_step_area_skip;
-    juce::ScopedPointer<AppStyle> const style_step_area_steps;
+    std::unique_ptr<ColorTheme> color_theme;
+    std::unique_ptr<AppStyle> const style_step_area;
+    std::unique_ptr<AppStyle> const style_step_area_mute;
+    std::unique_ptr<AppStyle> const style_step_area_octave;
+    std::unique_ptr<AppStyle> const style_step_area_chord;
+    std::unique_ptr<AppStyle> const style_step_area_duration;
+    std::unique_ptr<AppStyle> const style_step_area_velocity;
+    std::unique_ptr<AppStyle> const style_step_area_run;
+    std::unique_ptr<AppStyle> const style_step_area_skip;
+    std::unique_ptr<AppStyle> const style_step_area_steps;
 
-    juce::ScopedPointer<AppStyle> const style_bar_area;
-    juce::ScopedPointer<AppStyle> const style_bar_area_solo;
-    juce::ScopedPointer<AppStyle> const style_bar_area_time;
-    juce::ScopedPointer<AppStyle> const style_bar_area_skip;
-    juce::ScopedPointer<AppStyle> const style_bar_area_run;
-    juce::ScopedPointer<AppStyle> const style_bar_area_chord;
-    juce::ScopedPointer<AppStyle> const style_bar_area_octave;
-    juce::ScopedPointer<AppStyle> const style_bar_area_mute;
+    std::unique_ptr<AppStyle> const style_bar_area;
+    std::unique_ptr<AppStyle> const style_bar_area_solo;
+    std::unique_ptr<AppStyle> const style_bar_area_time;
+    std::unique_ptr<AppStyle> const style_bar_area_skip;
+    std::unique_ptr<AppStyle> const style_bar_area_run;
+    std::unique_ptr<AppStyle> const style_bar_area_chord;
+    std::unique_ptr<AppStyle> const style_bar_area_octave;
+    std::unique_ptr<AppStyle> const style_bar_area_mute;
 
-    juce::ScopedPointer<AppStyle> const style_global_area;
-    juce::ScopedPointer<AppStyle> const style_global_area_run;
-    juce::ScopedPointer<AppStyle> const style_global_area_chord;
-    juce::ScopedPointer<AppStyle> const style_global_area_octave;
-    juce::ScopedPointer<AppStyle> const style_global_area_notes;
-    juce::ScopedPointer<AppStyle> const style_global_area_stop;
-    juce::ScopedPointer<AppStyle> const style_global_area_velocity;
-    juce::ScopedPointer<AppStyle> const style_global_area_duration;
+    std::unique_ptr<AppStyle> const style_global_area;
+    std::unique_ptr<AppStyle> const style_global_area_run;
+    std::unique_ptr<AppStyle> const style_global_area_chord;
+    std::unique_ptr<AppStyle> const style_global_area_octave;
+    std::unique_ptr<AppStyle> const style_global_area_notes;
+    std::unique_ptr<AppStyle> const style_global_area_stop;
+    std::unique_ptr<AppStyle> const style_global_area_velocity;
+    std::unique_ptr<AppStyle> const style_global_area_duration;
 
-    juce::ScopedPointer<AppStyle> const style_menu_area;
-    juce::ScopedPointer<AppStyle> const style_menu_area_mute;
-    juce::ScopedPointer<AppStyle> const style_menu_area_octave;
-    juce::ScopedPointer<AppStyle> const style_menu_area_chord;
-    juce::ScopedPointer<AppStyle> const style_menu_area_duration;
-    juce::ScopedPointer<AppStyle> const style_menu_area_velocity;
-    juce::ScopedPointer<AppStyle> const style_menu_area_run;
-    juce::ScopedPointer<AppStyle> const style_menu_area_skip;
+    std::unique_ptr<AppStyle> const style_menu_area;
+    std::unique_ptr<AppStyle> const style_menu_area_mute;
+    std::unique_ptr<AppStyle> const style_menu_area_octave;
+    std::unique_ptr<AppStyle> const style_menu_area_chord;
+    std::unique_ptr<AppStyle> const style_menu_area_duration;
+    std::unique_ptr<AppStyle> const style_menu_area_velocity;
+    std::unique_ptr<AppStyle> const style_menu_area_run;
+    std::unique_ptr<AppStyle> const style_menu_area_skip;
 
-    juce::ScopedPointer<AppStyle> const style_popup_editor;
-    juce::ScopedPointer<AppStyle> const style_popup_editor_mute;
-    juce::ScopedPointer<AppStyle> const style_popup_editor_octave;
-    juce::ScopedPointer<AppStyle> const style_popup_editor_chord;
-    juce::ScopedPointer<AppStyle> const style_popup_editor_velocity;
-    juce::ScopedPointer<AppStyle> const style_popup_editor_run;
-    juce::ScopedPointer<AppStyle> const style_popup_editor_skip;
+    std::unique_ptr<AppStyle> const style_popup_editor;
+    std::unique_ptr<AppStyle> const style_popup_editor_mute;
+    std::unique_ptr<AppStyle> const style_popup_editor_octave;
+    std::unique_ptr<AppStyle> const style_popup_editor_chord;
+    std::unique_ptr<AppStyle> const style_popup_editor_velocity;
+    std::unique_ptr<AppStyle> const style_popup_editor_run;
+    std::unique_ptr<AppStyle> const style_popup_editor_skip;
 
     juce::Array<AppStyle *> styles;
 

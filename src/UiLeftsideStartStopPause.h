@@ -54,15 +54,15 @@ class UiLeftsideStartStopPause : public SubeditorBase
     {
         if (!bstepIsStandalone)
         {
-            button_play->set_style(store_->style_global_area_stop);
-            button_pause->set_style(store_->style_global_area_stop);
-            button_stop->set_style(store_->style_global_area_stop);
+            button_play->set_style(store_->style_global_area_stop.get());
+            button_pause->set_style(store_->style_global_area_stop.get());
+            button_stop->set_style(store_->style_global_area_stop.get());
         }
         else
         {
-            button_play->set_style(store_->style_global_area_chord);
-            button_pause->set_style(store_->style_global_area_octave);
-            button_stop->set_style(store_->style_global_area_stop);
+            button_play->set_style(store_->style_global_area_chord.get());
+            button_pause->set_style(store_->style_global_area_octave.get());
+            button_stop->set_style(store_->style_global_area_stop.get());
         }
     }
 

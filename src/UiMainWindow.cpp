@@ -103,7 +103,7 @@ void GstepAudioProcessorEditor::open_midi_learn_editor()
         _config->midi_learn_editor = std::make_unique<UiEditorMidiLearn>(_app_instance_store);
         _app_instance_store->midi_in_map.set_learning(true);
         _config->controller_mid_learn = std::make_unique<ControllerMIDILearn>(
-            _app_instance_store, midi_learn_focus, midi_cc_value);
+            _app_instance_store, midi_learn_focus.get(), midi_cc_value.get());
 
         if (!_app_instance_store->midi_io_handler.midi_learn_in.is_open())
         {
@@ -410,12 +410,14 @@ void GstepAudioProcessorEditor::visibilityChanged() {}
 GstepAudioProcessorEditor::GstepAudioProcessorEditor(GstepAudioProcessor *processor_)
     : AudioProcessorEditor(processor_), _app_instance_store(&processor_->_app_instance_store)
 {
-    addAndMakeVisible(midi_learn_focus = new juce::ImageButton(juce::String()));
+    midi_learn_focus = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*midi_learn_focus);
 
     midi_learn_focus->setImages(false, true, false, juce::Image(), 1.000f, juce::Colour(0x00000000),
                                 juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(),
                                 1.000f, juce::Colour(0x00000000));
-    addAndMakeVisible(midi_cc_value = new juce::Label(juce::String(), TRANS("n/a")));
+    midi_cc_value = std::make_unique<juce::Label>(juce::String(), TRANS("n/a"));
+    addAndMakeVisible(*midi_cc_value);
     midi_cc_value->setFont(juce::Font(15.00f, juce::Font::bold));
     midi_cc_value->setJustificationType(juce::Justification::centred);
     midi_cc_value->setEditable(false, false, false);

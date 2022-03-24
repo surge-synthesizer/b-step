@@ -90,17 +90,17 @@ class UiEditorAbout : public UiEditor, public juce::Button::Listener
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::ImageButton> au_button;
-    juce::ScopedPointer<juce::ImageButton> vst_button;
-    juce::ScopedPointer<juce::HyperlinkButton> hyperlinkButton8;
-    juce::ScopedPointer<juce::HyperlinkButton> video_1;
-    juce::ScopedPointer<juce::HyperlinkButton> video_2;
-    juce::ScopedPointer<juce::HyperlinkButton> video_3;
-    juce::ScopedPointer<juce::HyperlinkButton> video_4;
-    juce::ScopedPointer<juce::HyperlinkButton> video_5;
-    juce::ScopedPointer<juce::TextEditor> debug_out;
-    juce::ScopedPointer<UiEditorToolbar> toolbar;
-    juce::ScopedPointer<juce::ImageButton> open_debug;
+    std::unique_ptr<juce::ImageButton> au_button;
+    std::unique_ptr<juce::ImageButton> vst_button;
+    std::unique_ptr<juce::HyperlinkButton> hyperlinkButton8;
+    std::unique_ptr<juce::HyperlinkButton> video_1;
+    std::unique_ptr<juce::HyperlinkButton> video_2;
+    std::unique_ptr<juce::HyperlinkButton> video_3;
+    std::unique_ptr<juce::HyperlinkButton> video_4;
+    std::unique_ptr<juce::HyperlinkButton> video_5;
+    std::unique_ptr<juce::TextEditor> debug_out;
+    std::unique_ptr<UiEditorToolbar> toolbar;
+    std::unique_ptr<juce::ImageButton> open_debug;
 
     std::unique_ptr<juce::Label> buildInfo;
 

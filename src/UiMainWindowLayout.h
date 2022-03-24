@@ -258,7 +258,7 @@ class LabelPopupWithLivetime
     int _live_time;
 
     const MONO_Controller *const _controller;
-    juce::ScopedPointer<SliderValuePopup> popup;
+    std::unique_ptr<SliderValuePopup> popup;
 
     bool is_top_popup;
 
@@ -323,7 +323,7 @@ class LabelPopupWithLivetime
             }
         }
 
-        popup = new SliderValuePopup(_controller->get_model());
+        popup = std::make_unique<SliderValuePopup>(_controller->get_model());
 
         juce::String text;
         _controller->get_label_text(text);
@@ -342,7 +342,7 @@ class LabelPopupWithLivetime
         popup->setVisible(true);
         popup->setAlwaysOnTop(true);
 #else
-        mainwindow_->addAndMakeVisible(popup);
+        mainwindow_->addAndMakeVisible(*popup);
         // popup->enterModalState( true );
         popup->toFront(true);
 #endif

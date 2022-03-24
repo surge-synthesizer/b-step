@@ -30,9 +30,9 @@
 UiEditorKeyboard::UiEditorKeyboard(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-MIDI-Keyboard"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(keyboard = new juce::MidiKeyboardComponent(
-                          *_app_instance_store->audio_processor,
-                          juce::MidiKeyboardComponent::horizontalKeyboard));
+    keyboard = std::make_unique<juce::MidiKeyboardComponent>(
+        *_app_instance_store->audio_processor, juce::MidiKeyboardComponent::horizontalKeyboard);
+    addAndMakeVisible(*keyboard);
 
     //[UserPreSize]
 
@@ -85,7 +85,7 @@ void UiEditorKeyboard::resized()
 
     keyboard->setBounds(2, 2, getWidth() - 4, getHeight() - 4);
     //[UserResized] Add your own custom resize handling here..
-    keyboard->setKeyWidth(float(getWidth()) / (float(128 / 12) * 7.5));
+    keyboard->setKeyWidth(float(getWidth()) / (float(128.0f / 12) * 7.5));
     ResizableWindow::resized();
     //[/UserResized]
 }

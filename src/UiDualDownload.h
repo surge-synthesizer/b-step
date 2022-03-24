@@ -304,22 +304,22 @@ class UiDualDownload : public UiEditor,
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::TextButton> ok;
-    juce::ScopedPointer<juce::TextButton> close;
-    juce::ScopedPointer<juce::Slider> data_progress;
-    juce::ScopedPointer<juce::TextButton> cancel_data;
-    juce::ScopedPointer<juce::Slider> audio_progress;
-    juce::ScopedPointer<juce::Label> data_info;
-    juce::ScopedPointer<juce::Label> data_name;
-    juce::ScopedPointer<juce::Label> old_info_2;
-    juce::ScopedPointer<juce::Label> old_info_3;
-    juce::ScopedPointer<juce::Label> titel7;
-    juce::ScopedPointer<juce::TextButton> chancel_audio;
-    juce::ScopedPointer<juce::Label> audio_info;
-    juce::ScopedPointer<juce::Label> audio_name;
-    juce::ScopedPointer<juce::Label> data_percent;
-    juce::ScopedPointer<juce::Label> audio_percent;
-    juce::ScopedPointer<UiEditorToolbar> toolbar;
+    std::unique_ptr<juce::TextButton> ok;
+    std::unique_ptr<juce::TextButton> close;
+    std::unique_ptr<juce::Slider> data_progress;
+    std::unique_ptr<juce::TextButton> cancel_data;
+    std::unique_ptr<juce::Slider> audio_progress;
+    std::unique_ptr<juce::Label> data_info;
+    std::unique_ptr<juce::Label> data_name;
+    std::unique_ptr<juce::Label> old_info_2;
+    std::unique_ptr<juce::Label> old_info_3;
+    std::unique_ptr<juce::Label> titel7;
+    std::unique_ptr<juce::TextButton> chancel_audio;
+    std::unique_ptr<juce::Label> audio_info;
+    std::unique_ptr<juce::Label> audio_name;
+    std::unique_ptr<juce::Label> data_percent;
+    std::unique_ptr<juce::Label> audio_percent;
+    std::unique_ptr<UiEditorToolbar> toolbar;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiDualDownload)

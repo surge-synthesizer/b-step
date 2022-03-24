@@ -197,8 +197,8 @@ class GstepAudioProcessorEditor : public juce::AudioProcessorEditor,
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::ImageButton> midi_learn_focus;
-    juce::ScopedPointer<juce::Label> midi_cc_value;
+    std::unique_ptr<juce::ImageButton> midi_learn_focus;
+    std::unique_ptr<juce::Label> midi_cc_value;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GstepAudioProcessorEditor)

@@ -89,22 +89,22 @@ class UiColumn16 : public SubeditorBase
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<ModelBase> elem_0;
-    juce::ScopedPointer<ModelBase> elem_1;
-    juce::ScopedPointer<ModelBase> elem_2;
-    juce::ScopedPointer<ModelBase> elem_3;
-    juce::ScopedPointer<ModelBase> elem_4;
-    juce::ScopedPointer<ModelBase> elem_5;
-    juce::ScopedPointer<ModelBase> elem_6;
-    juce::ScopedPointer<ModelBase> elem_7;
-    juce::ScopedPointer<ModelBase> elem_8;
-    juce::ScopedPointer<ModelBase> elem_9;
-    juce::ScopedPointer<ModelBase> elem_10;
-    juce::ScopedPointer<ModelBase> elem_11;
-    juce::ScopedPointer<ModelBase> elem_12;
-    juce::ScopedPointer<ModelBase> elem_13;
-    juce::ScopedPointer<ModelBase> elem_14;
-    juce::ScopedPointer<ModelBase> elem_15;
+    std::unique_ptr<ModelBase> elem_0;
+    std::unique_ptr<ModelBase> elem_1;
+    std::unique_ptr<ModelBase> elem_2;
+    std::unique_ptr<ModelBase> elem_3;
+    std::unique_ptr<ModelBase> elem_4;
+    std::unique_ptr<ModelBase> elem_5;
+    std::unique_ptr<ModelBase> elem_6;
+    std::unique_ptr<ModelBase> elem_7;
+    std::unique_ptr<ModelBase> elem_8;
+    std::unique_ptr<ModelBase> elem_9;
+    std::unique_ptr<ModelBase> elem_10;
+    std::unique_ptr<ModelBase> elem_11;
+    std::unique_ptr<ModelBase> elem_12;
+    std::unique_ptr<ModelBase> elem_13;
+    std::unique_ptr<ModelBase> elem_14;
+    std::unique_ptr<ModelBase> elem_15;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiColumn16)

@@ -34,71 +34,87 @@ void UiEditorColourStyler::timerCallback()
 UiEditorColourStyler::UiEditorColourStyler(ComponentColours *const colours_)
     : _colours(colours_), editable_colour(&colours_->slider_text_colour)
 {
-    addAndMakeVisible(colour_selector =
-                          new juce::ColourSelector(juce::ColourSelector::showSliders |
-                                                   juce::ColourSelector::showColourspace));
+    colour_selector = std::make_unique<juce::ColourSelector>(juce::ColourSelector::showSliders |
+                                                             juce::ColourSelector::showColourspace);
+    addAndMakeVisible(*colour_selector);
 
-    addAndMakeVisible(col_1 = new juce::TextButton(juce::String()));
+    col_1 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_1);
     col_1->addListener(this);
 
-    addAndMakeVisible(style_1 = new juce::TextButton(juce::String()));
+    col_1 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_1);
     style_1->setButtonText(TRANS("PRE 1"));
     style_1->addListener(this);
     style_1->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff080d0f));
     style_1->setColour(juce::TextButton::textColourOffId, juce::Colour(0xff9b9dc8));
 
-    addAndMakeVisible(col_2 = new juce::TextButton(juce::String()));
+    col_2 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_2);
     col_2->addListener(this);
 
-    addAndMakeVisible(col_3 = new juce::TextButton(juce::String()));
+    col_3 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_3);
     col_3->addListener(this);
 
-    addAndMakeVisible(col_4 = new juce::TextButton(juce::String()));
+    col_4 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_4);
     col_4->addListener(this);
 
-    addAndMakeVisible(col_5 = new juce::TextButton(juce::String()));
+    col_5 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_5);
     col_5->addListener(this);
 
-    addAndMakeVisible(col_6 = new juce::TextButton(juce::String()));
+    col_6 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_6);
     col_6->addListener(this);
 
-    addAndMakeVisible(col_7 = new juce::TextButton(juce::String()));
+    col_7 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_7);
     col_7->addListener(this);
 
-    addAndMakeVisible(col_8 = new juce::TextButton(juce::String()));
+    col_8 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_8);
     col_8->addListener(this);
 
-    addAndMakeVisible(col_9 = new juce::TextButton(juce::String()));
+    col_9 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_9);
     col_9->addListener(this);
 
-    addAndMakeVisible(col_10 = new juce::TextButton(juce::String()));
+    col_10 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_10);
     col_10->addListener(this);
 
-    addAndMakeVisible(style_2 = new juce::TextButton(juce::String()));
+    col_1 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_1);
     style_2->setButtonText(TRANS("PRE 1"));
     style_2->addListener(this);
     style_2->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff080d0f));
     style_2->setColour(juce::TextButton::textColourOffId, juce::Colour(0xff9b9dc8));
 
-    addAndMakeVisible(style_3 = new juce::TextButton(juce::String()));
+    style_3 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*style_3);
     style_3->setButtonText(TRANS("PRE 1"));
     style_3->addListener(this);
     style_3->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff080d0f));
     style_3->setColour(juce::TextButton::textColourOffId, juce::Colour(0xff9b9dc8));
 
-    addAndMakeVisible(style_4 = new juce::TextButton(juce::String()));
+    style_4 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*style_4);
     style_4->setButtonText(TRANS("PRE 1"));
     style_4->addListener(this);
     style_4->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff080d0f));
     style_4->setColour(juce::TextButton::textColourOffId, juce::Colour(0xff9b9dc8));
 
-    addAndMakeVisible(style_5 = new juce::TextButton(juce::String()));
+    style_5 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*style_5);
     style_5->setButtonText(TRANS("PRE 1"));
     style_5->addListener(this);
     style_5->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff080d0f));
     style_5->setColour(juce::TextButton::textColourOffId, juce::Colour(0xff9b9dc8));
 
-    addAndMakeVisible(col_11 = new juce::TextButton(juce::String()));
+    col_11 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_11);
     col_11->addListener(this);
 
     //[UserPreSize]
@@ -195,19 +211,19 @@ void UiEditorColourStyler::buttonClicked(juce::Button *buttonThatWasClicked)
     stopTimer();
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == col_1)
+    if (buttonThatWasClicked == col_1.get())
     {
         //[UserButtonCode_col_1] -- add your button handler code here..
         editable_colour = &_colours->slider_track_colour;
         buttonThatWasClicked->setButtonText("SL - TRCK");
         //[/UserButtonCode_col_1]
     }
-    else if (buttonThatWasClicked == style_1)
+    else if (buttonThatWasClicked == style_1.get())
     {
         //[UserButtonCode_style_1] -- add your button handler code here..
         //[/UserButtonCode_style_1]
     }
-    else if (buttonThatWasClicked == col_2)
+    else if (buttonThatWasClicked == col_2.get())
     {
         //[UserButtonCode_col_2] -- add your button handler code here..
 
@@ -215,83 +231,83 @@ void UiEditorColourStyler::buttonClicked(juce::Button *buttonThatWasClicked)
         buttonThatWasClicked->setButtonText("SL - LINE");
         //[/UserButtonCode_col_2]
     }
-    else if (buttonThatWasClicked == col_3)
+    else if (buttonThatWasClicked == col_3.get())
     {
         //[UserButtonCode_col_3] -- add your button handler code here..
         editable_colour = &_colours->slider_text_colour;
         buttonThatWasClicked->setButtonText("SL - TXT");
         //[/UserButtonCode_col_3]
     }
-    else if (buttonThatWasClicked == col_4)
+    else if (buttonThatWasClicked == col_4.get())
     {
         //[UserButtonCode_col_4] -- add your button handler code here..
         editable_colour = &_colours->button_on_colour;
         buttonThatWasClicked->setButtonText("BTN - ON");
         //[/UserButtonCode_col_4]
     }
-    else if (buttonThatWasClicked == col_5)
+    else if (buttonThatWasClicked == col_5.get())
     {
         //[UserButtonCode_col_5] -- add your button handler code here..
         editable_colour = &_colours->button_off_colour;
         buttonThatWasClicked->setButtonText("BTN - OFF");
         //[/UserButtonCode_col_5]
     }
-    else if (buttonThatWasClicked == col_6)
+    else if (buttonThatWasClicked == col_6.get())
     {
         //[UserButtonCode_col_6] -- add your button handler code here..
         editable_colour = &_colours->button_text_colour;
         buttonThatWasClicked->setButtonText("BTN - TXT");
         //[/UserButtonCode_col_6]
     }
-    else if (buttonThatWasClicked == col_7)
+    else if (buttonThatWasClicked == col_7.get())
     {
         //[UserButtonCode_col_7] -- add your button handler code here..
         editable_colour = &_colours->slider_line_colour;
         buttonThatWasClicked->setButtonText("SL LINE");
         //[/UserButtonCode_col_7]
     }
-    else if (buttonThatWasClicked == col_8)
+    else if (buttonThatWasClicked == col_8.get())
     {
         //[UserButtonCode_col_8] -- add your button handler code here..
         editable_colour = &_colours->bg;
         buttonThatWasClicked->setButtonText("BG");
         //[/UserButtonCode_col_8]
     }
-    else if (buttonThatWasClicked == col_9)
+    else if (buttonThatWasClicked == col_9.get())
     {
         //[UserButtonCode_col_9] -- add your button handler code here..
         editable_colour = &_colours->bg_lines;
         buttonThatWasClicked->setButtonText("BG - LINES");
         //[/UserButtonCode_col_9]
     }
-    else if (buttonThatWasClicked == col_10)
+    else if (buttonThatWasClicked == col_10.get())
     {
         //[UserButtonCode_col_10] -- add your button handler code here..
         editable_colour = &_colours->label_text_colour;
         buttonThatWasClicked->setButtonText("LBL - TXT");
         //[/UserButtonCode_col_10]
     }
-    else if (buttonThatWasClicked == style_2)
+    else if (buttonThatWasClicked == style_2.get())
     {
         //[UserButtonCode_style_2] -- add your button handler code here..
         //[/UserButtonCode_style_2]
     }
-    else if (buttonThatWasClicked == style_3)
+    else if (buttonThatWasClicked == style_3.get())
     {
         //[UserButtonCode_style_3] -- add your button handler code here..
         //[/UserButtonCode_style_3]
     }
-    else if (buttonThatWasClicked == style_4)
+    else if (buttonThatWasClicked == style_4.get())
     {
         //[UserButtonCode_style_4] -- add your button handler code here..
         //[/UserButtonCode_style_4]
     }
-    else if (buttonThatWasClicked == style_5)
+    else if (buttonThatWasClicked == style_5.get())
     {
         //[UserButtonCode_style_5] -- add your button handler code here..
         //[/UserButtonCode_style_5]
     }
-    else if (buttonThatWasClicked == col_11)
+    else if (buttonThatWasClicked == col_11.get())
     {
         //[UserButtonCode_col_11] -- add your button handler code here..
         //[/UserButtonCode_col_11]

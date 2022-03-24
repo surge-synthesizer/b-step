@@ -87,17 +87,17 @@ class UiEditorMidiLearn : public UiEditor,
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::Label> label_target;
-    juce::ScopedPointer<juce::TextButton> delete_asignment;
-    juce::ScopedPointer<juce::ComboBox> cb_midi_learn_mode;
-    juce::ScopedPointer<juce::ComboBox> cb_midi_assigns;
-    juce::ScopedPointer<UiEditorToolbar> toolbar;
-    juce::ScopedPointer<juce::Label> label_target3;
-    juce::ScopedPointer<juce::Label> label_target8;
-    juce::ScopedPointer<juce::ImageButton> button_remove_all_mappings;
-    juce::ScopedPointer<juce::TextButton> button_info;
-    juce::ScopedPointer<juce::Label> label;
-    juce::ScopedPointer<juce::Drawable> drawable1;
+    std::unique_ptr<juce::Label> label_target;
+    std::unique_ptr<juce::TextButton> delete_asignment;
+    std::unique_ptr<juce::ComboBox> cb_midi_learn_mode;
+    std::unique_ptr<juce::ComboBox> cb_midi_assigns;
+    std::unique_ptr<UiEditorToolbar> toolbar;
+    std::unique_ptr<juce::Label> label_target3;
+    std::unique_ptr<juce::Label> label_target8;
+    std::unique_ptr<juce::ImageButton> button_remove_all_mappings;
+    std::unique_ptr<juce::TextButton> button_info;
+    std::unique_ptr<juce::Label> label;
+    std::unique_ptr<juce::Drawable> drawable1;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorMidiLearn)

@@ -43,7 +43,8 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     : UiEditor("B-AudioPlayer"), _app_instance_store(app_instance_store_), _listener(listener_),
       _audio_player(audio_player_)
 {
-    addAndMakeVisible(ok = new juce::TextButton(juce::String()));
+    ok = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*ok);
     ok->setExplicitFocusOrder(2);
     ok->setButtonText(TRANS("OK / ASSIGN"));
     ok->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
@@ -54,7 +55,8 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     ok->setColour(juce::TextButton::textColourOnId, juce::Colours::chartreuse);
     ok->setColour(juce::TextButton::textColourOffId, juce::Colours::chartreuse);
 
-    addAndMakeVisible(cancel = new juce::TextButton(juce::String()));
+    cancel = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*cancel);
     cancel->setExplicitFocusOrder(3);
     cancel->setButtonText(TRANS("CANCEL"));
     cancel->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
@@ -65,13 +67,15 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     cancel->setColour(juce::TextButton::textColourOnId, juce::Colours::red);
     cancel->setColour(juce::TextButton::textColourOffId, juce::Colours::red);
 
-    addAndMakeVisible(audio_thumb_new = new juce::Slider(juce::String()));
+    audio_thumb_new = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*audio_thumb_new);
     audio_thumb_new->setRange(0, 10, 0);
     audio_thumb_new->setSliderStyle(juce::Slider::LinearHorizontal);
     audio_thumb_new->setTextBoxStyle(juce::Slider::NoTextBox, false, 80, 20);
     audio_thumb_new->addListener(this);
 
-    addAndMakeVisible(play_new = new juce::TextButton(juce::String()));
+    play_new = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*play_new);
     play_new->setExplicitFocusOrder(2);
     play_new->setButtonText(TRANS("PLAY"));
     play_new->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
@@ -82,15 +86,16 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     play_new->setColour(juce::TextButton::textColourOnId, juce::Colours::chartreuse);
     play_new->setColour(juce::TextButton::textColourOffId, juce::Colours::chartreuse);
 
-    addAndMakeVisible(audio_thumb_old = new juce::Slider(juce::String()));
+    audio_thumb_old = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*audio_thumb_old);
     audio_thumb_old->setRange(0, 10, 0);
     audio_thumb_old->setSliderStyle(juce::Slider::LinearHorizontal);
     audio_thumb_old->setTextBoxStyle(juce::Slider::NoTextBox, false, 80, 20);
     audio_thumb_old->addListener(this);
 
-    addAndMakeVisible(
-        titel2 = new juce::Label(juce::String(),
-                                 TRANS("Would you like to assign this audio to project: ")));
+    titel2 = std::make_unique<juce::Label>(
+        juce::String(), TRANS("Would you like to assign this audio to project: "));
+    addAndMakeVisible(*titel2);
     titel2->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
     titel2->setJustificationType(juce::Justification::centredLeft);
     titel2->setEditable(false, false, false);
@@ -99,7 +104,8 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     titel2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     titel2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(project_name = new juce::Label(juce::String(), TRANS("XYZ")));
+    project_name = std::make_unique<juce::Label>(juce::String(), TRANS("XYZ"));
+    addAndMakeVisible(*project_name);
     project_name->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
     project_name->setJustificationType(juce::Justification::centred);
     project_name->setEditable(false, false, false);
@@ -107,7 +113,8 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     project_name->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     project_name->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(titel4 = new juce::Label(juce::String(), TRANS("?")));
+    titel4 = std::make_unique<juce::Label>(juce::String(), TRANS("?"));
+    addAndMakeVisible(*titel4);
     titel4->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
     titel4->setJustificationType(juce::Justification::centredRight);
     titel4->setEditable(false, false, false);
@@ -116,11 +123,11 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     titel4->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     titel4->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(
-        old_info_2 = new juce::Label(
-            juce::String(),
-            TRANS("Assigning a audio file will create a copy of the file you like to asign. It "
-                  "also replaces existing audio assigns for this projects (unrestoreable).")));
+    old_info_2 = std::make_unique<juce::Label>(
+        juce::String(),
+        TRANS("Assigning a audio file will create a copy of the file you like to asign. It "
+              "also replaces existing audio assigns for this projects (unrestoreable)."));
+    addAndMakeVisible(*old_info_2);
     old_info_2->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
     old_info_2->setJustificationType(juce::Justification::topLeft);
     old_info_2->setEditable(false, false, false);
@@ -128,7 +135,8 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     old_info_2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     old_info_2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(old_info_3 = new juce::Label(juce::String(), TRANS("NOTE:")));
+    old_info_3 = std::make_unique<juce::Label>(juce::String(), TRANS("NOTE:"));
+    addAndMakeVisible(*old_info_3);
     old_info_3->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
     old_info_3->setJustificationType(juce::Justification::topLeft);
     old_info_3->setEditable(false, false, false);
@@ -136,8 +144,8 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     old_info_3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     old_info_3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(titel7 =
-                          new juce::Label(juce::String(), TRANS("ASSIGN SAMPLE AUDIO TO PROJECT")));
+    titel7 = std::make_unique<juce::Label>(juce::String(), TRANS("ASSIGN SAMPLE AUDIO TO PROJECT"));
+    addAndMakeVisible(*titel7);
     titel7->setFont(juce::Font("Oswald", 25.00f, juce::Font::bold));
     titel7->setJustificationType(juce::Justification::centredLeft);
     titel7->setEditable(false, false, false);
@@ -146,7 +154,8 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     titel7->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     titel7->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(play_old = new juce::TextButton(juce::String()));
+    play_old = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*play_old);
     play_old->setExplicitFocusOrder(2);
     play_old->setButtonText(TRANS("PLAY"));
     play_old->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
@@ -157,9 +166,9 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     play_old->setColour(juce::TextButton::textColourOnId, juce::Colours::red);
     play_old->setColour(juce::TextButton::textColourOffId, juce::Colours::red);
 
-    addAndMakeVisible(
-        old_info_1 = new juce::Label(juce::String(),
-                                     TRANS("Currently assigned audio file (will be replaced)")));
+    old_info_1 = std::make_unique<juce::Label>(
+        juce::String(), TRANS("Currently assigned audio file (will be replaced)"));
+    addAndMakeVisible(*old_info_1);
     old_info_1->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
     old_info_1->setJustificationType(juce::Justification::centredLeft);
     old_info_1->setEditable(false, false, false);
@@ -168,7 +177,8 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     old_info_1->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     old_info_1->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toolbar = new UiEditorToolbar(this, false, true, false));
+    toolbar = std::make_unique<UiEditorToolbar>(this, false, true, false);
+    addAndMakeVisible(*toolbar);
 
     //[UserPreSize]
     project_name->setText(project_name_, juce::dontSendNotification);
@@ -192,7 +202,7 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     enterModalState(true);
     // AUTO START
     _playing_thumb = nullptr;
-    buttonClicked(play_new);
+    buttonClicked(play_new.get());
 
     startTimer(50);
     //[/Constructor]
@@ -289,7 +299,7 @@ void UiDualAudioMessage::buttonClicked(juce::Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == ok)
+    if (buttonThatWasClicked == ok.get())
     {
         //[UserButtonCode_ok] -- add your button handler code here..
         _audio_player->stop(true);
@@ -297,7 +307,7 @@ void UiDualAudioMessage::buttonClicked(juce::Button *buttonThatWasClicked)
         delete this;
         //[/UserButtonCode_ok]
     }
-    else if (buttonThatWasClicked == cancel)
+    else if (buttonThatWasClicked == cancel.get())
     {
         //[UserButtonCode_cancel] -- add your button handler code here..
         _audio_player->stop(true);
@@ -305,16 +315,16 @@ void UiDualAudioMessage::buttonClicked(juce::Button *buttonThatWasClicked)
         delete this;
         //[/UserButtonCode_cancel]
     }
-    else if (buttonThatWasClicked == play_new)
+    else if (buttonThatWasClicked == play_new.get())
     {
         //[UserButtonCode_play_new] -- add your button handler code here..
-        if (_playing_thumb != audio_thumb_new)
+        if (_playing_thumb != audio_thumb_new.get())
         {
             _audio_player->stop();
             if (_audio_player->loadFileIntoTransport(_listener->get_new_audio_file()))
             {
-                _audio_player->play(audio_thumb_new);
-                _playing_thumb = audio_thumb_new;
+                _audio_player->play(audio_thumb_new.get());
+                _playing_thumb = audio_thumb_new.get();
 
                 play_new->setButtonText("STOP");
                 play_old->setButtonText("PLAY");
@@ -328,16 +338,16 @@ void UiDualAudioMessage::buttonClicked(juce::Button *buttonThatWasClicked)
         }
         //[/UserButtonCode_play_new]
     }
-    else if (buttonThatWasClicked == play_old)
+    else if (buttonThatWasClicked == play_old.get())
     {
         //[UserButtonCode_play_old] -- add your button handler code here..
-        if (_playing_thumb != audio_thumb_old)
+        if (_playing_thumb != audio_thumb_old.get())
         {
             _audio_player->stop();
             if (_audio_player->loadFileIntoTransport(_listener->get_old_audio_file()))
             {
-                _audio_player->play(audio_thumb_old);
-                _playing_thumb = audio_thumb_old;
+                _audio_player->play(audio_thumb_old.get());
+                _playing_thumb = audio_thumb_old.get();
 
                 play_old->setButtonText("STOP");
                 play_new->setButtonText("PLAY");
@@ -361,12 +371,12 @@ void UiDualAudioMessage::sliderValueChanged(juce::Slider *sliderThatWasMoved)
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
 
-    if (sliderThatWasMoved == audio_thumb_new)
+    if (sliderThatWasMoved == audio_thumb_new.get())
     {
         //[UserSliderCode_audio_thumb_new] -- add your slider handling code here..
         //[/UserSliderCode_audio_thumb_new]
     }
-    else if (sliderThatWasMoved == audio_thumb_old)
+    else if (sliderThatWasMoved == audio_thumb_old.get())
     {
         //[UserSliderCode_audio_thumb_old] -- add your slider handling code here..
         //[/UserSliderCode_audio_thumb_old]

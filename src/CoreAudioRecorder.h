@@ -95,8 +95,7 @@ class AudioRecorder : public juce::AudioIODeviceCallback
         {
             // Create an OutputStream to write to our destination file...
             file.deleteFile();
-            juce::ScopedPointer<juce::FileOutputStream> fileStream(
-                file.createOutputStream().release());
+            std::unique_ptr<juce::FileOutputStream> fileStream(file.createOutputStream().release());
 
             if (fileStream != nullptr)
             {
@@ -115,13 +114,13 @@ class AudioRecorder : public juce::AudioIODeviceCallback
 
                     // Now we'll create one of these helper objects which will act as a FIFO buffer,
                     // and will write the data to disk on our background thread.
-                    threadedWriter = new juce::AudioFormatWriter::ThreadedWriter(
+                    threadedWriter = std::make_unique<juce::AudioFormatWriter::ThreadedWriter>(
                         writer, backgroundThread, 32768);
 
                     // And now, swap over our active writer pointer so that the audio callback will
                     // start using it..
                     const juce::ScopedLock sl(writerLock);
-                    activeWriter = threadedWriter;
+                    activeWriter = threadedWriter.get();
                     if (!bstepIsStandalone && is_host_audio_recorder)
                         _app_instance_store->audio_processor->set_active_writer(activeWriter);
                 }
@@ -262,7 +261,7 @@ class AudioRecorder : public juce::AudioIODeviceCallback
 
   private:
     juce::TimeSliceThread backgroundThread; // the thread that will write our audio data to disk
-    juce::ScopedPointer<juce::AudioFormatWriter::ThreadedWriter>
+    std::unique_ptr<juce::AudioFormatWriter::ThreadedWriter>
         threadedWriter; // the FIFO used to buffer the incoming data
     double sampleRate;
     juce::AudioDeviceManager deviceManager;

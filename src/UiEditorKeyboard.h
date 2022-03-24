@@ -56,7 +56,7 @@ class UiEditorKeyboard : public UiEditor
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::MidiKeyboardComponent> keyboard;
+    std::unique_ptr<juce::MidiKeyboardComponent> keyboard;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorKeyboard)

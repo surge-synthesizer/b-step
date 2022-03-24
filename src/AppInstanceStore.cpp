@@ -873,9 +873,8 @@ juce::String AppInstanceStore::load_midi_map(const juce::File &xml_doc_)
     if (!xml_doc_.existsAsFile())
         return read_error_not_exist(xml_doc_);
 
-    juce::ScopedPointer<juce::XmlElement> xml =
-        juce::XmlDocument(xml_doc_).getDocumentElement().release();
-    return load_midi_map(xml);
+    auto xml = juce::XmlDocument(xml_doc_).getDocumentElement();
+    return load_midi_map(xml.get());
 }
 juce::String AppInstanceStore::load_midi_map(const juce::XmlElement *xml)
 {
@@ -931,8 +930,7 @@ juce::String AppInstanceStore::load_project(const juce::File &xml_doc_)
     if (!xml_doc_.existsAsFile())
         return read_error_not_exist(xml_doc_);
 
-    juce::ScopedPointer<juce::XmlElement> xml =
-        juce::XmlDocument(xml_doc_).getDocumentElement().release();
+    auto xml = juce::XmlDocument(xml_doc_).getDocumentElement();
     if (xml)
     {
         if ((error = load_project(*xml)) == "")
@@ -1086,9 +1084,8 @@ juce::String AppInstanceStore::load_setup(const juce::File &xml_doc_)
     if (!xml_doc_.existsAsFile())
         return read_error_not_exist(xml_doc_);
 
-    juce::ScopedPointer<juce::XmlElement> xml =
-        juce::XmlDocument(xml_doc_).getDocumentElement().release();
-    return load_setup(xml);
+    auto xml = juce::XmlDocument(xml_doc_).getDocumentElement();
+    return load_setup(xml.get());
 }
 juce::String AppInstanceStore::load_setup(const juce::XmlElement *xml)
 {
@@ -1204,8 +1201,7 @@ juce::String AppInstanceStore::load_snapshot(const juce::File &xml_doc_, Bar &ba
     if (!xml_doc_.existsAsFile())
         return read_error_not_exist(xml_doc_);
 
-    juce::ScopedPointer<juce::XmlElement> xml =
-        juce::XmlDocument(xml_doc_).getDocumentElement().release();
+    auto xml = juce::XmlDocument(xml_doc_).getDocumentElement();
     if (xml)
         return load_snapshot(*xml, bar_);
     else
@@ -1294,8 +1290,7 @@ juce::String AppInstanceStore::load_chordset(const juce::File &xml_doc_)
     if (!xml_doc_.existsAsFile())
         return read_error_not_exist(xml_doc_);
 
-    juce::ScopedPointer<juce::XmlElement> xml =
-        juce::XmlDocument(xml_doc_).getDocumentElement().release();
+    auto xml = juce::XmlDocument(xml_doc_).getDocumentElement();
     if (xml)
         return load_chordset(*xml);
     else
@@ -1360,8 +1355,7 @@ juce::String AppInstanceStore::load_colour_theme(const juce::File &xml_doc_)
 {
     juce::String error;
 
-    juce::ScopedPointer<juce::XmlElement> xml =
-        juce::XmlDocument(xml_doc_).getDocumentElement().release();
+    auto xml = juce::XmlDocument(xml_doc_).getDocumentElement();
     if (xml)
         error += load_colour_theme(*xml);
     else
@@ -1391,8 +1385,7 @@ juce::String AppInstanceStore::load_defines(const juce::File &xml_doc_)
 {
     juce::String error;
 
-    juce::ScopedPointer<juce::XmlElement> xml =
-        juce::XmlDocument(xml_doc_).getDocumentElement().release();
+    auto xml = juce::XmlDocument(xml_doc_).getDocumentElement();
     if (xml)
     {
         if (xml->hasTagName(APPDEFF::define_file_version))
@@ -1412,7 +1405,7 @@ juce::String AppInstanceStore::load_defines(const juce::File &xml_doc_)
             }
         }
         else
-            error += read_error(xml, APPDEFF::define_file_version);
+            error += read_error(xml.get(), APPDEFF::define_file_version);
     }
     else
         error += read_error_hard();
@@ -1438,14 +1431,13 @@ juce::String AppInstanceStore::load_global(const juce::File &xml_doc_)
 {
     juce::String error;
 
-    juce::ScopedPointer<juce::XmlElement> xml =
-        juce::XmlDocument(xml_doc_).getDocumentElement().release();
+    auto xml = juce::XmlDocument(xml_doc_).getDocumentElement();
     if (xml)
     {
         if (xml->hasTagName(APPDEFF::global_file_version))
             GLOBAL_VALUE_HOLDER::getInstance()->load_from(*xml);
         else
-            error += read_error(xml, APPDEFF::global_file_version);
+            error += read_error(xml.get(), APPDEFF::global_file_version);
     }
     else
         error += read_error_hard();
@@ -1460,7 +1452,7 @@ juce::String AppInstanceStore::load_global(const juce::File &xml_doc_)
 class ControllerPlay : public MONO_UIButtonController
 {
     AppInstanceStore *_app_instance_store;
-    juce::ScopedPointer<juce::Drawable> _drawable;
+    std::unique_ptr<juce::Drawable> _drawable;
 
     IS_NOT_MIDI_LEARNABLE
 
@@ -1486,7 +1478,7 @@ class ControllerPlay : public MONO_UIButtonController
     const juce::Drawable *get_current_drawable() override
     {
         if (bstepIsStandalone)
-            return _drawable;
+            return _drawable.get();
         return nullptr;
     }
 
@@ -1522,7 +1514,7 @@ class ControllerPlay : public MONO_UIButtonController
 class ControllerPause : public MONO_UIButtonController
 {
     AppInstanceStore *_app_instance_store;
-    juce::ScopedPointer<juce::Drawable> _drawable;
+    std::unique_ptr<juce::Drawable> _drawable;
 
     IS_NOT_MIDI_LEARNABLE
 
@@ -1549,7 +1541,7 @@ class ControllerPause : public MONO_UIButtonController
     const juce::Drawable *get_current_drawable() override
     {
         if (bstepIsStandalone)
-            return _drawable;
+            return _drawable.get();
         return nullptr;
     }
 
@@ -1581,7 +1573,7 @@ class ControllerPause : public MONO_UIButtonController
 class ControllerStop : public MONO_UIButtonController
 {
     AppInstanceStore *_app_instance_store;
-    juce::ScopedPointer<juce::Drawable> _drawable;
+    std::unique_ptr<juce::Drawable> _drawable;
 
     IS_NOT_MIDI_LEARNABLE
 
@@ -1605,7 +1597,7 @@ class ControllerStop : public MONO_UIButtonController
     const juce::Drawable *get_current_drawable() override
     {
         if (bstepIsStandalone)
-            return _drawable;
+            return _drawable.get();
         return nullptr;
     }
 
@@ -1667,7 +1659,7 @@ class ControllerBPM : public MONO_UISliderController
 class ControllerMute : public MONO_UIButtonController
 {
     AppInstanceStore *_app_instance_store;
-    juce::ScopedPointer<juce::Drawable> _drawable;
+    std::unique_ptr<juce::Drawable> _drawable;
 
     PodParameterBase *get_parameter() const override
     {
@@ -1685,7 +1677,7 @@ class ControllerMute : public MONO_UIButtonController
         return _app_instance_store->audio_processor->is_mute;
     }
 
-    const juce::Drawable *get_current_drawable() override { return _drawable; }
+    const juce::Drawable *get_current_drawable() override { return _drawable.get(); }
 
   public:
     ControllerMute(AppInstanceStore *const app_instance_store_)
@@ -1830,7 +1822,7 @@ class ControllerSwingDurationOffset : public MONO_UISliderController
 class ControllerChordEditor : public MONO_UIButtonController
 {
     AppInstanceStore *const _app_instance_store;
-    juce::ScopedPointer<juce::Drawable> _drawable;
+    std::unique_ptr<juce::Drawable> _drawable;
 
     IS_NOT_MIDI_LEARNABLE
 
@@ -1848,7 +1840,7 @@ class ControllerChordEditor : public MONO_UIButtonController
         return false;
     }
 
-    const juce::Drawable *get_current_drawable() override { return _drawable; }
+    const juce::Drawable *get_current_drawable() override { return _drawable.get(); }
 
     const juce::String get_help_url() override { return MANUAL_URL + "beginner/the-chord-editor"; }
 

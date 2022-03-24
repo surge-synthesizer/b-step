@@ -272,7 +272,7 @@ class MONO_UISliderController : public MONO_Controller
     virtual bool do_you_need_a_text_popup() override
     {
         MultidragSource *const multidrag_source =
-            _app_instance_store->editor_config.multidrag_source;
+            _app_instance_store->editor_config.multidrag_source.get();
         if (multidrag_source)
         {
             if (_app_instance_store->editor_config.multidrag_source->controller_type_ident ==

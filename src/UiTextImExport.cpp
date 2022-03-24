@@ -172,7 +172,7 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     button_info->addListener(this);
 
     //[UserPreSize]
-    _app_instance_store->editor_config.im_exporter_editor = this;
+    _app_instance_store->editor_config.im_exporter_editor = std::unique_ptr<UiTextImExport>(this);
 
     titel->setText(_listener->_title, juce::dontSendNotification);
     text->setText(_listener->_data, juce::dontSendNotification);

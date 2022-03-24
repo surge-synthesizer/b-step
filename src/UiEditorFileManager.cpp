@@ -1737,7 +1737,7 @@ struct PresetItem : public juce::TreeViewItem,
                 // CLOSE THE WRITE AND OPEN THE READER
                 UiEditorFileManager *reader = new UiEditorFileManager(
                     _app_instance_store, READ_MODE, FILEMANAGER_PTR->_view_type);
-                FILEMANAGER_PTR = reader;
+                FILEMANAGER_PTR = std::unique_ptr<UiEditorFileManager>(reader);
             }
             else if (success && auto_close_)
             {

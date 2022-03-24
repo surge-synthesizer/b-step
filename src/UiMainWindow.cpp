@@ -121,7 +121,7 @@ void GstepAudioProcessorEditor::open_reader(VIEW_TYPE type_)
         _app_instance_store->editor_config.file_manager = nullptr;
     else
         _app_instance_store->editor_config.file_manager =
-            new UiEditorFileManager(_app_instance_store, false, type_);
+            std::make_unique<UiEditorFileManager>(_app_instance_store, false, type_);
 }
 #ifdef DEMO
 void GstepAudioProcessorEditor::open_demo_window()
@@ -158,7 +158,7 @@ void GstepAudioProcessorEditor::open_writer(VIEW_TYPE type_)
         _app_instance_store->editor_config.file_manager = nullptr;
     else
         _app_instance_store->editor_config.file_manager =
-            new UiEditorFileManager(_app_instance_store, true, type_);
+            std::make_unique<UiEditorFileManager>(_app_instance_store, true, type_);
 
 #endif // DEMO
 }

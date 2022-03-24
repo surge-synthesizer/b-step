@@ -40,7 +40,7 @@ class UITool : public juce::DragAndDropContainer, public juce::ImageButton
 // ************************************************************************************************
 class UIRubber : public UITool
 {
-    juce::ScopedPointer<juce::Drawable> drawable;
+    std::unique_ptr<juce::Drawable> drawable;
 
     void paint(juce::Graphics &g_) override;
 
@@ -58,7 +58,7 @@ class UIRubber : public UITool
 // ************************************************************************************************
 class UIQuestion : public UITool
 {
-    juce::ScopedPointer<juce::Drawable> drawable;
+    std::unique_ptr<juce::Drawable> drawable;
 
     void paint(juce::Graphics &g_) override;
 
@@ -92,7 +92,7 @@ class UIClipboard : public UITool, public juce::DragAndDropTarget
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
-    juce::ScopedPointer<juce::Component> drag_source;
+    std::unique_ptr<juce::Component> drag_source;
 
   public:
     // PARAMETER
@@ -101,7 +101,7 @@ class UIClipboard : public UITool, public juce::DragAndDropTarget
     const std::uint8_t id;
     BarCopyClipboard &_bar_copy_clipboard;
 
-    juce::ScopedPointer<juce::Drawable> drawable;
+    std::unique_ptr<juce::Drawable> drawable;
     UiEditorClipboard *_editor;
 
     void paint(juce::Graphics &g_) override;

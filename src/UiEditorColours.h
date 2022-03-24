@@ -61,23 +61,23 @@ class UiEditorColourStyler : public juce::Component,
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::ColourSelector> colour_selector;
-    juce::ScopedPointer<juce::TextButton> col_1;
-    juce::ScopedPointer<juce::TextButton> style_1;
-    juce::ScopedPointer<juce::TextButton> col_2;
-    juce::ScopedPointer<juce::TextButton> col_3;
-    juce::ScopedPointer<juce::TextButton> col_4;
-    juce::ScopedPointer<juce::TextButton> col_5;
-    juce::ScopedPointer<juce::TextButton> col_6;
-    juce::ScopedPointer<juce::TextButton> col_7;
-    juce::ScopedPointer<juce::TextButton> col_8;
-    juce::ScopedPointer<juce::TextButton> col_9;
-    juce::ScopedPointer<juce::TextButton> col_10;
-    juce::ScopedPointer<juce::TextButton> style_2;
-    juce::ScopedPointer<juce::TextButton> style_3;
-    juce::ScopedPointer<juce::TextButton> style_4;
-    juce::ScopedPointer<juce::TextButton> style_5;
-    juce::ScopedPointer<juce::TextButton> col_11;
+    std::unique_ptr<juce::ColourSelector> colour_selector;
+    std::unique_ptr<juce::TextButton> col_1;
+    std::unique_ptr<juce::TextButton> style_1;
+    std::unique_ptr<juce::TextButton> col_2;
+    std::unique_ptr<juce::TextButton> col_3;
+    std::unique_ptr<juce::TextButton> col_4;
+    std::unique_ptr<juce::TextButton> col_5;
+    std::unique_ptr<juce::TextButton> col_6;
+    std::unique_ptr<juce::TextButton> col_7;
+    std::unique_ptr<juce::TextButton> col_8;
+    std::unique_ptr<juce::TextButton> col_9;
+    std::unique_ptr<juce::TextButton> col_10;
+    std::unique_ptr<juce::TextButton> style_2;
+    std::unique_ptr<juce::TextButton> style_3;
+    std::unique_ptr<juce::TextButton> style_4;
+    std::unique_ptr<juce::TextButton> style_5;
+    std::unique_ptr<juce::TextButton> col_11;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorColourStyler)

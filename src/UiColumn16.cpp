@@ -68,37 +68,53 @@ void UiColumn16::set_background_style(AppStyle *const style_)
 //==============================================================================
 UiColumn16::UiColumn16()
 {
-    addAndMakeVisible(elem_0 = new ModelBase());
+    elem_0 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*elem_0);
 
-    addAndMakeVisible(elem_1 = new ModelBase());
+    elem_1 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*elem_1);
 
-    addAndMakeVisible(elem_2 = new ModelBase());
+    elem_2 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*elem_2);
 
-    addAndMakeVisible(elem_3 = new ModelBase());
+    elem_3 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*elem_3);
 
-    addAndMakeVisible(elem_4 = new ModelBase());
+    elem_4 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*elem_4);
 
-    addAndMakeVisible(elem_5 = new ModelBase());
+    elem_5 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*elem_5);
 
-    addAndMakeVisible(elem_6 = new ModelBase());
+    elem_6 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*elem_6);
 
-    addAndMakeVisible(elem_7 = new ModelBase());
+    elem_7 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*elem_7);
 
-    addAndMakeVisible(elem_8 = new ModelBase());
+    elem_8 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*elem_8);
 
-    addAndMakeVisible(elem_9 = new ModelBase());
+    elem_9 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*elem_9);
 
-    addAndMakeVisible(elem_10 = new ModelBase());
+    elem_10 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*elem_10);
 
-    addAndMakeVisible(elem_11 = new ModelBase());
+    elem_11 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*elem_11);
 
-    addAndMakeVisible(elem_12 = new ModelBase());
+    elem_12 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*elem_12);
 
-    addAndMakeVisible(elem_13 = new ModelBase());
+    elem_13 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*elem_13);
 
-    addAndMakeVisible(elem_14 = new ModelBase());
+    elem_14 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*elem_14);
 
-    addAndMakeVisible(elem_15 = new ModelBase());
+    elem_15 = std::make_unique<ModelBase>();
+    addAndMakeVisible(*elem_15);
 
     //[UserPreSize]
     _style = nullptr;

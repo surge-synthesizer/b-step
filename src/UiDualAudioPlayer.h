@@ -94,20 +94,20 @@ class UiDualAudioMessage : public UiEditor,
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::TextButton> ok;
-    juce::ScopedPointer<juce::TextButton> cancel;
-    juce::ScopedPointer<juce::Slider> audio_thumb_new;
-    juce::ScopedPointer<juce::TextButton> play_new;
-    juce::ScopedPointer<juce::Slider> audio_thumb_old;
-    juce::ScopedPointer<juce::Label> titel2;
-    juce::ScopedPointer<juce::Label> project_name;
-    juce::ScopedPointer<juce::Label> titel4;
-    juce::ScopedPointer<juce::Label> old_info_2;
-    juce::ScopedPointer<juce::Label> old_info_3;
-    juce::ScopedPointer<juce::Label> titel7;
-    juce::ScopedPointer<juce::TextButton> play_old;
-    juce::ScopedPointer<juce::Label> old_info_1;
-    juce::ScopedPointer<UiEditorToolbar> toolbar;
+    std::unique_ptr<juce::TextButton> ok;
+    std::unique_ptr<juce::TextButton> cancel;
+    std::unique_ptr<juce::Slider> audio_thumb_new;
+    std::unique_ptr<juce::TextButton> play_new;
+    std::unique_ptr<juce::Slider> audio_thumb_old;
+    std::unique_ptr<juce::Label> titel2;
+    std::unique_ptr<juce::Label> project_name;
+    std::unique_ptr<juce::Label> titel4;
+    std::unique_ptr<juce::Label> old_info_2;
+    std::unique_ptr<juce::Label> old_info_3;
+    std::unique_ptr<juce::Label> titel7;
+    std::unique_ptr<juce::TextButton> play_old;
+    std::unique_ptr<juce::Label> old_info_1;
+    std::unique_ptr<UiEditorToolbar> toolbar;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiDualAudioMessage)

@@ -66,8 +66,8 @@ class UiLeftsideCC : public SubeditorBase
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<ModelBase> cc_type;
-    juce::ScopedPointer<UiLabel> cc_label;
+    std::unique_ptr<ModelBase> cc_type;
+    std::unique_ptr<UiLabel> cc_label;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiLeftsideCC)

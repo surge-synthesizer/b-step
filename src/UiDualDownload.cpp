@@ -67,7 +67,8 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
                                UiDualDownloadListener *const listener_)
     : UiEditor("B-Downloader"), _app_instance_store(app_instance_store_), _listener(listener_)
 {
-    addAndMakeVisible(ok = new juce::TextButton(juce::String()));
+    ok = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*ok);
     ok->setExplicitFocusOrder(2);
     ok->setButtonText(TRANS("OK / LOAD PROJECT"));
     ok->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
@@ -78,7 +79,8 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     ok->setColour(juce::TextButton::textColourOnId, juce::Colours::chartreuse);
     ok->setColour(juce::TextButton::textColourOffId, juce::Colours::chartreuse);
 
-    addAndMakeVisible(close = new juce::TextButton(juce::String()));
+    close = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*close);
     close->setExplicitFocusOrder(3);
     close->setButtonText(TRANS("CLOSE"));
     close->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
@@ -89,14 +91,16 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     close->setColour(juce::TextButton::textColourOnId, juce::Colours::cornflowerblue);
     close->setColour(juce::TextButton::textColourOffId, juce::Colours::cornflowerblue);
 
-    addAndMakeVisible(data_progress = new juce::Slider(juce::String()));
+    data_progress = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*data_progress);
     data_progress->setRange(0, 1, 0);
     data_progress->setSliderStyle(juce::Slider::LinearHorizontal);
     data_progress->setTextBoxStyle(juce::Slider::NoTextBox, false, 80, 20);
     data_progress->setColour(juce::Slider::trackColourId, juce::Colours::aquamarine);
     data_progress->addListener(this);
 
-    addAndMakeVisible(cancel_data = new juce::TextButton(juce::String()));
+    cancel_data = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*cancel_data);
     cancel_data->setExplicitFocusOrder(2);
     cancel_data->setButtonText(TRANS("CANCEL"));
     cancel_data->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
@@ -107,14 +111,16 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     cancel_data->setColour(juce::TextButton::textColourOnId, juce::Colours::chartreuse);
     cancel_data->setColour(juce::TextButton::textColourOffId, juce::Colours::red);
 
-    addAndMakeVisible(audio_progress = new juce::Slider(juce::String()));
+    audio_progress = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*audio_progress);
     audio_progress->setRange(0, 1, 0);
     audio_progress->setSliderStyle(juce::Slider::LinearHorizontal);
     audio_progress->setTextBoxStyle(juce::Slider::NoTextBox, false, 80, 20);
     audio_progress->setColour(juce::Slider::trackColourId, juce::Colours::aquamarine);
     audio_progress->addListener(this);
 
-    addAndMakeVisible(data_info = new juce::Label(juce::String(), TRANS("DOWNLOADING DATA FILE:")));
+    data_info = std::make_unique<juce::Label>(juce::String(), TRANS("DOWNLOADING DATA FILE:"));
+    addAndMakeVisible(*data_info);
     data_info->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
     data_info->setJustificationType(juce::Justification::centredLeft);
     data_info->setEditable(false, false, false);
@@ -123,7 +129,8 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     data_info->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     data_info->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(data_name = new juce::Label(juce::String(), TRANS("XYZ")));
+    data_name = std::make_unique<juce::Label>(juce::String(), TRANS("XYZ"));
+    addAndMakeVisible(*data_name);
     data_name->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
     data_name->setJustificationType(juce::Justification::centred);
     data_name->setEditable(false, false, false);
@@ -131,10 +138,10 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     data_name->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     data_name->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(
-        old_info_2 = new juce::Label(
-            juce::String(),
-            TRANS("After download you will find this project in \"Presets (downloads)\"")));
+    old_info_2 = std::make_unique<juce::Label>(
+        juce::String(),
+        TRANS("After download you will find this project in \"Presets (downloads)\""));
+    addAndMakeVisible(*old_info_2);
     old_info_2->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
     old_info_2->setJustificationType(juce::Justification::topLeft);
     old_info_2->setEditable(false, false, false);
@@ -142,7 +149,8 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     old_info_2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     old_info_2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(old_info_3 = new juce::Label(juce::String(), TRANS("NOTE:")));
+    old_info_3 = std::make_unique<juce::Label>(juce::String(), TRANS("NOTE:"));
+    addAndMakeVisible(*old_info_3);
     old_info_3->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
     old_info_3->setJustificationType(juce::Justification::topLeft);
     old_info_3->setEditable(false, false, false);
@@ -150,8 +158,9 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     old_info_3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     old_info_3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(titel7 = new juce::Label(
-                          juce::String(), TRANS("DOWNLOADING FILES TO \"PRESETS (downloads)\"")));
+    titel7 = std::make_unique<juce::Label>(juce::String(),
+                                           TRANS("DOWNLOADING FILES TO \"PRESETS (downloads)\""));
+    addAndMakeVisible(*titel7);
     titel7->setFont(juce::Font("Oswald", 25.00f, juce::Font::bold));
     titel7->setJustificationType(juce::Justification::centredLeft);
     titel7->setEditable(false, false, false);
@@ -160,7 +169,8 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     titel7->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     titel7->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(chancel_audio = new juce::TextButton(juce::String()));
+    chancel_audio = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*chancel_audio);
     chancel_audio->setExplicitFocusOrder(2);
     chancel_audio->setButtonText(TRANS("CANCEL"));
     chancel_audio->setConnectedEdges(juce::Button::ConnectedOnLeft |
@@ -172,8 +182,8 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     chancel_audio->setColour(juce::TextButton::textColourOnId, juce::Colours::red);
     chancel_audio->setColour(juce::TextButton::textColourOffId, juce::Colours::red);
 
-    addAndMakeVisible(audio_info =
-                          new juce::Label(juce::String(), TRANS("DOWNLOADING AUDIO FILE:")));
+    audio_info = std::make_unique<juce::Label>(juce::String(), TRANS("DOWNLOADING AUDIO FILE:"));
+    addAndMakeVisible(*audio_info);
     audio_info->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
     audio_info->setJustificationType(juce::Justification::centredLeft);
     audio_info->setEditable(false, false, false);
@@ -182,7 +192,8 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     audio_info->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     audio_info->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(audio_name = new juce::Label(juce::String(), TRANS("XYZ")));
+    audio_name = std::make_unique<juce::Label>(juce::String(), TRANS("XYZ"));
+    addAndMakeVisible(*audio_name);
     audio_name->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
     audio_name->setJustificationType(juce::Justification::centred);
     audio_name->setEditable(false, false, false);
@@ -190,7 +201,8 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     audio_name->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     audio_name->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(data_percent = new juce::Label(juce::String(), TRANS("0%")));
+    data_percent = std::make_unique<juce::Label>(juce::String(), TRANS("0%"));
+    addAndMakeVisible(*data_percent);
     data_percent->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
     data_percent->setJustificationType(juce::Justification::centred);
     data_percent->setEditable(false, false, false);
@@ -198,7 +210,8 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     data_percent->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     data_percent->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(audio_percent = new juce::Label(juce::String(), TRANS("0%")));
+    audio_percent = std::make_unique<juce::Label>(juce::String(), TRANS("0%"));
+    addAndMakeVisible(*audio_percent);
     audio_percent->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));
     audio_percent->setJustificationType(juce::Justification::centred);
     audio_percent->setEditable(false, false, false);
@@ -206,7 +219,8 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     audio_percent->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     audio_percent->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toolbar = new UiEditorToolbar(this, false, true, false));
+    toolbar = std::make_unique<UiEditorToolbar>(this, false, true, false);
+    addAndMakeVisible(*toolbar);
 
     //[UserPreSize]
     /*
@@ -330,27 +344,27 @@ void UiDualDownload::buttonClicked(juce::Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == ok)
+    if (buttonThatWasClicked == ok.get())
     {
         //[UserButtonCode_ok] -- add your button handler code here..
         _listener->perform_ok();
         delete this;
         //[/UserButtonCode_ok]
     }
-    else if (buttonThatWasClicked == close)
+    else if (buttonThatWasClicked == close.get())
     {
         //[UserButtonCode_close] -- add your button handler code here..
         _listener->perform_close();
         delete this;
         //[/UserButtonCode_close]
     }
-    else if (buttonThatWasClicked == cancel_data)
+    else if (buttonThatWasClicked == cancel_data.get())
     {
         //[UserButtonCode_cancel_data] -- add your button handler code here..
         _listener->chancel_data_download();
         //[/UserButtonCode_cancel_data]
     }
-    else if (buttonThatWasClicked == chancel_audio)
+    else if (buttonThatWasClicked == chancel_audio.get())
     {
         //[UserButtonCode_chancel_audio] -- add your button handler code here..
         _listener->chancel_audio_download();
@@ -366,12 +380,12 @@ void UiDualDownload::sliderValueChanged(juce::Slider *sliderThatWasMoved)
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
 
-    if (sliderThatWasMoved == data_progress)
+    if (sliderThatWasMoved == data_progress.get())
     {
         //[UserSliderCode_data_progress] -- add your slider handling code here..
         //[/UserSliderCode_data_progress]
     }
-    else if (sliderThatWasMoved == audio_progress)
+    else if (sliderThatWasMoved == audio_progress.get())
     {
         //[UserSliderCode_audio_progress] -- add your slider handling code here..
         //[/UserSliderCode_audio_progress]

@@ -164,7 +164,8 @@ void UiEditorMidiLearn::on_close_clicked()
 UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-MIDI-Learn"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(label_target = new juce::Label(juce::String(), TRANS("MIDI LEARN")));
+    label_target = std::make_unique<juce::Label>(juce::String(), TRANS("MIDI LEARN"));
+    addAndMakeVisible(*label_target);
     label_target->setFont(juce::Font(15.00f, juce::Font::plain));
     label_target->setJustificationType(juce::Justification::centred);
     label_target->setEditable(false, false, false);
@@ -173,13 +174,15 @@ UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_
     label_target->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_target->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(delete_asignment = new juce::TextButton(juce::String()));
+    delete_asignment = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*delete_asignment);
     delete_asignment->setButtonText(TRANS("remove last in list"));
     delete_asignment->addListener(this);
     delete_asignment->setColour(juce::TextButton::buttonColourId, juce::Colours::red);
     delete_asignment->setColour(juce::TextButton::buttonOnColourId, juce::Colours::red);
 
-    addAndMakeVisible(cb_midi_learn_mode = new juce::ComboBox(juce::String()));
+    cb_midi_learn_mode = std::make_unique<juce::ComboBox>(juce::String());
+    addAndMakeVisible(*cb_midi_learn_mode);
     cb_midi_learn_mode->setExplicitFocusOrder(4);
     cb_midi_learn_mode->setEditableText(false);
     cb_midi_learn_mode->setJustificationType(juce::Justification::centred);
@@ -187,7 +190,8 @@ UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_
     cb_midi_learn_mode->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_learn_mode->addListener(this);
 
-    addAndMakeVisible(cb_midi_assigns = new juce::ComboBox(juce::String()));
+    cb_midi_assigns = std::make_unique<juce::ComboBox>(juce::String());
+    addAndMakeVisible(*cb_midi_assigns);
     cb_midi_assigns->setExplicitFocusOrder(4);
     cb_midi_assigns->setEditableText(false);
     cb_midi_assigns->setJustificationType(juce::Justification::centred);
@@ -195,9 +199,11 @@ UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_
     cb_midi_assigns->setTextWhenNoChoicesAvailable(TRANS("( nothing assigned )"));
     cb_midi_assigns->addListener(this);
 
-    addAndMakeVisible(toolbar = new UiEditorToolbar(this));
+    toolbar = std::make_unique<UiEditorToolbar>(this);
+    addAndMakeVisible(*toolbar);
 
-    addAndMakeVisible(label_target3 = new juce::Label(juce::String(), TRANS("Learn Mode")));
+    label_target3 = std::make_unique<juce::Label>(juce::String(), TRANS("Learn Mode"));
+    addAndMakeVisible(*label_target3);
     label_target3->setFont(juce::Font(15.00f, juce::Font::plain));
     label_target3->setJustificationType(juce::Justification::centredRight);
     label_target3->setEditable(false, false, false);
@@ -206,7 +212,8 @@ UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_
     label_target3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_target3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_target8 = new juce::Label(juce::String(), TRANS("Assignments\n")));
+    label_target8 = std::make_unique<juce::Label>(juce::String(), TRANS("Assignments\n"));
+    addAndMakeVisible(*label_target8);
     label_target8->setFont(juce::Font(15.00f, juce::Font::plain));
     label_target8->setJustificationType(juce::Justification::centredRight);
     label_target8->setEditable(false, false, false);
@@ -215,20 +222,21 @@ UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_
     label_target8->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_target8->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(button_remove_all_mappings = new juce::ImageButton(juce::String()));
+    button_remove_all_mappings = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*button_remove_all_mappings);
     button_remove_all_mappings->addListener(this);
-
     button_remove_all_mappings->setImages(
         false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
         juce::Colour(0x00000000), juce::Image(), 1.000f, juce::Colour(0x00000000));
-    addAndMakeVisible(button_info = new juce::TextButton(juce::String()));
+    button_info = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*button_info);
     button_info->setButtonText(TRANS("?"));
     button_info->addListener(this);
 
-    addAndMakeVisible(
-        label = new juce::Label(
-            "new label", TRANS("INFO: Select/click an element on the user interface then move a "
-                               "slider or push a button on your MIDI controller. Done.")));
+    label = std::make_unique<juce::Label>(
+        "new label", TRANS("INFO: Select/click an element on the user interface then move a "
+                           "slider or push a button on your MIDI controller. Done."));
+    addAndMakeVisible(*label);
     label->setFont(juce::Font(15.00f, juce::Font::plain));
     label->setJustificationType(juce::Justification::centredLeft);
     label->setEditable(false, false, false);
@@ -237,7 +245,7 @@ UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_
     label->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    drawable1 = juce::Drawable::createFromImageData(trash_svg, trash_svgSize).release();
+    drawable1 = juce::Drawable::createFromImageData(trash_svg, trash_svgSize);
 
     //[UserPreSize]
     setOpaque(true);
@@ -351,7 +359,7 @@ void UiEditorMidiLearn::buttonClicked(juce::Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == delete_asignment)
+    if (buttonThatWasClicked == delete_asignment.get())
     {
         //[UserButtonCode_delete_asignment] -- add your button handler code here..
         _app_instance_store->midi_in_map.remove_handler_for(
@@ -360,7 +368,7 @@ void UiEditorMidiLearn::buttonClicked(juce::Button *buttonThatWasClicked)
         load_assignments();
         //[/UserButtonCode_delete_asignment]
     }
-    else if (buttonThatWasClicked == button_remove_all_mappings)
+    else if (buttonThatWasClicked == button_remove_all_mappings.get())
     {
         //[UserButtonCode_button_remove_all_mappings] -- add your button handler code here..
         class CallbackManager : public juce::ModalComponentManager::Callback
@@ -396,7 +404,7 @@ void UiEditorMidiLearn::buttonClicked(juce::Button *buttonThatWasClicked)
             "CLEAR ALL", "KEEP IT", _app_instance_store->editor, callback);
         //[/UserButtonCode_button_remove_all_mappings]
     }
-    else if (buttonThatWasClicked == button_info)
+    else if (buttonThatWasClicked == button_info.get())
     {
         //[UserButtonCode_button_info] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
@@ -417,7 +425,7 @@ void UiEditorMidiLearn::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]
 
-    if (comboBoxThatHasChanged == cb_midi_learn_mode)
+    if (comboBoxThatHasChanged == cb_midi_learn_mode.get())
     {
         //[UserComboBoxCode_cb_midi_learn_mode] -- add your combo box handling code here..
         switch (cb_midi_learn_mode->getSelectedId())
@@ -437,7 +445,7 @@ void UiEditorMidiLearn::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
         }
         //[/UserComboBoxCode_cb_midi_learn_mode]
     }
-    else if (comboBoxThatHasChanged == cb_midi_assigns)
+    else if (comboBoxThatHasChanged == cb_midi_assigns.get())
     {
         //[UserComboBoxCode_cb_midi_assigns] -- add your combo box handling code here..
 

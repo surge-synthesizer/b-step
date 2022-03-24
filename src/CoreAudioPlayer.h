@@ -104,7 +104,7 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
 
     juce::AudioSourcePlayer audioSourcePlayer;
     juce::AudioTransportSource transportSource;
-    juce::ScopedPointer<juce::AudioFormatReaderSource> currentAudioFileSource;
+    std::unique_ptr<juce::AudioFormatReaderSource> currentAudioFileSource;
 
     juce::OwnedArray<juce::AudioFormat> _supported_audio_formats;
     juce::String _supported_audio_format_names;

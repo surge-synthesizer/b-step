@@ -41,58 +41,66 @@ static bool is_au;
 UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-About"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(au_button = new juce::ImageButton(juce::String()));
-
+    au_button = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*au_button);
     au_button->setImages(false, true, true,
                          juce::ImageCache::getFromMemory(au_logo_100x_png, au_logo_100x_pngSize),
                          1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
                          juce::Colour(0x00000000), juce::Image(), 1.000f, juce::Colour(0x00000000));
-    addAndMakeVisible(vst_button = new juce::ImageButton(juce::String()));
 
+    vst_button = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*vst_button);
     vst_button->setImages(false, true, true,
                           juce::ImageCache::getFromMemory(vst_logo_100x_png, vst_logo_100x_pngSize),
                           1.000f, juce::Colour(0x00000000), juce::Image(), 1.000f,
                           juce::Colour(0x00000000), juce::Image(), 1.000f,
                           juce::Colour(0x00000000));
-    addAndMakeVisible(hyperlinkButton8 = new juce::HyperlinkButton(
-                          juce::String(), juce::URL("http://b-step.monoplugs.com")));
+
+    hyperlinkButton8 = std::make_unique<juce::HyperlinkButton>(
+        juce::String(), juce::URL("http://b-step.monoplugs.com"));
+    addAndMakeVisible(*hyperlinkButton8);
     hyperlinkButton8->setTooltip(TRANS("http://b-step.monoplugs.com"));
     hyperlinkButton8->setColour(juce::HyperlinkButton::textColourId, juce::Colour(0xffffdd00));
 
-    addAndMakeVisible(video_1 =
-                          new juce::HyperlinkButton(TRANS("http://B-Step.Monoplugs.com"),
-                                                    juce::URL("http://b-step.monoplugs.com")));
+    video_1 = std::make_unique<juce::HyperlinkButton>(TRANS("http://B-Step.Monoplugs.com"),
+                                                      juce::URL("http://b-step.monoplugs.com"));
+    addAndMakeVisible(*video_1);
     video_1->setTooltip(TRANS("http://b-step.monoplugs.com"));
     video_1->setButtonText(TRANS("http://B-Step.Monoplugs.com"));
     video_1->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 
-    addAndMakeVisible(video_2 = new juce::HyperlinkButton(TRANS("http://Forum.Monoplugs.com"),
-                                                          juce::URL("http://forum.monoplugs.com")));
+    video_2 = std::make_unique<juce::HyperlinkButton>(TRANS("http://Forum.Monoplugs.com"),
+                                                      juce::URL("http://forum.monoplugs.com"));
+    addAndMakeVisible(*video_2);
     video_2->setTooltip(TRANS("http://forum.monoplugs.com"));
     video_2->setButtonText(TRANS("http://Forum.Monoplugs.com"));
     video_2->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 
-    addAndMakeVisible(video_3 = new juce::HyperlinkButton(
-                          TRANS("http://B-Step.Monoplugs.com/Manual/"),
-                          juce::URL("http://b-step-manual-redirect.monoplugs.com/")));
+    video_3 = std::make_unique<juce::HyperlinkButton>(
+        TRANS("http://B-Step.Monoplugs.com/Manual/"),
+        juce::URL("http://b-step-manual-redirect.monoplugs.com/"));
+    addAndMakeVisible(*video_3);
     video_3->setTooltip(TRANS("http://b-step-manual-redirect.monoplugs.com/"));
     video_3->setButtonText(TRANS("http://B-Step.Monoplugs.com/Manual/"));
     video_3->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 
-    addAndMakeVisible(
-        video_4 = new juce::HyperlinkButton(TRANS("https://www.youtube.com/monoplugs"),
-                                            juce::URL("https://www.youtube.com/user/monotomys")));
+    video_4 = std::make_unique<juce::HyperlinkButton>(
+        TRANS("https://www.youtube.com/monoplugs"),
+        juce::URL("https://www.youtube.com/user/monotomys"));
+    addAndMakeVisible(*video_4);
     video_4->setTooltip(TRANS("https://www.youtube.com/user/monotomys"));
     video_4->setButtonText(TRANS("https://www.youtube.com/monoplugs"));
     video_4->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 
-    addAndMakeVisible(video_5 = new juce::HyperlinkButton(TRANS("info@Monoplugs.com : B-Step 2"),
-                                                          juce::URL("mailto:info@monoplugs.com")));
+    video_5 = std::make_unique<juce::HyperlinkButton>(TRANS("info@Monoplugs.com : B-Step 2"),
+                                                      juce::URL("mailto:info@monoplugs.com"));
+    addAndMakeVisible(*video_5);
     video_5->setTooltip(TRANS("mailto:info@monoplugs.com"));
     video_5->setButtonText(TRANS("info@Monoplugs.com : B-Step 2"));
     video_5->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 
-    addAndMakeVisible(debug_out = new juce::TextEditor(juce::String()));
+    debug_out = std::make_unique<juce::TextEditor>(juce::String());
+    addAndMakeVisible(*debug_out);
     debug_out->setMultiLine(true);
     debug_out->setReturnKeyStartsNewLine(false);
     debug_out->setReadOnly(false);
@@ -106,9 +114,11 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
     debug_out->setColour(juce::CaretComponent::caretColourId, juce::Colours::aqua);
     debug_out->setText(TRANS("\n"));
 
-    addAndMakeVisible(toolbar = new UiEditorToolbar(this, true, false, false));
+    toolbar = std::make_unique<UiEditorToolbar>(this, true, false, false);
+    addAndMakeVisible(*toolbar);
 
-    addAndMakeVisible(open_debug = new juce::ImageButton(juce::String()));
+    open_debug = std::make_unique<juce::ImageButton>(juce::String());
+    addAndMakeVisible(*open_debug);
     open_debug->addListener(this);
 
     open_debug->setImages(false, true, true, juce::Image(), 1.000f, juce::Colour(0x00000000),
@@ -347,7 +357,7 @@ void UiEditorAbout::buttonClicked(juce::Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == open_debug)
+    if (buttonThatWasClicked == open_debug.get())
     {
         //[UserButtonCode_open_debug] -- add your button handler code here..
 #ifdef DEVELOPMENT

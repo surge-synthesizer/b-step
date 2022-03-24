@@ -40,7 +40,7 @@ void UiLeftsideCC::refresh_ui(juce::Array<juce::Component *> &components_to_repa
     cc_type->get_components_to_repaint(components_to_repaint_);
 
     if (cc_label->is_repaint_required())
-        components_to_repaint_.add(cc_label);
+        components_to_repaint_.add(cc_label.get());
 
     const MONO_Controller *constroller = cc_type->get_controller();
     if (constroller)
@@ -51,9 +51,11 @@ void UiLeftsideCC::refresh_ui(juce::Array<juce::Component *> &components_to_repa
 //==============================================================================
 UiLeftsideCC::UiLeftsideCC()
 {
-    addAndMakeVisible(cc_type = new ModelBase());
+    cc_type = std::make_unique<ModelBase>();
+    addAndMakeVisible(*cc_type);
 
-    addAndMakeVisible(cc_label = new UiLabel());
+    cc_label = std::make_unique<UiLabel>();
+    addAndMakeVisible(*cc_label);
 
     //[UserPreSize]
     _style = nullptr;

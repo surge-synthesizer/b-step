@@ -41,7 +41,8 @@ void UiEditorWhatsNew::timerCallback()
 UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-WhatsNew"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(label22 = new juce::Label(juce::String(), TRANS("DON\'T SHOW AGAIN")));
+    label22 = std::make_unique<juce::Label>(juce::String(), TRANS("DON\'T SHOW AGAIN"));
+    addAndMakeVisible(*label22);
     label22->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label22->setJustificationType(juce::Justification::centredLeft);
     label22->setEditable(false, false, false);
@@ -49,11 +50,12 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label22->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label22->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(dont_show_again = new juce::ToggleButton(juce::String()));
+    dont_show_again = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*dont_show_again);
     dont_show_again->addListener(this);
 
-    addAndMakeVisible(label9 =
-                          new juce::Label(juce::String(), TRANS("WHAT\'S NEW IN B-STEP 2.1?")));
+    label9 = std::make_unique<juce::Label>(juce::String(), TRANS("WHAT\'S NEW IN B-STEP 2.1?"));
+    addAndMakeVisible(*label9);
     label9->setFont(juce::Font("Oswald", 63.40f, juce::Font::bold));
     label9->setJustificationType(juce::Justification::centredLeft);
     label9->setEditable(false, false, false);
@@ -61,8 +63,8 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label9->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label9->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label2 =
-                          new juce::Label(juce::String(), TRANS("WHAT\'S NEW IN B-STEP 2.1?")));
+    label2 = std::make_unique<juce::Label>(juce::String(), TRANS("WHAT\'S NEW IN B-STEP 2.1?"));
+    addAndMakeVisible(*label2);
     label2->setFont(juce::Font("Oswald", 63.40f, juce::Font::bold));
     label2->setJustificationType(juce::Justification::centredLeft);
     label2->setEditable(false, false, false);
@@ -70,12 +72,14 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(close = new juce::TextButton(juce::String()));
+    close = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*close);
     close->setButtonText(TRANS("X"));
     close->addListener(this);
     close->setColour(juce::TextButton::buttonColourId, juce::Colours::cornsilk);
 
-    addAndMakeVisible(label3 = new juce::Label(juce::String(), TRANS("-> Colour Styler")));
+    label3 = std::make_unique<juce::Label>(juce::String(), TRANS("-> Colour Styler"));
+    addAndMakeVisible(*label3);
     label3->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label3->setJustificationType(juce::Justification::centredLeft);
     label3->setEditable(false, false, false);
@@ -83,7 +87,8 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label4 = new juce::Label(juce::String(), TRANS("-> New Filemanager")));
+    label4 = std::make_unique<juce::Label>(juce::String(), TRANS("-> New Filemanager"));
+    addAndMakeVisible(*label4);
     label4->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label4->setJustificationType(juce::Justification::centredLeft);
     label4->setEditable(false, false, false);
@@ -91,8 +96,9 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label4->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label4->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label5 = new juce::Label(juce::String(),
-                                               TRANS("---> Im- & Export Projects and other Data")));
+    label5 = std::make_unique<juce::Label>(juce::String(),
+                                           TRANS("---> Im- & Export Projects and other Data"));
+    addAndMakeVisible(*label5);
     label5->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label5->setJustificationType(juce::Justification::centredLeft);
     label5->setEditable(false, false, false);
@@ -100,9 +106,9 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label5->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label5->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(
-        label6 = new juce::Label(juce::String(),
-                                 TRANS("---> Download free Presets from the B-Step Repository")));
+    label6 = std::make_unique<juce::Label>(
+        juce::String(), TRANS("---> Download free Presets from the B-Step Repository"));
+    addAndMakeVisible(*label6);
     label6->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label6->setJustificationType(juce::Justification::centredLeft);
     label6->setEditable(false, false, false);
@@ -110,8 +116,9 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label6->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label6->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(
-        label7 = new juce::Label(juce::String(), TRANS("COLOUR STYLER: CREATE YOUR OWN STYLES")));
+    label7 = std::make_unique<juce::Label>(juce::String(),
+                                           TRANS("COLOUR STYLER: CREATE YOUR OWN STYLES"));
+    addAndMakeVisible(*label7);
     label7->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label7->setJustificationType(juce::Justification::centredLeft);
     label7->setEditable(false, false, false);
@@ -119,8 +126,9 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label7->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label7->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label10 = new juce::Label(
-                          juce::String(), TRANS("---> Share your Projects on the Repository")));
+    label10 = std::make_unique<juce::Label>(juce::String(),
+                                            TRANS("---> Share your Projects on the Repository"));
+    addAndMakeVisible(*label10);
     label10->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label10->setJustificationType(juce::Justification::centredLeft);
     label10->setEditable(false, false, false);
@@ -128,9 +136,9 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label10->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label10->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(
-        label11 = new juce::Label(
-            juce::String(), TRANS("---> Provide Audio and Text Info to identify your Projects")));
+    label11 = std::make_unique<juce::Label>(
+        juce::String(), TRANS("---> Provide Audio and Text Info to identify your Projects"));
+    addAndMakeVisible(*label11);
     label11->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label11->setJustificationType(juce::Justification::centredLeft);
     label11->setEditable(false, false, false);
@@ -138,13 +146,15 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label11->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label11->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(open_styler = new juce::TextButton(juce::String()));
+    open_styler = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*open_styler);
     open_styler->setButtonText(TRANS("OPEN THE STYLER"));
     open_styler->addListener(this);
     open_styler->setColour(juce::TextButton::buttonColourId,
                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(label12 = new juce::Label(juce::String(), TRANS("-> New Supported Hosts")));
+    label12 = std::make_unique<juce::Label>(juce::String(), TRANS("-> New Supported Hosts"));
+    addAndMakeVisible(*label12);
     label12->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label12->setJustificationType(juce::Justification::centredLeft);
     label12->setEditable(false, false, false);
@@ -152,8 +162,9 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label12->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label12->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(
-        label13 = new juce::Label(juce::String(), TRANS("---> Nuendo, Studio One, NI Maschine")));
+    label13 = std::make_unique<juce::Label>(juce::String(),
+                                            TRANS("---> Nuendo, Studio One, NI Maschine"));
+    addAndMakeVisible(*label13);
     label13->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label13->setJustificationType(juce::Justification::centredLeft);
     label13->setEditable(false, false, false);
@@ -161,7 +172,8 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label13->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label13->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label8 = new juce::Label(juce::String(), TRANS("FILEMANAGER")));
+    label8 = std::make_unique<juce::Label>(juce::String(), TRANS("FILEMANAGER"));
+    addAndMakeVisible(*label8);
     label8->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label8->setJustificationType(juce::Justification::centredLeft);
     label8->setEditable(false, false, false);
@@ -169,13 +181,15 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label8->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label8->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(open_filemanager = new juce::TextButton(juce::String()));
+    open_filemanager = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*open_filemanager);
     open_filemanager->setButtonText(TRANS("OK, OPEN A PROJECT"));
     open_filemanager->addListener(this);
     open_filemanager->setColour(juce::TextButton::buttonColourId,
                                 juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(label15 = new juce::Label(juce::String(), TRANS("BUG FIXES & IMPROVEMENTS")));
+    label15 = std::make_unique<juce::Label>(juce::String(), TRANS("BUG FIXES & IMPROVEMENTS"));
+    addAndMakeVisible(*label15);
     label15->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label15->setJustificationType(juce::Justification::centredLeft);
     label15->setEditable(false, false, false);
@@ -183,8 +197,8 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label15->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label15->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label16 =
-                          new juce::Label(juce::String(), TRANS("-> FIX: iPad MIDI sync issues")));
+    label16 = std::make_unique<juce::Label>(juce::String(), TRANS("-> FIX: iPad MIDI sync issues"));
+    addAndMakeVisible(*label16);
     label16->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label16->setJustificationType(juce::Justification::centredLeft);
     label16->setEditable(false, false, false);
@@ -193,8 +207,9 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label16->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label16->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(
-        label17 = new juce::Label(juce::String(), TRANS("-> FIX: playback freeze in repeat mode")));
+    label17 = std::make_unique<juce::Label>(juce::String(),
+                                            TRANS("-> FIX: playback freeze in repeat mode"));
+    addAndMakeVisible(*label17);
     label17->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label17->setJustificationType(juce::Justification::centredLeft);
     label17->setEditable(false, false, false);
@@ -203,8 +218,9 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label17->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label17->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(
-        label18 = new juce::Label(juce::String(), TRANS("-> FIX: restore settings issues")));
+    label18 =
+        std::make_unique<juce::Label>(juce::String(), TRANS("-> FIX: restore settings issues"));
+    addAndMakeVisible(*label18);
     label18->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label18->setJustificationType(juce::Justification::centredLeft);
     label18->setEditable(false, false, false);
@@ -213,7 +229,8 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label18->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label18->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label19 = new juce::Label(juce::String(), TRANS("-> reduce CPU usage ")));
+    label19 = std::make_unique<juce::Label>(juce::String(), TRANS("-> reduce CPU usage "));
+    addAndMakeVisible(*label19);
     label19->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label19->setJustificationType(juce::Justification::centredLeft);
     label19->setEditable(false, false, false);
@@ -222,7 +239,8 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label19->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label19->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label20 = new juce::Label(juce::String(), TRANS("-> reduce RAM usage")));
+    label20 = std::make_unique<juce::Label>(juce::String(), TRANS("-> reduce RAM usage"));
+    addAndMakeVisible(*label20);
     label20->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label20->setJustificationType(juce::Justification::centredLeft);
     label20->setEditable(false, false, false);
@@ -231,13 +249,15 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label20->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label20->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(open_log = new juce::TextButton(juce::String()));
+    open_log = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*open_log);
     open_log->setButtonText(TRANS("OPEN THE COMPLETE LOG"));
     open_log->addListener(this);
     open_log->setColour(juce::TextButton::buttonColourId,
                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
 
-    addAndMakeVisible(label21 = new juce::Label(juce::String(), TRANS("-> built in presets")));
+    label21 = std::make_unique<juce::Label>(juce::String(), TRANS("-> built in presets"));
+    addAndMakeVisible(*label21);
     label21->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label21->setJustificationType(juce::Justification::centredLeft);
     label21->setEditable(false, false, false);
@@ -246,7 +266,8 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label21->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label21->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label14 = new juce::Label(juce::String(), TRANS("-> Embedded User Manual")));
+    label14 = std::make_unique<juce::Label>(juce::String(), TRANS("-> Embedded User Manual"));
+    addAndMakeVisible(*label14);
     label14->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label14->setJustificationType(juce::Justification::centredLeft);
     label14->setEditable(false, false, false);
@@ -254,8 +275,9 @@ UiEditorWhatsNew::UiEditorWhatsNew(AppInstanceStore *const app_instance_store_)
     label14->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label14->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(
-        label23 = new juce::Label(juce::String(), TRANS("-> Basic AudioBus support on iOS")));
+    label23 =
+        std::make_unique<juce::Label>(juce::String(), TRANS("-> Basic AudioBus support on iOS"));
+    addAndMakeVisible(*label23);
     label23->setFont(juce::Font("Oswald", 22.00f, juce::Font::plain));
     label23->setJustificationType(juce::Justification::centredLeft);
     label23->setEditable(false, false, false);
@@ -424,19 +446,19 @@ void UiEditorWhatsNew::buttonClicked(juce::Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == dont_show_again)
+    if (buttonThatWasClicked == dont_show_again.get())
     {
         //[UserButtonCode_dont_show_again] -- add your button handler code here..
         //[/UserButtonCode_dont_show_again]
     }
-    else if (buttonThatWasClicked == close)
+    else if (buttonThatWasClicked == close.get())
     {
         //[UserButtonCode_close] -- add your button handler code here..
         _app_instance_store->editor->open_whats_window();
         return;
         //[/UserButtonCode_close]
     }
-    else if (buttonThatWasClicked == open_styler)
+    else if (buttonThatWasClicked == open_styler.get())
     {
         //[UserButtonCode_open_styler] -- add your button handler code here..
         if (!_app_instance_store->editor_config.style_editor)
@@ -449,7 +471,7 @@ void UiEditorWhatsNew::buttonClicked(juce::Button *buttonThatWasClicked)
         return;
         //[/UserButtonCode_open_styler]
     }
-    else if (buttonThatWasClicked == open_filemanager)
+    else if (buttonThatWasClicked == open_filemanager.get())
     {
         //[UserButtonCode_open_filemanager] -- add your button handler code here..
         _app_instance_store->editor->open_reader(VIEW_TYPE::PROJECTS);
@@ -457,7 +479,7 @@ void UiEditorWhatsNew::buttonClicked(juce::Button *buttonThatWasClicked)
         return;
         //[/UserButtonCode_open_filemanager]
     }
-    else if (buttonThatWasClicked == open_log)
+    else if (buttonThatWasClicked == open_log.get())
     {
         //[UserButtonCode_open_log] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)

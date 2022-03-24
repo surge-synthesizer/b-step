@@ -481,7 +481,7 @@ void MenuBarRight::buttonClicked(juce::Button *buttonThatWasClicked)
         if (!_app_instance_store->editor_config.about_winodow)
         {
             _app_instance_store->editor_config.about_winodow =
-                new UiEditorAbout(_app_instance_store);
+                std::make_unique<UiEditorAbout>(_app_instance_store);
         }
         else
             _app_instance_store->editor_config.about_winodow = nullptr;
@@ -510,7 +510,7 @@ void MenuBarRight::buttonClicked(juce::Button *buttonThatWasClicked)
         //[UserButtonCode_open_setup_editor] -- add your button handler code here..
         if (!_app_instance_store->editor_config.setup_editor)
             _app_instance_store->editor_config.setup_editor =
-                new UiEditorSetup(_app_instance_store);
+                std::make_unique<UiEditorSetup>(_app_instance_store);
         else
             _app_instance_store->editor_config.setup_editor = nullptr;
         //[/UserButtonCode_open_setup_editor]
@@ -552,7 +552,7 @@ void MenuBarRight::buttonClicked(juce::Button *buttonThatWasClicked)
         //[UserButtonCode_open_styler] -- add your button handler code here..
         if (!_app_instance_store->editor_config.style_editor)
             _app_instance_store->editor_config.style_editor =
-                new UiEditorAppStyler(_app_instance_store);
+                std::make_unique<UiEditorAppStyler>(_app_instance_store);
         else
             _app_instance_store->editor_config.style_editor = nullptr;
         //[/UserButtonCode_open_styler]

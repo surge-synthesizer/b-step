@@ -67,7 +67,7 @@ void GstepAudioProcessorEditor::open_settings_editor(bool focus_midi_learn_, boo
 {
     if (!_config->editor_settings)
     {
-        _config->editor_settings = new UiEditorSettings(_app_instance_store);
+        _config->editor_settings = std::make_unique<UiEditorSettings>(_app_instance_store);
         if (focus_midi_learn_)
             _config->editor_settings->focus_midi_learn_in();
         if (focus_master_out_)
@@ -81,7 +81,7 @@ void GstepAudioProcessorEditor::open_chord_editor()
 {
     if (!_config->chord_editor)
     {
-        _config->chord_editor = new UiEditorChords(_app_instance_store);
+        _config->chord_editor = std::make_unique<UiEditorChords>(_app_instance_store);
 
         float width_prop = width_propertion();
         float height_prop = height_propertion();
@@ -100,10 +100,10 @@ void GstepAudioProcessorEditor::open_midi_learn_editor()
 {
     if (!_config->midi_learn_editor)
     {
-        _config->midi_learn_editor = new UiEditorMidiLearn(_app_instance_store);
+        _config->midi_learn_editor = std::make_unique<UiEditorMidiLearn>(_app_instance_store);
         _app_instance_store->midi_in_map.set_learning(true);
-        _config->controller_mid_learn =
-            new ControllerMIDILearn(_app_instance_store, midi_learn_focus, midi_cc_value);
+        _config->controller_mid_learn = std::make_unique<ControllerMIDILearn>(
+            _app_instance_store, midi_learn_focus, midi_cc_value);
 
         if (!_app_instance_store->midi_io_handler.midi_learn_in.is_open())
         {
@@ -140,7 +140,7 @@ bool GstepAudioProcessorEditor::open_whats_window()
 
         GLOBAL_VALUE_HOLDER::getInstance()->WHATS_NEW_WAS_UP = true;
 
-        _config->whatsnew_editor = new UiEditorWhatsNew(_app_instance_store);
+        _config->whatsnew_editor = std::make_unique<UiEditorWhatsNew>(_app_instance_store);
         return true;
     }
     else

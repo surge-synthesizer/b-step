@@ -92,77 +92,77 @@ void UiEditorSettings::fill_drop_downs()
     // OUTPUTS
     juce::StringArray all_devs = juce::MidiOutput::getDevices();
     int index = 1;
-    add_set_midi_port(cb_midi_pad_out_1, DISABLED_PORT, index,
+    add_set_midi_port(cb_midi_pad_out_1.get(), DISABLED_PORT, index,
                       _app_instance_store->midi_io_handler.pad_1_out);
-    add_set_midi_port(cb_midi_pad_out_2, DISABLED_PORT, index,
+    add_set_midi_port(cb_midi_pad_out_2.get(), DISABLED_PORT, index,
                       _app_instance_store->midi_io_handler.pad_2_out);
-    add_set_midi_port(cb_midi_out_port, DISABLED_PORT, index,
+    add_set_midi_port(cb_midi_out_port.get(), DISABLED_PORT, index,
                       _app_instance_store->midi_io_handler.get_out_port(0));
-    add_set_midi_port(cb_midi_out_port_string_g, USE_MASTER_OUT, index,
+    add_set_midi_port(cb_midi_out_port_string_g.get(), USE_MASTER_OUT, index,
                       _app_instance_store->midi_io_handler.get_out_port(1));
-    add_set_midi_port(cb_midi_out_port_string_d, USE_MASTER_OUT, index,
+    add_set_midi_port(cb_midi_out_port_string_d.get(), USE_MASTER_OUT, index,
                       _app_instance_store->midi_io_handler.get_out_port(2));
-    add_set_midi_port(cb_midi_out_port_string_a, USE_MASTER_OUT, index,
+    add_set_midi_port(cb_midi_out_port_string_a.get(), USE_MASTER_OUT, index,
                       _app_instance_store->midi_io_handler.get_out_port(3));
-    add_set_midi_port(cb_midi_out_port_b, DISABLED_PORT, index,
+    add_set_midi_port(cb_midi_out_port_b.get(), DISABLED_PORT, index,
                       _app_instance_store->midi_io_handler.get_out_port(4));
-    add_set_midi_port(cb_midi_learn_out_port, DISABLED_PORT, index,
+    add_set_midi_port(cb_midi_learn_out_port.get(), DISABLED_PORT, index,
                       _app_instance_store->midi_io_handler.midi_learn_out);
     index++;
     int i = 0;
     for (; i < all_devs.size(); i++)
     {
-        add_set_midi_port(cb_midi_pad_out_1, all_devs[i], i + index,
+        add_set_midi_port(cb_midi_pad_out_1.get(), all_devs[i], i + index,
                           _app_instance_store->midi_io_handler.pad_1_out);
-        add_set_midi_port(cb_midi_pad_out_2, all_devs[i], i + index,
+        add_set_midi_port(cb_midi_pad_out_2.get(), all_devs[i], i + index,
                           _app_instance_store->midi_io_handler.pad_2_out);
-        add_set_midi_port(cb_midi_out_port, all_devs[i], i + index,
+        add_set_midi_port(cb_midi_out_port.get(), all_devs[i], i + index,
                           _app_instance_store->midi_io_handler.get_out_port(0));
-        add_set_midi_port(cb_midi_out_port_string_g, all_devs[i], i + index,
+        add_set_midi_port(cb_midi_out_port_string_g.get(), all_devs[i], i + index,
                           _app_instance_store->midi_io_handler.get_out_port(1));
-        add_set_midi_port(cb_midi_out_port_string_d, all_devs[i], i + index,
+        add_set_midi_port(cb_midi_out_port_string_d.get(), all_devs[i], i + index,
                           _app_instance_store->midi_io_handler.get_out_port(2));
-        add_set_midi_port(cb_midi_out_port_string_a, all_devs[i], i + index,
+        add_set_midi_port(cb_midi_out_port_string_a.get(), all_devs[i], i + index,
                           _app_instance_store->midi_io_handler.get_out_port(3));
-        add_set_midi_port(cb_midi_out_port_b, all_devs[i], i + index,
+        add_set_midi_port(cb_midi_out_port_b.get(), all_devs[i], i + index,
                           _app_instance_store->midi_io_handler.get_out_port(4));
-        add_set_midi_port(cb_midi_learn_out_port, all_devs[i], i + index,
+        add_set_midi_port(cb_midi_learn_out_port.get(), all_devs[i], i + index,
                           _app_instance_store->midi_io_handler.midi_learn_out);
     }
 
     if (!bstepIsStandalone)
     {
-        add_set_midi_port(cb_midi_pad_out_1, IN_HOST_MIDI_HANDLING, i + index,
+        add_set_midi_port(cb_midi_pad_out_1.get(), IN_HOST_MIDI_HANDLING, i + index,
                           _app_instance_store->midi_io_handler.pad_1_out);
-        add_set_midi_port(cb_midi_pad_out_2, IN_HOST_MIDI_HANDLING, i + index,
+        add_set_midi_port(cb_midi_pad_out_2.get(), IN_HOST_MIDI_HANDLING, i + index,
                           _app_instance_store->midi_io_handler.pad_2_out);
-        add_set_midi_port(cb_midi_out_port, IN_HOST_MIDI_HANDLING, i + index,
+        add_set_midi_port(cb_midi_out_port.get(), IN_HOST_MIDI_HANDLING, i + index,
                           _app_instance_store->midi_io_handler.get_out_port(0));
-        add_set_midi_port(cb_midi_out_port_string_g, IN_HOST_MIDI_HANDLING, i + index,
+        add_set_midi_port(cb_midi_out_port_string_g.get(), IN_HOST_MIDI_HANDLING, i + index,
                           _app_instance_store->midi_io_handler.get_out_port(1));
-        add_set_midi_port(cb_midi_out_port_string_d, IN_HOST_MIDI_HANDLING, i + index,
+        add_set_midi_port(cb_midi_out_port_string_d.get(), IN_HOST_MIDI_HANDLING, i + index,
                           _app_instance_store->midi_io_handler.get_out_port(2));
-        add_set_midi_port(cb_midi_out_port_string_a, IN_HOST_MIDI_HANDLING, i + index,
+        add_set_midi_port(cb_midi_out_port_string_a.get(), IN_HOST_MIDI_HANDLING, i + index,
                           _app_instance_store->midi_io_handler.get_out_port(3));
-        add_set_midi_port(cb_midi_out_port_b, IN_HOST_MIDI_HANDLING, i + index,
+        add_set_midi_port(cb_midi_out_port_b.get(), IN_HOST_MIDI_HANDLING, i + index,
                           _app_instance_store->midi_io_handler.get_out_port(4));
-        add_set_midi_port(cb_midi_learn_out_port, IN_HOST_MIDI_HANDLING, i + index,
+        add_set_midi_port(cb_midi_learn_out_port.get(), IN_HOST_MIDI_HANDLING, i + index,
                           _app_instance_store->midi_io_handler.midi_learn_out);
     }
     else
     {
 #if !JUCE_WINDOWS
-        add_set_midi_port(cb_midi_out_port, VIRTUAL_PORT, i + index,
+        add_set_midi_port(cb_midi_out_port.get(), VIRTUAL_PORT, i + index,
                           _app_instance_store->midi_io_handler.get_out_port(0));
-        add_set_midi_port(cb_midi_out_port_string_g, VIRTUAL_PORT, i + index,
+        add_set_midi_port(cb_midi_out_port_string_g.get(), VIRTUAL_PORT, i + index,
                           _app_instance_store->midi_io_handler.get_out_port(1));
-        add_set_midi_port(cb_midi_out_port_string_d, VIRTUAL_PORT, i + index,
+        add_set_midi_port(cb_midi_out_port_string_d.get(), VIRTUAL_PORT, i + index,
                           _app_instance_store->midi_io_handler.get_out_port(2));
-        add_set_midi_port(cb_midi_out_port_string_a, VIRTUAL_PORT, i + index,
+        add_set_midi_port(cb_midi_out_port_string_a.get(), VIRTUAL_PORT, i + index,
                           _app_instance_store->midi_io_handler.get_out_port(3));
-        add_set_midi_port(cb_midi_out_port_b, VIRTUAL_PORT, i + index,
+        add_set_midi_port(cb_midi_out_port_b.get(), VIRTUAL_PORT, i + index,
                           _app_instance_store->midi_io_handler.get_out_port(4));
-        add_set_midi_port(cb_midi_learn_out_port, VIRTUAL_PORT, i + index,
+        add_set_midi_port(cb_midi_learn_out_port.get(), VIRTUAL_PORT, i + index,
                           _app_instance_store->midi_io_handler.midi_learn_out);
 #endif
     }
@@ -170,45 +170,45 @@ void UiEditorSettings::fill_drop_downs()
     // INPUTS
     juce::StringArray all_indevs = juce::MidiInput::getDevices();
     index = 1;
-    add_set_midi_port(cb_midi_pad_in_1, DISABLED_PORT, index,
+    add_set_midi_port(cb_midi_pad_in_1.get(), DISABLED_PORT, index,
                       _app_instance_store->midi_io_handler.pad_1_in);
-    add_set_midi_port(cb_midi_pad_in_2, DISABLED_PORT, index,
+    add_set_midi_port(cb_midi_pad_in_2.get(), DISABLED_PORT, index,
                       _app_instance_store->midi_io_handler.pad_2_in);
-    add_set_midi_port(cb_midi_in_port, DISABLED_PORT, index,
+    add_set_midi_port(cb_midi_in_port.get(), DISABLED_PORT, index,
                       _app_instance_store->midi_io_handler.midi_in);
-    add_set_midi_port(cb_midi_learn_in_port, DISABLED_PORT, index,
+    add_set_midi_port(cb_midi_learn_in_port.get(), DISABLED_PORT, index,
                       _app_instance_store->midi_io_handler.midi_learn_in);
     index++;
     i = 0;
     for (; i < all_indevs.size(); i++)
     {
-        add_set_midi_port(cb_midi_pad_in_1, all_indevs[i], i + index,
+        add_set_midi_port(cb_midi_pad_in_1.get(), all_indevs[i], i + index,
                           _app_instance_store->midi_io_handler.pad_1_in);
-        add_set_midi_port(cb_midi_pad_in_2, all_indevs[i], i + index,
+        add_set_midi_port(cb_midi_pad_in_2.get(), all_indevs[i], i + index,
                           _app_instance_store->midi_io_handler.pad_2_in);
-        add_set_midi_port(cb_midi_in_port, all_indevs[i], i + index,
+        add_set_midi_port(cb_midi_in_port.get(), all_indevs[i], i + index,
                           _app_instance_store->midi_io_handler.midi_in);
-        add_set_midi_port(cb_midi_learn_in_port, all_indevs[i], i + index,
+        add_set_midi_port(cb_midi_learn_in_port.get(), all_indevs[i], i + index,
                           _app_instance_store->midi_io_handler.midi_learn_in);
     }
 
     if (bstepIsStandalone)
     {
-        add_set_midi_port(cb_midi_pad_in_1, IN_HOST_MIDI_HANDLING, i + index,
+        add_set_midi_port(cb_midi_pad_in_1.get(), IN_HOST_MIDI_HANDLING, i + index,
                           _app_instance_store->midi_io_handler.pad_1_in);
-        add_set_midi_port(cb_midi_pad_in_2, IN_HOST_MIDI_HANDLING, i + index,
+        add_set_midi_port(cb_midi_pad_in_2.get(), IN_HOST_MIDI_HANDLING, i + index,
                           _app_instance_store->midi_io_handler.pad_2_in);
-        add_set_midi_port(cb_midi_in_port, IN_HOST_MIDI_HANDLING, i + index,
+        add_set_midi_port(cb_midi_in_port.get(), IN_HOST_MIDI_HANDLING, i + index,
                           _app_instance_store->midi_io_handler.midi_in);
-        add_set_midi_port(cb_midi_learn_in_port, IN_HOST_MIDI_HANDLING, i + index,
+        add_set_midi_port(cb_midi_learn_in_port.get(), IN_HOST_MIDI_HANDLING, i + index,
                           _app_instance_store->midi_io_handler.midi_learn_in);
     }
     else
     {
 #ifndef JUCE_WINDOWS
-        add_set_midi_port(cb_midi_in_port, VIRTUAL_PORT, i + index,
+        add_set_midi_port(cb_midi_in_port.get(), VIRTUAL_PORT, i + index,
                           _app_instance_store->midi_io_handler.midi_in);
-        add_set_midi_port(cb_midi_learn_in_port, VIRTUAL_PORT, i + index,
+        add_set_midi_port(cb_midi_learn_in_port.get(), VIRTUAL_PORT, i + index,
                           _app_instance_store->midi_io_handler.midi_learn_in);
 #endif
     }
@@ -226,7 +226,8 @@ void UiEditorSettings::comboBoxMouseDown(juce::ComboBox *) { fill_drop_downs(); 
 UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-IO-Settings"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(label_latency_ms = new juce::Label(juce::String(), TRANS("Latency +/- ms")));
+    label_latency_ms = std::make_unique<juce::Label>(juce::String(), TRANS("Latency +/- ms"));
+    addAndMakeVisible(*label_latency_ms);
     label_latency_ms->setFont(juce::Font(15.00f, juce::Font::plain));
     label_latency_ms->setJustificationType(juce::Justification::centredRight);
     label_latency_ms->setEditable(false, false, false);
@@ -235,8 +236,9 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_latency_ms->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_latency_ms->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(lbl_clock_thru =
-                          new juce::Label(juce::String(), TRANS("Sync Thru (Clock, Start...)")));
+    lbl_clock_thru =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Sync Thru (Clock, Start...)"));
+    addAndMakeVisible(*lbl_clock_thru);
     lbl_clock_thru->setFont(juce::Font(15.00f, juce::Font::plain));
     lbl_clock_thru->setJustificationType(juce::Justification::centredLeft);
     lbl_clock_thru->setEditable(false, false, false);
@@ -245,12 +247,13 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     lbl_clock_thru->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     lbl_clock_thru->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(tb_clock_thru = new juce::ToggleButton(juce::String()));
+    tb_clock_thru = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*tb_clock_thru);
     tb_clock_thru->setExplicitFocusOrder(2);
     tb_clock_thru->addListener(this);
 
-    addAndMakeVisible(label_latency_clocks =
-                          new juce::Label(juce::String(), TRANS("Latency +1/96")));
+    label_latency_clocks = std::make_unique<juce::Label>(juce::String(), TRANS("Latency +1/96"));
+    addAndMakeVisible(*label_latency_clocks);
     label_latency_clocks->setFont(juce::Font(15.00f, juce::Font::plain));
     label_latency_clocks->setJustificationType(juce::Justification::centredRight);
     label_latency_clocks->setEditable(false, false, false);
@@ -259,7 +262,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_latency_clocks->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_latency_clocks->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_midi_thru = new juce::Label(juce::String(), TRANS("MIDI Thru")));
+    label_midi_thru = std::make_unique<juce::Label>(juce::String(), TRANS("MIDI Thru"));
+    addAndMakeVisible(*label_midi_thru);
     label_midi_thru->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_thru->setJustificationType(juce::Justification::centredLeft);
     label_midi_thru->setEditable(false, false, false);
@@ -268,11 +272,13 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_thru->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_thru->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(tb_midi_thru_enable = new juce::ToggleButton(juce::String()));
+    tb_midi_thru_enable = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*tb_midi_thru_enable);
     tb_midi_thru_enable->setExplicitFocusOrder(2);
     tb_midi_thru_enable->addListener(this);
 
-    addAndMakeVisible(sl_latency_ms = new juce::Slider(juce::String()));
+    sl_latency_ms = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*sl_latency_ms);
     sl_latency_ms->setExplicitFocusOrder(1);
     sl_latency_ms->setRange(0, 400, 1);
     sl_latency_ms->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -283,7 +289,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     sl_latency_ms->setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colour(0xff272727));
     sl_latency_ms->addListener(this);
 
-    addAndMakeVisible(sl_latency_clocks = new juce::Slider(juce::String()));
+    sl_latency_clocks = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*sl_latency_clocks);
     sl_latency_clocks->setExplicitFocusOrder(1);
     sl_latency_clocks->setRange(-5, 5, 1);
     sl_latency_clocks->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -295,8 +302,9 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
                                  juce::Colour(0xff272727));
     sl_latency_clocks->addListener(this);
 
-    addAndMakeVisible(label_midi_learn_headline =
-                          new juce::Label(juce::String(), TRANS("MIDI LEARN (CC, NOTES)")));
+    label_midi_learn_headline =
+        std::make_unique<juce::Label>(juce::String(), TRANS("MIDI LEARN (CC, NOTES)"));
+    addAndMakeVisible(*label_midi_learn_headline);
     label_midi_learn_headline->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_learn_headline->setJustificationType(juce::Justification::centred);
     label_midi_learn_headline->setEditable(false, false, false);
@@ -306,10 +314,12 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_learn_headline->setColour(juce::TextEditor::backgroundColourId,
                                          juce::Colour(0x00000000));
 
-    addAndMakeVisible(toolbar = new UiEditorToolbar(this, true, true, false));
+    toolbar = std::make_unique<UiEditorToolbar>(this, true, true, false);
+    addAndMakeVisible(*toolbar);
 
-    addAndMakeVisible(label_midi_io_port_per_track = new juce::Label(
-                          juce::String(), TRANS("MIDI OUT FOR SEQUENCE# 2, 3 & 4")));
+    label_midi_io_port_per_track =
+        std::make_unique<juce::Label>(juce::String(), TRANS("MIDI OUT FOR SEQUENCE# 2, 3 & 4"));
+    addAndMakeVisible(*label_midi_io_port_per_track);
     label_midi_io_port_per_track->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_io_port_per_track->setJustificationType(juce::Justification::centred);
     label_midi_io_port_per_track->setEditable(false, false, false);
@@ -319,7 +329,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_io_port_per_track->setColour(juce::TextEditor::backgroundColourId,
                                             juce::Colour(0x00000000));
 
-    addAndMakeVisible(sl_midi_out_channel = new juce::Slider(juce::String()));
+    sl_midi_out_channel = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*sl_midi_out_channel);
     sl_midi_out_channel->setExplicitFocusOrder(1);
     sl_midi_out_channel->setRange(1, 16, 1);
     sl_midi_out_channel->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -331,7 +342,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
                                    juce::Colour(0xff272727));
     sl_midi_out_channel->addListener(this);
 
-    addAndMakeVisible(sl_midi_in_channel_pad_1 = new juce::Slider(juce::String()));
+    sl_midi_in_channel_pad_1 = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*sl_midi_in_channel_pad_1);
     sl_midi_in_channel_pad_1->setExplicitFocusOrder(6);
     sl_midi_in_channel_pad_1->setRange(1, 16, 1);
     sl_midi_in_channel_pad_1->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -344,7 +356,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
                                         juce::Colour(0xff272727));
     sl_midi_in_channel_pad_1->addListener(this);
 
-    addAndMakeVisible(sl_midi_out_channel_pad_1 = new juce::Slider(juce::String()));
+    sl_midi_out_channel_pad_1 = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*sl_midi_out_channel_pad_1);
     sl_midi_out_channel_pad_1->setExplicitFocusOrder(7);
     sl_midi_out_channel_pad_1->setRange(1, 16, 1);
     sl_midi_out_channel_pad_1->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -357,7 +370,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
                                          juce::Colour(0xff272727));
     sl_midi_out_channel_pad_1->addListener(this);
 
-    addAndMakeVisible(sl_midi_in_channel_pad_2 = new juce::Slider(juce::String()));
+    sl_midi_in_channel_pad_2 = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*sl_midi_in_channel_pad_2);
     sl_midi_in_channel_pad_2->setExplicitFocusOrder(10);
     sl_midi_in_channel_pad_2->setRange(1, 16, 1);
     sl_midi_in_channel_pad_2->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -370,7 +384,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
                                         juce::Colour(0xff272727));
     sl_midi_in_channel_pad_2->addListener(this);
 
-    addAndMakeVisible(sl_midi_out_channel_pad_2 = new juce::Slider(juce::String()));
+    sl_midi_out_channel_pad_2 = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*sl_midi_out_channel_pad_2);
     sl_midi_out_channel_pad_2->setExplicitFocusOrder(11);
     sl_midi_out_channel_pad_2->setRange(1, 16, 1);
     sl_midi_out_channel_pad_2->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -383,7 +398,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
                                          juce::Colour(0xff272727));
     sl_midi_out_channel_pad_2->addListener(this);
 
-    addAndMakeVisible(pb_refresh_pad_1 = new juce::TextButton(juce::String()));
+    pb_refresh_pad_1 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*pb_refresh_pad_1);
     pb_refresh_pad_1->setExplicitFocusOrder(8);
     pb_refresh_pad_1->setButtonText(TRANS("Refresh Launchpad 1 (MIDI OUT)"));
     pb_refresh_pad_1->setConnectedEdges(
@@ -391,7 +407,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
         juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     pb_refresh_pad_1->addListener(this);
 
-    addAndMakeVisible(pb_refresh_pad_2 = new juce::TextButton(juce::String()));
+    pb_refresh_pad_2 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*pb_refresh_pad_2);
     pb_refresh_pad_2->setExplicitFocusOrder(12);
     pb_refresh_pad_2->setButtonText(TRANS("Refresh Launchpad 2 (MIDI OUT)"));
     pb_refresh_pad_2->setConnectedEdges(juce::Button::ConnectedOnLeft |
@@ -399,49 +416,56 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
                                         juce::Button::ConnectedOnBottom);
     pb_refresh_pad_2->addListener(this);
 
-    addAndMakeVisible(cb_midi_pad_in_1 = new juce::ComboBox(juce::String()));
+    cb_midi_pad_in_1 = std::make_unique<juce::ComboBox>(juce::String());
+    addAndMakeVisible(*cb_midi_pad_in_1);
     cb_midi_pad_in_1->setEditableText(false);
     cb_midi_pad_in_1->setJustificationType(juce::Justification::centredLeft);
     cb_midi_pad_in_1->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_pad_in_1->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_pad_in_1->addListener(this);
 
-    addAndMakeVisible(cb_midi_pad_out_1 = new juce::ComboBox(juce::String()));
+    cb_midi_pad_out_1 = std::make_unique<juce::ComboBox>(juce::String());
+    addAndMakeVisible(*cb_midi_pad_out_1);
     cb_midi_pad_out_1->setEditableText(false);
     cb_midi_pad_out_1->setJustificationType(juce::Justification::centredLeft);
     cb_midi_pad_out_1->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_pad_out_1->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_pad_out_1->addListener(this);
 
-    addAndMakeVisible(cb_midi_pad_in_2 = new juce::ComboBox(juce::String()));
+    cb_midi_pad_in_2 = std::make_unique<juce::ComboBox>(juce::String());
+    addAndMakeVisible(*cb_midi_pad_in_2);
     cb_midi_pad_in_2->setEditableText(false);
     cb_midi_pad_in_2->setJustificationType(juce::Justification::centredLeft);
     cb_midi_pad_in_2->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_pad_in_2->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_pad_in_2->addListener(this);
 
-    addAndMakeVisible(cb_midi_pad_out_2 = new juce::ComboBox(juce::String()));
+    cb_midi_pad_out_2 = std::make_unique<juce::ComboBox>(juce::String());
+    addAndMakeVisible(*cb_midi_pad_out_2);
     cb_midi_pad_out_2->setEditableText(false);
     cb_midi_pad_out_2->setJustificationType(juce::Justification::centredLeft);
     cb_midi_pad_out_2->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_pad_out_2->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_pad_out_2->addListener(this);
 
-    addAndMakeVisible(cb_midi_in_port = new juce::ComboBox(juce::String()));
+    cb_midi_in_port = std::make_unique<juce::ComboBox>(juce::String());
+    addAndMakeVisible(*cb_midi_in_port);
     cb_midi_in_port->setEditableText(false);
     cb_midi_in_port->setJustificationType(juce::Justification::centredLeft);
     cb_midi_in_port->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_in_port->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_in_port->addListener(this);
 
-    addAndMakeVisible(cb_midi_out_port = new juce::ComboBox(juce::String()));
+    cb_midi_out_port = std::make_unique<juce::ComboBox>(juce::String());
+    addAndMakeVisible(*cb_midi_out_port);
     cb_midi_out_port->setEditableText(false);
     cb_midi_out_port->setJustificationType(juce::Justification::centredLeft);
     cb_midi_out_port->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_out_port->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_out_port->addListener(this);
 
-    addAndMakeVisible(sl_midi_in_channel = new juce::Slider(juce::String()));
+    sl_midi_in_channel = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*sl_midi_in_channel);
     sl_midi_in_channel->setExplicitFocusOrder(1);
     sl_midi_in_channel->setRange(1, 16, 1);
     sl_midi_in_channel->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -454,21 +478,24 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
                                   juce::Colour(0xff272727));
     sl_midi_in_channel->addListener(this);
 
-    addAndMakeVisible(cb_midi_learn_in_port = new juce::ComboBox(juce::String()));
+    cb_midi_learn_in_port = std::make_unique<juce::ComboBox>(juce::String());
+    addAndMakeVisible(*cb_midi_learn_in_port);
     cb_midi_learn_in_port->setEditableText(false);
     cb_midi_learn_in_port->setJustificationType(juce::Justification::centredLeft);
     cb_midi_learn_in_port->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_learn_in_port->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_learn_in_port->addListener(this);
 
-    addAndMakeVisible(cb_midi_learn_out_port = new juce::ComboBox(juce::String()));
+    cb_midi_learn_out_port = std::make_unique<juce::ComboBox>(juce::String());
+    addAndMakeVisible(*cb_midi_learn_out_port);
     cb_midi_learn_out_port->setEditableText(false);
     cb_midi_learn_out_port->setJustificationType(juce::Justification::centredLeft);
     cb_midi_learn_out_port->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_learn_out_port->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_learn_out_port->addListener(this);
 
-    addAndMakeVisible(pb_refresh_feedback = new juce::TextButton(juce::String()));
+    pb_refresh_feedback = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*pb_refresh_feedback);
     pb_refresh_feedback->setExplicitFocusOrder(8);
     pb_refresh_feedback->setButtonText(TRANS("Refresh Feedback (MIDI OUT)"));
     pb_refresh_feedback->setConnectedEdges(
@@ -476,8 +503,9 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
         juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     pb_refresh_feedback->addListener(this);
 
-    addAndMakeVisible(label_midi_in_port =
-                          new juce::Label(juce::String(), TRANS("Receive Port (Slave)")));
+    label_midi_in_port =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Receive Port (Slave)"));
+    addAndMakeVisible(*label_midi_in_port);
     label_midi_in_port->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_in_port->setJustificationType(juce::Justification::centredRight);
     label_midi_in_port->setEditable(false, false, false);
@@ -486,8 +514,9 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_in_port->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_in_port->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_midi_out =
-                          new juce::Label(juce::String(), TRANS("Master Out (to Synth) Ch/Port")));
+    label_midi_out =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Master Out (to Synth) Ch/Port"));
+    addAndMakeVisible(*label_midi_out);
     label_midi_out->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_out->setJustificationType(juce::Justification::centredRight);
     label_midi_out->setEditable(false, false, false);
@@ -495,8 +524,9 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_out->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_out->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_master_slave_headline =
-                          new juce::Label(juce::String(), TRANS("MIDI OUT (Notes, Sync)")));
+    label_master_slave_headline =
+        std::make_unique<juce::Label>(juce::String(), TRANS("MIDI OUT (Notes, Sync)"));
+    addAndMakeVisible(*label_master_slave_headline);
     label_master_slave_headline->setFont(juce::Font(15.00f, juce::Font::plain));
     label_master_slave_headline->setJustificationType(juce::Justification::centred);
     label_master_slave_headline->setEditable(false, false, false);
@@ -506,8 +536,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_master_slave_headline->setColour(juce::TextEditor::backgroundColourId,
                                            juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_midi_learn_in =
-                          new juce::Label(juce::String(), TRANS("Receive Port (IN)")));
+    label_midi_learn_in = std::make_unique<juce::Label>(juce::String(), TRANS("Receive Port (IN)"));
+    addAndMakeVisible(*label_midi_learn_in);
     label_midi_learn_in->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_learn_in->setJustificationType(juce::Justification::centredRight);
     label_midi_learn_in->setEditable(false, false, false);
@@ -516,8 +546,9 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_learn_in->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_learn_in->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_midi_learn_out =
-                          new juce::Label(juce::String(), TRANS("Feedback Port (OUT)")));
+    label_midi_learn_out =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Feedback Port (OUT)"));
+    addAndMakeVisible(*label_midi_learn_out);
     label_midi_learn_out->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_learn_out->setJustificationType(juce::Justification::centredRight);
     label_midi_learn_out->setEditable(false, false, false);
@@ -526,8 +557,9 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_learn_out->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_learn_out->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_launchpad_1_headline =
-                          new juce::Label(juce::String(), TRANS("NOVATION LAUNCHPAD 1")));
+    label_launchpad_1_headline =
+        std::make_unique<juce::Label>(juce::String(), TRANS("NOVATION LAUNCHPAD 1"));
+    addAndMakeVisible(*label_launchpad_1_headline);
     label_launchpad_1_headline->setFont(juce::Font(15.00f, juce::Font::plain));
     label_launchpad_1_headline->setJustificationType(juce::Justification::centred);
     label_launchpad_1_headline->setEditable(false, false, false);
@@ -537,8 +569,9 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_launchpad_1_headline->setColour(juce::TextEditor::backgroundColourId,
                                           juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_midi_launchpad_1_in =
-                          new juce::Label(juce::String(), TRANS("Receive Port (IN)")));
+    label_midi_launchpad_1_in =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Receive Port (IN)"));
+    addAndMakeVisible(*label_midi_launchpad_1_in);
     label_midi_launchpad_1_in->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_launchpad_1_in->setJustificationType(juce::Justification::centredRight);
     label_midi_launchpad_1_in->setEditable(false, false, false);
@@ -548,8 +581,9 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_launchpad_1_in->setColour(juce::TextEditor::backgroundColourId,
                                          juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_midi_launchpad_1_out =
-                          new juce::Label(juce::String(), TRANS("Feedback Port (OUT)")));
+    label_midi_launchpad_1_out =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Feedback Port (OUT)"));
+    addAndMakeVisible(*label_midi_launchpad_1_out);
     label_midi_launchpad_1_out->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_launchpad_1_out->setJustificationType(juce::Justification::centredRight);
     label_midi_launchpad_1_out->setEditable(false, false, false);
@@ -559,8 +593,9 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_launchpad_1_out->setColour(juce::TextEditor::backgroundColourId,
                                           juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_launchpad_2_headline =
-                          new juce::Label(juce::String(), TRANS("NOVATION LAUNCHPAD 2")));
+    label_launchpad_2_headline =
+        std::make_unique<juce::Label>(juce::String(), TRANS("NOVATION LAUNCHPAD 2"));
+    addAndMakeVisible(*label_launchpad_2_headline);
     label_launchpad_2_headline->setFont(juce::Font(15.00f, juce::Font::plain));
     label_launchpad_2_headline->setJustificationType(juce::Justification::centred);
     label_launchpad_2_headline->setEditable(false, false, false);
@@ -570,8 +605,9 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_launchpad_2_headline->setColour(juce::TextEditor::backgroundColourId,
                                           juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_midi_launchpad_2_in =
-                          new juce::Label(juce::String(), TRANS("Receive Port (IN)")));
+    label_midi_launchpad_2_in =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Receive Port (IN)"));
+    addAndMakeVisible(*label_midi_launchpad_2_in);
     label_midi_launchpad_2_in->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_launchpad_2_in->setJustificationType(juce::Justification::centredRight);
     label_midi_launchpad_2_in->setEditable(false, false, false);
@@ -581,8 +617,9 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_launchpad_2_in->setColour(juce::TextEditor::backgroundColourId,
                                          juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_midi_launchpad_2_out =
-                          new juce::Label(juce::String(), TRANS("Feedback Port (OUT)")));
+    label_midi_launchpad_2_out =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Feedback Port (OUT)"));
+    addAndMakeVisible(*label_midi_launchpad_2_out);
     label_midi_launchpad_2_out->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_launchpad_2_out->setJustificationType(juce::Justification::centredRight);
     label_midi_launchpad_2_out->setEditable(false, false, false);
@@ -592,14 +629,16 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_launchpad_2_out->setColour(juce::TextEditor::backgroundColourId,
                                           juce::Colour(0x00000000));
 
-    addAndMakeVisible(cb_midi_out_port_string_g = new juce::ComboBox(juce::String()));
+    cb_midi_out_port_string_g = std::make_unique<juce::ComboBox>(juce::String());
+    addAndMakeVisible(*cb_midi_out_port_string_g);
     cb_midi_out_port_string_g->setEditableText(false);
     cb_midi_out_port_string_g->setJustificationType(juce::Justification::centredLeft);
     cb_midi_out_port_string_g->setTextWhenNothingSelected(TRANS("Use Master Output"));
     cb_midi_out_port_string_g->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_out_port_string_g->addListener(this);
 
-    addAndMakeVisible(sl_midi_out_channel_string_g = new juce::Slider(juce::String()));
+    sl_midi_out_channel_string_g = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*sl_midi_out_channel_string_g);
     sl_midi_out_channel_string_g->setExplicitFocusOrder(1);
     sl_midi_out_channel_string_g->setRange(1, 16, 1);
     sl_midi_out_channel_string_g->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -612,8 +651,9 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
                                             juce::Colour(0xff272727));
     sl_midi_out_channel_string_g->addListener(this);
 
-    addAndMakeVisible(label_midi_out_string_g =
-                          new juce::Label(juce::String(), TRANS("Output (to Synth) Group 2")));
+    label_midi_out_string_g =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Output (to Synth) Group 2"));
+    addAndMakeVisible(*label_midi_out_string_g);
     label_midi_out_string_g->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_out_string_g->setJustificationType(juce::Justification::centredRight);
     label_midi_out_string_g->setEditable(false, false, false);
@@ -623,14 +663,16 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_out_string_g->setColour(juce::TextEditor::backgroundColourId,
                                        juce::Colour(0x00000000));
 
-    addAndMakeVisible(cb_midi_out_port_string_d = new juce::ComboBox(juce::String()));
+    cb_midi_out_port_string_d = std::make_unique<juce::ComboBox>(juce::String());
+    addAndMakeVisible(*cb_midi_out_port_string_d);
     cb_midi_out_port_string_d->setEditableText(false);
     cb_midi_out_port_string_d->setJustificationType(juce::Justification::centredLeft);
     cb_midi_out_port_string_d->setTextWhenNothingSelected(TRANS("Use Master Output"));
     cb_midi_out_port_string_d->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_out_port_string_d->addListener(this);
 
-    addAndMakeVisible(sl_midi_out_channel_string_d = new juce::Slider(juce::String()));
+    sl_midi_out_channel_string_d = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*sl_midi_out_channel_string_d);
     sl_midi_out_channel_string_d->setExplicitFocusOrder(1);
     sl_midi_out_channel_string_d->setRange(1, 16, 1);
     sl_midi_out_channel_string_d->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -643,8 +685,9 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
                                             juce::Colour(0xff272727));
     sl_midi_out_channel_string_d->addListener(this);
 
-    addAndMakeVisible(label_midi_out_string_d =
-                          new juce::Label(juce::String(), TRANS("Output (to Synth) Group 3")));
+    label_midi_out_string_d =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Output (to Synth) Group 3"));
+    addAndMakeVisible(*label_midi_out_string_d);
     label_midi_out_string_d->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_out_string_d->setJustificationType(juce::Justification::centredRight);
     label_midi_out_string_d->setEditable(false, false, false);
@@ -654,14 +697,16 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_out_string_d->setColour(juce::TextEditor::backgroundColourId,
                                        juce::Colour(0x00000000));
 
-    addAndMakeVisible(cb_midi_out_port_string_a = new juce::ComboBox(juce::String()));
+    cb_midi_out_port_string_a = std::make_unique<juce::ComboBox>(juce::String());
+    addAndMakeVisible(*cb_midi_out_port_string_a);
     cb_midi_out_port_string_a->setEditableText(false);
     cb_midi_out_port_string_a->setJustificationType(juce::Justification::centredLeft);
     cb_midi_out_port_string_a->setTextWhenNothingSelected(TRANS("Use Master Output"));
     cb_midi_out_port_string_a->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_out_port_string_a->addListener(this);
 
-    addAndMakeVisible(sl_midi_out_channel_string_a = new juce::Slider(juce::String()));
+    sl_midi_out_channel_string_a = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*sl_midi_out_channel_string_a);
     sl_midi_out_channel_string_a->setExplicitFocusOrder(1);
     sl_midi_out_channel_string_a->setRange(1, 16, 1);
     sl_midi_out_channel_string_a->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -674,8 +719,9 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
                                             juce::Colour(0xff272727));
     sl_midi_out_channel_string_a->addListener(this);
 
-    addAndMakeVisible(label_midi_out_string_a =
-                          new juce::Label(juce::String(), TRANS("Output (to Synth) Group 4")));
+    label_midi_out_string_a =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Output (to Synth) Group 4"));
+    addAndMakeVisible(*label_midi_out_string_a);
     label_midi_out_string_a->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_out_string_a->setJustificationType(juce::Justification::centredRight);
     label_midi_out_string_a->setEditable(false, false, false);
@@ -685,7 +731,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_out_string_a->setColour(juce::TextEditor::backgroundColourId,
                                        juce::Colour(0x00000000));
 
-    addAndMakeVisible(pb_refresh_all = new juce::TextButton(juce::String()));
+    pb_refresh_all = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*pb_refresh_all);
     pb_refresh_all->setExplicitFocusOrder(12);
     pb_refresh_all->setButtonText(TRANS("Refresh All"));
     pb_refresh_all->setConnectedEdges(juce::Button::ConnectedOnLeft |
@@ -693,14 +740,16 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
                                       juce::Button::ConnectedOnBottom);
     pb_refresh_all->addListener(this);
 
-    addAndMakeVisible(cb_midi_out_port_b = new juce::ComboBox(juce::String()));
+    cb_midi_out_port_b = std::make_unique<juce::ComboBox>(juce::String());
+    addAndMakeVisible(*cb_midi_out_port_b);
     cb_midi_out_port_b->setEditableText(false);
     cb_midi_out_port_b->setJustificationType(juce::Justification::centredLeft);
     cb_midi_out_port_b->setTextWhenNothingSelected(TRANS("Error: device removed?"));
     cb_midi_out_port_b->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_out_port_b->addListener(this);
 
-    addAndMakeVisible(sl_midi_out_channel_b = new juce::Slider(juce::String()));
+    sl_midi_out_channel_b = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*sl_midi_out_channel_b);
     sl_midi_out_channel_b->setExplicitFocusOrder(1);
     sl_midi_out_channel_b->setRange(1, 16, 1);
     sl_midi_out_channel_b->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -712,7 +761,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
                                      juce::Colour(0xff272727));
     sl_midi_out_channel_b->addListener(this);
 
-    addAndMakeVisible(label_midi_in_port_b = new juce::Label(juce::String(), TRANS("Second Out")));
+    label_midi_in_port_b = std::make_unique<juce::Label>(juce::String(), TRANS("Second Out"));
+    addAndMakeVisible(*label_midi_in_port_b);
     label_midi_in_port_b->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_in_port_b->setJustificationType(juce::Justification::centredRight);
     label_midi_in_port_b->setEditable(false, false, false);
@@ -721,8 +771,9 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_in_port_b->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_in_port_b->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_master_slave_headline2 =
-                          new juce::Label(juce::String(), TRANS("MIDI IN (Slave, Thru)")));
+    label_master_slave_headline2 =
+        std::make_unique<juce::Label>(juce::String(), TRANS("MIDI IN (Slave, Thru)"));
+    addAndMakeVisible(*label_master_slave_headline2);
     label_master_slave_headline2->setFont(juce::Font(15.00f, juce::Font::plain));
     label_master_slave_headline2->setJustificationType(juce::Justification::centred);
     label_master_slave_headline2->setEditable(false, false, false);
@@ -732,27 +783,33 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_master_slave_headline2->setColour(juce::TextEditor::backgroundColourId,
                                             juce::Colour(0x00000000));
 
-    addAndMakeVisible(button_info_master_out = new juce::TextButton(juce::String()));
+    button_info_master_out = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*button_info_master_out);
     button_info_master_out->setButtonText(TRANS("?"));
     button_info_master_out->addListener(this);
 
-    addAndMakeVisible(button_info_master_input = new juce::TextButton(juce::String()));
+    button_info_master_input = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*button_info_master_input);
     button_info_master_input->setButtonText(TRANS("?"));
     button_info_master_input->addListener(this);
 
-    addAndMakeVisible(button_info_midi_thru = new juce::TextButton(juce::String()));
+    button_info_midi_thru = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*button_info_midi_thru);
     button_info_midi_thru->setButtonText(TRANS("?"));
     button_info_midi_thru->addListener(this);
 
-    addAndMakeVisible(button_info_sequence_out = new juce::TextButton(juce::String()));
+    button_info_sequence_out = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*button_info_sequence_out);
     button_info_sequence_out->setButtonText(TRANS("?"));
     button_info_sequence_out->addListener(this);
 
-    addAndMakeVisible(button_info_cc_in = new juce::TextButton(juce::String()));
+    button_info_cc_in = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*button_info_cc_in);
     button_info_cc_in->setButtonText(TRANS("?"));
     button_info_cc_in->addListener(this);
 
-    addAndMakeVisible(button_info_launchpad_in_1 = new juce::TextButton(juce::String()));
+    button_info_launchpad_in_1 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*button_info_launchpad_in_1);
     button_info_launchpad_in_1->setButtonText(TRANS("?"));
     button_info_launchpad_in_1->addListener(this);
 
@@ -1093,37 +1150,37 @@ void UiEditorSettings::buttonClicked(juce::Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == tb_clock_thru)
+    if (buttonThatWasClicked == tb_clock_thru.get())
     {
         //[UserButtonCode_tb_clock_thru] -- add your button handler code here..
         _app_instance_store->audio_processor->sync_thru = tb_clock_thru->getToggleState();
         //[/UserButtonCode_tb_clock_thru]
     }
-    else if (buttonThatWasClicked == tb_midi_thru_enable)
+    else if (buttonThatWasClicked == tb_midi_thru_enable.get())
     {
         //[UserButtonCode_tb_midi_thru_enable] -- add your button handler code here..
         _app_instance_store->audio_processor->midi_thru = tb_midi_thru_enable->getToggleState();
         //[/UserButtonCode_tb_midi_thru_enable]
     }
-    else if (buttonThatWasClicked == pb_refresh_pad_1)
+    else if (buttonThatWasClicked == pb_refresh_pad_1.get())
     {
         //[UserButtonCode_pb_refresh_pad_1] -- add your button handler code here..
         _app_instance_store->launchpad_1.refresh_all_buttons();
         //[/UserButtonCode_pb_refresh_pad_1]
     }
-    else if (buttonThatWasClicked == pb_refresh_pad_2)
+    else if (buttonThatWasClicked == pb_refresh_pad_2.get())
     {
         //[UserButtonCode_pb_refresh_pad_2] -- add your button handler code here..
         _app_instance_store->launchpad_2.refresh_all_buttons();
         //[/UserButtonCode_pb_refresh_pad_2]
     }
-    else if (buttonThatWasClicked == pb_refresh_feedback)
+    else if (buttonThatWasClicked == pb_refresh_feedback.get())
     {
         //[UserButtonCode_pb_refresh_feedback] -- add your button handler code here..
         _app_instance_store->midi_in_map.force_feedback_refresh();
         //[/UserButtonCode_pb_refresh_feedback]
     }
-    else if (buttonThatWasClicked == pb_refresh_all)
+    else if (buttonThatWasClicked == pb_refresh_all.get())
     {
         //[UserButtonCode_pb_refresh_all] -- add your button handler code here..
         _app_instance_store->launchpad_1.refresh_all_buttons();
@@ -1164,61 +1221,67 @@ void UiEditorSettings::buttonClicked(juce::Button *buttonThatWasClicked)
         fill_drop_downs();
         //[/UserButtonCode_pb_refresh_all]
     }
-    else if (buttonThatWasClicked == button_info_master_out)
+    else if (buttonThatWasClicked == button_info_master_out.get())
     {
         //[UserButtonCode_button_info_master_out] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
+            _app_instance_store->editor_config.manual_editor =
+                std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(
             MANUAL_URL + "beginner/master-and-slave-standalone");
         //[/UserButtonCode_button_info_master_out]
     }
-    else if (buttonThatWasClicked == button_info_master_input)
+    else if (buttonThatWasClicked == button_info_master_input.get())
     {
         //[UserButtonCode_button_info_master_input] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
+            _app_instance_store->editor_config.manual_editor =
+                std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(
             MANUAL_URL + "beginner/master-and-slave-standalone");
         //[/UserButtonCode_button_info_master_input]
     }
-    else if (buttonThatWasClicked == button_info_midi_thru)
+    else if (buttonThatWasClicked == button_info_midi_thru.get())
     {
         //[UserButtonCode_button_info_midi_thru] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
+            _app_instance_store->editor_config.manual_editor =
+                std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(
             MANUAL_URL + "beginner/master-and-slave-standalone");
         //[/UserButtonCode_button_info_midi_thru]
     }
-    else if (buttonThatWasClicked == button_info_sequence_out)
+    else if (buttonThatWasClicked == button_info_sequence_out.get())
     {
         //[UserButtonCode_button_info_sequence_out] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
+            _app_instance_store->editor_config.manual_editor =
+                std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(
             MANUAL_URL + "advanced-users/layer-b-4th-bar-playback");
         //[/UserButtonCode_button_info_sequence_out]
     }
-    else if (buttonThatWasClicked == button_info_cc_in)
+    else if (buttonThatWasClicked == button_info_cc_in.get())
     {
         //[UserButtonCode_button_info_cc_in] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
+            _app_instance_store->editor_config.manual_editor =
+                std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(
             MANUAL_URL + "conroller-stuff/midi-learn");
         //[/UserButtonCode_button_info_cc_in]
     }
-    else if (buttonThatWasClicked == button_info_launchpad_in_1)
+    else if (buttonThatWasClicked == button_info_launchpad_in_1.get())
     {
         //[UserButtonCode_button_info_launchpad_in_1] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
+            _app_instance_store->editor_config.manual_editor =
+                std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(
             MANUAL_URL + "conroller-stuff/novation-launchpad");
@@ -1234,50 +1297,50 @@ void UiEditorSettings::sliderValueChanged(juce::Slider *sliderThatWasMoved)
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
 
-    if (sliderThatWasMoved == sl_latency_ms)
+    if (sliderThatWasMoved == sl_latency_ms.get())
     {
         //[UserSliderCode_sl_latency_ms] -- add your slider handling code here..
         _app_instance_store->audio_processor->latency_corretion_ms = sliderThatWasMoved->getValue();
         //[/UserSliderCode_sl_latency_ms]
     }
-    else if (sliderThatWasMoved == sl_latency_clocks)
+    else if (sliderThatWasMoved == sl_latency_clocks.get())
     {
         //[UserSliderCode_sl_latency_clocks] -- add your slider handling code here..
         _app_instance_store->audio_processor->latency_corretion_clocks =
             sliderThatWasMoved->getValue();
         //[/UserSliderCode_sl_latency_clocks]
     }
-    else if (sliderThatWasMoved == sl_midi_out_channel)
+    else if (sliderThatWasMoved == sl_midi_out_channel.get())
     {
         //[UserSliderCode_sl_midi_out_channel] -- add your slider handling code here..
         _app_instance_store->audio_processor->channel_out = sliderThatWasMoved->getValue();
         //[/UserSliderCode_sl_midi_out_channel]
     }
-    else if (sliderThatWasMoved == sl_midi_in_channel_pad_1)
+    else if (sliderThatWasMoved == sl_midi_in_channel_pad_1.get())
     {
         //[UserSliderCode_sl_midi_in_channel_pad_1] -- add your slider handling code here..
         _app_instance_store->launchpad_1.channel_in = sliderThatWasMoved->getValue();
         //[/UserSliderCode_sl_midi_in_channel_pad_1]
     }
-    else if (sliderThatWasMoved == sl_midi_out_channel_pad_1)
+    else if (sliderThatWasMoved == sl_midi_out_channel_pad_1.get())
     {
         //[UserSliderCode_sl_midi_out_channel_pad_1] -- add your slider handling code here..
         _app_instance_store->launchpad_1.channel_out = sliderThatWasMoved->getValue();
         //[/UserSliderCode_sl_midi_out_channel_pad_1]
     }
-    else if (sliderThatWasMoved == sl_midi_in_channel_pad_2)
+    else if (sliderThatWasMoved == sl_midi_in_channel_pad_2.get())
     {
         //[UserSliderCode_sl_midi_in_channel_pad_2] -- add your slider handling code here..
         _app_instance_store->launchpad_2.channel_in = sliderThatWasMoved->getValue();
         //[/UserSliderCode_sl_midi_in_channel_pad_2]
     }
-    else if (sliderThatWasMoved == sl_midi_out_channel_pad_2)
+    else if (sliderThatWasMoved == sl_midi_out_channel_pad_2.get())
     {
         //[UserSliderCode_sl_midi_out_channel_pad_2] -- add your slider handling code here..
         _app_instance_store->launchpad_2.channel_out = sliderThatWasMoved->getValue();
         //[/UserSliderCode_sl_midi_out_channel_pad_2]
     }
-    else if (sliderThatWasMoved == sl_midi_in_channel)
+    else if (sliderThatWasMoved == sl_midi_in_channel.get())
     {
         //[UserSliderCode_sl_midi_in_channel] -- add your slider handling code here..
         _app_instance_store->audio_processor->channel_in = sliderThatWasMoved->getValue();
@@ -1286,25 +1349,25 @@ void UiEditorSettings::sliderValueChanged(juce::Slider *sliderThatWasMoved)
 
         //[/UserSliderCode_sl_midi_in_channel]
     }
-    else if (sliderThatWasMoved == sl_midi_out_channel_string_g)
+    else if (sliderThatWasMoved == sl_midi_out_channel_string_g.get())
     {
         //[UserSliderCode_sl_midi_out_channel_string_g] -- add your slider handling code here..
         _app_instance_store->audio_processor->channel_out_group_2 = sliderThatWasMoved->getValue();
         //[/UserSliderCode_sl_midi_out_channel_string_g]
     }
-    else if (sliderThatWasMoved == sl_midi_out_channel_string_d)
+    else if (sliderThatWasMoved == sl_midi_out_channel_string_d.get())
     {
         //[UserSliderCode_sl_midi_out_channel_string_d] -- add your slider handling code here..
         _app_instance_store->audio_processor->channel_out_group_3 = sliderThatWasMoved->getValue();
         //[/UserSliderCode_sl_midi_out_channel_string_d]
     }
-    else if (sliderThatWasMoved == sl_midi_out_channel_string_a)
+    else if (sliderThatWasMoved == sl_midi_out_channel_string_a.get())
     {
         //[UserSliderCode_sl_midi_out_channel_string_a] -- add your slider handling code here..
         _app_instance_store->audio_processor->channel_out_group_4 = sliderThatWasMoved->getValue();
         //[/UserSliderCode_sl_midi_out_channel_string_a]
     }
-    else if (sliderThatWasMoved == sl_midi_out_channel_b)
+    else if (sliderThatWasMoved == sl_midi_out_channel_b.get())
     {
         //[UserSliderCode_sl_midi_out_channel_b] -- add your slider handling code here..
         _app_instance_store->audio_processor->channel_out_b = sliderThatWasMoved->getValue();
@@ -1326,7 +1389,7 @@ void UiEditorSettings::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
     int selected_index = comboBoxThatHasChanged->getSelectedId() - 2;
     //[/UsercomboBoxChanged_Pre]
 
-    if (comboBoxThatHasChanged == cb_midi_pad_in_1)
+    if (comboBoxThatHasChanged == cb_midi_pad_in_1.get())
     {
         //[UserComboBoxCode_cb_midi_pad_in_1] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.pad_1_in.close_port();
@@ -1334,7 +1397,7 @@ void UiEditorSettings::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
         _app_instance_store->midi_io_handler.pad_1_in.open_port();
         //[/UserComboBoxCode_cb_midi_pad_in_1]
     }
-    else if (comboBoxThatHasChanged == cb_midi_pad_out_1)
+    else if (comboBoxThatHasChanged == cb_midi_pad_out_1.get())
     {
         //[UserComboBoxCode_cb_midi_pad_out_1] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.pad_1_out.close_port();
@@ -1342,7 +1405,7 @@ void UiEditorSettings::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
         _app_instance_store->midi_io_handler.pad_1_out.open_port();
         //[/UserComboBoxCode_cb_midi_pad_out_1]
     }
-    else if (comboBoxThatHasChanged == cb_midi_pad_in_2)
+    else if (comboBoxThatHasChanged == cb_midi_pad_in_2.get())
     {
         //[UserComboBoxCode_cb_midi_pad_in_2] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.pad_2_in.close_port();
@@ -1350,7 +1413,7 @@ void UiEditorSettings::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
         _app_instance_store->midi_io_handler.pad_2_in.open_port();
         //[/UserComboBoxCode_cb_midi_pad_in_2]
     }
-    else if (comboBoxThatHasChanged == cb_midi_pad_out_2)
+    else if (comboBoxThatHasChanged == cb_midi_pad_out_2.get())
     {
         //[UserComboBoxCode_cb_midi_pad_out_2] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.pad_2_out.close_port();
@@ -1358,7 +1421,7 @@ void UiEditorSettings::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
         _app_instance_store->midi_io_handler.pad_2_out.open_port();
         //[/UserComboBoxCode_cb_midi_pad_out_2]
     }
-    else if (comboBoxThatHasChanged == cb_midi_in_port)
+    else if (comboBoxThatHasChanged == cb_midi_in_port.get())
     {
         //[UserComboBoxCode_cb_midi_in_port] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.midi_in.close_port();
@@ -1366,7 +1429,7 @@ void UiEditorSettings::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
         _app_instance_store->midi_io_handler.midi_in.open_port();
         //[/UserComboBoxCode_cb_midi_in_port]
     }
-    else if (comboBoxThatHasChanged == cb_midi_out_port)
+    else if (comboBoxThatHasChanged == cb_midi_out_port.get())
     {
         //[UserComboBoxCode_cb_midi_out_port] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.get_out_port(0).close_port();
@@ -1375,7 +1438,7 @@ void UiEditorSettings::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
         _app_instance_store->midi_io_handler.get_out_port(0).open_port();
         //[/UserComboBoxCode_cb_midi_out_port]
     }
-    else if (comboBoxThatHasChanged == cb_midi_learn_in_port)
+    else if (comboBoxThatHasChanged == cb_midi_learn_in_port.get())
     {
         //[UserComboBoxCode_cb_midi_learn_in_port] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.midi_learn_in.close_port();
@@ -1384,7 +1447,7 @@ void UiEditorSettings::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
         _app_instance_store->midi_io_handler.midi_learn_in.open_port();
         //[/UserComboBoxCode_cb_midi_learn_in_port]
     }
-    else if (comboBoxThatHasChanged == cb_midi_learn_out_port)
+    else if (comboBoxThatHasChanged == cb_midi_learn_out_port.get())
     {
         //[UserComboBoxCode_cb_midi_learn_out_port] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.midi_learn_out.close_port();
@@ -1393,7 +1456,7 @@ void UiEditorSettings::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
         _app_instance_store->midi_io_handler.midi_learn_out.open_port();
         //[/UserComboBoxCode_cb_midi_learn_out_port]
     }
-    else if (comboBoxThatHasChanged == cb_midi_out_port_string_g)
+    else if (comboBoxThatHasChanged == cb_midi_out_port_string_g.get())
     {
         //[UserComboBoxCode_cb_midi_out_port_string_g] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.get_out_port(1).close_port();
@@ -1402,7 +1465,7 @@ void UiEditorSettings::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
         _app_instance_store->midi_io_handler.get_out_port(1).open_port();
         //[/UserComboBoxCode_cb_midi_out_port_string_g]
     }
-    else if (comboBoxThatHasChanged == cb_midi_out_port_string_d)
+    else if (comboBoxThatHasChanged == cb_midi_out_port_string_d.get())
     {
         //[UserComboBoxCode_cb_midi_out_port_string_d] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.get_out_port(2).close_port();
@@ -1411,7 +1474,7 @@ void UiEditorSettings::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
         _app_instance_store->midi_io_handler.get_out_port(2).open_port();
         //[/UserComboBoxCode_cb_midi_out_port_string_d]
     }
-    else if (comboBoxThatHasChanged == cb_midi_out_port_string_a)
+    else if (comboBoxThatHasChanged == cb_midi_out_port_string_a.get())
     {
         //[UserComboBoxCode_cb_midi_out_port_string_a] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.get_out_port(3).close_port();
@@ -1420,7 +1483,7 @@ void UiEditorSettings::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
         _app_instance_store->midi_io_handler.get_out_port(3).open_port();
         //[/UserComboBoxCode_cb_midi_out_port_string_a]
     }
-    else if (comboBoxThatHasChanged == cb_midi_out_port_b)
+    else if (comboBoxThatHasChanged == cb_midi_out_port_b.get())
     {
         //[UserComboBoxCode_cb_midi_out_port_b] -- add your combo box handling code here..
         _app_instance_store->midi_io_handler.get_out_port(4).close_port();

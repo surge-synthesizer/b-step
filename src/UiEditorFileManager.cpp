@@ -3625,7 +3625,7 @@ void UiEditorFileManager::buttonClicked(juce::Button *buttonThatWasClicked)
         {
             if (!_app_instance_store->editor_config.manual_editor)
                 _app_instance_store->editor_config.manual_editor =
-                    new UIHtmlView(_app_instance_store);
+                    std::make_unique<UIHtmlView>(_app_instance_store);
 
             _app_instance_store->editor_config.manual_editor->try_open_url(MANUAL_URL +
                                                                            "latest-downloads");

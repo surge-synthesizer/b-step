@@ -89,7 +89,8 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
       _clipboard_id(clipboard_id_),
       _bar_copy_clipboard(*_app_instance_store->bar_copy_clipboards.getUnchecked(_clipboard_id))
 {
-    addAndMakeVisible(newComponent = new juce::Label(juce::String(), TRANS("Copy Steps")));
+    newComponent = std::make_unique<juce::Label>(juce::String(), TRANS("Copy Steps"));
+    addAndMakeVisible(*newComponent);
     newComponent->setFont(juce::Font(15.00f, juce::Font::plain));
     newComponent->setJustificationType(juce::Justification::centredLeft);
     newComponent->setEditable(false, false, false);
@@ -98,13 +99,15 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_copy_steps = new juce::ToggleButton(juce::String()));
+    toggle_copy_steps = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*toggle_copy_steps);
     toggle_copy_steps->addListener(this);
 
-    addAndMakeVisible(toolbar = new UiEditorToolbar(this));
+    toolbar = std::make_unique<UiEditorToolbar>(this);
+    addAndMakeVisible(*toolbar);
 
-    addAndMakeVisible(newComponent15 =
-                          new juce::Label(juce::String(), TRANS("Copy Step Duration")));
+    newComponent15 = std::make_unique<juce::Label>(juce::String(), TRANS("Copy Step Duration"));
+    addAndMakeVisible(*newComponent15);
     newComponent15->setFont(juce::Font(15.00f, juce::Font::plain));
     newComponent15->setJustificationType(juce::Justification::centredLeft);
     newComponent15->setEditable(false, false, false);
@@ -113,8 +116,8 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent15->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent15->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent14 =
-                          new juce::Label(juce::String(), TRANS("Copy Step Velocity\n")));
+    newComponent14 = std::make_unique<juce::Label>(juce::String(), TRANS("Copy Step Velocity\n"));
+    addAndMakeVisible(*newComponent14);
     newComponent14->setFont(juce::Font(15.00f, juce::Font::plain));
     newComponent14->setJustificationType(juce::Justification::centredLeft);
     newComponent14->setEditable(false, false, false);
@@ -123,7 +126,8 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent14->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent14->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent13 = new juce::Label(juce::String(), TRANS("Copy Sequence#")));
+    newComponent13 = std::make_unique<juce::Label>(juce::String(), TRANS("Copy Sequence#"));
+    addAndMakeVisible(*newComponent13);
     newComponent13->setFont(juce::Font(15.00f, juce::Font::plain));
     newComponent13->setJustificationType(juce::Justification::centredLeft);
     newComponent13->setEditable(false, false, false);
@@ -132,7 +136,8 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent13->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent13->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent12 = new juce::Label(juce::String(), TRANS("Copy Bar Solo\n")));
+    newComponent12 = std::make_unique<juce::Label>(juce::String(), TRANS("Copy Bar Solo\n"));
+    addAndMakeVisible(*newComponent12);
     newComponent12->setFont(juce::Font(15.00f, juce::Font::plain));
     newComponent12->setJustificationType(juce::Justification::centredLeft);
     newComponent12->setEditable(false, false, false);
@@ -141,8 +146,8 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent12->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent12->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent11 =
-                          new juce::Label(juce::String(), TRANS("Copy String Octave")));
+    newComponent11 = std::make_unique<juce::Label>(juce::String(), TRANS("Copy String Octave"));
+    addAndMakeVisible(*newComponent11);
     newComponent11->setFont(juce::Font(15.00f, juce::Font::plain));
     newComponent11->setJustificationType(juce::Justification::centredLeft);
     newComponent11->setEditable(false, false, false);
@@ -151,8 +156,8 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent11->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent11->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent9 =
-                          new juce::Label(juce::String(), TRANS("Copy CC Layer Data (CC)")));
+    newComponent9 = std::make_unique<juce::Label>(juce::String(), TRANS("Copy CC Layer Data (CC)"));
+    addAndMakeVisible(*newComponent9);
     newComponent9->setFont(juce::Font(15.00f, juce::Font::plain));
     newComponent9->setJustificationType(juce::Justification::centredLeft);
     newComponent9->setEditable(false, false, false);
@@ -161,8 +166,9 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent9->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent9->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent8 = new juce::Label(
-                          juce::String(), TRANS("Copy Ratcheting Layer Data (REP1+REP2)")));
+    newComponent8 = std::make_unique<juce::Label>(juce::String(),
+                                                  TRANS("Copy Ratcheting Layer Data (REP1+REP2)"));
+    addAndMakeVisible(*newComponent8);
     newComponent8->setFont(juce::Font(15.00f, juce::Font::plain));
     newComponent8->setJustificationType(juce::Justification::centredLeft);
     newComponent8->setEditable(false, false, false);
@@ -171,8 +177,9 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent8->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent8->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent7 =
-                          new juce::Label(juce::String(), TRANS("Copy Bar Layer Data (BAR)")));
+    newComponent7 =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Copy Bar Layer Data (BAR)"));
+    addAndMakeVisible(*newComponent7);
     newComponent7->setFont(juce::Font(15.00f, juce::Font::plain));
     newComponent7->setJustificationType(juce::Justification::centredLeft);
     newComponent7->setEditable(false, false, false);
@@ -181,8 +188,9 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent7->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent7->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent6 =
-                          new juce::Label(juce::String(), TRANS("Copy Step Layer Data (STEP)")));
+    newComponent6 =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Copy Step Layer Data (STEP)"));
+    addAndMakeVisible(*newComponent6);
     newComponent6->setFont(juce::Font(15.00f, juce::Font::plain));
     newComponent6->setJustificationType(juce::Justification::centredLeft);
     newComponent6->setEditable(false, false, false);
@@ -191,8 +199,9 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent6->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent6->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(
-        newComponent4 = new juce::Label(juce::String(), TRANS("Copy Sequence Layer Data (SEQ#)")));
+    newComponent4 =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Copy Sequence Layer Data (SEQ#)"));
+    addAndMakeVisible(*newComponent4);
     newComponent4->setFont(juce::Font(15.00f, juce::Font::plain));
     newComponent4->setJustificationType(juce::Justification::centredLeft);
     newComponent4->setEditable(false, false, false);
@@ -201,8 +210,9 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent4->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent4->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent3 =
-                          new juce::Label(juce::String(), TRANS("Copy Main Layer Data (MAIN)")));
+    newComponent3 =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Copy Main Layer Data (MAIN)"));
+    addAndMakeVisible(*newComponent3);
     newComponent3->setFont(juce::Font(15.00f, juce::Font::plain));
     newComponent3->setJustificationType(juce::Justification::centredLeft);
     newComponent3->setEditable(false, false, false);
@@ -211,8 +221,8 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent10 =
-                          new juce::Label(juce::String(), TRANS("SELECT/UNSELECT ALL")));
+    newComponent10 = std::make_unique<juce::Label>(juce::String(), TRANS("SELECT/UNSELECT ALL"));
+    addAndMakeVisible(*newComponent10);
     newComponent10->setFont(juce::Font(15.00f, juce::Font::plain));
     newComponent10->setJustificationType(juce::Justification::centredLeft);
     newComponent10->setEditable(false, false, false);
@@ -221,44 +231,57 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent10->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent10->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toggle_select_all = new juce::ToggleButton(juce::String()));
+    toggle_select_all = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*toggle_select_all);
     toggle_select_all->addListener(this);
 
-    addAndMakeVisible(toggle_copy_layer_7 = new juce::ToggleButton(juce::String()));
+    toggle_copy_layer_7 = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*toggle_copy_layer_7);
     toggle_copy_layer_7->addListener(this);
 
-    addAndMakeVisible(toggle_copy_layer_5_6 = new juce::ToggleButton(juce::String()));
+    toggle_copy_layer_5_6 = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*toggle_copy_layer_5_6);
     toggle_copy_layer_5_6->addListener(this);
 
-    addAndMakeVisible(toggle_copy_layer_4 = new juce::ToggleButton(juce::String()));
+    toggle_copy_layer_4 = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*toggle_copy_layer_4);
     toggle_copy_layer_4->addListener(this);
 
-    addAndMakeVisible(toggle_copy_layer_3 = new juce::ToggleButton(juce::String()));
+    toggle_copy_layer_3 = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*toggle_copy_layer_3);
     toggle_copy_layer_3->addListener(this);
 
-    addAndMakeVisible(toggle_copy_layer_2 = new juce::ToggleButton(juce::String()));
+    toggle_copy_layer_2 = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*toggle_copy_layer_2);
     toggle_copy_layer_2->addListener(this);
 
-    addAndMakeVisible(toggle_copy_layer_1 = new juce::ToggleButton(juce::String()));
+    toggle_copy_layer_1 = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*toggle_copy_layer_1);
     toggle_copy_layer_1->addListener(this);
 
-    addAndMakeVisible(toggle_copy_bar_groups = new juce::ToggleButton(juce::String()));
+    toggle_copy_bar_groups = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*toggle_copy_bar_groups);
     toggle_copy_bar_groups->addListener(this);
 
-    addAndMakeVisible(toggle_copy_bar_solo = new juce::ToggleButton(juce::String()));
+    toggle_copy_bar_solo = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*toggle_copy_bar_solo);
     toggle_copy_bar_solo->addListener(this);
 
-    addAndMakeVisible(toggle_copy_step_duration = new juce::ToggleButton(juce::String()));
+    toggle_copy_step_duration = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*toggle_copy_step_duration);
     toggle_copy_step_duration->addListener(this);
 
-    addAndMakeVisible(toggle_copy_step_velocity = new juce::ToggleButton(juce::String()));
+    toggle_copy_step_velocity = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*toggle_copy_step_velocity);
     toggle_copy_step_velocity->addListener(this);
 
-    addAndMakeVisible(toggle_copy_string_octave = new juce::ToggleButton(juce::String()));
+    toggle_copy_string_octave = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*toggle_copy_string_octave);
     toggle_copy_string_octave->addListener(this);
 
-    addAndMakeVisible(newComponent2 =
-                          new juce::Label(juce::String(), TRANS("Copy Back to Bar Options")));
+    newComponent2 = std::make_unique<juce::Label>(juce::String()),
+    TRANS("Copy Back to Bar Options");
+    addAndMakeVisible(*newComponent2);
     newComponent2->setFont(juce::Font(15.00f, juce::Font::plain));
     newComponent2->setJustificationType(juce::Justification::centredLeft);
     newComponent2->setEditable(false, false, false);
@@ -267,8 +290,8 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(newComponent5 =
-                          new juce::Label(juce::String(), TRANS("Bar Snapshot Info :: 1")));
+    newComponent5 = std::make_unique<juce::Label>(juce::String()), TRANS("Bar Snapshot Info :: 1");
+    addAndMakeVisible(*newComponent5);
     newComponent5->setFont(juce::Font(15.00f, juce::Font::plain));
     newComponent5->setJustificationType(juce::Justification::centredLeft);
     newComponent5->setEditable(false, false, false);
@@ -277,7 +300,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent5->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent5->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(label = new juce::Label(juce::String(), juce::String()));
+    label = std::make_unique<juce::Label>(juce::String(), juce::String());
     label->setFont(juce::Font(15.00f, juce::Font::plain));
     label->setJustificationType(juce::Justification::centred);
     label->setEditable(true, true, true);
@@ -290,7 +313,8 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     label->setColour(juce::TextEditor::highlightColourId, juce::Colours::yellow);
     label->addListener(this);
 
-    addAndMakeVisible(button_info = new juce::TextButton(juce::String()));
+    button_info = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*button_info);
     button_info->setButtonText(TRANS("?"));
     button_info->addListener(this);
 
@@ -451,13 +475,13 @@ void UiEditorClipboard::buttonClicked(juce::Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == toggle_copy_steps)
+    if (buttonThatWasClicked == toggle_copy_steps.get())
     {
         //[UserButtonCode_toggle_copy_steps] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_steps = buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_toggle_copy_steps]
     }
-    else if (buttonThatWasClicked == toggle_select_all)
+    else if (buttonThatWasClicked == toggle_select_all.get())
     {
         //[UserButtonCode_toggle_select_all] -- add your button handler code here..
         toggle_copy_steps->setToggleState(buttonThatWasClicked->getToggleState(),
@@ -486,78 +510,79 @@ void UiEditorClipboard::buttonClicked(juce::Button *buttonThatWasClicked)
                                                   juce::NotificationType::sendNotification);
         //[/UserButtonCode_toggle_select_all]
     }
-    else if (buttonThatWasClicked == toggle_copy_layer_7)
+    else if (buttonThatWasClicked == toggle_copy_layer_7.get())
     {
         //[UserButtonCode_toggle_copy_layer_7] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_layer_7 = buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_toggle_copy_layer_7]
     }
-    else if (buttonThatWasClicked == toggle_copy_layer_5_6)
+    else if (buttonThatWasClicked == toggle_copy_layer_5_6.get())
     {
         //[UserButtonCode_toggle_copy_layer_5_6] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_layer_5 = buttonThatWasClicked->getToggleState();
         _bar_copy_clipboard.is_copy_layer_6 = buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_toggle_copy_layer_5_6]
     }
-    else if (buttonThatWasClicked == toggle_copy_layer_4)
+    else if (buttonThatWasClicked == toggle_copy_layer_4.get())
     {
         //[UserButtonCode_toggle_copy_layer_4] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_layer_4 = buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_toggle_copy_layer_4]
     }
-    else if (buttonThatWasClicked == toggle_copy_layer_3)
+    else if (buttonThatWasClicked == toggle_copy_layer_3.get())
     {
         //[UserButtonCode_toggle_copy_layer_3] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_layer_3 = buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_toggle_copy_layer_3]
     }
-    else if (buttonThatWasClicked == toggle_copy_layer_2)
+    else if (buttonThatWasClicked == toggle_copy_layer_2.get())
     {
         //[UserButtonCode_toggle_copy_layer_2] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_layer_2 = buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_toggle_copy_layer_2]
     }
-    else if (buttonThatWasClicked == toggle_copy_layer_1)
+    else if (buttonThatWasClicked == toggle_copy_layer_1.get())
     {
         //[UserButtonCode_toggle_copy_layer_1] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_layer_1 = buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_toggle_copy_layer_1]
     }
-    else if (buttonThatWasClicked == toggle_copy_bar_groups)
+    else if (buttonThatWasClicked == toggle_copy_bar_groups.get())
     {
         //[UserButtonCode_toggle_copy_bar_groups] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_bar_groups = buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_toggle_copy_bar_groups]
     }
-    else if (buttonThatWasClicked == toggle_copy_bar_solo)
+    else if (buttonThatWasClicked == toggle_copy_bar_solo.get())
     {
         //[UserButtonCode_toggle_copy_bar_solo] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_bar_solo = buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_toggle_copy_bar_solo]
     }
-    else if (buttonThatWasClicked == toggle_copy_step_duration)
+    else if (buttonThatWasClicked == toggle_copy_step_duration.get())
     {
         //[UserButtonCode_toggle_copy_step_duration] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_step_duration = buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_toggle_copy_step_duration]
     }
-    else if (buttonThatWasClicked == toggle_copy_step_velocity)
+    else if (buttonThatWasClicked == toggle_copy_step_velocity.get())
     {
         //[UserButtonCode_toggle_copy_step_velocity] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_step_velocity = buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_toggle_copy_step_velocity]
     }
-    else if (buttonThatWasClicked == toggle_copy_string_octave)
+    else if (buttonThatWasClicked == toggle_copy_string_octave.get())
     {
         //[UserButtonCode_toggle_copy_string_octave] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_string_octave = buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_toggle_copy_string_octave]
     }
-    else if (buttonThatWasClicked == button_info)
+    else if (buttonThatWasClicked == button_info.get())
     {
         //[UserButtonCode_button_info] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
+            _app_instance_store->editor_config.manual_editor =
+                std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(
             MANUAL_URL + "experts/snapshots-and-the-clipboard");
@@ -573,7 +598,7 @@ void UiEditorClipboard::labelTextChanged(juce::Label *labelThatHasChanged)
     //[UserlabelTextChanged_Pre]
     //[/UserlabelTextChanged_Pre]
 
-    if (labelThatHasChanged == label)
+    if (labelThatHasChanged == label.get())
     {
         //[UserLabelCode_label] -- add your label text handling code here..
         //[/UserLabelCode_label]

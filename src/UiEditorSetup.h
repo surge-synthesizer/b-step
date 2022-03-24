@@ -62,25 +62,25 @@ class UiEditorSetup : public UiEditor, public juce::Button::Listener, public juc
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::Label> label_multidrag_on_off2;
-    juce::ScopedPointer<juce::Label> label_multidrag_on_off;
-    juce::ScopedPointer<juce::ToggleButton> tb_turn_multidrag_on_off;
-    juce::ScopedPointer<juce::ToggleButton> tb_switch_multidrag_mouse;
-    juce::ScopedPointer<juce::Label> label_switch_multidrag_mouse;
-    juce::ScopedPointer<juce::Label> label_playback_mode;
-    juce::ScopedPointer<UiEditorToolbar> toolbar;
-    juce::ScopedPointer<juce::Label> label_multidrag_delay;
-    juce::ScopedPointer<juce::Label> label_ui_headline;
-    juce::ScopedPointer<juce::Slider> sl_multidrag_delay;
-    juce::ScopedPointer<juce::Label> label_multidrag_sensitivity;
-    juce::ScopedPointer<juce::Slider> sl_multidrag_sensitivity;
-    juce::ScopedPointer<juce::Label> label_simpledrag_sensitivity;
-    juce::ScopedPointer<juce::Slider> sl_simpledrag_sensitivity;
-    juce::ScopedPointer<juce::TextButton> button_info;
-    juce::ScopedPointer<juce::Slider> slider_playback_mode;
-    juce::ScopedPointer<juce::Label> label_ui_headline2;
-    juce::ScopedPointer<juce::ToggleButton> tb_turn_mousewheel_on_off;
-    juce::ScopedPointer<juce::TextButton> info_playback_modes;
+    std::unique_ptr<juce::Label> label_multidrag_on_off2;
+    std::unique_ptr<juce::Label> label_multidrag_on_off;
+    std::unique_ptr<juce::ToggleButton> tb_turn_multidrag_on_off;
+    std::unique_ptr<juce::ToggleButton> tb_switch_multidrag_mouse;
+    std::unique_ptr<juce::Label> label_switch_multidrag_mouse;
+    std::unique_ptr<juce::Label> label_playback_mode;
+    std::unique_ptr<UiEditorToolbar> toolbar;
+    std::unique_ptr<juce::Label> label_multidrag_delay;
+    std::unique_ptr<juce::Label> label_ui_headline;
+    std::unique_ptr<juce::Slider> sl_multidrag_delay;
+    std::unique_ptr<juce::Label> label_multidrag_sensitivity;
+    std::unique_ptr<juce::Slider> sl_multidrag_sensitivity;
+    std::unique_ptr<juce::Label> label_simpledrag_sensitivity;
+    std::unique_ptr<juce::Slider> sl_simpledrag_sensitivity;
+    std::unique_ptr<juce::TextButton> button_info;
+    std::unique_ptr<juce::Slider> slider_playback_mode;
+    std::unique_ptr<juce::Label> label_ui_headline2;
+    std::unique_ptr<juce::ToggleButton> tb_turn_mousewheel_on_off;
+    std::unique_ptr<juce::TextButton> info_playback_modes;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorSetup)

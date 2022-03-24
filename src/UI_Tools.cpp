@@ -41,7 +41,8 @@ void UITool::mouseUp(const juce::MouseEvent &)
 void UITool::clicked()
 {
     if (!_app_instance_store->editor_config.manual_editor)
-        _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
+        _app_instance_store->editor_config.manual_editor =
+            std::make_unique<UIHtmlView>(_app_instance_store);
 
     _app_instance_store->editor_config.manual_editor->try_open_question_mark();
 }
@@ -124,7 +125,7 @@ void UIClipboard::clicked()
     {
         if (!_app_instance_store->editor_config.clipboard_editor)
             _app_instance_store->editor_config.clipboard_editor =
-                new UiEditorClipboard(_app_instance_store, id);
+                std::make_unique<UiEditorClipboard>(_app_instance_store, id);
         else
             _app_instance_store->editor_config.clipboard_editor = nullptr;
     }
@@ -160,7 +161,7 @@ void UIClipboard::itemDropped(const SourceDetails &dragSourceDetails_)
         {
             if (!_app_instance_store->editor_config.manual_editor)
                 _app_instance_store->editor_config.manual_editor =
-                    new UIHtmlView(_app_instance_store);
+                    std::make_unique<UIHtmlView>(_app_instance_store);
 
             _app_instance_store->editor_config.manual_editor->try_open_url(
                 MANUAL_URL + "experts/snapshots-and-the-clipboard");

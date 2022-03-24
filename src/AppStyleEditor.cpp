@@ -166,74 +166,91 @@ void UiEditorAppStyler::on_save_clicked()
 UiEditorAppStyler::UiEditorAppStyler(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-Styler"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(toolbar = new UiEditorToolbar(this, true, true, true));
+    toolbar = std::make_unique<UiEditorToolbar>(this, true, true, true);
+    addAndMakeVisible(*toolbar);
 
-    addAndMakeVisible(colour_selector =
-                          new juce::ColourSelector(juce::ColourSelector::showSliders |
-                                                   juce::ColourSelector::showColourspace));
+    colour_selector = std::make_unique<juce::ColourSelector>(juce::ColourSelector::showSliders |
+                                                             juce::ColourSelector::showColourspace);
+    addAndMakeVisible(*colour_selector);
 
-    addAndMakeVisible(col_1 = new juce::TextButton(juce::String()));
+    col_1 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_1);
     col_1->setButtonText(TRANS("MUTE"));
     col_1->addListener(this);
     col_1->setColour(juce::TextButton::buttonColourId, juce::Colours::green);
 
-    addAndMakeVisible(col_3 = new juce::TextButton(juce::String()));
+    col_3 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_3);
     col_3->setButtonText(TRANS("SHUFFLE SKIP"));
     col_3->addListener(this);
 
-    addAndMakeVisible(col_4 = new juce::TextButton(juce::String()));
+    col_4 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_4);
     col_4->setButtonText(TRANS("EMPTY / NOT SET"));
     col_4->addListener(this);
 
-    addAndMakeVisible(col_5 = new juce::TextButton(juce::String()));
+    col_5 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_5);
     col_5->setButtonText(TRANS("RUNNING"));
     col_5->addListener(this);
 
-    addAndMakeVisible(col_6 = new juce::TextButton(juce::String()));
+    col_6 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_6);
     col_6->setButtonText(TRANS("SOLO"));
     col_6->addListener(this);
 
-    addAndMakeVisible(col_7 = new juce::TextButton(juce::String()));
+    col_7 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_7);
     col_7->setButtonText(TRANS("TRANSP. / OCTAVE"));
     col_7->addListener(this);
 
-    addAndMakeVisible(col_8 = new juce::TextButton(juce::String()));
+    col_8 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_8);
     col_8->setButtonText(TRANS("NOTE / CHORD"));
     col_8->addListener(this);
 
-    addAndMakeVisible(col_9 = new juce::TextButton(juce::String()));
+    col_9 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_9);
     col_9->setButtonText(TRANS("DURATION / REPEAT"));
     col_9->addListener(this);
 
-    addAndMakeVisible(col_10 = new juce::TextButton(juce::String()));
+    col_10 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_10);
     col_10->setButtonText(TRANS("VELOCITY / CC"));
     col_10->addListener(this);
 
-    addAndMakeVisible(col_11 = new juce::TextButton(juce::String()));
+    col_11 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_11);
     col_11->setButtonText(TRANS("GLOBAL BORDER"));
     col_11->addListener(this);
 
-    addAndMakeVisible(col_12 = new juce::TextButton(juce::String()));
+    col_12 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_10);
     col_12->setButtonText(TRANS("GLOBAL BG"));
     col_12->addListener(this);
 
-    addAndMakeVisible(col_13 = new juce::TextButton(juce::String()));
+    col_13 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_13);
     col_13->setButtonText(TRANS("BAR AREA BORDER"));
     col_13->addListener(this);
 
-    addAndMakeVisible(col_14 = new juce::TextButton(juce::String()));
+    col_14 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_14);
     col_14->setButtonText(TRANS("BAR AREA"));
     col_14->addListener(this);
 
-    addAndMakeVisible(col_15 = new juce::TextButton(juce::String()));
+    col_15 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_15);
     col_15->setButtonText(TRANS("STEP AREA BORDER"));
     col_15->addListener(this);
 
-    addAndMakeVisible(col_16 = new juce::TextButton(juce::String()));
+    col_16 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_16);
     col_16->setButtonText(TRANS("STEP AREA"));
     col_16->addListener(this);
 
-    addAndMakeVisible(label_current_color = new juce::Label(juce::String(), juce::String()));
+    label_current_color = std::make_unique<juce::Label>(juce::String(), juce::String());
+    addAndMakeVisible(*label_current_color);
     label_current_color->setFont(juce::Font(15.00f, juce::Font::plain));
     label_current_color->setJustificationType(juce::Justification::centred);
     label_current_color->setEditable(true, true, false);
@@ -244,31 +261,38 @@ UiEditorAppStyler::UiEditorAppStyler(AppInstanceStore *const app_instance_store_
     label_current_color->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0xffadadad));
     label_current_color->addListener(this);
 
-    addAndMakeVisible(copy = new juce::TextButton(juce::String()));
+    copy = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*copy);
     copy->setButtonText(TRANS("COPY"));
     copy->addListener(this);
 
-    addAndMakeVisible(past = new juce::TextButton(juce::String()));
+    past = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*past);
     past->setButtonText(TRANS("PASTE"));
     past->addListener(this);
 
-    addAndMakeVisible(col_17 = new juce::TextButton(juce::String()));
+    col_17 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_17);
     col_17->setButtonText(TRANS("GLOBAL BUTTONS"));
     col_17->addListener(this);
 
-    addAndMakeVisible(col_18 = new juce::TextButton(juce::String()));
+    col_18 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_18);
     col_18->setButtonText(TRANS("BAR AREA BUTTONS"));
     col_18->addListener(this);
 
-    addAndMakeVisible(col_19 = new juce::TextButton(juce::String()));
+    col_19 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_19);
     col_19->setButtonText(TRANS("STEP AREA BUTTON"));
     col_19->addListener(this);
 
-    addAndMakeVisible(rand = new juce::TextButton(juce::String()));
+    rand = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*rand);
     rand->setButtonText(TRANS("RAND"));
     rand->addListener(this);
 
-    addAndMakeVisible(list = new juce::Label(juce::String(), juce::String()));
+    list = std::make_unique<juce::Label>(juce::String(), juce::String());
+    addAndMakeVisible(*list);
     list->setFont(juce::Font(9.30f, juce::Font::plain));
     list->setJustificationType(juce::Justification::topLeft);
     list->setEditable(true, true, false);
@@ -281,69 +305,83 @@ UiEditorAppStyler::UiEditorAppStyler(AppInstanceStore *const app_instance_store_
     list->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0xffadadad));
     list->addListener(this);
 
-    addAndMakeVisible(col_2 = new juce::TextButton(juce::String()));
+    col_2 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_2);
     col_2->setButtonText(TRANS("GLOBAL BTN BORDER"));
     col_2->addListener(this);
 
-    addAndMakeVisible(col_20 = new juce::TextButton(juce::String()));
+    col_20 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_20);
     col_20->setButtonText(TRANS("BAR BTN BORDER"));
     col_20->addListener(this);
 
-    addAndMakeVisible(col_21 = new juce::TextButton(juce::String()));
+    col_21 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_21);
     col_21->setButtonText(TRANS("STEP BTN BORDER"));
     col_21->addListener(this);
 
-    addAndMakeVisible(col_22 = new juce::TextButton(juce::String()));
+    col_22 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_22);
     col_22->setButtonText(TRANS("SLDER KNOB (OVERALL)"));
     col_22->addListener(this);
 
-    addAndMakeVisible(col_23 = new juce::TextButton(juce::String()));
+    col_23 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_23);
     col_23->setButtonText(TRANS("OUTLINE (OVERALL)"));
     col_23->addListener(this);
 
-    addAndMakeVisible(style_1 = new juce::TextButton(juce::String()));
+    style_1 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*style_1);
     style_1->setButtonText(TRANS("PRE 1"));
     style_1->addListener(this);
     style_1->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff080d0f));
     style_1->setColour(juce::TextButton::textColourOffId, juce::Colour(0xff9b9dc8));
 
-    addAndMakeVisible(style_3 = new juce::TextButton(juce::String()));
+    style_3 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*style_3);
     style_3->setButtonText(TRANS("PRE 3"));
     style_3->addListener(this);
     style_3->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff2b2b2b));
     style_3->setColour(juce::TextButton::textColourOffId, juce::Colour(0xff3edde6));
 
-    addAndMakeVisible(style_4 = new juce::TextButton(juce::String()));
+    style_4 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*style_4);
     style_4->setButtonText(TRANS("PRE 5"));
     style_4->addListener(this);
     style_4->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff595959));
     style_4->setColour(juce::TextButton::textColourOffId, juce::Colour(0xffc9c9c9));
 
-    addAndMakeVisible(style_5 = new juce::TextButton(juce::String()));
+    style_5 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*style_5);
     style_5->setButtonText(TRANS("PRE 4"));
     style_5->addListener(this);
     style_5->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff333333));
     style_5->setColour(juce::TextButton::textColourOffId, juce::Colour(0xfffac48f));
 
-    addAndMakeVisible(button_info = new juce::TextButton(juce::String()));
+    button_info = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*button_info);
     button_info->setButtonText(TRANS("?"));
     button_info->addListener(this);
 
-    addAndMakeVisible(col_master = new juce::TextButton(juce::String()));
+    col_master = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_master);
     col_master->setButtonText(TRANS("INFO (FONTS & BORDERS)"));
     col_master->addListener(this);
 
-    addAndMakeVisible(reset = new juce::TextButton(juce::String()));
+    reset = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*reset);
     reset->setButtonText(TRANS("RESET"));
     reset->addListener(this);
     reset->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff2e2017));
     reset->setColour(juce::TextButton::textColourOffId, juce::Colour(0xfff98120));
 
-    addAndMakeVisible(rand2 = new juce::TextButton(juce::String()));
+    rand2 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*rand2);
     rand2->setButtonText(TRANS("SET AS APP DEFAULT"));
     rand2->addListener(this);
 
-    addAndMakeVisible(style_6 = new juce::TextButton(juce::String()));
+    style_6 = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*style_6);
     style_6->setButtonText(TRANS("PRE 2"));
     style_6->addListener(this);
     style_6->setColour(juce::TextButton::buttonColourId, juce::Colour(0xff2d2321));
@@ -581,103 +619,103 @@ void UiEditorAppStyler::buttonClicked(juce::Button *buttonThatWasClicked)
 
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == col_1)
+    if (buttonThatWasClicked == col_1.get())
     {
         //[UserButtonCode_col_1] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->elem_color_1;
         //[/UserButtonCode_col_1]
     }
-    else if (buttonThatWasClicked == col_3)
+    else if (buttonThatWasClicked == col_3.get())
     {
         //[UserButtonCode_col_3] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->elem_color_3;
         //[/UserButtonCode_col_3]
     }
-    else if (buttonThatWasClicked == col_4)
+    else if (buttonThatWasClicked == col_4.get())
     {
         //[UserButtonCode_col_4] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->elem_color_4;
         //[/UserButtonCode_col_4]
     }
-    else if (buttonThatWasClicked == col_5)
+    else if (buttonThatWasClicked == col_5.get())
     {
         //[UserButtonCode_col_5] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->elem_color_5;
         //[/UserButtonCode_col_5]
     }
-    else if (buttonThatWasClicked == col_6)
+    else if (buttonThatWasClicked == col_6.get())
     {
         //[UserButtonCode_col_6] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->elem_color_6;
         //[/UserButtonCode_col_6]
     }
-    else if (buttonThatWasClicked == col_7)
+    else if (buttonThatWasClicked == col_7.get())
     {
         //[UserButtonCode_col_7] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->elem_color_7;
         //[/UserButtonCode_col_7]
     }
-    else if (buttonThatWasClicked == col_8)
+    else if (buttonThatWasClicked == col_8.get())
     {
         //[UserButtonCode_col_8] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->elem_color_8;
         //[/UserButtonCode_col_8]
     }
-    else if (buttonThatWasClicked == col_9)
+    else if (buttonThatWasClicked == col_9.get())
     {
         //[UserButtonCode_col_9] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->elem_color_9;
         //[/UserButtonCode_col_9]
     }
-    else if (buttonThatWasClicked == col_10)
+    else if (buttonThatWasClicked == col_10.get())
     {
         //[UserButtonCode_col_10] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->elem_color_10;
         //[/UserButtonCode_col_10]
     }
-    else if (buttonThatWasClicked == col_11)
+    else if (buttonThatWasClicked == col_11.get())
     {
         //[UserButtonCode_col_11] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->main_border;
         //[/UserButtonCode_col_11]
     }
-    else if (buttonThatWasClicked == col_12)
+    else if (buttonThatWasClicked == col_12.get())
     {
         //[UserButtonCode_col_12] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->main_bg;
         //[/UserButtonCode_col_12]
     }
-    else if (buttonThatWasClicked == col_13)
+    else if (buttonThatWasClicked == col_13.get())
     {
         //[UserButtonCode_col_13] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->bar_area_border;
         //[/UserButtonCode_col_13]
     }
-    else if (buttonThatWasClicked == col_14)
+    else if (buttonThatWasClicked == col_14.get())
     {
         //[UserButtonCode_col_14] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->bar_area_bg;
         //[/UserButtonCode_col_14]
     }
-    else if (buttonThatWasClicked == col_15)
+    else if (buttonThatWasClicked == col_15.get())
     {
         //[UserButtonCode_col_15] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->step_area_border;
         //[/UserButtonCode_col_15]
     }
-    else if (buttonThatWasClicked == col_16)
+    else if (buttonThatWasClicked == col_16.get())
     {
         //[UserButtonCode_col_16] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->step_area_bg;
         //[/UserButtonCode_col_16]
     }
-    else if (buttonThatWasClicked == copy)
+    else if (buttonThatWasClicked == copy.get())
     {
         //[UserButtonCode_copy] -- add your button handler code here..
         juce::SystemClipboard::copyTextToClipboard(list->getText());
         //[/UserButtonCode_copy]
     }
-    else if (buttonThatWasClicked == past)
+    else if (buttonThatWasClicked == past.get())
     {
         //[UserButtonCode_past] -- add your button handler code here..
         _app_instance_store->color_theme->set_theme(juce::SystemClipboard::getTextFromClipboard());
@@ -685,25 +723,25 @@ void UiEditorAppStyler::buttonClicked(juce::Button *buttonThatWasClicked)
         timerCallback();
         //[/UserButtonCode_past]
     }
-    else if (buttonThatWasClicked == col_17)
+    else if (buttonThatWasClicked == col_17.get())
     {
         //[UserButtonCode_col_17] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->main_step_bg;
         //[/UserButtonCode_col_17]
     }
-    else if (buttonThatWasClicked == col_18)
+    else if (buttonThatWasClicked == col_18.get())
     {
         //[UserButtonCode_col_18] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->bar_step_bg;
         //[/UserButtonCode_col_18]
     }
-    else if (buttonThatWasClicked == col_19)
+    else if (buttonThatWasClicked == col_19.get())
     {
         //[UserButtonCode_col_19] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->step_step_bg;
         //[/UserButtonCode_col_19]
     }
-    else if (buttonThatWasClicked == rand)
+    else if (buttonThatWasClicked == rand.get())
     {
         //[UserButtonCode_rand] -- add your button handler code here..
         float col;
@@ -741,37 +779,37 @@ void UiEditorAppStyler::buttonClicked(juce::Button *buttonThatWasClicked)
         timerCallback();
         //[/UserButtonCode_rand]
     }
-    else if (buttonThatWasClicked == col_2)
+    else if (buttonThatWasClicked == col_2.get())
     {
         //[UserButtonCode_col_2] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->main_step_border;
         //[/UserButtonCode_col_2]
     }
-    else if (buttonThatWasClicked == col_20)
+    else if (buttonThatWasClicked == col_20.get())
     {
         //[UserButtonCode_col_20] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->bar_step_border;
         //[/UserButtonCode_col_20]
     }
-    else if (buttonThatWasClicked == col_21)
+    else if (buttonThatWasClicked == col_21.get())
     {
         //[UserButtonCode_col_21] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->step_step_border;
         //[/UserButtonCode_col_21]
     }
-    else if (buttonThatWasClicked == col_22)
+    else if (buttonThatWasClicked == col_22.get())
     {
         //[UserButtonCode_col_22] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->slider_knob_color;
         //[/UserButtonCode_col_22]
     }
-    else if (buttonThatWasClicked == col_23)
+    else if (buttonThatWasClicked == col_23.get())
     {
         //[UserButtonCode_col_23] -- add your button handler code here..
         target_color = &_app_instance_store->color_theme->slider_outline;
         //[/UserButtonCode_col_23]
     }
-    else if (buttonThatWasClicked == style_1)
+    else if (buttonThatWasClicked == style_1.get())
     {
         //[UserButtonCode_style_1] -- add your button handler code here..
         _app_instance_store->color_theme->set_theme(
@@ -784,7 +822,7 @@ void UiEditorAppStyler::buttonClicked(juce::Button *buttonThatWasClicked)
         timerCallback();
         //[/UserButtonCode_style_1]
     }
-    else if (buttonThatWasClicked == style_3)
+    else if (buttonThatWasClicked == style_3.get())
     {
         //[UserButtonCode_style_3] -- add your button handler code here..
         _app_instance_store->color_theme->set_theme(
@@ -797,7 +835,7 @@ void UiEditorAppStyler::buttonClicked(juce::Button *buttonThatWasClicked)
         timerCallback();
         //[/UserButtonCode_style_3]
     }
-    else if (buttonThatWasClicked == style_4)
+    else if (buttonThatWasClicked == style_4.get())
     {
         //[UserButtonCode_style_4] -- add your button handler code here..
         _app_instance_store->color_theme->set_theme(
@@ -810,7 +848,7 @@ void UiEditorAppStyler::buttonClicked(juce::Button *buttonThatWasClicked)
         timerCallback();
         //[/UserButtonCode_style_4]
     }
-    else if (buttonThatWasClicked == style_5)
+    else if (buttonThatWasClicked == style_5.get())
     {
         //[UserButtonCode_style_5] -- add your button handler code here..
         _app_instance_store->color_theme->set_theme(
@@ -823,24 +861,25 @@ void UiEditorAppStyler::buttonClicked(juce::Button *buttonThatWasClicked)
         timerCallback();
         //[/UserButtonCode_style_5]
     }
-    else if (buttonThatWasClicked == button_info)
+    else if (buttonThatWasClicked == button_info.get())
     {
         //[UserButtonCode_button_info] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
+            _app_instance_store->editor_config.manual_editor =
+                std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(MANUAL_URL + "styles");
 
         return;
         //[/UserButtonCode_button_info]
     }
-    else if (buttonThatWasClicked == col_master)
+    else if (buttonThatWasClicked == col_master.get())
     {
         //[UserButtonCode_col_master] -- add your button handler code here..
         target_color = &GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR;
         //[/UserButtonCode_col_master]
     }
-    else if (buttonThatWasClicked == reset)
+    else if (buttonThatWasClicked == reset.get())
     {
         //[UserButtonCode_reset] -- add your button handler code here..
         _app_instance_store->color_theme->set_theme(
@@ -853,7 +892,7 @@ void UiEditorAppStyler::buttonClicked(juce::Button *buttonThatWasClicked)
         timerCallback();
         //[/UserButtonCode_reset]
     }
-    else if (buttonThatWasClicked == rand2)
+    else if (buttonThatWasClicked == rand2.get())
     {
         //[UserButtonCode_rand2] -- add your button handler code here..
 #ifndef DEMO
@@ -863,7 +902,7 @@ void UiEditorAppStyler::buttonClicked(juce::Button *buttonThatWasClicked)
 #endif // DEMO
        //[/UserButtonCode_rand2]
     }
-    else if (buttonThatWasClicked == style_6)
+    else if (buttonThatWasClicked == style_6.get())
     {
         //[UserButtonCode_style_6] -- add your button handler code here..
         _app_instance_store->color_theme->set_theme(
@@ -894,14 +933,14 @@ void UiEditorAppStyler::labelTextChanged(juce::Label *labelThatHasChanged)
     //[UserlabelTextChanged_Pre]
     //[/UserlabelTextChanged_Pre]
 
-    if (labelThatHasChanged == label_current_color)
+    if (labelThatHasChanged == label_current_color.get())
     {
         //[UserLabelCode_label_current_color] -- add your label text handling code here..
         colour_selector->setCurrentColour(
             juce::Colour::fromString(juce::String("0xFF") + label_current_color->getText()));
         //[/UserLabelCode_label_current_color]
     }
-    else if (labelThatHasChanged == list)
+    else if (labelThatHasChanged == list.get())
     {
         //[UserLabelCode_list] -- add your label text handling code here..
         _app_instance_store->color_theme->set_theme(list->getText().trim());

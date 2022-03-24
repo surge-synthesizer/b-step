@@ -46,21 +46,21 @@ class EditorConfig : public UIUserData
 
     juce::ScopedPointer<MultidragSource> multidrag_source;
 
-    juce::ScopedPointer<ControllerMIDILearn> controller_mid_learn;
-    juce::ScopedPointer<UiEditorMidiLearn> midi_learn_editor;
-    juce::ScopedPointer<UiEditorChords> chord_editor;
-    juce::ScopedPointer<UiEditorSettings> editor_settings;
-    juce::ScopedPointer<UiEditorAbout> about_winodow;
+    std::unique_ptr<ControllerMIDILearn> controller_mid_learn;
+    std::unique_ptr<UiEditorMidiLearn> midi_learn_editor;
+    std::unique_ptr<UiEditorChords> chord_editor;
+    std::unique_ptr<UiEditorSettings> editor_settings;
+    std::unique_ptr<UiEditorAbout> about_winodow;
 #ifdef DEMO
     ScopedPointer<UiEditorDemo> demo_window;
 #endif
-    juce::ScopedPointer<UiEditorClipboard> clipboard_editor;
-    juce::ScopedPointer<UiEditorSetup> setup_editor;
-    juce::ScopedPointer<UiEditorAppStyler> style_editor;
+    std::unique_ptr<UiEditorClipboard> clipboard_editor;
+    std::unique_ptr<UiEditorSetup> setup_editor;
+    std::unique_ptr<UiEditorAppStyler> style_editor;
     juce::ScopedPointer<UiEditorFileManager> file_manager;
-    juce::ScopedPointer<UiEditorWhatsNew> whatsnew_editor;
-    juce::ScopedPointer<UIHtmlView> manual_editor;
-    juce::ScopedPointer<UiQuestionIsYourFriend> question_editor;
+    std::unique_ptr<UiEditorWhatsNew> whatsnew_editor;
+    std::unique_ptr<UIHtmlView> manual_editor;
+    std::unique_ptr<UiQuestionIsYourFriend> question_editor;
     juce::ScopedPointer<UiTextImExport> im_exporter_editor;
 
     juce::Point<int> XY_midi_learn_editor;

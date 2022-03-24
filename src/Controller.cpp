@@ -454,7 +454,7 @@ void MONO_Controller::item_dropped(const juce::DragAndDropTarget::SourceDetails 
         {
             if (!_app_instance_store->editor_config.manual_editor)
                 _app_instance_store->editor_config.manual_editor =
-                    new UIHtmlView(_app_instance_store);
+                    std::make_unique<UIHtmlView>(_app_instance_store);
 
             _app_instance_store->editor_config.manual_editor->try_open_url(get_help_url());
         }

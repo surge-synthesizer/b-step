@@ -580,7 +580,7 @@ inline void GstepAudioProcessorEditor::timerCallback()
             if (!GLOBAL_VALUE_HOLDER::getInstance()->QUESTION_WAS_UP)
             {
                 _app_instance_store->editor_config.question_editor =
-                    new UiQuestionIsYourFriend(_app_instance_store);
+                    std::make_unique<UiQuestionIsYourFriend>(_app_instance_store);
                 _app_instance_store->save_default_files();
             }
 
@@ -658,8 +658,8 @@ inline void GstepAudioProcessorEditor::timerCallback()
                                         if (!_owner->_app_instance_store->editor_config
                                                  .manual_editor)
                                             _owner->_app_instance_store->editor_config
-                                                .manual_editor =
-                                                new UIHtmlView(_owner->_app_instance_store);
+                                                .manual_editor = std::make_unique<UIHtmlView>(
+                                                _owner->_app_instance_store);
 
                                         _owner->_app_instance_store->editor_config.manual_editor
                                             ->try_open_url(MANUAL_URL);

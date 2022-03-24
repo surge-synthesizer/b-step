@@ -75,8 +75,9 @@ void set_playback_label_text(int playback_mode_, juce::Label *label_)
 UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-Setup"), _app_instance_store(app_instance_store_)
 {
-    addAndMakeVisible(label_multidrag_on_off2 =
-                          new juce::Label(juce::String(), TRANS("Enable Mousewheel on main UI")));
+    label_multidrag_on_off2 =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Enable Mousewheel on main UI"));
+    addAndMakeVisible(*label_multidrag_on_off2);
     label_multidrag_on_off2->setFont(juce::Font(15.00f, juce::Font::plain));
     label_multidrag_on_off2->setJustificationType(juce::Justification::centredLeft);
     label_multidrag_on_off2->setEditable(false, false, false);
@@ -88,8 +89,9 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     label_multidrag_on_off2->setColour(juce::TextEditor::backgroundColourId,
                                        juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_multidrag_on_off =
-                          new juce::Label(juce::String(), TRANS("Enable MultiDrag (Multi Copy)")));
+    label_multidrag_on_off =
+        std::make_unique<juce::Label>(juce::String(), TRANS("Enable MultiDrag (Multi Copy)"));
+    addAndMakeVisible(*label_multidrag_on_off);
     label_multidrag_on_off->setFont(juce::Font(15.00f, juce::Font::plain));
     label_multidrag_on_off->setJustificationType(juce::Justification::centredLeft);
     label_multidrag_on_off->setEditable(false, false, false);
@@ -101,16 +103,19 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     label_multidrag_on_off->setColour(juce::TextEditor::backgroundColourId,
                                       juce::Colour(0x00000000));
 
-    addAndMakeVisible(tb_turn_multidrag_on_off = new juce::ToggleButton(juce::String()));
+    tb_turn_multidrag_on_off = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*tb_turn_multidrag_on_off);
     tb_turn_multidrag_on_off->setExplicitFocusOrder(2);
     tb_turn_multidrag_on_off->addListener(this);
 
-    addAndMakeVisible(tb_switch_multidrag_mouse = new juce::ToggleButton(juce::String()));
+    tb_switch_multidrag_mouse = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*tb_switch_multidrag_mouse);
     tb_switch_multidrag_mouse->setExplicitFocusOrder(2);
     tb_switch_multidrag_mouse->addListener(this);
 
-    addAndMakeVisible(label_switch_multidrag_mouse =
-                          new juce::Label(juce::String(), TRANS("MultiDrag on right Mouse")));
+    label_switch_multidrag_mouse =
+        std::make_unique<juce::Label>(juce::String(), TRANS("MultiDrag on right Mouse"));
+    addAndMakeVisible(*label_switch_multidrag_mouse);
     label_switch_multidrag_mouse->setFont(juce::Font(15.00f, juce::Font::plain));
     label_switch_multidrag_mouse->setJustificationType(juce::Justification::centredLeft);
     label_switch_multidrag_mouse->setEditable(false, false, false);
@@ -122,7 +127,8 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     label_switch_multidrag_mouse->setColour(juce::TextEditor::backgroundColourId,
                                             juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_playback_mode = new juce::Label(juce::String(), TRANS("PLAYBACK: ")));
+    label_playback_mode = std::make_unique<juce::Label>(juce::String(), TRANS("PLAYBACK: "));
+    addAndMakeVisible(*label_playback_mode);
     label_playback_mode->setFont(juce::Font(15.00f, juce::Font::plain));
     label_playback_mode->setJustificationType(juce::Justification::centredLeft);
     label_playback_mode->setEditable(false, false, false);
@@ -132,10 +138,11 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
                                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     label_playback_mode->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(toolbar = new UiEditorToolbar(this, true, true, false));
+    toolbar = std::make_unique<UiEditorToolbar>(this, true, true, false);
+    addAndMakeVisible(*toolbar);
 
-    addAndMakeVisible(label_multidrag_delay =
-                          new juce::Label(juce::String(), TRANS("MultiDrag Delay")));
+    label_multidrag_delay = std::make_unique<juce::Label>(juce::String(), TRANS("MultiDrag Delay"));
+    addAndMakeVisible(*label_multidrag_delay);
     label_multidrag_delay->setFont(juce::Font(15.00f, juce::Font::plain));
     label_multidrag_delay->setJustificationType(juce::Justification::centredRight);
     label_multidrag_delay->setEditable(false, false, false);
@@ -147,7 +154,8 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     label_multidrag_delay->setColour(juce::TextEditor::backgroundColourId,
                                      juce::Colour(0x00000000));
 
-    addAndMakeVisible(label_ui_headline = new juce::Label(juce::String(), TRANS("SETTINGS")));
+    label_ui_headline = std::make_unique<juce::Label>(juce::String(), TRANS("SETTINGS"));
+    addAndMakeVisible(*label_ui_headline);
     label_ui_headline->setFont(juce::Font(30.00f, juce::Font::plain));
     label_ui_headline->setJustificationType(juce::Justification::centred);
     label_ui_headline->setEditable(false, false, false);
@@ -157,14 +165,16 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
                                  juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     label_ui_headline->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(sl_multidrag_delay = new juce::Slider(juce::String()));
+    sl_multidrag_delay = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*sl_multidrag_delay);
     sl_multidrag_delay->setRange(300, 1500, 1);
     sl_multidrag_delay->setSliderStyle(juce::Slider::LinearHorizontal);
     sl_multidrag_delay->setTextBoxStyle(juce::Slider::TextBoxLeft, false, 40, 20);
     sl_multidrag_delay->addListener(this);
 
-    addAndMakeVisible(label_multidrag_sensitivity =
-                          new juce::Label(juce::String(), TRANS("MultiDrag Sensitivity")));
+    label_multidrag_sensitivity =
+        std::make_unique<juce::Label>(juce::String(), TRANS("MultiDrag Sensitivity"));
+    addAndMakeVisible(*label_multidrag_sensitivity);
     label_multidrag_sensitivity->setFont(juce::Font(15.00f, juce::Font::plain));
     label_multidrag_sensitivity->setJustificationType(juce::Justification::centredRight);
     label_multidrag_sensitivity->setEditable(false, false, false);
@@ -176,14 +186,16 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     label_multidrag_sensitivity->setColour(juce::TextEditor::backgroundColourId,
                                            juce::Colour(0x00000000));
 
-    addAndMakeVisible(sl_multidrag_sensitivity = new juce::Slider(juce::String()));
+    sl_multidrag_sensitivity = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*sl_multidrag_sensitivity);
     sl_multidrag_sensitivity->setRange(0.01, 2, 0.01);
     sl_multidrag_sensitivity->setSliderStyle(juce::Slider::LinearHorizontal);
     sl_multidrag_sensitivity->setTextBoxStyle(juce::Slider::TextBoxLeft, false, 40, 20);
     sl_multidrag_sensitivity->addListener(this);
 
-    addAndMakeVisible(label_simpledrag_sensitivity =
-                          new juce::Label(juce::String(), TRANS("SimpleDrag Sensitivity")));
+    label_simpledrag_sensitivity =
+        std::make_unique<juce::Label>(juce::String(), TRANS("SimpleDrag Sensitivity"));
+    addAndMakeVisible(*label_simpledrag_sensitivity);
     label_simpledrag_sensitivity->setFont(juce::Font(20.00f, juce::Font::plain));
     label_simpledrag_sensitivity->setJustificationType(juce::Justification::centredRight);
     label_simpledrag_sensitivity->setEditable(false, false, false);
@@ -195,17 +207,20 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     label_simpledrag_sensitivity->setColour(juce::TextEditor::backgroundColourId,
                                             juce::Colour(0x00000000));
 
-    addAndMakeVisible(sl_simpledrag_sensitivity = new juce::Slider(juce::String()));
+    sl_simpledrag_sensitivity = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*sl_simpledrag_sensitivity);
     sl_simpledrag_sensitivity->setRange(0.01, 2, 0.01);
     sl_simpledrag_sensitivity->setSliderStyle(juce::Slider::LinearHorizontal);
     sl_simpledrag_sensitivity->setTextBoxStyle(juce::Slider::TextBoxLeft, false, 40, 20);
     sl_simpledrag_sensitivity->addListener(this);
 
-    addAndMakeVisible(button_info = new juce::TextButton(juce::String()));
+    button_info = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*button_info);
     button_info->setButtonText(TRANS("?"));
     button_info->addListener(this);
 
-    addAndMakeVisible(slider_playback_mode = new juce::Slider(juce::String()));
+    slider_playback_mode = std::make_unique<juce::Slider>(juce::String());
+    addAndMakeVisible(*slider_playback_mode);
     slider_playback_mode->setRange(0, 6, 1);
     slider_playback_mode->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     slider_playback_mode->setTextBoxStyle(juce::Slider::NoTextBox, false, 80, 20);
@@ -219,8 +234,9 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
                                     juce::Colour(0xff3e3e3e));
     slider_playback_mode->addListener(this);
 
-    addAndMakeVisible(label_ui_headline2 =
-                          new juce::Label(juce::String(), TRANS("NOTE PLAYBACK HANDLING")));
+    label_ui_headline2 =
+        std::make_unique<juce::Label>(juce::String(), TRANS("NOTE PLAYBACK HANDLING"));
+    addAndMakeVisible(*label_ui_headline2);
     label_ui_headline2->setFont(juce::Font(30.00f, juce::Font::plain));
     label_ui_headline2->setJustificationType(juce::Justification::centred);
     label_ui_headline2->setEditable(false, false, false);
@@ -230,11 +246,13 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
                                   juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
     label_ui_headline2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    addAndMakeVisible(tb_turn_mousewheel_on_off = new juce::ToggleButton(juce::String()));
+    tb_turn_mousewheel_on_off = std::make_unique<juce::ToggleButton>(juce::String());
+    addAndMakeVisible(*tb_turn_mousewheel_on_off);
     tb_turn_mousewheel_on_off->setExplicitFocusOrder(2);
     tb_turn_mousewheel_on_off->addListener(this);
 
-    addAndMakeVisible(info_playback_modes = new juce::TextButton(juce::String()));
+    info_playback_modes = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*info_playback_modes);
     info_playback_modes->setButtonText(TRANS("?"));
     info_playback_modes->addListener(this);
 
@@ -261,7 +279,7 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
                                               juce::dontSendNotification);
 
     set_playback_label_text(_app_instance_store->audio_processor->note_playback_mode,
-                            label_playback_mode);
+                            label_playback_mode.get());
 
     bool show_right_mouse_options = !GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_AT_RIGHT_MOUSE &&
                                     GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_ENABLE;
@@ -403,42 +421,44 @@ void UiEditorSetup::buttonClicked(juce::Button *buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == tb_turn_multidrag_on_off)
+    if (buttonThatWasClicked == tb_turn_multidrag_on_off.get())
     {
         //[UserButtonCode_tb_turn_multidrag_on_off] -- add your button handler code here..
         GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_ENABLE =
             buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_tb_turn_multidrag_on_off]
     }
-    else if (buttonThatWasClicked == tb_switch_multidrag_mouse)
+    else if (buttonThatWasClicked == tb_switch_multidrag_mouse.get())
     {
         //[UserButtonCode_tb_switch_multidrag_mouse] -- add your button handler code here..
         GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_AT_RIGHT_MOUSE =
             buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_tb_switch_multidrag_mouse]
     }
-    else if (buttonThatWasClicked == button_info)
+    else if (buttonThatWasClicked == button_info.get())
     {
         //[UserButtonCode_button_info] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
+            _app_instance_store->editor_config.manual_editor =
+                std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(
             MANUAL_URL + "beginner/multidrag-feature");
         //[/UserButtonCode_button_info]
     }
-    else if (buttonThatWasClicked == tb_turn_mousewheel_on_off)
+    else if (buttonThatWasClicked == tb_turn_mousewheel_on_off.get())
     {
         //[UserButtonCode_tb_turn_mousewheel_on_off] -- add your button handler code here..
         GLOBAL_VALUE_HOLDER::getInstance()->ENABLE_MOUSEWHEEL =
             buttonThatWasClicked->getToggleState();
         //[/UserButtonCode_tb_turn_mousewheel_on_off]
     }
-    else if (buttonThatWasClicked == info_playback_modes)
+    else if (buttonThatWasClicked == info_playback_modes.get())
     {
         //[UserButtonCode_info_playback_modes] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
-            _app_instance_store->editor_config.manual_editor = new UIHtmlView(_app_instance_store);
+            _app_instance_store->editor_config.manual_editor =
+                std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(
             MANUAL_URL + "advanced-users/playback-modes");
@@ -464,32 +484,32 @@ void UiEditorSetup::sliderValueChanged(juce::Slider *sliderThatWasMoved)
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
 
-    if (sliderThatWasMoved == sl_multidrag_delay)
+    if (sliderThatWasMoved == sl_multidrag_delay.get())
     {
         //[UserSliderCode_sl_multidrag_delay] -- add your slider handling code here..
         GLOBAL_VALUE_HOLDER::getInstance()->LONG_MOUSE_DOWN_INTERVAL =
             sliderThatWasMoved->getValue();
         //[/UserSliderCode_sl_multidrag_delay]
     }
-    else if (sliderThatWasMoved == sl_multidrag_sensitivity)
+    else if (sliderThatWasMoved == sl_multidrag_sensitivity.get())
     {
         //[UserSliderCode_sl_multidrag_sensitivity] -- add your slider handling code here..
         GLOBAL_VALUE_HOLDER::getInstance()->MULTIDRAG_SENSITIVITY = sliderThatWasMoved->getValue();
         //[/UserSliderCode_sl_multidrag_sensitivity]
     }
-    else if (sliderThatWasMoved == sl_simpledrag_sensitivity)
+    else if (sliderThatWasMoved == sl_simpledrag_sensitivity.get())
     {
         //[UserSliderCode_sl_simpledrag_sensitivity] -- add your slider handling code here..
         GLOBAL_VALUE_HOLDER::getInstance()->SIMPLEDRAG_SENSITIVITY = sliderThatWasMoved->getValue();
         //[/UserSliderCode_sl_simpledrag_sensitivity]
     }
-    else if (sliderThatWasMoved == slider_playback_mode)
+    else if (sliderThatWasMoved == slider_playback_mode.get())
     {
         //[UserSliderCode_slider_playback_mode] -- add your slider handling code here..
         _app_instance_store->audio_processor->note_playback_mode.set_value(
             slider_playback_mode->getValue());
         set_playback_label_text(_app_instance_store->audio_processor->note_playback_mode,
-                                label_playback_mode);
+                                label_playback_mode.get());
         //[/UserSliderCode_slider_playback_mode]
     }
 

@@ -83,37 +83,37 @@ class UiEditorClipboard : public UiEditor,
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<juce::Label> newComponent;
-    juce::ScopedPointer<juce::ToggleButton> toggle_copy_steps;
-    juce::ScopedPointer<UiEditorToolbar> toolbar;
-    juce::ScopedPointer<juce::Label> newComponent15;
-    juce::ScopedPointer<juce::Label> newComponent14;
-    juce::ScopedPointer<juce::Label> newComponent13;
-    juce::ScopedPointer<juce::Label> newComponent12;
-    juce::ScopedPointer<juce::Label> newComponent11;
-    juce::ScopedPointer<juce::Label> newComponent9;
-    juce::ScopedPointer<juce::Label> newComponent8;
-    juce::ScopedPointer<juce::Label> newComponent7;
-    juce::ScopedPointer<juce::Label> newComponent6;
-    juce::ScopedPointer<juce::Label> newComponent4;
-    juce::ScopedPointer<juce::Label> newComponent3;
-    juce::ScopedPointer<juce::Label> newComponent10;
-    juce::ScopedPointer<juce::ToggleButton> toggle_select_all;
-    juce::ScopedPointer<juce::ToggleButton> toggle_copy_layer_7;
-    juce::ScopedPointer<juce::ToggleButton> toggle_copy_layer_5_6;
-    juce::ScopedPointer<juce::ToggleButton> toggle_copy_layer_4;
-    juce::ScopedPointer<juce::ToggleButton> toggle_copy_layer_3;
-    juce::ScopedPointer<juce::ToggleButton> toggle_copy_layer_2;
-    juce::ScopedPointer<juce::ToggleButton> toggle_copy_layer_1;
-    juce::ScopedPointer<juce::ToggleButton> toggle_copy_bar_groups;
-    juce::ScopedPointer<juce::ToggleButton> toggle_copy_bar_solo;
-    juce::ScopedPointer<juce::ToggleButton> toggle_copy_step_duration;
-    juce::ScopedPointer<juce::ToggleButton> toggle_copy_step_velocity;
-    juce::ScopedPointer<juce::ToggleButton> toggle_copy_string_octave;
-    juce::ScopedPointer<juce::Label> newComponent2;
-    juce::ScopedPointer<juce::Label> newComponent5;
-    juce::ScopedPointer<juce::Label> label;
-    juce::ScopedPointer<juce::TextButton> button_info;
+    std::unique_ptr<juce::Label> newComponent;
+    std::unique_ptr<juce::ToggleButton> toggle_copy_steps;
+    std::unique_ptr<UiEditorToolbar> toolbar;
+    std::unique_ptr<juce::Label> newComponent15;
+    std::unique_ptr<juce::Label> newComponent14;
+    std::unique_ptr<juce::Label> newComponent13;
+    std::unique_ptr<juce::Label> newComponent12;
+    std::unique_ptr<juce::Label> newComponent11;
+    std::unique_ptr<juce::Label> newComponent9;
+    std::unique_ptr<juce::Label> newComponent8;
+    std::unique_ptr<juce::Label> newComponent7;
+    std::unique_ptr<juce::Label> newComponent6;
+    std::unique_ptr<juce::Label> newComponent4;
+    std::unique_ptr<juce::Label> newComponent3;
+    std::unique_ptr<juce::Label> newComponent10;
+    std::unique_ptr<juce::ToggleButton> toggle_select_all;
+    std::unique_ptr<juce::ToggleButton> toggle_copy_layer_7;
+    std::unique_ptr<juce::ToggleButton> toggle_copy_layer_5_6;
+    std::unique_ptr<juce::ToggleButton> toggle_copy_layer_4;
+    std::unique_ptr<juce::ToggleButton> toggle_copy_layer_3;
+    std::unique_ptr<juce::ToggleButton> toggle_copy_layer_2;
+    std::unique_ptr<juce::ToggleButton> toggle_copy_layer_1;
+    std::unique_ptr<juce::ToggleButton> toggle_copy_bar_groups;
+    std::unique_ptr<juce::ToggleButton> toggle_copy_bar_solo;
+    std::unique_ptr<juce::ToggleButton> toggle_copy_step_duration;
+    std::unique_ptr<juce::ToggleButton> toggle_copy_step_velocity;
+    std::unique_ptr<juce::ToggleButton> toggle_copy_string_octave;
+    std::unique_ptr<juce::Label> newComponent2;
+    std::unique_ptr<juce::Label> newComponent5;
+    std::unique_ptr<juce::Label> label;
+    std::unique_ptr<juce::TextButton> button_info;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorClipboard)

@@ -2002,14 +2002,15 @@ GstepAudioProcessor::GstepAudioProcessor()
 
     if (!bstepIsStandalone)
     {
-        _clock = new VSTClockProcessor(this);
+        _clock = std::make_unique<VSTClockProcessor>(this);
         _active_writer = nullptr;
         _current_vst_samples_delay = 0;
         _current_sample_rate = 0;
         _sample_playback_position = 0;
         _sample_playback_length = 0;
         _sample_started = 0;
-        sensing_timer = juce::PluginHostType().isAbletonLive() ? (new SensingTimer()) : nullptr;
+        sensing_timer =
+            juce::PluginHostType().isAbletonLive() ? (std::make_unique<SensingTimer>()) : nullptr;
         last_sensing = 0;
     }
     BOOT(Processor);

@@ -328,7 +328,7 @@ void MONO_Controller::on_clicked(bool do_realy_click_)
     else
     {
         MultidragSource *const multidrag_source =
-            _app_instance_store->editor_config.multidrag_source;
+            _app_instance_store->editor_config.multidrag_source.get();
         if (!multidrag_source)
         {
             if (do_realy_click_)
@@ -356,12 +356,14 @@ void MONO_Controller::on_long_mouse_down()
         multidrag_source->source_state = get_value();
         multidrag_source->alreay_handled_controllers.add(this);
         multidrag_source->is_drag_started = false;
-        _app_instance_store->editor_config.multidrag_source = multidrag_source;
+        _app_instance_store->editor_config.multidrag_source =
+            std::unique_ptr<MultidragSource>(multidrag_source);
     }
 }
 bool MONO_Controller::should_start_multi_drag()
 {
-    MultidragSource *const multidrag_source = _app_instance_store->editor_config.multidrag_source;
+    MultidragSource *const multidrag_source =
+        _app_instance_store->editor_config.multidrag_source.get();
     if (multidrag_source)
         if (!multidrag_source->is_drag_started)
             if (multidrag_source->controller_type_ident == get_controller_type_ident())
@@ -381,7 +383,8 @@ void MONO_Controller::get_label_text(juce::String &string_) const
     if (_app_instance_store->midi_in_map.is_in_learning_mode())
         return;
 
-    MultidragSource *const multidrag_source = _app_instance_store->editor_config.multidrag_source;
+    MultidragSource *const multidrag_source =
+        _app_instance_store->editor_config.multidrag_source.get();
     if (multidrag_source)
     {
         if (multidrag_source->controller_type_ident == get_controller_type_ident())
@@ -417,7 +420,7 @@ bool MONO_Controller::is_interested_in_drag_source(
     else
     {
         MultidragSource *const multidrag_source =
-            _app_instance_store->editor_config.multidrag_source;
+            _app_instance_store->editor_config.multidrag_source.get();
         if (multidrag_source)
         {
             if (multidrag_source->controller_type_ident == get_controller_type_ident())

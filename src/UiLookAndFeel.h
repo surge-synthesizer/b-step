@@ -358,7 +358,7 @@ class UiLookAndFeel : public juce::LookAndFeel_V2, public juce::DeletedAtShutdow
 
   private:
     //==============================================================================
-    juce::ScopedPointer<juce::Drawable> folderImage, documentImage;
+    std::unique_ptr<juce::Drawable> folderImage, documentImage;
 
     void drawShinyButtonShape(juce::Graphics &, float x, float y, float w, float h,
                               float maxCornerSize, const juce::Colour &baseColour,

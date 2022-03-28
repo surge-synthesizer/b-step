@@ -14,7 +14,7 @@ class UiButton : public UIBase,
     bool is_multi_drag_valid;
     bool was_dragging;
 
-    juce::ScopedPointer<juce::Component> drop_source;
+    std::unique_ptr<juce::Component> drop_source;
 
   public:
     void mouseDown(const juce::MouseEvent &) override;

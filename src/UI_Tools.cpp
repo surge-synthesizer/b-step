@@ -57,9 +57,8 @@ void UIRubber::paint(juce::Graphics &g_)
 
 UIRubber::UIRubber(const juce::String &) : UITool("TlR")
 {
-    drawable =
-        juce::DrawableImage::createFromImageData(BinaryData::rubber_svg, BinaryData::rubber_svgSize)
-            .release();
+    drawable = juce::DrawableImage::createFromImageData(BinaryData::rubber_svg,
+                                                        BinaryData::rubber_svgSize);
 }
 void UIQuestion::paint(juce::Graphics &g_)
 {
@@ -72,8 +71,7 @@ void UIQuestion::paint(juce::Graphics &g_)
 UIQuestion::UIQuestion(const juce::String &) : UITool("TlQ")
 {
     drawable = juce::DrawableImage::createFromImageData(BinaryData::question_svg,
-                                                        BinaryData::question_svgSize)
-                   .release();
+                                                        BinaryData::question_svgSize);
 }
 BarCopyClipboard::BarCopyClipboard(std::uint8_t id_)
     : UIBarClipboardSettings(id_), stored_bar(new Bar(SUM_BARS + 99 + id_))
@@ -116,7 +114,7 @@ void UIClipboard::mouseDrag(const juce::MouseEvent &e_)
     _curser_image =
         this->createComponentSnapshot(this->getLocalBounds()).convertedToFormat(juce::Image::ARGB);
 
-    drag_source = source;
+    drag_source = std::unique_ptr<BarCopySourceData>(source);
     startDragging(BAR_CLIPBOARD_DRAG_N_DROP_IDENT, source, _curser_image, true);
 }
 void UIClipboard::clicked()
@@ -185,18 +183,14 @@ UIClipboard::UIClipboard(AppInstanceStore *app_instance_store_,
 {
     if (id_ == 0)
         drawable = juce::DrawableImage::createFromImageData(BinaryData::clipboard_1_svg,
-                                                            BinaryData::clipboard_1_svgSize)
-                       .release();
+                                                            BinaryData::clipboard_1_svgSize);
     else if (id_ == 1)
         drawable = juce::DrawableImage::createFromImageData(BinaryData::clipboard_2_svg,
-                                                            BinaryData::clipboard_2_svgSize)
-                       .release();
+                                                            BinaryData::clipboard_2_svgSize);
     else if (id_ == 2)
         drawable = juce::DrawableImage::createFromImageData(BinaryData::clipboard_3_svg,
-                                                            BinaryData::clipboard_3_svgSize)
-                       .release();
+                                                            BinaryData::clipboard_3_svgSize);
     else if (id_ == 3)
         drawable = juce::DrawableImage::createFromImageData(BinaryData::clipboard_4_svg,
-                                                            BinaryData::clipboard_4_svgSize)
-                       .release();
+                                                            BinaryData::clipboard_4_svgSize);
 }

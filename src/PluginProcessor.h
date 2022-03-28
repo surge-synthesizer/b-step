@@ -67,9 +67,9 @@ class GstepAudioProcessor : public ProcessorUserData,
   private:
 #ifdef USE_PLUGIN_PROCESS_BLOCK
     friend class VSTClockProcessor;
-    juce::ScopedPointer<VSTClockProcessor> _clock;
+    std::unique_ptr<VSTClockProcessor> _clock;
     juce::AudioFormatWriter::ThreadedWriter *volatile _active_writer;
-    juce::ScopedPointer<juce::AudioFormatReader> _active_sample_playback;
+    std::unique_ptr<juce::AudioFormatReader> _active_sample_playback;
 
   public:
     void set_active_writer(juce::AudioFormatWriter::ThreadedWriter *active_writer_)
@@ -88,7 +88,7 @@ class GstepAudioProcessor : public ProcessorUserData,
 
         _sample_playback_position = 0;
         _sample_started = false;
-        _active_sample_playback = active_reader_;
+        _active_sample_playback = std::unique_ptr<juce::AudioFormatReader>(active_reader_);
     }
     std::uint64_t _sample_playback_position;
     std::uint64_t _sample_playback_length;
@@ -123,7 +123,7 @@ class GstepAudioProcessor : public ProcessorUserData,
   public:
     juce::MidiMessage sensing_message;
     int last_sensing;
-    juce::ScopedPointer<SensingTimer> sensing_timer;
+    std::unique_ptr<SensingTimer> sensing_timer;
 #endif // USE_PLUGIN_PROCESS_BLOCK
 #ifdef DEMO
   public:

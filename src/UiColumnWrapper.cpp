@@ -34,7 +34,8 @@ void UiColumnWrapper::set_leftside_subeditor(SubeditorBase *const leftside_edito
                                     leftside_subeditor->getHeight());
     }
 
-    addAndMakeVisible(leftside_subeditor = leftside_editor_);
+    leftside_subeditor = std::unique_ptr<SubeditorBase>(leftside_editor_);
+    addAndMakeVisible(*leftside_subeditor);
 }
 void UiColumnWrapper::set_colum_editor(UiColumn16 *const column_editor_)
 {
@@ -44,7 +45,8 @@ void UiColumnWrapper::set_colum_editor(UiColumn16 *const column_editor_)
                                   column_editor->getWidth(), column_editor->getHeight());
     }
 
-    addAndMakeVisible(column_editor = column_editor_);
+    column_editor = std::unique_ptr<UiColumn16>(column_editor_);
+    addAndMakeVisible(*column_editor);
 }
 
 void UiColumnWrapper::refresh_ui(juce::Array<Component *> &components_to_repaint_)
@@ -85,9 +87,11 @@ void UiColumnWrapper::set_style(AppStyle *const style_)
 //==============================================================================
 UiColumnWrapper::UiColumnWrapper()
 {
-    addAndMakeVisible(leftside_subeditor = new SubeditorBase());
+    leftside_subeditor = std::make_unique<SubeditorBase>();
+    addAndMakeVisible(*leftside_subeditor);
 
-    addAndMakeVisible(column_editor = new UiColumn16());
+    column_editor = std::make_unique<UiColumn16>();
+    addAndMakeVisible(*column_editor);
 
     //[UserPreSize]
     _style = nullptr;

@@ -85,8 +85,8 @@ class UiColumnWrapper : public juce::Component
     // the text will only be set if the wrapped leftside editor have an label
     void set_text(const juce::String &text_) { leftside_subeditor->set_text(text_); };
 
-    UiColumn16 *get_column_editor() { return column_editor; }
-    SubeditorBase *get_leftside_editor() { return leftside_subeditor; }
+    UiColumn16 *get_column_editor() { return column_editor.get(); }
+    SubeditorBase *get_leftside_editor() { return leftside_subeditor.get(); }
 
     void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_);
     void get_controllers_for_paint_popup(juce::Array<MONO_Controller *> &controllers_with_popup_);
@@ -100,8 +100,8 @@ class UiColumnWrapper : public juce::Component
     //[/UserVariables]
 
     //==============================================================================
-    juce::ScopedPointer<SubeditorBase> leftside_subeditor;
-    juce::ScopedPointer<UiColumn16> column_editor;
+    std::unique_ptr<SubeditorBase> leftside_subeditor;
+    std::unique_ptr<UiColumn16> column_editor;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiColumnWrapper)

@@ -2613,10 +2613,11 @@ const juce::Drawable *UiLookAndFeel::getDefaultFolderImage()
             171, 197, 191, 156, 123, 162, 135, 187, 198, 227, 131, 113, 219, 80,  159, 1,   4,
             239, 223, 231, 0,   0};
 
-        folderImage = loadDrawableFromData(drawableData, sizeof(drawableData));
+        folderImage = std::unique_ptr<juce::Drawable>(
+            loadDrawableFromData(drawableData, sizeof(drawableData)));
     }
 
-    return folderImage;
+    return folderImage.get();
 }
 
 const juce::Drawable *UiLookAndFeel::getDefaultDocumentFileImage()
@@ -2718,10 +2719,11 @@ const juce::Drawable *UiLookAndFeel::getDefaultDocumentFileImage()
             237, 29,  170, 72,  175, 109, 119, 129, 127, 235, 9,   92,  20,  85,  185, 254, 72,
             220, 147, 162, 121, 235, 219, 13,  44,  144, 225, 63,  241, 244, 165, 51,  0,   0};
 
-        documentImage = loadDrawableFromData(drawableData, sizeof(drawableData));
+        documentImage = std::unique_ptr<juce::Drawable>(
+            loadDrawableFromData(drawableData, sizeof(drawableData)));
     }
 
-    return documentImage;
+    return documentImage.get();
 }
 
 //==============================================================================

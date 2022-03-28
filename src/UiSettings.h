@@ -44,7 +44,7 @@ class EditorConfig : public UIUserData
     MONO_Controller *slider_controller_is_down;
     juce::Array<MONO_Controller *> sliders_for_popup_info;
 
-    juce::ScopedPointer<MultidragSource> multidrag_source;
+    std::unique_ptr<MultidragSource> multidrag_source;
 
     std::unique_ptr<ControllerMIDILearn> controller_mid_learn;
     std::unique_ptr<UiEditorMidiLearn> midi_learn_editor;
@@ -57,11 +57,11 @@ class EditorConfig : public UIUserData
     std::unique_ptr<UiEditorClipboard> clipboard_editor;
     std::unique_ptr<UiEditorSetup> setup_editor;
     std::unique_ptr<UiEditorAppStyler> style_editor;
-    juce::ScopedPointer<UiEditorFileManager> file_manager;
+    std::unique_ptr<UiEditorFileManager> file_manager;
     std::unique_ptr<UiEditorWhatsNew> whatsnew_editor;
     std::unique_ptr<UIHtmlView> manual_editor;
     std::unique_ptr<UiQuestionIsYourFriend> question_editor;
-    juce::ScopedPointer<UiTextImExport> im_exporter_editor;
+    std::unique_ptr<UiTextImExport> im_exporter_editor;
 
     juce::Point<int> XY_midi_learn_editor;
     juce::Point<int> XY_chord_editor;

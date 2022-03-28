@@ -4,3 +4,6 @@
 [submodule "libs/sst/sst-plugininfra"]
 	path = libs/sst/sst-plugininfra
 	url = https://github.com/surge-synthesizer/sst-plugininfra.git
+[submodule "libs/clap-juce-extensions"]
+	path = libs/clap-juce-extensions
+	url = https://github.com/free-audio/clap-juce-extensions

@@ -314,7 +314,7 @@ struct PresetItem : public juce::TreeViewItem,
         {
             _subfolder_item->set_input_listener(nullptr);
 
-            _parent_item->removeSubItem(_subfolder_item->getIndexInParent());
+            // FIXME see issue #46
             SHOW_CANCEL_NOTIFICATION();
             delete this;
         }
@@ -402,7 +402,7 @@ struct PresetItem : public juce::TreeViewItem,
         void on_text_chancel() override
         {
             _new_file_item->set_input_listener(nullptr);
-            _parent_item->removeSubItem(_new_file_item->getIndexInParent());
+            // FIXME see issue #46
             SHOW_CANCEL_NOTIFICATION();
             delete this;
         }

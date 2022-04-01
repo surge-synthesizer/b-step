@@ -438,11 +438,6 @@ inline void GstepAudioProcessorEditor::timerCallback()
     if (input_popup)
         input_popup->refresh_ui();
 
-#ifdef DEMO
-    if (_app_instance_store->editor_config.demo_window)
-        _app_instance_store->editor_config.demo_window->refresh_ui();
-#endif
-
     if (!lock.tryEnter())
         return;
 
@@ -582,113 +577,6 @@ inline void GstepAudioProcessorEditor::timerCallback()
                 _app_instance_store->editor_config.question_editor =
                     std::make_unique<UiQuestionIsYourFriend>(_app_instance_store);
                 _app_instance_store->save_default_files();
-            }
-
-            if (!open_whats_window())
-            {
-                _app_instance_store->save_default_files();
-
-                if (!_app_instance_store->editor_config.update_notifyer_was_up)
-                {
-                    _app_instance_store->editor_config.update_notifyer_was_up = true;
-                    if (GLOBAL_VALUE_HOLDER::getInstance()->AUTO_CHECK_UPDATES)
-                    {
-                        class CheckUpdates : public AutonomThread
-                        {
-                            GstepAudioProcessorEditor *const _owner;
-
-                            void run() override
-                            {
-                                //#ifndef DEMO
-                                if (!GLOBAL_VALUE_HOLDER::getInstance()->USER_ASKED_FOR_AUTO_UPDATE)
-                                {
-                                    GLOBAL_VALUE_HOLDER::getInstance()->USER_ASKED_FOR_AUTO_UPDATE =
-                                        true;
-                                    GLOBAL_VALUE_HOLDER::getInstance()->AUTO_CHECK_UPDATES =
-                                        juce::AlertWindow::showOkCancelBox(
-                                            juce::AlertWindow::QuestionIcon,
-                                            "AUTOMATICALLY CHECK FOR UPDATES?",
-                                            "Would you like to atomatically check for new B-Step "
-                                            "updates?",
-                                            "YES, CHECK AUTOMATICALLY (recommended)", "NEVER",
-                                            _owner);
-
-                                    _owner->_app_instance_store->save_default_files();
-                                }
-
-                                if (!GLOBAL_VALUE_HOLDER::getInstance()->AUTO_CHECK_UPDATES)
-                                {
-                                    selfkill();
-                                    return;
-                                }
-                                //#endif
-
-                                juce::URL version(MANUAL_URL + "version");
-                                juce::String v_info = version.readEntireTextStream();
-                                float number = -1;
-                                int minor = -1;
-                                if (v_info.contains("<!-- VERSION:"))
-                                {
-                                    number =
-                                        v_info.fromFirstOccurrenceOf("<!-- VERSION:", false, false)
-                                            .upToFirstOccurrenceOf(" -->", false, false)
-                                            .getFloatValue();
-                                    minor =
-                                        v_info.fromFirstOccurrenceOf("<!-- MINOR:", false, false)
-                                            .upToLastOccurrenceOf(" -->", false, false)
-                                            .getIntValue();
-                                }
-
-                                OUT("B-VERSION: " << number << "." << minor);
-
-                                if (number > float(B_STEP_VERSION) ||
-                                    (number == float(B_STEP_VERSION) &&
-                                     minor > B_STEP_MINOR_VERSION))
-                                {
-                                    int answer = juce::AlertWindow::showYesNoCancelBox(
-                                        juce::AlertWindow::InfoIcon,
-                                        "VERSION " + juce::String(number) + juce::String(".") +
-                                            juce::String(minor) + " IS AVAILABLE!",
-                                        "Would you like to see what's new in this version?",
-                                        "SHOW ME THAT STUFF!", "NO, NOT NOW",
-                                        "DISABLE UPDATE CHECK", _owner);
-
-                                    if (answer == 1)
-                                    {
-                                        if (!_owner->_app_instance_store->editor_config
-                                                 .manual_editor)
-                                            _owner->_app_instance_store->editor_config
-                                                .manual_editor = std::make_unique<UIHtmlView>(
-                                                _owner->_app_instance_store);
-
-                                        _owner->_app_instance_store->editor_config.manual_editor
-                                            ->try_open_url(MANUAL_URL);
-                                    }
-                                    else if (answer == 2)
-                                        ; // NO
-                                    else
-                                    {
-                                        //#ifndef DEMO
-                                        GLOBAL_VALUE_HOLDER::getInstance()->AUTO_CHECK_UPDATES =
-                                            false;
-                                        _owner->_app_instance_store->save_default_files();
-                                    }
-                                    //#endif
-                                }
-                                selfkill();
-                            }
-
-                          public:
-                            CheckUpdates(GstepAudioProcessorEditor *const owner_)
-                                : AutonomThread("B-UpdateChecker"), _owner(owner_)
-                            {
-                                startThread(1);
-                            }
-                        };
-
-                        new CheckUpdates(this);
-                    }
-                }
             }
         }
         is_first_callback = false;

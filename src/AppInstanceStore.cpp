@@ -912,17 +912,16 @@ juce::String AppInstanceStore::save_project(const juce::File &xml_doc_) const
 {
     juce::String error;
 
-#ifndef DEMO
     juce::File xml_doc = xml_doc_.withFileExtension(APPDEFF::project_file_extension);
     juce::XmlElement xml(APPDEFF::project_file_version);
 
     error += save_project(xml);
     if (error == "")
         error += write(xml, xml_doc);
-#endif
 
     return error;
 }
+
 juce::String AppInstanceStore::load_project(const juce::File &xml_doc_)
 {
     juce::String error;
@@ -941,14 +940,13 @@ juce::String AppInstanceStore::load_project(const juce::File &xml_doc_)
 
     return error;
 }
+
 juce::String AppInstanceStore::save_project(juce::XmlElement &xml_) const
 {
-#ifndef DEMO
     audio_processor->::ProcessorUserData::export_to(xml_);
     editor_config.export_to(xml_);
     pattern.export_to(xml_);
     xml_.setAttribute("THEME", color_theme->get_color_list());
-#endif
 
     return "";
 }
@@ -1079,6 +1077,7 @@ juce::String AppInstanceStore::save_setup(juce::XmlElement &xml) const
 
     return "";
 }
+
 juce::String AppInstanceStore::load_setup(const juce::File &xml_doc_)
 {
     if (!xml_doc_.existsAsFile())
@@ -1087,6 +1086,7 @@ juce::String AppInstanceStore::load_setup(const juce::File &xml_doc_)
     auto xml = juce::XmlDocument(xml_doc_).getDocumentElement();
     return load_setup(xml.get());
 }
+
 juce::String AppInstanceStore::load_setup(const juce::XmlElement *xml)
 {
     juce::String error;
@@ -1196,6 +1196,7 @@ juce::String AppInstanceStore::save_snapshot(const juce::File &xml_doc_, const B
 
     return write(xml, xml_doc);
 }
+
 juce::String AppInstanceStore::load_snapshot(const juce::File &xml_doc_, Bar &bar_)
 {
     if (!xml_doc_.existsAsFile())
@@ -1255,6 +1256,7 @@ juce::String AppInstanceStore::save_chordset(juce::XmlElement &xml_) const
 
     return "";
 }
+
 juce::String AppInstanceStore::save_chordset(const juce::File &xml_doc_) const
 {
     juce::String error;
@@ -1267,6 +1269,7 @@ juce::String AppInstanceStore::save_chordset(const juce::File &xml_doc_) const
 
     return error;
 }
+
 juce::String AppInstanceStore::load_chordset(const juce::XmlElement &xml_)
 {
     juce::String error;
@@ -1285,6 +1288,7 @@ juce::String AppInstanceStore::load_chordset(const juce::XmlElement &xml_)
 
     return error;
 }
+
 juce::String AppInstanceStore::load_chordset(const juce::File &xml_doc_)
 {
     if (!xml_doc_.existsAsFile())
@@ -1327,6 +1331,7 @@ juce::String AppInstanceStore::save_colour_theme(const juce::File &xml_doc_) con
 
     return error;
 }
+
 juce::String AppInstanceStore::load_colour_theme(const juce::XmlElement &xml_)
 {
     juce::String error;
@@ -1351,6 +1356,7 @@ juce::String AppInstanceStore::load_colour_theme(const juce::XmlElement &xml_)
 
     return error;
 }
+
 juce::String AppInstanceStore::load_colour_theme(const juce::File &xml_doc_)
 {
     juce::String error;

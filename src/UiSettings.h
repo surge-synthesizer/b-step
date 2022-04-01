@@ -22,13 +22,8 @@ class UiEditorSettings;
 class MultidragSource;
 class UiEditorClipboard;
 class UiEditorSetup;
-#ifdef DEMO
-class UiEditorDemo;
-#endif
 class UiEditorAppStyler;
 class UiEditorFileManager;
-class UiEditorWhatsNew;
-class UiEditorWhatsNew;
 class UIHtmlView;
 class UiQuestionIsYourFriend;
 class UiTextImExport;
@@ -36,9 +31,6 @@ class EditorConfig : public UIUserData
 {
     AppInstanceStore *const _app_instance_store;
     float _resize_denominator;
-
-  public:
-    bool demo_time_is_over;
 
   public:
     MONO_Controller *slider_controller_is_down;
@@ -51,14 +43,10 @@ class EditorConfig : public UIUserData
     std::unique_ptr<UiEditorChords> chord_editor;
     std::unique_ptr<UiEditorSettings> editor_settings;
     std::unique_ptr<UiEditorAbout> about_winodow;
-#ifdef DEMO
-    ScopedPointer<UiEditorDemo> demo_window;
-#endif
     std::unique_ptr<UiEditorClipboard> clipboard_editor;
     std::unique_ptr<UiEditorSetup> setup_editor;
     std::unique_ptr<UiEditorAppStyler> style_editor;
     std::unique_ptr<UiEditorFileManager> file_manager;
-    std::unique_ptr<UiEditorWhatsNew> whatsnew_editor;
     std::unique_ptr<UIHtmlView> manual_editor;
     std::unique_ptr<UiQuestionIsYourFriend> question_editor;
     std::unique_ptr<UiTextImExport> im_exporter_editor;
@@ -73,9 +61,6 @@ class EditorConfig : public UIUserData
 
     std::uint32_t *current_editable_colour;
     std::uint8_t selected_bar_clipboard_id;
-
-    // LIVE VAR TO DO NOT SHOW THE NEW VERSIONS INFO AGAIN
-    bool update_notifyer_was_up;
 
     void close_all_editors();
 

@@ -895,12 +895,8 @@ void UiEditorAppStyler::buttonClicked(juce::Button *buttonThatWasClicked)
     else if (buttonThatWasClicked == rand2.get())
     {
         //[UserButtonCode_rand2] -- add your button handler code here..
-#ifndef DEMO
         _app_instance_store->save_default_colour_theme();
-#else
-        _app_instance_store->editor->open_demo_window();
-#endif // DEMO
-       //[/UserButtonCode_rand2]
+        //[/UserButtonCode_rand2]
     }
     else if (buttonThatWasClicked == style_6.get())
     {

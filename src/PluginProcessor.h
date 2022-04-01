@@ -4,43 +4,12 @@
 #include "App.h"
 #include "CoreDatastructure.h"
 
-#include "UiEditorDemo.h"
 #include <juce_audio_formats/juce_audio_formats.h>
 #include <juce_audio_devices/juce_audio_devices.h>
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_audio_basics/juce_audio_basics.h>
 
 #include <juce_core/juce_core.h>
-
-#ifdef DEMO
-#define SEC_PER_MIN 60 // 60
-class DemoTimer : public Timer, public Component
-{
-  private:
-    AppInstanceStore *const _app_instance_store;
-
-  public:
-    void timerCallback() override;
-
-  private:
-    struct OutPutOffTimer : public Timer
-    {
-        void timerCallback() override { stopTimer(); }
-    };
-    OutPutOffTimer output_off_timer;
-
-  public:
-    DemoTimer(AppInstanceStore *const app_instance_store_);
-    ~DemoTimer()
-    {
-        output_off_timer.stopTimer();
-        stopTimer();
-    }
-
-    //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DemoTimer)
-};
-#endif // DEMO
 
 // ********************************************************************************************
 // ********************************************************************************************
@@ -125,11 +94,7 @@ class GstepAudioProcessor : public ProcessorUserData,
     int last_sensing;
     std::unique_ptr<SensingTimer> sensing_timer;
 #endif // USE_PLUGIN_PROCESS_BLOCK
-#ifdef DEMO
-  public:
-    DemoTimer demo_timer;
-    void restart_timer(int minutes_) { demo_timer.startTimer(1000 * SEC_PER_MIN * minutes_); }
-#endif
+
   public:
     void play();
     void stop();

@@ -176,7 +176,6 @@ target_sources(B-Step
         "src/UiEditorAbout.cpp"
         "src/UiEditorChords.cpp"
         "src/UiEditorClipboard.cpp"
-        "src/UiEditorDemo.cpp"
         "src/UiEditorFileManager.cpp"
         "src/UiEditorInputPopup.cpp"
         "src/UiEditorKeyboard.cpp"
@@ -184,7 +183,6 @@ target_sources(B-Step
         "src/UiEditorRightMainwindows.cpp"
         "src/UiEditorSettings.cpp"
         "src/UiEditorSetup.cpp"
-        "src/UiEditorWhatsNew.cpp"
         "src/UiFileView.cpp"
         "src/UiLeftsideCC.cpp"
         "src/UiLeftsideLabel.cpp"
@@ -236,7 +234,6 @@ target_link_libraries(B-Step
         juce::juce_audio_processors
         juce::juce_audio_utils
         juce::juce_core
-        juce::juce_cryptography
         juce::juce_data_structures
         juce::juce_events
         juce::juce_graphics

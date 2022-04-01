@@ -226,14 +226,6 @@ class GstepAudioProcessor : public ProcessorUserData,
     GstepAudioProcessor();
     ~GstepAudioProcessor();
 
-#ifdef USE_A_SYNTH
-    // the synth!
-    float gain, delay;
-    AudioSampleBuffer delayBuffer;
-    int delayPosition;
-    Synthesiser synth;
-#endif // USE_A_SYNTH
-
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GstepAudioProcessor)
 };

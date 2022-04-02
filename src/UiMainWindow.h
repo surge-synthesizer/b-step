@@ -27,7 +27,6 @@
 class GstepAudioProcessor;
 
 class PopUpAbout;
-class PopUpDemo;
 
 class ControllerMIDILearn;
 
@@ -162,8 +161,6 @@ class GstepAudioProcessorEditor : public juce::AudioProcessorEditor,
     void open_midi_learn_editor();
     void open_reader(VIEW_TYPE type_);
     void open_writer(VIEW_TYPE type_);
-    void open_demo_window();
-    bool open_whats_window();
 
     bool is_initalized;
 

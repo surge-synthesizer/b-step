@@ -152,8 +152,6 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
 
     setOpaque(true);
 
-    is_demo = false;
-
     juce::String additional_info;
 
     if (!bstepIsStandalone)

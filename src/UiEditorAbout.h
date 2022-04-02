@@ -49,8 +49,6 @@ class UiEditorAbout : public UiEditor, public juce::Button::Listener
     //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
 
-    bool is_demo;
-
   public:
     void on_close_clicked() override;
 #ifdef DEVELOPMENT

@@ -32,7 +32,6 @@
 #include "UiEditorMidiLearn.h"
 #include "UiEditorClipboard.h"
 #include "UiEditorSetup.h"
-#include "UiEditorWhatsNew.h"
 
 #include "UiEditorRightMainwindows.h"
 #include "MenuBarRight.h"
@@ -123,44 +122,14 @@ void GstepAudioProcessorEditor::open_reader(VIEW_TYPE type_)
         _app_instance_store->editor_config.file_manager =
             std::make_unique<UiEditorFileManager>(_app_instance_store, false, type_);
 }
-#ifdef DEMO
-void GstepAudioProcessorEditor::open_demo_window()
-{
-    if (!_config->demo_window)
-        _config->demo_window = new UiEditorDemo(_app_instance_store);
-}
-#endif
-bool GstepAudioProcessorEditor::open_whats_window()
-{
-    if (!_config->whatsnew_editor)
-    {
-        if (GLOBAL_VALUE_HOLDER::getInstance()->DONT_SHOW_AGAIN_2_1 ||
-            GLOBAL_VALUE_HOLDER::getInstance()->WHATS_NEW_WAS_UP)
-            return false;
-
-        GLOBAL_VALUE_HOLDER::getInstance()->WHATS_NEW_WAS_UP = true;
-
-        _config->whatsnew_editor = std::make_unique<UiEditorWhatsNew>(_app_instance_store);
-        return true;
-    }
-    else
-        _config->whatsnew_editor = nullptr;
-
-    return false;
-}
 
 void GstepAudioProcessorEditor::open_writer(VIEW_TYPE type_)
 {
-#ifdef DEMO
-    open_demo_window();
-#else
     if (_app_instance_store->editor_config.file_manager)
         _app_instance_store->editor_config.file_manager = nullptr;
     else
         _app_instance_store->editor_config.file_manager =
             std::make_unique<UiEditorFileManager>(_app_instance_store, true, type_);
-
-#endif // DEMO
 }
 
 static inline void add_as_kylistener_to_all_childs(juce::KeyListener *const listener_,

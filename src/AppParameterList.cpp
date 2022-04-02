@@ -63,8 +63,6 @@ const char *APPDEF_ProcessorUserData::parameter_name(int id)
         return "Speed";
     case I_NOTE_PLAYBACK_MODE:
         return "Playback-Mode";
-    case I_USING_DEMO_FIRST_TIME:
-        return "Pattern-split";
     case I_LATENCY_CORRECTION_CLOCKS:
         return "Latency-ticks";
     case I_LATENCY_CORRECTION_MS:
@@ -85,8 +83,6 @@ const char *APPDEF_ProcessorUserData::parameter_name_short(int id)
         return "m_Speed";
     case I_NOTE_PLAYBACK_MODE:
         return "m_PbMod";
-    case I_USING_DEMO_FIRST_TIME:
-        return "pt_splt";
     case I_LATENCY_CORRECTION_CLOCKS:
         return "lat-tck";
     case I_LATENCY_CORRECTION_MS:

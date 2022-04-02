@@ -30,8 +30,6 @@ struct ProcessorUserData
     appdeff_t::latency_corretion_clocks_t latency_corretion_clocks;
     appdeff_t::latency_corretion_ms_t latency_corretion_ms;
 
-    appdeff_t::demo_first_time_t demo_first_time;
-
   public:
     Parameters parameter_list;
 

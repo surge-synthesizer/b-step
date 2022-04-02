@@ -19,9 +19,7 @@ ProcessorUserData::ProcessorUserData()
 
                      &note_playback_mode,
 
-                     &latency_corretion_clocks, &latency_corretion_ms,
-
-                     &demo_first_time)
+                     &latency_corretion_clocks, &latency_corretion_ms)
 {
 }
 

@@ -1693,18 +1693,10 @@ struct PresetItem : public juce::TreeViewItem,
         }
         break;
         case IS_DOWNLOAD_DIR:
-#ifdef DEMO
-            _app_instance_store->editor->open_demo_window();
-#else
             download_all_childs();
-#endif
             break;
         case IS_DOWNLOAD_FILE:
-#ifdef DEMO
-            _app_instance_store->editor->open_demo_window();
-#else
             handle_download_from_server();
-#endif
             break;
         case IS_FILE:
             read_xmlfile_from_file();
@@ -3327,9 +3319,6 @@ void UiEditorFileManager::buttonClicked(juce::Button *buttonThatWasClicked)
         if (AUDIO_PLAYER_PTR)
             AUDIO_PLAYER_PTR->stop(true);
 
-#ifdef DEMO
-        _app_instance_store->editor->open_demo_window();
-#else
         class TextImporter : public UiTextImExportListener, public SubThreadOfFimemanager
         {
             AppInstanceStore *const _app_instance_store;
@@ -3389,8 +3378,7 @@ void UiEditorFileManager::buttonClicked(juce::Button *buttonThatWasClicked)
 
         new UiTextImExport(_app_instance_store,
                            new TextImporter(_app_instance_store, "IMPORTER", ""));
-#endif // DEMO
-       //[/UserButtonCode_import]
+        //[/UserButtonCode_import]
     }
     else if (buttonThatWasClicked == play.get())
     {

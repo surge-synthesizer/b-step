@@ -12,13 +12,11 @@
 #include "UiEditorAbout.h"
 #include "UiEditorChords.h"
 #include "UiEditorClipboard.h"
-#include "UiEditorDemo.h"
 #include "UiEditorMidiLearn.h"
 #include "UiEditorSettings.h"
 #include "UiEditorSetup.h"
 #include "ControllerMidiLearn.h"
 #include "UiEditorFileManager.h"
-#include "UiEditorWhatsNew.h"
 #include "AppStyleEditor.h"
 #include "UIHtmlView.h"
 #include "UiQuestionIsYourFriend.h"
@@ -29,15 +27,13 @@
 EditorConfig::EditorConfig(AppInstanceStore *const app_instance_store_)
     : _app_instance_store(app_instance_store_), _resize_denominator(1),
 
-      demo_time_is_over(false), slider_controller_is_down(nullptr),
+      slider_controller_is_down(nullptr),
 
       controller_mid_learn(nullptr), midi_learn_editor(nullptr), chord_editor(nullptr),
       editor_settings(nullptr), about_winodow(nullptr),
-#ifdef DEMO
-      demo_window(nullptr),
-#endif
+
       clipboard_editor(nullptr), setup_editor(nullptr), style_editor(nullptr),
-      file_manager(nullptr), whatsnew_editor(nullptr), manual_editor(nullptr),
+      file_manager(nullptr), manual_editor(nullptr),
 
       XY_midi_learn_editor(-9999, -9999), XY_chord_editor(-9999, -9999),
       XY_editor_settings(-9999, -9999), XY_clipboard_editor(-9999, -9999),
@@ -45,7 +41,7 @@ EditorConfig::EditorConfig(AppInstanceStore *const app_instance_store_)
 
       current_editable_colour(nullptr),
 
-      selected_bar_clipboard_id(0), update_notifyer_was_up(false)
+      selected_bar_clipboard_id(0)
 {
     BOOT(EditorConfig);
 
@@ -181,10 +177,6 @@ EditorConfig::EditorConfig(AppInstanceStore *const app_instance_store_)
 
 void EditorConfig::close_all_editors()
 {
-#ifdef DEMO
-    if (demo_window)
-        demo_window = nullptr;
-#endif
     if (im_exporter_editor)
         im_exporter_editor->on_close_clicked();
     if (midi_learn_editor)
@@ -202,11 +194,6 @@ void EditorConfig::close_all_editors()
         style_editor->on_close_clicked();
     if (file_manager)
         file_manager->on_close_clicked();
-    whatsnew_editor = nullptr;
-    if (manual_editor)
-        manual_editor->on_close_clicked();
-    if (question_editor)
-        question_editor->on_close_clicked();
 }
 
 EditorConfig::~EditorConfig()

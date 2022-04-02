@@ -141,8 +141,6 @@ struct APPDEF_ProcessorUserData
 
         I_NOTE_PLAYBACK_MODE,
 
-        I_USING_DEMO_FIRST_TIME,
-
         I_LATENCY_CORRECTION_CLOCKS,
         I_LATENCY_CORRECTION_MS,
 
@@ -188,9 +186,6 @@ struct APPDEF_ProcessorUserData
         PLAYBACK_MODE_POLYPHON_OVERLAY, PLAYBACK_MODE_POLYPHON_STOP_NOTES_BEFORE_PLAY_SAME,
         PLAYBACK_MODE_MONOPHON_EXPAND_LAST, I_NOTE_PLAYBACK_MODE, APPDEF_ProcessorUserData>
         note_playback_mode_t;
-
-    typedef PodParameter<false, true, true, I_USING_DEMO_FIRST_TIME, APPDEF_ProcessorUserData>
-        demo_first_time_t;
 
     typedef PodParameter<-5, 0, 5, I_LATENCY_CORRECTION_CLOCKS, APPDEF_ProcessorUserData>
         latency_corretion_clocks_t;

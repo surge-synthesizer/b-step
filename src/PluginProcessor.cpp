@@ -500,13 +500,13 @@ class MessageProcessor : public Ticker,
 
     /// MASTER PROCESS
   private:
-    inline void on_tick()
+    inline void on_tick() override
     {
         send_precalculated_messages();
         send_sync_message_to_all_ports_NOW(clock_message);
     }
 
-    inline void on_tick_precalculate()
+    inline void on_tick_precalculate() override
     {
         // SPEED REFRESH
         if (_last_bpm != _audio_processor.bpm)
@@ -1353,125 +1353,6 @@ void GstepAudioProcessor::on_vst_continue(std::int64_t pos_)
 #include "CoreAudioRecorder.h"
 // TODO EXPORT MIDI BY LOAD A ENGINE IN THE BACKGROUND AND TRANSPORT IT
 
-#ifdef USE_A_SYNTH
-//==============================================================================
-/** A demo synth sound that's just a basic sine wave.. */
-class SineWaveSound : public SynthesiserSound
-{
-  public:
-    SineWaveSound() {}
-
-    bool appliesToNote(int /*midiNoteNumber*/) override { return true; }
-    bool appliesToChannel(int /*midiChannel*/) override { return true; }
-};
-
-//==============================================================================
-/** A simple demo synth voice that just plays a sine wave.. */
-class SineWaveVoice : public SynthesiserVoice
-{
-  public:
-    SineWaveVoice() : angleDelta(0.0), tailOff(0.0) {}
-
-    bool canPlaySound(SynthesiserSound *sound) override
-    {
-        return dynamic_cast<SineWaveSound *>(sound) != nullptr;
-    }
-
-    void startNote(int midiNoteNumber, float velocity, SynthesiserSound * /*sound*/,
-                   int /*currentPitchWheelPosition*/) override
-    {
-        currentAngle = 0.0;
-        level = velocity * 0.15;
-        tailOff = 0.0;
-
-        double cyclesPerSecond = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber);
-        double cyclesPerSample = cyclesPerSecond / getSampleRate();
-
-        angleDelta = cyclesPerSample * 2.0 * double_Pi;
-    }
-
-    void stopNote(float /*velocity*/, bool allowTailOff) override
-    {
-        if (allowTailOff)
-        {
-            // start a tail-off by setting this flag. The render callback will pick up on
-            // this and do a fade out, calling clearCurrentNote() when it's finished.
-
-            if (tailOff ==
-                0.0) // we only need to begin a tail-off if it's not already doing so - the
-                // stopNote method could be called more than once.
-                tailOff = 1.0;
-        }
-        else
-        {
-            // we're being told to stop playing immediately, so reset everything..
-
-            clearCurrentNote();
-            angleDelta = 0.0;
-        }
-    }
-
-    void pitchWheelMoved(int /*newValue*/) override
-    {
-        // can't be bothered implementing this for the demo!
-    }
-
-    void controllerMoved(int /*controllerNumber*/, int /*newValue*/) override
-    {
-        // not interested in controllers in this case.
-    }
-
-    void renderNextBlock(AudioSampleBuffer &outputBuffer, int startSample, int numSamples) override
-    {
-        if (angleDelta != 0.0)
-        {
-            if (tailOff > 0)
-            {
-                while (--numSamples >= 0)
-                {
-                    const float currentSample = (float)(sin(currentAngle) * level * tailOff);
-
-                    for (int i = outputBuffer.getNumChannels(); --i >= 0;)
-                        outputBuffer.addSample(i, startSample, currentSample);
-
-                    currentAngle += angleDelta;
-                    ++startSample;
-
-                    tailOff *= 0.99;
-
-                    if (tailOff <= 0.005)
-                    {
-                        clearCurrentNote();
-
-                        angleDelta = 0.0;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                while (--numSamples >= 0)
-                {
-                    const float currentSample = (float)(sin(currentAngle) * level);
-
-                    for (int i = outputBuffer.getNumChannels(); --i >= 0;)
-                        outputBuffer.addSample(i, startSample, currentSample);
-
-                    currentAngle += angleDelta;
-                    ++startSample;
-                }
-            }
-        }
-    }
-
-  private:
-    double currentAngle, angleDelta, level, tailOff;
-};
-
-const float defaultGain = 1.0f;
-const float defaultDelay = 0.5f;
-#endif // USE_A_SYNTH
-
 class SensingTimer : public juce::Timer
 {
     void timerCallback() { ++callback_counter; }
@@ -1537,43 +1418,6 @@ void GstepAudioProcessor::processBlock(juce::AudioSampleBuffer &buffer_,
             _clock->generate_clock_callbacks(pos, _current_buffer, buffer_.getNumSamples(),
                                              getSampleRate());
 
-            /*
-                synth.addSound (new Vocoder( buffer_, getSampleRate(), buffer_.getNumSamples(),
-            &synth ));
-            //buffer_.clear();
-                synth.renderNextBlock (buffer_, midi_messages_, 0, buffer_.getNumSamples());
-            */
-#ifdef USE_A_SYNTH
-            const int numSamples = buffer_.getNumSamples();
-            int channel, dp = 0;
-
-            // Go through the incoming data, and apply our gain to it...
-            // for (channel = 0; channel < getNumInputChannels(); ++channel)
-            //    buffer_.applyGain (channel, 0, buffer_.getNumSamples(), gain);
-
-            synth.renderNextBlock(buffer_, midi_messages_, 0, numSamples);
-
-            // Apply our delay effect to the new output..
-            for (channel = 0; channel < getNumInputChannels(); ++channel)
-            {
-                float *channelData = buffer_.getWritePointer(channel);
-                float *delayData =
-                    delayBuffer.getWritePointer(jmin(channel, delayBuffer.getNumChannels() - 1));
-                dp = delayPosition;
-
-                for (int i = 0; i < numSamples; ++i)
-                {
-                    const float in = channelData[i];
-                    channelData[i] += delayData[dp];
-                    delayData[dp] = (delayData[dp] + in) * delay;
-                    if (++dp >= delayBuffer.getNumSamples())
-                        dp = 0;
-                }
-            }
-
-            delayPosition = dp;
-#endif // USE_A_SYNTH
-
             // FEEDBACK AND LAUNCHPAD
             _message_processor->send_midi_controller_messages_manually();
         }
@@ -1630,10 +1474,6 @@ void GstepAudioProcessor::panic() { _message_processor->send_panic(); }
 void GstepAudioProcessor::prepareToPlay(double sampleRate, int)
 {
     USER_OUT(LOG_VST_TRANSPORT_EVENTS, "enter::prepareToPlay", "", "", "");
-#ifdef USE_A_SYNTH
-    synth.setCurrentPlaybackSampleRate(sampleRate);
-    delayBuffer.clear();
-#endif
 }
 
 void GstepAudioProcessor::releaseResources()
@@ -1646,9 +1486,6 @@ void GstepAudioProcessor::reset()
 
     // Use this method as the place to clear any delay lines, buffers, etc, as it
     // means there's been a break in the audio's continuity.
-#ifdef USE_A_SYNTH
-    delayBuffer.clear();
-#endif
 }
 
 // ********************************************************************************************

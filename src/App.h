@@ -23,8 +23,6 @@ class AppInstanceStore;
 extern int bstepIsStandalone;
 
 #define BUILD_INFO juce::String("")
-//#	define USE_A_SYNTH 1             // in development
-//#	define USE_STANDALONE_SYNTH 1	 // in development
 //#	define USE_PLUGIN_PROCESS_BLOCK 1
 //#	define LOG_THE_EVENTS_TO_FILE 1
 #ifndef USE_PLUGIN_PROCESS_BLOCK

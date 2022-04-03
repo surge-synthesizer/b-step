@@ -137,7 +137,7 @@ UiChordEditorStringOffset::UiChordEditorStringOffset(AppInstanceStore *const app
     label->setJustificationType(juce::Justification::centredLeft);
     label->setEditable(false, false, false);
     label->setColour(juce::Label::textColourId,
-                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 

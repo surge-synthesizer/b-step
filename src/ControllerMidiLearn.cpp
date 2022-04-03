@@ -59,9 +59,10 @@ ControllerMIDILearn::ControllerMIDILearn(AppInstanceStore *const app_instance_st
             .release();
     juce::Image image = drawable->createComponentSnapshot(drawable->getBounds());
     _midi_learn_focus->setImages(
-        true, true, true, image, 1, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR),
-        image, 1, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR), image, 1,
-        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        true, true, true, image, 1,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR), image, 1,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR), image, 1,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     _midi_learn_focus->toFront(false);
     _midi_cc_value->toFront(false);

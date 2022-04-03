@@ -104,7 +104,7 @@ class GstepAudioProcessor : public ProcessorUserData,
     bool is_playing() const;
     bool is_stopped() const;
     bool is_paused() const;
-    bool is_master() const;
+    bool is_producer() const;
 
     inline std::uint8_t get_channel(std::uint8_t string_id_)
     {

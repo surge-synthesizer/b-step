@@ -398,7 +398,7 @@ struct GLOBAL_VALUE_HOLDER : public juce::DeletedAtShutdown
     bool QUESTION_WAS_UP;
     bool WHATS_NEW_WAS_UP;
 
-    std::uint32_t MASTER_COLOUR;
+    std::uint32_t PRIMARY_COLOUR;
 
 #ifdef LOG_THE_EVENTS_TO_FILE
     bool SESSION_FILE_WAS_STILL_PRESENT;

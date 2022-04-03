@@ -35,9 +35,9 @@ MidiIOHandler::MidiIOHandler(AppInstanceStore *const app_instance_store_)
     {
         midi_in.set_port_name(DISABLED_PORT, 0);
         midi_outs.getUnchecked(0)->set_port_name(IN_HOST_MIDI_HANDLING, 0);
-        midi_outs.getUnchecked(1)->set_port_name(USE_MASTER_OUT, 0);
-        midi_outs.getUnchecked(2)->set_port_name(USE_MASTER_OUT, 0);
-        midi_outs.getUnchecked(3)->set_port_name(USE_MASTER_OUT, 0);
+        midi_outs.getUnchecked(1)->set_port_name(USE_MAIN_OUT, 0);
+        midi_outs.getUnchecked(2)->set_port_name(USE_MAIN_OUT, 0);
+        midi_outs.getUnchecked(3)->set_port_name(USE_MAIN_OUT, 0);
         midi_outs.getUnchecked(4)->set_port_name(DISABLED_PORT, 0);
     }
     else
@@ -46,9 +46,9 @@ MidiIOHandler::MidiIOHandler(AppInstanceStore *const app_instance_store_)
         midi_outs.getUnchecked(0)->set_port_name(VIRTUAL_PORT, 0);
         midi_in.set_port_name(VIRTUAL_PORT, 0);
 #endif
-        midi_outs.getUnchecked(1)->set_port_name(USE_MASTER_OUT, 0);
-        midi_outs.getUnchecked(2)->set_port_name(USE_MASTER_OUT, 0);
-        midi_outs.getUnchecked(3)->set_port_name(USE_MASTER_OUT, 0);
+        midi_outs.getUnchecked(1)->set_port_name(USE_MAIN_OUT, 0);
+        midi_outs.getUnchecked(2)->set_port_name(USE_MAIN_OUT, 0);
+        midi_outs.getUnchecked(3)->set_port_name(USE_MAIN_OUT, 0);
     }
 }
 

@@ -61,12 +61,12 @@ enum LAUNCHPAD_ROWS
 
     // RIGHT BUTTONS
     FIXED_LAUNCHPAD_PAGE_1_SHIFT_CARLA_CC_FIX = 0,
-    FIXED_LAUNCHPAD_PAGE_1_MASTER_OCTAVE_UP = 1,
-    FIXED_LAUNCHPAD_PAGE_1_MASTER_OCTAVE_DOWN = 2,
-    FIXED_LAUNCHPAD_PAGE_1_MASTER_NOTE_UP = 3,
-    FIXED_LAUNCHPAD_PAGE_1_MASTER_NOTE_DOWN = 4,
-    FIXED_LAUNCHPAD_PAGE_1_MASTER_CHORD_UP = 5,
-    FIXED_LAUNCHPAD_PAGE_1_MASTER_CHORD_DOWN = 6,
+    FIXED_LAUNCHPAD_PAGE_1_GLOBAL_OCTAVE_UP = 1,
+    FIXED_LAUNCHPAD_PAGE_1_GLOBAL_OCTAVE_DOWN = 2,
+    FIXED_LAUNCHPAD_PAGE_1_GLOBAL_NOTE_UP = 3,
+    FIXED_LAUNCHPAD_PAGE_1_GLOBAL_NOTE_DOWN = 4,
+    FIXED_LAUNCHPAD_PAGE_1_GLOBAL_CHORD_UP = 5,
+    FIXED_LAUNCHPAD_PAGE_1_GLOBAL_CHORD_DOWN = 6,
     FIXED_LAUNCHPAD_PAGE_1_SET_SOLO_BAR = 7,
 
     // TOP BUTTONS ( CC )
@@ -315,22 +315,22 @@ static inline std::uint8_t get_pressed_option_color() { return LAUNCHPAD_AMBER_F
 
 static inline std::uint8_t get_mode_arrow_color() { return LAUNCHPAD_AMBER_LOW; }
 
-static inline std::uint8_t get_master_octave_up_color(const Pattern &)
+static inline std::uint8_t get_global_octave_up_color(const Pattern &)
 {
     return LAUNCHPAD_AMBER_MID;
 }
-static inline std::uint8_t get_master_octave_down_color(const Pattern &)
+static inline std::uint8_t get_global_octave_down_color(const Pattern &)
 {
     return LAUNCHPAD_AMBER_LOW;
 }
 
-static inline std::uint8_t get_master_note_up_color(const Pattern &) { return LAUNCHPAD_RED_MID; }
-static inline std::uint8_t get_master_note_down_color(const Pattern &) { return LAUNCHPAD_RED_LOW; }
-static inline std::uint8_t get_master_chord_type_up_color(const Pattern &)
+static inline std::uint8_t get_global_note_up_color(const Pattern &) { return LAUNCHPAD_RED_MID; }
+static inline std::uint8_t get_global_note_down_color(const Pattern &) { return LAUNCHPAD_RED_LOW; }
+static inline std::uint8_t get_global_chord_type_up_color(const Pattern &)
 {
     return LAUNCHPAD_GREEN_MID;
 }
-static inline std::uint8_t get_master_chord_type_down_color(const Pattern &)
+static inline std::uint8_t get_global_chord_type_down_color(const Pattern &)
 {
     return LAUNCHPAD_GREEN_LOW;
 }
@@ -551,7 +551,7 @@ void Launchpad::get_updates(juce::Array<juce::MidiMessage *> &messages_)
                 ; // process_colormessage_for_button( LAUNCHPAD_OFF, _channel_out, option_button,
                   // messages );
 
-            // MASTER ROTARY
+            // GLOBAL ROTARY
             // TODO not with the scrolloffset!
             if (_current_scroll_offset == SCROLL_OFFSET_PAGE_1)
             {
@@ -565,28 +565,28 @@ void Launchpad::get_updates(juce::Array<juce::MidiMessage *> &messages_)
                         process_colormessage_for_button(LAUNCHPAD_OFF, channel_out, option_button,
                                                         messages_);
                     break;
-                case FIXED_LAUNCHPAD_PAGE_1_MASTER_OCTAVE_UP:
-                    process_colormessage_for_button(get_master_octave_up_color(pattern),
+                case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_OCTAVE_UP:
+                    process_colormessage_for_button(get_global_octave_up_color(pattern),
                                                     channel_out, option_button, messages_);
                     break;
-                case FIXED_LAUNCHPAD_PAGE_1_MASTER_OCTAVE_DOWN:
-                    process_colormessage_for_button(get_master_octave_down_color(pattern),
+                case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_OCTAVE_DOWN:
+                    process_colormessage_for_button(get_global_octave_down_color(pattern),
                                                     channel_out, option_button, messages_);
                     break;
-                case FIXED_LAUNCHPAD_PAGE_1_MASTER_NOTE_UP:
-                    process_colormessage_for_button(get_master_note_up_color(pattern), channel_out,
+                case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_NOTE_UP:
+                    process_colormessage_for_button(get_global_note_up_color(pattern), channel_out,
                                                     option_button, messages_);
                     break;
-                case FIXED_LAUNCHPAD_PAGE_1_MASTER_NOTE_DOWN:
-                    process_colormessage_for_button(get_master_note_down_color(pattern),
+                case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_NOTE_DOWN:
+                    process_colormessage_for_button(get_global_note_down_color(pattern),
                                                     channel_out, option_button, messages_);
                     break;
-                case FIXED_LAUNCHPAD_PAGE_1_MASTER_CHORD_UP:
-                    process_colormessage_for_button(get_master_chord_type_up_color(pattern),
+                case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_CHORD_UP:
+                    process_colormessage_for_button(get_global_chord_type_up_color(pattern),
                                                     channel_out, option_button, messages_);
                     break;
-                case FIXED_LAUNCHPAD_PAGE_1_MASTER_CHORD_DOWN:
-                    process_colormessage_for_button(get_master_chord_type_down_color(pattern),
+                case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_CHORD_DOWN:
+                    process_colormessage_for_button(get_global_chord_type_down_color(pattern),
                                                     channel_out, option_button, messages_);
                     break;
                 case FIXED_LAUNCHPAD_PAGE_1_SET_SOLO_BAR:
@@ -611,19 +611,19 @@ void Launchpad::get_updates(juce::Array<juce::MidiMessage *> &messages_)
                         process_colormessage_for_button(LAUNCHPAD_OFF, channel_out, option_button,
                                                         messages_);
                     break;
-                case FIXED_LAUNCHPAD_PAGE_1_MASTER_OCTAVE_UP:
+                case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_OCTAVE_UP:
                     process_colormessage_for_button(LAUNCHPAD_OFF, channel_out, option_button,
                                                     messages_);
                     break;
-                case FIXED_LAUNCHPAD_PAGE_1_MASTER_OCTAVE_DOWN:
+                case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_OCTAVE_DOWN:
                     process_colormessage_for_button(LAUNCHPAD_OFF, channel_out, option_button,
                                                     messages_);
                     break;
-                case FIXED_LAUNCHPAD_PAGE_1_MASTER_NOTE_UP:
+                case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_NOTE_UP:
                     process_colormessage_for_button(LAUNCHPAD_OFF, channel_out, option_button,
                                                     messages_);
                     break;
-                case FIXED_LAUNCHPAD_PAGE_1_MASTER_NOTE_DOWN:
+                case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_NOTE_DOWN:
                     if (_buttons_right.getReference(hard_row_id).is_pressed)
                         process_colormessage_for_button(get_pressed_option_color(), channel_out,
                                                         option_button, messages_);
@@ -631,7 +631,7 @@ void Launchpad::get_updates(juce::Array<juce::MidiMessage *> &messages_)
                         process_colormessage_for_button(LAUNCHPAD_OFF, channel_out, option_button,
                                                         messages_);
                     break;
-                case FIXED_LAUNCHPAD_PAGE_1_MASTER_CHORD_UP:
+                case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_CHORD_UP:
                     if (_buttons_right.getReference(hard_row_id).is_pressed)
                         process_colormessage_for_button(get_pressed_option_color(), channel_out,
                                                         option_button, messages_);
@@ -639,7 +639,7 @@ void Launchpad::get_updates(juce::Array<juce::MidiMessage *> &messages_)
                         process_colormessage_for_button(LAUNCHPAD_OFF, channel_out, option_button,
                                                         messages_);
                     break;
-                case FIXED_LAUNCHPAD_PAGE_1_MASTER_CHORD_DOWN:
+                case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_CHORD_DOWN:
                     if (_buttons_right.getReference(hard_row_id).is_pressed)
                         process_colormessage_for_button(get_pressed_option_color(), channel_out,
                                                         option_button, messages_);
@@ -950,22 +950,22 @@ void Launchpad::process(const juce::MidiMessage &message_)
                 {
                     switch (hard_button_row)
                     {
-                    case FIXED_LAUNCHPAD_PAGE_1_MASTER_OCTAVE_UP:
+                    case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_OCTAVE_UP:
                         _app_instance_store->pattern.octave_offset++;
                         break;
-                    case FIXED_LAUNCHPAD_PAGE_1_MASTER_OCTAVE_DOWN:
+                    case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_OCTAVE_DOWN:
                         _app_instance_store->pattern.octave_offset--;
                         break;
-                    case FIXED_LAUNCHPAD_PAGE_1_MASTER_NOTE_UP:
+                    case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_NOTE_UP:
                         _app_instance_store->pattern.note_offset++;
                         break;
-                    case FIXED_LAUNCHPAD_PAGE_1_MASTER_NOTE_DOWN:
+                    case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_NOTE_DOWN:
                         _app_instance_store->pattern.note_offset--;
                         break;
-                    case FIXED_LAUNCHPAD_PAGE_1_MASTER_CHORD_UP:
+                    case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_CHORD_UP:
                         _app_instance_store->pattern.chord_type++;
                         break;
-                    case FIXED_LAUNCHPAD_PAGE_1_MASTER_CHORD_DOWN:
+                    case FIXED_LAUNCHPAD_PAGE_1_GLOBAL_CHORD_DOWN:
                         _app_instance_store->pattern.chord_type--;
                         break;
                     }

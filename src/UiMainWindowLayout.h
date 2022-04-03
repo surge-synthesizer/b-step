@@ -498,7 +498,7 @@ inline void GstepAudioProcessorEditor::timerCallback()
         std::int8_t pattern_and_barstring_offset;
         for (int i = 0; i != SUM_STRINGS; ++i)
         {
-            pattern_and_barstring_offset = (_app_instance_store->pattern.master_string_octave(i) +
+            pattern_and_barstring_offset = (_app_instance_store->pattern.global_string_octave(i) +
                                             selected_bar.barstring(i).octave_offset) *
                                            OCTAVE_MULTIPLIER;
 

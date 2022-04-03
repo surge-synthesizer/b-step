@@ -55,7 +55,7 @@ class ControllerStepMute : public MONO_UIButtonController
         std::int8_t sum_octave_offset = selected_step.get_selected_barstep().octave_offset;
         sum_octave_offset += selected_step.get_selected_barstring().octave_offset;
         sum_octave_offset +=
-            _app_instance_store->pattern.master_string_octave(selected_step.barstring_id).value();
+            _app_instance_store->pattern.global_string_octave(selected_step.barstring_id).value();
 
         if (sum_octave_offset != 0)
         {

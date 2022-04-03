@@ -62,9 +62,9 @@ UiFileView::UiFileView()
     player_slider->setSliderStyle(juce::Slider::LinearHorizontal);
     player_slider->setTextBoxStyle(juce::Slider::NoTextBox, false, 30, 20);
     player_slider->setColour(juce::Slider::thumbColourId,
-                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     player_slider->setColour(juce::Slider::textBoxTextColourId,
-                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     player_slider->setColour(juce::Slider::textBoxBackgroundColourId, juce::Colour(0x00ffffff));
     player_slider->setColour(juce::Slider::textBoxOutlineColourId, juce::Colour(0x00808080));
     player_slider->addListener(this);

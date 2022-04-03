@@ -829,7 +829,7 @@ struct PresetItem : public juce::TreeViewItem,
                 line_.getEndY() - line_.getStartY());
             _drawable->replaceColour(
                 juce::Colour(0xffff3b00),
-                juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
             _drawable->drawWithin(
                 g,
                 juce::Rectangle<float>(area.getX() + area.getWidth(), 0.2 * getItemHeight(),
@@ -857,7 +857,7 @@ struct PresetItem : public juce::TreeViewItem,
             {
                 _drawable->replaceColour(
                     juce::Colour(0xffff3b00),
-                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
                 _drawable->drawWithin(g,
                                       juce::Rectangle<float>(area.getX() + area.getWidth() * 0.2,
                                                              area.getY() + area.getHeight() * 0.2,
@@ -1499,7 +1499,7 @@ struct PresetItem : public juce::TreeViewItem,
             PresetItem *const _parent_folder;
             AppInstanceStore *const _app_instance_store;
 
-            bool _was_master_download;
+            bool _was_primary_download;
 
             void run() override
             {
@@ -1540,17 +1540,17 @@ struct PresetItem : public juce::TreeViewItem,
                 while (!is_done)
                     juce::Thread::sleep(200);
 
-                if (_was_master_download)
+                if (_was_primary_download)
                 {
                     if (FILEMANAGER_PTR)
                         FILEMANAGER_PTR->should_refresh_all = true;
                 }
             }
 
-            DownloadExecuter(PresetItem *const parent_folder_, bool was_master_download_)
+            DownloadExecuter(PresetItem *const parent_folder_, bool was_primary_download_)
                 : AutonomThread("B-Download-Pool"), _parent_folder(parent_folder_),
                   _app_instance_store(_parent_folder->_app_instance_store),
-                  _was_master_download(was_master_download_)
+                  _was_primary_download(was_primary_download_)
             {
             }
 
@@ -2786,7 +2786,7 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     label5->setJustificationType(juce::Justification::centredRight);
     label5->setEditable(false, false, false);
     label5->setColour(juce::Label::textColourId,
-                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label5->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label5->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -2825,11 +2825,11 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     info->setCaretVisible(true);
     info->setPopupMenuEnabled(true);
     info->setColour(juce::TextEditor::textColourId,
-                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     info->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0xff161616));
     info->setColour(juce::TextEditor::highlightColourId, juce::Colours::yellow);
     info->setColour(juce::TextEditor::outlineColourId,
-                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     info->setColour(juce::TextEditor::shadowColourId, juce::Colour(0x00ff0000));
     info->setColour(juce::CaretComponent::caretColourId, juce::Colours::aqua);
     info->setText(juce::String());
@@ -2840,7 +2840,7 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     label->setJustificationType(juce::Justification::centredLeft);
     label->setEditable(false, false, false);
     label->setColour(juce::Label::textColourId,
-                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -2850,7 +2850,7 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     label2->setJustificationType(juce::Justification::centredLeft);
     label2->setEditable(false, false, false);
     label2->setColour(juce::Label::textColourId,
-                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -2860,7 +2860,7 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     path_view->setJustificationType(juce::Justification::centredLeft);
     path_view->setEditable(false, false, false);
     path_view->setColour(juce::Label::textColourId,
-                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     path_view->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     path_view->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -2872,9 +2872,9 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     play->addListener(this);
     play->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
     play->setColour(juce::TextButton::textColourOnId,
-                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     play->setColour(juce::TextButton::textColourOffId,
-                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     label3 = std::make_unique<juce::Label>(juce::String(), TRANS("SAMPLE AUDIO:"));
     addAndMakeVisible(*label3);
@@ -2882,7 +2882,7 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     label3->setJustificationType(juce::Justification::centredLeft);
     label3->setEditable(false, false, false);
     label3->setColour(juce::Label::textColourId,
-                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -2894,9 +2894,9 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     record->addListener(this);
     record->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
     record->setColour(juce::TextButton::textColourOnId,
-                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     record->setColour(juce::TextButton::textColourOffId,
-                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     delete_audio = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*delete_audio);
@@ -2906,9 +2906,9 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     delete_audio->addListener(this);
     delete_audio->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
     delete_audio->setColour(juce::TextButton::textColourOnId,
-                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     delete_audio->setColour(juce::TextButton::textColourOffId,
-                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     assign = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*assign);
@@ -2918,9 +2918,9 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     assign->addListener(this);
     assign->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
     assign->setColour(juce::TextButton::textColourOnId,
-                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     assign->setColour(juce::TextButton::textColourOffId,
-                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     audio_source_devices = std::make_unique<juce::ComboBox>(juce::String());
     addAndMakeVisible(*audio_source_devices);
@@ -2954,7 +2954,7 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     addAndMakeVisible(*toggleButton);
     toggleButton->addListener(this);
     toggleButton->setColour(juce::ToggleButton::textColourId,
-                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     show_audio_dyk = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*show_audio_dyk);
@@ -2965,9 +2965,9 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     show_audio_dyk->addListener(this);
     show_audio_dyk->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
     show_audio_dyk->setColour(juce::TextButton::textColourOnId,
-                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     show_audio_dyk->setColour(juce::TextButton::textColourOffId,
-                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     show_info_dyk = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*show_info_dyk);
@@ -2978,9 +2978,9 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     show_info_dyk->addListener(this);
     show_info_dyk->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
     show_info_dyk->setColour(juce::TextButton::textColourOnId,
-                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     show_info_dyk->setColour(juce::TextButton::textColourOffId,
-                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     save = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*save);
@@ -2996,7 +2996,7 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     addAndMakeVisible(*treeView);
     treeView->setDefaultOpenness(true);
     treeView->setColour(juce::TreeView::linesColourId,
-                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     export_ = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*export_);
@@ -3020,9 +3020,9 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     show_new_stuff->addListener(this);
     show_new_stuff->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
     show_new_stuff->setColour(juce::TextButton::textColourOnId,
-                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     show_new_stuff->setColour(juce::TextButton::textColourOffId,
-                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     confirm_text_changes = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*confirm_text_changes);
@@ -3205,10 +3205,10 @@ void UiEditorFileManager::paint(juce::Graphics &g)
     g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillRect(proportionOfWidth(0.0333f), proportionOfHeight(0.6786f), proportionOfWidth(0.9333f),
                1);
 

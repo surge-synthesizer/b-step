@@ -60,7 +60,7 @@ class UiEditorSettings : public UiEditor,
         cb_midi_learn_in_port->grabKeyboardFocus();
         cb_midi_learn_in_port->showPopup();
     }
-    void focus_master_out()
+    void focus_main_out()
     {
         cb_midi_out_port->grabKeyboardFocus();
         cb_midi_out_port->showPopup();
@@ -110,7 +110,7 @@ class UiEditorSettings : public UiEditor,
     std::unique_ptr<juce::TextButton> pb_refresh_feedback;
     std::unique_ptr<juce::Label> label_midi_in_port;
     std::unique_ptr<juce::Label> label_midi_out;
-    std::unique_ptr<juce::Label> label_master_slave_headline;
+    std::unique_ptr<juce::Label> label_producer_consumer_headline;
     std::unique_ptr<juce::Label> label_midi_learn_in;
     std::unique_ptr<juce::Label> label_midi_learn_out;
     std::unique_ptr<juce::Label> label_launchpad_1_headline;
@@ -132,9 +132,9 @@ class UiEditorSettings : public UiEditor,
     std::unique_ptr<juce::ComboBox> cb_midi_out_port_b;
     std::unique_ptr<juce::Slider> sl_midi_out_channel_b;
     std::unique_ptr<juce::Label> label_midi_in_port_b;
-    std::unique_ptr<juce::Label> label_master_slave_headline2;
-    std::unique_ptr<juce::TextButton> button_info_master_out;
-    std::unique_ptr<juce::TextButton> button_info_master_input;
+    std::unique_ptr<juce::Label> label_producer_consumer_headline2;
+    std::unique_ptr<juce::TextButton> button_info_main_out;
+    std::unique_ptr<juce::TextButton> button_info_main_input;
     std::unique_ptr<juce::TextButton> button_info_midi_thru;
     std::unique_ptr<juce::TextButton> button_info_sequence_out;
     std::unique_ptr<juce::TextButton> button_info_cc_in;

@@ -264,7 +264,7 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     lbl_clock_thru->setJustificationType(juce::Justification::centred);
     lbl_clock_thru->setEditable(false, false, false);
     lbl_clock_thru->setColour(juce::Label::textColourId,
-                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     lbl_clock_thru->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     lbl_clock_thru->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -273,7 +273,7 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     tb_drum_view->setExplicitFocusOrder(2);
     tb_drum_view->addListener(this);
     tb_drum_view->setColour(juce::ToggleButton::textColourId,
-                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     target_chord_0 = std::make_unique<juce::ToggleButton>(juce::String());
     addAndMakeVisible(*target_chord_0);
@@ -311,7 +311,7 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     label_string_g->setJustificationType(juce::Justification::centredRight);
     label_string_g->setEditable(false, false, false);
     label_string_g->setColour(juce::Label::textColourId,
-                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_string_g->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_string_g->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -411,7 +411,7 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     label_string_d->setJustificationType(juce::Justification::centredRight);
     label_string_d->setEditable(false, false, false);
     label_string_d->setColour(juce::Label::textColourId,
-                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_string_d->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_string_d->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -421,7 +421,7 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     label_string_a->setJustificationType(juce::Justification::centredRight);
     label_string_a->setEditable(false, false, false);
     label_string_a->setColour(juce::Label::textColourId,
-                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_string_a->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_string_a->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -431,7 +431,7 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     label_string_e->setJustificationType(juce::Justification::centredRight);
     label_string_e->setEditable(false, false, false);
     label_string_e->setColour(juce::Label::textColourId,
-                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_string_e->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_string_e->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -441,7 +441,7 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     label_transpose->setJustificationType(juce::Justification::centredRight);
     label_transpose->setEditable(false, false, false);
     label_transpose->setColour(juce::Label::textColourId,
-                               juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                               juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_transpose->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_transpose->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -450,8 +450,9 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     label_preset_target->setFont(juce::Font(15.00f, juce::Font::plain));
     label_preset_target->setJustificationType(juce::Justification::centredRight);
     label_preset_target->setEditable(false, false, false);
-    label_preset_target->setColour(juce::Label::textColourId,
-                                   juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_preset_target->setColour(
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_preset_target->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_preset_target->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -460,49 +461,49 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     preset_0->setButtonText(TRANS("A"));
     preset_0->addListener(this);
     preset_0->setColour(juce::TextButton::buttonColourId,
-                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     preset_1 = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*preset_1);
     preset_1->setButtonText(TRANS("B"));
     preset_1->addListener(this);
     preset_1->setColour(juce::TextButton::buttonColourId,
-                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     preset_2 = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*preset_2);
     preset_2->setButtonText(TRANS("C"));
     preset_2->addListener(this);
     preset_2->setColour(juce::TextButton::buttonColourId,
-                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     preset_3 = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*preset_3);
     preset_3->setButtonText(TRANS("D"));
     preset_3->addListener(this);
     preset_3->setColour(juce::TextButton::buttonColourId,
-                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     preset_4 = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*preset_4);
     preset_4->setButtonText(TRANS("E"));
     preset_4->addListener(this);
     preset_4->setColour(juce::TextButton::buttonColourId,
-                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     preset_5 = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*preset_5);
     preset_5->setButtonText(TRANS("F"));
     preset_5->addListener(this);
     preset_5->setColour(juce::TextButton::buttonColourId,
-                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     preset_6 = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*preset_6);
     preset_6->setButtonText(TRANS("G"));
     preset_6->addListener(this);
     preset_6->setColour(juce::TextButton::buttonColourId,
-                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     preset_7 = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*preset_7);
@@ -552,7 +553,7 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     labe_chord_0->setJustificationType(juce::Justification::centred);
     labe_chord_0->setEditable(false, false, false);
     labe_chord_0->setColour(juce::Label::textColourId,
-                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     labe_chord_0->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     labe_chord_0->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -562,7 +563,7 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     labe_chord_1->setJustificationType(juce::Justification::centred);
     labe_chord_1->setEditable(false, false, false);
     labe_chord_1->setColour(juce::Label::textColourId,
-                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     labe_chord_1->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     labe_chord_1->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -572,7 +573,7 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     labe_chord_2->setJustificationType(juce::Justification::centred);
     labe_chord_2->setEditable(false, false, false);
     labe_chord_2->setColour(juce::Label::textColourId,
-                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     labe_chord_2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     labe_chord_2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -582,7 +583,7 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     labe_chord_3->setJustificationType(juce::Justification::centred);
     labe_chord_3->setEditable(false, false, false);
     labe_chord_3->setColour(juce::Label::textColourId,
-                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     labe_chord_3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     labe_chord_3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -592,7 +593,7 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     labe_chord_4->setJustificationType(juce::Justification::centred);
     labe_chord_4->setEditable(false, false, false);
     labe_chord_4->setColour(juce::Label::textColourId,
-                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     labe_chord_4->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     labe_chord_4->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -602,7 +603,7 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     labe_chord_5->setJustificationType(juce::Justification::centred);
     labe_chord_5->setEditable(false, false, false);
     labe_chord_5->setColour(juce::Label::textColourId,
-                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     labe_chord_5->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     labe_chord_5->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -612,7 +613,7 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     button_fill_all_from_scale->addListener(this);
     button_fill_all_from_scale->setColour(
         juce::TextButton::buttonColourId,
-        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     button_fill_target_from_scale = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*button_fill_target_from_scale);
@@ -620,7 +621,7 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     button_fill_target_from_scale->addListener(this);
     button_fill_target_from_scale->setColour(
         juce::TextButton::buttonColourId,
-        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     combo_scales = std::make_unique<juce::ComboBox>("new combo box");
     addAndMakeVisible(*combo_scales);
@@ -804,7 +805,7 @@ void UiEditorChords::paint(juce::Graphics &g)
     g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
     g.setColour(juce::Colours::white);
@@ -818,19 +819,19 @@ void UiEditorChords::paint(juce::Graphics &g)
     g.setColour(juce::Colour(0xff6ea52a));
     g.fillPath(internalPath3);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillPath(internalPath4);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillPath(internalPath5);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillPath(internalPath6);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillPath(internalPath7);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillRoundedRectangle(20.0f, static_cast<float>(proportionOfHeight(0.7600f)),
                            static_cast<float>(proportionOfWidth(0.8974f)), 1.0f, 10.000f);
 

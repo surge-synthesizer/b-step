@@ -98,11 +98,11 @@ void UiEditorSettings::fill_drop_downs()
                       _app_instance_store->midi_io_handler.pad_2_out);
     add_set_midi_port(cb_midi_out_port.get(), DISABLED_PORT, index,
                       _app_instance_store->midi_io_handler.get_out_port(0));
-    add_set_midi_port(cb_midi_out_port_string_g.get(), USE_MASTER_OUT, index,
+    add_set_midi_port(cb_midi_out_port_string_g.get(), USE_MAIN_OUT, index,
                       _app_instance_store->midi_io_handler.get_out_port(1));
-    add_set_midi_port(cb_midi_out_port_string_d.get(), USE_MASTER_OUT, index,
+    add_set_midi_port(cb_midi_out_port_string_d.get(), USE_MAIN_OUT, index,
                       _app_instance_store->midi_io_handler.get_out_port(2));
-    add_set_midi_port(cb_midi_out_port_string_a.get(), USE_MASTER_OUT, index,
+    add_set_midi_port(cb_midi_out_port_string_a.get(), USE_MAIN_OUT, index,
                       _app_instance_store->midi_io_handler.get_out_port(3));
     add_set_midi_port(cb_midi_out_port_b.get(), DISABLED_PORT, index,
                       _app_instance_store->midi_io_handler.get_out_port(4));
@@ -232,7 +232,7 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_latency_ms->setJustificationType(juce::Justification::centredRight);
     label_latency_ms->setEditable(false, false, false);
     label_latency_ms->setColour(juce::Label::textColourId,
-                                juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                                juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_latency_ms->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_latency_ms->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -243,7 +243,7 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     lbl_clock_thru->setJustificationType(juce::Justification::centredLeft);
     lbl_clock_thru->setEditable(false, false, false);
     lbl_clock_thru->setColour(juce::Label::textColourId,
-                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     lbl_clock_thru->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     lbl_clock_thru->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -258,7 +258,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_latency_clocks->setJustificationType(juce::Justification::centredRight);
     label_latency_clocks->setEditable(false, false, false);
     label_latency_clocks->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_latency_clocks->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_latency_clocks->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -268,7 +269,7 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_thru->setJustificationType(juce::Justification::centredLeft);
     label_midi_thru->setEditable(false, false, false);
     label_midi_thru->setColour(juce::Label::textColourId,
-                               juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                               juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_midi_thru->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_thru->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -309,7 +310,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_learn_headline->setJustificationType(juce::Justification::centred);
     label_midi_learn_headline->setEditable(false, false, false);
     label_midi_learn_headline->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_midi_learn_headline->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_learn_headline->setColour(juce::TextEditor::backgroundColourId,
                                          juce::Colour(0x00000000));
@@ -324,7 +326,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_io_port_per_track->setJustificationType(juce::Justification::centred);
     label_midi_io_port_per_track->setEditable(false, false, false);
     label_midi_io_port_per_track->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_midi_io_port_per_track->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_io_port_per_track->setColour(juce::TextEditor::backgroundColourId,
                                             juce::Colour(0x00000000));
@@ -504,18 +507,18 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     pb_refresh_feedback->addListener(this);
 
     label_midi_in_port =
-        std::make_unique<juce::Label>(juce::String(), TRANS("Receive Port (Slave)"));
+        std::make_unique<juce::Label>(juce::String(), TRANS("Receive Port (Consumer)"));
     addAndMakeVisible(*label_midi_in_port);
     label_midi_in_port->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_in_port->setJustificationType(juce::Justification::centredRight);
     label_midi_in_port->setEditable(false, false, false);
     label_midi_in_port->setColour(juce::Label::textColourId,
-                                  juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                                  juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_midi_in_port->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_in_port->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     label_midi_out =
-        std::make_unique<juce::Label>(juce::String(), TRANS("Master Out (to Synth) Ch/Port"));
+        std::make_unique<juce::Label>(juce::String(), TRANS("Main Out (to Synth) Ch/Port"));
     addAndMakeVisible(*label_midi_out);
     label_midi_out->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_out->setJustificationType(juce::Justification::centredRight);
@@ -524,25 +527,28 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_out->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_out->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    label_master_slave_headline =
+    label_producer_consumer_headline =
         std::make_unique<juce::Label>(juce::String(), TRANS("MIDI OUT (Notes, Sync)"));
-    addAndMakeVisible(*label_master_slave_headline);
-    label_master_slave_headline->setFont(juce::Font(15.00f, juce::Font::plain));
-    label_master_slave_headline->setJustificationType(juce::Justification::centred);
-    label_master_slave_headline->setEditable(false, false, false);
-    label_master_slave_headline->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_master_slave_headline->setColour(juce::TextEditor::textColourId, juce::Colours::black);
-    label_master_slave_headline->setColour(juce::TextEditor::backgroundColourId,
-                                           juce::Colour(0x00000000));
+    addAndMakeVisible(*label_producer_consumer_headline);
+    label_producer_consumer_headline->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_producer_consumer_headline->setJustificationType(juce::Justification::centred);
+    label_producer_consumer_headline->setEditable(false, false, false);
+    label_producer_consumer_headline->setColour(
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
+    label_producer_consumer_headline->setColour(juce::TextEditor::textColourId,
+                                                juce::Colours::black);
+    label_producer_consumer_headline->setColour(juce::TextEditor::backgroundColourId,
+                                                juce::Colour(0x00000000));
 
     label_midi_learn_in = std::make_unique<juce::Label>(juce::String(), TRANS("Receive Port (IN)"));
     addAndMakeVisible(*label_midi_learn_in);
     label_midi_learn_in->setFont(juce::Font(15.00f, juce::Font::plain));
     label_midi_learn_in->setJustificationType(juce::Justification::centredRight);
     label_midi_learn_in->setEditable(false, false, false);
-    label_midi_learn_in->setColour(juce::Label::textColourId,
-                                   juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_midi_learn_in->setColour(
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_midi_learn_in->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_learn_in->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -553,7 +559,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_learn_out->setJustificationType(juce::Justification::centredRight);
     label_midi_learn_out->setEditable(false, false, false);
     label_midi_learn_out->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_midi_learn_out->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_learn_out->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -564,7 +571,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_launchpad_1_headline->setJustificationType(juce::Justification::centred);
     label_launchpad_1_headline->setEditable(false, false, false);
     label_launchpad_1_headline->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_launchpad_1_headline->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_launchpad_1_headline->setColour(juce::TextEditor::backgroundColourId,
                                           juce::Colour(0x00000000));
@@ -576,7 +584,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_launchpad_1_in->setJustificationType(juce::Justification::centredRight);
     label_midi_launchpad_1_in->setEditable(false, false, false);
     label_midi_launchpad_1_in->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_midi_launchpad_1_in->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_launchpad_1_in->setColour(juce::TextEditor::backgroundColourId,
                                          juce::Colour(0x00000000));
@@ -588,7 +597,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_launchpad_1_out->setJustificationType(juce::Justification::centredRight);
     label_midi_launchpad_1_out->setEditable(false, false, false);
     label_midi_launchpad_1_out->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_midi_launchpad_1_out->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_launchpad_1_out->setColour(juce::TextEditor::backgroundColourId,
                                           juce::Colour(0x00000000));
@@ -600,7 +610,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_launchpad_2_headline->setJustificationType(juce::Justification::centred);
     label_launchpad_2_headline->setEditable(false, false, false);
     label_launchpad_2_headline->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_launchpad_2_headline->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_launchpad_2_headline->setColour(juce::TextEditor::backgroundColourId,
                                           juce::Colour(0x00000000));
@@ -612,7 +623,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_launchpad_2_in->setJustificationType(juce::Justification::centredRight);
     label_midi_launchpad_2_in->setEditable(false, false, false);
     label_midi_launchpad_2_in->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_midi_launchpad_2_in->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_launchpad_2_in->setColour(juce::TextEditor::backgroundColourId,
                                          juce::Colour(0x00000000));
@@ -624,7 +636,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_launchpad_2_out->setJustificationType(juce::Justification::centredRight);
     label_midi_launchpad_2_out->setEditable(false, false, false);
     label_midi_launchpad_2_out->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_midi_launchpad_2_out->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_launchpad_2_out->setColour(juce::TextEditor::backgroundColourId,
                                           juce::Colour(0x00000000));
@@ -633,7 +646,7 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     addAndMakeVisible(*cb_midi_out_port_string_g);
     cb_midi_out_port_string_g->setEditableText(false);
     cb_midi_out_port_string_g->setJustificationType(juce::Justification::centredLeft);
-    cb_midi_out_port_string_g->setTextWhenNothingSelected(TRANS("Use Master Output"));
+    cb_midi_out_port_string_g->setTextWhenNothingSelected(TRANS("Use Main Output"));
     cb_midi_out_port_string_g->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_out_port_string_g->addListener(this);
 
@@ -658,7 +671,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_out_string_g->setJustificationType(juce::Justification::centredRight);
     label_midi_out_string_g->setEditable(false, false, false);
     label_midi_out_string_g->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_midi_out_string_g->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_out_string_g->setColour(juce::TextEditor::backgroundColourId,
                                        juce::Colour(0x00000000));
@@ -667,7 +681,7 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     addAndMakeVisible(*cb_midi_out_port_string_d);
     cb_midi_out_port_string_d->setEditableText(false);
     cb_midi_out_port_string_d->setJustificationType(juce::Justification::centredLeft);
-    cb_midi_out_port_string_d->setTextWhenNothingSelected(TRANS("Use Master Output"));
+    cb_midi_out_port_string_d->setTextWhenNothingSelected(TRANS("Use Main Output"));
     cb_midi_out_port_string_d->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_out_port_string_d->addListener(this);
 
@@ -692,7 +706,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_out_string_d->setJustificationType(juce::Justification::centredRight);
     label_midi_out_string_d->setEditable(false, false, false);
     label_midi_out_string_d->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_midi_out_string_d->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_out_string_d->setColour(juce::TextEditor::backgroundColourId,
                                        juce::Colour(0x00000000));
@@ -701,7 +716,7 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     addAndMakeVisible(*cb_midi_out_port_string_a);
     cb_midi_out_port_string_a->setEditableText(false);
     cb_midi_out_port_string_a->setJustificationType(juce::Justification::centredLeft);
-    cb_midi_out_port_string_a->setTextWhenNothingSelected(TRANS("Use Master Output"));
+    cb_midi_out_port_string_a->setTextWhenNothingSelected(TRANS("Use Main Output"));
     cb_midi_out_port_string_a->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_out_port_string_a->addListener(this);
 
@@ -726,7 +741,8 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_out_string_a->setJustificationType(juce::Justification::centredRight);
     label_midi_out_string_a->setEditable(false, false, false);
     label_midi_out_string_a->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_midi_out_string_a->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_out_string_a->setColour(juce::TextEditor::backgroundColourId,
                                        juce::Colour(0x00000000));
@@ -767,31 +783,34 @@ UiEditorSettings::UiEditorSettings(AppInstanceStore *const app_instance_store_)
     label_midi_in_port_b->setJustificationType(juce::Justification::centredRight);
     label_midi_in_port_b->setEditable(false, false, false);
     label_midi_in_port_b->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_midi_in_port_b->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_midi_in_port_b->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
-    label_master_slave_headline2 =
-        std::make_unique<juce::Label>(juce::String(), TRANS("MIDI IN (Slave, Thru)"));
-    addAndMakeVisible(*label_master_slave_headline2);
-    label_master_slave_headline2->setFont(juce::Font(15.00f, juce::Font::plain));
-    label_master_slave_headline2->setJustificationType(juce::Justification::centred);
-    label_master_slave_headline2->setEditable(false, false, false);
-    label_master_slave_headline2->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_master_slave_headline2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
-    label_master_slave_headline2->setColour(juce::TextEditor::backgroundColourId,
-                                            juce::Colour(0x00000000));
+    label_producer_consumer_headline2 =
+        std::make_unique<juce::Label>(juce::String(), TRANS("MIDI IN (Consumer, Thru)"));
+    addAndMakeVisible(*label_producer_consumer_headline2);
+    label_producer_consumer_headline2->setFont(juce::Font(15.00f, juce::Font::plain));
+    label_producer_consumer_headline2->setJustificationType(juce::Justification::centred);
+    label_producer_consumer_headline2->setEditable(false, false, false);
+    label_producer_consumer_headline2->setColour(
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
+    label_producer_consumer_headline2->setColour(juce::TextEditor::textColourId,
+                                                 juce::Colours::black);
+    label_producer_consumer_headline2->setColour(juce::TextEditor::backgroundColourId,
+                                                 juce::Colour(0x00000000));
 
-    button_info_master_out = std::make_unique<juce::TextButton>(juce::String());
-    addAndMakeVisible(*button_info_master_out);
-    button_info_master_out->setButtonText(TRANS("?"));
-    button_info_master_out->addListener(this);
+    button_info_main_out = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*button_info_main_out);
+    button_info_main_out->setButtonText(TRANS("?"));
+    button_info_main_out->addListener(this);
 
-    button_info_master_input = std::make_unique<juce::TextButton>(juce::String());
-    addAndMakeVisible(*button_info_master_input);
-    button_info_master_input->setButtonText(TRANS("?"));
-    button_info_master_input->addListener(this);
+    button_info_main_input = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*button_info_main_input);
+    button_info_main_input->setButtonText(TRANS("?"));
+    button_info_main_input->addListener(this);
 
     button_info_midi_thru = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*button_info_midi_thru);
@@ -931,7 +950,7 @@ UiEditorSettings::~UiEditorSettings()
     pb_refresh_feedback = nullptr;
     label_midi_in_port = nullptr;
     label_midi_out = nullptr;
-    label_master_slave_headline = nullptr;
+    label_producer_consumer_headline = nullptr;
     label_midi_learn_in = nullptr;
     label_midi_learn_out = nullptr;
     label_launchpad_1_headline = nullptr;
@@ -953,9 +972,9 @@ UiEditorSettings::~UiEditorSettings()
     cb_midi_out_port_b = nullptr;
     sl_midi_out_channel_b = nullptr;
     label_midi_in_port_b = nullptr;
-    label_master_slave_headline2 = nullptr;
-    button_info_master_out = nullptr;
-    button_info_master_input = nullptr;
+    label_producer_consumer_headline2 = nullptr;
+    button_info_main_out = nullptr;
+    button_info_main_input = nullptr;
     button_info_midi_thru = nullptr;
     button_info_sequence_out = nullptr;
     button_info_cc_in = nullptr;
@@ -974,35 +993,35 @@ void UiEditorSettings::paint(juce::Graphics &g)
     g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.0175f)),
                            static_cast<float>(proportionOfHeight(0.4286f)),
                            static_cast<float>(proportionOfWidth(0.4649f)), 1.0f, 10.000f);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.5000f)),
                            static_cast<float>(proportionOfHeight(0.0286f)), 1.0f,
                            static_cast<float>(proportionOfHeight(0.8571f)), 10.000f);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.5175f)),
                            static_cast<float>(proportionOfHeight(0.3000f)),
                            static_cast<float>(proportionOfWidth(0.4649f)), 1.0f, 10.000f);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.0175f)),
                            static_cast<float>(proportionOfHeight(0.5857f)),
                            static_cast<float>(proportionOfWidth(0.4649f)), 1.0f, 10.000f);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.5175f)),
                            static_cast<float>(proportionOfHeight(0.6000f)),
                            static_cast<float>(proportionOfWidth(0.4649f)), 1.0f, 10.000f);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.0175f)),
                            static_cast<float>(proportionOfHeight(0.2414f)),
                            static_cast<float>(proportionOfWidth(0.4649f)), 1.0f, 10.000f);
@@ -1078,8 +1097,9 @@ void UiEditorSettings::resized()
                                   proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
     label_midi_out->setBounds(proportionOfWidth(0.0175f), proportionOfHeight(0.1143f),
                               proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
-    label_master_slave_headline->setBounds(proportionOfWidth(0.0526f), proportionOfHeight(0.0286f),
-                                           proportionOfWidth(0.3947f), proportionOfHeight(0.0571f));
+    label_producer_consumer_headline->setBounds(
+        proportionOfWidth(0.0526f), proportionOfHeight(0.0286f), proportionOfWidth(0.3947f),
+        proportionOfHeight(0.0571f));
     label_midi_learn_in->setBounds(proportionOfWidth(0.5175f), proportionOfHeight(0.1143f),
                                    proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
     label_midi_learn_out->setBounds(proportionOfWidth(0.5175f), proportionOfHeight(0.1714f),
@@ -1125,13 +1145,13 @@ void UiEditorSettings::resized()
                                      proportionOfWidth(0.0702f), proportionOfHeight(0.0429f));
     label_midi_in_port_b->setBounds(proportionOfWidth(0.0175f), proportionOfHeight(0.1714f),
                                     proportionOfWidth(0.1754f), proportionOfHeight(0.0429f));
-    label_master_slave_headline2->setBounds(proportionOfWidth(0.0526f), proportionOfHeight(0.2714f),
-                                            proportionOfWidth(0.3947f),
-                                            proportionOfHeight(0.0571f));
-    button_info_master_out->setBounds(proportionOfWidth(0.4561f), proportionOfHeight(0.0357f),
+    label_producer_consumer_headline2->setBounds(
+        proportionOfWidth(0.0526f), proportionOfHeight(0.2714f), proportionOfWidth(0.3947f),
+        proportionOfHeight(0.0571f));
+    button_info_main_out->setBounds(proportionOfWidth(0.4561f), proportionOfHeight(0.0357f),
+                                    proportionOfWidth(0.0263f), proportionOfHeight(0.0429f));
+    button_info_main_input->setBounds(proportionOfWidth(0.4561f), proportionOfHeight(0.2714f),
                                       proportionOfWidth(0.0263f), proportionOfHeight(0.0429f));
-    button_info_master_input->setBounds(proportionOfWidth(0.4561f), proportionOfHeight(0.2714f),
-                                        proportionOfWidth(0.0263f), proportionOfHeight(0.0429f));
     button_info_midi_thru->setBounds(proportionOfWidth(0.4561f), proportionOfHeight(0.4571f),
                                      proportionOfWidth(0.0263f), proportionOfHeight(0.0429f));
     button_info_sequence_out->setBounds(proportionOfWidth(0.4561f), proportionOfHeight(0.6214f),
@@ -1221,27 +1241,27 @@ void UiEditorSettings::buttonClicked(juce::Button *buttonThatWasClicked)
         fill_drop_downs();
         //[/UserButtonCode_pb_refresh_all]
     }
-    else if (buttonThatWasClicked == button_info_master_out.get())
+    else if (buttonThatWasClicked == button_info_main_out.get())
     {
-        //[UserButtonCode_button_info_master_out] -- add your button handler code here..
+        //[UserButtonCode_button_info_main_out] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
             _app_instance_store->editor_config.manual_editor =
                 std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(
-            MANUAL_URL + "beginner/master-and-slave-standalone");
-        //[/UserButtonCode_button_info_master_out]
+            MANUAL_URL + "beginner/producer-and-consumer-standalone");
+        //[/UserButtonCode_button_info_main_out]
     }
-    else if (buttonThatWasClicked == button_info_master_input.get())
+    else if (buttonThatWasClicked == button_info_main_input.get())
     {
-        //[UserButtonCode_button_info_master_input] -- add your button handler code here..
+        //[UserButtonCode_button_info_main_input] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
             _app_instance_store->editor_config.manual_editor =
                 std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(
-            MANUAL_URL + "beginner/master-and-slave-standalone");
-        //[/UserButtonCode_button_info_master_input]
+            MANUAL_URL + "beginner/producer-and-consumer-standalone");
+        //[/UserButtonCode_button_info_main_input]
     }
     else if (buttonThatWasClicked == button_info_midi_thru.get())
     {
@@ -1251,7 +1271,7 @@ void UiEditorSettings::buttonClicked(juce::Button *buttonThatWasClicked)
                 std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(
-            MANUAL_URL + "beginner/master-and-slave-standalone");
+            MANUAL_URL + "beginner/producer-and-consumer-standalone");
         //[/UserButtonCode_button_info_midi_thru]
     }
     else if (buttonThatWasClicked == button_info_sequence_out.get())
@@ -1664,15 +1684,15 @@ BEGIN_JUCER_METADATA
               needsCallback="1" radioGroupId="0"/>
   <LABEL name="" id="7e1a90736e7e533d" memberName="label_midi_in_port"
          virtualName="" explicitFocusOrder="0" pos="1.754% 35.714% 17.544% 4.286%"
-         textCol="ffff3b00" edTextCol="ff000000" edBkgCol="0" labelText="Receive Port (Slave)"
+         textCol="ffff3b00" edTextCol="ff000000" edBkgCol="0" labelText="Receive Port (Consumer)"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="34"/>
   <LABEL name="" id="e328ef5ba588ecb2" memberName="label_midi_out" virtualName=""
          explicitFocusOrder="0" pos="1.754% 11.429% 17.544% 4.286%" textCol="ffffff00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Master Out (to Synth) Ch/Port"
+         edTextCol="ff000000" edBkgCol="0" labelText="Main Out (to Synth) Ch/Port"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="34"/>
-  <LABEL name="" id="58aa3cd776e78ac8" memberName="label_master_slave_headline"
+  <LABEL name="" id="58aa3cd776e78ac8" memberName="label_producer_consumer_headline"
          virtualName="" explicitFocusOrder="0" pos="5.263% 2.857% 39.474% 5.714%"
          textCol="ffff3b00" edTextCol="ff000000" edBkgCol="0" labelText="MIDI OUT (Notes, Sync)"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
@@ -1719,7 +1739,7 @@ BEGIN_JUCER_METADATA
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="34"/>
   <COMBOBOX name="" id="89134858ee07f189" memberName="cb_midi_out_port_string_g"
             virtualName="" explicitFocusOrder="0" pos="27.544% 70.143% 17.544% 4.286%"
-            editable="0" layout="33" items="" textWhenNonSelected="Use Master Output"
+            editable="0" layout="33" items="" textWhenNonSelected="Use Main Output"
             textWhenNoItems="(no choices)"/>
   <SLIDER name="" id="68b1ce93c55971c" memberName="sl_midi_out_channel_string_g"
           virtualName="" explicitFocusOrder="1" pos="20.263% 70.143% 7.018% 4.286%"
@@ -1734,7 +1754,7 @@ BEGIN_JUCER_METADATA
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="34"/>
   <COMBOBOX name="" id="19bc3a55e3eda5e4" memberName="cb_midi_out_port_string_d"
             virtualName="" explicitFocusOrder="0" pos="27.544% 75.714% 17.544% 4.286%"
-            editable="0" layout="33" items="" textWhenNonSelected="Use Master Output"
+            editable="0" layout="33" items="" textWhenNonSelected="Use Main Output"
             textWhenNoItems="(no choices)"/>
   <SLIDER name="" id="95341ddbec9fa16d" memberName="sl_midi_out_channel_string_d"
           virtualName="" explicitFocusOrder="1" pos="20.175% 75.714% 7.018% 4.286%"
@@ -1749,7 +1769,7 @@ BEGIN_JUCER_METADATA
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="34"/>
   <COMBOBOX name="" id="41d504d6aa7f4e4e" memberName="cb_midi_out_port_string_a"
             virtualName="" explicitFocusOrder="0" pos="27.544% 81.429% 17.544% 4.286%"
-            editable="0" layout="33" items="" textWhenNonSelected="Use Master Output"
+            editable="0" layout="33" items="" textWhenNonSelected="Use Main Output"
             textWhenNoItems="(no choices)"/>
   <SLIDER name="" id="47ede213d0fda19e" memberName="sl_midi_out_channel_string_a"
           virtualName="" explicitFocusOrder="1" pos="20.175% 81.429% 7.018% 4.286%"
@@ -1780,15 +1800,15 @@ BEGIN_JUCER_METADATA
          textCol="ffff3b00" edTextCol="ff000000" edBkgCol="0" labelText="Second Out"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="34"/>
-  <LABEL name="" id="44369bccd5c91f92" memberName="label_master_slave_headline2"
+  <LABEL name="" id="44369bccd5c91f92" memberName="label_producer_consumer_headline2"
          virtualName="" explicitFocusOrder="0" pos="5.263% 27.143% 39.474% 5.714%"
-         textCol="ffff3b00" edTextCol="ff000000" edBkgCol="0" labelText="MIDI IN (Slave, Thru)"
+         textCol="ffff3b00" edTextCol="ff000000" edBkgCol="0" labelText="MIDI IN (Consumer, Thru)"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
-  <TEXTBUTTON name="" id="b19e0b65604ddee7" memberName="button_info_master_out"
+  <TEXTBUTTON name="" id="b19e0b65604ddee7" memberName="button_info_main_out"
               virtualName="" explicitFocusOrder="0" pos="45.614% 3.571% 2.632% 4.286%"
               buttonText="?" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="a0537da9b93e2636" memberName="button_info_master_input"
+  <TEXTBUTTON name="" id="a0537da9b93e2636" memberName="button_info_main_input"
               virtualName="" explicitFocusOrder="0" pos="45.614% 27.143% 2.632% 4.286%"
               buttonText="?" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="" id="bd9da0bea16f2520" memberName="button_info_midi_thru"

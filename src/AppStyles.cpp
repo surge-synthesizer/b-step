@@ -38,14 +38,14 @@ AppStyle::AppStyle() : default_colour(0xff000000), button_border_color(0xff11111
 ColorTheme::ColorTheme()
 {
     main_border 	=
-Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR).darker(0.5).getARGB(); main_bg
+Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR).darker(0.5).getARGB(); main_bg
 =		Colour(0xFF483d37).darker(0.5).getARGB();
 
-    step_area_border	=		GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR;
+    step_area_border	=		GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR;
     step_area_bg	=		0xFF483d37;
 
     bar_area_border	=
-Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR).darker(0.2).getARGB(); bar_area_bg	=
+Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR).darker(0.2).getARGB(); bar_area_bg	=
 Colour(step_area_bg).darker(0.5).getARGB();
 
     elem_color_1	=			0xFFcd000d;	// mute
@@ -66,14 +66,14 @@ Colour(step_area_bg).darker(0.5).getARGB();
 ColorTheme::ColorTheme()
 {
     main_border 	=
-Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR).darker(0.5).getARGB(); main_bg
+Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR).darker(0.5).getARGB(); main_bg
 =		Colour(0xFF483d37).darker(0.5).getARGB();
 
-    step_area_border	=		GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR;
+    step_area_border	=		GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR;
     step_area_bg	=		0xFF483d37;
 
     bar_area_border	=
-Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR).darker(0.2).getARGB(); bar_area_bg	=
+Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR).darker(0.2).getARGB(); bar_area_bg	=
 Colour(step_area_bg).darker(0.5).getARGB();
 
     elem_color_1	=		0xFFff7f2b;
@@ -85,7 +85,7 @@ Colour(step_area_bg).darker(0.5).getARGB();
     elem_color_7	=		0xFFff7f2b;
     elem_color_8	=		0xFF89a02c;
     elem_color_9	=		0xff00c0c8;
-    elem_color_10	=		GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR;
+    elem_color_10	=		GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR;
 }
 */
 
@@ -94,14 +94,14 @@ ColorTheme::ColorTheme()
     BOOT(ColorTheme);
 
     main_border =
-        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR).darker(0.5).getARGB();
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR).darker(0.5).getARGB();
     main_bg = juce::Colour(0xFF412d21).darker(0.4).getARGB();
 
-    step_area_border = GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR; //
+    step_area_border = GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR; //
     step_area_bg = 0xFF412d21;
 
     bar_area_border =
-        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR).darker(0.2).getARGB();
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR).darker(0.2).getARGB();
     bar_area_bg = juce::Colour(step_area_bg).darker(0.6).getARGB();
 
     elem_color_1 = 0xFFd0222d;
@@ -113,7 +113,7 @@ ColorTheme::ColorTheme()
     elem_color_7 = 0xFFff7f2b;
     elem_color_8 = 0xFF86983d;
     elem_color_9 = 0xFF4dadb1; // 0xff00c0c8;
-    elem_color_10 = GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR;
+    elem_color_10 = GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR;
 
     main_step_bg = juce::Colour(main_bg).darker(0.6).getARGB();
     bar_step_bg = juce::Colour(bar_area_bg).darker(0.6).getARGB();
@@ -154,7 +154,7 @@ ColorTheme::ColorTheme()
     color_list.add(&slider_knob_color);
     color_list.add(&slider_outline);
 
-    color_list.add(&GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR);
+    color_list.add(&GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR);
 }
 
 void AppStyle::paint_outline_label(juce::Graphics &g_, const juce::Component &owner_,
@@ -246,7 +246,7 @@ const juce::String ColorTheme::get_color_list() const
             juce::Colour(*color_list.getUnchecked(i)).toString() + juce::String(",");
     }
     color_list_string +=
-        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR).toString() +
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR).toString() +
         juce::String(",");
 
     return color_list_string;

@@ -156,7 +156,7 @@ class GstepAudioProcessorEditor : public juce::AudioProcessorEditor,
     friend class MenuBarRight;
 
   public:
-    void open_settings_editor(bool focus_midi_learn_ = false, bool focus_master_out_ = false);
+    void open_settings_editor(bool focus_midi_learn_ = false, bool focus_main_out_ = false);
     void open_chord_editor();
     void open_midi_learn_editor();
     void open_reader(VIEW_TYPE type_);

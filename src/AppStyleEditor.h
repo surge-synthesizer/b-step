@@ -104,7 +104,7 @@ class UiEditorAppStyler : public UiEditor,
     std::unique_ptr<juce::TextButton> style_4;
     std::unique_ptr<juce::TextButton> style_5;
     std::unique_ptr<juce::TextButton> button_info;
-    std::unique_ptr<juce::TextButton> col_master;
+    std::unique_ptr<juce::TextButton> col_primary;
     std::unique_ptr<juce::TextButton> reset;
     std::unique_ptr<juce::TextButton> rand2;
     std::unique_ptr<juce::TextButton> style_6;

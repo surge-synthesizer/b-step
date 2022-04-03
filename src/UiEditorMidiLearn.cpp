@@ -170,7 +170,7 @@ UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_
     label_target->setJustificationType(juce::Justification::centred);
     label_target->setEditable(false, false, false);
     label_target->setColour(juce::Label::textColourId,
-                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_target->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_target->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -208,7 +208,7 @@ UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_
     label_target3->setJustificationType(juce::Justification::centredRight);
     label_target3->setEditable(false, false, false);
     label_target3->setColour(juce::Label::textColourId,
-                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_target3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_target3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -218,7 +218,7 @@ UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_
     label_target8->setJustificationType(juce::Justification::centredRight);
     label_target8->setEditable(false, false, false);
     label_target8->setColour(juce::Label::textColourId,
-                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_target8->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label_target8->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -241,7 +241,7 @@ UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_
     label->setJustificationType(juce::Justification::centredLeft);
     label->setEditable(false, false, false);
     label->setColour(juce::Label::textColourId,
-                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -307,7 +307,7 @@ void UiEditorMidiLearn::paint(juce::Graphics &g)
     g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
     g.setColour(juce::Colours::black);

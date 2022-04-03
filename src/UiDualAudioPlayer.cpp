@@ -100,7 +100,7 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     titel2->setJustificationType(juce::Justification::centredLeft);
     titel2->setEditable(false, false, false);
     titel2->setColour(juce::Label::textColourId,
-                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     titel2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     titel2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -119,7 +119,7 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     titel4->setJustificationType(juce::Justification::centredRight);
     titel4->setEditable(false, false, false);
     titel4->setColour(juce::Label::textColourId,
-                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     titel4->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     titel4->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -150,7 +150,7 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     titel7->setJustificationType(juce::Justification::centredLeft);
     titel7->setEditable(false, false, false);
     titel7->setColour(juce::Label::textColourId,
-                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     titel7->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     titel7->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -173,7 +173,7 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     old_info_1->setJustificationType(juce::Justification::centredLeft);
     old_info_1->setEditable(false, false, false);
     old_info_1->setColour(juce::Label::textColourId,
-                          juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                          juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     old_info_1->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     old_info_1->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -243,7 +243,7 @@ void UiDualAudioMessage::paint(juce::Graphics &g)
     g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
     //[UserPaint] Add your own custom painting code here..

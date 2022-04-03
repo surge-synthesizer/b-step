@@ -515,7 +515,7 @@ class NavItem : public juce::TreeViewItem
         _label->setColour(juce::Label::textColourId,
                           isNowSelected
                               ? juce::Colours::yellow
-                              : juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              : juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
         if (isNowSelected)
             click();
     }
@@ -849,7 +849,7 @@ void UIHtmlView::add_text_part(const juce::String &text_, int height_, int white
                            : col_));
     editor->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00ffffff));
     // editor->setColour (TextEditor::outlineColourId, Colour
-    // (GLOBAL_VALUE_HOLDER::get().MASTER_COLOUR));
+    // (GLOBAL_VALUE_HOLDER::get().PRIMARY_COLOUR));
     editor->setColour(juce::TextEditor::shadowColourId, juce::Colour(0x00000000));
     editor->setColour(juce::TextEditor::highlightColourId, juce::Colours::yellow);
 
@@ -1047,7 +1047,7 @@ UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
     label->setJustificationType(juce::Justification::centredRight);
     label->setEditable(false, false, false);
     label->setColour(juce::Label::textColourId,
-                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -1057,7 +1057,7 @@ UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
     label2->setJustificationType(juce::Justification::centred);
     label2->setEditable(false, false, false);
     label2->setColour(juce::Label::textColourId,
-                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -1074,7 +1074,7 @@ UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
     label3->setJustificationType(juce::Justification::centred);
     label3->setEditable(false, false, false);
     label3->setColour(juce::Label::textColourId,
-                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -1091,7 +1091,7 @@ UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
     label4->setJustificationType(juce::Justification::centred);
     label4->setEditable(false, false, false);
     label4->setColour(juce::Label::textColourId,
-                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label4->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label4->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -1173,7 +1173,7 @@ void UIHtmlView::paint(juce::Graphics &g)
 
     g.fillAll(juce::Colour(0xff161616));
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, proportionOfWidth(1.0000f), proportionOfHeight(1.0000f), 2);
 
     //[UserPaint] Add your own custom painting code here..

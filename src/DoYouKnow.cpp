@@ -82,10 +82,10 @@ DoYouKnow::CharPair DoYouKnow::get_message(DoYouKnow::MESSAGES id_)
                         "To use the MIDI Learn feature: please select your MIDI controller at "
                         "'MIDI LEARN :: Receive Port (IN)' in the IO settings.");
 
-    case NO_MASTER_OUTPORT_READY:
+    case NO_MAIN_OUTPORT_READY:
         return CharPair(
             "NO MIDI OUT PORT READY!",
-            "You should assign a synthesizer to 'Master Out (to Synth)' in the IO settings.");
+            "You should assign a synthesizer to 'Main Out (to Synth)' in the IO settings.");
 
     case USE_VST_INSTEAD_OF_AU:
         return CharPair("YOU ARE USING THE B-STEP AUDIO UNIT!",
@@ -114,8 +114,8 @@ void DoYouKnow::export_to(juce::XmlElement &xml) const
     if (dont_show_agains.contains(NO_MIDI_LEARN_PORT_READY))
         xml.setAttribute("NO_MIDI_LEARN_PORT_READY", true);
 
-    if (dont_show_agains.contains(NO_MASTER_OUTPORT_READY))
-        xml.setAttribute("NO_MASTER_OUTPORT_READY", true);
+    if (dont_show_agains.contains(NO_MAIN_OUTPORT_READY))
+        xml.setAttribute("NO_MAIN_OUTPORT_READY", true);
 
     if (dont_show_agains.contains(USE_VST_INSTEAD_OF_AU))
         xml.setAttribute("USE_VST_INSTEAD_OF_AU", true);
@@ -137,8 +137,8 @@ void DoYouKnow::import_from(const juce::XmlElement &xml)
     if (xml.getIntAttribute("NO_MIDI_LEARN_PORT_READY", false))
         dont_show_agains.add(NO_MIDI_LEARN_PORT_READY);
 
-    if (xml.getIntAttribute("NO_MASTER_OUTPORT_READY", false))
-        dont_show_agains.add(NO_MASTER_OUTPORT_READY);
+    if (xml.getIntAttribute("NO_MAIN_OUTPORT_READY", false))
+        dont_show_agains.add(NO_MAIN_OUTPORT_READY);
 
     if (xml.getIntAttribute("USE_VST_INSTEAD_OF_AU", false))
         dont_show_agains.add(USE_VST_INSTEAD_OF_AU);

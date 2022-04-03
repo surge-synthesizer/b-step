@@ -195,7 +195,8 @@ class PodParameterBase
     inline bool isBoolean()
     {
         // FIXME - this compare is super gross
-        return MIN == false && MAX == true;
+        // UPDATE - made it even grosserer but silences MSVC C4805
+        return MIN == false && MAX == static_cast<int>(true);
     }
 
     inline pod_type invert()

@@ -85,7 +85,7 @@ void TickLoop::MyTimer::hiResTimerCallback()
     if (_new_usec_per_tick != _usec_per_tick)
     {
         _usec_per_tick = _new_usec_per_tick;
-        startTimer(floor(_usec_per_tick / 1000));
+        startTimer(floor(static_cast<float>(_usec_per_tick) / 1000));
     }
 }
 
@@ -97,7 +97,10 @@ void TickLoop::stop()
     }
 }
 
-void TickLoop::start() { active_timer.startTimer(floor(_usec_per_tick / 1000)); }
+void TickLoop::start()
+{
+    active_timer.startTimer(floor(static_cast<float>(_usec_per_tick) / 1000));
+}
 
 TickLoop::~TickLoop()
 {

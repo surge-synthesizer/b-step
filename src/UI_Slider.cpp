@@ -110,7 +110,7 @@ void SliderWrapper::mouseWheelMove(const juce::MouseEvent &e_, const juce::Mouse
      * generate a 0-distance drag event also, which looks like a move, setting this timer
      * in a way which conflicts with the drag.
      */
-    if (abs(w_.deltaY) + abs(w_.deltaY) < 0.0001)
+    if (std::abs(w_.deltaY) + std::abs(w_.deltaY) < 0.0001)
         return;
 
     if (!GLOBAL_VALUE_HOLDER::getInstance()->ENABLE_MOUSEWHEEL)

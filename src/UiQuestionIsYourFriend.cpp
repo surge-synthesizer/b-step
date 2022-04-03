@@ -42,7 +42,7 @@ UiQuestionIsYourFriend::UiQuestionIsYourFriend(AppInstanceStore *const app_insta
     label->setJustificationType(juce::Justification::centred);
     label->setEditable(false, false, false);
     label->setColour(juce::Label::textColourId,
-                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -64,7 +64,7 @@ UiQuestionIsYourFriend::UiQuestionIsYourFriend(AppInstanceStore *const app_insta
     textEditor->setCaretVisible(false);
     textEditor->setPopupMenuEnabled(false);
     textEditor->setColour(juce::TextEditor::textColourId,
-                          juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                          juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     textEditor->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00ffff23));
     textEditor->setColour(juce::TextEditor::highlightColourId, juce::Colour(0x001111ee));
     textEditor->setColour(juce::TextEditor::shadowColourId, juce::Colour(0x00000000));
@@ -112,7 +112,7 @@ void UiQuestionIsYourFriend::paint(juce::Graphics &g)
 
     g.fillAll(juce::Colour(0xff161616));
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, proportionOfWidth(1.0000f), proportionOfHeight(1.0000f), 2);
 
     g.setColour(juce::Colours::black);

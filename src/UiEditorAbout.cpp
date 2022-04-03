@@ -238,7 +238,7 @@ void UiEditorAbout::paint(juce::Graphics &g)
                     proportionOfHeight(1.0000f), 0, 0, cachedImage_aboutbox_png.getWidth(),
                     cachedImage_aboutbox_png.getHeight());
 
-        g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
         g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
         g.setColour(juce::Colours::black);
@@ -247,7 +247,7 @@ void UiEditorAbout::paint(juce::Graphics &g)
             proportionOfHeight(0.3704f),
             juce::RectanglePlacement::centred | juce::RectanglePlacement::onlyReduceInSize, false);
 
-        g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
         g.setFont(juce::Font(11.20f, juce::Font::plain));
         g.drawText(TRANS("VST is a trademark of Steinberg Media Technologies GmbH"),
                    (getWidth() / 2) - (proportionOfWidth(0.9002f) / 2),
@@ -263,7 +263,7 @@ void UiEditorAbout::paint(juce::Graphics &g)
                 proportionOfHeight(1.0000f), 0, 0, cachedImage_aboutbox_png.getWidth(),
                 cachedImage_aboutbox_png.getHeight());
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
     g.setColour(juce::Colours::black);
@@ -272,7 +272,7 @@ void UiEditorAbout::paint(juce::Graphics &g)
         proportionOfHeight(0.3704f),
         juce::RectanglePlacement::centred | juce::RectanglePlacement::onlyReduceInSize, false);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     if (bstepIsStandalone)
     {
         g.drawText(BUILD_INFO + juce::String("B-Step ") + BStep::Build::FullVersionStr,
@@ -303,7 +303,7 @@ void UiEditorAbout::paint(juce::Graphics &g)
     g.fillRoundedRectangle(2.0f, 2.0f, static_cast<float>(getWidth() - 4),
                            static_cast<float>(getHeight() - 4), 10.000f);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRoundedRectangle(2.0f, 2.0f, static_cast<float>(getWidth() - 4),
                            static_cast<float>(getHeight() - 4), 10.000f, 2.000f);
 

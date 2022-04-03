@@ -312,7 +312,7 @@ class StyleMenuArea : public AppStyle
 
     std::uint32_t &get_font_color() override
     {
-        return GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR;
+        return GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR;
     }
 
     bool is_opaque() const override { return true; }
@@ -406,7 +406,7 @@ class StylePopupEditor : public AppStyle
     std::uint32_t &get_foreground_color() override { return bg_colour; }
     std::uint32_t &get_border_color() override
     {
-        return GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR;
+        return GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR;
     }
     std::uint32_t button_border_color;
     std::uint32_t &get_button_border_color() override { return button_border_color; }
@@ -414,11 +414,11 @@ class StylePopupEditor : public AppStyle
     std::uint32_t &get_state_off_1_color() override { return default_colour; }
     std::uint32_t &get_state_on_1_color() override
     {
-        return GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR;
+        return GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR;
     }
     std::uint32_t &get_font_color() override
     {
-        return GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR;
+        return GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR;
     }
 
     bool is_opaque() const override { return true; }

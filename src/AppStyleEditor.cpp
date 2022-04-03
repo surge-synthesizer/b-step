@@ -62,10 +62,10 @@ void UiEditorAppStyler::timerCallback()
         _app_instance_store->editor->stopTimer();
         _app_instance_store->editor->lock.enter();
         {
-            // MASTER
-            if (target_color == &GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR)
+            // PRIMARY
+            if (target_color == &GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR)
             {
-                GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR =
+                GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR =
                     colour_selector->getCurrentColour().getARGB();
                 repaint();
             }
@@ -126,9 +126,9 @@ void UiEditorAppStyler::timerCallback()
                     juce::Colour(_app_instance_store->color_theme->slider_knob_color));
                 col_23->setColour(juce::TextButton::buttonColourId,
                                   juce::Colour(_app_instance_store->color_theme->slider_outline));
-                col_master->setColour(
+                col_primary->setColour(
                     juce::TextButton::buttonColourId,
-                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
                 if (!label_current_color->isBeingEdited())
                     label_current_color->setText(
@@ -298,9 +298,9 @@ UiEditorAppStyler::UiEditorAppStyler(AppInstanceStore *const app_instance_store_
     list->setEditable(true, true, false);
     list->setColour(juce::Label::backgroundColourId, juce::Colour(0xff161616));
     list->setColour(juce::Label::textColourId,
-                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     list->setColour(juce::Label::outlineColourId,
-                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     list->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     list->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0xffadadad));
     list->addListener(this);
@@ -363,10 +363,10 @@ UiEditorAppStyler::UiEditorAppStyler(AppInstanceStore *const app_instance_store_
     button_info->setButtonText(TRANS("?"));
     button_info->addListener(this);
 
-    col_master = std::make_unique<juce::TextButton>(juce::String());
-    addAndMakeVisible(*col_master);
-    col_master->setButtonText(TRANS("INFO (FONTS & BORDERS)"));
-    col_master->addListener(this);
+    col_primary = std::make_unique<juce::TextButton>(juce::String());
+    addAndMakeVisible(*col_primary);
+    col_primary->setButtonText(TRANS("INFO (FONTS & BORDERS)"));
+    col_primary->addListener(this);
 
     reset = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*reset);
@@ -433,8 +433,8 @@ UiEditorAppStyler::UiEditorAppStyler(AppInstanceStore *const app_instance_store_
                       juce::Colour(_app_instance_store->color_theme->slider_knob_color));
     col_23->setColour(juce::TextButton::buttonColourId,
                       juce::Colour(_app_instance_store->color_theme->slider_outline));
-    col_master->setColour(juce::TextButton::buttonColourId,
-                          juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    col_primary->setColour(juce::TextButton::buttonColourId,
+                           juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     colour_selector->setCurrentColour(juce::Colour(_app_instance_store->color_theme->elem_color_1));
     target_color = &_app_instance_store->color_theme->elem_color_1;
@@ -492,7 +492,7 @@ UiEditorAppStyler::~UiEditorAppStyler()
     style_4 = nullptr;
     style_5 = nullptr;
     button_info = nullptr;
-    col_master = nullptr;
+    col_primary = nullptr;
     reset = nullptr;
     rand2 = nullptr;
     style_6 = nullptr;
@@ -513,10 +513,10 @@ void UiEditorAppStyler::paint(juce::Graphics &g)
     g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillRoundedRectangle(20.0f, 418.0f, static_cast<float>(proportionOfWidth(0.8644f)), 1.0f,
                            10.000f);
 
@@ -600,8 +600,8 @@ void UiEditorAppStyler::resized()
                        proportionOfWidth(0.0678f), proportionOfHeight(0.0625f));
     button_info->setBounds(proportionOfWidth(0.9271f), proportionOfHeight(0.4375f),
                            proportionOfWidth(0.0509f), proportionOfHeight(0.0625f));
-    col_master->setBounds(proportionOfWidth(0.4746f), proportionOfHeight(0.7917f),
-                          proportionOfWidth(0.4237f), proportionOfHeight(0.0417f));
+    col_primary->setBounds(proportionOfWidth(0.4746f), proportionOfHeight(0.7917f),
+                           proportionOfWidth(0.4237f), proportionOfHeight(0.0417f));
     reset->setBounds(proportionOfWidth(0.3220f), proportionOfHeight(0.7917f),
                      proportionOfWidth(0.1186f), proportionOfHeight(0.0521f));
     rand2->setBounds(proportionOfWidth(0.6271f), proportionOfHeight(0.8958f),
@@ -873,11 +873,11 @@ void UiEditorAppStyler::buttonClicked(juce::Button *buttonThatWasClicked)
         return;
         //[/UserButtonCode_button_info]
     }
-    else if (buttonThatWasClicked == col_master.get())
+    else if (buttonThatWasClicked == col_primary.get())
     {
-        //[UserButtonCode_col_master] -- add your button handler code here..
-        target_color = &GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR;
-        //[/UserButtonCode_col_master]
+        //[UserButtonCode_col_primary] -- add your button handler code here..
+        target_color = &GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR;
+        //[/UserButtonCode_col_primary]
     }
     else if (buttonThatWasClicked == reset.get())
     {
@@ -1085,7 +1085,7 @@ BEGIN_JUCER_METADATA
   <TEXTBUTTON name="" id="3ed8b754d00a12d8" memberName="button_info" virtualName=""
               explicitFocusOrder="0" pos="92.712% 43.75% 5.085% 6.25%" buttonText="?"
               connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="a65be023c0c89c3f" memberName="col_master" virtualName=""
+  <TEXTBUTTON name="" id="a65be023c0c89c3f" memberName="col_primary" virtualName=""
               explicitFocusOrder="0" pos="47.458% 79.167% 42.373% 4.167%" buttonText="INFO (FONTS &amp; BORDERS)"
               connectedEdges="0" needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="" id="a8471ea804e10dfe" memberName="reset" virtualName=""

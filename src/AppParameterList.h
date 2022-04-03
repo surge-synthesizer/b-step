@@ -206,8 +206,8 @@ struct APPDEF_MIDIUserData
     /// param ids
     enum IDS
     {
-        I_CHANNEL_OUT, // master channel (group 1)
-        I_CHANNEL_IN,  // master channel
+        I_CHANNEL_OUT, // main channel (group 1)
+        I_CHANNEL_IN,  // main channel
 
         I_CHANNEL_OUT_2,
         I_CHANNEL_OUT_3,
@@ -270,7 +270,7 @@ struct APPDEF_MIDIUserData
 // ************************************************************************************************
 /** CLASS APPDEF_Pattern
  *
- * Pattern holds the global values like master octave...
+ * Pattern holds the global values like global octave...
  *
  */
 struct APPDEF_Pattern

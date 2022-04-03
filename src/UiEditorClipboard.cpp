@@ -95,7 +95,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent->setJustificationType(juce::Justification::centredLeft);
     newComponent->setEditable(false, false, false);
     newComponent->setColour(juce::Label::textColourId,
-                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                            juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     newComponent->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -112,7 +112,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent15->setJustificationType(juce::Justification::centredLeft);
     newComponent15->setEditable(false, false, false);
     newComponent15->setColour(juce::Label::textColourId,
-                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     newComponent15->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent15->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -122,7 +122,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent14->setJustificationType(juce::Justification::centredLeft);
     newComponent14->setEditable(false, false, false);
     newComponent14->setColour(juce::Label::textColourId,
-                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     newComponent14->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent14->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -132,7 +132,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent13->setJustificationType(juce::Justification::centredLeft);
     newComponent13->setEditable(false, false, false);
     newComponent13->setColour(juce::Label::textColourId,
-                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     newComponent13->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent13->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -142,7 +142,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent12->setJustificationType(juce::Justification::centredLeft);
     newComponent12->setEditable(false, false, false);
     newComponent12->setColour(juce::Label::textColourId,
-                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     newComponent12->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent12->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -152,7 +152,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent11->setJustificationType(juce::Justification::centredLeft);
     newComponent11->setEditable(false, false, false);
     newComponent11->setColour(juce::Label::textColourId,
-                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     newComponent11->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent11->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -162,7 +162,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent9->setJustificationType(juce::Justification::centredLeft);
     newComponent9->setEditable(false, false, false);
     newComponent9->setColour(juce::Label::textColourId,
-                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     newComponent9->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent9->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -173,7 +173,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent8->setJustificationType(juce::Justification::centredLeft);
     newComponent8->setEditable(false, false, false);
     newComponent8->setColour(juce::Label::textColourId,
-                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     newComponent8->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent8->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -184,7 +184,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent7->setJustificationType(juce::Justification::centredLeft);
     newComponent7->setEditable(false, false, false);
     newComponent7->setColour(juce::Label::textColourId,
-                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     newComponent7->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent7->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -195,7 +195,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent6->setJustificationType(juce::Justification::centredLeft);
     newComponent6->setEditable(false, false, false);
     newComponent6->setColour(juce::Label::textColourId,
-                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     newComponent6->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent6->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -206,7 +206,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent4->setJustificationType(juce::Justification::centredLeft);
     newComponent4->setEditable(false, false, false);
     newComponent4->setColour(juce::Label::textColourId,
-                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     newComponent4->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent4->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -217,7 +217,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent3->setJustificationType(juce::Justification::centredLeft);
     newComponent3->setEditable(false, false, false);
     newComponent3->setColour(juce::Label::textColourId,
-                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     newComponent3->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent3->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -227,7 +227,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent10->setJustificationType(juce::Justification::centredLeft);
     newComponent10->setEditable(false, false, false);
     newComponent10->setColour(juce::Label::textColourId,
-                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                              juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     newComponent10->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent10->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -286,7 +286,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent2->setJustificationType(juce::Justification::centredLeft);
     newComponent2->setEditable(false, false, false);
     newComponent2->setColour(juce::Label::textColourId,
-                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     newComponent2->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -296,7 +296,7 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     newComponent5->setJustificationType(juce::Justification::centredLeft);
     newComponent5->setEditable(false, false, false);
     newComponent5->setColour(juce::Label::textColourId,
-                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                             juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     newComponent5->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     newComponent5->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -305,9 +305,9 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     label->setJustificationType(juce::Justification::centred);
     label->setEditable(true, true, true);
     label->setColour(juce::Label::textColourId,
-                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label->setColour(juce::Label::outlineColourId,
-                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label->setColour(juce::TextEditor::textColourId, juce::Colours::aqua);
     label->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
     label->setColour(juce::TextEditor::highlightColourId, juce::Colours::yellow);
@@ -390,7 +390,7 @@ void UiEditorClipboard::paint(juce::Graphics &g)
     g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
     //[UserPaint] Add your own custom painting code here..

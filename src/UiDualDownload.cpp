@@ -125,7 +125,7 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     data_info->setJustificationType(juce::Justification::centredLeft);
     data_info->setEditable(false, false, false);
     data_info->setColour(juce::Label::textColourId,
-                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     data_info->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     data_info->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -165,7 +165,7 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     titel7->setJustificationType(juce::Justification::centredLeft);
     titel7->setEditable(false, false, false);
     titel7->setColour(juce::Label::textColourId,
-                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                      juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     titel7->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     titel7->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -188,7 +188,7 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     audio_info->setJustificationType(juce::Justification::centredLeft);
     audio_info->setEditable(false, false, false);
     audio_info->setColour(juce::Label::textColourId,
-                          juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                          juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     audio_info->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     audio_info->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -285,7 +285,7 @@ void UiDualDownload::paint(juce::Graphics &g)
     g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
     //[UserPaint] Add your own custom painting code here..

@@ -16,7 +16,7 @@
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-class ControllerMasterOctave : public MONO_UISliderController
+class ControllerGlobalOctave : public MONO_UISliderController
 {
     SelectedPatternObserver selected_pattern;
 
@@ -26,7 +26,7 @@ class ControllerMasterOctave : public MONO_UISliderController
     }
 
   public:
-    ControllerMasterOctave(AppInstanceStore *const app_instance_store_)
+    ControllerGlobalOctave(AppInstanceStore *const app_instance_store_)
         : MONO_UISliderController(app_instance_store_), selected_pattern(app_instance_store_)
     {
     }
@@ -35,7 +35,7 @@ class ControllerMasterOctave : public MONO_UISliderController
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-class ControllerMasterNote : public MONO_UISliderController
+class ControllerGlobalNote : public MONO_UISliderController
 {
     SelectedPatternObserver selected_pattern;
 
@@ -87,7 +87,7 @@ class ControllerMasterNote : public MONO_UISliderController
     bool should_start_multi_drag() override { return false; }
 
   public:
-    ControllerMasterNote(AppInstanceStore *const app_instance_store_)
+    ControllerGlobalNote(AppInstanceStore *const app_instance_store_)
         : MONO_UISliderController(app_instance_store_), selected_pattern(app_instance_store_)
     {
     }
@@ -96,7 +96,7 @@ class ControllerMasterNote : public MONO_UISliderController
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-class ControllerMasterChord : public MONO_UISliderController
+class ControllerGlobalChord : public MONO_UISliderController
 {
     SelectedPatternObserver selected_pattern;
 
@@ -110,7 +110,7 @@ class ControllerMasterChord : public MONO_UISliderController
     bool should_start_multi_drag() override { return false; }
 
   public:
-    ControllerMasterChord(AppInstanceStore *const app_instance_store_)
+    ControllerGlobalChord(AppInstanceStore *const app_instance_store_)
         : MONO_UISliderController(app_instance_store_), selected_pattern(app_instance_store_)
     {
     }
@@ -119,18 +119,18 @@ class ControllerMasterChord : public MONO_UISliderController
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-class ControllerMasterStringOctave : public MONO_UISliderController
+class ControllerGlobalStringOctave : public MONO_UISliderController
 {
     SelectedPatternObserver selected_pattern;
     const std::int8_t barstring_id;
 
     PodParameterBase *get_parameter() const override
     {
-        return &selected_pattern.get().master_string_octave(barstring_id);
+        return &selected_pattern.get().global_string_octave(barstring_id);
     }
 
   public:
-    ControllerMasterStringOctave(AppInstanceStore *const app_instance_store_,
+    ControllerGlobalStringOctave(AppInstanceStore *const app_instance_store_,
                                  std::int8_t barstring_id_)
         : MONO_UISliderController(app_instance_store_), selected_pattern(app_instance_store_),
           barstring_id(barstring_id_)

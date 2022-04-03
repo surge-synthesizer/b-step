@@ -46,7 +46,7 @@ juce_ImplementSingleton(GLOBAL_VALUE_HOLDER) GLOBAL_VALUE_HOLDER::GLOBAL_VALUE_H
                                                                ),
       ENABLE_MOUSEWHEEL(true), DONT_SHOW_AGAIN_2_1(false), AUTO_CHECK_UPDATES(true),
       USER_ASKED_FOR_AUTO_UPDATE(false), QUESTION_WAS_UP(false), WHATS_NEW_WAS_UP(false),
-      MASTER_COLOUR(0xffdfce89)
+      PRIMARY_COLOUR(0xffdfce89)
 #ifdef LOG_THE_EVENTS_TO_FILE
       ,
       SESSION_FILE_WAS_STILL_PRESENT(false)
@@ -1907,8 +1907,8 @@ class ControllerLayer : public MONO_UIButtonController
 Controllers::Controllers(AppInstanceStore *const store_) : pattern(store_), bar(store_) {}
 
 Controllers::ForPattern::ForPattern(AppInstanceStore *const store_)
-    : octave(new ControllerMasterOctave(store_)), note(new ControllerMasterNote(store_)),
-      chord(new ControllerMasterChord(store_)),
+    : octave(new ControllerGlobalOctave(store_)), note(new ControllerGlobalNote(store_)),
+      chord(new ControllerGlobalChord(store_)),
 
       bpm(new ControllerBPM(store_)), mute(new ControllerMute(store_)),
       swing_position(new ControllerSwingPosition(store_)),
@@ -1926,7 +1926,7 @@ Controllers::ForPattern::ForPattern(AppInstanceStore *const store_)
       layers_7(new ControllerLayer(store_, 6, "CC\n\nPC"))
 {
     for (unsigned int barstring_id = 0; barstring_id != SUM_STRINGS; ++barstring_id)
-        add_to_const_array(string_octaves, new ControllerMasterStringOctave(store_, barstring_id));
+        add_to_const_array(string_octaves, new ControllerGlobalStringOctave(store_, barstring_id));
 
     play = std::make_unique<ControllerPlay>(store_);
     pause = std::make_unique<ControllerPause>(store_);

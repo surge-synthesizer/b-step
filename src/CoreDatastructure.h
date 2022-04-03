@@ -100,7 +100,7 @@ struct Pattern
     appdeff_t::swing_velocity_offset_t swing_velocity_offset;
     appdeff_t::swing_duration_offset_t swing_duration_offset;
 
-    PodParameterBase &master_string_octave(std::uint8_t id_)
+    PodParameterBase &global_string_octave(std::uint8_t id_)
     {
         switch (id_)
         {
@@ -114,7 +114,7 @@ struct Pattern
             return string_offset_e;
         }
     }
-    const PodParameterBase &master_string_octave_c(std::uint8_t id_) const
+    const PodParameterBase &global_string_octave_c(std::uint8_t id_) const
     {
         switch (id_)
         {

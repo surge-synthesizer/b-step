@@ -24,7 +24,7 @@ struct DoYouKnow : public juce::DeletedAtShutdown
 
         EDITOR_CHORDS,
         NO_MIDI_LEARN_PORT_READY,
-        NO_MASTER_OUTPORT_READY,
+        NO_MAIN_OUTPORT_READY,
 
         USE_VST_INSTEAD_OF_AU
     };

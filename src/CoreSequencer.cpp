@@ -722,7 +722,7 @@ class BarProcessor
             // NOTE_VALUE
             {
                 note = root_note;
-                note += pattern->master_string_octave_c(barstring_id).value() * OCTAVE_MULTIPLIER;
+                note += pattern->global_string_octave_c(barstring_id).value() * OCTAVE_MULTIPLIER;
                 note += pattern->note_offset;
                 note += barstring->octave_offset * OCTAVE_MULTIPLIER;
                 note += Sequencer::get_base_note_value(*chord, barstring_id);

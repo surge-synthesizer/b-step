@@ -59,7 +59,7 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     titel->setJustificationType(juce::Justification::centred);
     titel->setEditable(false, false, false);
     titel->setColour(juce::Label::textColourId,
-                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                     juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     titel->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     titel->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -98,7 +98,7 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     text->setColour(juce::TextEditor::textColourId, juce::Colours::aqua);
     text->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00ffffff));
     text->setColour(juce::TextEditor::outlineColourId,
-                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     text->setColour(juce::TextEditor::shadowColourId, juce::Colour(0x00000000));
     text->setText(juce::String());
 
@@ -112,9 +112,9 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     copy_past->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
     copy_past->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
     copy_past->setColour(juce::TextButton::textColourOnId,
-                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     copy_past->setColour(juce::TextButton::textColourOffId,
-                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     note = std::make_unique<juce::Label>(juce::String(), juce::String());
     addAndMakeVisible(*note);
@@ -122,7 +122,7 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     note->setJustificationType(juce::Justification::centredLeft);
     note->setEditable(false, false, false);
     note->setColour(juce::Label::textColourId,
-                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                    juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     note->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     note->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -132,7 +132,7 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     description->setJustificationType(juce::Justification::centredLeft);
     description->setEditable(false, false, false);
     description->setColour(juce::Label::textColourId,
-                           juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                           juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     description->setColour(juce::TextEditor::textColourId, juce::Colours::black);
     description->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
@@ -146,9 +146,9 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     send_mail->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
     send_mail->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
     send_mail->setColour(juce::TextButton::textColourOnId,
-                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     send_mail->setColour(juce::TextButton::textColourOffId,
-                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                         juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
     send_mail_to_monoplugs = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*send_mail_to_monoplugs);
@@ -163,7 +163,7 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     send_mail_to_monoplugs->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
     send_mail_to_monoplugs->setColour(
         juce::TextButton::textColourOnId,
-        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     send_mail_to_monoplugs->setColour(juce::TextButton::textColourOffId, juce::Colour(0xffff7000));
 
     button_info = std::make_unique<juce::TextButton>(juce::String());
@@ -247,7 +247,7 @@ void UiTextImExport::paint(juce::Graphics &g)
     g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
     //[UserPaint] Add your own custom painting code here..

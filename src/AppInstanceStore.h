@@ -337,7 +337,7 @@ struct AppInstanceStore
     juce::String load_global(const juce::File &);
 
   private:
-    friend class GstepAudioProcessor; // OUR MASTER INSTANCE
+    friend class GstepAudioProcessor; // OUR MAIN INSTANCE
     AppInstanceStore(GstepAudioProcessor *const audio_processor_);
     ~AppInstanceStore();
 

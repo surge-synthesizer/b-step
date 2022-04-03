@@ -54,11 +54,11 @@ Note: This manual is still in review. We apologize for any errors. Thank you.
 * [Settings](#multidrag-settings)
 * [Special Drags](#special-drags)
 
-### [**Master and Slave (Standalone)**](#master-slave)
+### [**Producer and Consumer (Standalone)**](#producer-consumer)
 
-* [Master](#master)
-* [Slave](#slave)
-* [Sync/Clock Thru](#slave-sync-thru)
+* [Producer](#producer)
+* [Consumer](#consumer)
+* [Sync/Clock Thru](#consumer-sync-thru)
 * [MIDI Thru](#midi-thru)
 
 ### [Load/Save Projects](#load-save-project)
@@ -222,7 +222,7 @@ Part by part a section will be highlighted and explained shortly.
 <a name="triggering-first-notes"> </a>
 ### A few clicks to start triggering some notes (Standalone, iPad,Android,Mac,Linux,Windows,Raspberry) 
 1. Open the In-Out settings (IO-settings).
-2. Select your synthesizer at the Master Out (choose the right channel if your synthesizer does not listen on channel 1).
+2. Select your synthesizer at the Main Out (choose the right channel if your synthesizer does not listen on channel 1).
 3. Close the IO-settings and push the play button -> this will start the playback of the sample project.
 
 ![B-Step Sequencer IO Settings - Quickstart](images/b-step-sequencer-standalone-quickstart.gif)
@@ -315,7 +315,7 @@ Click on the three buttons for setting the playback tempo. Middle is 1 * host sp
 2 * host speed.
 
 **Standalone only**:
-Start, pause and stop B-Step Sequencer as master.
+Start, pause and stop B-Step Sequencer as clock producer.
 
 <br />
 [back to top](#content)
@@ -473,7 +473,7 @@ Similar to [Bar String Octave](#bar-string-octave-shifts), but it will shift the
 
 ![B-Step Sequencer - Tune](images/b-step-sequencer-global-octave-fine-tune.gif)
 
-Finally we have on the right side another two master parameters, which add on top of what you had so far. Octave
+Finally we have on the right side another two main parameters, which add on top of what you had so far. Octave
 shifting notes in octaves.
 
 Fine Tune is for setting the root note or the tune of the bass guitar (transposes each string). Easy.
@@ -649,51 +649,51 @@ of all layers in the target step!
 
 [//]: <> ( *********************************************************** )
 
-[//]: <> ( Master / Slave )
+[//]: <> ( Producer / Consumer )
 
 [//]: <> ( *********************************************************** )
 
 [//]: <> ( *********************************************************** )
-<a name="master-slave"></a>
+<a name="producer-consumer"></a>
 
-## **Master and Slave (Standalone)**
+## **Producer and Consumer (Standalone)**
 
-B-Step can be used as clock master or synced in slave mode to another master like a drum machine.
+B-Step can be used as clock producer or synced in consumer mode to another producer like a drum machine.
 
-![B-Step Sequencer - Slave (MIDI Clock) and Clock Master](images/b-step-sequencer-master-slave.gif)
+![B-Step Sequencer - Consumer (MIDI Clock) and Clock Producer](images/b-step-sequencer-producer-consumer.gif)
 
-<a name="master"></a>
+<a name="producer"></a>
 
-### Master
+### Producer
 
-If you like to run B-Step as master choose your slave device at "Master Output (to Synth) Ch/Port" and push the play
-button on the main user interface. B-Step will send MIDI start, stop, continue and clock to the slave. A second device
-you can connect to "Second Out" - this device will be feeded with the same data like the Master Out.
+If you like to run B-Step as producer choose your consumer device at "Main Output (to Synth) Ch/Port" and push the play
+button on the main user interface. B-Step will send MIDI start, stop, continue and clock to the consumer. A second device
+you can connect to "Second Out" - this device will be feeded with the same data like the Main Out.
 
-<a name="slave"></a>
+<a name="consumer"></a>
 
-### Slave
+### Consumer
 
-To run B-Step in slave mode you have to select your clock master device (e.g. your drum machine or DAW) at "Receive
+To run B-Step in consumer mode you have to select your clock producer device (e.g. your drum machine or DAW) at "Receive
 Channel/Port". If B receives a clock at this port then B-Step stops generating it's own clock and is waiting for MIDI
 start, stop, continue and clock. All other events will be ignored on this port or you can optional forward it (
-see [Sync/Clock Thru](#slave-sync-thru), [MIDI Thru](#midi-thru)).
+see [Sync/Clock Thru](#consumer-sync-thru), [MIDI Thru](#midi-thru)).
 
-<a name="slave-sync-thru"></a>
+<a name="consumer-sync-thru"></a>
 
 ### Sync/Clock Thru
 
-When B-Step is running in slave mode you can forward the received sync events (Start, Stop, Continue, Clock) to the
-outputs (Master Out, Sceond Out, Group 2,3 & 4). Just enable "MIDI Sync Thru".
+When B-Step is running in consumer mode you can forward the received sync events (Start, Stop, Continue, Clock) to the
+outputs (Main Out, Sceond Out, Group 2,3 & 4). Just enable "MIDI Sync Thru".
 
 <br />
-**NOTE:** B-Step does also forward the events in master mode but removes any other clock event.
+**NOTE:** B-Step does also forward the events in producer mode but removes any other clock event.
 
 <a name="midi-thru"></a>
 
 ### MIDI Thru
 
-Similar to [Sync/Clock Thru](#slave-sync-thru), but if enabled B forwards all other events like MIDI notes, CC, PC etc.
+Similar to [Sync/Clock Thru](#consumer-sync-thru), but if enabled B forwards all other events like MIDI notes, CC, PC etc.
 
 
 <br /> [back to top](#content) </div><div class="manual">
@@ -1344,7 +1344,7 @@ You can split B-Step in up to 4 independent sequencers which only share the [Glo
 
 Basically each sequence works like a single B-Step - you can define [Bar Solo](#bar-solo)'s, you can
 use [Restart Sequence](#layer-4-restart-sequence)
-and you can choose a separate MIDI output for each or use the master output (default).
+and you can choose a separate MIDI output for each or use the main output (default).
 
 **The Goals:**
 
@@ -1377,7 +1377,7 @@ from sequence two is editable your step runlight will be become green and the pl
 ![B-Step Sequencer - Sequence Settings](images/b-step-sequencer-layer-4-sequences-settings.gif)
 
 To set an extra output for a sequence you have to choose your port and channel at the bottom of the IO settings editor.
-If "Use Master Out" is selected all the events will be send to the Master Out which is defined at the top.
+If "Use Main Out" is selected all the events will be send to the Main Out which is defined at the top.
 
 
 <br /> [back to top](#content) </div><div class="manual">
@@ -2076,7 +2076,7 @@ in advance. Now enjoy B-Step and your other great musical tools.
 - User interface performance boost.
 - Fix timing issues.
 - Fix app switching breaks.
-- Fix MIDI sync (as master).
+- Fix MIDI sync (as producer).
 - Fix MIDI playback stops if Audiobus app is running.
 - Remove next bar in chain marker.
 - Other small user interface changes.
@@ -2112,7 +2112,7 @@ in advance. Now enjoy B-Step and your other great musical tools.
 ##### Sequencer Features:
 
 - Add mute-chain | you can now play empty bars or mute a bar in the chain.
-- Add master track octave offset rotaries.
+- Add global track octave offset rotaries.
 - Add what's the next bar in the chain marker.
 - Add panic button.
 

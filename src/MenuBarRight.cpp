@@ -196,7 +196,7 @@ MenuBarRight::MenuBarRight(AppInstanceStore *const app_instance_store_,
     drawables.add(drawable14.get());
     drawables.add(drawable15.get());
 
-    last_painted_colour = GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR;
+    last_painted_colour = GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR;
 
     button_question->set_app_instance_store(_app_instance_store);
     button_rubber->set_app_instance_store(_app_instance_store);
@@ -259,14 +259,14 @@ void MenuBarRight::paint(juce::Graphics &g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     /*
-    std::uint32_t new_colur = GLOBAL_VALUE_HOLDER::get().MASTER_COLOUR;
+    std::uint32_t new_colur = GLOBAL_VALUE_HOLDER::get().PRIMARY_COLOUR;
       for( int i = 0 ; i != drawables.size() ; i++ )
       {
           Drawable* drawable = drawables.getUnchecked(i);
           if( drawable )
               drawable->replaceColour( Colour(last_painted_colour), Colour(new_colur) );
       }
-      last_painted_colour = GLOBAL_VALUE_HOLDER::get().MASTER_COLOUR;
+      last_painted_colour = GLOBAL_VALUE_HOLDER::get().PRIMARY_COLOUR;
       */
     //[/UserPrePaint]
 

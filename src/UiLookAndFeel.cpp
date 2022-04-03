@@ -105,7 +105,7 @@ UiLookAndFeel::UiLookAndFeel()
         juce::Label::backgroundColourId,
         0x00000000,
         juce::Label::textColourId,
-        GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR,
+        GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR,
         juce::Label::outlineColourId,
         0x00000000,
 
@@ -148,7 +148,7 @@ UiLookAndFeel::UiLookAndFeel()
         juce::PropertyComponent::backgroundColourId,
         0x66ffffff,
         juce::PropertyComponent::labelTextColourId,
-        GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR,
+        GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR,
 
         juce::TextPropertyComponent::backgroundColourId,
         0xffffffff,
@@ -181,7 +181,7 @@ UiLookAndFeel::UiLookAndFeel()
         juce::Slider::textBoxHighlightColourId,
         textHighlightColour,
         juce::Slider::textBoxOutlineColourId,
-        GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR,
+        GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR,
 
         juce::ResizableWindow::backgroundColourId,
         0xff777777,
@@ -224,7 +224,7 @@ UiLookAndFeel::UiLookAndFeel()
         juce::Toolbar::buttonMouseDownBackgroundColourId,
         0x800000ff,
         juce::Toolbar::labelTextColourId,
-        GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR,
+        GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR,
         juce::Toolbar::editingModeOutlineColourId,
         0xffff0000,
 
@@ -268,10 +268,10 @@ UiLookAndFeel::UiLookAndFeel()
         /*MidiKeyboardComponent::keySeparatorLineColourId*/ 0x66000000,
         0x1005003,
         /*MidiKeyboardComponent::mouseOverKeyOverlayColourId*/
-        GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR,
+        GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR,
         0x1005004,
         /*MidiKeyboardComponent::keyDownOverlayColourId*/
-        GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR,
+        GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR,
         0x1005005,
         /*MidiKeyboardComponent::textLabelColourId*/ 0xff000000,
         0x1005006,
@@ -306,7 +306,7 @@ UiLookAndFeel::UiLookAndFeel()
         0xffffffff,
 
         juce::FileChooserDialogBox::titleTextColourId,
-        GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR,
+        GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR,
     };
 
     OUT_LOG("BOOT::UiLookAndFeel::SET-COLOURS::DONE");
@@ -353,7 +353,7 @@ void UiLookAndFeel::drawButtonText(juce::Graphics &g, juce::TextButton &button,
 
     if (juce::Colour(button.findColour(juce::TextButton::buttonColourId)).getBrightness() < 0.3 &&
         button.findColour(juce::TextButton::textColourOffId).getBrightness() < 0.3)
-        g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     else
         g.setColour(juce::Colour(button.findColour(juce::TextButton::textColourOffId)
                                      .withMultipliedAlpha(button.isEnabled() ? 1.0f : 0.5f)));
@@ -379,7 +379,7 @@ void UiLookAndFeel::drawTickBox(juce::Graphics &g, juce::Component &component, f
     g.setColour(juce::Colours::black);
     g.fillRect(int(x) - 1, int(y) - 1, int(w), int(h));
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(int(x) - 1, int(y) - 1, int(w), int(h), 1);
 
     if (ticked)
@@ -671,7 +671,7 @@ void UiLookAndFeel::drawScrollbarButton(juce::Graphics &g, juce::ScrollBar &scro
 
     g.fillPath(p);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.strokePath(p, juce::PathStrokeType(0.5f));
 }
 
@@ -727,10 +727,10 @@ void UiLookAndFeel::drawScrollbar(juce::Graphics &g, juce::ScrollBar &scrollbar,
         */
     }
     /*
-        g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
         g.fillRect (gx1, gy1, gx2, gy2);
 
-        g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        g.setColour (Colour (GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
         g.drawRect (0, 0, getWidth() - 0, getHeight() - 0, 2);
 
         g.setGradientFill (ColourGradient (trackColour1, gx1, gy1,
@@ -748,12 +748,12 @@ void UiLookAndFeel::drawScrollbar(juce::Graphics &g, juce::ScrollBar &scrollbar,
             gy2 = (float) y + height;
         }
     */
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillPath(slotPath);
     g.setColour(juce::Colour(0xff161616));
     g.fillPath(slotPathInner);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillPath(thumbPath);
 
     g.saveState();
@@ -1154,20 +1154,21 @@ void UiLookAndFeel::drawComboBox(juce::Graphics &g, int width, int height, const
     }
     else
     {
-        g.setColour(box.isEnabled()
-                        ? juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR)
-                        : juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR).darker());
+        g.setColour(
+            box.isEnabled()
+                ? juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR)
+                : juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR).darker());
         g.drawRect(0, 0, width, height);
     }
 
     const float outlineThickness = 1; // box.isEnabled() ? (isButtonDown ? 1.2f : 0.8f) : 0.3f;
 
-    drawGlassLozenge(g, buttonX + outlineThickness, buttonY + outlineThickness,
-                     buttonW - outlineThickness * 2.0f, buttonH - outlineThickness * 2.0f,
-                     box.isEnabled()
-                         ? juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR)
-                         : juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR).darker(),
-                     outlineThickness, -1.0f, true, true, true, true);
+    drawGlassLozenge(
+        g, buttonX + outlineThickness, buttonY + outlineThickness,
+        buttonW - outlineThickness * 2.0f, buttonH - outlineThickness * 2.0f,
+        box.isEnabled() ? juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR)
+                        : juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR).darker(),
+        outlineThickness, -1.0f, true, true, true, true);
 
     if (box.isEnabled())
     {
@@ -1598,7 +1599,7 @@ void UiLookAndFeel::drawCornerResizer(juce::Graphics &g, int w, int h, bool /*is
 
     for (float i = 0.0f; i < 1.0f; i += 0.3f)
     {
-        g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
         g.drawLine(w * i + lineThickness, h + 1.0f, w + 1.0f, h * i + lineThickness, lineThickness);
     }
 }
@@ -1633,7 +1634,7 @@ void UiLookAndFeel::fillResizableWindowBackground(juce::Graphics &g, int /*w*/, 
     g.setColour(window.getBackgroundColour());
     g.fillRect(0, 0, window.getWidth(), window.getHeight());
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, window.getWidth(), window.getHeight(), 2);
 }
 
@@ -2488,7 +2489,7 @@ juce::Button *UiLookAndFeel::createFileBrowserGoUpButton()
     arrowPath.addArrow(juce::Line<float>(50.0f, 100.0f, 50.0f, 0.0f), 40.0f, 100.0f, 50.0f);
 
     juce::DrawablePath arrowImage;
-    arrowImage.setFill(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    arrowImage.setFill(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     arrowImage.setPath(arrowPath);
 
     goUpButton->setImages(&arrowImage);

@@ -331,7 +331,7 @@ class MessageProcessor : public Ticker,
     bool is_playing;
     bool is_paused;
     bool is_stoped;
-    bool is_master;
+    bool is_producer;
 
     int _last_bpm;
 
@@ -346,7 +346,7 @@ class MessageProcessor : public Ticker,
 
     AppInstanceStore *const _app_instance_store;
 
-    /// SLAVE PROCESS OR VST
+    /// CONSUMER PROCESS OR VST
   public:
     // VON EXTERN NOTEN SCHICKEN ZUM VERSTIMMEN!!!!
     // DANN ALS ARP EINSETZEN
@@ -436,17 +436,17 @@ class MessageProcessor : public Ticker,
         {
             if (message_.isMidiClock())
             {
-                if ((is_playing || is_paused) && is_master)
+                if ((is_playing || is_paused) && is_producer)
                     return;
 
                 if (!is_playing || !is_paused)
                 {
-                    is_master = false;
+                    is_producer = false;
                     if (is_executing())
                         break_event_loop();
                 }
 
-                if (!is_master)
+                if (!is_producer)
                 {
                     send_precalculated_messages();
                     precalculate(true);
@@ -474,7 +474,7 @@ class MessageProcessor : public Ticker,
         bool is_sync_message = false;
         if (message_.isMidiClock())
         {
-            if (is_master)
+            if (is_producer)
                 return;
             else
                 is_sync_message = true;
@@ -498,7 +498,7 @@ class MessageProcessor : public Ticker,
         }
     }
 
-    /// MASTER PROCESS
+    /// PRODUCER PROCESS
   private:
     inline void on_tick() override
     {
@@ -519,7 +519,7 @@ class MessageProcessor : public Ticker,
         precalculate(true);
     }
 
-    /// SLAVE AND MASTER
+    /// CONSUMER AND PRODUCER
   public:
     inline void precalculate(bool do_, std::int64_t absolute_vst_clock = -1)
     {
@@ -755,7 +755,7 @@ class MessageProcessor : public Ticker,
             break_event_loop();
         }
 
-        is_master = false;
+        is_producer = false;
 
         is_paused = false;
         bool was_stopped = is_stoped;
@@ -776,7 +776,7 @@ class MessageProcessor : public Ticker,
         if (is_playing)
             return;
 
-        is_master = true;
+        is_producer = true;
         is_playing = true;
 
         bool was_paused = is_paused;
@@ -800,11 +800,11 @@ class MessageProcessor : public Ticker,
   private:
     void check_make_no_port_open_message()
     {
-        if (!_midi_io_handler.is_master_outport_open())
+        if (!_midi_io_handler.is_main_outport_open())
         {
             if (_app_instance_store->editor)
             {
-                _app_instance_store->do_you_know.show(DoYouKnow::NO_MASTER_OUTPORT_READY, true);
+                _app_instance_store->do_you_know.show(DoYouKnow::NO_MAIN_OUTPORT_READY, true);
                 _app_instance_store->editor->open_settings_editor(false, true);
             }
         }
@@ -854,7 +854,7 @@ class MessageProcessor : public Ticker,
         if (is_stoped || is_paused)
             return;
 
-        is_master = false;
+        is_producer = false;
         if (is_executing())
             break_event_loop();
 
@@ -1071,7 +1071,7 @@ class MessageProcessor : public Ticker,
 };
 
 MessageProcessor::MessageProcessor(AppInstanceStore *const app_instance_store_)
-    : is_playing(false), is_paused(false), is_stoped(true), is_master(true),
+    : is_playing(false), is_paused(false), is_stoped(true), is_producer(true),
 
       _last_bpm(app_instance_store_->audio_processor->bpm),
 
@@ -1459,7 +1459,7 @@ void GstepAudioProcessor::processBlock(juce::AudioSampleBuffer &buffer_,
 bool GstepAudioProcessor::is_playing() const { return _message_processor->is_playing; }
 bool GstepAudioProcessor::is_stopped() const { return _message_processor->is_stoped; }
 bool GstepAudioProcessor::is_paused() const { return _message_processor->is_paused; }
-bool GstepAudioProcessor::is_master() const { return _message_processor->is_master; }
+bool GstepAudioProcessor::is_producer() const { return _message_processor->is_producer; }
 
 void GstepAudioProcessor::play() { _message_processor->handle_user_start_event(); }
 void GstepAudioProcessor::stop() { _message_processor->handle_user_stop_event(); }

@@ -62,15 +62,15 @@
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
-void GstepAudioProcessorEditor::open_settings_editor(bool focus_midi_learn_, bool focus_master_out_)
+void GstepAudioProcessorEditor::open_settings_editor(bool focus_midi_learn_, bool focus_main_out_)
 {
     if (!_config->editor_settings)
     {
         _config->editor_settings = std::make_unique<UiEditorSettings>(_app_instance_store);
         if (focus_midi_learn_)
             _config->editor_settings->focus_midi_learn_in();
-        if (focus_master_out_)
-            _config->editor_settings->focus_master_out();
+        if (focus_main_out_)
+            _config->editor_settings->focus_main_out();
     }
     else
         _config->editor_settings->on_close_clicked();

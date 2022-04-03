@@ -36,14 +36,14 @@ class MIDIInListener
 #define DISABLED_PORT "No Device Selected"
 #define IN_HOST_MIDI_HANDLING "In Host Routing"
 #define VIRTUAL_PORT "Create Virtual Port"
-#define USE_MASTER_OUT "Use Master Output"
+#define USE_MAIN_OUT "Use Main Output"
 
 enum
 {
     IS_DISABLED_PORT = -1,
 
     IS_VIRTUAL_PORT = 9991,
-    IS_SAME_AS_MASTER_OUT = 9992,
+    IS_SAME_AS_MAIN_OUT = 9992,
     IS_IN_HOST_HANDLING = 9993
 };
 
@@ -63,7 +63,7 @@ template <class port_type> class MidiIOObject
     int _at_dev_index;
     bool _is_succesful_opend;
     bool _is_in_host_handling;
-    bool _use_master_midi_out;
+    bool _use_main_midi_out;
     bool _is_enabled;
 
     // --------------------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ template <class port_type> class MidiIOObject
     MidiIOObject(AppInstanceStore *const app_instance_store_)
         : _app_instance_store(app_instance_store_), _midi_port(nullptr), _port_name(DISABLED_PORT),
           _standalone_portname(DISABLED_PORT), _at_dev_index(-1), _is_succesful_opend(false),
-          _is_in_host_handling(false), _use_master_midi_out(false), _is_enabled(false)
+          _is_in_host_handling(false), _use_main_midi_out(false), _is_enabled(false)
     {
     }
     virtual ~MidiIOObject() {}
@@ -94,7 +94,7 @@ template <class port_type> class MidiIOObject
         _at_dev_index = at_dev_index_;
 
         _is_in_host_handling = false;
-        _use_master_midi_out = false;
+        _use_main_midi_out = false;
         _is_enabled = true;
         if (_port_name == IN_HOST_MIDI_HANDLING)
         {
@@ -112,13 +112,13 @@ template <class port_type> class MidiIOObject
         }
         else if (_port_name == VIRTUAL_PORT)
             _at_dev_index = IS_VIRTUAL_PORT;
-        else if (_port_name == USE_MASTER_OUT)
+        else if (_port_name == USE_MAIN_OUT)
         {
             _is_succesful_opend = true;
             _is_enabled = true;
-            _use_master_midi_out = true;
+            _use_main_midi_out = true;
 
-            _at_dev_index = IS_SAME_AS_MASTER_OUT;
+            _at_dev_index = IS_SAME_AS_MAIN_OUT;
         }
     }
 
@@ -130,7 +130,7 @@ template <class port_type> class MidiIOObject
             return true;
         if (name_.compare(VIRTUAL_PORT) == 0)
             return true;
-        if (name_.compare(USE_MASTER_OUT) == 0)
+        if (name_.compare(USE_MAIN_OUT) == 0)
             return true;
 
         if (at_dev_index_ <= 0)
@@ -165,7 +165,7 @@ template <class port_type> class MidiIOObject
     }
 
     bool is_in_host_handling() const { return _is_in_host_handling; }
-    bool use_master_midi_out() const { return _use_master_midi_out; }
+    bool use_main_midi_out() const { return _use_main_midi_out; }
     bool is_enabled() const { return _is_enabled; }
     int get_dev_index() const { return _at_dev_index; }
 
@@ -376,7 +376,7 @@ class MidiOutputObject : public MidiIOObject<juce::MidiOutput>
             _is_succesful_opend = true;
             return true;
         }
-        if (_port_name.compare(USE_MASTER_OUT) == 0)
+        if (_port_name.compare(USE_MAIN_OUT) == 0)
         {
             _is_succesful_opend = true;
             return true;
@@ -523,7 +523,7 @@ class MultiMIDIMessageOutputGuard
         if (!feeded_ports.contains(dev_index))
         {
             feeded_ports.add(dev_index);
-            if (dev_index != IS_SAME_AS_MASTER_OUT)
+            if (dev_index != IS_SAME_AS_MAIN_OUT)
             {
                 if (port_->is_open())
                     is_valid = true;
@@ -550,7 +550,7 @@ class MidiIOHandler
   public:
     MidiInputObject midi_in;
 
-    bool is_master_outport_open() { return midi_outs.getUnchecked(0)->is_open(); }
+    bool is_main_outport_open() { return midi_outs.getUnchecked(0)->is_open(); }
 
     bool is_a_outport_enabled()
     {
@@ -575,7 +575,7 @@ class MidiIOHandler
     MidiOutputObject &get_out_port_for_sending(std::uint8_t barstring_id)
     {
         if (barstring_id > 0)
-            if (midi_outs.getUnchecked(barstring_id)->use_master_midi_out())
+            if (midi_outs.getUnchecked(barstring_id)->use_main_midi_out())
             {
                 return *midi_outs.getUnchecked(0);
             }

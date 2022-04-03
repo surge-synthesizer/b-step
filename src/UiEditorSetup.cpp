@@ -82,10 +82,11 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     label_multidrag_on_off2->setJustificationType(juce::Justification::centredLeft);
     label_multidrag_on_off2->setEditable(false, false, false);
     label_multidrag_on_off2->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_multidrag_on_off2->setColour(
         juce::TextEditor::textColourId,
-        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_multidrag_on_off2->setColour(juce::TextEditor::backgroundColourId,
                                        juce::Colour(0x00000000));
 
@@ -96,10 +97,11 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     label_multidrag_on_off->setJustificationType(juce::Justification::centredLeft);
     label_multidrag_on_off->setEditable(false, false, false);
     label_multidrag_on_off->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_multidrag_on_off->setColour(
         juce::TextEditor::textColourId,
-        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_multidrag_on_off->setColour(juce::TextEditor::backgroundColourId,
                                       juce::Colour(0x00000000));
 
@@ -120,10 +122,11 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     label_switch_multidrag_mouse->setJustificationType(juce::Justification::centredLeft);
     label_switch_multidrag_mouse->setEditable(false, false, false);
     label_switch_multidrag_mouse->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_switch_multidrag_mouse->setColour(
         juce::TextEditor::textColourId,
-        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_switch_multidrag_mouse->setColour(juce::TextEditor::backgroundColourId,
                                             juce::Colour(0x00000000));
 
@@ -132,10 +135,12 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     label_playback_mode->setFont(juce::Font(15.00f, juce::Font::plain));
     label_playback_mode->setJustificationType(juce::Justification::centredLeft);
     label_playback_mode->setEditable(false, false, false);
-    label_playback_mode->setColour(juce::Label::textColourId,
-                                   juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
-    label_playback_mode->setColour(juce::TextEditor::textColourId,
-                                   juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    label_playback_mode->setColour(
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
+    label_playback_mode->setColour(
+        juce::TextEditor::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_playback_mode->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     toolbar = std::make_unique<UiEditorToolbar>(this, true, true, false);
@@ -147,10 +152,11 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     label_multidrag_delay->setJustificationType(juce::Justification::centredRight);
     label_multidrag_delay->setEditable(false, false, false);
     label_multidrag_delay->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_multidrag_delay->setColour(
         juce::TextEditor::textColourId,
-        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_multidrag_delay->setColour(juce::TextEditor::backgroundColourId,
                                      juce::Colour(0x00000000));
 
@@ -160,9 +166,9 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     label_ui_headline->setJustificationType(juce::Justification::centred);
     label_ui_headline->setEditable(false, false, false);
     label_ui_headline->setColour(juce::Label::textColourId,
-                                 juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                                 juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_ui_headline->setColour(juce::TextEditor::textColourId,
-                                 juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                                 juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_ui_headline->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     sl_multidrag_delay = std::make_unique<juce::Slider>(juce::String());
@@ -179,10 +185,11 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     label_multidrag_sensitivity->setJustificationType(juce::Justification::centredRight);
     label_multidrag_sensitivity->setEditable(false, false, false);
     label_multidrag_sensitivity->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_multidrag_sensitivity->setColour(
         juce::TextEditor::textColourId,
-        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_multidrag_sensitivity->setColour(juce::TextEditor::backgroundColourId,
                                            juce::Colour(0x00000000));
 
@@ -200,10 +207,11 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     label_simpledrag_sensitivity->setJustificationType(juce::Justification::centredRight);
     label_simpledrag_sensitivity->setEditable(false, false, false);
     label_simpledrag_sensitivity->setColour(
-        juce::Label::textColourId, juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Label::textColourId,
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_simpledrag_sensitivity->setColour(
         juce::TextEditor::textColourId,
-        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_simpledrag_sensitivity->setColour(juce::TextEditor::backgroundColourId,
                                             juce::Colour(0x00000000));
 
@@ -227,7 +235,7 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     slider_playback_mode->setColour(juce::Slider::thumbColourId, juce::Colour(0xff4f4f4f));
     slider_playback_mode->setColour(
         juce::Slider::trackColourId,
-        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     slider_playback_mode->setColour(juce::Slider::rotarySliderFillColourId,
                                     juce::Colour(0xfff03b00));
     slider_playback_mode->setColour(juce::Slider::rotarySliderOutlineColourId,
@@ -241,9 +249,9 @@ UiEditorSetup::UiEditorSetup(AppInstanceStore *const app_instance_store_)
     label_ui_headline2->setJustificationType(juce::Justification::centred);
     label_ui_headline2->setEditable(false, false, false);
     label_ui_headline2->setColour(juce::Label::textColourId,
-                                  juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                                  juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_ui_headline2->setColour(juce::TextEditor::textColourId,
-                                  juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+                                  juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     label_ui_headline2->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
 
     tb_turn_mousewheel_on_off = std::make_unique<juce::ToggleButton>(juce::String());
@@ -342,20 +350,20 @@ void UiEditorSetup::paint(juce::Graphics &g)
     g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.0328f)),
                            static_cast<float>(proportionOfHeight(0.2930f)),
                            static_cast<float>(proportionOfWidth(0.9344f)), 1.0f, 10.000f);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.0361f)),
                            static_cast<float>(proportionOfHeight(0.7558f)),
                            static_cast<float>(proportionOfWidth(0.9344f)), 1.0f, 10.000f);
 
-    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->MASTER_COLOUR));
+    g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.fillRoundedRectangle(static_cast<float>(proportionOfWidth(0.0361f)),
                            static_cast<float>(proportionOfHeight(0.6628f)),
                            static_cast<float>(proportionOfWidth(0.9344f)), 1.0f, 10.000f);

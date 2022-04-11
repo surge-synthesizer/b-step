@@ -217,7 +217,7 @@ UiEditorRightMainwindows::UiEditorRightMainwindows(AppInstanceStore *const app_i
     addAndMakeVisible(*lbl_version4);
 
     //[UserPreSize]
-    if (bstepIsStandalone)
+    if (!bstepIsStandalone)
     {
         label_current_bpm->setVisible(false);
         slider_bpm->setVisible(false);

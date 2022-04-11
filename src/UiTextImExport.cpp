@@ -34,7 +34,6 @@ void UiTextImExport::timerCallback()
 
     ok->setEnabled(has_text);
     send_mail->setEnabled(has_text);
-    send_mail_to_monoplugs->setEnabled(has_text);
 
     if (!_listener->_is_importer)
         copy_past->setEnabled(has_text);
@@ -150,22 +149,6 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     send_mail->setColour(juce::TextButton::textColourOffId,
                          juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
 
-    send_mail_to_monoplugs = std::make_unique<juce::TextButton>(juce::String());
-    addAndMakeVisible(*send_mail_to_monoplugs);
-    send_mail_to_monoplugs->setExplicitFocusOrder(3);
-    send_mail_to_monoplugs->setButtonText(
-        TRANS("SEND AS MAIL TO MONOPLUGS AND SHARE IT ON THE ONLINE REPOSITORY"));
-    send_mail_to_monoplugs->setConnectedEdges(
-        juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
-        juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
-    send_mail_to_monoplugs->addListener(this);
-    send_mail_to_monoplugs->setColour(juce::TextButton::buttonColourId, juce::Colours::black);
-    send_mail_to_monoplugs->setColour(juce::TextButton::buttonOnColourId, juce::Colour(0x004444ff));
-    send_mail_to_monoplugs->setColour(
-        juce::TextButton::textColourOnId,
-        juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
-    send_mail_to_monoplugs->setColour(juce::TextButton::textColourOffId, juce::Colour(0xffff7000));
-
     button_info = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*button_info);
     button_info->setButtonText(TRANS("?"));
@@ -229,7 +212,6 @@ UiTextImExport::~UiTextImExport()
     note = nullptr;
     description = nullptr;
     send_mail = nullptr;
-    send_mail_to_monoplugs = nullptr;
     button_info = nullptr;
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -280,9 +262,6 @@ void UiTextImExport::resized()
     send_mail->setBounds(proportionOfWidth(0.4546f) - proportionOfWidth(0.2500f),
                          proportionOfHeight(0.9083f) - proportionOfHeight(0.0417f),
                          proportionOfWidth(0.2500f), proportionOfHeight(0.0417f));
-    send_mail_to_monoplugs->setBounds(proportionOfWidth(0.9546f) - proportionOfWidth(0.9091f),
-                                      proportionOfHeight(0.9750f) - proportionOfHeight(0.0417f),
-                                      proportionOfWidth(0.9091f), proportionOfHeight(0.0417f));
     button_info->setBounds(proportionOfWidth(0.8864f), proportionOfHeight(0.0250f),
                            proportionOfWidth(0.0682f), proportionOfHeight(0.0500f));
     //[UserResized] Add your own custom resize handling here..
@@ -342,39 +321,6 @@ void UiTextImExport::buttonClicked(juce::Button *buttonThatWasClicked)
                                      : _listener->_data.replaceCharacters("<", "#"));
         juce::URL(juce::String("mailto:yourmail?body=") + data_to_send).launchInDefaultBrowser();
         //[/UserButtonCode_send_mail]
-    }
-    else if (buttonThatWasClicked == send_mail_to_monoplugs.get())
-    {
-        //[UserButtonCode_send_mail_to_monoplugs] -- add your button handler code here..
-        juce::String data_to_send =
-            (_listener->_is_importer ? text->getText().replaceCharacters("<", "#")
-                                     : _listener->_data.replaceCharacters("<", "#"));
-
-        juce::URL(
-            juce::String(
-                juce::String("mailto:share@monoplugs.com?body=") +
-                juce::String("THANKS FOR SHARING YOUR WORK!\n") +
-                juce::String(
-                    "IF YOU LIKE YOU CAN ADD SOME ADDITIONAL INFO LIKE YOUR ARTIST NAME,\n") +
-                juce::String("WEBPAGE ETC, WHICH WE CAN PUBLISH WITH YOUR PROJECT OR FILE.\n\n")
-
-                + juce::String("ADD YOUR INFO HERE: \n\n") +
-                juce::String("------------------------\n\n") +
-                juce::String("TO GIVE US AN IDEA HOW IT CAN SOUND, YOU CAN ATTACH AN AUDIO SAMPLE "
-                             "FILE.\n\n") +
-                juce::String("------------------------\n\n") +
-                juce::String(
-                    "WE WILL SEND YOU A MAIL WHEN YOUR FILE IS AVAILABLE ON THE REPOSITORY.\n")
-
-                + juce::String("THANK YOU!\n\n") + juce::String("------------------------\n") +
-                juce::String("------------------------\n") +
-                juce::String("------------------------\n\n") +
-                juce::String("YOUR EXPORTED DATA:\n")) +
-            data_to_send)
-            .launchInDefaultBrowser();
-
-        std::cout << data_to_send << std::endl;
-        //[/UserButtonCode_send_mail_to_monoplugs]
     }
     else if (buttonThatWasClicked == button_info.get())
     {

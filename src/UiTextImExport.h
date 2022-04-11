@@ -116,7 +116,6 @@ class UiTextImExport : public UiEditor, public juce::Timer, public juce::Button:
     std::unique_ptr<juce::Label> note;
     std::unique_ptr<juce::Label> description;
     std::unique_ptr<juce::TextButton> send_mail;
-    std::unique_ptr<juce::TextButton> send_mail_to_monoplugs;
     std::unique_ptr<juce::TextButton> button_info;
 
     //==============================================================================

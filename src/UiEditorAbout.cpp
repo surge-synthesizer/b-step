@@ -57,31 +57,32 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
                           juce::Colour(0x00000000));
 
     hyperlinkButton8 = std::make_unique<juce::HyperlinkButton>(
-        juce::String(), juce::URL("http://b-step.monoplugs.com"));
+        juce::String(), juce::URL("https://github.com/surge-synthesizer/b-step"));
     addAndMakeVisible(*hyperlinkButton8);
-    hyperlinkButton8->setTooltip(TRANS("http://b-step.monoplugs.com"));
+    hyperlinkButton8->setTooltip(TRANS("https://github.com/surge-synthesizer/b-step"));
     hyperlinkButton8->setColour(juce::HyperlinkButton::textColourId, juce::Colour(0xffffdd00));
 
-    video_1 = std::make_unique<juce::HyperlinkButton>(TRANS("http://B-Step.Monoplugs.com"),
-                                                      juce::URL("http://b-step.monoplugs.com"));
+    video_1 = std::make_unique<juce::HyperlinkButton>(
+        TRANS("Inspect the code"), juce::URL("https://github.com/surge-synthesizer/b-step"));
     addAndMakeVisible(*video_1);
-    video_1->setTooltip(TRANS("http://b-step.monoplugs.com"));
-    video_1->setButtonText(TRANS("http://B-Step.Monoplugs.com"));
+    video_1->setTooltip(TRANS("https://github.com/surge-synthesizer/b-step"));
+    video_1->setButtonText(TRANS("Inspect the code"));
     video_1->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 
-    video_2 = std::make_unique<juce::HyperlinkButton>(TRANS("http://Forum.Monoplugs.com"),
-                                                      juce::URL("http://forum.monoplugs.com"));
+    video_2 = std::make_unique<juce::HyperlinkButton>(
+        TRANS("Open an issue"), juce::URL("https://github.com/surge-synthesizer/b-step/issues"));
     addAndMakeVisible(*video_2);
-    video_2->setTooltip(TRANS("http://forum.monoplugs.com"));
-    video_2->setButtonText(TRANS("http://Forum.Monoplugs.com"));
+    video_2->setTooltip(TRANS("https://github.com/surge-synthesizer/b-step/issues"));
+    video_2->setButtonText(TRANS("Open an issue"));
     video_2->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 
     video_3 = std::make_unique<juce::HyperlinkButton>(
-        TRANS("http://B-Step.Monoplugs.com/Manual/"),
-        juce::URL("http://b-step-manual-redirect.monoplugs.com/"));
+        TRANS("Read the Manual on Github"),
+        juce::URL("https://github.com/surge-synthesizer/b-step/blob/main/doc/manual/Readme.md"));
     addAndMakeVisible(*video_3);
-    video_3->setTooltip(TRANS("http://b-step-manual-redirect.monoplugs.com/"));
-    video_3->setButtonText(TRANS("http://B-Step.Monoplugs.com/Manual/"));
+    video_3->setTooltip(
+        TRANS("https://github.com/surge-synthesizer/b-step/blob/main/doc/manual/Readme.md"));
+    video_3->setButtonText(TRANS("Read the Manual on Github"));
     video_3->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 
     video_4 = std::make_unique<juce::HyperlinkButton>(
@@ -92,11 +93,11 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
     video_4->setButtonText(TRANS("https://www.youtube.com/monoplugs"));
     video_4->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 
-    video_5 = std::make_unique<juce::HyperlinkButton>(TRANS("info@Monoplugs.com : B-Step 2"),
-                                                      juce::URL("mailto:info@monoplugs.com"));
+    video_5 = std::make_unique<juce::HyperlinkButton>(TRANS("No email, chat on discord instead"),
+                                                      juce::URL("https://discord.gg/aFQDdMV"));
     addAndMakeVisible(*video_5);
-    video_5->setTooltip(TRANS("mailto:info@monoplugs.com"));
-    video_5->setButtonText(TRANS("info@Monoplugs.com : B-Step 2"));
+    video_5->setTooltip(TRANS("https://discord.gg/aFQDdMV"));
+    video_5->setButtonText(TRANS("No email, chat on discord instead"));
     video_5->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 
     debug_out = std::make_unique<juce::TextEditor>(juce::String());
@@ -160,13 +161,6 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
         additional_info += " ";
     }
     additional_info += juce::SystemStats::getOperatingSystemName();
-
-    video_5->setButtonText(
-        TRANS("info@Monoplugs.com : B-Step ")); // + String(ProjectInfo::versionString));
-
-    video_5->setURL(juce::URL(
-        juce::String("mailto:info@monoplugs.com?subject=B-Step ") //+ProjectInfo::versionString
-        + juce::String(" (") + additional_info + juce::String(") : ")));
 
     debug_out->setVisible(false);
 

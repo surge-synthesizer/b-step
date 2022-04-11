@@ -672,8 +672,9 @@ bool UIHtmlView::open_url(const juce::URL &source_, bool and_download_complete_n
         add_text_part("Error, can not download: " +
                           source_.toString(false).fromLastOccurrenceOf("/", false, false),
                       6, 0, true, juce::Colour(0xffff0000));
-        add_text_part("Please try to re-download later or download the offline version.", 4, 10,
-                      true, juce::Colour(0xffff0000));
+        add_text_part("At the moment the manual can only be read online.\n"
+                      "https://github.com/surge-synthesizer/b-step/blob/main/doc/manual/Readme.md",
+                      4, 10, true, juce::Colour(0xffff0000));
 
         return_value = false;
     }
@@ -681,7 +682,7 @@ bool UIHtmlView::open_url(const juce::URL &source_, bool and_download_complete_n
     can_something_selected = true;
 
     if (get_manual_folder().exists())
-        update->setButtonText(TRANS("RE-DOWNLOAD COMPLETE MANUAL"));
+        update->setButtonText(TRANS("No download possible right now"));
 
     return return_value;
 }
@@ -1036,7 +1037,7 @@ UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
 
     forum = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*forum);
-    forum->setButtonText(TRANS("CHECK THE FORUM"));
+    forum->setButtonText(TRANS("CHECK GITHUB"));
     forum->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
                              juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     forum->addListener(this);
@@ -1063,7 +1064,7 @@ UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
 
     mail = std::make_unique<juce::TextButton>(juce::String());
     addAndMakeVisible(*mail);
-    mail->setButtonText(TRANS("CONTACT SUPPORT"));
+    mail->setButtonText(TRANS("DISCORD"));
     mail->setConnectedEdges(juce::Button::ConnectedOnLeft | juce::Button::ConnectedOnRight |
                             juce::Button::ConnectedOnTop | juce::Button::ConnectedOnBottom);
     mail->addListener(this);
@@ -1290,40 +1291,12 @@ void UIHtmlView::buttonClicked(juce::Button *buttonThatWasClicked)
     else if (buttonThatWasClicked == forum.get())
     {
         //[UserButtonCode_forum] -- add your button handler code here..
-        juce::URL("http://forum.monoplugs.com/viewforum.php?f=47").launchInDefaultBrowser();
+        juce::URL("https://github.com/surge-synthesizer/b-step/issues").launchInDefaultBrowser();
         //[/UserButtonCode_forum]
     }
     else if (buttonThatWasClicked == mail.get())
     {
-        //[UserButtonCode_mail] -- add your button handler code here..
-
-        juce::String additional_info;
-
-        if (!bstepIsStandalone)
-        {
-            additional_info = juce::PluginHostType().getHostDescription();
-            additional_info += " ";
-        }
-        additional_info += juce::SystemStats::getOperatingSystemName();
-
-        juce::String subject("Q: B-Step ");
-        // subject += String(ProjectInfo::versionString);
-        subject += " (";
-        subject += additional_info;
-        subject += juce::String(")");
-        if (treeView->getSelectedItem(0))
-        {
-            NavItem *item = dynamic_cast<NavItem *>(treeView->getSelectedItem(0));
-            if (item)
-                subject = subject + juce::String(" : ") + item->get_title();
-
-            juce::URL(juce::String("mailto:support@monoplugs.com?subject=") + subject)
-                .launchInDefaultBrowser();
-        }
-        else
-            juce::URL(juce::String("mailto:support@monoplugs.com?subject=") + subject)
-                .launchInDefaultBrowser();
-        //[/UserButtonCode_mail]
+        juce::URL("https://discord.gg/aFQDdMV").launchInDefaultBrowser();
     }
     else if (buttonThatWasClicked == online.get())
     {

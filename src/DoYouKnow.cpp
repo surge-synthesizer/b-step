@@ -77,6 +77,7 @@ DoYouKnow::CharPair DoYouKnow::get_message(DoYouKnow::MESSAGES id_)
             "the chord which is currently used by the bar which you can edit on the main "
             "interface.\nBeige sliders mark the running chord.\n\nAt the bottom you have a few "
             "presets which you can assign to the selected 'PRESET TARGET' chord.");
+
     case NO_MIDI_LEARN_PORT_READY:
         return CharPair("NO MIDI LEARN IN PORT READY!",
                         "To use the MIDI Learn feature: please select your MIDI controller at "
@@ -87,11 +88,6 @@ DoYouKnow::CharPair DoYouKnow::get_message(DoYouKnow::MESSAGES id_)
             "NO MIDI OUT PORT READY!",
             "You should assign a synthesizer to 'Main Out (to Synth)' in the IO settings.");
 
-    case USE_VST_INSTEAD_OF_AU:
-        return CharPair("YOU ARE USING THE B-STEP AUDIO UNIT!",
-                        "If your host support VST's, then you should use the VST version instead "
-                        "of the AudioUnit!\nIf you are using a host like Logic please read: "
-                        "http://forum.monoplugs.com/logic");
     default:
         return CharPair("", "");
     }

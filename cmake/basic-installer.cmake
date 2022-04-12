@@ -91,14 +91,26 @@ if (APPLE)
             COMMAND ${CMAKE_SOURCE_DIR}/libs/sst/sst-plugininfra/scripts/installer_mac/make_installer.sh "B-Step" ${CMAKE_BINARY_DIR}/bstep-products ${CMAKE_SOURCE_DIR}/resources/installer_mac ${CMAKE_BINARY_DIR}/installer "${BSTEP_DATE}-${VERSION_CHUNK}"
     )
 elseif (WIN32)
-    message(STATUS "Basic Installer: Target is installer/${BSTEP_ZIP}")
+    message(STATUS "Configuring for win installer")
     add_custom_command(
             TARGET bstep-installer
             POST_BUILD
             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
             COMMAND ${CMAKE_COMMAND} -E make_directory installer
             COMMAND 7z a -r installer/${BSTEP_ZIP} ${BSTEP_PRODUCT_DIR}/
-            COMMAND ${CMAKE_COMMAND} -E echo "Installer in: installer/${BSTEP_ZIP}")
+            COMMAND ${CMAKE_COMMAND} -E echo "ZIP Installer in: installer/${BSTEP_ZIP}")
+    find_program(BSTEP_NUGET_EXE nuget.exe PATHS ENV "PATH")
+    if(BSTEP_NUGET_EXE)
+        message(STATUS "NuGet found at ${BSTEP_NUGET_EXE}, creating InnoSetup installer")
+        add_custom_command(
+            TARGET bstep-installer
+            POST_BUILD
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+            COMMAND ${BSTEP_NUGET_EXE} install Tools.InnoSetup -version 6.2.0
+            COMMAND Tools.InnoSetup.6.2.0/tools/iscc.exe /O"installer" /DBSTEP_SRC="${CMAKE_SOURCE_DIR}" /DBSTEP_BIN="${CMAKE_BINARY_DIR}" /DBSTEP_VERSION="${BSTEP_DATE}-${VERSION_CHUNK}" "${CMAKE_SOURCE_DIR}/resources/installer_win/bstep${BSTEP_BITNESS}.iss")
+    else()
+        message(STATUS "NuGet not found, not creating InnoSetup installer")
+    endif()
 else ()
     message(STATUS "Basic Installer: Target is installer/${BSTEP_ZIP}")
     add_custom_command(

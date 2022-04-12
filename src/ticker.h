@@ -1,21 +1,19 @@
 /*
- * Author: Thomas Arndt monotomy[ä]cythar[dot]sequenzer[dot]org
- * This file is part of cythar
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
- */
+** B-Step is Free and Open Source Software
+**
+** B-Step is made available under the Gnu General Public License, v3.0
+** https://www.gnu.org/licenses/gpl-3.0.en.html; The authors of the code
+** reserve the right to re-license their contributions under the MIT license in the
+** future at the discretion of the project maintainers.
+**
+** Copyright 2014-2022 by various individuals as described by the git transaction log
+**
+** All source at: https://github.com/surge-synthesizer/b-step.git
+**
+** B-Step was a commercial product from 2014-2022, with copyright and ownership
+** in that period held by Thomas Arndt at Monoplugs. Thomas made B-Step
+** open source in March 2022.
+*/
 
 #ifndef cythar_ticker_h_included
 #define cythar_ticker_h_included

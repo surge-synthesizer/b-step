@@ -1,25 +1,18 @@
 /*
-  ==============================================================================
-
-   This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
-
-   Permission is granted to use this software under the terms of either:
-   a) the GPL v2 (or any later version)
-   b) the Affero GPL v3
-
-   Details of these licenses can be found at: www.gnu.org/licenses
-
-   JUCE is distributed in the hope that it will be useful, but WITHOUT ANY
-   WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-   A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
-   ------------------------------------------------------------------------------
-
-   To release a closed-source product which uses JUCE, commercial licenses are
-   available: visit www.juce.com for more information.
-
-  ==============================================================================
+** B-Step is Free and Open Source Software
+**
+** B-Step is made available under the Gnu General Public License, v3.0
+** https://www.gnu.org/licenses/gpl-3.0.en.html; The authors of the code
+** reserve the right to re-license their contributions under the MIT license in the
+** future at the discretion of the project maintainers.
+**
+** Copyright 2014-2022 by various individuals as described by the git transaction log
+**
+** All source at: https://github.com/surge-synthesizer/b-step.git
+**
+** B-Step was a commercial product from 2014-2022, with copyright and ownership
+** in that period held by Thomas Arndt at Monoplugs. Thomas made B-Step
+** open source in March 2022.
 */
 
 #include "UiLookAndFeel.h"

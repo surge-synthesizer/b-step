@@ -9,7 +9,7 @@ project("B-Step" VERSION 2.1.0 LANGUAGES C CXX ASM)
 
 # Calculate bitness
 math(EXPR MONIQUE_BITNESS "${CMAKE_SIZEOF_VOID_P} * 8" OUTPUT_FORMAT DECIMAL)
-message(STATUS "Targeting ${MONIQUE_BITNESS}-bit configuration")
+message(STATUS "Targeting ${BSTEP_BITNESS}-bit configuration")
 
 option(BSTEP_COPY_PLUGIN_AFTER_BUILD "Copy JUCE Plugins after built" OFF)
 option(BSTEP_RELIABLE_VERSION_INFO "Update version info on every build (off: generate only at configuration time)" ON)

@@ -107,7 +107,7 @@ elseif (WIN32)
             POST_BUILD
             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
             COMMAND ${BSTEP_NUGET_EXE} install Tools.InnoSetup -version 6.2.0
-            COMMAND Tools.InnoSetup.6.2.0/tools/iscc.exe /O"installer" /DBSTEP_SRC="${CMAKE_SOURCE_DIR}" /DBSTEP_BIN="${CMAKE_BINARY_DIR}" /DBSTEP_VERSION="${BSTEP_DATE}-${VERSION_CHUNK}" "${CMAKE_SOURCE_DIR}/resources/installer_win/bstep${MONIQUE_BITNESS}.iss")
+            COMMAND Tools.InnoSetup.6.2.0/tools/iscc.exe /O"installer" /DBSTEP_SRC="${CMAKE_SOURCE_DIR}" /DBSTEP_BIN="${CMAKE_BINARY_DIR}" /DBSTEP_VERSION="${BSTEP_DATE}-${VERSION_CHUNK}" "${CMAKE_SOURCE_DIR}/resources/installer_win/bstep${BSTEP_BITNESS}.iss")
     else()
         message(STATUS "NuGet not found, not creating InnoSetup installer")
     endif()

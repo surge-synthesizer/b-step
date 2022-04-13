@@ -15,15 +15,12 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #include "UiMainWindow.h"
 #include "_H_UiElements.h"
 #include "ControllerConfig.h"
-//[/Headers]
 
 #include "MenuBarLeft.h"
 
-//[MiscUserDefs] You can add your own user definitions and misc code here...
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
@@ -91,7 +88,6 @@ void MenuBarLeft::set_user_mode()
 
     repaint(0, 0, getWidth(), getHeight());
 }
-//[/MiscUserDefs]
 
 //==============================================================================
 MenuBarLeft::MenuBarLeft(AppInstanceStore *const app_instance_store_,
@@ -169,20 +165,14 @@ MenuBarLeft::MenuBarLeft(AppInstanceStore *const app_instance_store_,
     set_user_mode();
 
 #ifdef DO_NEVER_DEFINE_THIS
-    //[/UserPreSize]
 
     setSize(42, 768);
 
-    //[Constructor] You can add your own custom stuff here..
 #endif // DO_NEVER_DEFINE_THIS
-    //[/Constructor]
 }
 
 MenuBarLeft::~MenuBarLeft()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
-    //[/Destructor_pre]
-
     button_layer_1 = nullptr;
     button_layer_2 = nullptr;
     button_layer_3 = nullptr;
@@ -196,17 +186,11 @@ MenuBarLeft::~MenuBarLeft()
     drawable1 = nullptr;
     drawable2 = nullptr;
     drawable3 = nullptr;
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
 }
 
 //==============================================================================
 void MenuBarLeft::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
-
     g.fillAll(juce::Colours::black);
 
     g.setColour(juce::Colours::black);
@@ -232,9 +216,6 @@ void MenuBarLeft::paint(juce::Graphics &g)
                               juce::Rectangle<float>(1, proportionOfHeight(0.9440f), getWidth() - 2,
                                                      proportionOfHeight(0.0391f)),
                               juce::RectanglePlacement::centred, 1.000f);
-
-    //[UserPaint] Add your own custom painting code here..
-    //[/UserPaint]
 }
 
 void MenuBarLeft::resized()
@@ -259,110 +240,26 @@ void MenuBarLeft::resized()
                             proportionOfHeight(0.0495f));
     pb_pro_mode->setBounds(1, proportionOfHeight(0.9388f), getWidth() - 2,
                            proportionOfHeight(0.0495f));
-    //[UserResized] Add your own custom resize handling here..
-    //[/UserResized]
 }
 
 void MenuBarLeft::buttonClicked(juce::Button *buttonThatWasClicked)
 {
-    //[UserbuttonClicked_Pre]
-    //[/UserbuttonClicked_Pre]
-
     if (buttonThatWasClicked == pb_lite_mode.get())
     {
-        //[UserButtonCode_pb_lite_mode] -- add your button handler code here..
         _app_instance_store->editor_config.user_mode = 0;
         set_user_mode();
-        //[/UserButtonCode_pb_lite_mode]
     }
     else if (buttonThatWasClicked == pb_semi_mode.get())
     {
-        //[UserButtonCode_pb_semi_mode] -- add your button handler code here..
         _app_instance_store->editor_config.user_mode = 1;
         set_user_mode();
-        //[/UserButtonCode_pb_semi_mode]
     }
     else if (buttonThatWasClicked == pb_pro_mode.get())
     {
-        //[UserButtonCode_pb_pro_mode] -- add your button handler code here..
         _app_instance_store->editor_config.user_mode = 2;
         set_user_mode();
-        //[/UserButtonCode_pb_pro_mode]
     }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
 }
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="MenuBarLeft" componentName=""
-                 parentClasses="public Component" constructorParams="AppInstanceStore*const app_instance_store_, GstepAudioProcessorEditor*const main_window_"
-                 variableInitialisers="_app_instance_store(app_instance_store_),_main_window(main_window_)"
-                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="42" initialHeight="768">
-  <BACKGROUND backgroundColour="ff000000">
-    <IMAGE pos="0 85.286% 2M 1.302%" resource="_1stars_svg" opacity="1"
-           mode="1"/>
-    <IMAGE pos="1 89.844% 2M 2.604%" resource="_3stars_svg" opacity="1"
-           mode="1"/>
-    <IMAGE pos="1 94.401% 2M 3.906%" resource="_5stars_svg" opacity="1"
-           mode="1"/>
-  </BACKGROUND>
-  <GENERICCOMPONENT name="" id="90d39c0c38abfe3d" memberName="button_layer_1" virtualName="ModelBase"
-                    explicitFocusOrder="0" pos="1 1.302% 2M 10.417%" class="Component"
-                    params=""/>
-  <GENERICCOMPONENT name="" id="983cf60714379d17" memberName="button_layer_2" virtualName="ModelBase"
-                    explicitFocusOrder="0" pos="1 13.021% 2M 10.417%" class="Component"
-                    params=""/>
-  <GENERICCOMPONENT name="" id="8c054bebc4abcdfa" memberName="button_layer_3" virtualName="ModelBase"
-                    explicitFocusOrder="0" pos="1 24.74% 2M 10.417%" class="Component"
-                    params=""/>
-  <GENERICCOMPONENT name="" id="ee54baa16fff36f9" memberName="button_layer_4" virtualName="ModelBase"
-                    explicitFocusOrder="0" pos="1 36.458% 2M 10.417%" class="Component"
-                    params=""/>
-  <GENERICCOMPONENT name="" id="787d33afdf793763" memberName="button_layer_5" virtualName="ModelBase"
-                    explicitFocusOrder="0" pos="1 48.177% 2M 10.417%" class="Component"
-                    params=""/>
-  <GENERICCOMPONENT name="" id="4ef15432f0af87be" memberName="button_layer_6" virtualName="ModelBase"
-                    explicitFocusOrder="0" pos="1 59.896% 2M 10.417%" class="Component"
-                    params=""/>
-  <GENERICCOMPONENT name="" id="8309c2cd5de872a4" memberName="button_layer_7" virtualName="ModelBase"
-                    explicitFocusOrder="0" pos="1 71.615% 2M 10.417%" class="Component"
-                    params=""/>
-  <IMAGEBUTTON name="" id="66d6c7cff9ad9157" memberName="pb_lite_mode" virtualName=""
-               explicitFocusOrder="0" pos="1 83.464% 2M 4.948%" buttonText=""
-               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
-               resourceNormal="" opacityNormal="1" colourNormal="0" resourceOver=""
-               opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
-               colourDown="0"/>
-  <IMAGEBUTTON name="" id="6dad676a86496bb1" memberName="pb_semi_mode" virtualName=""
-               explicitFocusOrder="0" pos="1 88.672% 2M 4.948%" buttonText=""
-               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
-               resourceNormal="" opacityNormal="1" colourNormal="0" resourceOver=""
-               opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
-               colourDown="0"/>
-  <IMAGEBUTTON name="" id="82a38c0a500ea4d0" memberName="pb_pro_mode" virtualName=""
-               explicitFocusOrder="0" pos="1 93.88% 2M 4.948%" buttonText=""
-               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
-               resourceNormal="" opacityNormal="1" colourNormal="0" resourceOver=""
-               opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
-               colourDown="0"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
 
 //==============================================================================
 // Binary resources - be careful not to edit any of these sections!
@@ -2397,6 +2294,3 @@ static const unsigned char resource_MenuBarLeft__1starson_svg[] = {
 
 const char *MenuBarLeft::_1starson_svg = (const char *)resource_MenuBarLeft__1starson_svg;
 const int MenuBarLeft::_1starson_svgSize = 3676;
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

@@ -18,22 +18,12 @@
 #ifndef __JUCE_HEADER_66A24595D6F5B79C__
 #define __JUCE_HEADER_66A24595D6F5B79C__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
 
 class AppInstanceStore;
 class UiLabel;
-//[/Headers]
 
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiEditorMidiLearn : public UiEditor,
                           public juce::Button::Listener,
                           public juce::ComboBox::Listener
@@ -44,7 +34,6 @@ class UiEditorMidiLearn : public UiEditor,
     ~UiEditorMidiLearn();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
 
     void refresh_ui();
@@ -69,8 +58,6 @@ class UiEditorMidiLearn : public UiEditor,
     void on_close_clicked() override;
 
   private:
-    //[/UserMethods]
-
     void paint(juce::Graphics &g) override;
     void resized() override;
     void buttonClicked(juce::Button *buttonThatWasClicked) override;
@@ -81,9 +68,6 @@ class UiEditorMidiLearn : public UiEditor,
     static const int trash_svgSize;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<juce::Label> label_target;
     std::unique_ptr<juce::TextButton> delete_asignment;
@@ -100,8 +84,5 @@ class UiEditorMidiLearn : public UiEditor,
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorMidiLearn)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_66A24595D6F5B79C__

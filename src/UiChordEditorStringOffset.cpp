@@ -15,17 +15,14 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #include "_H_UiElements.h"
 #include "ControllerConfig.h"
 
 #include "CoreSequencer.h"
 #include "UiChordEditorChordOffset.h"
-//[/Headers]
 
 #include "UiChordEditorStringOffset.h"
 
-//[MiscUserDefs] You can add your own user definitions and misc code here...
 class ControllerStringOffset : public MONO_UISliderController
 {
     AppInstanceStore *const _app_instance_store;
@@ -121,7 +118,6 @@ void UiChordEditorStringOffset::set_style(AppStyle *const style_)
 
     repaint_label();
 }
-//[/MiscUserDefs]
 
 //==============================================================================
 UiChordEditorStringOffset::UiChordEditorStringOffset(AppInstanceStore *const app_instance_store_,
@@ -144,43 +140,28 @@ UiChordEditorStringOffset::UiChordEditorStringOffset(AppInstanceStore *const app
         _app_instance_store->style_popup_editor_chord.get());
     addAndMakeVisible(*slider);
 
-    //[UserPreSize]
     setOpaque(true);
-    //[/UserPreSize]
 
     setSize(80, 40);
-
-    //[Constructor] You can add your own custom stuff here..
-    //[/Constructor]
 }
 
 UiChordEditorStringOffset::~UiChordEditorStringOffset()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
     MONO_Controller *tmp_ctlr = const_cast<MONO_Controller *>(slider->get_controller());
     slider->set_controller(nullptr);
     delete tmp_ctlr;
-    //[/Destructor_pre]
 
     label = nullptr;
     slider = nullptr;
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
 }
 
 //==============================================================================
 void UiChordEditorStringOffset::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
     g.fillAll(juce::Colour(_app_instance_store->style_popup_editor->get_background_color()));
     return;
-    //[/UserPrePaint]
 
     g.fillAll(juce::Colour(0xff161616));
-
-    //[UserPaint] Add your own custom painting code here..
-    //[/UserPaint]
 }
 
 void UiChordEditorStringOffset::resized()
@@ -188,40 +169,4 @@ void UiChordEditorStringOffset::resized()
     label->setBounds(getWidth() - proportionOfWidth(0.5000f), 0, proportionOfWidth(0.5000f),
                      proportionOfHeight(1.0000f));
     slider->setBounds(0, 0, proportionOfWidth(0.5000f), proportionOfHeight(1.0000f));
-    //[UserResized] Add your own custom resize handling here..
-    //[/UserResized]
 }
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="UiChordEditorStringOffset"
-                 componentName="" parentClasses="public Component" constructorParams="AppInstanceStore* const app_instance_store_,std::uint8_t chord_id_, std::uint8_t barstring_id_"
-                 variableInitialisers="_app_instance_store(app_instance_store_)"
-                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="80" initialHeight="40">
-  <BACKGROUND backgroundColour="ff161616"/>
-  <LABEL name="" id="c06a04c41a1aa81f" memberName="label" virtualName=""
-         explicitFocusOrder="0" pos="0Rr 0 50% 100%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
-  <GENERICCOMPONENT name="" id="7df349b1fad40eac" memberName="slider" virtualName="ModelBase"
-                    explicitFocusOrder="0" pos="0 0 50% 100%" class="Component" params="new ControllerStringOffset(_app_instance_store,chord_id_,barstring_id_,label),_app_instance_store-&gt;style_popup_editor_chord"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

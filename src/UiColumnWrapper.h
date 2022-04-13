@@ -18,7 +18,6 @@
 #ifndef __JUCE_HEADER_8614586703E11C5E__
 #define __JUCE_HEADER_8614586703E11C5E__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "Controller.h"
 #include "UI_MoveEvent2ChildsComponent.h"
@@ -52,16 +51,7 @@ struct SubeditorBase : public MoveEvent2ChildsComponent
     //==============================================================================
     JUCE_LEAK_DETECTOR(SubeditorBase)
 };
-//[/Headers]
 
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiColumnWrapper : public juce::Component
 {
   public:
@@ -70,7 +60,6 @@ class UiColumnWrapper : public juce::Component
     ~UiColumnWrapper();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
   private:
     AppStyle *_style;
 
@@ -88,15 +77,11 @@ class UiColumnWrapper : public juce::Component
 
     void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_);
     void get_controllers_for_paint_popup(juce::Array<MONO_Controller *> &controllers_with_popup_);
-    //[/UserMethods]
 
     void paint(juce::Graphics &g);
     void resized();
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<SubeditorBase> leftside_subeditor;
     std::unique_ptr<UiColumn16> column_editor;
@@ -104,8 +89,5 @@ class UiColumnWrapper : public juce::Component
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiColumnWrapper)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_8614586703E11C5E__

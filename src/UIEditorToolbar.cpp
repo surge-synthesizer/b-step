@@ -15,14 +15,11 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #include "AppParameterList.h"
 #include "UiEditorInputPopup.h"
-//[/Headers]
 
 #include "UIEditorToolbar.h"
 
-//[MiscUserDefs] You can add your own user definitions and misc code here...
 UiEditor::UiEditor(juce::String name)
     : juce::ResizableWindow(name, juce::Colour(0xff000000), false), animate_lock(false),
       _animate_mover(nullptr)
@@ -199,7 +196,6 @@ void UiEditor::animate_move_back()
         _animate_mover = nullptr;
     }
 }
-//[/MiscUserDefs]
 
 //==============================================================================
 UiEditorToolbar::UiEditorToolbar(UiEditor *const owner_editor_, bool show_close, bool show_move,
@@ -233,7 +229,6 @@ UiEditorToolbar::UiEditorToolbar(UiEditor *const owner_editor_, bool show_close,
     drawable3 = juce::Drawable::createFromImageData(move_svg, move_svgSize);
     drawable4 = juce::Drawable::createFromImageData(close_svg, close_svgSize);
 
-    //[UserPreSize]
     if (!show_close)
     {
         close->setVisible(false);
@@ -251,13 +246,10 @@ UiEditorToolbar::UiEditorToolbar(UiEditor *const owner_editor_, bool show_close,
         drawable1 = juce::Drawable::createFromImageData(load_svg, 0);
         drawable2 = juce::Drawable::createFromImageData(save_svg, 0);
     }
-    //[/UserPreSize]
 
     setSize(50, 200);
 
-    //[Constructor] You can add your own custom stuff here..
     setInterceptsMouseClicks(false, true);
-    //[/Constructor]
 }
 
 UiEditorToolbar::~UiEditorToolbar() {}
@@ -265,9 +257,6 @@ UiEditorToolbar::~UiEditorToolbar() {}
 //==============================================================================
 void UiEditorToolbar::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
-
     g.setColour(juce::Colours::black);
     // jassert (drawable1 );
     if (drawable1)
@@ -303,15 +292,10 @@ void UiEditorToolbar::paint(juce::Graphics &g)
             juce::Rectangle<float>(proportionOfWidth(0.2000f), proportionOfHeight(0.0750f),
                                    proportionOfWidth(0.5000f), proportionOfHeight(0.1250f)),
             juce::RectanglePlacement::centred, 1.000f);
-
-    //[UserPaint] Add your own custom painting code here..
-    //[/UserPaint]
 }
 
 void UiEditorToolbar::resized()
 {
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
 
     close->setBounds(proportionOfWidth(0.0400f), proportionOfHeight(0.0350f),
                      proportionOfWidth(0.8000f), proportionOfHeight(0.2000f));
@@ -319,84 +303,26 @@ void UiEditorToolbar::resized()
                     proportionOfWidth(0.8000f), proportionOfHeight(0.1500f));
     save->setBounds(proportionOfWidth(0.0400f), proportionOfHeight(0.7500f),
                     proportionOfWidth(0.8000f), proportionOfHeight(0.1500f));
-    //[UserResized] Add your own custom resize handling here..
-    //[/UserResized]
 }
 
 void UiEditorToolbar::buttonClicked(juce::Button *buttonThatWasClicked)
 {
-    //[UserbuttonClicked_Pre]
-    //[/UserbuttonClicked_Pre]
-
     if (buttonThatWasClicked == close.get())
     {
-        //[UserButtonCode_close] -- add your button handler code here..
         if (!_owner_editor->animate_lock)
         {
             _owner_editor->on_close_clicked();
         }
-        //[/UserButtonCode_close]
     }
     else if (buttonThatWasClicked == load.get())
     {
-        //[UserButtonCode_load] -- add your button handler code here..
         _owner_editor->on_load_clicked();
-        //[/UserButtonCode_load]
     }
     else if (buttonThatWasClicked == save.get())
     {
-        //[UserButtonCode_save] -- add your button handler code here..
         _owner_editor->on_save_clicked();
-        //[/UserButtonCode_save]
     }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
 }
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="UiEditorToolbar" componentName=""
-                 parentClasses="public Component" constructorParams="UiEditor*const owner_editor_, bool show_close = true, bool show_move = true, bool show_load_save = true"
-                 variableInitialisers="_owner_editor(owner_editor_)" snapPixels="8"
-                 snapActive="1" snapShown="1" overlayOpacity="0.330" fixedSize="1"
-                 initialWidth="50" initialHeight="200">
-  <BACKGROUND backgroundColour="ffffff">
-    <IMAGE pos="20% 60% 50% 12.5%" resource="load_svg" opacity="1" mode="1"/>
-    <IMAGE pos="20% 75% 50% 12.5%" resource="save_svg" opacity="1" mode="1"/>
-    <IMAGE pos="20% 35% 50% 12.5%" resource="move_svg" opacity="1" mode="1"/>
-    <IMAGE pos="20% 7.5% 50% 12.5%" resource="close_svg" opacity="1" mode="1"/>
-  </BACKGROUND>
-  <IMAGEBUTTON name="" id="8c767370c223a78f" memberName="close" virtualName=""
-               explicitFocusOrder="0" pos="4% 3.5% 80% 20%" buttonText="" connectedEdges="0"
-               needsCallback="1" radioGroupId="0" keepProportions="1" resourceNormal=""
-               opacityNormal="0" colourNormal="0" resourceOver="" opacityOver="0"
-               colourOver="0" resourceDown="" opacityDown="0" colourDown="0"/>
-  <IMAGEBUTTON name="" id="1166efa410e75fa4" memberName="load" virtualName=""
-               explicitFocusOrder="0" pos="4% 57.5% 80% 15%" buttonText="" connectedEdges="0"
-               needsCallback="1" radioGroupId="0" keepProportions="1" resourceNormal=""
-               opacityNormal="0" colourNormal="0" resourceOver="" opacityOver="0"
-               colourOver="0" resourceDown="" opacityDown="0" colourDown="0"/>
-  <IMAGEBUTTON name="" id="a91de02cee9ead04" memberName="save" virtualName=""
-               explicitFocusOrder="0" pos="4% 75% 80% 15%" buttonText="" connectedEdges="0"
-               needsCallback="1" radioGroupId="0" keepProportions="1" resourceNormal=""
-               opacityNormal="0" colourNormal="0" resourceOver="" opacityOver="0"
-               colourOver="0" resourceDown="" opacityDown="0" colourDown="0"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
 
 //==============================================================================
 // Binary resources - be careful not to edit any of these sections!
@@ -880,6 +806,3 @@ static const unsigned char resource_UiEditorToolbar_close_svg[] = {
 
 const char *UiEditorToolbar::close_svg = (const char *)resource_UiEditorToolbar_close_svg;
 const int UiEditorToolbar::close_svgSize = 2098;
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

@@ -18,22 +18,12 @@
 #ifndef __JUCE_HEADER_49E9D35AC14A2530__
 #define __JUCE_HEADER_49E9D35AC14A2530__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 
 class ModelBase;
 class UiLabel;
 class AppInstanceStore;
-//[/Headers]
 
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiChordEditorChordOffset : public juce::Component
 {
   public:
@@ -42,21 +32,16 @@ class UiChordEditorChordOffset : public juce::Component
     ~UiChordEditorChordOffset();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
 
     void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_);
     std::int8_t last_refreshed_offset_value;
     bool is_your_value_changed_since_last_request();
-    //[/UserMethods]
 
     void paint(juce::Graphics &g);
     void resized();
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<UiLabel> label;
     std::unique_ptr<ModelBase> slider;
@@ -64,8 +49,5 @@ class UiChordEditorChordOffset : public juce::Component
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiChordEditorChordOffset)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_49E9D35AC14A2530__

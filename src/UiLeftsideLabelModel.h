@@ -18,21 +18,11 @@
 #ifndef __JUCE_HEADER_EE082E2DCA75D936__
 #define __JUCE_HEADER_EE082E2DCA75D936__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "Controller.h"
 #include "UiColumnWrapper.h"
 
-//[/Headers]
-
 //==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiLeftsideLabelModel : public SubeditorBase, public juce::Button::Listener
 {
   public:
@@ -41,7 +31,6 @@ class UiLeftsideLabelModel : public SubeditorBase, public juce::Button::Listener
     ~UiLeftsideLabelModel();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
   private:
     AppInstanceStore *const _app_insteance_store;
     juce::String _text;
@@ -56,16 +45,12 @@ class UiLeftsideLabelModel : public SubeditorBase, public juce::Button::Listener
     void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_) override;
     void get_controllers_for_paint_popup(
         juce::Array<MONO_Controller *> &controllers_with_popup_) override;
-    //[/UserMethods]
 
     void paint(juce::Graphics &g) override;
     void resized() override;
     void buttonClicked(juce::Button *buttonThatWasClicked) override;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<juce::ImageButton> bg_button;
     std::unique_ptr<ModelBase> model;
@@ -73,8 +58,5 @@ class UiLeftsideLabelModel : public SubeditorBase, public juce::Button::Listener
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiLeftsideLabelModel)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_EE082E2DCA75D936__

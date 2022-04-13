@@ -18,22 +18,12 @@
 #ifndef __JUCE_HEADER_D69BC9044BC344F4__
 #define __JUCE_HEADER_D69BC9044BC344F4__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
 #include <juce_audio_utils/juce_audio_utils.h>
 
 class AppInstanceStore;
-//[/Headers]
 
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiEditorKeyboard : public UiEditor
 {
   public:
@@ -42,25 +32,17 @@ class UiEditorKeyboard : public UiEditor
     ~UiEditorKeyboard();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
-    //[/UserMethods]
 
     void paint(juce::Graphics &g);
     void resized();
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<juce::MidiKeyboardComponent> keyboard;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorKeyboard)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_D69BC9044BC344F4__

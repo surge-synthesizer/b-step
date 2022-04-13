@@ -15,7 +15,6 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #include "UiMainWindow.h"
 #include "AppStyles.h"
 #include "_H_UiElements.h"
@@ -23,11 +22,9 @@
 #include "PluginProcessor.h"
 #include "CoreSequencer.h"
 #include "PluginProcessor.h"
-//[/Headers]
 
 #include "UiEditorRightMainwindows.h"
 
-//[MiscUserDefs] You can add your own user definitions and misc code here...
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
@@ -82,8 +79,6 @@ void UiEditorRightMainwindows::get_controllers_for_paint_popup(
 
     slider_bpm->get_controllers_for_paint_popup(controllers_that_need_a_popup);
 }
-
-//[/MiscUserDefs]
 
 //==============================================================================
 UiEditorRightMainwindows::UiEditorRightMainwindows(AppInstanceStore *const app_instance_store_,
@@ -280,20 +275,14 @@ UiEditorRightMainwindows::UiEditorRightMainwindows(AppInstanceStore *const app_i
     _models.add(button_chord_editor.get());
 
 #ifdef DO_NEVER_DEFINE_THIS
-    //[/UserPreSize]
 
     setSize(206, 748);
 
-    //[Constructor] You can add your own custom stuff here..
 #endif // DO_NEVER_DEFINE_THIS
-    //[/Constructor]
 }
 
 UiEditorRightMainwindows::~UiEditorRightMainwindows()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
-    //[/Destructor_pre]
-
     lbl_set_9 = nullptr;
     lbl_bar_chord2 = nullptr;
     lbl_bar_chord3 = nullptr;
@@ -324,23 +313,15 @@ UiEditorRightMainwindows::~UiEditorRightMainwindows()
     lbl_version2 = nullptr;
     lbl_version3 = nullptr;
     lbl_version4 = nullptr;
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
 }
 
 //==============================================================================
 void UiEditorRightMainwindows::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
     g.fillAll(juce::Colour(_app_instance_store->style_global_area->get_foreground_color()));
     return;
-    //[/UserPrePaint]
 
     g.fillAll(juce::Colour(0xff111111));
-
-    //[UserPaint] Add your own custom painting code here..
-    //[/UserPaint]
 }
 
 void UiEditorRightMainwindows::resized()
@@ -405,124 +386,4 @@ void UiEditorRightMainwindows::resized()
                             proportionOfWidth(0.1942f), proportionOfHeight(0.0495f));
     lbl_version4->setBounds(proportionOfWidth(0.7379f), proportionOfHeight(0.9171f),
                             proportionOfWidth(0.1942f), proportionOfHeight(0.0495f));
-    //[UserResized] Add your own custom resize handling here..
-    //[/UserResized]
 }
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="UiEditorRightMainwindows"
-                 componentName="" parentClasses="public MoveEvent2ChildsComponent"
-                 constructorParams="AppInstanceStore*const app_instance_store_, GstepAudioProcessorEditor*const main_window_"
-                 variableInitialisers="_app_instance_store(app_instance_store_),_main_window(main_window_)"
-                 snapPixels="4" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="206" initialHeight="748">
-  <BACKGROUND backgroundColour="ff111111"/>
-  <GENERICCOMPONENT name="" id="6270c67e016614d9" memberName="lbl_set_9" virtualName="UiLabel"
-                    explicitFocusOrder="0" pos="69.417% 37.299% 19.417% 5.348%" class="Component"
-                    params="&quot;E&quot;,_app_instance_store-&gt;style_global_area_octave"/>
-  <GENERICCOMPONENT name="" id="4c4f643325dfd9e" memberName="lbl_bar_chord2" virtualName="UiLabel"
-                    explicitFocusOrder="0" pos="0% 70.588% 100% 5.882%" class="Component"
-                    params="&quot;chord set&quot;,_app_instance_store-&gt;style_global_area_chord"/>
-  <GENERICCOMPONENT name="" id="482562075ba68bd" memberName="lbl_bar_chord3" virtualName="UiLabel"
-                    explicitFocusOrder="0" pos="38.835% 50.134% 48.544% 5.882%" class="Component"
-                    params="&quot;tune&quot;,_app_instance_store-&gt;style_global_area_octave"/>
-  <GENERICCOMPONENT name="" id="3354b014ef9a3485" memberName="lbl_bar_chord4" virtualName="UiLabel"
-                    explicitFocusOrder="0" pos="34.951% 29.813% 54.369% 5.882%" class="Component"
-                    params="&quot;octave&quot;,_app_instance_store-&gt;style_global_area_octave"/>
-  <GENERICCOMPONENT name="" id="f967bf192f47536f" memberName="pattern_gstring_offset_0"
-                    virtualName="ModelBase" explicitFocusOrder="0" pos="14.563% 11.631% 20.388% 5.615%"
-                    class="Component" params="_app_instance_store-&gt;controller.pattern.string_octaves[0],_app_instance_store-&gt;style_global_area_octave"/>
-  <GENERICCOMPONENT name="" id="6765f5ef665a04dc" memberName="pattern_gstring_offset_1"
-                    virtualName="ModelBase" explicitFocusOrder="0" pos="4.854% 18.316% 20.388% 5.615%"
-                    class="Component" params="_app_instance_store-&gt;controller.pattern.string_octaves[1],_app_instance_store-&gt;style_global_area_octave"/>
-  <GENERICCOMPONENT name="" id="1e3f1bd189ee616d" memberName="pattern_gstring_offset_2"
-                    virtualName="ModelBase" explicitFocusOrder="0" pos="4.854% 25% 20.388% 5.615%"
-                    class="Component" params="_app_instance_store-&gt;controller.pattern.string_octaves[2],_app_instance_store-&gt;style_global_area_octave"/>
-  <GENERICCOMPONENT name="" id="56221f9d4d266ed9" memberName="pattern_gstring_offset_3"
-                    virtualName="ModelBase" explicitFocusOrder="0" pos="14.563% 31.684% 20.388% 5.615%"
-                    class="Component" params="_app_instance_store-&gt;controller.pattern.string_octaves[3],_app_instance_store-&gt;style_global_area_octave"/>
-  <GENERICCOMPONENT name="" id="cc9dcfb2ff3de6a9" memberName="pattern_chord" virtualName="ModelBase"
-                    explicitFocusOrder="0" pos="25.728% 57.487% 48.544% 13.369%"
-                    class="Component" params="_app_instance_store-&gt;controller.pattern.chord,_app_instance_store-&gt;style_global_area_chord"/>
-  <GENERICCOMPONENT name="" id="2430487a09605f28" memberName="pattern_note" virtualName="ModelBase"
-                    explicitFocusOrder="0" pos="46.117% 41.176% 33.981% 9.358%" class="Component"
-                    params="_app_instance_store-&gt;controller.pattern.note, _app_instance_store-&gt;style_global_area_octave"/>
-  <GENERICCOMPONENT name="" id="5d6e722e5fa9215a" memberName="pattern_oktave" virtualName="ModelBase"
-                    explicitFocusOrder="0" pos="38.835% 17.781% 48.544% 13.369%"
-                    class="Component" params="_app_instance_store-&gt;controller.pattern.octave,_app_instance_store-&gt;style_global_area_octave"/>
-  <GENERICCOMPONENT name="" id="8ac43ca790eb75de" memberName="lbl_version" virtualName="UiLabel"
-                    explicitFocusOrder="0" pos="4.854% 91.711% 19.417% 4.947%" class="Component"
-                    params="&quot;shfl&quot;,_app_instance_store-&gt;style_global_area_stop"/>
-  <GENERICCOMPONENT name="" id="f5cbbf81f9fc0249" memberName="slider_bpm" virtualName="ModelBase"
-                    explicitFocusOrder="0" pos="4.854% 2.139% 19.417% 5.348%" class="Component"
-                    params="new ControllerBPM( _app_instance_store ),_app_instance_store-&gt;style_global_area_run"/>
-  <GENERICCOMPONENT name="" id="7c45e7bbe1329c75" memberName="button_mute" virtualName="ModelBase"
-                    explicitFocusOrder="0" pos="74.757% 2.139% 19.417% 5.348%" class="Component"
-                    params="new ControllerMute( _app_instance_store ),_app_instance_store-&gt;style_global_area_stop"/>
-  <GENERICCOMPONENT name="" id="37b9e13012a9bec" memberName="button_chord_editor"
-                    virtualName="ModelBase" explicitFocusOrder="0" pos="0% 62.032% 19.417% 5.348%"
-                    class="Component" params="new ControllerChordEditor( _app_instance_store,_main_window ),_app_instance_store-&gt;style_global_area_chord"/>
-  <GENERICCOMPONENT name="" id="b1c16635d3dafaa6" memberName="lbl_set_1" virtualName="UiLabel"
-                    explicitFocusOrder="0" pos="16.019% 68.182% 19.417% 5.348%" class="Component"
-                    params="&quot;1&quot;,_app_instance_store-&gt;style_global_area_chord"/>
-  <GENERICCOMPONENT name="" id="6c32c04126a61d8e" memberName="lbl_set_2" virtualName="UiLabel"
-                    explicitFocusOrder="0" pos="64.563% 68.182% 19.417% 5.348%" class="Component"
-                    params="&quot;5&quot;,_app_instance_store-&gt;style_global_area_chord"/>
-  <GENERICCOMPONENT name="" id="ac3606bb5f832d8a" memberName="lbl_set_7" virtualName="UiLabel"
-                    explicitFocusOrder="0" pos="34.951% 48.262% 19.417% 5.348%" class="Component"
-                    params="&quot;A&quot;,_app_instance_store-&gt;style_global_area_octave"/>
-  <GENERICCOMPONENT name="" id="26f3a6cc8b485ecf" memberName="lbl_set_8" virtualName="UiLabel"
-                    explicitFocusOrder="0" pos="71.845% 48.262% 19.417% 5.348%" class="Component"
-                    params="&quot;G#&quot;,_app_instance_store-&gt;style_global_area_octave"/>
-  <GENERICCOMPONENT name="" id="33ada817f36bba90" memberName="lbl_set_4" virtualName="UiLabel"
-                    explicitFocusOrder="0" pos="75.728% 27.941% 19.417% 5.348%" class="Component"
-                    params="&quot;3&quot;,_app_instance_store-&gt;style_global_area_octave"/>
-  <GENERICCOMPONENT name="" id="c06a04c41a1aa81f" memberName="lbl_set_3" virtualName="UiLabel"
-                    explicitFocusOrder="0" pos="30.097% 28.209% 19.417% 5.348%" class="Component"
-                    params="&quot;-3&quot;,_app_instance_store-&gt;style_global_area_octave"/>
-  <GENERICCOMPONENT name="" id="88a51ded2c24a59c" memberName="lbl_set_6" virtualName="UiLabel"
-                    explicitFocusOrder="0" pos="52.913% 13.235% 19.417% 5.348%" class="Component"
-                    params="&quot;0&quot;,_app_instance_store-&gt;style_global_area_octave"/>
-  <GENERICCOMPONENT name="" id="44369bccd5c91f92" memberName="label_current_bpm"
-                    virtualName="UiLabel" explicitFocusOrder="0" pos="27.184% 2.139% 40.777% 5.348%"
-                    class="Component" params="&quot;BPM&quot;,_app_instance_store-&gt;style_global_area_run"/>
-  <GENERICCOMPONENT name="" id="83738b20df7c18be" memberName="button_chord_editor2"
-                    virtualName="ModelBase" explicitFocusOrder="0" pos="4.854% 85.027% 19.417% 5.348%"
-                    class="Component" params="new ControllerSwingPosition( _app_instance_store),_app_instance_store-&gt;style_global_area_stop"/>
-  <GENERICCOMPONENT name="" id="be931952e1724668" memberName="button_chord_editor3"
-                    virtualName="ModelBase" explicitFocusOrder="0" pos="28.155% 85.027% 19.417% 5.348%"
-                    class="Component" params="new ControllerSwingDistanceOffset( _app_instance_store),_app_instance_store-&gt;style_global_area_stop"/>
-  <GENERICCOMPONENT name="" id="eb7b597aacb17f27" memberName="button_chord_editor4"
-                    virtualName="ModelBase" explicitFocusOrder="0" pos="51.456% 85.027% 19.417% 5.348%"
-                    class="Component" params="new ControllerSwingVelocityOffset( _app_instance_store),_app_instance_store-&gt;style_global_area_velocity"/>
-  <GENERICCOMPONENT name="" id="f0a86bc68baf0c62" memberName="button_chord_editor5"
-                    virtualName="ModelBase" explicitFocusOrder="0" pos="73.786% 85.027% 19.417% 5.348%"
-                    class="Component" params="new ControllerSwingDurationOffset( _app_instance_store),_app_instance_store-&gt;style_global_area_duration"/>
-  <GENERICCOMPONENT name="" id="7f14a6f3d6ef1817" memberName="lbl_version2" virtualName="UiLabel"
-                    explicitFocusOrder="0" pos="28.155% 91.711% 19.417% 4.947%" class="Component"
-                    params="&quot;&gt;&gt;&quot;,_app_instance_store-&gt;style_global_area_stop"/>
-  <GENERICCOMPONENT name="" id="73d43f23446d2a7e" memberName="lbl_version3" virtualName="UiLabel"
-                    explicitFocusOrder="0" pos="51.456% 91.711% 19.417% 4.947%" class="Component"
-                    params="&quot;velo&quot;,_app_instance_store-&gt;style_global_area_velocity"/>
-  <GENERICCOMPONENT name="" id="b3aeba8b58e375dd" memberName="lbl_version4" virtualName="UiLabel"
-                    explicitFocusOrder="0" pos="73.786% 91.711% 19.417% 4.947%" class="Component"
-                    params="&quot;dura&quot;,_app_instance_store-&gt;style_global_area_duration"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

@@ -18,23 +18,12 @@
 #ifndef __JUCE_HEADER_E48326D9C43DBCF0__
 #define __JUCE_HEADER_E48326D9C43DBCF0__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "Controller.h"
 #include "UiColumnWrapper.h"
 #include "MIDICC.h"
 
 class UiLabel;
-//[/Headers]
-
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiLeftsideCC : public SubeditorBase
 {
   public:
@@ -43,7 +32,6 @@ class UiLeftsideCC : public SubeditorBase
     ~UiLeftsideCC();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
   public:
     void on_style_set(AppStyle *const style_) override;
 
@@ -53,15 +41,12 @@ class UiLeftsideCC : public SubeditorBase
     }
 
     void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_) override;
-    //[/UserMethods]
 
     void paint(juce::Graphics &g) override;
     void resized() override;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
     MIDICC midi_cc;
-    //[/UserVariables]
 
     //==============================================================================
     std::unique_ptr<ModelBase> cc_type;
@@ -70,8 +55,5 @@ class UiLeftsideCC : public SubeditorBase
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiLeftsideCC)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_E48326D9C43DBCF0__

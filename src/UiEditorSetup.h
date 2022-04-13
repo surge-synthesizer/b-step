@@ -18,22 +18,14 @@
 #ifndef __JUCE_HEADER_212FF4A38918099C__
 #define __JUCE_HEADER_212FF4A38918099C__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
 
 class AppInstanceStore;
 class UiLabel;
-//[/Headers]
 
 //==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
 
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiEditorSetup : public UiEditor, public juce::Button::Listener, public juce::Slider::Listener
 {
   public:
@@ -42,13 +34,11 @@ class UiEditorSetup : public UiEditor, public juce::Button::Listener, public juc
     ~UiEditorSetup();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
 
     void on_close_clicked() override;
 
     void refresh_ui();
-    //[/UserMethods]
 
     void paint(juce::Graphics &g) override;
     void resized() override;
@@ -56,9 +46,6 @@ class UiEditorSetup : public UiEditor, public juce::Button::Listener, public juc
     void sliderValueChanged(juce::Slider *sliderThatWasMoved) override;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<juce::Label> label_multidrag_on_off2;
     std::unique_ptr<juce::Label> label_multidrag_on_off;
@@ -83,8 +70,5 @@ class UiEditorSetup : public UiEditor, public juce::Button::Listener, public juc
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorSetup)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_212FF4A38918099C__

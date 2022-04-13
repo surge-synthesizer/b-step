@@ -18,20 +18,10 @@
 #ifndef __JUCE_HEADER_E11E4287FAF6B318__
 #define __JUCE_HEADER_E11E4287FAF6B318__
 
-//[Headers]     -- You can add your own extra header files here --
 #if !JUCE_IOS
 #include "App.h"
 #endif
-//[/Headers]
 
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class MySplashScreen : public juce::Component
 {
   public:
@@ -40,8 +30,6 @@ class MySplashScreen : public juce::Component
     ~MySplashScreen();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
-    //[/UserMethods]
 
     void paint(juce::Graphics &g);
     void resized();
@@ -51,17 +39,11 @@ class MySplashScreen : public juce::Component
     static const int desktopsplash_pngSize;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     juce::Image cachedImage_desktopsplash_png;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MySplashScreen)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_E11E4287FAF6B318__

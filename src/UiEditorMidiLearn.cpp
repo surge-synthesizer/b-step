@@ -15,7 +15,6 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #include "UiSettings.h"
 #include "UiMainWindow.h"
 
@@ -28,11 +27,9 @@
 #include "UiEditorFileManager.h"
 
 #include "UIHtmlView.h"
-//[/Headers]
 
 #include "UiEditorMidiLearn.h"
 
-//[MiscUserDefs] You can add your own user definitions and misc code here...
 /*
     addAndMakeVisible (label_target4 = new UiLabel ("1:1 - ONE controller can assigned to only ONE
    target (last trained) (default)",_app_instance_store->style_popup_editor));
@@ -156,7 +153,6 @@ void UiEditorMidiLearn::on_close_clicked()
 
     _app_instance_store->editor_config.midi_learn_editor = nullptr;
 }
-//[/MiscUserDefs]
 
 //==============================================================================
 UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_)
@@ -245,7 +241,6 @@ UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_
 
     drawable1 = juce::Drawable::createFromImageData(trash_svg, trash_svgSize);
 
-    //[UserPreSize]
     setOpaque(true);
 
     _last_change_counter = 0;
@@ -254,11 +249,8 @@ UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_
     _current_type = -1;
     _current_number = -1;
 
-    //[/UserPreSize]
-
     setSize(360, 250);
 
-    //[Constructor] You can add your own custom stuff here..
     cb_midi_learn_mode->addItem("1:1", 1);
     cb_midi_learn_mode->addItem("1:n", 2);
     cb_midi_learn_mode->addItem("n:1", 3);
@@ -268,17 +260,14 @@ UiEditorMidiLearn::UiEditorMidiLearn(AppInstanceStore *const app_instance_store_
 
     center_relative_and_make_visible(_app_instance_store->editor);
     restore_XY(_app_instance_store->editor_config.XY_midi_learn_editor);
-    //[/Constructor]
 }
 
 UiEditorMidiLearn::~UiEditorMidiLearn()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
     _app_instance_store->editor_config.XY_midi_learn_editor = juce::Point<int>(getX(), getY());
 
     _app_instance_store->midi_in_map.set_learning(false);
     _app_instance_store->editor_config.controller_mid_learn = nullptr;
-    //[/Destructor_pre]
 
     label_target = nullptr;
     delete_asignment = nullptr;
@@ -291,17 +280,11 @@ UiEditorMidiLearn::~UiEditorMidiLearn()
     button_info = nullptr;
     label = nullptr;
     drawable1 = nullptr;
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
 }
 
 //==============================================================================
 void UiEditorMidiLearn::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
-
     g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
@@ -317,16 +300,11 @@ void UiEditorMidiLearn::paint(juce::Graphics &g)
                                    proportionOfWidth(0.1111f), proportionOfHeight(0.0960f)),
             juce::RectanglePlacement::centred, 1.000f);
 
-    //[UserPaint] Add your own custom painting code here..
     juce::ResizableWindow::moved();
-    //[/UserPaint]
 }
 
 void UiEditorMidiLearn::resized()
 {
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
-
     label_target->setBounds(proportionOfWidth(0.1111f), proportionOfHeight(0.0400f),
                             proportionOfWidth(0.7778f), proportionOfHeight(0.1600f));
     delete_asignment->setBounds(proportionOfWidth(0.3333f), proportionOfHeight(0.5600f),
@@ -347,28 +325,21 @@ void UiEditorMidiLearn::resized()
                            proportionOfWidth(0.0833f), proportionOfHeight(0.1200f));
     label->setBounds(proportionOfWidth(0.0556f), proportionOfHeight(0.7200f),
                      proportionOfWidth(0.7778f), proportionOfHeight(0.2000f));
-    //[UserResized] Add your own custom resize handling here..
+
     juce::ResizableWindow::resized();
-    //[/UserResized]
 }
 
 void UiEditorMidiLearn::buttonClicked(juce::Button *buttonThatWasClicked)
 {
-    //[UserbuttonClicked_Pre]
-    //[/UserbuttonClicked_Pre]
-
     if (buttonThatWasClicked == delete_asignment.get())
     {
-        //[UserButtonCode_delete_asignment] -- add your button handler code here..
         _app_instance_store->midi_in_map.remove_handler_for(
             _last_controller,
             MIDIInToControllerHandler(_current_type, _current_number, _current_channel));
         load_assignments();
-        //[/UserButtonCode_delete_asignment]
     }
     else if (buttonThatWasClicked == button_remove_all_mappings.get())
     {
-        //[UserButtonCode_button_remove_all_mappings] -- add your button handler code here..
         class CallbackManager : public juce::ModalComponentManager::Callback
         {
             MIDIInToControllerMap *const _map;
@@ -400,32 +371,22 @@ void UiEditorMidiLearn::buttonClicked(juce::Button *buttonThatWasClicked)
             juce::AlertWindow::WarningIcon, "Clear MIDI mappings?",
             "This will delete all your assinged controllers! Press OK if you like to do it now!",
             "CLEAR ALL", "KEEP IT", _app_instance_store->editor, callback);
-        //[/UserButtonCode_button_remove_all_mappings]
     }
     else if (buttonThatWasClicked == button_info.get())
     {
-        //[UserButtonCode_button_info] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
             _app_instance_store->editor_config.manual_editor =
                 std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(
             MANUAL_URL + "conroller-stuff/midi-learn");
-        //[/UserButtonCode_button_info]
     }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
 }
 
 void UiEditorMidiLearn::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
 {
-    //[UsercomboBoxChanged_Pre]
-    //[/UsercomboBoxChanged_Pre]
-
     if (comboBoxThatHasChanged == cb_midi_learn_mode.get())
     {
-        //[UserComboBoxCode_cb_midi_learn_mode] -- add your combo box handling code here..
         switch (cb_midi_learn_mode->getSelectedId())
         {
         case 1:
@@ -441,90 +402,11 @@ void UiEditorMidiLearn::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
             _app_instance_store->midi_in_map.learn_mode = MIDIInToControllerMap::_N_N;
             break;
         }
-        //[/UserComboBoxCode_cb_midi_learn_mode]
     }
     else if (comboBoxThatHasChanged == cb_midi_assigns.get())
     {
-        //[UserComboBoxCode_cb_midi_assigns] -- add your combo box handling code here..
-
-        //[/UserComboBoxCode_cb_midi_assigns]
     }
-
-    //[UsercomboBoxChanged_Post]
-    //[/UsercomboBoxChanged_Post]
 }
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="UiEditorMidiLearn" componentName=""
-                 parentClasses="public UiEditor" constructorParams="AppInstanceStore* const app_instance_store_"
-                 variableInitialisers="UiEditor(&quot;B-MIDI-Learn&quot;),_app_instance_store(app_instance_store_)"
-                 snapPixels="10" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="360" initialHeight="250">
-  <BACKGROUND backgroundColour="161616">
-    <RECT pos="0 0 0M 0M" fill="solid: ff161616" hasStroke="1" stroke="2, mitered, butt"
-          strokeColour="solid: ffff3b00"/>
-    <IMAGE pos="86.667% 80% 11.111% 9.6%" resource="trash_svg" opacity="1"
-           mode="1"/>
-  </BACKGROUND>
-  <LABEL name="" id="e328ef5ba588ecb2" memberName="label_target" virtualName=""
-         explicitFocusOrder="0" pos="11.111% 4% 77.778% 16%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="MIDI LEARN" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="36"/>
-  <TEXTBUTTON name="" id="72216b2d6e3dc8ad" memberName="delete_asignment" virtualName=""
-              explicitFocusOrder="0" pos="33.333% 56% 44.444% 12%" bgColOff="ffff0000"
-              bgColOn="ffff0000" buttonText="remove last in list" connectedEdges="0"
-              needsCallback="1" radioGroupId="0"/>
-  <COMBOBOX name="" id="812774edd326647f" memberName="cb_midi_learn_mode"
-            virtualName="" explicitFocusOrder="4" pos="33.333% 24% 44.444% 12%"
-            editable="0" layout="36" items="" textWhenNonSelected="choose"
-            textWhenNoItems="(no choices)"/>
-  <COMBOBOX name="" id="785d0e6d7f6d794d" memberName="cb_midi_assigns" virtualName=""
-            explicitFocusOrder="4" pos="33.333% 42% 44.444% 12%" editable="0"
-            layout="36" items="" textWhenNonSelected="nothing" textWhenNoItems="( nothing assigned )"/>
-  <GENERICCOMPONENT name="" id="b3ecc3f8f99fe16a" memberName="toolbar" virtualName="UiEditorToolbar"
-                    explicitFocusOrder="0" pos="0Rr 0 13.889% 80%" class="Component"
-                    params="this"/>
-  <LABEL name="" id="86a80a1b6b2358b" memberName="label_target3" virtualName=""
-         explicitFocusOrder="0" pos="5.556% 24% 27.778% 12%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Learn Mode" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="34"/>
-  <LABEL name="" id="d68e3872dbfa82d6" memberName="label_target8" virtualName=""
-         explicitFocusOrder="0" pos="5.556% 42% 27.778% 12%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Assignments&#10;"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="34"/>
-  <IMAGEBUTTON name="" id="4df89bf23115c07" memberName="button_remove_all_mappings"
-               virtualName="" explicitFocusOrder="0" pos="86.667% 76% 11.111% 16%"
-               buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-               keepProportions="1" resourceNormal="" opacityNormal="1" colourNormal="0"
-               resourceOver="" opacityOver="1" colourOver="0" resourceDown=""
-               opacityDown="1" colourDown="0"/>
-  <TEXTBUTTON name="" id="84fac28a44ced355" memberName="button_info" virtualName=""
-              explicitFocusOrder="0" pos="77.778% 24% 8.333% 12%" buttonText="?"
-              connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <LABEL name="new label" id="fe5f824f17004793" memberName="label" virtualName=""
-         explicitFocusOrder="0" pos="5.556% 72% 77.778% 20%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="INFO: Select/click an element on the user interface then move a slider or push a button on your MIDI controller. Done."
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
 
 //==============================================================================
 // Binary resources - be careful not to edit any of these sections!
@@ -673,6 +555,3 @@ static const unsigned char resource_UiEditorMidiLearn_trash_svg[] = {
 
 const char *UiEditorMidiLearn::trash_svg = (const char *)resource_UiEditorMidiLearn_trash_svg;
 const int UiEditorMidiLearn::trash_svgSize = 2639;
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

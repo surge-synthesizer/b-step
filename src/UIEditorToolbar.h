@@ -18,7 +18,6 @@
 #ifndef __JUCE_HEADER_77F0CE91B2F32968__
 #define __JUCE_HEADER_77F0CE91B2F32968__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 
 class AnimateMove;
@@ -58,16 +57,9 @@ class UiEditor : public juce::ResizableWindow
     void animate_move(int y_to_move_);
     void animate_move_back();
 };
-//[/Headers]
 
 //==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
 
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiEditorToolbar : public juce::Component, public juce::Button::Listener
 {
   public:
@@ -77,9 +69,7 @@ class UiEditorToolbar : public juce::Component, public juce::Button::Listener
     ~UiEditorToolbar();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     UiEditor *const _owner_editor;
-    //[/UserMethods]
 
     void paint(juce::Graphics &g);
     void resized();
@@ -96,9 +86,6 @@ class UiEditorToolbar : public juce::Component, public juce::Button::Listener
     static const int close_svgSize;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<juce::ImageButton> close;
     std::unique_ptr<juce::ImageButton> load;
@@ -111,8 +98,5 @@ class UiEditorToolbar : public juce::Component, public juce::Button::Listener
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorToolbar)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_77F0CE91B2F32968__

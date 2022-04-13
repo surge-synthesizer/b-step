@@ -18,23 +18,15 @@
 #ifndef __JUCE_HEADER_FF56F54DD22FFD62__
 #define __JUCE_HEADER_FF56F54DD22FFD62__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 
 class ModelBase;
 class UiLabel;
 class AppInstanceStore;
 class MONO_Controller;
-//[/Headers]
 
 //==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
 
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiChordEditorStringOffset : public juce::Component
 {
   public:
@@ -44,7 +36,6 @@ class UiChordEditorStringOffset : public juce::Component
     ~UiChordEditorStringOffset();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
 
     void refresh_ui(juce::Array<Component *> &components_to_repaint_);
@@ -53,15 +44,11 @@ class UiChordEditorStringOffset : public juce::Component
 
     void repaint_label();
     void set_style(AppStyle *const);
-    //[/UserMethods]
 
     void paint(juce::Graphics &g);
     void resized();
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<juce::Label> label;
     std::unique_ptr<ModelBase> slider;
@@ -69,8 +56,5 @@ class UiChordEditorStringOffset : public juce::Component
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiChordEditorStringOffset)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_FF56F54DD22FFD62__

@@ -18,21 +18,11 @@
 #ifndef __JUCE_HEADER_1EE5576E0584BFD0__
 #define __JUCE_HEADER_1EE5576E0584BFD0__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include <juce_gui_extra/juce_gui_extra.h>
 
 class ComponentColours;
-//[/Headers]
 
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiEditorColourStyler : public juce::Component,
                              public juce::Timer,
                              public juce::Button::Listener
@@ -43,21 +33,16 @@ class UiEditorColourStyler : public juce::Component,
     ~UiEditorColourStyler();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     ComponentColours *const _colours;
     juce::Colour *editable_colour;
 
     void timerCallback();
-    //[/UserMethods]
 
     void paint(juce::Graphics &g);
     void resized();
     void buttonClicked(juce::Button *buttonThatWasClicked);
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<juce::ColourSelector> colour_selector;
     std::unique_ptr<juce::TextButton> col_1;
@@ -80,8 +65,5 @@ class UiEditorColourStyler : public juce::Component,
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorColourStyler)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_1EE5576E0584BFD0__

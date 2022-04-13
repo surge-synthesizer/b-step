@@ -18,22 +18,12 @@
 #ifndef __JUCE_HEADER_D0A211EF20981AF4__
 #define __JUCE_HEADER_D0A211EF20981AF4__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
 
 class AppInstanceStore;
 class UiLabel;
-//[/Headers]
 
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiEditorSettings : public UiEditor,
                          public juce::Button::Listener,
                          public juce::Slider::Listener,
@@ -45,7 +35,6 @@ class UiEditorSettings : public UiEditor,
     ~UiEditorSettings();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
 
     void fill_drop_downs();
@@ -65,8 +54,6 @@ class UiEditorSettings : public UiEditor,
     }
 
   private:
-    //[/UserMethods]
-
     void paint(juce::Graphics &g) override;
     void resized() override;
     void buttonClicked(juce::Button *buttonThatWasClicked) override;
@@ -74,9 +61,6 @@ class UiEditorSettings : public UiEditor,
     void comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged) override;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<juce::Label> label_latency_ms;
     std::unique_ptr<juce::Label> lbl_clock_thru;
@@ -141,8 +125,5 @@ class UiEditorSettings : public UiEditor,
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorSettings)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_D0A211EF20981AF4__

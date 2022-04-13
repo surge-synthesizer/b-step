@@ -18,23 +18,14 @@
 #ifndef __JUCE_HEADER_A2547B656C4F7F86__
 #define __JUCE_HEADER_A2547B656C4F7F86__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 
 class AppInstanceStore;
 class GstepAudioProcessorEditor;
 
 class ModelBase;
-//[/Headers]
 
 //==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class MenuBarLeft : public juce::Component, public juce::Button::Listener
 {
   public:
@@ -44,7 +35,6 @@ class MenuBarLeft : public juce::Component, public juce::Button::Listener
     ~MenuBarLeft();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
     GstepAudioProcessorEditor *const _main_window;
 
@@ -56,7 +46,6 @@ class MenuBarLeft : public juce::Component, public juce::Button::Listener
 
   private:
     void set_user_mode();
-    //[/UserMethods]
 
     void paint(juce::Graphics &g);
     void resized();
@@ -77,9 +66,6 @@ class MenuBarLeft : public juce::Component, public juce::Button::Listener
     static const int _1starson_svgSize;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<ModelBase> button_layer_1;
     std::unique_ptr<ModelBase> button_layer_2;
@@ -98,8 +84,5 @@ class MenuBarLeft : public juce::Component, public juce::Button::Listener
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MenuBarLeft)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_A2547B656C4F7F86__

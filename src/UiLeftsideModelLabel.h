@@ -18,20 +18,11 @@
 #ifndef __JUCE_HEADER_3F6EA32C251175BE__
 #define __JUCE_HEADER_3F6EA32C251175BE__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "Controller.h"
 #include "UiColumnWrapper.h"
-//[/Headers]
 
 //==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiLeftsideModelLabel : public SubeditorBase
 {
   public:
@@ -40,7 +31,6 @@ class UiLeftsideModelLabel : public SubeditorBase
     ~UiLeftsideModelLabel();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
   private:
     juce::String _text;
 
@@ -59,17 +49,11 @@ class UiLeftsideModelLabel : public SubeditorBase
     void resized() override;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<ModelBase> model;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiLeftsideModelLabel)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_3F6EA32C251175BE__

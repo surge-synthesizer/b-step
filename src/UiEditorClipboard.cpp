@@ -15,7 +15,6 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #include "PluginProcessor.h"
 #include "UiMainWindow.h"
 #include "CoreDatastructure.h"
@@ -24,11 +23,9 @@
 #include "UiSettings.h"
 #include "UiEditorFileManager.h"
 #include "UIHtmlView.h"
-//[/Headers]
 
 #include "UiEditorClipboard.h"
 
-//[MiscUserDefs] You can add your own user definitions and misc code here...
 void UiEditorClipboard::reload_ui()
 {
     toggle_copy_steps->setToggleState(_bar_copy_clipboard.is_copy_steps,
@@ -77,8 +74,6 @@ void UiEditorClipboard::textEditorTextChanged(juce::TextEditor &editor_)
 {
     _bar_copy_clipboard.stored_bar_source_ident = editor_.getText();
 }
-
-//[/MiscUserDefs]
 
 //==============================================================================
 UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_,
@@ -316,15 +311,12 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
     button_info->setButtonText(TRANS("?"));
     button_info->addListener(this);
 
-    //[UserPreSize]
     newComponent5->setText(juce::String("Bar Snapshot Info :: ").operator+=(_clipboard_id + 1),
                            juce::dontSendNotification);
     reload_ui();
-    //[/UserPreSize]
 
     setSize(360, 570);
 
-    //[Constructor] You can add your own custom stuff here..
     center_relative_and_make_visible(_app_instance_store->editor, true, false);
     restore_XY(_app_instance_store->editor_config.XY_clipboard_editor);
 
@@ -334,14 +326,11 @@ UiEditorClipboard::UiEditorClipboard(AppInstanceStore *const app_instance_store_
                    juce::NotificationType::dontSendNotification);
 
     startTimer(40);
-    //[/Constructor]
 }
 
 UiEditorClipboard::~UiEditorClipboard()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
     _app_instance_store->editor_config.XY_clipboard_editor = juce::Point<int>(getX(), getY());
-    //[/Destructor_pre]
 
     newComponent = nullptr;
     toggle_copy_steps = nullptr;
@@ -374,33 +363,22 @@ UiEditorClipboard::~UiEditorClipboard()
     newComponent5 = nullptr;
     label = nullptr;
     button_info = nullptr;
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
 }
 
 //==============================================================================
 void UiEditorClipboard::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
-
     g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
     g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    //[UserPaint] Add your own custom painting code here..
     juce::ResizableWindow::moved();
-    //[/UserPaint]
 }
 
 void UiEditorClipboard::resized()
 {
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
-
     newComponent->setBounds(proportionOfWidth(0.1389f), proportionOfHeight(0.2018f),
                             proportionOfWidth(0.7222f), proportionOfHeight(0.0526f));
     toggle_copy_steps->setBounds(proportionOfWidth(0.0556f), proportionOfHeight(0.2105f),
@@ -463,25 +441,18 @@ void UiEditorClipboard::resized()
                      proportionOfWidth(0.7361f), proportionOfHeight(0.0526f));
     button_info->setBounds(proportionOfWidth(0.8806f), proportionOfHeight(0.3597f),
                            proportionOfWidth(0.0833f), proportionOfHeight(0.0526f));
-    //[UserResized] Add your own custom resize handling here..
+
     juce::ResizableWindow::resized();
-    //[/UserResized]
 }
 
 void UiEditorClipboard::buttonClicked(juce::Button *buttonThatWasClicked)
 {
-    //[UserbuttonClicked_Pre]
-    //[/UserbuttonClicked_Pre]
-
     if (buttonThatWasClicked == toggle_copy_steps.get())
     {
-        //[UserButtonCode_toggle_copy_steps] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_steps = buttonThatWasClicked->getToggleState();
-        //[/UserButtonCode_toggle_copy_steps]
     }
     else if (buttonThatWasClicked == toggle_select_all.get())
     {
-        //[UserButtonCode_toggle_select_all] -- add your button handler code here..
         toggle_copy_steps->setToggleState(buttonThatWasClicked->getToggleState(),
                                           juce::NotificationType::sendNotification);
         toggle_copy_layer_1->setToggleState(buttonThatWasClicked->getToggleState(),
@@ -506,271 +477,67 @@ void UiEditorClipboard::buttonClicked(juce::Button *buttonThatWasClicked)
                                                   juce::NotificationType::sendNotification);
         toggle_copy_step_duration->setToggleState(buttonThatWasClicked->getToggleState(),
                                                   juce::NotificationType::sendNotification);
-        //[/UserButtonCode_toggle_select_all]
     }
     else if (buttonThatWasClicked == toggle_copy_layer_7.get())
     {
-        //[UserButtonCode_toggle_copy_layer_7] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_layer_7 = buttonThatWasClicked->getToggleState();
-        //[/UserButtonCode_toggle_copy_layer_7]
     }
     else if (buttonThatWasClicked == toggle_copy_layer_5_6.get())
     {
-        //[UserButtonCode_toggle_copy_layer_5_6] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_layer_5 = buttonThatWasClicked->getToggleState();
         _bar_copy_clipboard.is_copy_layer_6 = buttonThatWasClicked->getToggleState();
-        //[/UserButtonCode_toggle_copy_layer_5_6]
     }
     else if (buttonThatWasClicked == toggle_copy_layer_4.get())
     {
-        //[UserButtonCode_toggle_copy_layer_4] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_layer_4 = buttonThatWasClicked->getToggleState();
-        //[/UserButtonCode_toggle_copy_layer_4]
     }
     else if (buttonThatWasClicked == toggle_copy_layer_3.get())
     {
-        //[UserButtonCode_toggle_copy_layer_3] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_layer_3 = buttonThatWasClicked->getToggleState();
-        //[/UserButtonCode_toggle_copy_layer_3]
     }
     else if (buttonThatWasClicked == toggle_copy_layer_2.get())
     {
-        //[UserButtonCode_toggle_copy_layer_2] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_layer_2 = buttonThatWasClicked->getToggleState();
-        //[/UserButtonCode_toggle_copy_layer_2]
     }
     else if (buttonThatWasClicked == toggle_copy_layer_1.get())
     {
-        //[UserButtonCode_toggle_copy_layer_1] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_layer_1 = buttonThatWasClicked->getToggleState();
-        //[/UserButtonCode_toggle_copy_layer_1]
     }
     else if (buttonThatWasClicked == toggle_copy_bar_groups.get())
     {
-        //[UserButtonCode_toggle_copy_bar_groups] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_bar_groups = buttonThatWasClicked->getToggleState();
-        //[/UserButtonCode_toggle_copy_bar_groups]
     }
     else if (buttonThatWasClicked == toggle_copy_bar_solo.get())
     {
-        //[UserButtonCode_toggle_copy_bar_solo] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_bar_solo = buttonThatWasClicked->getToggleState();
-        //[/UserButtonCode_toggle_copy_bar_solo]
     }
     else if (buttonThatWasClicked == toggle_copy_step_duration.get())
     {
-        //[UserButtonCode_toggle_copy_step_duration] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_step_duration = buttonThatWasClicked->getToggleState();
-        //[/UserButtonCode_toggle_copy_step_duration]
     }
     else if (buttonThatWasClicked == toggle_copy_step_velocity.get())
     {
-        //[UserButtonCode_toggle_copy_step_velocity] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_step_velocity = buttonThatWasClicked->getToggleState();
-        //[/UserButtonCode_toggle_copy_step_velocity]
     }
     else if (buttonThatWasClicked == toggle_copy_string_octave.get())
     {
-        //[UserButtonCode_toggle_copy_string_octave] -- add your button handler code here..
         _bar_copy_clipboard.is_copy_string_octave = buttonThatWasClicked->getToggleState();
-        //[/UserButtonCode_toggle_copy_string_octave]
     }
     else if (buttonThatWasClicked == button_info.get())
     {
-        //[UserButtonCode_button_info] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
             _app_instance_store->editor_config.manual_editor =
                 std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(
             MANUAL_URL + "experts/snapshots-and-the-clipboard");
-        //[/UserButtonCode_button_info]
     }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
 }
 
 void UiEditorClipboard::labelTextChanged(juce::Label *labelThatHasChanged)
 {
-    //[UserlabelTextChanged_Pre]
-    //[/UserlabelTextChanged_Pre]
 
     if (labelThatHasChanged == label.get())
     {
-        //[UserLabelCode_label] -- add your label text handling code here..
-        //[/UserLabelCode_label]
     }
-
-    //[UserlabelTextChanged_Post]
-    //[/UserlabelTextChanged_Post]
 }
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="UiEditorClipboard" componentName=""
-                 parentClasses="public UiEditor, public Timer, public TextEditor::Listener"
-                 constructorParams="AppInstanceStore* const app_instance_store_, std::uint8_t clipboard_id_"
-                 variableInitialisers="UiEditor(&quot;B-Snapshot&quot;),_app_instance_store(app_instance_store_),&#10;_clipboard_id(clipboard_id_),&#10;_bar_copy_clipboard(*_app_instance_store-&gt;bar_copy_clipboards.getUnchecked(_clipboard_id ))"
-                 snapPixels="5" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="360" initialHeight="570">
-  <BACKGROUND backgroundColour="161616">
-    <RECT pos="0 0 0M 0M" fill="solid: ff161616" hasStroke="1" stroke="2, mitered, butt"
-          strokeColour="solid: ffff3b00"/>
-  </BACKGROUND>
-  <LABEL name="" id="d60bc44fa0c37574" memberName="newComponent" virtualName=""
-         explicitFocusOrder="0" pos="13.889% 20.175% 72.222% 5.263%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Copy Steps" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
-  <TOGGLEBUTTON name="" id="deaf15156f00f4da" memberName="toggle_copy_steps"
-                virtualName="" explicitFocusOrder="0" pos="5.556% 21.053% 75% 4.211%"
-                buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
-  <GENERICCOMPONENT name="" id="b3ecc3f8f99fe16a" memberName="toolbar" virtualName="UiEditorToolbar"
-                    explicitFocusOrder="0" pos="0Rr 0 13.889% 35.088%" class="Component"
-                    params="this"/>
-  <LABEL name="" id="b65d565f11ec83bf" memberName="" virtualName=""
-         explicitFocusOrder="0" pos="13.889% 37.719% 72.222% 5.263%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Copy Step Duration"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="3d7f08bcf233f668" memberName="newComponent14" virtualName=""
-         explicitFocusOrder="0" pos="13.889% 32.456% 72.222% 5.263%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Copy Step Velocity&#10;"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="87e17342e2e3bcf" memberName="newComponent13" virtualName=""
-         explicitFocusOrder="0" pos="13.889% 50% 72.222% 5.263%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Copy Sequence#"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="eb8e2b4603e94a00" memberName="newComponent12" virtualName=""
-         explicitFocusOrder="0" pos="13.889% 44.737% 72.222% 5.263%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Copy Bar Solo&#10;"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="25e11cdbbd4389b4" memberName="newComponent11" virtualName=""
-         explicitFocusOrder="0" pos="13.889% 25.439% 72.222% 5.263%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Copy String Octave"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="5be5f82bd4e83c31" memberName="newComponent9" virtualName=""
-         explicitFocusOrder="0" pos="13.889% 83.333% 72.222% 5.263%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Copy CC Layer Data (CC PC)"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="9f495af7ff577c4c" memberName="newComponent8" virtualName=""
-         explicitFocusOrder="0" pos="13.889% 78.07% 71.944% 5.263%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Copy Repeat Layer Data (REP1+REP2)"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="94de2e3966564132" memberName="newComponent7" virtualName=""
-         explicitFocusOrder="0" pos="13.889% 72.807% 71.944% 5.263%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Copy Bar Layer Data (BAR)"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="e44d5e8432e167a7" memberName="newComponent6" virtualName=""
-         explicitFocusOrder="0" pos="13.889% 62.281% 72.222% 5.263%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Copy Step Layer Data (STEP)"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="e381e35f78b742a0" memberName="newComponent4" virtualName=""
-         explicitFocusOrder="0" pos="13.889% 67.544% 72.222% 5.263%" textCol="ffff3b00"
-	edTextCol="ff000000" edBkgCol="0" labelText="Copy Sequence Layer Data (SEQ#)"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="72be94b2e1289db1" memberName="newComponent3" virtualName=""
-         explicitFocusOrder="0" pos="13.889% 57.018% 72.222% 5.263%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Copy Main Layer Data (MAIN)"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="21b6a7accfd70d46" memberName="newComponent10" virtualName=""
-         explicitFocusOrder="0" pos="13.889% 90.351% 72.222% 5.263%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="SELECT/UNSELECT ALL"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
-  <TOGGLEBUTTON name="" id="34e88ea87d7cb57" memberName="toggle_select_all" virtualName=""
-                explicitFocusOrder="0" pos="5.556% 91.228% 75% 4.211%" buttonText=""
-                connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
-  <TOGGLEBUTTON name="" id="e5278668a2f3a20e" memberName="toggle_copy_layer_7"
-                virtualName="" explicitFocusOrder="0" pos="5.556% 84.211% 75% 4.211%"
-                buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
-  <TOGGLEBUTTON name="" id="215f0b7420522bf8" memberName="toggle_copy_layer_5_6"
-                virtualName="" explicitFocusOrder="0" pos="5.556% 78.947% 75% 4.211%"
-                buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
-  <TOGGLEBUTTON name="" id="2a1847eecc5f696c" memberName="toggle_copy_layer_4"
-                virtualName="" explicitFocusOrder="0" pos="5.556% 73.684% 75% 4.211%"
-                buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
-  <TOGGLEBUTTON name="" id="674b466170d71e06" memberName="toggle_copy_layer_3"
-                virtualName="" explicitFocusOrder="0" pos="5.556% 68.421% 75% 4.211%"
-                buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
-  <TOGGLEBUTTON name="" id="36ab62bf34e00fe3" memberName="toggle_copy_layer_2"
-                virtualName="" explicitFocusOrder="0" pos="5.556% 63.158% 75% 4.211%"
-                buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
-  <TOGGLEBUTTON name="" id="1396dfd3835dcbcc" memberName="toggle_copy_layer_1"
-                virtualName="" explicitFocusOrder="0" pos="5.556% 57.895% 75% 4.211%"
-                buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
-  <TOGGLEBUTTON name="" id="52247222e7fefa44" memberName="toggle_copy_bar_groups"
-                virtualName="" explicitFocusOrder="0" pos="5.556% 50.877% 75% 4.211%"
-                buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
-  <TOGGLEBUTTON name="" id="cd109c0291ea64b5" memberName="toggle_copy_bar_solo"
-                virtualName="" explicitFocusOrder="0" pos="5.556% 45.614% 75% 4.211%"
-                buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
-  <TOGGLEBUTTON name="" id="11a585bc3a2b2e3d" memberName="toggle_copy_step_duration"
-                virtualName="" explicitFocusOrder="0" pos="5.833% 38.246% 75% 4.211%"
-                buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
-  <TOGGLEBUTTON name="" id="ecfdcc8628c3f635" memberName="toggle_copy_step_velocity"
-                virtualName="" explicitFocusOrder="0" pos="5.833% 32.982% 75% 4.211%"
-                buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
-  <TOGGLEBUTTON name="" id="c0cbcbbba33dd8d5" memberName="toggle_copy_string_octave"
-                virtualName="" explicitFocusOrder="0" pos="5.556% 26.316% 75% 4.211%"
-                buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
-  <LABEL name="" id="1614fdc41a4e69c" memberName="newComponent2" virtualName=""
-         explicitFocusOrder="0" pos="5.556% 12.281% 77.778% 7.018%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Copy Back to Bar Options"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="5fe1c91003202dd3" memberName="newComponent5" virtualName=""
-         explicitFocusOrder="0" pos="5.556% 1.754% 75% 7.018%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Bar Snapshot Info :: 1"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="70496e935388f971" memberName="label" virtualName=""
-         explicitFocusOrder="0" pos="6.944% 7.895% 73.611% 5.263%" textCol="ffff3b00"
-         outlineCol="ffff3b00" edTextCol="ff00ffff" edBkgCol="0" hiliteCol="ffffff00"
-         labelText="" editableSingleClick="1" editableDoubleClick="1"
-         focusDiscardsChanges="1" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
-  <TEXTBUTTON name="" id="a0537da9b93e2636" memberName="button_info" virtualName=""
-              explicitFocusOrder="0" pos="88.056% 35.965% 8.333% 5.263%" buttonText="?"
-              connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

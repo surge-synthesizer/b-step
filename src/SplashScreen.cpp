@@ -15,14 +15,9 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #if !JUCE_IOS
-//[/Headers]
 
 #include "SplashScreen.h"
-
-//[MiscUserDefs] You can add your own user definitions and misc code here...
-//[/MiscUserDefs]
 
 //==============================================================================
 MySplashScreen::MySplashScreen()
@@ -30,80 +25,32 @@ MySplashScreen::MySplashScreen()
     cachedImage_desktopsplash_png =
         juce::ImageCache::getFromMemory(desktopsplash_png, desktopsplash_pngSize);
 
-    //[UserPreSize]
     BOOT(SplashScreen)
-    //[/UserPreSize]
 
     setSize(1245, 507);
 
-    //[Constructor] You can add your own custom stuff here..
     centreWithSize(getWidth(), getHeight());
     addToDesktop(juce::ComponentPeer::StyleFlags::windowIsTemporary, nullptr);
     // setAlwaysOnTop( true );
     enterModalState(true);
     setVisible(true);
-    //[/Constructor]
 }
 
 MySplashScreen::~MySplashScreen()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
     // DOWN(SplashScreen)
-    //[/Destructor_pre]
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
 }
 
 //==============================================================================
 void MySplashScreen::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
-
     g.setColour(juce::Colours::black);
     g.drawImage(cachedImage_desktopsplash_png, 0, 0, proportionOfWidth(1.0000f),
                 proportionOfHeight(1.0000f), 0, 0, cachedImage_desktopsplash_png.getWidth(),
                 cachedImage_desktopsplash_png.getHeight());
-
-    //[UserPaint] Add your own custom painting code here..
-    //[/UserPaint]
 }
 
-void MySplashScreen::resized()
-{
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
-
-    //[UserResized] Add your own custom resize handling here..
-    //[/UserResized]
-}
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="MySplashScreen" componentName=""
-                 parentClasses="public Component" constructorParams="" variableInitialisers="&#10;"
-                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="1245" initialHeight="507">
-  <BACKGROUND backgroundColour="161616">
-    <IMAGE pos="0 0 100% 100%" resource="desktopsplash_png" opacity="1"
-           mode="0"/>
-  </BACKGROUND>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
+void MySplashScreen::resized() {}
 
 //==============================================================================
 // Binary resources - be careful not to edit any of these sections!
@@ -21465,6 +21412,4 @@ const char *MySplashScreen::desktopsplash_png =
     (const char *)resource_MySplashScreen_desktopsplash_png;
 const int MySplashScreen::desktopsplash_pngSize = 405648;
 
-//[EndFile] You can add extra defines here...
 #endif // #if ! JUCE_IOS
-//[/EndFile]

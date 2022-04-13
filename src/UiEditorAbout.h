@@ -18,7 +18,6 @@
 #ifndef __JUCE_HEADER_F24D3F196EED8940__
 #define __JUCE_HEADER_F24D3F196EED8940__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
 
@@ -26,16 +25,7 @@ class AppInstanceStore;
 #ifdef DEVELOPMENT
 class Parser;
 #endif
-//[/Headers]
 
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiEditorAbout : public UiEditor, public juce::Button::Listener
 {
   public:
@@ -44,7 +34,6 @@ class UiEditorAbout : public UiEditor, public juce::Button::Listener
     ~UiEditorAbout();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
 
   public:
@@ -65,7 +54,6 @@ class UiEditorAbout : public UiEditor, public juce::Button::Listener
     juce::URL url_twitter;
     juce::URL url_pinit;
     juce::URL url_google;
-    //[/UserMethods]
 
     void paint(juce::Graphics &g) override;
     void resized() override;
@@ -82,9 +70,6 @@ class UiEditorAbout : public UiEditor, public juce::Button::Listener
     static const int aboutbox_pngSize;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<juce::ImageButton> au_button;
     std::unique_ptr<juce::ImageButton> vst_button;
@@ -106,8 +91,5 @@ class UiEditorAbout : public UiEditor, public juce::Button::Listener
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorAbout)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_F24D3F196EED8940__

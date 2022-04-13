@@ -18,7 +18,6 @@
 #ifndef __JUCE_HEADER_CE9BCDBBB61A0BE6__
 #define __JUCE_HEADER_CE9BCDBBB61A0BE6__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
 
@@ -26,16 +25,6 @@ class AppInstanceStore;
 class UiLabel;
 class BarCopyClipboard;
 
-//[/Headers]
-
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiEditorClipboard : public UiEditor,
                           public juce::Timer,
                           public juce::TextEditor::Listener,
@@ -48,7 +37,6 @@ class UiEditorClipboard : public UiEditor,
     ~UiEditorClipboard();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
 
   public:
@@ -68,17 +56,11 @@ class UiEditorClipboard : public UiEditor,
 
   private:
     void textEditorTextChanged(juce::TextEditor &editor_) override;
-    //[/UserMethods]
 
     void paint(juce::Graphics &g) override;
     void resized() override;
     void buttonClicked(juce::Button *buttonThatWasClicked) override;
     void labelTextChanged(juce::Label *labelThatHasChanged) override;
-
-  private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-  public:
-    //[/UserVariables]
 
     //==============================================================================
     std::unique_ptr<juce::Label> newComponent;
@@ -116,8 +98,5 @@ class UiEditorClipboard : public UiEditor,
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorClipboard)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_CE9BCDBBB61A0BE6__

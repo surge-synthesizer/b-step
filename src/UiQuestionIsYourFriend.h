@@ -18,20 +18,9 @@
 #ifndef __JUCE_HEADER_7E5BDFC8AB7B8312__
 #define __JUCE_HEADER_7E5BDFC8AB7B8312__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
 
-//[/Headers]
-
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiQuestionIsYourFriend : public UiEditor, public juce::Button::Listener
 {
   public:
@@ -40,24 +29,18 @@ class UiQuestionIsYourFriend : public UiEditor, public juce::Button::Listener
     ~UiQuestionIsYourFriend();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
 
     void on_close_clicked() override;
-    //[/UserMethods]
 
     void paint(juce::Graphics &g) override;
     void resized() override;
     void buttonClicked(juce::Button *buttonThatWasClicked) override;
 
-    // Binary resources:
     static const char *question_svg;
     static const int question_svgSize;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<juce::Label> label;
     std::unique_ptr<juce::TextButton> save;
@@ -67,8 +50,5 @@ class UiQuestionIsYourFriend : public UiEditor, public juce::Button::Listener
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiQuestionIsYourFriend)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_7E5BDFC8AB7B8312__

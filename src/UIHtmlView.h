@@ -18,21 +18,10 @@
 #ifndef __JUCE_HEADER_A50A8B6E25702864__
 #define __JUCE_HEADER_A50A8B6E25702864__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
 
 class NavItem;
-//[/Headers]
-
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UIHtmlView : public UiEditor, public juce::Button::Listener, public juce::AsyncUpdater
 {
   public:
@@ -41,7 +30,6 @@ class UIHtmlView : public UiEditor, public juce::Button::Listener, public juce::
     ~UIHtmlView();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
 
     juce::URL load_async_url;
@@ -86,16 +74,12 @@ class UIHtmlView : public UiEditor, public juce::Button::Listener, public juce::
     void block_views(bool block_);
 
     volatile bool can_something_selected;
-    //[/UserMethods]
 
     void paint(juce::Graphics &g) override;
     void resized() override;
     void buttonClicked(juce::Button *buttonThatWasClicked) override;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<juce::Viewport> viewport;
     std::unique_ptr<juce::TreeView> treeView;
@@ -114,8 +98,5 @@ class UIHtmlView : public UiEditor, public juce::Button::Listener, public juce::
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UIHtmlView)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_A50A8B6E25702864__

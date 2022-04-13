@@ -15,16 +15,13 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #include "CoreAudioPlayer.h"
 #include "UiEditorFileManager.h"
 #include "UiSettings.h"
 #include "UiNotificationAnimation.h"
-//[/Headers]
 
 #include "UiDualDownload.h"
 
-//[MiscUserDefs] You can add your own user definitions and misc code here...
 void UiDualDownload::timerCallback()
 {
     // UPDATE UI
@@ -58,7 +55,6 @@ void UiDualDownload::timerCallback()
         return;
     }
 }
-//[/MiscUserDefs]
 
 //==============================================================================
 UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
@@ -220,7 +216,6 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
     toolbar = std::make_unique<UiEditorToolbar>(this, false, true, false);
     addAndMakeVisible(*toolbar);
 
-    //[UserPreSize]
     /*
     project_name->setText(project_name_,juce::dontSendNotification);
 
@@ -233,23 +228,18 @@ UiDualDownload::UiDualDownload(AppInstanceStore *app_instance_store_,
       old_info_3->setEnabled(false);
     }
     */
-    //[/UserPreSize]
 
     setSize(440, 305);
 
-    //[Constructor] You can add your own custom stuff here..
     center_relative_and_make_visible(
         reinterpret_cast<juce::Component *const>(_app_instance_store->editor));
     // setAlwaysOnTop(true);
     enterModalState(true);
-    //[/Constructor]
 }
 
 UiDualDownload::~UiDualDownload()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
     juce::MessageManagerLock mmLock;
-    //[/Destructor_pre]
 
     ok = nullptr;
     close = nullptr;
@@ -267,16 +257,11 @@ UiDualDownload::~UiDualDownload()
     data_percent = nullptr;
     audio_percent = nullptr;
     toolbar = nullptr;
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
 }
 
 //==============================================================================
 void UiDualDownload::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
 
     g.fillAll(juce::Colours::white);
 
@@ -286,16 +271,11 @@ void UiDualDownload::paint(juce::Graphics &g)
     g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    //[UserPaint] Add your own custom painting code here..
     juce::ResizableWindow::moved();
-    //[/UserPaint]
 }
 
 void UiDualDownload::resized()
 {
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
-
     ok->setBounds(proportionOfWidth(0.7273f) - proportionOfWidth(0.3182f),
                   proportionOfHeight(0.8525f), proportionOfWidth(0.3182f),
                   proportionOfHeight(0.0820f));
@@ -332,166 +312,38 @@ void UiDualDownload::resized()
                              proportionOfWidth(0.1136f), proportionOfHeight(0.0984f));
     toolbar->setBounds(getWidth() - proportionOfWidth(0.1136f), proportionOfHeight(-0.1738f),
                        proportionOfWidth(0.1136f), proportionOfHeight(0.6557f));
-    //[UserResized] Add your own custom resize handling here..
+
     juce::ResizableWindow::resized();
-    //[/UserResized]
 }
 
 void UiDualDownload::buttonClicked(juce::Button *buttonThatWasClicked)
 {
-    //[UserbuttonClicked_Pre]
-    //[/UserbuttonClicked_Pre]
-
     if (buttonThatWasClicked == ok.get())
     {
-        //[UserButtonCode_ok] -- add your button handler code here..
         _listener->perform_ok();
         delete this;
-        //[/UserButtonCode_ok]
     }
     else if (buttonThatWasClicked == close.get())
     {
-        //[UserButtonCode_close] -- add your button handler code here..
         _listener->perform_close();
         delete this;
-        //[/UserButtonCode_close]
     }
     else if (buttonThatWasClicked == cancel_data.get())
     {
-        //[UserButtonCode_cancel_data] -- add your button handler code here..
         _listener->chancel_data_download();
-        //[/UserButtonCode_cancel_data]
     }
     else if (buttonThatWasClicked == chancel_audio.get())
     {
-        //[UserButtonCode_chancel_audio] -- add your button handler code here..
         _listener->chancel_audio_download();
-        //[/UserButtonCode_chancel_audio]
     }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
 }
 
 void UiDualDownload::sliderValueChanged(juce::Slider *sliderThatWasMoved)
 {
-    //[UsersliderValueChanged_Pre]
-    //[/UsersliderValueChanged_Pre]
-
     if (sliderThatWasMoved == data_progress.get())
     {
-        //[UserSliderCode_data_progress] -- add your slider handling code here..
-        //[/UserSliderCode_data_progress]
     }
     else if (sliderThatWasMoved == audio_progress.get())
     {
-        //[UserSliderCode_audio_progress] -- add your slider handling code here..
-        //[/UserSliderCode_audio_progress]
     }
-
-    //[UsersliderValueChanged_Post]
-    //[/UsersliderValueChanged_Post]
 }
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="UiDualDownload" componentName=""
-                 parentClasses="public UiEditor, public Timer" constructorParams="AppInstanceStore*app_instance_store_, UiDualDownloadListener*const listener_"
-                 variableInitialisers="UiEditor(&quot;B-Downloader&quot;),_app_instance_store(app_instance_store_), _listener(listener_)"
-                 snapPixels="10" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="440" initialHeight="305">
-  <BACKGROUND backgroundColour="ffffffff">
-    <RECT pos="0 0 0M 0M" fill="solid: ff161616" hasStroke="1" stroke="2, mitered, butt"
-          strokeColour="solid: ffff3b00"/>
-  </BACKGROUND>
-  <TEXTBUTTON name="" id="ca3c487198c8aedc" memberName="ok" virtualName=""
-              explicitFocusOrder="2" pos="72.727%r 85.246% 31.818% 8.197%"
-              bgColOff="ff000000" bgColOn="4444ff" textCol="ff7fff00" textColOn="ff7fff00"
-              buttonText="OK / LOAD PROJECT" connectedEdges="15" needsCallback="1"
-              radioGroupId="0"/>
-  <TEXTBUTTON name="" id="6733db43b3f162a6" memberName="close" virtualName=""
-              explicitFocusOrder="3" pos="95.455%r 85.246% 20.455% 8.197%"
-              bgColOff="ff000000" bgColOn="4444ff" textCol="ff6495ed" textColOn="ff6495ed"
-              buttonText="CLOSE" connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <SLIDER name="" id="66c725f390624925" memberName="data_progress" virtualName=""
-          explicitFocusOrder="0" pos="4.545% 29.508% 75% 7.869%" trackcol="ff7fffd4"
-          min="0" max="1" int="0" style="LinearHorizontal" textBoxPos="NoTextBox"
-          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
-  <TEXTBUTTON name="" id="7398184a5468e9a8" memberName="cancel_data" virtualName=""
-              explicitFocusOrder="2" pos="95.455%r 29.508% 13.636% 8.197%"
-              bgColOff="ff000000" bgColOn="4444ff" textCol="ff7fff00" textColOn="ffff0000"
-              buttonText="CANCEL" connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <SLIDER name="" id="e3e27d63145b9b" memberName="audio_progress" virtualName=""
-          explicitFocusOrder="0" pos="4.545% 52.459% 75% 7.869%" trackcol="ff7fffd4"
-          min="0" max="1" int="0" style="LinearHorizontal" textBoxPos="NoTextBox"
-          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
-  <LABEL name="" id="e95009284c62ddb2" memberName="data_info" virtualName=""
-         explicitFocusOrder="0" pos="4.545% 18.033% 34.091% 9.836%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="DOWNLOADING DATA FILE:"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Oswald" fontsize="18" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="a5336083f9083049" memberName="data_name" virtualName=""
-         explicitFocusOrder="0" pos="38.636% 18.033% 43.182% 9.836%" textCol="ff00ffff"
-         edTextCol="ff000000" edBkgCol="0" labelText="XYZ" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Oswald"
-         fontsize="18" bold="0" italic="0" justification="36"/>
-  <LABEL name="" id="440c9352c749361c" memberName="old_info_2" virtualName=""
-         explicitFocusOrder="0" pos="13.636% 68.852% 81.818% 9.836%" textCol="ffff0000"
-         edTextCol="ff000000" edBkgCol="0" labelText="After download you will find this project in &quot;Presets (downloads)&quot;"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Oswald" fontsize="18" bold="0" italic="0" justification="9"/>
-  <LABEL name="" id="5cfc7980beb0813" memberName="old_info_3" virtualName=""
-         explicitFocusOrder="0" pos="4.545% 68.852% 9.091% 9.836%" textCol="ffff0000"
-         edTextCol="ff000000" edBkgCol="0" labelText="NOTE:" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Oswald"
-         fontsize="18" bold="0" italic="0" justification="9"/>
-  <LABEL name="" id="bba892cccd5fe810" memberName="titel7" virtualName=""
-         explicitFocusOrder="0" pos="4.545% 3.279% 80% 13.115%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="DOWNLOADING FILES TO &quot;PRESETS (downloads)&quot;"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Oswald" fontsize="25" bold="1" italic="0" justification="33"/>
-  <TEXTBUTTON name="" id="3ece3d591639661d" memberName="chancel_audio" virtualName=""
-              explicitFocusOrder="2" pos="95.455%r 52.459% 13.636% 8.197%"
-              bgColOff="ff000000" bgColOn="4444ff" textCol="ffff0000" textColOn="ffff0000"
-              buttonText="CANCEL" connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <LABEL name="" id="a94ebb9afe451bac" memberName="audio_info" virtualName=""
-         explicitFocusOrder="0" pos="4.545% 40.984% 34.091% 9.836%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="DOWNLOADING AUDIO FILE:"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Oswald" fontsize="18" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="158dd24433322e1e" memberName="audio_name" virtualName=""
-         explicitFocusOrder="0" pos="38.636% 40.984% 43.182% 9.836%" textCol="ff00ffff"
-         edTextCol="ff000000" edBkgCol="0" labelText="XYZ" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Oswald"
-         fontsize="18" bold="0" italic="0" justification="36"/>
-  <LABEL name="" id="c3658c15e6b4f287" memberName="data_percent" virtualName=""
-         explicitFocusOrder="0" pos="84.091% 18.033% 11.364% 9.836%" textCol="ff00ffff"
-         edTextCol="ff000000" edBkgCol="0" labelText="0%" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Oswald"
-         fontsize="18" bold="0" italic="0" justification="36"/>
-  <LABEL name="" id="8b6545123b76d66b" memberName="audio_percent" virtualName=""
-         explicitFocusOrder="0" pos="84.091% 40.984% 11.364% 9.836%" textCol="ff00ffff"
-         edTextCol="ff000000" edBkgCol="0" labelText="0%" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Oswald"
-         fontsize="18" bold="0" italic="0" justification="36"/>
-  <GENERICCOMPONENT name="" id="b3ecc3f8f99fe16a" memberName="toolbar" virtualName="UiEditorToolbar"
-                    explicitFocusOrder="0" pos="0Rr -17.377% 11.364% 65.574%" class="Component"
-                    params="this, false, true, false"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

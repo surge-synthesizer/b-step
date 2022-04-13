@@ -15,7 +15,6 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #include "CoreSequencer.h"
 #include "_H_CoreSettings.h"
 
@@ -32,12 +31,10 @@
 #include "UiEditorFileManager.h"
 
 #include "UIHtmlView.h"
-//[/Headers]
 
 #include "UiEditorChords.h"
 #include <juce_core/juce_core.h>
 
-//[MiscUserDefs] You can add your own user definitions and misc code here...
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
@@ -637,7 +634,6 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     button_info->setButtonText(TRANS("?"));
     button_info->addListener(this);
 
-    //[UserPreSize]
     _ui_string_offset_0.add(chord_offset_0_0.get());
     _ui_string_offset_0.add(chord_offset_0_1.get());
     _ui_string_offset_0.add(chord_offset_0_2.get());
@@ -688,11 +684,9 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     last_running_chord_id = 99;
     last_selected_preset_id = 99;
     last_tune_offset = 99;
-    //[/UserPreSize]
 
     setSize(780, 500);
 
-    //[Constructor] You can add your own custom stuff here..
     std::uint8_t selected_bar_id = _app_instance_store->editor_config.selected_bar_id;
     _selected_preset_chord = _app_instance_store->pattern.bar(selected_bar_id).chord_id;
 
@@ -716,9 +710,7 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
 
 UiEditorChords::~UiEditorChords()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
     _app_instance_store->editor_config.XY_chord_editor = juce::Point<int>(getX(), getY());
-    //[/Destructor_pre]
 
     lbl_clock_thru = nullptr;
     tb_drum_view = nullptr;
@@ -789,17 +781,11 @@ UiEditorChords::~UiEditorChords()
     combo_scales = nullptr;
     toolbar = nullptr;
     button_info = nullptr;
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
 }
 
 //==============================================================================
 void UiEditorChords::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
-
     g.setColour(juce::Colour(0xff161616));
     g.fillRect(0, 0, getWidth() - 0, getHeight() - 0);
 
@@ -833,16 +819,11 @@ void UiEditorChords::paint(juce::Graphics &g)
     g.fillRoundedRectangle(20.0f, static_cast<float>(proportionOfHeight(0.7600f)),
                            static_cast<float>(proportionOfWidth(0.8974f)), 1.0f, 10.000f);
 
-    //[UserPaint] Add your own custom painting code here..
     juce::ResizableWindow::moved();
-    //[/UserPaint]
 }
 
 void UiEditorChords::resized()
 {
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
-
     lbl_clock_thru->setBounds(proportionOfWidth(0.0513f), proportionOfHeight(0.0300f),
                               proportionOfWidth(0.0936f), proportionOfHeight(0.0600f));
     tb_drum_view->setBounds(proportionOfWidth(0.0256f), proportionOfHeight(0.0300f),
@@ -1045,148 +1026,101 @@ void UiEditorChords::resized()
                          static_cast<float>(proportionOfHeight(0.1920f)));
     internalPath7.closeSubPath();
 
-    //[UserResized] Add your own custom resize handling here..
     juce::ResizableWindow::resized();
-    //[/UserResized]
 }
 
 void UiEditorChords::buttonClicked(juce::Button *buttonThatWasClicked)
 {
-    //[UserbuttonClicked_Pre]
     ChordSet &target_chord_set = _app_instance_store->pattern.selected_chordset();
     Chord &target_chord = target_chord_set.chord(_selected_preset_chord);
-    //[/UserbuttonClicked_Pre]
 
     if (buttonThatWasClicked == tb_drum_view.get())
     {
-        //[UserButtonCode_tb_drum_view] -- add your button handler code here..
         _app_instance_store->editor_config.current_chord_view =
             buttonThatWasClicked->getToggleState();
-        //[/UserButtonCode_tb_drum_view]
     }
     else if (buttonThatWasClicked == target_chord_0.get())
     {
-        //[UserButtonCode_target_chord_0] -- add your button handler code here..
         _selected_preset_chord = 0;
-        //[/UserButtonCode_target_chord_0]
     }
     else if (buttonThatWasClicked == target_chord_1.get())
     {
-        //[UserButtonCode_target_chord_1] -- add your button handler code here..
         _selected_preset_chord = 1;
-        //[/UserButtonCode_target_chord_1]
     }
     else if (buttonThatWasClicked == target_chord_2.get())
     {
-        //[UserButtonCode_target_chord_2] -- add your button handler code here..
         _selected_preset_chord = 2;
-        //[/UserButtonCode_target_chord_2]
     }
     else if (buttonThatWasClicked == target_chord_3.get())
     {
-        //[UserButtonCode_target_chord_3] -- add your button handler code here..
         _selected_preset_chord = 3;
-        //[/UserButtonCode_target_chord_3]
     }
     else if (buttonThatWasClicked == target_chord_4.get())
     {
-        //[UserButtonCode_target_chord_4] -- add your button handler code here..
         _selected_preset_chord = 4;
-        //[/UserButtonCode_target_chord_4]
     }
     else if (buttonThatWasClicked == target_chord_5.get())
     {
-        //[UserButtonCode_target_chord_5] -- add your button handler code here..
         _selected_preset_chord = 5;
-        //[/UserButtonCode_target_chord_5]
     }
     else if (buttonThatWasClicked == preset_0.get())
     {
-        //[UserButtonCode_preset_0] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::A_MAJOR));
-        //[/UserButtonCode_preset_0]
     }
     else if (buttonThatWasClicked == preset_1.get())
     {
-        //[UserButtonCode_preset_1] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::B_MAJOR));
-        //[/UserButtonCode_preset_1]
     }
     else if (buttonThatWasClicked == preset_2.get())
     {
-        //[UserButtonCode_preset_2] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::C_MAJOR));
-        //[/UserButtonCode_preset_2]
     }
     else if (buttonThatWasClicked == preset_3.get())
     {
-        //[UserButtonCode_preset_3] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::D_MAJOR));
-        //[/UserButtonCode_preset_3]
     }
     else if (buttonThatWasClicked == preset_4.get())
     {
-        //[UserButtonCode_preset_4] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::E_MAJOR));
-        //[/UserButtonCode_preset_4]
     }
     else if (buttonThatWasClicked == preset_5.get())
     {
-        //[UserButtonCode_preset_5] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::F_MAJOR));
-        //[/UserButtonCode_preset_5]
     }
     else if (buttonThatWasClicked == preset_6.get())
     {
-        //[UserButtonCode_preset_6] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::G_MAJOR));
-        //[/UserButtonCode_preset_6]
     }
     else if (buttonThatWasClicked == preset_7.get())
     {
-        //[UserButtonCode_preset_7] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::A_MINOR));
-        //[/UserButtonCode_preset_7]
     }
     else if (buttonThatWasClicked == preset_8.get())
     {
-        //[UserButtonCode_preset_8] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::B_MINOR));
-        //[/UserButtonCode_preset_8]
     }
     else if (buttonThatWasClicked == preset_9.get())
     {
-        //[UserButtonCode_preset_9] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::C_MINOR));
-        //[/UserButtonCode_preset_9]
     }
     else if (buttonThatWasClicked == preset_10.get())
     {
-        //[UserButtonCode_preset_10] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::D_MINOR));
-        //[/UserButtonCode_preset_10]
     }
     else if (buttonThatWasClicked == preset_11.get())
     {
-        //[UserButtonCode_preset_11] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::E_MINOR));
-        //[/UserButtonCode_preset_11]
     }
     else if (buttonThatWasClicked == preset_12.get())
     {
-        //[UserButtonCode_preset_12] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::F_MINOR));
-        //[/UserButtonCode_preset_12]
     }
     else if (buttonThatWasClicked == preset_13.get())
     {
-        //[UserButtonCode_preset_13] -- add your button handler code here..
         set_chord_offsets(target_chord, get_chord(CHORD_AT_E_TUNE::G_MINOR));
-        //[/UserButtonCode_preset_13]
     }
     else if (buttonThatWasClicked == button_fill_all_from_scale.get())
     {
-        //[UserButtonCode_button_fill_all_from_scale] -- add your button handler code here..
         juce::Array<std::int8_t> offsets;
         for (int chord_id = 0; chord_id != ChordSet::appdeff_t::SUM_CHORDS; ++chord_id)
         {
@@ -1195,323 +1129,30 @@ void UiEditorChords::buttonClicked(juce::Button *buttonThatWasClicked)
             set_chord_offsets(chord, offsets);
             chord.offset_all = 0;
         }
-        //[/UserButtonCode_button_fill_all_from_scale]
     }
     else if (buttonThatWasClicked == button_fill_target_from_scale.get())
     {
-        //[UserButtonCode_button_fill_target_from_scale] -- add your button handler code here..
         if (combo_scales->getSelectedItemIndex() != -1)
         {
             juce::Array<std::int8_t> offsets =
                 get_random_chord(combo_scales->getSelectedItemIndex());
             set_chord_offsets(target_chord, offsets);
         }
-        //[/UserButtonCode_button_fill_target_from_scale]
     }
     else if (buttonThatWasClicked == button_info.get())
     {
-        //[UserButtonCode_button_info] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
             _app_instance_store->editor_config.manual_editor =
                 std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(MANUAL_URL +
                                                                        "beginner/the-chord-editor");
-        //[/UserButtonCode_button_info]
     }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
 }
 
 void UiEditorChords::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
 {
-    //[UsercomboBoxChanged_Pre]
-    //[/UsercomboBoxChanged_Pre]
-
     if (comboBoxThatHasChanged == combo_scales.get())
     {
-        //[UserComboBoxCode_combo_scales] -- add your combo box handling code here..
-        //[/UserComboBoxCode_combo_scales]
     }
-
-    //[UsercomboBoxChanged_Post]
-    //[/UsercomboBoxChanged_Post]
 }
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="UiEditorChords" componentName=""
-                 parentClasses="public UiEditor" constructorParams="AppInstanceStore* const app_instance_store_"
-                 variableInitialisers="UiEditor(&quot;B-Chords&quot;),_app_instance_store(app_instance_store_)"
-                 snapPixels="5" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="780" initialHeight="500">
-  <BACKGROUND backgroundColour="0">
-    <RECT pos="0 0 0M 0M" fill="solid: ff161616" hasStroke="1" stroke="2, mitered, butt"
-          strokeColour="solid: ffff3b00"/>
-    <PATH pos="0 0 100 100" fill="solid: 0" hasStroke="1" stroke="2, beveled, rounded"
-          strokeColour="solid: ffffffff" nonZeroWinding="1">s 88.462% 70% l 96.154% 70% l 96.154% 80% l 93.59% 80%</PATH>
-    <PATH pos="0 0 100 100" fill="solid: 0" hasStroke="1" stroke="2, beveled, rounded"
-          strokeColour="solid: ffffffff" nonZeroWinding="1">s 88.462% 68% l 87.179% 70% l 88.462% 72%</PATH>
-    <PATH pos="0 0 100 100" fill="solid: ff6ea52a" hasStroke="0" nonZeroWinding="1">s 96.795% 93.2% l 98.462% 95.4% l 96.795% 97.4% x</PATH>
-    <PATH pos="0 0 100 100" fill="solid: ffff3b00" hasStroke="0" nonZeroWinding="1">s 2.821% 47.2% l 2.821% 51.2% l 1.538% 49.2% x</PATH>
-    <PATH pos="0 0 100 100" fill="solid: ffff3b00" hasStroke="0" nonZeroWinding="1">s 2.821% 27.2% l 2.821% 31.2% l 1.538% 29.2% x</PATH>
-    <PATH pos="0 0 100 100" fill="solid: ffff3b00" hasStroke="0" nonZeroWinding="1">s 2.821% 37.2% l 2.821% 41.2% l 1.538% 39.2% x</PATH>
-    <PATH pos="0 0 100 100" fill="solid: ffff3b00" hasStroke="0" nonZeroWinding="1">s 2.821% 17.2% l 2.821% 21.2% l 1.538% 19.2% x</PATH>
-    <ROUNDRECT pos="20 76% 89.744% 1" cornerSize="10" fill="solid: ffff3b00"
-               hasStroke="0"/>
-  </BACKGROUND>
-  <LABEL name="" id="c62a521ca44ece88" memberName="lbl_clock_thru" virtualName=""
-         explicitFocusOrder="0" pos="5.128% 3% 9.359% 6%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="DRUMS&#10;" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="36"/>
-  <TOGGLEBUTTON name="" id="ed213804326327f7" memberName="tb_drum_view" virtualName=""
-                explicitFocusOrder="2" pos="2.564% 3% 11.795% 6%" txtcol="ffff3b00"
-                buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
-  <TOGGLEBUTTON name="" id="7b05b991cde8ca5" memberName="target_chord_0" virtualName=""
-                explicitFocusOrder="0" pos="17.949% 66% 5.256% 8%" buttonText=""
-                connectedEdges="0" needsCallback="1" radioGroupId="1" state="0"/>
-  <TOGGLEBUTTON name="" id="b8aba79bc8c20c88" memberName="target_chord_1" virtualName=""
-                explicitFocusOrder="0" pos="30.769% 66% 5.256% 8%" buttonText=""
-                connectedEdges="0" needsCallback="1" radioGroupId="1" state="0"/>
-  <TOGGLEBUTTON name="" id="ffadd5decf8738cc" memberName="target_chord_2" virtualName=""
-                explicitFocusOrder="0" pos="43.59% 66% 5.256% 8%" buttonText=""
-                connectedEdges="0" needsCallback="1" radioGroupId="1" state="0"/>
-  <TOGGLEBUTTON name="" id="6e19363bd65a2cda" memberName="target_chord_3" virtualName=""
-                explicitFocusOrder="0" pos="56.41% 66% 5.256% 8%" buttonText=""
-                connectedEdges="0" needsCallback="1" radioGroupId="1" state="0"/>
-  <TOGGLEBUTTON name="" id="8d7b8eb3cde2e8bf" memberName="target_chord_4" virtualName=""
-                explicitFocusOrder="0" pos="69.231% 66% 5.256% 8%" buttonText=""
-                connectedEdges="0" needsCallback="1" radioGroupId="1" state="0"/>
-  <TOGGLEBUTTON name="" id="97baef4558165f3" memberName="target_chord_5" virtualName=""
-                explicitFocusOrder="0" pos="82.051% 66% 5.256% 8%" buttonText=""
-                connectedEdges="0" needsCallback="1" radioGroupId="1" state="0"/>
-  <LABEL name="" id="570e427862f0a9a0" memberName="label_string_g" virtualName=""
-         explicitFocusOrder="0" pos="3.205% 12% 10.256% 8%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="STRING G" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="34"/>
-  <GENERICCOMPONENT name="" id="7df349b1fad40eac" memberName="chord_offset_0_0" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="16.538% 12% 10.256% 8%" class="Component"
-                    params="_app_instance_store,0,0"/>
-  <GENERICCOMPONENT name="" id="371f847b2e527e6e" memberName="chord_offset_0_1" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="16.538% 22% 10.256% 8%" class="Component"
-                    params="_app_instance_store,0,1"/>
-  <GENERICCOMPONENT name="" id="e581738161f3ad1f" memberName="chord_offset_0_2" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="16.538% 32% 10.256% 8%" class="Component"
-                    params="_app_instance_store,0,2"/>
-  <GENERICCOMPONENT name="" id="aa9d9894a6159596" memberName="chord_offset_0_3" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="16.538% 42% 10.256% 8%" class="Component"
-                    params="_app_instance_store,0,3"/>
-  <GENERICCOMPONENT name="" id="aec47ae35c7b3135" memberName="chord_offset_1_0" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="29.359% 12% 10.256% 8%" class="Component"
-                    params="_app_instance_store,1,0"/>
-  <GENERICCOMPONENT name="" id="e465bbb1379cd31f" memberName="chord_offset_2_0" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="42.436% 12% 10.256% 8%" class="Component"
-                    params="_app_instance_store,2,0"/>
-  <GENERICCOMPONENT name="" id="2e16227c60e1f711" memberName="chord_offset_3_0" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="55.256% 12% 10.256% 8%" class="Component"
-                    params="_app_instance_store,3,0"/>
-  <GENERICCOMPONENT name="" id="7db53d096edbd209" memberName="chord_offset_4_0" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="67.949% 12% 10.256% 8%" class="Component"
-                    params="_app_instance_store,4,0"/>
-  <GENERICCOMPONENT name="" id="be2ab7d13b7f4d2c" memberName="chord_offset_5_0" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="80.769% 12% 10.256% 8%" class="Component"
-                    params="_app_instance_store,5,0"/>
-  <GENERICCOMPONENT name="" id="3dfe5ac5011c4074" memberName="chord_offset_1_1" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="29.359% 22% 10.256% 8%" class="Component"
-                    params="_app_instance_store,1,1"/>
-  <GENERICCOMPONENT name="" id="c39da26fe8c5ff0b" memberName="chord_offset_1_2" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="29.359% 32% 10.256% 8%" class="Component"
-                    params="_app_instance_store,1,2"/>
-  <GENERICCOMPONENT name="" id="c7ff475775c7d4db" memberName="chord_offset_1_3" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="29.359% 42% 10.256% 8%" class="Component"
-                    params="_app_instance_store,1,3"/>
-  <GENERICCOMPONENT name="" id="cbed57a7446b4965" memberName="chord_offset_2_1" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="42.436% 22% 10.256% 8%" class="Component"
-                    params="_app_instance_store,2,1"/>
-  <GENERICCOMPONENT name="" id="25a4c712505f3bd2" memberName="chord_offset_2_2" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="42.436% 32% 10.256% 8%" class="Component"
-                    params="_app_instance_store,2,2"/>
-  <GENERICCOMPONENT name="" id="960398f0046c2c47" memberName="chord_offset_2_3" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="42.436% 42% 10.256% 8%" class="Component"
-                    params="_app_instance_store,2,3"/>
-  <GENERICCOMPONENT name="" id="4c6d08add313467d" memberName="chord_offset_3_1" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="55.256% 22% 10.256% 8%" class="Component"
-                    params="_app_instance_store,3,1"/>
-  <GENERICCOMPONENT name="" id="411d5464fb7b0190" memberName="chord_offset_3_2" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="55.256% 32% 10.256% 8%" class="Component"
-                    params="_app_instance_store,3,2"/>
-  <GENERICCOMPONENT name="" id="5d1d0dc670e56916" memberName="chord_offset_3_3" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="55.256% 42% 10.256% 8%" class="Component"
-                    params="_app_instance_store,3,3"/>
-  <GENERICCOMPONENT name="" id="4f9e1540fa196372" memberName="chord_offset_4_1" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="67.949% 22% 10.256% 8%" class="Component"
-                    params="_app_instance_store,4,1"/>
-  <GENERICCOMPONENT name="" id="208aa35d7ae9896a" memberName="chord_offset_4_2" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="67.949% 32% 10.256% 8%" class="Component"
-                    params="_app_instance_store,4,2"/>
-  <GENERICCOMPONENT name="" id="19b10468b99862f7" memberName="chord_offset_4_3" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="67.949% 42% 10.256% 8%" class="Component"
-                    params="_app_instance_store,4,3"/>
-  <GENERICCOMPONENT name="" id="f97cea55ad831d5c" memberName="chord_offset_5_1" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="80.769% 22% 10.256% 8%" class="Component"
-                    params="_app_instance_store,5,1"/>
-  <GENERICCOMPONENT name="" id="25d978e0a9790e7a" memberName="chord_offset_5_2" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="80.769% 32% 10.256% 8%" class="Component"
-                    params="_app_instance_store,5,2"/>
-  <GENERICCOMPONENT name="" id="c1e56ff643b79961" memberName="chord_offset_5_3" virtualName="UiChordEditorStringOffset"
-                    explicitFocusOrder="0" pos="80.769% 42% 10.256% 8%" class="Component"
-                    params="_app_instance_store,5,3"/>
-  <GENERICCOMPONENT name="" id="36b272b71f278057" memberName="chord_offset_0" virtualName="UiChordEditorChordOffset"
-                    explicitFocusOrder="0" pos="16.538% 56% 10.256% 8%" class="Component"
-                    params="_app_instance_store,0"/>
-  <GENERICCOMPONENT name="" id="873ebbcad8b1e7" memberName="chord_offset_1" virtualName="UiChordEditorChordOffset"
-                    explicitFocusOrder="0" pos="29.359% 56% 10.256% 8%" class="Component"
-                    params="_app_instance_store,1"/>
-  <GENERICCOMPONENT name="" id="51de2ffb674743a8" memberName="chord_offset_2" virtualName="UiChordEditorChordOffset"
-                    explicitFocusOrder="0" pos="42.436% 56% 10.256% 8%" class="Component"
-                    params="_app_instance_store,2"/>
-  <GENERICCOMPONENT name="" id="a066198586b3ad59" memberName="chord_offset_3" virtualName="UiChordEditorChordOffset"
-                    explicitFocusOrder="0" pos="55.256% 56% 10.256% 8%" class="Component"
-                    params="_app_instance_store,3"/>
-  <GENERICCOMPONENT name="" id="79f09b77a8e75023" memberName="chord_offset_4" virtualName="UiChordEditorChordOffset"
-                    explicitFocusOrder="0" pos="67.949% 56% 10.256% 8%" class="Component"
-                    params="_app_instance_store,4"/>
-  <GENERICCOMPONENT name="" id="7d42fbc29b90da0e" memberName="chord_offset_5" virtualName="UiChordEditorChordOffset"
-                    explicitFocusOrder="0" pos="80.769% 56% 10.256% 8%" class="Component"
-                    params="_app_instance_store,5"/>
-  <LABEL name="" id="c36aae4435054b42" memberName="label_string_d" virtualName=""
-         explicitFocusOrder="0" pos="3.205% 22% 10.256% 8%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="D" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="34"/>
-  <LABEL name="" id="edd9df2aa2ce7630" memberName="label_string_a" virtualName=""
-         explicitFocusOrder="0" pos="3.205% 31% 10.256% 8%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="A" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="34"/>
-  <LABEL name="" id="5d31d004d0bca3a5" memberName="label_string_e" virtualName=""
-         explicitFocusOrder="0" pos="3.205% 42% 10.256% 8%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="E" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="34"/>
-  <LABEL name="" id="cb690363a9c4f1bf" memberName="label_transpose" virtualName=""
-         explicitFocusOrder="0" pos="2.564% 57% 10.897% 6%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Transpose&#10;"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="34"/>
-  <LABEL name="" id="268da408b8789993" memberName="label_preset_target"
-         virtualName="" explicitFocusOrder="0" pos="2.564% 67% 10.897% 6%"
-         textCol="ffff3b00" edTextCol="ff000000" edBkgCol="0" labelText="Preset Target"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="34"/>
-  <TEXTBUTTON name="" id="2bbf41d8e0f0b992" memberName="preset_0" virtualName=""
-              explicitFocusOrder="0" pos="3.846% 78% 5.256% 8%" bgColOff="ffff3b00"
-              buttonText="A" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="9e71a3c86019419c" memberName="preset_1" virtualName=""
-              explicitFocusOrder="0" pos="10.256% 78% 5.256% 8%" bgColOff="ffff3b00"
-              buttonText="B" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="26393bcf34eb5733" memberName="preset_2" virtualName=""
-              explicitFocusOrder="0" pos="16.538% 78% 5.256% 8%" bgColOff="ffff3b00"
-              buttonText="C" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="9f80b2f965b7f3b8" memberName="preset_3" virtualName=""
-              explicitFocusOrder="0" pos="22.949% 78% 5.256% 8%" bgColOff="ffff3b00"
-              buttonText="D" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="6194a4def4d7aa7f" memberName="preset_4" virtualName=""
-              explicitFocusOrder="0" pos="29.359% 78% 5.256% 8%" bgColOff="ffff3b00"
-              buttonText="E" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="e4c13b7ebd258de8" memberName="preset_5" virtualName=""
-              explicitFocusOrder="0" pos="35.769% 78% 5.256% 8%" bgColOff="ffff3b00"
-              buttonText="F" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="6976076249a28eb0" memberName="preset_6" virtualName=""
-              explicitFocusOrder="0" pos="42.436% 78% 5.256% 8%" bgColOff="ffff3b00"
-              buttonText="G" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="410cb600361efc83" memberName="preset_7" virtualName=""
-              explicitFocusOrder="0" pos="48.846% 78% 5.256% 8%" bgColOff="ff003bff"
-              buttonText="A m" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="35da4a6366a2fbd4" memberName="preset_8" virtualName=""
-              explicitFocusOrder="0" pos="55.256% 78% 5.256% 8%" bgColOff="ff003bff"
-              buttonText="B m" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="d088bc0b458804f1" memberName="preset_9" virtualName=""
-              explicitFocusOrder="0" pos="61.538% 78% 5.256% 8%" bgColOff="ff003bff"
-              buttonText="C m" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="803120117cc2c051" memberName="preset_10" virtualName=""
-              explicitFocusOrder="0" pos="67.949% 78% 5.256% 8%" bgColOff="ff003bff"
-              buttonText="D m" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="c78cc08e96fdd430" memberName="preset_11" virtualName=""
-              explicitFocusOrder="0" pos="74.359% 78% 5.256% 8%" bgColOff="ff003bff"
-              buttonText="E m" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="f615c63dc61b775d" memberName="preset_12" virtualName=""
-              explicitFocusOrder="0" pos="80.769% 78% 5.256% 8%" bgColOff="ff003bff"
-              buttonText="F m" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="f656585fefbcdd52" memberName="preset_13" virtualName=""
-              explicitFocusOrder="0" pos="87.179% 78% 5.256% 8%" bgColOff="ff003bff"
-              buttonText="G m" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <LABEL name="" id="c8460da9196f5d97" memberName="labe_chord_0" virtualName=""
-         explicitFocusOrder="0" pos="16.667% 3% 10.256% 6%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="CHORD 1&#10;" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="36"/>
-  <LABEL name="" id="1832d2314dbd2c34" memberName="labe_chord_1" virtualName=""
-         explicitFocusOrder="0" pos="29.487% 3% 10.256% 6%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="2" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="36"/>
-  <LABEL name="" id="b1ac6f063195a77f" memberName="labe_chord_2" virtualName=""
-         explicitFocusOrder="0" pos="42.308% 3% 10.256% 6%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="3" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="36"/>
-  <LABEL name="" id="5cebc431dba16e92" memberName="labe_chord_3" virtualName=""
-         explicitFocusOrder="0" pos="55.128% 3% 10.256% 6%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="4" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="36"/>
-  <LABEL name="" id="d1bfe283daca4f26" memberName="labe_chord_4" virtualName=""
-         explicitFocusOrder="0" pos="67.949% 3% 10.256% 6%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="5" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="36"/>
-  <LABEL name="" id="51588c811a3f657c" memberName="labe_chord_5" virtualName=""
-         explicitFocusOrder="0" pos="80.769% 3% 10.256% 6%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="6" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="36"/>
-  <TEXTBUTTON name="" id="e47db93c4fc2277a" memberName="button_fill_all_from_scale"
-              virtualName="" explicitFocusOrder="0" pos="61.538% 90% 30.769% 6%"
-              bgColOff="ffff3b00" buttonText="Fill ALL Chords randomly from Scale"
-              connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="ee373f39c7a0a1f2" memberName="button_fill_target_from_scale"
-              virtualName="" explicitFocusOrder="0" pos="30.769% 90% 29.359% 6%"
-              bgColOff="ffff3b00" buttonText="Fill Target Chord randomly from Scale"
-              connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <COMBOBOX name="new combo box" id="8bf31827fcc3a2fc" memberName="combo_scales"
-            virtualName="" explicitFocusOrder="0" pos="3.846% 90% 25.641% 6%"
-            editable="0" layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
-  <GENERICCOMPONENT name="" id="b3ecc3f8f99fe16a" memberName="toolbar" virtualName="UiEditorToolbar"
-                    explicitFocusOrder="0" pos="0Rr 0 6.41% 40%" class="Component"
-                    params="this"/>
-  <TEXTBUTTON name="" id="3ed8b754d00a12d8" memberName="button_info" virtualName=""
-              explicitFocusOrder="0" pos="94.487% 41% 3.846% 6%" buttonText="?"
-              connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

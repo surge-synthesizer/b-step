@@ -15,7 +15,6 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #include "PluginProcessor.h"
 #include "UiMainWindow.h"
 
@@ -34,11 +33,8 @@
 #include "MIDIIO.h"
 
 #include "AppStyleEditor.h"
-//[/Headers]
 
 #include "MenuBarRight.h"
-
-//[MiscUserDefs] You can add your own user definitions and misc code here...
 
 /*
     leftside_model_mode_model->set_controller_left( _app_instance_store->controller.start );
@@ -62,8 +58,6 @@ void MenuBarRight::mouseDown(const juce::MouseEvent &e_)
             MANUAL_URL + "beginner/user-interface-layout");
     }
 }
-
-//[/MiscUserDefs]
 
 //==============================================================================
 MenuBarRight::MenuBarRight(AppInstanceStore *const app_instance_store_,
@@ -202,21 +196,14 @@ MenuBarRight::MenuBarRight(AppInstanceStore *const app_instance_store_,
     setOpaque(true);
 
 #ifdef DO_NEVER_DEFINE_THIS
-    //[/UserPreSize]
 
     setSize(42, 768);
 
-    //[Constructor] You can add your own custom stuff here..
 #endif // DO_NEVER_DEFINE_THIS
-
-    //[/Constructor]
 }
 
 MenuBarRight::~MenuBarRight()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
-    //[/Destructor_pre]
-
     open_settings_editor = nullptr;
     do_midi_learn = nullptr;
     open_about_window = nullptr;
@@ -247,15 +234,11 @@ MenuBarRight::~MenuBarRight()
     drawable13 = nullptr;
     drawable14 = nullptr;
     drawable15 = nullptr;
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
 }
 
 //==============================================================================
 void MenuBarRight::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
     /*
     std::uint32_t new_colur = GLOBAL_VALUE_HOLDER::get().PRIMARY_COLOUR;
       for( int i = 0 ; i != drawables.size() ; i++ )
@@ -266,7 +249,6 @@ void MenuBarRight::paint(juce::Graphics &g)
       }
       last_painted_colour = GLOBAL_VALUE_HOLDER::get().PRIMARY_COLOUR;
       */
-    //[/UserPrePaint]
 
     g.fillAll(juce::Colours::black);
 
@@ -416,9 +398,6 @@ void MenuBarRight::paint(juce::Graphics &g)
             juce::Rectangle<float>(proportionOfWidth(0.0476f), proportionOfHeight(0.5534f),
                                    proportionOfWidth(0.9048f), proportionOfHeight(0.0365f)),
             juce::RectanglePlacement::centred, 1.000f);
-
-    //[UserPaint] Add your own custom painting code here..
-    //[/UserPaint]
 }
 
 void MenuBarRight::resized()
@@ -452,30 +431,20 @@ void MenuBarRight::resized()
                              proportionOfHeight(0.0469f));
     open_styler->setBounds(0, proportionOfHeight(0.5469f), getWidth() - 0,
                            proportionOfHeight(0.0521f));
-    //[UserResized] Add your own custom resize handling here..
-    //[/UserResized]
 }
 
 void MenuBarRight::buttonClicked(juce::Button *buttonThatWasClicked)
 {
-    //[UserbuttonClicked_Pre]
-    //[/UserbuttonClicked_Pre]
-
     if (buttonThatWasClicked == open_settings_editor.get())
     {
-        //[UserButtonCode_open_settings_editor] -- add your button handler code here..
         _main_window->open_settings_editor();
-        //[/UserButtonCode_open_settings_editor]
     }
     else if (buttonThatWasClicked == do_midi_learn.get())
     {
-        //[UserButtonCode_do_midi_learn] -- add your button handler code here..
         _main_window->open_midi_learn_editor();
-        //[/UserButtonCode_do_midi_learn]
     }
     else if (buttonThatWasClicked == open_about_window.get())
     {
-        //[UserButtonCode_open_about_window] -- add your button handler code here..
         if (!_app_instance_store->editor_config.about_winodow)
         {
             _app_instance_store->editor_config.about_winodow =
@@ -483,39 +452,29 @@ void MenuBarRight::buttonClicked(juce::Button *buttonThatWasClicked)
         }
         else
             _app_instance_store->editor_config.about_winodow = nullptr;
-        //[/UserButtonCode_open_about_window]
     }
     else if (buttonThatWasClicked == save_preset.get())
     {
-        //[UserButtonCode_save_preset] -- add your button handler code here..
         _main_window->open_writer(VIEW_TYPE::PROJECTS);
-        //[/UserButtonCode_save_preset]
     }
     else if (buttonThatWasClicked == panic.get())
     {
-        //[UserButtonCode_panic] -- add your button handler code here..
         _app_instance_store->audio_processor->panic();
-        //[/UserButtonCode_panic]
     }
     else if (buttonThatWasClicked == load_preset.get())
     {
-        //[UserButtonCode_load_preset] -- add your button handler code here..
         _main_window->open_reader(VIEW_TYPE::PROJECTS);
-        //[/UserButtonCode_load_preset]
     }
     else if (buttonThatWasClicked == open_setup_editor.get())
     {
-        //[UserButtonCode_open_setup_editor] -- add your button handler code here..
         if (!_app_instance_store->editor_config.setup_editor)
             _app_instance_store->editor_config.setup_editor =
                 std::make_unique<UiEditorSetup>(_app_instance_store);
         else
             _app_instance_store->editor_config.setup_editor = nullptr;
-        //[/UserButtonCode_open_setup_editor]
     }
     else if (buttonThatWasClicked == clear_project.get())
     {
-        //[UserButtonCode_clear_project] -- add your button handler code here..
         class CallbackManager : public juce::ModalComponentManager::Callback
         {
             AppInstanceStore *const _app_instance_store;
@@ -543,159 +502,16 @@ void MenuBarRight::buttonClicked(juce::Button *buttonThatWasClicked)
                                            "This will clear your project to factory defaults!",
                                            "YES, CLEAR ALL", "NO, KEEP IT",
                                            _app_instance_store->editor, callback);
-        //[/UserButtonCode_clear_project]
     }
     else if (buttonThatWasClicked == open_styler.get())
     {
-        //[UserButtonCode_open_styler] -- add your button handler code here..
         if (!_app_instance_store->editor_config.style_editor)
             _app_instance_store->editor_config.style_editor =
                 std::make_unique<UiEditorAppStyler>(_app_instance_store);
         else
             _app_instance_store->editor_config.style_editor = nullptr;
-        //[/UserButtonCode_open_styler]
     }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
 }
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="MenuBarRight" componentName=""
-                 parentClasses="public Component" constructorParams="AppInstanceStore*const app_instance_store_, GstepAudioProcessorEditor*const main_window_"
-                 variableInitialisers="_app_instance_store(app_instance_store_),_main_window(main_window_)"
-                 snapPixels="2" snapActive="0" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="42" initialHeight="768">
-  <BACKGROUND backgroundColour="ff000000">
-    <IMAGE pos="14.286% 13.542% 71.429% 4.688%" resource="load_svg" opacity="1"
-           mode="1"/>
-    <IMAGE pos="14.286% 18.75% 71.429% 4.688%" resource="save_svg" opacity="1"
-           mode="1"/>
-    <IMAGE pos="16.667% 44.141% 71.429% 4.688%" resource="learn_svg" opacity="1"
-           mode="1"/>
-    <IMAGE pos="16.667% 38.932% 71.429% 4.688%" resource="connection_svg"
-           opacity="1" mode="1"/>
-    <IMAGE pos="7.143% 50.391% 90.476% 3.125%" resource="info_svg" opacity="1"
-           mode="1"/>
-    <IMAGE pos="4.762% 4.427% 90.476% 3.125%" resource="panic_svg" opacity="1"
-           mode="1"/>
-    <RECT pos="2 11.198% 4M 1" fill="solid: ffdfce89" hasStroke="0"/>
-    <RECT pos="3 31.38% 4M 1" fill="solid: ffdfce89" hasStroke="0"/>
-    <RECT pos="2 60.547% 4M 1" fill="solid: ffdfce89" hasStroke="0"/>
-    <IMAGE pos="7.143% 67.188% 90.476% 5.208%" resource="drag_svg" opacity="0.5"
-           mode="1"/>
-    <IMAGE pos="7.143% 61.979% 90.476% 5.208%" resource="drag_svg" opacity="0.5"
-           mode="1"/>
-    <RECT pos="2 73.698% 4M 1" fill="solid: ffdfce89" hasStroke="0"/>
-    <IMAGE pos="16.667% 33.724% 71.429% 4.688%" resource="settings_svg"
-           opacity="1" mode="1"/>
-    <IMAGE pos="4.762% 75.781% 90.476% 5.208%" resource="drag_svg" opacity="0.5"
-           mode="1"/>
-    <IMAGE pos="4.762% 80.99% 90.476% 5.208%" resource="drag_svg" opacity="0.5"
-           mode="1"/>
-    <IMAGE pos="4.762% 86.198% 90.476% 5.208%" resource="drag_svg" opacity="0.5"
-           mode="1"/>
-    <IMAGE pos="4.762% 91.406% 90.476% 5.208%" resource="drag_svg" opacity="0.5"
-           mode="1"/>
-    <IMAGE pos="14.286% 24.349% 71.429% 3.906%" resource="trash_svg" opacity="1"
-           mode="1"/>
-    <IMAGE pos="4.762% 55.339% 90.476% 3.646%" resource="paint_svg" opacity="1"
-           mode="1"/>
-  </BACKGROUND>
-  <IMAGEBUTTON name="" id="a22f46f0d295d702" memberName="open_settings_editor"
-               virtualName="" explicitFocusOrder="0" pos="0 38.542% 0M 5.208%"
-               buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-               keepProportions="1" resourceNormal="" opacityNormal="1" colourNormal="0"
-               resourceOver="" opacityOver="1" colourOver="0" resourceDown=""
-               opacityDown="1" colourDown="0"/>
-  <IMAGEBUTTON name="" id="c8640ae16ca9fbad" memberName="do_midi_learn" virtualName=""
-               explicitFocusOrder="0" pos="0 43.75% 0M 5.208%" buttonText=""
-               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
-               resourceNormal="" opacityNormal="1" colourNormal="0" resourceOver=""
-               opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
-               colourDown="0"/>
-  <IMAGEBUTTON name="" id="243c8b13a9755b82" memberName="open_about_window"
-               virtualName="" explicitFocusOrder="0" pos="0 49.219% 0M 5.208%"
-               buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-               keepProportions="1" resourceNormal="" opacityNormal="1" colourNormal="0"
-               resourceOver="" opacityOver="1" colourOver="0" resourceDown=""
-               opacityDown="1" colourDown="0"/>
-  <IMAGEBUTTON name="" id="db039f474c06c7a5" memberName="save_preset" virtualName=""
-               explicitFocusOrder="0" pos="0 18.75% 0M 4.688%" buttonText=""
-               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
-               resourceNormal="" opacityNormal="1" colourNormal="0" resourceOver=""
-               opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
-               colourDown="0"/>
-  <IMAGEBUTTON name="" id="684c4e7e3a7208da" memberName="panic" virtualName=""
-               explicitFocusOrder="0" pos="0 3.385% 0M 4.688%" buttonText=""
-               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
-               resourceNormal="" opacityNormal="1" colourNormal="0" resourceOver=""
-               opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
-               colourDown="0"/>
-  <IMAGEBUTTON name="" id="4e26c399039c99ca" memberName="load_preset" virtualName=""
-               explicitFocusOrder="0" pos="0 13.542% 0M 4.688%" buttonText=""
-               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
-               resourceNormal="" opacityNormal="1" colourNormal="0" resourceOver=""
-               opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
-               colourDown="0"/>
-  <IMAGEBUTTON name="" id="3629436e9e6c1d20" memberName="button_rubber" virtualName="UIRubber"
-               explicitFocusOrder="0" pos="0 62.109% 0M 4.688%" buttonText=""
-               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="1"
-               resourceNormal="" opacityNormal="1" colourNormal="0" resourceOver=""
-               opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
-               colourDown="0"/>
-  <IMAGEBUTTON name="" id="59dd11ec5838f896" memberName="button_question" virtualName="UIQuestion"
-               explicitFocusOrder="0" pos="0 67.318% 0M 4.688%" buttonText=""
-               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="1"
-               resourceNormal="" opacityNormal="1" colourNormal="0" resourceOver=""
-               opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
-               colourDown="0"/>
-  <GENERICCOMPONENT name="tool_clipboard_1" id="bf47f17b9a7138d5" memberName="button_clipboard_1"
-                    virtualName="UIClipboard" explicitFocusOrder="0" pos="0 75.781% 0M 5.208%"
-                    class="Component" params="_app_instance_store,_main_window,0"/>
-  <GENERICCOMPONENT name="tool_clipboard_2" id="fb2c413e3731c705" memberName="button_clipboard_2"
-                    virtualName="UIClipboard" explicitFocusOrder="0" pos="0 80.99% 0M 5.208%"
-                    class="Component" params="_app_instance_store,_main_window,1"/>
-  <GENERICCOMPONENT name="tool_clipboard_3" id="25029a502726bcfc" memberName="button_clipboard_3"
-                    virtualName="UIClipboard" explicitFocusOrder="0" pos="0 86.198% 0M 5.208%"
-                    class="Component" params="_app_instance_store,_main_window,2"/>
-  <GENERICCOMPONENT name="tool_clipboard_4" id="de1cd9cc3810b999" memberName="button_clipboard_4"
-                    virtualName="UIClipboard" explicitFocusOrder="0" pos="0 91.406% 0M 5.208%"
-                    class="Component" params="_app_instance_store,_main_window,3"/>
-  <IMAGEBUTTON name="" id="c556436ff5d2cb0" memberName="open_setup_editor" virtualName=""
-               explicitFocusOrder="0" pos="0 33.333% 0M 5.208%" buttonText=""
-               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
-               resourceNormal="" opacityNormal="1" colourNormal="0" resourceOver=""
-               opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
-               colourDown="0"/>
-  <IMAGEBUTTON name="" id="37c7e6cb6700a112" memberName="clear_project" virtualName=""
-               explicitFocusOrder="0" pos="0 23.958% 0M 4.688%" buttonText=""
-               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
-               resourceNormal="" opacityNormal="1" colourNormal="0" resourceOver=""
-               opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
-               colourDown="0"/>
-  <IMAGEBUTTON name="" id="86c940a9c6ff46ad" memberName="open_styler" virtualName=""
-               explicitFocusOrder="0" pos="0 54.688% 0M 5.208%" buttonText=""
-               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
-               resourceNormal="" opacityNormal="1" colourNormal="0" resourceOver=""
-               opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
-               colourDown="0"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
 
 //==============================================================================
 // Binary resources - be careful not to edit any of these sections!
@@ -2339,6 +2155,3 @@ static const unsigned char resource_MenuBarRight_paint_svg[] = {
 
 const char *MenuBarRight::paint_svg = (const char *)resource_MenuBarRight_paint_svg;
 const int MenuBarRight::paint_svgSize = 5394;
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

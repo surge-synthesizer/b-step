@@ -15,20 +15,15 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #include "UiSettings.h"
 #include "UiMainWindow.h"
-//[/Headers]
 
 #include "UiQuestionIsYourFriend.h"
 #include <memory>
-
-//[MiscUserDefs] You can add your own user definitions and misc code here...
 void UiQuestionIsYourFriend::on_close_clicked()
 {
     _app_instance_store->editor_config.question_editor = nullptr;
 }
-//[/MiscUserDefs]
 
 //==============================================================================
 UiQuestionIsYourFriend::UiQuestionIsYourFriend(AppInstanceStore *const app_instance_store_)
@@ -74,40 +69,26 @@ UiQuestionIsYourFriend::UiQuestionIsYourFriend(AppInstanceStore *const app_insta
 
     drawable1 = juce::Drawable::createFromImageData(question_svg, question_svgSize);
 
-    //[UserPreSize]
     GLOBAL_VALUE_HOLDER::getInstance()->QUESTION_WAS_UP = true;
-
-    //[/UserPreSize]
 
     setSize(300, 350);
 
-    //[Constructor] You can add your own custom stuff here..
     center_relative_and_make_visible(_app_instance_store->editor);
     textEditor->setFont(textEditor->getFont().withHeight(1.f / 350 * getHeight() * 15));
     textEditor->applyFontToAllText(textEditor->getFont().withHeight(1.f / 350 * getHeight() * 15));
-    //[/Constructor]
 }
 
 UiQuestionIsYourFriend::~UiQuestionIsYourFriend()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
-    //[/Destructor_pre]
-
     label = nullptr;
     save = nullptr;
     textEditor = nullptr;
     drawable1 = nullptr;
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
 }
 
 //==============================================================================
 void UiQuestionIsYourFriend::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
-
     g.fillAll(juce::Colour(0xff161616));
 
     g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
@@ -121,16 +102,10 @@ void UiQuestionIsYourFriend::paint(juce::Graphics &g)
             juce::Rectangle<float>(proportionOfWidth(0.3233f), proportionOfHeight(0.2057f),
                                    proportionOfWidth(0.3333f), proportionOfHeight(0.2286f)),
             juce::RectanglePlacement::centred, 1.000f);
-
-    //[UserPaint] Add your own custom painting code here..
-    //[/UserPaint]
 }
 
 void UiQuestionIsYourFriend::resized()
 {
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
-
     label->setBounds(proportionOfWidth(0.0669f), proportionOfHeight(0.0567f),
                      proportionOfWidth(0.8669f), proportionOfHeight(0.1144f));
     save->setBounds(proportionOfWidth(0.5003f) - (proportionOfWidth(0.5331f) / 2),
@@ -138,69 +113,15 @@ void UiQuestionIsYourFriend::resized()
                     proportionOfHeight(0.0856f));
     textEditor->setBounds(proportionOfWidth(0.0800f), proportionOfHeight(0.5033f),
                           proportionOfWidth(0.8531f), proportionOfHeight(0.2967f));
-    //[UserResized] Add your own custom resize handling here..
-    //[/UserResized]
 }
 
 void UiQuestionIsYourFriend::buttonClicked(juce::Button *buttonThatWasClicked)
 {
-    //[UserbuttonClicked_Pre]
-    //[/UserbuttonClicked_Pre]
-
     if (buttonThatWasClicked == save.get())
     {
-        //[UserButtonCode_save] -- add your button handler code here..
         on_close_clicked();
-        //[/UserButtonCode_save]
     }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
 }
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="UiQuestionIsYourFriend" componentName=""
-                 parentClasses="public UiEditor" constructorParams="AppInstanceStore* const app_instance_store_"
-                 variableInitialisers="UiEditor(&quot;B-Question&quot;),_app_instance_store(app_instance_store_)"
-                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="300" initialHeight="350">
-  <BACKGROUND backgroundColour="ff161616">
-    <RECT pos="0 0 100% 100%" fill="solid: ffffff" hasStroke="1" stroke="2, mitered, butt"
-          strokeColour="solid: ffff3b0a"/>
-    <IMAGE pos="32.333% 20.571% 33.333% 22.857%" resource="question_svg"
-           opacity="1" mode="1"/>
-  </BACKGROUND>
-  <LABEL name="" id="d29055c09cd59844" memberName="label" virtualName=""
-         explicitFocusOrder="0" pos="6.688% 5.667% 86.688% 11.444%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="NEED HELP?" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Oswald"
-         fontsize="33.100000000000001421" bold="0" italic="0" justification="36"/>
-  <TEXTBUTTON name="" id="5db3932260acfbac" memberName="save" virtualName=""
-              explicitFocusOrder="0" pos="50.031%c 84.556% 53.312% 8.556%"
-              bgColOff="ff000000" textColOn="ff7fff00" buttonText="OK, DON'T SHOW AGAIN"
-              connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <TEXTEDITOR name="" id="349dcef92cb5b4eb" memberName="textEditor" virtualName=""
-              explicitFocusOrder="0" pos="8% 50.333% 85.312% 29.667%" textcol="ffff3b00"
-              bkgcol="ffff23" hilitecol="1111ee" shadowcol="0" caretcol="0"
-              initialText="The question mark is your friend!&#10;&#10;If you need some help drag the question mark (right menu bar) to any element on the user interface and get the info you need."
-              multiline="1" retKeyStartsLine="0" readonly="1" scrollbars="0"
-              caret="0" popupmenu="0"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
 
 //==============================================================================
 // Binary resources - be careful not to edit any of these sections!
@@ -461,6 +382,3 @@ static const unsigned char resource_UiQuestionIsYourFriend_question_svg[] = {
 const char *UiQuestionIsYourFriend::question_svg =
     (const char *)resource_UiQuestionIsYourFriend_question_svg;
 const int UiQuestionIsYourFriend::question_svgSize = 4740;
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

@@ -15,7 +15,6 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #include "CoreDatastructure.h"
 #include "AppStyles.h"
 
@@ -52,11 +51,9 @@
 
 #include "CoreAudioPlayer.h"
 #include "CoreAudioRecorder.h"
-//[/Headers]
 
 #include "UiMainWindow.h"
 
-//[MiscUserDefs] You can add your own user definitions and misc code here...
 // ************************************************************************************************
 // ************************************************************************************************
 // ************************************************************************************************
@@ -371,7 +368,6 @@ void GstepAudioProcessorEditor::mouseDown(const juce::MouseEvent &e_)
 
 void GstepAudioProcessorEditor::visibilityChanged() {}
 #include "UIHtmlView.h"
-//[/MiscUserDefs]
 
 //==============================================================================
 GstepAudioProcessorEditor::GstepAudioProcessorEditor(GstepAudioProcessor *processor_)
@@ -393,7 +389,6 @@ GstepAudioProcessorEditor::GstepAudioProcessorEditor(GstepAudioProcessor *proces
     midi_cc_value->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
     midi_cc_value->setColour(juce::TextEditor::highlightColourId, juce::Colour(0x00000000));
 
-    //[UserPreSize]
     is_first_callback = true;
 
     default_width = APPDEF_UIUserData::WINDOW_WIDTH;
@@ -444,11 +439,9 @@ GstepAudioProcessorEditor::GstepAudioProcessorEditor(GstepAudioProcessor *proces
 
     // NEVER CHANGE SIZE FROM HERE
 #ifdef DO_NEVER_DEFINE_THIS
-    //[/UserPreSize]
 
     setSize(APPDEF_UIUserData::WINDOW_WIDTH, APPDEF_UIUserData::WINDOW_HEIGHT);
 
-    //[Constructor] You can add your own custom stuff here..
 #endif // DO_NEVER_DEFINE_THIS
 
     auto_resize_to_user_area();
@@ -470,12 +463,10 @@ GstepAudioProcessorEditor::GstepAudioProcessorEditor(GstepAudioProcessor *proces
 #endif
 
     startTimer(UI_REFRESH_RATE);
-    //[/Constructor]
 }
 
 GstepAudioProcessorEditor::~GstepAudioProcessorEditor()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
     DOWN(Mainwindow);
 
     Timer::stopTimer();
@@ -486,30 +477,25 @@ GstepAudioProcessorEditor::~GstepAudioProcessorEditor()
     _menue_bar_right = nullptr;
 
     _editor_right_mainwindow = nullptr;
-    //[/Destructor_pre]
 
     midi_learn_focus = nullptr;
     midi_cc_value = nullptr;
 
-    //[Destructor]. You can add your own custom destruction code here..
     if (keyboard)
         delete keyboard;
     keyboard = nullptr;
 
     resizer = nullptr;
-    //[/Destructor]
 }
 
 //==============================================================================
 void GstepAudioProcessorEditor::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
     lock.enter();
     complex_paint(g);
     lock.exit();
     return;
     // forces to two paints a least to get the updater painted
-    //[/UserPrePaint]
 
     g.fillAll(juce::Colours::black);
 
@@ -520,14 +506,10 @@ void GstepAudioProcessorEditor::paint(juce::Graphics &g)
     g.setColour(juce::Colour(0xff1111ff));
     g.drawRoundedRectangle(1.0f, 1.0f, static_cast<float>(proportionOfWidth(0.9672f)),
                            static_cast<float>(getHeight() - 2), 10.000f, 2.000f);
-
-    //[UserPaint] Add your own custom painting code here..
-    //[/UserPaint]
 }
 
 void GstepAudioProcessorEditor::resized()
 {
-    //[UserResized] Add your own custom resize handling here..
     float width_prop = width_propertion();
     float height_prop = height_propertion();
 
@@ -601,46 +583,4 @@ void GstepAudioProcessorEditor::resized()
         int keyboard_height = (1.0 / 1024 * getHeight()) * 200;
         keyboard->setBounds(0, getHeight() - keyboard_height, getWidth(), keyboard_height);
     }
-    //[/UserResized]
 }
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="GstepAudioProcessorEditor"
-                 componentName="" parentClasses="public AudioProcessorEditor, public Timer, public KeyListener, public AsyncUpdater"
-                 constructorParams="GstepAudioProcessor* processor_" variableInitialisers="AudioProcessorEditor(processor_),_app_instance_store(&amp;processor_-&gt;_app_instance_store)"
-                 snapPixels="5" snapActive="0" snapShown="0" overlayOpacity="1.000"
-                 fixedSize="1" initialWidth="1280" initialHeight="768">
-  <BACKGROUND backgroundColour="ff000000">
-    <ROUNDRECT pos="1 1 96.719% 2M" cornerSize="10" fill="solid: ff111111" hasStroke="1"
-               stroke="2, mitered, butt" strokeColour="solid: ff1111ff"/>
-  </BACKGROUND>
-  <IMAGEBUTTON name="" id="3518e87b2153e77a" memberName="midi_learn_focus" virtualName=""
-               explicitFocusOrder="0" pos="-2128 -278 2000 2000" buttonText=""
-               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
-               resourceNormal="" opacityNormal="1" colourNormal="0" resourceOver=""
-               opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
-               colourDown="0"/>
-  <LABEL name="" id="ce069c2ff9f1db33" memberName="midi_cc_value" virtualName=""
-         explicitFocusOrder="0" pos="-186 -99 130 130" textCol="ffffffff"
-         edTextCol="ffffffff" edBkgCol="0" hiliteCol="0" labelText="n/a"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="1" italic="0" justification="36"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

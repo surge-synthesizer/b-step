@@ -18,7 +18,6 @@
 #ifndef __JUCE_HEADER_FD2613C37E142430__
 #define __JUCE_HEADER_FD2613C37E142430__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
 
@@ -62,16 +61,7 @@ enum RW_MODE
     FILEMANAGER_PTR->info_animation->set_text_and_run(message_, state_)
 
 class FingerDrag;
-//[/Headers]
 
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiEditorFileManager : public UiEditor,
                             public juce::Timer,
                             public juce::TextEditor::Listener,
@@ -85,7 +75,6 @@ class UiEditorFileManager : public UiEditor,
     ~UiEditorFileManager();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     bool volatile should_refresh_all;
     juce::CriticalSection lock;
 
@@ -124,17 +113,10 @@ class UiEditorFileManager : public UiEditor,
 
     VIEW_TYPE _view_type;
 
-    //[/UserMethods]
-
     void paint(juce::Graphics &g) override;
     void resized() override;
     void buttonClicked(juce::Button *buttonThatWasClicked) override;
     void comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged) override;
-
-  private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-  public:
-    //[/UserVariables]
 
     //==============================================================================
     std::unique_ptr<juce::Label> label5;
@@ -168,8 +150,5 @@ class UiEditorFileManager : public UiEditor,
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorFileManager)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_FD2613C37E142430__

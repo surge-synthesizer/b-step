@@ -18,7 +18,6 @@
 #ifndef __JUCE_HEADER_3D71D75A5B27009E__
 #define __JUCE_HEADER_3D71D75A5B27009E__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 
 #include "UI_MoveEvent2ChildsComponent.h"
@@ -27,16 +26,7 @@ class AppInstanceStore;
 class GstepAudioProcessorEditor;
 
 class UiLabel;
-//[/Headers]
 
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiEditorRightMainwindows : public MoveEvent2ChildsComponent
 {
   public:
@@ -46,7 +36,6 @@ class UiEditorRightMainwindows : public MoveEvent2ChildsComponent
     ~UiEditorRightMainwindows();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
     GstepAudioProcessorEditor *const _main_window;
 
@@ -60,15 +49,11 @@ class UiEditorRightMainwindows : public MoveEvent2ChildsComponent
 
   private:
     virtual const juce::Array<ModelBase *> &get_event_receiveable_models() { return _models; }
-    //[/UserMethods]
 
     void paint(juce::Graphics &g);
     void resized();
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<UiLabel> lbl_set_9;
     std::unique_ptr<UiLabel> lbl_bar_chord2;
@@ -104,8 +89,5 @@ class UiEditorRightMainwindows : public MoveEvent2ChildsComponent
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiEditorRightMainwindows)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_3D71D75A5B27009E__

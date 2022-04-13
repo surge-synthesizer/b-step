@@ -18,19 +18,9 @@
 #ifndef __JUCE_HEADER_E43C5736B9D62706__
 #define __JUCE_HEADER_E43C5736B9D62706__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "UiColumnWrapper.h"
 #include <cstdint>
-//[/Headers]
 
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiColumn16 : public SubeditorBase
 {
   public:
@@ -39,7 +29,6 @@ class UiColumn16 : public SubeditorBase
     ~UiColumn16();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
   private:
     const juce::Array<ModelBase *> models;
     const juce::Array<ModelBase *> &get_event_receiveable_models() override { return models; }
@@ -77,15 +66,11 @@ class UiColumn16 : public SubeditorBase
     void set_background_style(AppStyle *const style_) override;
 
     ModelBase *get_model(std::uint8_t id) override { return models.getUnchecked(id); };
-    //[/UserMethods]
 
     void paint(juce::Graphics &g) override;
     void resized() override;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<ModelBase> elem_0;
     std::unique_ptr<ModelBase> elem_1;
@@ -107,8 +92,5 @@ class UiColumn16 : public SubeditorBase
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiColumn16)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_E43C5736B9D62706__

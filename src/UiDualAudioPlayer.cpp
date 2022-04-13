@@ -15,13 +15,10 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #include "CoreAudioPlayer.h"
-//[/Headers]
 
 #include "UiDualAudioPlayer.h"
 
-//[MiscUserDefs] You can add your own user definitions and misc code here...
 void UiDualAudioMessage::timerCallback()
 {
     if (!_audio_player->is_playing())
@@ -31,7 +28,6 @@ void UiDualAudioMessage::timerCallback()
         _playing_thumb = nullptr;
     }
 }
-//[/MiscUserDefs]
 
 //==============================================================================
 UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
@@ -178,7 +174,6 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     toolbar = std::make_unique<UiEditorToolbar>(this, false, true, false);
     addAndMakeVisible(*toolbar);
 
-    //[UserPreSize]
     project_name->setText(project_name_, juce::dontSendNotification);
 
     if (!_listener->get_old_audio_file().existsAsFile())
@@ -189,11 +184,9 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
         old_info_2->setEnabled(false);
         old_info_3->setEnabled(false);
     }
-    //[/UserPreSize]
 
     setSize(440, 305);
 
-    //[Constructor] You can add your own custom stuff here..
     center_relative_and_make_visible(
         reinterpret_cast<juce::Component *const>(_app_instance_store->editor));
     // setAlwaysOnTop(true);
@@ -203,14 +196,10 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
     buttonClicked(play_new.get());
 
     startTimer(50);
-    //[/Constructor]
 }
 
 UiDualAudioMessage::~UiDualAudioMessage()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
-    //[/Destructor_pre]
-
     ok = nullptr;
     cancel = nullptr;
     audio_thumb_new = nullptr;
@@ -225,17 +214,11 @@ UiDualAudioMessage::~UiDualAudioMessage()
     play_old = nullptr;
     old_info_1 = nullptr;
     toolbar = nullptr;
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
 }
 
 //==============================================================================
 void UiDualAudioMessage::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
-
     g.fillAll(juce::Colours::white);
 
     g.setColour(juce::Colour(0xff161616));
@@ -244,16 +227,11 @@ void UiDualAudioMessage::paint(juce::Graphics &g)
     g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    //[UserPaint] Add your own custom painting code here..
     juce::ResizableWindow::moved();
-    //[/UserPaint]
 }
 
 void UiDualAudioMessage::resized()
 {
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
-
     ok->setBounds(proportionOfWidth(0.7273f) - proportionOfWidth(0.2045f),
                   proportionOfHeight(0.8525f), proportionOfWidth(0.2045f),
                   proportionOfHeight(0.0820f));
@@ -287,35 +265,26 @@ void UiDualAudioMessage::resized()
                           proportionOfWidth(0.9091f), proportionOfHeight(0.0984f));
     toolbar->setBounds(getWidth() - proportionOfWidth(0.1136f), proportionOfHeight(-0.1738f),
                        proportionOfWidth(0.1136f), proportionOfHeight(0.6557f));
-    //[UserResized] Add your own custom resize handling here..
+
     juce::ResizableWindow::resized();
-    //[/UserResized]
 }
 
 void UiDualAudioMessage::buttonClicked(juce::Button *buttonThatWasClicked)
 {
-    //[UserbuttonClicked_Pre]
-    //[/UserbuttonClicked_Pre]
-
     if (buttonThatWasClicked == ok.get())
     {
-        //[UserButtonCode_ok] -- add your button handler code here..
         _audio_player->stop(true);
         _listener->perform_ok();
         delete this;
-        //[/UserButtonCode_ok]
     }
     else if (buttonThatWasClicked == cancel.get())
     {
-        //[UserButtonCode_cancel] -- add your button handler code here..
         _audio_player->stop(true);
         _listener->perform_chancel();
         delete this;
-        //[/UserButtonCode_cancel]
     }
     else if (buttonThatWasClicked == play_new.get())
     {
-        //[UserButtonCode_play_new] -- add your button handler code here..
         if (_playing_thumb != audio_thumb_new.get())
         {
             _audio_player->stop();
@@ -334,11 +303,9 @@ void UiDualAudioMessage::buttonClicked(juce::Button *buttonThatWasClicked)
             play_new->setButtonText("PLAY");
             _playing_thumb = nullptr;
         }
-        //[/UserButtonCode_play_new]
     }
     else if (buttonThatWasClicked == play_old.get())
     {
-        //[UserButtonCode_play_old] -- add your button handler code here..
         if (_playing_thumb != audio_thumb_old.get())
         {
             _audio_player->stop();
@@ -357,122 +324,15 @@ void UiDualAudioMessage::buttonClicked(juce::Button *buttonThatWasClicked)
             play_old->setButtonText("PLAY");
             _playing_thumb = nullptr;
         }
-        //[/UserButtonCode_play_old]
     }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
 }
 
 void UiDualAudioMessage::sliderValueChanged(juce::Slider *sliderThatWasMoved)
 {
-    //[UsersliderValueChanged_Pre]
-    //[/UsersliderValueChanged_Pre]
-
     if (sliderThatWasMoved == audio_thumb_new.get())
     {
-        //[UserSliderCode_audio_thumb_new] -- add your slider handling code here..
-        //[/UserSliderCode_audio_thumb_new]
     }
     else if (sliderThatWasMoved == audio_thumb_old.get())
     {
-        //[UserSliderCode_audio_thumb_old] -- add your slider handling code here..
-        //[/UserSliderCode_audio_thumb_old]
     }
-
-    //[UsersliderValueChanged_Post]
-    //[/UsersliderValueChanged_Post]
 }
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="UiDualAudioMessage" componentName=""
-                 parentClasses="public UiEditor, public Timer" constructorParams="AppInstanceStore*app_instance_store_, UiDualAudioMessageListener*const listener_, const String&amp; project_name_, AudioPlayer*const audio_player_"
-                 variableInitialisers="UiEditor(&quot;B-AudioPlayer&quot;),_app_instance_store(app_instance_store_),_listener(listener_),_audio_player(audio_player_)"
-                 snapPixels="10" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="440" initialHeight="305">
-  <BACKGROUND backgroundColour="ffffffff">
-    <RECT pos="0 0 0M 0M" fill="solid: ff161616" hasStroke="1" stroke="2, mitered, butt"
-          strokeColour="solid: ffff3b00"/>
-  </BACKGROUND>
-  <TEXTBUTTON name="" id="ca3c487198c8aedc" memberName="ok" virtualName=""
-              explicitFocusOrder="2" pos="72.727%r 85.246% 20.455% 8.197%"
-              bgColOff="ff000000" bgColOn="4444ff" textCol="ff7fff00" textColOn="ff7fff00"
-              buttonText="OK / ASSIGN" connectedEdges="15" needsCallback="1"
-              radioGroupId="0"/>
-  <TEXTBUTTON name="" id="6733db43b3f162a6" memberName="cancel" virtualName=""
-              explicitFocusOrder="3" pos="95.455%r 85.246% 20.455% 8.197%"
-              bgColOff="ff000000" bgColOn="4444ff" textCol="ffff0000" textColOn="ffff0000"
-              buttonText="CANCEL" connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <SLIDER name="" id="66c725f390624925" memberName="audio_thumb_new" virtualName=""
-          explicitFocusOrder="0" pos="20.455% 29.508% 75% 7.869%" min="0"
-          max="10" int="0" style="LinearHorizontal" textBoxPos="NoTextBox"
-          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
-  <TEXTBUTTON name="" id="7398184a5468e9a8" memberName="play_new" virtualName=""
-              explicitFocusOrder="2" pos="18.182%r 29.508% 13.636% 8.197%"
-              bgColOff="ff000000" bgColOn="4444ff" textCol="ff7fff00" textColOn="ff7fff00"
-              buttonText="PLAY" connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <SLIDER name="" id="e3e27d63145b9b" memberName="audio_thumb_old" virtualName=""
-          explicitFocusOrder="0" pos="20.455% 52.459% 75% 7.869%" min="0"
-          max="10" int="0" style="LinearHorizontal" textBoxPos="NoTextBox"
-          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
-  <LABEL name="" id="e95009284c62ddb2" memberName="titel2" virtualName=""
-         explicitFocusOrder="0" pos="4.545% 18.033% 47.727% 9.836%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Would you like to assign this audio to project: "
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Oswald" fontsize="18" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="a5336083f9083049" memberName="project_name" virtualName=""
-         explicitFocusOrder="0" pos="54.545% 18.033% 34.091% 9.836%" textCol="ff00ffff"
-         edTextCol="ff000000" edBkgCol="0" labelText="XYZ" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Oswald"
-         fontsize="18" bold="0" italic="0" justification="36"/>
-  <LABEL name="" id="7c1a25f37735fb58" memberName="titel4" virtualName=""
-         explicitFocusOrder="0" pos="95.455%r 18.033% 5.909% 9.836%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="?" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Oswald"
-         fontsize="18" bold="0" italic="0" justification="34"/>
-  <LABEL name="" id="440c9352c749361c" memberName="old_info_2" virtualName=""
-         explicitFocusOrder="0" pos="13.636% 65.574% 81.818% 16.393%"
-         textCol="ffff0000" edTextCol="ff000000" edBkgCol="0" labelText="Assigning a audio file will create a copy of the file you like to asign. It also replaces existing audio assigns for this projects (unrestoreable)."
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Oswald" fontsize="18" bold="0" italic="0" justification="9"/>
-  <LABEL name="" id="5cfc7980beb0813" memberName="old_info_3" virtualName=""
-         explicitFocusOrder="0" pos="4.545% 65.574% 9.091% 9.836%" textCol="ffff0000"
-         edTextCol="ff000000" edBkgCol="0" labelText="NOTE:" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Oswald"
-         fontsize="18" bold="0" italic="0" justification="9"/>
-  <LABEL name="" id="bba892cccd5fe810" memberName="titel7" virtualName=""
-         explicitFocusOrder="0" pos="4.545% 3.279% 80% 13.115%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="ASSIGN SAMPLE AUDIO TO PROJECT"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Oswald" fontsize="25" bold="1" italic="0" justification="33"/>
-  <TEXTBUTTON name="" id="3ece3d591639661d" memberName="play_old" virtualName=""
-              explicitFocusOrder="2" pos="18.182%r 52.459% 13.636% 8.197%"
-              bgColOff="ff000000" bgColOn="4444ff" textCol="ffff0000" textColOn="ffff0000"
-              buttonText="PLAY" connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <LABEL name="" id="a94ebb9afe451bac" memberName="old_info_1" virtualName=""
-         explicitFocusOrder="0" pos="4.545% 40.984% 90.909% 9.836%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Currently assigned audio file (will be replaced)"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Oswald" fontsize="18" bold="0" italic="0" justification="33"/>
-  <GENERICCOMPONENT name="" id="b3ecc3f8f99fe16a" memberName="toolbar" virtualName="UiEditorToolbar"
-                    explicitFocusOrder="0" pos="0Rr -17.377% 11.364% 65.574%" class="Component"
-                    params="this, false, true, false"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

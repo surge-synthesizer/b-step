@@ -18,7 +18,6 @@
 #ifndef __JUCE_HEADER_790B6713A7D96C36__
 #define __JUCE_HEADER_790B6713A7D96C36__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
 
@@ -49,16 +48,7 @@ class UiDualAudioMessageListener : public juce::Slider::Listener
 };
 
 class AppInstanceStore;
-//[/Headers]
 
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiDualAudioMessage : public UiEditor,
                            public juce::Button::Listener,
                            public juce::Slider::Listener,
@@ -72,7 +62,6 @@ class UiDualAudioMessage : public UiEditor,
     ~UiDualAudioMessage();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
     UiDualAudioMessageListener *const _listener;
     AudioPlayer *const _audio_player;
@@ -80,7 +69,6 @@ class UiDualAudioMessage : public UiEditor,
     juce::Slider *_playing_thumb;
 
     void timerCallback() override;
-    //[/UserMethods]
 
     void paint(juce::Graphics &g) override;
     void resized() override;
@@ -88,9 +76,6 @@ class UiDualAudioMessage : public UiEditor,
     void sliderValueChanged(juce::Slider *sliderThatWasMoved) override;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<juce::TextButton> ok;
     std::unique_ptr<juce::TextButton> cancel;
@@ -110,8 +95,5 @@ class UiDualAudioMessage : public UiEditor,
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiDualAudioMessage)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_790B6713A7D96C36__

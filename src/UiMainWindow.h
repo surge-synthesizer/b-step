@@ -18,7 +18,6 @@
 #ifndef __JUCE_HEADER_AD410155B668684B__
 #define __JUCE_HEADER_AD410155B668684B__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include <cstdint>
 
@@ -49,16 +48,7 @@ class UiEditorInputPopup;
 #include "UiColumnWrapper.h"
 #include "UiEditorFileManager.h"
 #include <juce_audio_processors/juce_audio_processors.h>
-//[/Headers]
 
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class GstepAudioProcessorEditor : public juce::AudioProcessorEditor,
                                   public juce::Timer,
                                   public juce::KeyListener
@@ -69,7 +59,6 @@ class GstepAudioProcessorEditor : public juce::AudioProcessorEditor,
     ~GstepAudioProcessorEditor();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
@@ -179,18 +168,13 @@ class GstepAudioProcessorEditor : public juce::AudioProcessorEditor,
 
     /** *************************************************************** */
   public:
-    //[/UserMethods]
-
     void paint(juce::Graphics &g) override;
     void resized() override;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
     juce::ComponentBoundsConstrainer resizeLimits;
 
   public:
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<juce::ImageButton> midi_learn_focus;
     std::unique_ptr<juce::Label> midi_cc_value;
@@ -198,8 +182,5 @@ class GstepAudioProcessorEditor : public juce::AudioProcessorEditor,
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GstepAudioProcessorEditor)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_AD410155B668684B__

@@ -15,25 +15,20 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #include "UiSettings.h"
 #include "PluginProcessor.h"
 #include "UiMainWindow.h"
 #include "version.h"
 #include "BinaryData.h"
-//[/Headers]
 
 #include "UiEditorAbout.h"
 
-//[MiscUserDefs] You can add your own user definitions and misc code here...
 void UiEditorAbout::on_close_clicked()
 {
     _app_instance_store->editor_config.about_winodow = nullptr;
 }
 
 static bool is_au;
-
-//[/MiscUserDefs]
 
 //==============================================================================
 UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
@@ -126,7 +121,6 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
     cachedImage_aboutbox_png = juce::ImageCache::getFromMemory(aboutbox_png, aboutbox_pngSize);
     cachedImage_b_logo_png = juce::ImageCache::getFromMemory(b_logo_png, b_logo_pngSize);
 
-    //[UserPreSize]
 #ifndef DEVELOPMENT
     debug_out->setEnabled(false);
 #else
@@ -170,11 +164,9 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
     buildInfo->setJustificationType(juce::Justification::left);
     buildInfo->setColour(juce::Label::textColourId, juce::Colours::white);
     addAndMakeVisible(*buildInfo);
-    //[/UserPreSize]
 
     setSize(431, 540);
 
-    //[Constructor] You can add your own custom stuff here..
     if (bstepIsStandalone)
     {
         vst_button->setVisible(false);
@@ -193,14 +185,10 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
     }
 
     center_relative_and_make_visible(_app_instance_store->editor);
-    //[/Constructor]
 }
 
 UiEditorAbout::~UiEditorAbout()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
-    //[/Destructor_pre]
-
     au_button = nullptr;
     vst_button = nullptr;
     hyperlinkButton8 = nullptr;
@@ -212,19 +200,13 @@ UiEditorAbout::~UiEditorAbout()
     debug_out = nullptr;
     toolbar = nullptr;
     open_debug = nullptr;
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
 }
 
 //==============================================================================
 void UiEditorAbout::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
     if (false)
     {
-        //[/UserPrePaint]
-
         g.setColour(juce::Colours::black);
         g.drawImage(cachedImage_aboutbox_png, 0, 0, proportionOfWidth(1.0000f),
                     proportionOfHeight(1.0000f), 0, 0, cachedImage_aboutbox_png.getWidth(),
@@ -246,8 +228,6 @@ void UiEditorAbout::paint(juce::Graphics &g)
                    proportionOfHeight(0.9907f) - proportionOfHeight(0.0630f),
                    proportionOfWidth(0.9002f), proportionOfHeight(0.0630f),
                    juce::Justification::centred, true);
-
-        //[UserPaint] Add your own custom painting code here..
     }
 
     g.setColour(juce::Colours::black);
@@ -304,14 +284,10 @@ void UiEditorAbout::paint(juce::Graphics &g)
                       92 - ((200) / 2), 432, 200, juce::RectanglePlacement::centred, false);
 
     juce::ResizableWindow::moved();
-    //[/UserPaint]
 }
 
 void UiEditorAbout::resized()
 {
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
-
     au_button->setBounds((getWidth() / 2) + 162 - (proportionOfWidth(0.1531f) / 2),
                          proportionOfHeight(0.8148f), proportionOfWidth(0.1531f),
                          proportionOfHeight(0.1111f));
@@ -337,19 +313,14 @@ void UiEditorAbout::resized()
                        proportionOfHeight(0.3704f));
     open_debug->setBounds(proportionOfWidth(0.0186f), proportionOfHeight(0.6963f),
                           proportionOfWidth(0.8538f), proportionOfHeight(0.2963f));
-    //[UserResized] Add your own custom resize handling here..
+
     juce::ResizableWindow::resized();
-    //[/UserResized]
 }
 
 void UiEditorAbout::buttonClicked(juce::Button *buttonThatWasClicked)
 {
-    //[UserbuttonClicked_Pre]
-    //[/UserbuttonClicked_Pre]
-
     if (buttonThatWasClicked == open_debug.get())
     {
-        //[UserButtonCode_open_debug] -- add your button handler code here..
 #ifdef DEVELOPMENT
         if (debug_parser)
             return;
@@ -357,97 +328,8 @@ void UiEditorAbout::buttonClicked(juce::Button *buttonThatWasClicked)
         debug_parser = new Parser(debug_out);
         debug_out->setVisible(true);
 #endif
-        //[/UserButtonCode_open_debug]
     }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
 }
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="UiEditorAbout" componentName=""
-                 parentClasses="public UiEditor" constructorParams="AppInstanceStore* const app_instance_store_"
-                 variableInitialisers="UiEditor(&quot;B-About&quot;),_app_instance_store(app_instance_store_)"
-                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="431" initialHeight="540">
-  <BACKGROUND backgroundColour="161616">
-    <IMAGE pos="0 0 100% 100%" resource="aboutbox_png" opacity="1" mode="0"/>
-    <RECT pos="0 0 0M 0M" fill="solid: 161616" hasStroke="1" stroke="2, mitered, butt"
-          strokeColour="solid: ffff3b00"/>
-    <IMAGE pos="-3.944% 0 107.889% 37.037%" resource="b_logo_png" opacity="1"
-           mode="2"/>
-    <TEXT pos="0Cc 99.074%r 90.023% 6.296%" fill="solid: ffff3b00" hasStroke="0"
-          text="VST is a trademark of Steinberg Media Technologies GmbH"
-          fontname="Default font" fontsize="11.199999999999999289" bold="0"
-          italic="0" justification="36"/>
-  </BACKGROUND>
-  <IMAGEBUTTON name="" id="98e4cda2c6c85ab4" memberName="au_button" virtualName=""
-               explicitFocusOrder="0" pos="162Cc 81.481% 15.313% 11.111%" buttonText=""
-               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="1"
-               resourceNormal="au_logo_100x_png" opacityNormal="1" colourNormal="0"
-               resourceOver="" opacityOver="1" colourOver="0" resourceDown=""
-               opacityDown="1" colourDown="0"/>
-  <IMAGEBUTTON name="" id="f354b69076d11424" memberName="vst_button" virtualName=""
-               explicitFocusOrder="0" pos="88.167%c 84.444% 16.705% 7.407%"
-               buttonText="" connectedEdges="0" needsCallback="0" radioGroupId="0"
-               keepProportions="1" resourceNormal="vst_logo_100x_png" opacityNormal="1"
-               colourNormal="0" resourceOver="" opacityOver="1" colourOver="0"
-               resourceDown="" opacityDown="1" colourDown="0"/>
-  <HYPERLINKBUTTON name="" id="8a6a29d1146c693d" memberName="hyperlinkButton8" virtualName=""
-                   explicitFocusOrder="0" pos="3.944% 0% 92.111% 33.333%" tooltip="http://b-step.monoplugs.com"
-                   textCol="ffffdd00" buttonText="" connectedEdges="0" needsCallback="0"
-                   radioGroupId="0" url="http://b-step.monoplugs.com"/>
-  <HYPERLINKBUTTON name="" id="f3ef165b08c75d01" memberName="video_1" virtualName=""
-                   explicitFocusOrder="0" pos="27.842% 39.259% 61.253% 5.185%" tooltip="http://b-step.monoplugs.com"
-                   textCol="fff0f8ff" buttonText="http://B-Step.Monoplugs.com" connectedEdges="0"
-                   needsCallback="0" radioGroupId="0" url="http://b-step.monoplugs.com"/>
-  <HYPERLINKBUTTON name="" id="2fc1a62b83ff7d1f" memberName="video_2" virtualName=""
-                   explicitFocusOrder="0" pos="27.842% 43.889% 61.253% 5.185%" tooltip="http://forum.monoplugs.com"
-                   textCol="fff0f8ff" buttonText="http://Forum.Monoplugs.com" connectedEdges="0"
-                   needsCallback="0" radioGroupId="0" url="http://forum.monoplugs.com"/>
-  <HYPERLINKBUTTON name="https://www.youtube.com/user/monotomys" id="9ad069b0cba063e0"
-                   memberName="video_3" virtualName="" explicitFocusOrder="0" pos="27.842% 48.519% 61.253% 5.185%"
-                   tooltip="http://b-step-manual-redirect.monoplugs.com/" textCol="fff0f8ff"
-                   buttonText="http://B-Step.Monoplugs.com/Manual/" connectedEdges="0"
-                   needsCallback="0" radioGroupId="0" url="http://b-step-manual-redirect.monoplugs.com/"/>
-  <HYPERLINKBUTTON name="" id="52f795e4a8d88167" memberName="video_4" virtualName=""
-                   explicitFocusOrder="0" pos="27.842% 53.148% 61.253% 5.185%" tooltip="https://www.youtube.com/user/monotomys"
-                   textCol="fff0f8ff" buttonText="https://www.youtube.com/monoplugs"
-                   connectedEdges="0" needsCallback="0" radioGroupId="0" url="https://www.youtube.com/user/monotomys"/>
-  <HYPERLINKBUTTON name="" id="e25e325442ba9e0c" memberName="video_5" virtualName=""
-                   explicitFocusOrder="0" pos="27.842% 57.778% 61.253% 5.185%" tooltip="mailto:info@monoplugs.com"
-                   textCol="fff0f8ff" buttonText="info@Monoplugs.com : B-Step 2"
-                   connectedEdges="0" needsCallback="0" radioGroupId="0" url="mailto:info@monoplugs.com"/>
-  <TEXTEDITOR name="" id="5d61010bcec9502e" memberName="debug_out" virtualName=""
-              explicitFocusOrder="0" pos="0 0 89.095% 100%" textcol="ff00ffff"
-              bkgcol="ff000000" outlinecol="ffff0000" shadowcol="ffff0000"
-              caretcol="ff00ffff" initialText="&#10;" multiline="1" retKeyStartsLine="0"
-              readonly="0" scrollbars="1" caret="1" popupmenu="1"/>
-  <GENERICCOMPONENT name="" id="b3ecc3f8f99fe16a" memberName="toolbar" virtualName="UiEditorToolbar"
-                    explicitFocusOrder="0" pos="0Rr 0 11.601% 37.037%" class="Component"
-                    params="this, true, false, false"/>
-  <IMAGEBUTTON name="" id="a84f57d328d95b64" memberName="open_debug" virtualName=""
-               explicitFocusOrder="0" pos="1.856% 69.63% 85.383% 29.63%" buttonText=""
-               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
-               resourceNormal="" opacityNormal="1" colourNormal="0" resourceOver=""
-               opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
-               colourDown="0"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
 
 //==============================================================================
 // Binary resources - be careful not to edit any of these sections!
@@ -4196,6 +4078,3 @@ static const unsigned char resource_UiEditorAbout_aboutbox_png[] = {
 
 const char *UiEditorAbout::aboutbox_png = (const char *)resource_UiEditorAbout_aboutbox_png;
 const int UiEditorAbout::aboutbox_pngSize = 8767;
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

@@ -18,7 +18,6 @@
 #ifndef __JUCE_HEADER_F99A763C4421110E__
 #define __JUCE_HEADER_F99A763C4421110E__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
 
@@ -70,16 +69,9 @@ class UiTextImExportListener
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiTextImExportListener)
 };
-//[/Headers]
 
 //==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
 
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiTextImExport : public UiEditor, public juce::Timer, public juce::Button::Listener
 {
   public:
@@ -89,22 +81,17 @@ class UiTextImExport : public UiEditor, public juce::Timer, public juce::Button:
     ~UiTextImExport();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
     UiTextImExportListener *const _listener;
 
     void timerCallback() override;
     void on_close_clicked() override;
-    //[/UserMethods]
 
     void paint(juce::Graphics &g) override;
     void resized() override;
     void buttonClicked(juce::Button *buttonThatWasClicked) override;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<juce::Label> titel;
     std::unique_ptr<juce::TextButton> ok;
@@ -119,8 +106,5 @@ class UiTextImExport : public UiEditor, public juce::Timer, public juce::Button:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiTextImExport)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_F99A763C4421110E__

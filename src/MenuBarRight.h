@@ -18,7 +18,6 @@
 #ifndef __JUCE_HEADER_B1D3D35915111CF0__
 #define __JUCE_HEADER_B1D3D35915111CF0__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 
 class AppInstanceStore;
@@ -27,16 +26,7 @@ class GstepAudioProcessorEditor;
 class UIRubber;
 class UIQuestion;
 class UIClipboard;
-//[/Headers]
 
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class MenuBarRight : public juce::Component, public juce::Button::Listener
 {
   public:
@@ -46,7 +36,6 @@ class MenuBarRight : public juce::Component, public juce::Button::Listener
     ~MenuBarRight();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
     GstepAudioProcessorEditor *const _main_window;
 
@@ -62,8 +51,6 @@ class MenuBarRight : public juce::Component, public juce::Button::Listener
     // UI REFRESH
   public:
     void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_);
-
-    //[/UserMethods]
 
     void paint(juce::Graphics &g) override;
     void resized() override;
@@ -92,9 +79,6 @@ class MenuBarRight : public juce::Component, public juce::Button::Listener
     static const int paint_svgSize;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<juce::ImageButton> open_settings_editor;
     std::unique_ptr<juce::ImageButton> do_midi_learn;
@@ -130,8 +114,5 @@ class MenuBarRight : public juce::Component, public juce::Button::Listener
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MenuBarRight)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_B1D3D35915111CF0__

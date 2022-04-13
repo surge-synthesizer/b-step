@@ -18,20 +18,12 @@
 #ifndef __JUCE_HEADER_F22A8E5894AEDD70__
 #define __JUCE_HEADER_F22A8E5894AEDD70__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "Controller.h"
 #include "UiColumnWrapper.h"
-//[/Headers]
 
 //==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
 
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiLeftsideStartStopPause : public SubeditorBase
 {
   public:
@@ -40,7 +32,6 @@ class UiLeftsideStartStopPause : public SubeditorBase
     ~UiLeftsideStartStopPause();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
   public:
     void set_controllers(MONO_Controller *start_, MONO_Controller *pause_, MONO_Controller *stop_)
     {
@@ -65,15 +56,10 @@ class UiLeftsideStartStopPause : public SubeditorBase
     }
 
     void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_) override;
-    //[/UserMethods]
-
     void paint(juce::Graphics &g) override;
     void resized() override;
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<ModelBase> button_play;
     std::unique_ptr<ModelBase> button_pause;
@@ -82,8 +68,5 @@ class UiLeftsideStartStopPause : public SubeditorBase
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiLeftsideStartStopPause)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_F22A8E5894AEDD70__

@@ -18,7 +18,6 @@
 #ifndef __JUCE_HEADER_5953CCC9ABA721E8__
 #define __JUCE_HEADER_5953CCC9ABA721E8__
 
-//[Headers]     -- You can add your own extra header files here --
 #include "App.h"
 #include "UIEditorToolbar.h"
 #include "UiEditorSettings.h"
@@ -247,16 +246,7 @@ class UiDualDownloadListener
 };
 
 class AppInstanceStore;
-//[/Headers]
 
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class UiDualDownload : public UiEditor,
                        public juce::Timer,
                        public juce::Button::Listener,
@@ -268,7 +258,6 @@ class UiDualDownload : public UiEditor,
     ~UiDualDownload();
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
     AppInstanceStore *const _app_instance_store;
     UiDualDownloadListener *const _listener;
 
@@ -290,7 +279,6 @@ class UiDualDownload : public UiEditor,
 
         _listener->start_download();
     }
-    //[/UserMethods]
 
     void paint(juce::Graphics &g);
     void resized();
@@ -298,9 +286,6 @@ class UiDualDownload : public UiEditor,
     void sliderValueChanged(juce::Slider *sliderThatWasMoved);
 
   private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
     //==============================================================================
     std::unique_ptr<juce::TextButton> ok;
     std::unique_ptr<juce::TextButton> close;
@@ -322,8 +307,5 @@ class UiDualDownload : public UiEditor,
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UiDualDownload)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
 
 #endif // __JUCE_HEADER_5953CCC9ABA721E8__

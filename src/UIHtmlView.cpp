@@ -15,25 +15,12 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #include "UiLookAndFeel.h"
 #include "UiSettings.h"
 #include "BinaryData.h"
 
-// TODO FUTURE UPDATED (after 2.1)
-// add a introduction date
-// add date modifyed // mark red if it is out of date // update request
-// CLOSE IF SELECTED //  DOUBLE CLICK
-
-// TODO news notification für DEMO versionen : SALES ETC
-
-// TODO default mail and support if nothing is selected
-
-//[/Headers]
-
 #include "UIHtmlView.h"
 
-//[MiscUserDefs] You can add your own user definitions and misc code here...
 #define CHECK_THREAD_EXIT(return_value)                                                            \
     if (juce::Thread::getCurrentThread())                                                          \
         if (juce::Thread::getCurrentThread()->threadShouldExit())                                  \
@@ -1009,7 +996,6 @@ void UIHtmlView::on_close_clicked()
 
     _app_instance_store->editor_config.manual_editor = nullptr;
 }
-//[/MiscUserDefs]
 
 //==============================================================================
 UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
@@ -1100,7 +1086,6 @@ UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
     viewport_dragger = std::make_unique<FingerDrag>(viewport.get(), this);
     addAndMakeVisible(*viewport_dragger);
 
-    //[UserPreSize]
     if (!get_manual_folder().exists())
         update->setButtonText(TRANS("DOWNLOAD COMPLETE MANUAL"));
 
@@ -1121,29 +1106,24 @@ UIHtmlView::UIHtmlView(AppInstanceStore *const app_instance_store_)
 
     treeView->getViewport()->setScrollBarThickness(10);
     viewport->setScrollBarThickness(10);
-    //[/UserPreSize]
 
     setSize(900, 600);
 
-    //[Constructor] You can add your own custom stuff here..
     content_wrapper->setVisible(true);
     viewport->setViewedComponent(content_wrapper, false);
 
     center_relative_and_make_visible(
         reinterpret_cast<juce::Component *>(_app_instance_store->editor));
-    //[/Constructor]
 }
 
 UIHtmlView::~UIHtmlView()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
     on_close_clicked();
 
     content_wrapper->removeAllChildren();
     clear_all_views();
     treeView->deleteRootItem();
     delete viewport->getViewedComponent();
-    //[/Destructor_pre]
 
     viewport = nullptr;
     treeView = nullptr;
@@ -1159,32 +1139,22 @@ UIHtmlView::~UIHtmlView()
     tree_view_dragger = nullptr;
     viewport_dragger = nullptr;
 
-    //[Destructor]. You can add your own custom destruction code here..
     juce::ImageCache::releaseUnusedImages();
-    //[/Destructor]
 }
 
 //==============================================================================
 void UIHtmlView::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
-
     g.fillAll(juce::Colour(0xff161616));
 
     g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, proportionOfWidth(1.0000f), proportionOfHeight(1.0000f), 2);
 
-    //[UserPaint] Add your own custom painting code here..
     juce::ResizableWindow::moved();
-    //[/UserPaint]
 }
 
 void UIHtmlView::resized()
 {
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
-
     viewport->setBounds(proportionOfWidth(0.3222f), proportionOfHeight(0.0167f),
                         proportionOfWidth(0.6222f), proportionOfHeight(0.8917f));
     treeView->setBounds(proportionOfWidth(0.0111f), proportionOfHeight(0.0167f),
@@ -1219,7 +1189,6 @@ void UIHtmlView::resized()
                                  proportionOfWidth(0.3111f), proportionOfHeight(0.8917f));
     viewport_dragger->setBounds(proportionOfWidth(0.3222f), proportionOfHeight(0.0167f),
                                 proportionOfWidth(0.6222f), proportionOfHeight(0.8917f));
-    //[UserResized] Add your own custom resize handling here..
 
     juce::ResizableWindow::resized();
 
@@ -1250,17 +1219,12 @@ void UIHtmlView::resized()
     }
 
     content_wrapper->setSize(wrapper_w, y);
-    //[/UserResized]
 }
 
 void UIHtmlView::buttonClicked(juce::Button *buttonThatWasClicked)
 {
-    //[UserbuttonClicked_Pre]
-    //[/UserbuttonClicked_Pre]
-
     if (buttonThatWasClicked == update.get())
     {
-        //[UserButtonCode_update] -- add your button handler code here..
         juce::URL online_test(MANUAL_URL + "is-online");
         {
             if (online_test.readEntireTextStream().contains("<!-- IS-ONLINE -->"))
@@ -1284,13 +1248,10 @@ void UIHtmlView::buttonClicked(juce::Button *buttonThatWasClicked)
                 SESSION_ERROR_LOG("ERROR Can not connect to the manual server.");
             }
         }
-        //[/UserButtonCode_update]
     }
     else if (buttonThatWasClicked == forum.get())
     {
-        //[UserButtonCode_forum] -- add your button handler code here..
         juce::URL("https://github.com/surge-synthesizer/b-step/issues").launchInDefaultBrowser();
-        //[/UserButtonCode_forum]
     }
     else if (buttonThatWasClicked == mail.get())
     {
@@ -1298,7 +1259,6 @@ void UIHtmlView::buttonClicked(juce::Button *buttonThatWasClicked)
     }
     else if (buttonThatWasClicked == online.get())
     {
-        //[UserButtonCode_online] -- add your button handler code here..
         if (treeView->getSelectedItem(0))
         {
             NavItem *item = dynamic_cast<NavItem *>(treeView->getSelectedItem(0));
@@ -1307,90 +1267,5 @@ void UIHtmlView::buttonClicked(juce::Button *buttonThatWasClicked)
         }
         else
             juce::URL(MANUAL_URL).launchInDefaultBrowser();
-        //[/UserButtonCode_online]
     }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
 }
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="UIHtmlView" componentName=""
-                 parentClasses="public UiEditor, public AsyncUpdater" constructorParams="AppInstanceStore* const app_instance_store_"
-                 variableInitialisers="UiEditor(&quot;B-Manual&quot;),_app_instance_store(app_instance_store_)"
-                 snapPixels="10" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="900" initialHeight="600">
-  <BACKGROUND backgroundColour="ff161616">
-    <RECT pos="0 0 100% 100%" fill="solid: ffffff" hasStroke="1" stroke="2, mitered, butt"
-          strokeColour="solid: ffff3b0a"/>
-  </BACKGROUND>
-  <VIEWPORT name="" id="d0f85b5774b3a51c" memberName="viewport" virtualName=""
-            explicitFocusOrder="0" pos="32.222% 1.667% 62.222% 89.167%" vscroll="1"
-            hscroll="0" scrollbarThickness="18" contentType="1" jucerFile=""
-            contentClass="" constructorParams=""/>
-  <TREEVIEW name="new treeview" id="ef4a7251c37a4a2a" memberName="treeView"
-            virtualName="" explicitFocusOrder="0" pos="1.111% 1.667% 31.111% 89.167%"
-            linecol="8aff3b00" rootVisible="1" openByDefault="0"/>
-  <GENERICCOMPONENT name="" id="b3ecc3f8f99fe16a" memberName="toolbar" virtualName="UiEditorToolbar"
-                    explicitFocusOrder="0" pos="0Rr 0 5.556% 33.333%" class="Component"
-                    params="this, true, true, false"/>
-  <TEXTBUTTON name="" id="e32e1e70f7085771" memberName="update" virtualName=""
-              explicitFocusOrder="0" pos="2.222% 96.667%r 21.111% 4.167%" buttonText="RE-DOWNLOAD COMPLETE MANUAL"
-              connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="ba85117b979e1c7f" memberName="forum" virtualName=""
-              explicitFocusOrder="0" pos="43.333% 96.667%r 14.444% 4.167%"
-              buttonText="CHECK THE FORUM" connectedEdges="15" needsCallback="1"
-              radioGroupId="0"/>
-  <LABEL name="new label" id="b7520c7e754f5a8" memberName="label" virtualName=""
-         explicitFocusOrder="0" pos="27.778% 96.667%r 15.556% 4.167%"
-         textCol="ffff3b00" edTextCol="ff000000" edBkgCol="0" labelText="QUESTIONS TO THIS POINT: "
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="34"/>
-  <LABEL name="new label" id="31e2b54f7ce913dd" memberName="label2" virtualName=""
-         explicitFocusOrder="0" pos="58.889% 96.667%r 3.333% 4.167%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="OR&#10;" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="36"/>
-  <TEXTBUTTON name="" id="4b99d387f2c8024d" memberName="mail" virtualName=""
-              explicitFocusOrder="0" pos="63.333% 96.667%r 14.444% 4.167%"
-              buttonText="CONTACT SUPPORT" connectedEdges="15" needsCallback="1"
-              radioGroupId="0"/>
-  <LABEL name="new label" id="51db1a3716611c47" memberName="label3" virtualName=""
-         explicitFocusOrder="0" pos="78.889% 96.667%r 3.333% 4.167%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="|" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="36"/>
-  <TEXTBUTTON name="" id="90ff999d1e695c55" memberName="online" virtualName=""
-              explicitFocusOrder="0" pos="97.778%r 96.667%r 14.444% 4.167%"
-              buttonText="OPEN ONLINE VERSION" connectedEdges="15" needsCallback="1"
-              radioGroupId="0"/>
-  <LABEL name="new label" id="3127375dbdbe2e1c" memberName="label4" virtualName=""
-         explicitFocusOrder="0" pos="24.444% 96.667%r 3.333% 4.167%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="|" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="36"/>
-  <GENERICCOMPONENT name="" id="42fcbdb763c1ae0e" memberName="tree_view_dragger"
-                    virtualName="FingerDrag" explicitFocusOrder="0" pos="1.111% 1.667% 31.111% 89.167%"
-                    class="FingerDrag" params="treeView-&gt;getViewport(),this"/>
-  <GENERICCOMPONENT name="" id="da629782da7e7e91" memberName="viewport_dragger" virtualName="FingerDrag"
-                    explicitFocusOrder="0" pos="32.222% 1.667% 62.222% 89.167%" class="FingerDrag"
-                    params="viewport,this"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

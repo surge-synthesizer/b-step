@@ -15,7 +15,6 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #include "PluginProcessor.h"
 #include "UiFileView.h"
 #include "FileIO.h"
@@ -111,11 +110,7 @@ TODO 2.1
 #define NO_FILEINFO_SET "NO INFO SET. INSERT A DESCRIPTION TO DESCRIBE THIS FILE OR PROJECT."
 #define NO_FILEINFO_SET_READ_ONLY "NO INFO SET."
 
-//[/Headers]
-
 #include "UiEditorFileManager.h"
-
-//[MiscUserDefs] You can add your own user definitions and misc code here...
 
 static const char *ERROR = "ERROR";
 
@@ -3044,7 +3039,6 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     cancel_text_changes->setColour(juce::TextButton::textColourOnId, juce::Colours::red);
     cancel_text_changes->setColour(juce::TextButton::textColourOffId, juce::Colours::red);
 
-    //[UserPreSize]
     is_on_return_lost = false;
     cancel_text_changes->setVisible(false);
     confirm_text_changes->setVisible(false);
@@ -3125,11 +3119,9 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
         _audio_recorder = nullptr;
         audio_source_devices->setVisible(false);
     }
-    //[/UserPreSize]
 
     setSize(600, 560);
 
-    //[Constructor] You can add your own custom stuff here..
     build_init_tree_view();
 
     info->addListener(this);
@@ -3138,13 +3130,10 @@ UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_st
     restore_XY(_app_instance_store->editor_config.XY_file_manager);
     startTimer(100);
     // download();
-
-    //[/Constructor]
 }
 
 UiEditorFileManager::~UiEditorFileManager()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
     _app_instance_store->editor_config.XY_file_manager = juce::Point<int>(getX(), getY());
 
     if (AUDIO_PLAYER_PTR)
@@ -3156,7 +3145,6 @@ UiEditorFileManager::~UiEditorFileManager()
     store_tree_view();
 
     treeView->deleteRootItem();
-    //[/Destructor_pre]
 
     label5 = nullptr;
     info_animation = nullptr;
@@ -3186,18 +3174,13 @@ UiEditorFileManager::~UiEditorFileManager()
     confirm_text_changes = nullptr;
     cancel_text_changes = nullptr;
 
-    //[Destructor]. You can add your own custom destruction code here..
     if (tmp_audio.existsAsFile())
         tmp_audio.deleteFile();
-    //[/Destructor]
 }
 
 //==============================================================================
 void UiEditorFileManager::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
-
     g.fillAll(juce::Colours::white);
 
     g.setColour(juce::Colour(0xff161616));
@@ -3210,16 +3193,11 @@ void UiEditorFileManager::paint(juce::Graphics &g)
     g.fillRect(proportionOfWidth(0.0333f), proportionOfHeight(0.6786f), proportionOfWidth(0.9333f),
                1);
 
-    //[UserPaint] Add your own custom painting code here..
     juce::ResizableWindow::moved();
-    //[/UserPaint]
 }
 
 void UiEditorFileManager::resized()
 {
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
-
     label5->setBounds(proportionOfWidth(0.7333f), proportionOfHeight(0.6071f),
                       proportionOfWidth(0.2333f), proportionOfHeight(0.0536f));
     info_animation->setBounds(proportionOfWidth(0.4833f), -10, proportionOfWidth(0.4167f),
@@ -3290,30 +3268,23 @@ void UiEditorFileManager::resized()
     cancel_text_changes->setBounds(proportionOfWidth(0.9667f) - proportionOfWidth(0.2333f),
                                    proportionOfHeight(0.6964f), proportionOfWidth(0.2333f),
                                    proportionOfHeight(0.0446f));
-    //[UserResized] Add your own custom resize handling here..
+
     juce::ResizableWindow::resized();
-    //[/UserResized]
 }
 
 void UiEditorFileManager::buttonClicked(juce::Button *buttonThatWasClicked)
 {
-    //[UserbuttonClicked_Pre]
-    //[/UserbuttonClicked_Pre]
-
     if (buttonThatWasClicked == open.get())
     {
-        //[UserButtonCode_open] -- add your button handler code here..
         if (AUDIO_PLAYER_PTR)
             AUDIO_PLAYER_PTR->stop(true);
 
         PresetItem *item = get_selected_item();
         if (item)
             item->open();
-        //[/UserButtonCode_open]
     }
     else if (buttonThatWasClicked == import.get())
     {
-        //[UserButtonCode_import] -- add your button handler code here..
         if (AUDIO_PLAYER_PTR)
             AUDIO_PLAYER_PTR->stop(true);
 
@@ -3376,21 +3347,17 @@ void UiEditorFileManager::buttonClicked(juce::Button *buttonThatWasClicked)
 
         new UiTextImExport(_app_instance_store,
                            new TextImporter(_app_instance_store, "IMPORTER", ""));
-        //[/UserButtonCode_import]
     }
     else if (buttonThatWasClicked == play.get())
     {
-        //[UserButtonCode_play] -- add your button handler code here..
         if (AUDIO_PLAYER_PTR)
         {
             if (get_selected_item())
                 get_selected_item()->play_audio();
         }
-        //[/UserButtonCode_play]
     }
     else if (buttonThatWasClicked == record.get())
     {
-        //[UserButtonCode_record] -- add your button handler code here..
         if (AUDIO_PLAYER_PTR)
             AUDIO_PLAYER_PTR->stop(true);
 
@@ -3429,21 +3396,17 @@ void UiEditorFileManager::buttonClicked(juce::Button *buttonThatWasClicked)
                                               FILEMANAGER_PTR.get());
             GLOBAL_ERROR_LOG("RECORDING ERROR - RECORDER NOT READY");
         }
-        //[/UserButtonCode_record]
     }
     else if (buttonThatWasClicked == delete_audio.get())
     {
-        //[UserButtonCode_delete_audio] -- add your button handler code here..
         if (AUDIO_PLAYER_PTR)
             AUDIO_PLAYER_PTR->stop(true);
 
         if (get_selected_item())
             get_selected_item()->remove_audio();
-        //[/UserButtonCode_delete_audio]
     }
     else if (buttonThatWasClicked == assign.get())
     {
-        //[UserButtonCode_assign] -- add your button handler code here..
         if (AUDIO_PLAYER_PTR)
             AUDIO_PLAYER_PTR->stop(true);
 
@@ -3513,62 +3476,48 @@ void UiEditorFileManager::buttonClicked(juce::Button *buttonThatWasClicked)
                 "file.\nPlease select a project file first.",
                 "OK", this);
         }
-        //[/UserButtonCode_assign]
     }
     else if (buttonThatWasClicked == rename.get())
     {
-        //[UserButtonCode_rename] -- add your button handler code here..
         if (AUDIO_PLAYER_PTR)
             AUDIO_PLAYER_PTR->stop(true);
 
         PresetItem *item = get_selected_item();
         if (item)
             item->rename();
-        //[/UserButtonCode_rename]
     }
     else if (buttonThatWasClicked == delete_file.get())
     {
-        //[UserButtonCode_delete_file] -- add your button handler code here..
         if (AUDIO_PLAYER_PTR)
             AUDIO_PLAYER_PTR->stop(true);
 
         PresetItem *item = get_selected_item();
         if (item)
             item->remove();
-        //[/UserButtonCode_delete_file]
     }
     else if (buttonThatWasClicked == toggleButton.get())
     {
-        //[UserButtonCode_toggleButton] -- add your button handler code here..
         _app_instance_store->editor_config.autoplay_sample_audio = toggleButton->getToggleState();
-        //[/UserButtonCode_toggleButton]
     }
     else if (buttonThatWasClicked == show_audio_dyk.get())
     {
-        //[UserButtonCode_show_audio_dyk] -- add your button handler code here..
         _app_instance_store->do_you_know.show(DoYouKnow::ASSIGN_AUDIO_FILES, true);
-        //[/UserButtonCode_show_audio_dyk]
     }
     else if (buttonThatWasClicked == show_info_dyk.get())
     {
-        //[UserButtonCode_show_info_dyk] -- add your button handler code here..
         _app_instance_store->do_you_know.show(DoYouKnow::ASSIGN_FILE_INFOS, true);
-        //[/UserButtonCode_show_info_dyk]
     }
     else if (buttonThatWasClicked == save.get())
     {
-        //[UserButtonCode_save] -- add your button handler code here..
         if (AUDIO_PLAYER_PTR)
             AUDIO_PLAYER_PTR->stop(true);
 
         PresetItem *item = get_selected_item();
         if (item)
             item->save();
-        //[/UserButtonCode_save]
     }
     else if (buttonThatWasClicked == export_.get())
     {
-        //[UserButtonCode_export_] -- add your button handler code here..
         class TextExporter : public UiTextImExportListener, public SubThreadOfFimemanager
         {
             AppInstanceStore *const _app_instance_store;
@@ -3601,12 +3550,9 @@ void UiEditorFileManager::buttonClicked(juce::Button *buttonThatWasClicked)
                 new UiTextImExport(_app_instance_store,
                                    new TextExporter(_app_instance_store, "EXPORTER", data));
         }
-
-        //[/UserButtonCode_export_]
     }
     else if (buttonThatWasClicked == show_new_stuff.get())
     {
-        //[UserButtonCode_show_new_stuff] -- add your button handler code here..
         if (_app_instance_store->editor)
         {
             if (!_app_instance_store->editor_config.manual_editor)
@@ -3616,182 +3562,24 @@ void UiEditorFileManager::buttonClicked(juce::Button *buttonThatWasClicked)
             _app_instance_store->editor_config.manual_editor->try_open_url(MANUAL_URL +
                                                                            "latest-downloads");
         }
-        //[/UserButtonCode_show_new_stuff]
     }
     else if (buttonThatWasClicked == confirm_text_changes.get())
     {
-        //[UserButtonCode_confirm_text_changes] -- add your button handler code here..
-        //[/UserButtonCode_confirm_text_changes]
     }
     else if (buttonThatWasClicked == cancel_text_changes.get())
     {
-        //[UserButtonCode_cancel_text_changes] -- add your button handler code here..
-        //[/UserButtonCode_cancel_text_changes]
     }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
 }
 
 void UiEditorFileManager::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
 {
-    //[UsercomboBoxChanged_Pre]
-    //[/UsercomboBoxChanged_Pre]
-
     if (comboBoxThatHasChanged == audio_source_devices.get())
     {
-        //[UserComboBoxCode_audio_source_devices] -- add your combo box handling code here..
         if (_audio_recorder)
         {
             _audio_recorder->set_audio_device(comboBoxThatHasChanged->getText());
             audio_source_devices->setText(_audio_recorder->get_selected_device_name(),
                                           juce::dontSendNotification);
         }
-        //[/UserComboBoxCode_audio_source_devices]
     }
-
-    //[UsercomboBoxChanged_Post]
-    //[/UsercomboBoxChanged_Post]
 }
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="UiEditorFileManager" componentName=""
-                 parentClasses="public UiEditor, public Timer, public TextEditor::Listener"
-                 constructorParams="AppInstanceStore* const app_instance_store_, bool write_mode_on_, VIEW_TYPE view_type_"
-                 variableInitialisers="UiEditor(&quot;B-FileManager&quot;),_app_instance_store(app_instance_store_),_is_in_write_mode(write_mode_on_), _view_type(view_type_)"
-                 snapPixels="10" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="600" initialHeight="560">
-  <BACKGROUND backgroundColour="ffffffff">
-    <RECT pos="0 0 0M 0M" fill="solid: ff161616" hasStroke="1" stroke="2, mitered, butt"
-          strokeColour="solid: ffff3b00"/>
-    <RECT pos="3.333% 67.857% 93.333% 1" fill="solid: ffff3b00" hasStroke="0"/>
-  </BACKGROUND>
-  <LABEL name="" id="8caed0321d0f4efe" memberName="label5" virtualName=""
-         explicitFocusOrder="0" pos="73.333% 60.714% 23.333% 5.357%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="AUTO PLAY SAMPLE AUDIO ON SELECT"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Oswald" fontsize="15" bold="0" italic="0" justification="34"/>
-  <GENERICCOMPONENT name="" id="b0f0a1a61af0a536" memberName="info_animation" virtualName="UiNotificationAnimation"
-                    explicitFocusOrder="0" pos="48.333% -10 41.667% 16.071%" class="Component"
-                    params=""/>
-  <TEXTBUTTON name="" id="ca3c487198c8aedc" memberName="open" virtualName=""
-              explicitFocusOrder="0" pos="71.667%r 69.643% 21.667% 4.464%"
-              bgColOff="ff000000" textCol="ff7fff00" textColOn="ff7fff00" buttonText="OPEN"
-              connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="c4d71d32de71b81f" memberName="import" virtualName=""
-              explicitFocusOrder="0" pos="96.667%r 69.643% 21.667% 4.464%"
-              bgColOff="ff000000" textCol="ff6495ed" textColOn="ff6495ed" buttonText="IMPORT"
-              connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <GENERICCOMPONENT name="" id="b3ecc3f8f99fe16a" memberName="toolbar" virtualName="UiEditorToolbar"
-                    explicitFocusOrder="0" pos="0Rr 0 8.333% 35.714%" class="Component"
-                    params="this, true, false, false"/>
-  <TEXTEDITOR name="" id="3869cd58d7992e57" memberName="info" virtualName=""
-              explicitFocusOrder="0" pos="3.333% 75.893% 93.333% 14.286%" textcol="ffff3b00"
-              bkgcol="ff161616" hilitecol="ffffff00" outlinecol="ffff3b00"
-              shadowcol="ff0000" caretcol="ff00ffff" initialText="" multiline="1"
-              retKeyStartsLine="0" readonly="0" scrollbars="1" caret="1" popupmenu="1"/>
-  <LABEL name="" id="d29055c09cd59844" memberName="label" virtualName=""
-         explicitFocusOrder="0" pos="3.333% 1.786% 45% 7.857%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="PROJECT DATA MANAGEMENT&#10;"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Oswald" fontsize="33.100000000000001421" bold="0" italic="0"
-         justification="33"/>
-  <LABEL name="" id="75b5f9dde0879979" memberName="label2" virtualName=""
-         explicitFocusOrder="0" pos="8.333% 69.643% 45.667% 4.286%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="NOTES / COMMENTS"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Oswald" fontsize="20" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="619d5975aa4106cf" memberName="path_view" virtualName=""
-         explicitFocusOrder="0" pos="3.333% 61.607% 56% 4.286%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="Label Text" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
-  <TEXTBUTTON name="" id="1afee6880037d568" memberName="play" virtualName=""
-              explicitFocusOrder="0" pos="31.667%r 91.964% 8.333% 4.464%" bgColOff="ff000000"
-              textCol="ffff3b00" textColOn="ffff3b00" buttonText="PLAY" connectedEdges="15"
-              needsCallback="1" radioGroupId="0"/>
-  <LABEL name="" id="4ea8bacdb2131fcf" memberName="label3" virtualName=""
-         explicitFocusOrder="0" pos="8.333% 91.964% 15% 4.286%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="SAMPLE AUDIO:" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Oswald"
-         fontsize="20" bold="0" italic="0" justification="33"/>
-  <TEXTBUTTON name="" id="6a48c696aba9453a" memberName="record" virtualName=""
-              explicitFocusOrder="0" pos="60%r 91.964% 18.333% 4.464%" bgColOff="ff000000"
-              textCol="ffff3b00" textColOn="ffff3b00" buttonText="RECORD SOURCE:"
-              connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="a372fb0373ea73e7" memberName="delete_audio" virtualName=""
-              explicitFocusOrder="0" pos="96.667%r 91.964% 8.333% 4.464%" bgColOff="ff000000"
-              textCol="ffff3b00" textColOn="ffff3b00" buttonText="REMOVE" connectedEdges="15"
-              needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="994da81b6e1f1f9b" memberName="assign" virtualName=""
-              explicitFocusOrder="0" pos="41.667%r 91.964% 8.333% 4.464%" bgColOff="ff000000"
-              textCol="ffff3b00" textColOn="ffff3b00" buttonText="ASSIGN" connectedEdges="15"
-              needsCallback="1" radioGroupId="0"/>
-  <COMBOBOX name="" id="df65040dbc985b72" memberName="audio_source_devices"
-            virtualName="" explicitFocusOrder="0" pos="85%r 91.964% 25% 4.464%"
-            editable="0" layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
-  <TEXTBUTTON name="" id="258020212400bd9c" memberName="rename" virtualName=""
-              explicitFocusOrder="0" pos="85%r 69.643% 10% 4.464%" bgColOff="ff000000"
-              textCol="ff7fffd4" textColOn="ff7fffd4" buttonText="RENAME" connectedEdges="15"
-              needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="1f0fc846e8f7abcb" memberName="delete_file" virtualName=""
-              explicitFocusOrder="0" pos="96.667%r 69.643% 10% 4.464%" bgColOff="ff000000"
-              textCol="ffff0000" textColOn="ffff0000" buttonText="DELETE" connectedEdges="15"
-              needsCallback="1" radioGroupId="0"/>
-  <TOGGLEBUTTON name="" id="7192fc6621bd68a4" memberName="toggleButton" virtualName=""
-                explicitFocusOrder="0" pos="68.333% 60.714% 28.333% 5.357%" txtcol="ffff3b00"
-                buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
-  <TEXTBUTTON name="" id="c950aed14e47b88d" memberName="show_audio_dyk" virtualName=""
-              explicitFocusOrder="0" pos="7.333%r 91.964% 4.167% 4.464%" bgColOff="ff000000"
-              textCol="ffff3b00" textColOn="ffff3b00" buttonText="?" connectedEdges="15"
-              needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="ceffc72cc92fd06b" memberName="show_info_dyk" virtualName=""
-              explicitFocusOrder="0" pos="7.333%r 69.643% 4.167% 4.464%" bgColOff="ff000000"
-              textCol="ffff3b00" textColOn="ffff3b00" buttonText="?" connectedEdges="15"
-              needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="5db3932260acfbac" memberName="save" virtualName=""
-              explicitFocusOrder="0" pos="58.333%r 69.643% 11.667% 4.464%"
-              bgColOff="ff000000" textCol="ff7fff00" textColOn="ff7fff00" buttonText="REPLACE"
-              connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <TREEVIEW name="" id="b0f435701217e9c" memberName="treeView" virtualName=""
-            explicitFocusOrder="0" pos="3.333% 10.714% 93.333% 49.643%" linecol="ffff3b00"
-            rootVisible="1" openByDefault="1"/>
-  <TEXTBUTTON name="" id="ef1f630332a02e70" memberName="export_" virtualName=""
-              explicitFocusOrder="0" pos="71.667%r 69.643% 11.667% 4.464%"
-              bgColOff="ff000000" textCol="ff6495ed" textColOn="ff6495ed" buttonText="EXPORT"
-              connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <GENERICCOMPONENT name="" id="42fcbdb763c1ae0e" memberName="finger_dragger" virtualName="FingerDrag"
-                    explicitFocusOrder="0" pos="3.333% 10.714% 90% 50%" class="FingerDrag"
-                    params="treeView-&gt;getViewport(),this"/>
-  <TEXTBUTTON name="" id="f3277a1967fc0bc1" memberName="show_new_stuff" virtualName=""
-              explicitFocusOrder="0" pos="96.667%r 91.964% 46.667% 4.464%"
-              bgColOff="ff000000" textCol="ffff3b00" textColOn="ffff3b00" buttonText="SHOW ME THE LATEST PRESET DOWNLOADS"
-              connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="426cd63ac9585b9" memberName="confirm_text_changes"
-              virtualName="" explicitFocusOrder="0" pos="71.667%r 69.643% 23.333% 4.464%"
-              bgColOff="ff000000" textCol="ff7fff00" textColOn="ff7fff00" buttonText="SET (OR PRESS RETURN)"
-              connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="427cb339701be975" memberName="cancel_text_changes"
-              virtualName="" explicitFocusOrder="0" pos="96.667%r 69.643% 23.333% 4.464%"
-              bgColOff="ff000000" textCol="ffff0000" textColOn="ffff0000" buttonText="CANCEL (OR PRESS ESC)"
-              connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

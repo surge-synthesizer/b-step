@@ -15,17 +15,14 @@
 ** open source in March 2022.
 */
 
-//[Headers] You can add your own extra header files here...
 #include "UiSettings.h"
 #include "UiEditorFileManager.h"
 
 #include "UIHtmlView.h"
-//[/Headers]
 
 #include "UiTextImExport.h"
 #include <memory>
 
-//[MiscUserDefs] You can add your own user definitions and misc code here...
 void UiTextImExport::timerCallback()
 {
     bool has_text = text->getText().length() > 40;
@@ -43,7 +40,6 @@ void UiTextImExport::on_close_clicked()
     _listener->perform_chancel();
     _app_instance_store->editor_config.im_exporter_editor = nullptr;
 }
-//[/MiscUserDefs]
 
 //==============================================================================
 UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
@@ -152,7 +148,6 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
     button_info->setButtonText(TRANS("?"));
     button_info->addListener(this);
 
-    //[UserPreSize]
     _app_instance_store->editor_config.im_exporter_editor = std::unique_ptr<UiTextImExport>(this);
 
     titel->setText(_listener->_title, juce::dontSendNotification);
@@ -182,26 +177,19 @@ UiTextImExport::UiTextImExport(AppInstanceStore *const app_instance_store_,
             "Copy the text below and paste it in your mail body or where ever you want.",
             juce::dontSendNotification);
     }
-    //
-    //[/UserPreSize]
 
     setSize(440, 600);
 
-    //[Constructor] You can add your own custom stuff here..
     center_relative_and_make_visible(
         reinterpret_cast<juce::Component *>(_app_instance_store->editor));
 
     text->setWantsKeyboardFocus(false);
 
     startTimer(50);
-    //[/Constructor]
 }
 
 UiTextImExport::~UiTextImExport()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
-    //[/Destructor_pre]
-
     titel = nullptr;
     ok = nullptr;
     cancel = nullptr;
@@ -211,17 +199,11 @@ UiTextImExport::~UiTextImExport()
     description = nullptr;
     send_mail = nullptr;
     button_info = nullptr;
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
 }
 
 //==============================================================================
 void UiTextImExport::paint(juce::Graphics &g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
-
     g.fillAll(juce::Colours::white);
 
     g.setColour(juce::Colour(0xff161616));
@@ -230,16 +212,11 @@ void UiTextImExport::paint(juce::Graphics &g)
     g.setColour(juce::Colour(GLOBAL_VALUE_HOLDER::getInstance()->PRIMARY_COLOUR));
     g.drawRect(0, 0, getWidth() - 0, getHeight() - 0, 2);
 
-    //[UserPaint] Add your own custom painting code here..
     juce::ResizableWindow::moved();
-    //[/UserPaint]
 }
 
 void UiTextImExport::resized()
 {
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
-
     titel->setBounds(proportionOfWidth(0.0455f), proportionOfHeight(0.0167f),
                      proportionOfWidth(0.9091f), proportionOfHeight(0.0667f));
     ok->setBounds(proportionOfWidth(0.7273f) - proportionOfWidth(0.2045f),
@@ -262,19 +239,13 @@ void UiTextImExport::resized()
                          proportionOfWidth(0.2500f), proportionOfHeight(0.0417f));
     button_info->setBounds(proportionOfWidth(0.8864f), proportionOfHeight(0.0250f),
                            proportionOfWidth(0.0682f), proportionOfHeight(0.0500f));
-    //[UserResized] Add your own custom resize handling here..
     juce::ResizableWindow::resized();
-    //[/UserResized]
 }
 
 void UiTextImExport::buttonClicked(juce::Button *buttonThatWasClicked)
 {
-    //[UserbuttonClicked_Pre]
-    //[/UserbuttonClicked_Pre]
-
     if (buttonThatWasClicked == ok.get())
     {
-        //[UserButtonCode_ok] -- add your button handler code here..
         _listener->_data = text->getText();
         bool success = false;
         _listener->perform_ok(success);
@@ -285,18 +256,14 @@ void UiTextImExport::buttonClicked(juce::Button *buttonThatWasClicked)
             _app_instance_store->editor_config.im_exporter_editor = nullptr;
             return;
         }
-        //[/UserButtonCode_ok]
     }
     else if (buttonThatWasClicked == cancel.get())
     {
-        //[UserButtonCode_cancel] -- add your button handler code here..
         on_close_clicked();
         return;
-        //[/UserButtonCode_cancel]
     }
     else if (buttonThatWasClicked == copy_past.get())
     {
-        //[UserButtonCode_copy_past] -- add your button handler code here..
         if (_listener->_is_importer)
         {
             juce::String data_received =
@@ -309,103 +276,21 @@ void UiTextImExport::buttonClicked(juce::Button *buttonThatWasClicked)
             juce::String data_to_send = (_listener->_data.replaceCharacters("<", "#"));
             juce::SystemClipboard::copyTextToClipboard(data_to_send);
         }
-        //[/UserButtonCode_copy_past]
     }
     else if (buttonThatWasClicked == send_mail.get())
     {
-        //[UserButtonCode_send_mail] -- add your button handler code here..
         juce::String data_to_send =
             (_listener->_is_importer ? text->getText().replaceCharacters("<", "#")
                                      : _listener->_data.replaceCharacters("<", "#"));
         juce::URL(juce::String("mailto:yourmail?body=") + data_to_send).launchInDefaultBrowser();
-        //[/UserButtonCode_send_mail]
     }
     else if (buttonThatWasClicked == button_info.get())
     {
-        //[UserButtonCode_button_info] -- add your button handler code here..
         if (!_app_instance_store->editor_config.manual_editor)
             _app_instance_store->editor_config.manual_editor =
                 std::make_unique<UIHtmlView>(_app_instance_store);
 
         _app_instance_store->editor_config.manual_editor->try_open_url(
             MANUAL_URL + "advanced-users/import-export");
-        //[/UserButtonCode_button_info]
     }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
 }
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="UiTextImExport" componentName=""
-                 parentClasses="public UiEditor, public Timer" constructorParams="AppInstanceStore*const app_instance_store_, UiTextImExportListener*const listener_"
-                 variableInitialisers="_app_instance_store(app_instance_store_), _listener(listener_)"
-                 snapPixels="10" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="440" initialHeight="600">
-  <BACKGROUND backgroundColour="ffffffff">
-    <RECT pos="0 0 0M 0M" fill="solid: ff161616" hasStroke="1" stroke="2, mitered, butt"
-          strokeColour="solid: ffff3b00"/>
-  </BACKGROUND>
-  <LABEL name="" id="2159ed4d8807fce" memberName="titel" virtualName=""
-         explicitFocusOrder="0" pos="4.545% 1.667% 90.909% 6.667%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="B-DATA-IMPORTER"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Oswald" fontsize="25" bold="0" italic="0" justification="36"/>
-  <TEXTBUTTON name="" id="ca3c487198c8aedc" memberName="ok" virtualName=""
-              explicitFocusOrder="2" pos="72.727%r 90.833%r 20.455% 4.167%"
-              bgColOff="ff000000" bgColOn="4444ff" textCol="ff7fff00" textColOn="ff7fff00"
-              buttonText="IMPORT" connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="6733db43b3f162a6" memberName="cancel" virtualName=""
-              explicitFocusOrder="3" pos="95.455%r 90.833%r 20.455% 4.167%"
-              bgColOff="ff000000" bgColOn="4444ff" textCol="ffff0000" textColOn="ffff0000"
-              buttonText="CANCEL" connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <TEXTEDITOR name="" id="269a8b9b327f0e38" memberName="text" virtualName=""
-              explicitFocusOrder="0" pos="4.545% 13.333% 90.909% 68.333%" textcol="ff00ffff"
-              bkgcol="ffffff" outlinecol="ffff3b00" shadowcol="0" initialText=""
-              multiline="1" retKeyStartsLine="0" readonly="0" scrollbars="1"
-              caret="1" popupmenu="1"/>
-  <TEXTBUTTON name="" id="62d88c11f14e0054" memberName="copy_past" virtualName=""
-              explicitFocusOrder="2" pos="18.182%r 90.833%r 13.636% 4.167%"
-              bgColOff="ff000000" bgColOn="4444ff" textCol="ffff3b00" textColOn="ffff3b00"
-              buttonText="COPY" connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <LABEL name="" id="994075b442be88b9" memberName="note" virtualName=""
-         explicitFocusOrder="0" pos="4.545% 81.667% 90.909% 5%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="" id="34f7f7b4764dd72e" memberName="description" virtualName=""
-         explicitFocusOrder="0" pos="4.545% 8.333% 90.909% 5%" textCol="ffff3b00"
-         edTextCol="ff000000" edBkgCol="0" labelText="&#10;" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
-  <TEXTBUTTON name="" id="dbca458587e0db5f" memberName="send_mail" virtualName=""
-              explicitFocusOrder="3" pos="45.455%r 90.833%r 25% 4.167%" bgColOff="ff000000"
-              bgColOn="4444ff" textCol="ffff3b00" textColOn="ffff3b00" buttonText="SEND AS MAIL"
-              connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="f2316eb80baa390f" memberName="send_mail_to_monoplugs"
-              virtualName="" explicitFocusOrder="3" pos="95.455%r 97.5%r 90.909% 4.167%"
-              bgColOff="ff000000" bgColOn="4444ff" textCol="ffff3b00" textColOn="ffff7000"
-              buttonText="SEND AS MAIL TO MONOPLUGS AND SHARE IT ON THE ONLINE REPOSITORY"
-              connectedEdges="15" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="" id="a0537da9b93e2636" memberName="button_info" virtualName=""
-              explicitFocusOrder="0" pos="88.636% 2.5% 6.818% 5%" buttonText="?"
-              connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

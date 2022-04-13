@@ -247,8 +247,6 @@ void UiEditorChords::on_close_clicked()
     _app_instance_store->editor_config.chord_editor = nullptr;
 }
 
-//[/MiscUserDefs]
-
 //==============================================================================
 UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
     : UiEditor("B-Chords"), _app_instance_store(app_instance_store_)
@@ -705,7 +703,6 @@ UiEditorChords::UiEditorChords(AppInstanceStore *const app_instance_store_)
 
     center_relative_and_make_visible(_app_instance_store->editor);
     restore_XY(_app_instance_store->editor_config.XY_chord_editor);
-    //[/Constructor]
 }
 
 UiEditorChords::~UiEditorChords()

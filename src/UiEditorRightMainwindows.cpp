@@ -209,7 +209,6 @@ UiEditorRightMainwindows::UiEditorRightMainwindows(AppInstanceStore *const app_i
         std::make_unique<UiLabel>("dura", _app_instance_store->style_global_area_duration.get());
     addAndMakeVisible(*lbl_version4);
 
-    //[UserPreSize]
     if (!bstepIsStandalone)
     {
         label_current_bpm->setVisible(false);

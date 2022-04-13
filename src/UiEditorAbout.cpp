@@ -87,9 +87,9 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
     video_4->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 
     video_5 = std::make_unique<juce::HyperlinkButton>(TRANS("No email, chat on discord instead"),
-                                                      juce::URL("https://discord.gg/aFQDdMV"));
+                                                      juce::URL("https://discord.gg/VaZew6D5CC"));
     addAndMakeVisible(*video_5);
-    video_5->setTooltip(TRANS("https://discord.gg/aFQDdMV"));
+    video_5->setTooltip(TRANS("https://discord.gg/VaZew6D5CC"));
     video_5->setButtonText(TRANS("No email, chat on discord instead"));
     video_5->setColour(juce::HyperlinkButton::textColourId, juce::Colours::aliceblue);
 

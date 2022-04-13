@@ -22,236 +22,230 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_CXX_STANDARD 17)
 set(BSTEP_JUCE_FORMATS VST3 Standalone)
 
-if (APPLE)
-    list(APPEND BSTEP_JUCE_FORMATS AU)
-endif ()
+if(APPLE)
+  list(APPEND BSTEP_JUCE_FORMATS AU)
+endif()
 
-if (DEFINED ENV{VST2SDK_DIR})
-    file(TO_CMAKE_PATH "$ENV{VST2SDK_DIR}" JUCE_VST2_DIR)
-    juce_set_vst2_sdk_path(${JUCE_VST2_DIR})
-    list(APPEND BSTEP_JUCE_FORMATS VST)
-    message(STATUS "VST2 SDK found at $ENV{VST2SDK_DIR}")
-    # VST2 headers are invalid UTF-8
-    add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/wd4828>)
-endif ()
+if(DEFINED ENV{VST2SDK_DIR})
+  file(TO_CMAKE_PATH "$ENV{VST2SDK_DIR}" JUCE_VST2_DIR)
+  juce_set_vst2_sdk_path(${JUCE_VST2_DIR})
+  list(APPEND BSTEP_JUCE_FORMATS VST)
+  message(STATUS "VST2 SDK found at $ENV{VST2SDK_DIR}")
+  # VST2 headers are invalid UTF-8
+  add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/wd4828>)
+endif()
 
-if (JUCE_SUPPORTS_LV2)
-    list(APPEND BSTEP_JUCE_FORMATS LV2)
-    message(STATUS "Including JUCE LV2 support. You will need the LV2 fork of JUCE!")
-    message(STATUS "Turning off deprecation warning to error, since JUCE LV2 uses deprecated APIs")
-    add_compile_options(-Wno-error=deprecated-declarations)
-endif ()
+if(JUCE_SUPPORTS_LV2)
+  list(APPEND BSTEP_JUCE_FORMATS LV2)
+  message(STATUS "Including JUCE LV2 support. You will need the LV2 fork of JUCE!")
+  message(STATUS "Turning off deprecation warning to error, since JUCE LV2 uses deprecated APIs")
+  add_compile_options(-Wno-error=deprecated-declarations)
+endif()
 
 message(STATUS "Building B-Step in formats: ${BSTEP_JUCE_FORMATS}")
 
 juce_add_plugin(B-Step
-        VERSION "2.1"
-        BUNDLE_ID "org.surge-synth-team.bstep"
-        COMPANY_NAME "Surge Synth Team"
-        PLUGIN_MANUFACTURER_CODE "VmbA"
-        COMPANY_COPYRIGHT "Copyright Thomas Arndt and Authors in Github, 2010-2021"
-        COMPANY_WEBSITE "http://surge-synth-team.org"
+  VERSION "2.1"
+  BUNDLE_ID "org.surge-synth-team.bstep"
+  COMPANY_NAME "Surge Synth Team"
+  PLUGIN_MANUFACTURER_CODE "VmbA"
+  COMPANY_COPYRIGHT "Copyright Thomas Arndt and Authors in Github, 2010-2021"
+  COMPANY_WEBSITE "http://surge-synth-team.org"
 
-        FORMATS ${BSTEP_JUCE_FORMATS}
+  FORMATS ${BSTEP_JUCE_FORMATS}
 
-        NEEDS_MIDI_INPUT TRUE
-        NEEDS_MIDI_OUTPUT TRUE
-        IS_MIDI_EFFECT TRUE
-        IS_SYNTH TRUE
+  NEEDS_MIDI_INPUT TRUE
+  NEEDS_MIDI_OUTPUT TRUE
+  IS_MIDI_EFFECT TRUE
+  IS_SYNTH TRUE
 
-        PLUGIN_NAME "B-Step Sequencer"
-        DESCRIPTION "Step Sequencer"
-        PLUGIN_MANUFACTURER_CODE "VmbA"
-        PLUGIN_CODE "bPlg"
-        AU_EXPORT_PREFIX "bstepAU"
+  PLUGIN_NAME "B-Step Sequencer"
+  DESCRIPTION "Step Sequencer"
+  PLUGIN_MANUFACTURER_CODE "VmbA"
+  PLUGIN_CODE "bPlg"
+  AU_EXPORT_PREFIX "bstepAU"
 
-        ICON_BIG "${CMAKE_SOURCE_DIR}/resources/Images/b-step-appicon.png"
+  ICON_BIG "${CMAKE_SOURCE_DIR}/resources/Images/b-step-appicon.png"
 
-        COPY_PLUGIN_AFTER_BUILD ${BSTEP_COPY_PLUGIN_AFTER_BUILD}
-        )
+  COPY_PLUGIN_AFTER_BUILD ${BSTEP_COPY_PLUGIN_AFTER_BUILD}
+  )
 
 clap_juce_extensions_plugin(TARGET B-Step
-        CLAP_ID "org.sure-synth-team.bstep"
-        CLAP_FEATURES sequencer "step sequencer")
+  CLAP_ID "org.sure-synth-team.bstep"
+  CLAP_FEATURES sequencer "step sequencer")
 
 
-if (BSTEP_RELIABLE_VERSION_INFO)
-    message(STATUS "VERSION IS ${CMAKE_PROJECT_VERSION_MAJOR} ${CMAKE_PROJECT_VERSION_MINOR}")
-    add_custom_target(version-info BYPRODUCTS ${CMAKE_BINARY_DIR}/geninclude/version.cpp
-            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-            COMMAND ${CMAKE_COMMAND} -D CMAKE_PROJECT_VERSION_MAJOR=${CMAKE_PROJECT_VERSION_MAJOR}
-            -D CMAKE_PROJECT_VERSION_MINOR=${CMAKE_PROJECT_VERSION_MINOR}
-            -D BSTEPSRC=${CMAKE_SOURCE_DIR} -D BSTEPBLD=${CMAKE_BINARY_DIR}
-            -D AZURE_PIPELINE=${AZURE_PIPELINE}
-            -D WIN32=${WIN32}
-            -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
-            -D CMAKE_CXX_COMPILER_ID=${CMAKE_CXX_COMPILER_ID}
-            -D CMAKE_CXX_COMPILER_VERSION=${CMAKE_CXX_COMPILER_VERSION}
-            -P ${CMAKE_SOURCE_DIR}/cmake/versiontools.cmake
-            )
-    add_dependencies(${PROJECT_NAME} version-info)
-else ()
-    set(BSTEPSRC ${CMAKE_SOURCE_DIR})
-    set(BSTEPBLD ${CMAKE_BINARY_DIR})
-    include(${CMAKE_SOURCE_DIR}/cmake/versiontools.cmake)
-endif ()
+if(BSTEP_RELIABLE_VERSION_INFO)
+  message(STATUS "VERSION IS ${CMAKE_PROJECT_VERSION_MAJOR} ${CMAKE_PROJECT_VERSION_MINOR}")
+  add_custom_target(version-info BYPRODUCTS ${CMAKE_BINARY_DIR}/geninclude/version.cpp
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    COMMAND ${CMAKE_COMMAND} -D CMAKE_PROJECT_VERSION_MAJOR=${CMAKE_PROJECT_VERSION_MAJOR}
+    -D CMAKE_PROJECT_VERSION_MINOR=${CMAKE_PROJECT_VERSION_MINOR}
+    -D BSTEPSRC=${CMAKE_SOURCE_DIR} -D BSTEPBLD=${CMAKE_BINARY_DIR}
+    -D AZURE_PIPELINE=${AZURE_PIPELINE}
+    -D WIN32=${WIN32}
+    -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+    -D CMAKE_CXX_COMPILER_ID=${CMAKE_CXX_COMPILER_ID}
+    -D CMAKE_CXX_COMPILER_VERSION=${CMAKE_CXX_COMPILER_VERSION}
+    -P ${CMAKE_SOURCE_DIR}/cmake/versiontools.cmake
+    )
+  add_dependencies(${PROJECT_NAME} version-info)
+else()
+  set(BSTEPSRC ${CMAKE_SOURCE_DIR})
+  set(BSTEPBLD ${CMAKE_BINARY_DIR})
+  include(${CMAKE_SOURCE_DIR}/cmake/versiontools.cmake)
+endif()
 
 target_sources(${PROJECT_NAME} PRIVATE ${CMAKE_BINARY_DIR}/geninclude/version.cpp)
 
 
 message(STATUS " FIXME - We obvioulsy over-glob here")
 file(GLOB_RECURSE BSTEP_RESOURCES
-        LIST_DIRECTORIES false
-        ${CMAKE_SOURCE_DIR}/resources/*)
+  LIST_DIRECTORIES false
+  ${CMAKE_SOURCE_DIR}/resources/*)
 
 juce_add_binary_data(B-Step-Binary SOURCES ${BSTEP_RESOURCES})
 
-target_compile_definitions(B-Step
-        PUBLIC
-        JUCE_ALSA=1
-        JUCE_ASIO=0
-        JUCE_CHECK_MEMORY_LEAKS=0
-        JUCE_DIRECTSOUND=1
-        JUCE_ENABLE_LIVE_CONSTANT_EDITOR=0
-        JUCE_FORCE_DEBUG=0
-        JUCE_JACK=1
-        JUCE_LOG_ASSERTIONS=0
-        JUCE_PLUGINHOST_AU=0
-        JUCE_PLUGINHOST_VST3=0
-        JUCE_PLUGINHOST_VST=0
-        JUCE_QUICKTIME=0
-        JUCE_USE_ANDROID_OPENSLES=0
-        JUCE_USE_CDBURNER=0
-        JUCE_USE_CDREADER=0
-        JUCE_USE_COREIMAGE_LOADER=1
-        JUCE_USE_CURL=0
-        JUCE_USE_DIRECTWRITE=1
-        JUCE_USE_FLAC=1
-        JUCE_USE_LAME_AUDIO_FORMAT=1
-        JUCE_USE_MP3AUDIOFORMAT=1
-        JUCE_USE_OGGVORBIS=1
-        JUCE_USE_WINDOWS_MEDIA_FORMAT=1
-        JUCE_WASAPI=1
-        JUCE_WEB_BROWSER=0
-        JUCE_VST3_CAN_REPLACE_VST2=0
+target_compile_definitions(B-Step PUBLIC
+  JUCE_ALSA=1
+  JUCE_ASIO=0
+  JUCE_CHECK_MEMORY_LEAKS=0
+  JUCE_DIRECTSOUND=1
+  JUCE_ENABLE_LIVE_CONSTANT_EDITOR=0
+  JUCE_FORCE_DEBUG=0
+  JUCE_JACK=1
+  JUCE_LOG_ASSERTIONS=0
+  JUCE_PLUGINHOST_AU=0
+  JUCE_PLUGINHOST_VST3=0
+  JUCE_PLUGINHOST_VST=0
+  JUCE_QUICKTIME=0
+  JUCE_USE_ANDROID_OPENSLES=0
+  JUCE_USE_CDBURNER=0
+  JUCE_USE_CDREADER=0
+  JUCE_USE_COREIMAGE_LOADER=1
+  JUCE_USE_CURL=0
+  JUCE_USE_DIRECTWRITE=1
+  JUCE_USE_FLAC=1
+  JUCE_USE_LAME_AUDIO_FORMAT=1
+  JUCE_USE_MP3AUDIOFORMAT=1
+  JUCE_USE_OGGVORBIS=1
+  JUCE_USE_WINDOWS_MEDIA_FORMAT=1
+  JUCE_WASAPI=1
+  JUCE_WEB_BROWSER=0
+  JUCE_VST3_CAN_REPLACE_VST2=0
 
-        # Note if you are building the code under MIT you need a license to use JUCE to set this to 0
-        JUCE_DISPLAY_SPLASH_SCREEN=0
+  # Note if you are building the code under MIT you need a license to use JUCE to set this to 0
+  JUCE_DISPLAY_SPLASH_SCREEN=0
 
-        JUCE_MODAL_LOOPS_PERMITTED=1
-
-        FIXMEPORT=jassertfalse
-        )
+  JUCE_MODAL_LOOPS_PERMITTED=1  
+  FIXMEPORT=jassertfalse
+  )
 
 target_include_directories(B-Step PRIVATE src)
 
-target_sources(B-Step
-        PRIVATE
+target_sources(B-Step PRIVATE
+  "src/AppInstanceStore.cpp"
+  "src/AppParameterList.cpp"
+  "src/AppStyleEditor.cpp"
+  "src/AppStyles.cpp"
+  "src/Controller.cpp"
+  "src/ControllerMidiLearn.cpp"
+  "src/CoreDatastructure.cpp"
+  "src/CoreLaunchpad.cpp"
+  "src/CoreSequencer.cpp"
+  "src/DoYouKnow.cpp"
+  "src/FileIO.cpp"
+  "src/MIDIIO.cpp"
+  "src/MIDILearn.cpp"
+  "src/MenuBarLeft.cpp"
+  "src/MenuBarRight.cpp"
+  "src/Parameter.cpp"
+  "src/PluginProcessor.cpp"
+  "src/SliderValuePopup.cpp"
+  "src/SplashScreen.cpp"
+  "src/UIEditorToolbar.cpp"
+  "src/UIHtmlView.cpp"
+  "src/UI_Button.cpp"
+  "src/UI_Label.cpp"
+  "src/UI_Slider.cpp"
+  "src/UI_Tools.cpp"
+  "src/UiChordEditorChordOffset.cpp"
+  "src/UiChordEditorStringOffset.cpp"
+  "src/UiColumn16.cpp"
+  "src/UiColumnWrapper.cpp"
+  "src/UiDualAudioPlayer.cpp"
+  "src/UiDualDownload.cpp"
+  "src/UiEditorAbout.cpp"
+  "src/UiEditorChords.cpp"
+  "src/UiEditorClipboard.cpp"
+  "src/UiEditorFileManager.cpp"
+  "src/UiEditorInputPopup.cpp"
+  "src/UiEditorKeyboard.cpp"
+  "src/UiEditorMidiLearn.cpp"
+  "src/UiEditorRightMainwindows.cpp"
+  "src/UiEditorSettings.cpp"
+  "src/UiEditorSetup.cpp"
+  "src/UiFileView.cpp"
+  "src/UiLeftsideCC.cpp"
+  "src/UiLeftsideLabel.cpp"
+  "src/UiLeftsideLabelModel.cpp"
+  "src/UiLeftsideModelLabel.cpp"
+  "src/UiLeftsideStartStopPause.cpp"
+  "src/UiLookAndFeel.cpp"
+  "src/UiMainWindow.cpp"
+  "src/UiNotificationAnimation.cpp"
+  "src/UiQuestionIsYourFriend.cpp"
+  "src/UiSettings.cpp"
+  "src/UiTextImExport.cpp"
+  src/ticker.cpp
+  )  
 
-
-        "src/AppInstanceStore.cpp"
-        "src/AppParameterList.cpp"
-        "src/AppStyleEditor.cpp"
-        "src/AppStyles.cpp"
-        "src/Controller.cpp"
-        "src/ControllerMidiLearn.cpp"
-        "src/CoreDatastructure.cpp"
-        "src/CoreLaunchpad.cpp"
-        "src/CoreSequencer.cpp"
-        "src/DoYouKnow.cpp"
-        "src/FileIO.cpp"
-        "src/MIDIIO.cpp"
-        "src/MIDILearn.cpp"
-        "src/MenuBarLeft.cpp"
-        "src/MenuBarRight.cpp"
-        "src/Parameter.cpp"
-        "src/PluginProcessor.cpp"
-        "src/SliderValuePopup.cpp"
-        "src/SplashScreen.cpp"
-        "src/UIEditorToolbar.cpp"
-        "src/UIHtmlView.cpp"
-        "src/UI_Button.cpp"
-        "src/UI_Label.cpp"
-        "src/UI_Slider.cpp"
-        "src/UI_Tools.cpp"
-        "src/UiChordEditorChordOffset.cpp"
-        "src/UiChordEditorStringOffset.cpp"
-        "src/UiColumn16.cpp"
-        "src/UiColumnWrapper.cpp"
-        "src/UiDualAudioPlayer.cpp"
-        "src/UiDualDownload.cpp"
-        "src/UiEditorAbout.cpp"
-        "src/UiEditorChords.cpp"
-        "src/UiEditorClipboard.cpp"
-        "src/UiEditorFileManager.cpp"
-        "src/UiEditorInputPopup.cpp"
-        "src/UiEditorKeyboard.cpp"
-        "src/UiEditorMidiLearn.cpp"
-        "src/UiEditorRightMainwindows.cpp"
-        "src/UiEditorSettings.cpp"
-        "src/UiEditorSetup.cpp"
-        "src/UiFileView.cpp"
-        "src/UiLeftsideCC.cpp"
-        "src/UiLeftsideLabel.cpp"
-        "src/UiLeftsideLabelModel.cpp"
-        "src/UiLeftsideModelLabel.cpp"
-        "src/UiLeftsideStartStopPause.cpp"
-        "src/UiLookAndFeel.cpp"
-        "src/UiMainWindow.cpp"
-        "src/UiNotificationAnimation.cpp"
-        "src/UiQuestionIsYourFriend.cpp"
-        "src/UiSettings.cpp"
-        "src/UiTextImExport.cpp"
-        src/ticker.cpp
-        )
-
-
-if (APPLE)
-    # these all need fixing obviously. The strategy I've used on mac here is
-    # 1: Turn off the juce suggested warning flags
-    # 2: Turn on werror (mac only)
-    # 3: Turn off every no-blah which stops me building (and apply these on linux too)
-    #
-    # Then one by one we should document each of these and decide if we want to
-    # keep them or fix them. Most probably fix.
-    message(STATUS "Turning off a collection of legitimate compiler warnings")
-    target_compile_options(${PROJECT_NAME} PUBLIC
-            #-Werror
-            -Wlogical-op-parentheses
-            -Wno-deprecated-declarations
-            -Wno-implicit-float-conversion
-            -Wno-inconsistent-missing-destructor-override
-            -Wno-inconsistent-missing-override
-            -Wno-switch-enum
-            )
-elseif (UNIX)
-    message(STATUS "Turning off a collection of legitimate compiler warnings")
-    target_compile_options(${PROJECT_NAME} PUBLIC
-            #-Werror
-            -Wno-deprecated-declarations
-            )
-endif ()
+if(APPLE)
+  # these all need fixing obviously. The strategy I've used on mac here is
+  # 1: Turn off the juce suggested warning flags
+  # 2: Turn on werror (mac only)
+  # 3: Turn off every no-blah which stops me building (and apply these on linux too)
+  #
+  # Then one by one we should document each of these and decide if we want to
+  # keep them or fix them. Most probably fix.
+  message(STATUS "Turning off a collection of legitimate compiler warnings")
+  target_compile_options(${PROJECT_NAME} PUBLIC
+    #-Werror
+    -Wlogical-op-parentheses
+    -Wno-deprecated-declarations
+    -Wno-implicit-float-conversion
+    -Wno-inconsistent-missing-destructor-override
+    -Wno-inconsistent-missing-override
+    -Wno-switch-enum
+    )
+elseif(UNIX)
+  message(STATUS "Turning off a collection of legitimate compiler warnings")
+  target_compile_options(${PROJECT_NAME} PUBLIC
+    #-Werror
+    -Wno-deprecated-declarations
+    )
+endif()
 
 target_link_libraries(B-Step
-        PRIVATE
-        juce::juce_audio_basics
-        juce::juce_audio_devices
-        juce::juce_audio_formats
-        juce::juce_audio_plugin_client
-        juce::juce_audio_processors
-        juce::juce_audio_utils
-        juce::juce_core
-        juce::juce_data_structures
-        juce::juce_events
-        juce::juce_graphics
-        juce::juce_gui_basics
-        juce::juce_gui_extra
-        B-Step-Binary
-        PUBLIC
-        juce::juce_recommended_config_flags
-        juce::juce_recommended_lto_flags
-        # juce::juce_recommended_warning_flags
-        )
+  PRIVATE
+    juce::juce_audio_basics
+    juce::juce_audio_devices
+    juce::juce_audio_formats
+    juce::juce_audio_plugin_client
+    juce::juce_audio_processors
+    juce::juce_audio_utils
+    juce::juce_core
+    juce::juce_data_structures
+    juce::juce_events
+    juce::juce_graphics
+    juce::juce_gui_basics
+    juce::juce_gui_extra
+    B-Step-Binary
+  PUBLIC
+    juce::juce_recommended_config_flags
+    juce::juce_recommended_lto_flags
+    # juce::juce_recommended_warning_flags
+    )
 
 include(cmake/basic-installer.cmake)
 
@@ -259,14 +253,14 @@ include(cmake/basic-installer.cmake)
 add_custom_target(code-quality-pipeline-checks)
 set(CLANG_FORMAT_DIRS src)
 set(CLANG_FORMAT_EXTS cpp h)
-foreach (dir ${CLANG_FORMAT_DIRS})
-    foreach (ext ${CLANG_FORMAT_EXTS})
-        list(APPEND CLANG_FORMAT_GLOBS "': (glob) ${dir}/**/*.${ext}' ")
-    endforeach ()
-endforeach ()
+foreach(dir ${CLANG_FORMAT_DIRS})
+  foreach(ext ${CLANG_FORMAT_EXTS})
+    list(APPEND CLANG_FORMAT_GLOBS "': (glob) ${dir}/**/*.${ext}' ")
+  endforeach()
+endforeach()
 add_custom_command(TARGET code-quality-pipeline-checks
-        POST_BUILD
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-        COMMAND ${CMAKE_COMMAND} -E echo About to check clang-format
-        COMMAND git ls-files -- ${CLANG_FORMAT_GLOBS} | xargs clang-format --dry-run --Werror
-        )
+  POST_BUILD
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  COMMAND ${CMAKE_COMMAND} -E echo About to check clang-format
+  COMMAND git ls-files -- ${CLANG_FORMAT_GLOBS} | xargs clang-format --dry-run --Werror
+  )

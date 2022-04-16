@@ -43,7 +43,6 @@ class UiLeftsideModelLabel : public SubeditorBase
     void refresh_ui(juce::Array<juce::Component *> &components_to_repaint_) override;
     void get_controllers_for_paint_popup(
         juce::Array<MONO_Controller *> &controllers_with_popup_) override;
-    //[/UserMethods]
 
     void paint(juce::Graphics &g) override;
     void resized() override;

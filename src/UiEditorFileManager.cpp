@@ -2764,7 +2764,6 @@ PresetItem *UiEditorFileManager::get_selected_item()
 
 // perform_write_info( info->getText() );
 // perform_chancel_info();
-//[/MiscUserDefs]
 
 //==============================================================================
 UiEditorFileManager::UiEditorFileManager(AppInstanceStore *const app_instance_store_,

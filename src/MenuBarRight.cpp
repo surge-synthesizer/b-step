@@ -171,7 +171,6 @@ MenuBarRight::MenuBarRight(AppInstanceStore *const app_instance_store_,
     drawable14 = juce::Drawable::createFromImageData(trash_svg, trash_svgSize);
     drawable15 = juce::Drawable::createFromImageData(paint_svg, paint_svgSize);
 
-    //[UserPreSize]
     drawables.add(drawable1.get());
     drawables.add(drawable2.get());
     drawables.add(drawable3.get());

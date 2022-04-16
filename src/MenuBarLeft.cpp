@@ -143,7 +143,6 @@ MenuBarLeft::MenuBarLeft(AppInstanceStore *const app_instance_store_,
     drawable2 = juce::Drawable::createFromImageData(_3stars_svg, _3stars_svgSize);
     drawable3 = juce::Drawable::createFromImageData(_5stars_svg, _5stars_svgSize);
 
-    //[UserPreSize]
     setOpaque(true);
 
     button_layer_1->set_controller(_app_instance_store->controller.pattern.layers_1.get());

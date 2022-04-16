@@ -1255,7 +1255,7 @@ void UIHtmlView::buttonClicked(juce::Button *buttonThatWasClicked)
     }
     else if (buttonThatWasClicked == mail.get())
     {
-        juce::URL("https://discord.gg/aFQDdMV").launchInDefaultBrowser();
+        juce::URL("https://discord.gg/VaZew6D5CC").launchInDefaultBrowser();
     }
     else if (buttonThatWasClicked == online.get())
     {

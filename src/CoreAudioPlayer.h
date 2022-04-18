@@ -145,72 +145,83 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
     {
         FIXMEPORT;
 
-#ifdef B_UNPORTED_STANDALONE
-        if (selected_device == -2)
-            return false;
+        if (bstepIsStandalone)
+        {
+            if (selected_device == -2)
+                return false;
 
-        // unload the previous file source and delete it..
-        transportSource.stop();
-        transportSource.setSource(nullptr);
-        currentAudioFileSource = nullptr;
-#endif // B_UNPORTED_STANDALONE
-        FIXMEPORT;
-        // AudioFormatReader* reader = formatManager.createReaderFor( audioFileStream_ );
-        juce::AudioFormatReader *reader{nullptr};
-#ifndef B_UNPORTED_STANDALONE
-        _processor->set_active_sample(reader);
-#endif
+            // unload the previous file source and delete it..
+            transportSource.stop();
+            transportSource.setSource(nullptr);
+            currentAudioFileSource = nullptr;
+        }
+
+        juce::AudioFormatReader *reader =
+            formatManager.createReaderFor(std::unique_ptr<juce::InputStream>(audioFileStream_));
+
+        if (!bstepIsStandalone)
+        {
+            _processor->set_active_sample(reader);
+        }
         if (reader)
         {
-#ifdef B_UNPORTED_STANDALONE
-            currentAudioFileSource = new AudioFormatReaderSource(reader, true);
+            if (bstepIsStandalone)
+            {
+                currentAudioFileSource =
+                    std::make_unique<juce::AudioFormatReaderSource>(reader, true);
 
-            // ..and plug it into our transport source
-            transportSource.setSource(
-                currentAudioFileSource,
-                32768,               // tells it to buffer this many samples ahead
-                &thread,             // this is the background thread to use for reading-ahead
-                reader->sampleRate); // allows for sample rate correction
-#endif                               // B_UNPORTED_STANDALONE
+                // ..and plug it into our transport source
+                transportSource.setSource(
+                    currentAudioFileSource.get(),
+                    32768,               // tells it to buffer this many samples ahead
+                    &thread,             // this is the background thread to use for reading-ahead
+                    reader->sampleRate); // allows for sample rate correction
+            }
             return true;
         }
         return false;
     }
+
     inline bool loadFileIntoTransport(const juce::File &file_)
     {
-        FIXMEPORT;
-#ifdef B_UNPORTED_STANDALONE
-        if (selected_device == -2)
-            return false;
+        if (bstepIsStandalone)
+        {
+            if (selected_device == -2)
+                return false;
 
-        // unload the previous file source and delete it..
-        transportSource.stop();
-        transportSource.setSource(nullptr);
-        currentAudioFileSource = nullptr;
-#endif // B_UNPORTED_STANDALONE
+            // unload the previous file source and delete it..
+            transportSource.stop();
+            transportSource.setSource(nullptr);
+            currentAudioFileSource = nullptr;
+        }
+
         juce::AudioFormatReader *reader = formatManager.createReaderFor(file_);
-#ifndef B_UNPORTED_STANDALONE
-        _processor->set_active_sample(reader);
-#endif
+        if (!bstepIsStandalone)
+        {
+            _processor->set_active_sample(reader);
+        }
         if (reader)
         {
-#ifdef B_UNPORTED_STANDALONE
-            currentAudioFileSource = new AudioFormatReaderSource(reader, true);
+            if (bstepIsStandalone)
+            {
+                currentAudioFileSource =
+                    std::make_unique<juce::AudioFormatReaderSource>(reader, true);
 
-            // ..and plug it into our transport source
-            transportSource.setSource(currentAudioFileSource, 0, nullptr,
-                                      reader->sampleRate); // allows for sample rate correction
-#endif                                                     // B_UNPORTED_STANDALONE
+                // ..and plug it into our transport source
+                transportSource.setSource(currentAudioFileSource.get(), 0, nullptr,
+                                          reader->sampleRate); // allows for sample rate correction
+            }
             return true;
         }
-#ifdef B_UNPORTED_STANDALONE
+        else if (bstepIsStandalone)
+        {
+            return loadFileIntoTransport(new juce::FileInputStream(file_));
+        }
+
         else
         {
-            return loadFileIntoTransport(new FileInputStream(file_));
+            return false;
         }
-#else
-        return false;
-#endif // B_UNPORTED_STANDALONE
     }
 
     inline void play(juce::Slider *const thumb_)
@@ -243,14 +254,15 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
             _thumb->setColour(juce::Slider::thumbColourId, juce::Colour(0xff7fff00));
             _thumb->addListener(this);
         }
-
         startTimer(250);
     }
+
     void unset_view(juce::Slider *const thumb_)
     {
         if (_thumb == thumb_)
             _thumb = nullptr;
     }
+
     void sliderValueChanged(juce::Slider *thumb_) override
     {
         if (_thumb)
@@ -356,10 +368,12 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
     {
         return _supported_audio_format_names;
     }
+
     const juce::StringArray &get_supported_audio_extensions() const
     {
         return _supported_audio_format_extensions;
     }
+
     bool has_supported_audio_extension(const juce::File &file_)
     {
         for (int i = 0; i != _supported_audio_format_extensions.size(); ++i)

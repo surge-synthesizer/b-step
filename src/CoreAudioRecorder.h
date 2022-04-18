@@ -117,12 +117,10 @@ class AudioRecorder : public juce::AudioIODeviceCallback
             if (fileStream != nullptr)
             {
                 // Now create a WAV writer object that writes to our output stream...
-                FIXMEPORT;
 
-                // OggVorbisAudioFormat ogg;
-                // AudioFormatWriter* writer = ogg.createWriterFor (fileStream, sampleRate, 1, 16,
-                // StringPairArray(), 0);
-                juce::AudioFormatWriter *writer{nullptr};
+                juce::OggVorbisAudioFormat ogg;
+                juce::AudioFormatWriter *writer = ogg.createWriterFor(
+                    fileStream.get(), sampleRate, 1, 16, juce::StringPairArray(), 0);
 
                 if (writer != nullptr)
                 {

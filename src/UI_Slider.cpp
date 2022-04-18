@@ -105,6 +105,14 @@ void SliderWrapper::mouseUp(const juce::MouseEvent &e_)
 
 void SliderWrapper::mouseWheelMove(const juce::MouseEvent &e_, const juce::MouseWheelDetails &w_)
 {
+    /*
+     * MACOS Trackpad on a two-finger gesture to drag (which is the RMB gesture) will
+     * generate a 0-distance drag event also, which looks like a move, setting this timer
+     * in a way which conflicts with the drag.
+     */
+    if (abs(w_.deltaY) + abs(w_.deltaY) < 0.0001)
+        return;
+
     if (!GLOBAL_VALUE_HOLDER::getInstance()->ENABLE_MOUSEWHEEL)
         return;
 

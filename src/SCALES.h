@@ -397,7 +397,7 @@ struct ScalesList
         names.add("Jazz Minor");
         names.add("Double Harmonic");
         names.add("Harmonic Major");
-        names.add("Hungarian Gypsy");
+        names.add("Double Harmonic Minor");
         names.add("Phrygian dominant");
         names.add("Octatonic");
         names.add("Pentatonic Major");

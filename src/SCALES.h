@@ -273,7 +273,7 @@ struct HARMONIC_MAJOR : public ScalesBase
 
     std::int8_t tune_offset() override { return TUNE_OFFSET_C; }
 };
-struct HUNGARIAN_GYPSY : public ScalesBase
+struct DOUBLE_HARMONIC_MINOR : public ScalesBase
 {
     bool is(std::int8_t value_) override
     {
@@ -426,7 +426,7 @@ struct ScalesList
         case 7:
             return new HARMONIC_MAJOR();
         case 8:
-            return new HUNGARIAN_GYPSY();
+            return new DOUBLE_HARMONIC_MINOR();
         case 9:
             return new PHRYGIAN_DOMINANT();
         case 10:

@@ -143,8 +143,6 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
 
     inline bool loadFileIntoTransport(juce::InputStream *audioFileStream_)
     {
-        FIXMEPORT;
-
         if (bstepIsStandalone)
         {
             if (selected_device == -2)

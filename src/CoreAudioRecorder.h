@@ -43,10 +43,10 @@ class AudioRecorder : public juce::AudioIODeviceCallback
             if (devices.size())
                 selected_device = 0;
 #ifdef JUCE_LINUX
-            // FIND JACK
+            // FIND JACK (switched to ALSA for now)
             for (int i = 0; i != devices.size(); ++i)
             {
-                if (devices[i] == "JACK")
+                if (devices[i] == "ALSA")
                 {
                     selected_device = i;
                     break;
@@ -91,13 +91,18 @@ class AudioRecorder : public juce::AudioIODeviceCallback
     int get_selected_device_id()
     {
         if (bstepIsStandalone)
+        {
             return selected_device;
+        }
 
-        if (_app_instance_store->audio_processor->wrapperType !=
-            juce::AudioProcessor::WrapperType::wrapperType_AudioUnit)
-            return selected_device + 1;
         else
-            return selected_device;
+        {
+            if (_app_instance_store->audio_processor->wrapperType !=
+                juce::AudioProcessor::WrapperType::wrapperType_AudioUnit)
+                return selected_device + 1;
+            else
+                return selected_device;
+        }
     }
 
     //==============================================================================
@@ -149,7 +154,7 @@ class AudioRecorder : public juce::AudioIODeviceCallback
         {
             const juce::ScopedLock sl(writerLock);
 
-            if (bstepIsStandalone)
+            if (!bstepIsStandalone)
                 _app_instance_store->audio_processor->set_active_writer(nullptr);
             activeWriter = nullptr;
         }
@@ -193,7 +198,7 @@ class AudioRecorder : public juce::AudioIODeviceCallback
     }
     juce::AudioFormatWriter::ThreadedWriter *get_active_writer()
     {
-        if (bstepIsStandalone && is_host_audio_recorder)
+        if (!bstepIsStandalone && is_host_audio_recorder)
             return activeWriter;
 
         return nullptr;

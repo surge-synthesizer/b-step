@@ -63,11 +63,11 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
             if (devs.size())
                 selected_device = 0;
 #ifdef JUCE_LINUX
-            // FIND JACK
+            // FIND JACK (switched to ALSA for now)
             for (int i = 0; i != devs.size(); ++i)
             {
                 auto *dev = devs.getUnchecked(i);
-                if (dev->getTypeName() == "JACK")
+                if (dev->getTypeName() == "ALSA")
                     if (dev->getDeviceNames().size())
                     {
                         selected_device = i;

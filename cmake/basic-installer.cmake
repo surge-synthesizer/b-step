@@ -41,10 +41,10 @@ if (WIN32)
             POST_BUILD
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
             COMMAND ${CMAKE_COMMAND} -E echo "Cleaning up windows goobits"
-            COMMAND ${CMAKE_COMMAND} -E rm -f "${BSTEP_PRODUCT_DIR}/Shortcircuit XT.exp"
-            COMMAND ${CMAKE_COMMAND} -E rm -f "${BSTEP_PRODUCT_DIR}/Shortcircuit XT.ilk"
-            COMMAND ${CMAKE_COMMAND} -E rm -f "${BSTEP_PRODUCT_DIR}/Shortcircuit XT.lib"
-            COMMAND ${CMAKE_COMMAND} -E rm -f "${BSTEP_PRODUCT_DIR}/Shortcircuit XT.pdb"
+            COMMAND ${CMAKE_COMMAND} -E rm -f "${BSTEP_PRODUCT_DIR}/B-Step.exp"
+            COMMAND ${CMAKE_COMMAND} -E rm -f "${BSTEP_PRODUCT_DIR}/B-Step.ilk"
+            COMMAND ${CMAKE_COMMAND} -E rm -f "${BSTEP_PRODUCT_DIR}/B-Step.lib"
+            COMMAND ${CMAKE_COMMAND} -E rm -f "${BSTEP_PRODUCT_DIR}/B-Step.pdb"
             )
 endif ()
 
@@ -74,7 +74,6 @@ endif ()
 
 string(TIMESTAMP BSTEP_DATE "%Y-%m-%d")
 if (WIN32)
-    math(EXPR BITS "8*${CMAKE_SIZEOF_VOID_P}")
     set(BSTEP_ZIP BStep-${BSTEP_DATE}-${VERSION_CHUNK}-${CMAKE_SYSTEM_NAME}-${BITS}bit.zip)
 else ()
     set(BSTEP_ZIP BStep-${BSTEP_DATE}-${VERSION_CHUNK}-${CMAKE_SYSTEM_NAME}.zip)
@@ -101,15 +100,15 @@ elseif (WIN32)
             COMMAND ${CMAKE_COMMAND} -E echo "ZIP Installer in: installer/${BSTEP_ZIP}")
     find_program(BSTEP_NUGET_EXE nuget.exe PATHS ENV "PATH")
     if(BSTEP_NUGET_EXE)
-        message(STATUS "NuGet found at ${BSTEP_NUGET_EXE}, creating InnoSetup installer")
+        message(STATUS "NuGet found at ${BSTEP_NUGET_EXE}")
         add_custom_command(
             TARGET bstep-installer
             POST_BUILD
             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
             COMMAND ${BSTEP_NUGET_EXE} install Tools.InnoSetup -version 6.2.0
-            COMMAND Tools.InnoSetup.6.2.0/tools/iscc.exe /O"installer" /DBSTEP_SRC="${CMAKE_SOURCE_DIR}" /DBSTEP_BIN="${CMAKE_BINARY_DIR}" /DBSTEP_VERSION="${BSTEP_DATE}-${VERSION_CHUNK}" "${CMAKE_SOURCE_DIR}/resources/installer_win/bstep${BSTEP_BITNESS}.iss")
+            COMMAND Tools.InnoSetup.6.2.0/tools/iscc.exe /O"installer" /DBSTEP_SRC="${CMAKE_SOURCE_DIR}" /DBSTEP_BIN="${CMAKE_BINARY_DIR}" /DBSTEP_VERSION="${BSTEP_DATE}-${VERSION_CHUNK}" "${CMAKE_SOURCE_DIR}/resources/installer_win/bstep${BITS}.iss")
     else()
-        message(STATUS "NuGet not found, not creating InnoSetup installer")
+        message(STATUS "NuGet not found")
     endif()
 else ()
     message(STATUS "Basic Installer: Target is installer/${BSTEP_ZIP}")

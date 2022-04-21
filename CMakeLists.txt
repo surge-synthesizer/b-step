@@ -8,8 +8,8 @@ set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13 CACHE STRING "Minimum macOS version")
 project("B-Step" VERSION 2.1.0 LANGUAGES C CXX ASM)
 
 # Calculate bitness
-math(EXPR BSTEP_BITNESS "${CMAKE_SIZEOF_VOID_P} * 8" OUTPUT_FORMAT DECIMAL)
-message(STATUS "Targeting ${BSTEP_BITNESS}-bit configuration")
+math(EXPR BITS "8*${CMAKE_SIZEOF_VOID_P}")
+message(STATUS "Targeting ${BITS}-bit configuration")
 
 option(BSTEP_COPY_PLUGIN_AFTER_BUILD "Copy JUCE Plugins after built" OFF)
 option(BSTEP_RELIABLE_VERSION_INFO "Update version info on every build (off: generate only at configuration time)" ON)

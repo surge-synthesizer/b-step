@@ -187,7 +187,6 @@ target_sources(B-Step PRIVATE
   "src/Parameter.cpp"
   "src/PluginProcessor.cpp"
   "src/SliderValuePopup.cpp"
-  "src/SplashScreen.cpp"
   "src/UIEditorToolbar.cpp"
   "src/UIHtmlView.cpp"
   "src/UI_Button.cpp"

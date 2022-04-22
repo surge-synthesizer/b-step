@@ -37,7 +37,6 @@
 #include "UiEditorRightMainwindows.h"
 
 #include "SliderValuePopup.h"
-#include "SplashScreen.h"
 
 #include "UiLeftsideStartStopPause.h"
 

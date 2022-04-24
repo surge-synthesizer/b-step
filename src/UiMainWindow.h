@@ -34,7 +34,6 @@ class UiEditorRightMainwindows;
 class UiEditorSettings;
 class UiEditorChords;
 class EditorConfig;
-class MySplashScreen;
 
 class SliderValuePopup;
 

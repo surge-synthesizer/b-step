@@ -30,6 +30,7 @@ packages.config
 .clang-tidy
 CMakeSettings.json
 CMakeUserPresets.json
+-.json
 
 # Files
 .so

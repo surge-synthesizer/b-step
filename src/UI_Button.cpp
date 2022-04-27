@@ -251,8 +251,9 @@ void UiButton::mouseDrag(const juce::MouseEvent &e_)
                         was_dragging = true;
 
                         juce::Image img(juce::Image::RGB, 0, 0, false);
-                        auto drop_source = _controller->get_dragNdrop_source();
-                        startDragging(_controller->get_dragNdrop_ident(), drop_source,
+                        drop_source =
+                            std::unique_ptr<juce::Component>(_controller->get_dragNdrop_source());
+                        startDragging(_controller->get_dragNdrop_ident(), drop_source.get(),
                                       _model->get_drag_image(img), true);
                     }
                 }
@@ -277,8 +278,9 @@ void UiButton::mouseDrag(const juce::MouseEvent &e_)
                     juce::Image img(juce::Image::RGB, 0, 0, false);
                     if (_controller->are_you_simple_dragable())
                     {
-                        auto drop_source = _controller->get_dragNdrop_source();
-                        startDragging(_controller->get_multi_dragNdrop_ident(), drop_source,
+                        drop_source =
+                            std::unique_ptr<juce::Component>(_controller->get_dragNdrop_source());
+                        startDragging(_controller->get_multi_dragNdrop_ident(), drop_source.get(),
                                       _model->get_drag_image(img), true);
                     }
                     else

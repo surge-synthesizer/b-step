@@ -89,7 +89,13 @@ void TickLoop::MyTimer::hiResTimerCallback()
     }
 }
 
-void TickLoop::stop() { active_timer.stopTimer(); }
+void TickLoop::stop()
+{
+    if (bstepIsStandalone)
+    {
+        active_timer.stopTimer();
+    }
+}
 
 void TickLoop::start() { active_timer.startTimer(floor(_usec_per_tick / 1000)); }
 

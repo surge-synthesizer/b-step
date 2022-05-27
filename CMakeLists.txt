@@ -42,6 +42,11 @@ if(JUCE_SUPPORTS_LV2)
   add_compile_options(-Wno-error=deprecated-declarations)
 endif()
 
+if(EXISTS ${BSTEP_JUCE_PATH}/modules/juce_audio_plugin_client/LV2/juce_LV2_Client.cpp)
+  message(STATUS "JUCE7 LV2 support present; activating LV2")
+  list(APPEND BSTEP_JUCE_FORMATS LV2)
+endif()
+
 message(STATUS "Building B-Step in formats: ${BSTEP_JUCE_FORMATS}")
 
 juce_add_plugin(B-Step
@@ -49,8 +54,8 @@ juce_add_plugin(B-Step
   BUNDLE_ID "org.surge-synth-team.bstep"
   COMPANY_NAME "Surge Synth Team"
   PLUGIN_MANUFACTURER_CODE "VmbA"
-  COMPANY_COPYRIGHT "Copyright Thomas Arndt and Authors in Github, 2010-2021"
-  COMPANY_WEBSITE "http://surge-synth-team.org"
+  COMPANY_COPYRIGHT "Copyright Thomas Arndt and Authors in Github, 2010-2022"
+  COMPANY_WEBSITE "https://surge-synth-team.org"
 
   FORMATS ${BSTEP_JUCE_FORMATS}
 

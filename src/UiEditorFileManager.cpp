@@ -107,6 +107,7 @@ TODO 2.1
 // noten oszilaor
 
 #include "UiNotificationAnimation.h"
+#include <memory>
 #define NO_FILEINFO_SET "NO INFO SET. INSERT A DESCRIPTION TO DESCRIBE THIS FILE OR PROJECT."
 #define NO_FILEINFO_SET_READ_ONLY "NO INFO SET."
 
@@ -206,7 +207,7 @@ struct PresetItem : public juce::TreeViewItem,
     {
         AppInstanceStore *_app_instance_store;
 
-        PresetItem *const _owner_item;
+        std::unique_ptr<PresetItem> _owner_item;
         const juce::File _file;
         const juce::String _old_title;
 
@@ -215,7 +216,6 @@ struct PresetItem : public juce::TreeViewItem,
             _owner_item->set_input_listener(nullptr);
             _owner_item->refresh_get_view();
             SHOW_CANCEL_NOTIFICATION();
-            delete this;
         }
 
         void on_text_changed(juce::String &text_) override
@@ -278,8 +278,6 @@ struct PresetItem : public juce::TreeViewItem,
                 else
                     SHOW_CANCEL_NOTIFICATION();
             }
-
-            delete this;
         }
 
       public:
@@ -296,20 +294,17 @@ struct PresetItem : public juce::TreeViewItem,
     class FolderCreator_Policy : UiFileViewListener
     {
         AppInstanceStore *_app_instance_store;
-
-        PresetItem *const _parent_item;
+        std::unique_ptr<PresetItem> _parent_item;
         const juce::File _parent_folder;
 
-        PresetItem *_subfolder_item;
+        std::unique_ptr<PresetItem> _subfolder_item;
         juce::File _root_plus_new_folder;
 
         void on_text_chancel() override
         {
             _subfolder_item->set_input_listener(nullptr);
-
-            // FIXME see issue #46
+            FILEMANAGER_PTR->should_refresh_all = true;
             SHOW_CANCEL_NOTIFICATION();
-            delete this;
         }
         void on_text_changed(juce::String &text_) override
         {
@@ -334,8 +329,9 @@ struct PresetItem : public juce::TreeViewItem,
                 if (new_folder.createDirectory())
                 {
                     _subfolder_item->set_file(new_folder);
-                    fill_folder_view(_subfolder_item, new_folder, _parent_item->_file_extension,
-                                     _parent_item->_label_color, true);
+                    fill_folder_view(_subfolder_item.get(), new_folder,
+                                     _parent_item->_file_extension, _parent_item->_label_color,
+                                     true);
 
                     succes = true;
                     SHOW_CUSTOM_NOTIFICATION("FOLDER CREATED", 1);
@@ -354,11 +350,7 @@ struct PresetItem : public juce::TreeViewItem,
                 _subfolder_item->setSelected(false, false);
 
                 FILEMANAGER_PTR->should_refresh_all = true;
-
-                //_parent_item->removeSubItem(_subfolder_item->getIndexInParent(),true);
             }
-
-            delete this;
         }
 
       public:
@@ -369,11 +361,11 @@ struct PresetItem : public juce::TreeViewItem,
 
               _subfolder_item(nullptr)
         {
-            _subfolder_item =
-                new PresetItem(parent_item_->_app_instance_store, "New Folder", PresetItem::IS_DIR);
+            _subfolder_item = std::make_unique<PresetItem>(parent_item_->_app_instance_store,
+                                                           "New Folder", PresetItem::IS_DIR);
             _subfolder_item->set_input_listener(this);
             _subfolder_item->set_file_extension(_parent_item->_file_extension);
-            _parent_item->addSubItem(_subfolder_item);
+            _parent_item->addSubItem(_subfolder_item.get());
         }
 
       private:
@@ -385,19 +377,17 @@ struct PresetItem : public juce::TreeViewItem,
     class FileCreator_Policy : UiFileViewListener
     {
         AppInstanceStore *const _app_instance_store;
-
-        PresetItem *const _parent_item;
+        std::unique_ptr<PresetItem> _parent_item;
         juce::File _parent_folder;
 
-        PresetItem *_new_file_item;
+        std::unique_ptr<PresetItem> _new_file_item;
         juce::File _root_plus_new_file;
 
         void on_text_chancel() override
         {
             _new_file_item->set_input_listener(nullptr);
-            // FIXME see issue #46
+            FILEMANAGER_PTR->should_refresh_all = true;
             SHOW_CANCEL_NOTIFICATION();
-            delete this;
         }
 
         void on_text_changed(juce::String &text_) override
@@ -454,7 +444,6 @@ struct PresetItem : public juce::TreeViewItem,
                         if (FILEMANAGER_PTR)
                             FILEMANAGER_PTR->trigger_close();
 
-                        delete this;
                         return;
                     }
                 }
@@ -470,11 +459,7 @@ struct PresetItem : public juce::TreeViewItem,
                 _new_file_item->setSelected(false, false);
 
                 FILEMANAGER_PTR->should_refresh_all = true;
-
-                //_parent_item->removeSubItem(_new_file_item->getIndexInParent(),true);
             }
-
-            delete this;
         }
 
       public:
@@ -509,10 +494,11 @@ struct PresetItem : public juce::TreeViewItem,
                 ident = "New Snapshot";
             }
 
-            _new_file_item = new PresetItem(_app_instance_store, ident, PresetItem::IS_FILE);
+            _new_file_item =
+                std::make_unique<PresetItem>(_app_instance_store, ident, PresetItem::IS_FILE);
             _new_file_item->set_input_listener(this);
             _new_file_item->set_writeprotect(false);
-            _parent_item->addSubItem(_new_file_item);
+            _parent_item->addSubItem(_new_file_item.get());
         }
 
       private:
@@ -2253,7 +2239,7 @@ void UiEditorFileManager::reset_tree_view()
 
     store_tree_view();
 
-    treeView->deleteRootItem();
+    // treeView->deleteRootItem();
     build_init_tree_view();
 
     should_refresh_all = false;

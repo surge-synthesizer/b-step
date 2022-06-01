@@ -14,12 +14,12 @@ Note: This manual is still in review. We apologize for any errors. Thank you.
 
 ## New Users <a name="beginner"></a>
 
-### [Quickie - It's your first time?](#quick-start)
+### [Quick Start](#quick-start-1)
 
 * [A few clicks to start triggering some notes (Standalone:iPad,Android,Mac,Linux,Windows,Raspberry) ](#triggering-first-notes)
 * [Getting started with the VST ](#start-vst-plugin)
 
-### [User Interface Layout](#user-interface-layout)
+### [User Interface Layout](#user-interface-layout-1)
 
 ### [Basic Functions](#functions-bars--steps)
 
@@ -43,12 +43,12 @@ Note: This manual is still in review. We apologize for any errors. Thank you.
 * [Presets](#chord-editor-presets)
 * [Scales](#chord-editor-scales)
 
-### [Tools](#tools)
+### [Tools](#tools-1)
 
 * [Rubber](#tools-rubber)
 * [Question](#tool-question-mark)
 
-### [Multidrag Feature](#multidrag)
+### [Multidrag Feature](#multidrag-feature-1)
 
 * [Usage](#multidrag-usage)
 * [Settings](#multidrag-settings)
@@ -98,8 +98,8 @@ Note: This manual is still in review. We apologize for any errors. Thank you.
 * [Step Octave](#layer-2-step-octave)
 * [Step Chord and Use Step Chord](#layer-2-step-chord)
 * [Step Delay, Microtiming](#layer-2-step-delay)
-* [Step Copy](#layer-2-step-copy)
-* [Step Clean](#layer-2-step-clean)
+* [Step Copy](#step-copy)
+* [Step Clean](#step-clean)
 
 <hr />
 
@@ -153,7 +153,7 @@ Note: This manual is still in review. We apologize for any errors. Thank you.
 * [Free Notes](#layer-6-repeat-free-notes)
 * [Repeat Probability](#layer-6-repeat-probability)
 
-### [Layer CC (7th) - Control and Program Changes](#layer-7)
+### [Layer CC (7th) - Control and Program Changes](#layer-cc-7th---control-and-program-changes-1)
 
 * [Send Program Changes](#layer-7-send-programm-changes)
 * [Send Control Changes](#layer-7-send-control-changes)
@@ -171,7 +171,7 @@ Note: This manual is still in review. We apologize for any errors. Thank you.
 
 ### [Keyboard layout](#keyboard-control)
 
-### [MIDI Learn](#midi-learn)
+### [MIDI Learn](#midi-learn-1)
 
 * [How to connect your Controller](#midi-learn-connect-controller)
 * [How to train a MIDI Controller](#midi-learn-how-to-train)
@@ -179,28 +179,25 @@ Note: This manual is still in review. We apologize for any errors. Thank you.
 * [Learn Modes](#midi-learn-modes)
 * [Load/Save Controller Maps](#midi-learn-load-save)
 
-### [Use B-Step as MIDI Controller from your iPad or Android Tablet](#as-midi-controller)
+<!-- ### [Use B-Step as MIDI Controller from your iPad or Android Tablet](#as-midi-controller)
 
-### [Host Automation - only VST and AudioUnit](#automation-parameters)
+### [Host Automation - only VST and AudioUnit](#automation-parameters) -->
 
-### [**Novation Launchpad**](#novation-launchpad)
+### [**Novation Launchpad**](#novation-launchpad-1)
 
 * [How to connect the Launchpads](#how-to-connect-novation-launchpads)
 * [View 8 Steps](#view-8-steps-recommend-if-you-use-one-launchpad)
 * [View Left Pad](#view-left-side-left-launchpad-if-you-use-two)
 * [View Right Pad](#view-right-side-right-launchpad-if-you-use-two)
 
-<hr />
-
-### [Outro](#outro)
 
 <hr />
 
-### [Thanks](#thanks)
+### [Thanks](#special-thanks)
 
 <hr />
 
-#### [Changelog](#changelog)
+### [Changelog](#changelog-1)
 
 </div><div class="manual">
 
@@ -218,7 +215,8 @@ Part by part a section will be highlighted and explained shortly.
 
 [//]: <> ( *********************************************************** )
 <a name="quick-start"> </a>
-## Quickie - It's your first time? 
+
+## Quick Start
 <a name="triggering-first-notes"> </a>
 ### A few clicks to start triggering some notes (Standalone, iPad,Android,Mac,Linux,Windows,Raspberry) 
 1. Open the In-Out settings (IO-settings).
@@ -227,8 +225,8 @@ Part by part a section will be highlighted and explained shortly.
 
 ![B-Step Sequencer IO Settings - Quickstart](images/b-step-sequencer-standalone-quickstart.gif)
 
-**As Video**: <a href="javascript:show_fancy_video('http://www.youtube-nocookie.com/embed/ev-oLRccAQQ?autoplay=1')">
-Quick start (Standalone)</a>
+<!-- **As Video**: <a href="javascript:show_fancy_video('http://www.youtube-nocookie.com/embed/ev-oLRccAQQ?autoplay=1')">
+Quick start (Standalone)</a> -->
 
 **Note**: You can start and stop B-Step by pushing the space key.
 
@@ -238,12 +236,12 @@ Quick start (Standalone)</a>
 
 <a name="start-vst-plugin"> </a>
 ### Getting started with the VST
-* <a href="javascript:show_fancy_video('http://www.youtube-nocookie.com/embed/_czLObz8Anw?autoplay=1')">Video: Using B-Step Sequencer in Ableton</a>
-* <a href="javascript:show_fancy_video('http://www.youtube-nocookie.com/embed/e1NnmuepubQ?autoplay=1')">Video: Using B-Step Sequencer in Cubase</a>
-[//]: <> ( * <a href="https://www.youtube.com/watch?v=x2OG_pUYr64" target="_blank">Video: Using B-Step Sequencer in Bitwig</a> )
-* <a href="javascript:show_fancy_video('http://www.youtube-nocookie.com/embed/rxGulT8l9ss?autoplay=1')">Video: Using B-Step Sequencer in Cakewalk Sonar</a> (B-Step 1, but it works on the same way)<br /><br />
-* <a href="http://forum.monoplugs.com/viewtopic.php?f=54&t=641#p2089" target="_blank">Forum: Using B-Step Sequencer in USINE</a> (B-Step 1, but it works on the same way)
-* <a href="http://forum.monoplugs.com/viewtopic.php?f=54&t=604#p1948" target="_blank">Forum: Using B-Step Sequencer in FL Studio</a> (B-Step 1, but it works on the same way)
+* <a href="https://www.youtube-nocookie.com/embed/_czLObz8Anw?autoplay=1">Video: Using B-Step Sequencer in Ableton</a>
+* <a href="https://www.youtube-nocookie.com/embed/e1NnmuepubQ?autoplay=1">Video: Using B-Step Sequencer in Cubase</a>
+<!-- [//]: <> ( * <a href="https://www.youtube.com/watch?v=x2OG_pUYr64" target="_blank">Video: Using B-Step Sequencer in Bitwig</a> ) -->
+* <a href="https://www.youtube-nocookie.com/embed/rxGulT8l9ss?autoplay=1">Video: Using B-Step Sequencer in Cakewalk Sonar</a> (B-Step 1, but it works the same way)<br /><br />
+<!-- * <a href="http://forum.monoplugs.com/viewtopic.php?f=54&t=641#p2089" target="_blank">Forum: Using B-Step Sequencer in USINE</a> (B-Step 1, but it works on the same way)
+* <a href="http://forum.monoplugs.com/viewtopic.php?f=54&t=604#p1948" target="_blank">Forum: Using B-Step Sequencer in FL Studio</a> (B-Step 1, but it works on the same way) -->
 
 <hr>
 
@@ -316,8 +314,8 @@ Click on the three buttons for setting the playback tempo. Middle is 1 * host sp
 
 **Standalone only**:
 Start, pause and stop B-Step Sequencer as clock producer.
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -328,12 +326,12 @@ Start, pause and stop B-Step Sequencer as clock producer.
 ![B-Step Sequencer - Steps and Tracks (StringS)](images/b-step-sequencer-steps-and-strings.gif)
 
 4 strings (Tracks), 16 steps. Click for setting and unsetting the steps.
-
 <br>
+
 **Layer Note**: 
 The Steps are on each layer available and have always the same functionality! 
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -347,8 +345,8 @@ You can set velocity and duration for each single step. Turn around.
 
 * **Velocity scale:** 1 to 128
 * **Duration scale:** 1/96th up to 4 whole notes
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -367,17 +365,19 @@ You can copy bars via drag and drop. If you want to reset a bar quickly, just ta
 drop on a non-empty bar. Otherwise use the [rubber tool](#tools-rubber).
 
 Create a nice bar, copy, modify. Repeat for the next bars. Enjoy.
-
 <br>
+
 **Note**: If you like to add an empty bar to the chain use the [Force Bar 2 Chain](#layer-4-force-bar-2-chain) feature on [Layer B (4th)](#layer-4). <br>
+
 **Note**: If you are using a Novation Launchpad you can use the copy feature too (see [**Novation Launchpad**](#novation-launchpad)). <br>
 <br>
+
 **Layer Note**: The bar selection button row is on each layer available and has always the same functionality.
-
 <br />
+
 **Note:** You can browse through the bars with the cursor left and right keys or by F and number keys.
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -388,12 +388,12 @@ Create a nice bar, copy, modify. Repeat for the next bars. Enjoy.
 ![B-Step Sequencer - Solo Bar](images/b-step-sequencer-bar-solo.gif)
 
 Enable one solo button to stay on that bar or enable more than one to define a group of bars that you want to loop.
-
 <br>
+
 **Layer Note**:
 The bar solo button row is on each layer available and has always the same functionality!
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -404,11 +404,11 @@ The bar solo button row is on each layer available and has always the same funct
 ![B-Step Sequencer - Mute a Bar](images/b-step-sequencer-bar-mute.gif)
 
 Mutes every MIDI event that a bar can produce. This include all notes, control and program changes.
-
 <br />
+
 **Changelog Note**: Changed in v2.0 from "Mute & Chain" to "Mute". "Chain" you will find as [force bar2chain](#layer-4-force-bar-2-chain) on [Layer B (4th)](#layer-4).
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -423,8 +423,8 @@ Each bar has 3 basic manipulation parameters.
 * **Bar octave** can shift the notes in octaves up and down.
 * **Bar chord** can select the chord for this bar (see [The Chord Editor](#chord-editor))
 * **Bar repeats** can repeat the bar 1 to 8 times.
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -462,8 +462,8 @@ as offset in the steps "-2, -1, 1, 2"
 ![B-Step Sequencer - Global Track Octave Shift](images/b-step-sequencer-global-string-octave.gif)
 
 Similar to [Bar String Octave](#bar-string-octave-shifts), but it will shift the octave for each string in each bar.
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -480,8 +480,8 @@ Fine Tune is for setting the root note or the tune of the bass guitar (transpose
 
 * **Fine Tune scale:** 1 to 12 OR A, A#, B... G# (default is E, that is relating to Bass Guitar **E** A D G tune.)
 * **Octave scale:** -3 to +3
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -535,11 +535,11 @@ buttons below (A,B,C...; Am (m = minor), Bm, Cm). Done, chord changed.
 If you like you can generate scale based chords randomly. Select a scale, select a Target Chord and push the button "
 Fill Target Chord randomly from Scale" or if you want you can do this for all chords by click the button "Fill ALL
 Chords randomly from scale".
-
 <br />
+
 **Tip:** How to make a blues chord progression: A D E? -> select chord one and assign the "A-"preset and also to chord two and three. Set transpose at chord one to 0, chord two to +5 and chord three to +7 (like in the picture above). Then assign these chords to 12 bars 1-1-1-1-2-2-1-1-3-2-1-3 (A-A-A-A-D-D-A-A-E-D-A-E) and enable some steps in those bars. Enjoy.
 
-**Video:** <a href="javascript:show_fancy_video('http://www.youtube-nocookie.com/embed/n5nW3Ra6N44?autoplay=1')">How to
+**Video:** <a href="https://www.youtube-nocookie.com/embed/n5nW3Ra6N44?autoplay=1">How to
 create a chord progression by Tom Traxx </a>(done with B-Step 1)
 
 
@@ -608,8 +608,8 @@ your finger.
 
 If you have started a multidrag all possible targets will be marked with a "T" label. Then you can drag your source "S"
 over the targets you want and this will immediately change the states of the targets.
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -626,8 +626,8 @@ To optimize the multidrag handling you can adjust it to you needs.
 * **Multidrag Delay**: defines the delay to start a multidrag. Default 750ms. (No effect if you use on right mouse)
 * **Multidrag Sensitivity**: defines the x,y offset that you can move your finger or mouse without disabel the multidrag
   start timer. (No effect if you use on right mouse)
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -685,8 +685,8 @@ see [Sync/Clock Thru](#consumer-sync-thru), [MIDI Thru](#midi-thru)).
 
 When B-Step is running in consumer mode you can forward the received sync events (Start, Stop, Continue, Clock) to the
 outputs (Main Out, Sceond Out, Group 2,3 & 4). Just enable "MIDI Sync Thru".
-
 <br />
+
 **NOTE:** B-Step does also forward the events in producer mode but removes any other clock event.
 
 <a name="midi-thru"></a>
@@ -722,8 +722,8 @@ settings, MIDI controller or things like [Multidrag Settings](#multidrag-setting
 stored in "b2patch"-files and all the other settings in "b2cfg"-files.
 
 By default B-Step stores all your settings and project data on shutdown and restore this on restart.
-
 <br />
+
 **VST, AudioUnit:** The plugin version does NOT auto save/load data! This should be managed inside with your DAW!
 
 **Note:** In the most editors you have the same functionailty to im- and export things like [Chord Sets](#chord-editor)
@@ -903,13 +903,7 @@ It's up to you and your synthesizers how your set will sound, but here is an ove
   </audio> ::: qdown-softShuffle
   <br><br>
 
-<br />
-**Note:** If you are interested on more presets: we will publish a preset database soon there you can download new presets which currently not included. 
-To keep up to date <a href="http://b-step.monoplugs.com/#newsletter">subscribe to our newsletter</a> (no spam, just information about tutorials, presets and other useful stuff).
-
-
 <br /> [back to top](#content) </div><div class="manual">
-
 
 [//]: <> ( *********************************************************** )
 
@@ -920,6 +914,7 @@ To keep up to date <a href="http://b-step.monoplugs.com/#newsletter">subscribe t
 [//]: <> ( *********************************************************** )
 
 [//]: <> ( *********************************************************** )
+
 <a name="groove-box"></a>
 
 ## B-Step as Groovebox
@@ -930,13 +925,14 @@ To switch in the drum mode enable the "DRUM" checkbox in the chord editor - this
 instead of note names. Then you can choose the instruments you need.
 
 ![B-Step Sequencer - Groove Box](images/b-step-sequencer-groove-box.gif)
-
 <br />
-**Video:** <a href="javascript:show_fancy_video('http://www.youtube-nocookie.com/embed/02-iXkGm7bA?autoplay=1')">Drumset with B-Step</a>
 
+**Video:** <a href="https://www.youtube-nocookie.com/embed/02-iXkGm7bA?autoplay=1">Drumset with B-Step</a>
 <br />
+
 **Tip:** Check the factory presets to get some ideas and you can take a look at the [Shuffle](#shuffle-shuffle)-features. <br />
 <br />
+
 **Trouble Shooting:** Common percussion synthesizer receive it's note events at MIDI channel 10 - you should change the channel in the IO-settings if your machine does not play any sound.
 
 
@@ -959,9 +955,10 @@ instead of note names. Then you can choose the instruments you need.
 With B-Step's shuffle feature you will get the right groove in your set by a few slider changes. The shuffle feature is
 a global parameter and will be added to each bar or/and step.
 
-**Video:** <a href="javascript:show_fancy_video('http://www.youtube-nocookie.com/embed/CStN8gMOhIY?autoplay=1')">Shuffle
+**Video:** <a href="https://www.youtube-nocookie.com/embed/CStN8gMOhIY?autoplay=1">Shuffle
 on top of an arpeggio</a> <br />
-**Video:** <a href="javascript:show_fancy_video('http://www.youtube-nocookie.com/embed/SPEdBFOirkg?autoplay=1')">How to
+
+**Video:** <a href="https://www.youtube-nocookie.com/embed/SPEdBFOirkg?autoplay=1">How to
 make a swinging arpeggio</a>
 
 ![B-Step Sequencer - Shuffe, Swing, Groove!](images/b-step-sequencer-swing-shuffle.gif)
@@ -1056,8 +1053,8 @@ all the blue marked features will be replaced with other features
 
 To access all layers you have to enable the pro mode by clicking the 5 star button. The 3 star button enables only the
 mid skilled mode and 1 star button you can use if you are starting with B-Step or if you do not need the other features.
-
 <br />
+
 **Note:** You can browse through the layers with the cursor up and down keys.
 
 
@@ -1102,8 +1099,8 @@ with [Bar Mute](#bar-chain--mute) - please study this part before you go on with
 * [Step Delay, Microtiming](#layer-2-step-delay)
 * [Step Copy](#layer-2-step-copy)
 * [Step Clean](#layer-2-step-clean)
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -1144,8 +1141,8 @@ The step delay will move the trigger point of this step to the future by 1/96th 
 ### Step Copy
 
 Copy a step by drag and drop to an other. You can also copy a step in the top [Runlight](#runlight) row.
-
 <br />
+
 **Note:** will be removed in v2.x
 
 <a name="layer-2-clean"></a>
@@ -1154,8 +1151,8 @@ Copy a step by drag and drop to an other. You can also copy a step in the top [R
 
 Delete all the data of this step. You can do the same by droping the rubber tool on a step in the
 top [Runlight](#runlight) row.
-
 <br />
+
 **Note:** will be removed in v2.x
 
 
@@ -1187,13 +1184,9 @@ On the NL layer you have a bunch of features to go away from the liniar step by 
 * [Restart Position](#layer-3-restart-position)
 * [Force Position to Beat](#layer-3-force-position-to-beat)
 * [Step Skip](#layer-3-step-skip)
-
 <br />
-[back to top](#content)
-<hr>
 
-**Video:** <a href="javascript:show_fancy_video('http://www.youtube-nocookie.com/embed/FvzIoAzWPKc?autoplay=1')">Shows
-the playback of the settings in the picture above which we explain in the next few points.</a>
+[back to top](#content)
 
 <hr>
 
@@ -1284,8 +1277,8 @@ On the B layer you have a bunch of features to go away from the liniar bar by ba
 * [Force Bar 2 Chain](#layer-4-force-bar-2-chain)
 * [Restart Sequence](#layer-4-restart-sequence)
 * [Bar Skip](#layer-4-bar-skip)
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -1426,14 +1419,15 @@ Have fun, listen what happens and see you later!
 * [Repeat Interval Offset](#layer-5-repeat-interval-offset)
 * [Repeat Duration Offset](#layer-5-repeat-duration-offset)
 * [Skip Repeat](#layer-5-repeat-skip)
-
 <br />
+
 [back to top](#content)
 <hr>
 
-**Video:** <a href="javascript:show_fancy_video('http://www.youtube-nocookie.com/embed/yhR2yqdKzk0?autoplay=1')">
+**Video:** <a href="https://www.youtube-nocookie.com/embed/yhR2yqdKzk0?autoplay=1">
 Sequencer Ratcheting with B-Step</a> <br />
-**Video:** <a href="javascript:show_fancy_video('http://www.youtube-nocookie.com/embed/SPEdBFOirkg?autoplay=1')">How to
+
+**Video:** <a href="https://www.youtube-nocookie.com/embed/SPEdBFOirkg?autoplay=1">How to
 make a swinging arpeggio</a>
 
 <hr>
@@ -1504,8 +1498,8 @@ Increase or decrease the duration of each repeat.
  </font>
 
 * Skale: -1/8th to 1/8th per repeat
-
 <br />
+
 **Note**: The duration offset has no influence to the [Repeat Interval](#layer-5-repeat-interval) or [Repeat Duration Offset](#layer-5-repeat-duration-offset) and will not shift any repeat trigger point!
 
 <a name="layer-5-repeat-skip"></a>
@@ -1542,8 +1536,8 @@ need this repeat at the moment.
 * [Note up'N'down](#layer-6-note-up-and-down)
 * [Free Notes](#layer-6-repeat-free-notes)
 * [Repeat Probability](#layer-6-repeat-probability)
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -1567,8 +1561,8 @@ Similar to [Repeat Duration Offset](#layer-5-repeat-duration-offset), but in- or
 
 Similar to [Repeat Duration Offset](#layer-5-repeat-duration-offset), but in- or decrese the step root note value by
 halftones for each repeat.
-
 <br />
+
 **Note:** When you use Note Offsets by default B-Step does not simply use Step Note value plus Repeat Note Offset. No, B replace the resulting note value by the next matching value of your choosen Bar Chord or a transponation of it - so you can be sure that the note ratcheting will always sound well to the other steps of your bar. To disable this you can use [Free Notes](#layer-6-repeat-free-notes).
 
 * Skale: -12 to 12 (in halftones)
@@ -1633,8 +1627,8 @@ theory).
 
 * [Send Program Changes](#layer-7-send-programm-changes)
 * [Send Control Changes](#layer-7-send-control-changes)
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -1687,8 +1681,8 @@ two times) and select "copy steps", then drag and drop the stored bar to your ta
 
 **Tip:** Mixing projects: store a bar or more to the clipboards and load another project - now you can simply import the
 stored bars to the other project.
-
 <br />
+
 **Note:** The clipboard will not stored to disk, it is just in the runtime memory!
 
 <a name="snapshots"></a>
@@ -1697,8 +1691,8 @@ stored bars to the other project.
 
 If you like you can im- and export bars over the load save function on the clipboard editor to use it in this or other
 projects.
-
 <br />
+
 **Note:**: The whole bar will be im- and exported whatever you have selected at the copy options!
 
 
@@ -1751,11 +1745,12 @@ Connect your MIDI conroller to your computer or tablet and open B-Step's IO sett
 Port to control B-Step. If your controller supports any feedback feature then you can select them at the Feedback port.
 
 **Windows:** If you are using B-Step as VST plugin in a DAW you may be have some trouble because our DAW may be already
-"owns" your controller. You can try to connect your controller after booting your DAW or have a look at this thread:
+"owns" your controller. You can try to connect your controller after booting your DAW.
+ <!-- or have a look at this thread:
 <a href="http://forum.monoplugs.com/viewtopic.php?f=54&t=623" title="Windows virtual MIDI" target="_blank">Windows
-virtual MIDI</a>
-
+virtual MIDI</a> -->
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -1800,8 +1795,7 @@ This modes especially the "1:n" gives you the posibility to train patterns that 
 E.g. assign a bunch of steps to one button at you midi controller and enable or disable all of them by one button push
 on your controller.
 
-Watch this video: <a href="javascript:show_fancy_video('http://www.youtube-nocookie.com/embed/LRdx88lFwzQ?autoplay=1')">
-MIDI Learn - Mode 1:n</a>.
+Watch this video: <a href="https://www.youtube-nocookie.com/embed/LRdx88lFwzQ?autoplay=1">MIDI Learn - Mode 1:n</a>.
 
 **1:n**
 <br>A controller can have unlimited receivers. A new controller assignment will replace all other controllers to which
@@ -1825,7 +1819,7 @@ Read this section: [Load/Save Projects](#load-save-project).
 <br /> [back to top](#content) </div><div class="manual">
 
 
-[//]: <> ( *********************************************************** )
+<!-- [//]: <> ( *********************************************************** )
 
 [//]: <> ( *********************************************************** )
 
@@ -1870,12 +1864,12 @@ We don't know how your software or device works, please check it's manual )
 
 [//]: <> ( *********************************************************** )
 
-[//]: <> ( *********************************************************** )
+[//]: <> ( *********************************************************** ) -->
 <a name="novation-launchpad"></a>
 
 ## Novation Launchpad
 
-**Video:** <a href="javascript:show_fancy_video('http://www.youtube-nocookie.com/embed/NanpC1VpuCQ?autoplay=1')">
+**Video:** <a href="https://www.youtube-nocookie.com/embed/NanpC1VpuCQ?autoplay=1">
 Novation Launchpad & B-Step video tutorial</a>
 
 <a name="how-to-connect-novation-launchpads"></a>
@@ -1888,11 +1882,12 @@ Connect your Launchpad(s) to your computer or tablet and open B-Step's IO settin
 OUT at channel 1. Your Launchpad should show some lightning buttons (if not try "Refresh"). Done.
 
 **Windows:** If you are using B-Step as VST plugin in a DAW you may be have some trouble because our DAW may be
-already "owns" the Launchpad. You can try to connect your Launchpad after booting your DAW or have a look at this
+already "owns" the Launchpad. You can try to connect your Launchpad after booting your DAW.
+<!-- or have a look at this
 thread: <a href="http://forum.monoplugs.com/viewtopic.php?f=54&t=623" title="Windows virtual MIDI" target="_blank">
-Windows virtual MIDI</a>
-
+Windows virtual MIDI</a> -->
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -1902,13 +1897,13 @@ Windows virtual MIDI</a>
 
 #### Page 1
 
-![B-Step Sequencer Novation Launchad feature View 8 Steps, Page 1](http://b-step.monoplugs.com/manual-old/images/launchpad_page-1_8-step-view.png)
+![B-Step Sequencer Novation Launchad feature View 8 Steps, Page 1](images/launchpad_page-1_8-step-view.png)
 
 #### Page 2
 
-![B-Step Sequencer Novation Launchad feature View 8 Steps, Page 2](http://b-step.monoplugs.com/manual-old/images/launchpad_page-2_8-step-view.png)
-
+![B-Step Sequencer Novation Launchad feature View 8 Steps, Page 2](images/launchpad_page-2_8-step-view.png)
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -1918,13 +1913,13 @@ Windows virtual MIDI</a>
 
 #### Page 1
 
-![B-Step Sequencer Novation Launchad feature View Left, Page 1](http://b-step.monoplugs.com/manual-old/images/launchpad_page-1_left-view.png)
+![B-Step Sequencer Novation Launchad feature View Left, Page 1](images/launchpad_page-1_left-view.png)
 
 #### Page 2
 
-![B-Step Sequencer Novation Launchad feature View Left, Page 2](http://b-step.monoplugs.com/manual-old/images/launchpad_page-2_left-view.png)
-
+![B-Step Sequencer Novation Launchad feature View Left, Page 2](images/launchpad_page-2_left-view.png)
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -1934,23 +1929,11 @@ Windows virtual MIDI</a>
 
 #### Page 1
 
-![B-Step Sequencer Novation Launchad feature View Right, Page 1](http://b-step.monoplugs.com/manual-old/images/launchpad_page-1_right-view.png)
+![B-Step Sequencer Novation Launchad feature View Right, Page 1](images/launchpad_page-1_right-view.png)
 
 #### Page 2
 
-![B-Step Sequencer Novation Launchad feature View Right, Page 2](http://b-step.monoplugs.com/manual-old/images/launchpad_page-2_right-view.png)
-
-
-<br /> [back to top](#content) </div><div class="manual">
-
-
-<a name="outro"></a>
-
-### QUESTIONS, see you in  B-Step Forum
-
-Any questions, come to B-Step forum, [ask there](http://forum.monoplugs.com), writing to which chapter of this manual
-your question is related to, so your question plus its answer can be added into the next version of this manual. Thanks
-in advance. Now enjoy B-Step and your other great musical tools.
+![B-Step Sequencer Novation Launchad feature View Right, Page 2](images/launchpad_page-2_right-view.png)
 
 
 <br /> [back to top](#content) </div><div class="manual">
@@ -2064,8 +2047,8 @@ in advance. Now enjoy B-Step and your other great musical tools.
 - Modulate velocity.
 - Modulate duration.
 - Modulate timing.
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -2081,8 +2064,8 @@ in advance. Now enjoy B-Step and your other great musical tools.
 - Remove next bar in chain marker.
 - Other small user interface changes.
 - Add delete and browse functions to the file chooser.
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -2132,8 +2115,8 @@ in advance. Now enjoy B-Step and your other great musical tools.
 
 - Add bar copy support (hold down one bar button (source) and click a other bar button (target) ).
 - Change default MIDI channel to 1.
-
 <br />
+
 [back to top](#content)
 <hr>
 
@@ -2182,8 +2165,8 @@ in advance. Now enjoy B-Step and your other great musical tools.
 - Add slider to control all velocity sliders.
 - Reduce UI refresh rate, feels less laggy.
 - Add auto resize if the desktop area is to small.
-
 <br />
+
 [back to top](#content)
 <hr>
 

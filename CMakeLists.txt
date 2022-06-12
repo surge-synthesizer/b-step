@@ -140,6 +140,7 @@ target_compile_definitions(B-Step PUBLIC
 
   # Note if you are building the code under MIT you need a license to use JUCE to set this to 0
   JUCE_DISPLAY_SPLASH_SCREEN=0
+  JUCE_REPORT_APP_USAGE=0
 
   JUCE_MODAL_LOOPS_PERMITTED=1  
   FIXMEPORT=jassertfalse

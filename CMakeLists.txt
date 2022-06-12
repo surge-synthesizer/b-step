@@ -77,7 +77,7 @@ juce_add_plugin(B-Step
 
 clap_juce_extensions_plugin(TARGET B-Step
   CLAP_ID "org.sure-synth-team.bstep"
-  CLAP_FEATURES sequencer "step sequencer")
+  CLAP_FEATURES "note-effect" sequencer "step sequencer")
 
 
 if(BSTEP_RELIABLE_VERSION_INFO)

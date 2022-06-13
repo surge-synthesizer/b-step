@@ -56,7 +56,7 @@ Name: "SA"; Description: "{#MyAppName} Standalone (64-bit)"; Types: full standal
 
 [Files]
 Source: "{#BSTEP_BIN}\bstep-products\{#MyAppName}.vst3\*"; DestDir: "{autocf}\VST3\{#MyAppPublisher}\{#MyAppName}.vst3\"; Components: VST3; Flags: ignoreversion recursesubdirs
-Source: "{#BSTEP_BIN}\bstep-products\{#MyAppName}.clap"; DestDir: "{autocf}\Clap\{#MyAppPublisher}\"; Components: CLAP; Flags: ignoreversion
+Source: "{#BSTEP_BIN}\bstep-products\{#MyAppName}.clap"; DestDir: "{autocf}\CLAP\{#MyAppPublisher}\"; Components: CLAP; Flags: ignoreversion
 Source: "{#BSTEP_BIN}\bstep-products\{#MyAppName}.exe"; DestDir: "{app}"; Components: SA; Flags: ignoreversion
 
 [Icons]

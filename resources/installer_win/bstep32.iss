@@ -4,6 +4,10 @@
 #define MyAppNameCondensed "BStep"
 #define MyID "9F829DB2-70CC-4FF0-8806-36A5C6C9E95D"
 
+#ifndef MyAppVersion
+#define MyAppVersion "0.0.0"
+#endif
+
 ;uncomment these two lines if building the installer locally!
 ;#define BSTEP_SRC "..\..\"
 ;#define BSTEP_BIN "..\..\build\"
@@ -12,7 +16,7 @@
 AppId={#MyID}
 AppName={#MyAppName}
 AppVerName={#MyAppName}
-AppVersion={#BSTEP_VERSION}
+AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
@@ -23,13 +27,13 @@ DisableDirPage=yes
 DisableProgramGroupPage=yes
 AlwaysShowDirOnReadyPage=yes
 LicenseFile={#BSTEP_SRC}\LICENSE-gpl3
-OutputBaseFilename={#MyAppNameCondensed}-{#BSTEP_VERSION}-Windows-32bit-setup
+OutputBaseFilename={#MyAppNameCondensed}-{#MyAppVersion}-Windows-32bit-setup
 SetupIconFile={#BSTEP_SRC}\resources\installer_win\bstep.ico
 UninstallDisplayIcon={uninstallexe}
 UsePreviousAppDir=yes
 Compression=lzma
 SolidCompression=yes
-UninstallFilesDir={app}\uninstall
+UninstallFilesDir={autoappdata}\{#MyAppName}\uninstall
 CloseApplicationsFilter=*.exe,*.vst3
 WizardStyle=modern
 WizardSizePercent=100

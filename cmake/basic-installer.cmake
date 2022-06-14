@@ -105,8 +105,8 @@ elseif (WIN32)
             TARGET bstep-installer
             POST_BUILD
             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-            COMMAND ${BSTEP_NUGET_EXE} install Tools.InnoSetup -version 6.2.0
-            COMMAND Tools.InnoSetup.6.2.0/tools/iscc.exe /O"installer" /DBSTEP_SRC="${CMAKE_SOURCE_DIR}" /DBSTEP_BIN="${CMAKE_BINARY_DIR}" /DBSTEP_VERSION="${BSTEP_DATE}-${VERSION_CHUNK}" "${CMAKE_SOURCE_DIR}/resources/installer_win/bstep${BITS}.iss")
+            COMMAND ${BSTEP_NUGET_EXE} install Tools.InnoSetup -version 6.2.1
+            COMMAND Tools.InnoSetup.6.2.1/tools/iscc.exe /O"installer" /DBSTEP_SRC="${CMAKE_SOURCE_DIR}" /DBSTEP_BIN="${CMAKE_BINARY_DIR}" /DMyAppVersion="${BSTEP_DATE}-${VERSION_CHUNK}" "${CMAKE_SOURCE_DIR}/resources/installer_win/bstep${BITS}.iss")
     else()
         message(STATUS "NuGet not found")
     endif()

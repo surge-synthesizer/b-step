@@ -217,7 +217,7 @@ jobs:
           
           mkdir -p releases
           
-          mv *.zip *.dmg releases
+          mv *.zip *.dmg *.exe releases
           
           ls -l $(System.DefaultWorkingDirectory)/git_info/
           echo "## B-Step Nightly Build" > releases/ReleaseNotes.md

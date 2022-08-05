@@ -46,19 +46,19 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Types]
 Name: "full"; Description: "Full installation"
-Name: "vst3"; Description: "VST3 installation"
 Name: "clap"; Description: "CLAP installation"
+Name: "vst3"; Description: "VST3 installation"
 Name: "standalone"; Description: "Standalone installation"
 Name: "custom"; Description: "Custom"; Flags: iscustom
 
 [Components]
-Name: "VST3"; Description: "{#MyAppName} VST3 (32-bit)"; Types: full vst3 custom
 Name: "CLAP"; Description: "{#MyAppName} CLAP (32-bit)"; Types: full clap custom
+Name: "VST3"; Description: "{#MyAppName} VST3 (32-bit)"; Types: full vst3 custom
 Name: "SA"; Description: "{#MyAppName} Standalone (32-bit)"; Types: full standalone custom
 
 [Files]
-Source: "{#BSTEP_BIN}\bstep-products\{#MyAppName}.vst3\*"; DestDir: "{autocf}\VST3\{#MyAppPublisher}\{#MyAppName}.vst3\"; Components: VST3; Flags: ignoreversion recursesubdirs
 Source: "{#BSTEP_BIN}\bstep-products\{#MyAppName}.clap"; DestDir: "{autocf}\CLAP\{#MyAppPublisher}\"; Components: CLAP; Flags: ignoreversion
+Source: "{#BSTEP_BIN}\bstep-products\{#MyAppName}.vst3\*"; DestDir: "{autocf}\VST3\{#MyAppPublisher}\{#MyAppName}.vst3\"; Components: VST3; Flags: ignoreversion recursesubdirs
 Source: "{#BSTEP_BIN}\bstep-products\{#MyAppName}.exe"; DestDir: "{app}"; Components: SA; Flags: ignoreversion
 
 [Icons]

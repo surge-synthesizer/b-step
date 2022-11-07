@@ -410,7 +410,7 @@ class HTMLPArser
                bool download_complete_nav_content_, bool show_content_)
         : _view(view_), _show_content(show_content_), _has_live_only_content(false),
 
-          _tag_h("<h", "</h", false), // note: uncomplete tag, will be done in a loop
+          _tag_h("<h", "</h", false), // note: incomplete tag, will be done in a loop
           _tag_p("<p", "</p>", false), _tag_li("<li", "</li>", false), _tag_img("<img", "/>", true),
           _tag_a("<a href", "</a>", false)
     {
@@ -606,7 +606,7 @@ bool UIHtmlView::open_url(const juce::URL &source_, bool and_download_complete_n
 
     juce::String data;
 
-    // CHECK IF IT ALREAD EXIST AND USE CACHE OR CREATE CACHE
+    // CHECK IF IT ALREADY EXISTS AND USE CACHE OR CREATE CACHE
     // IGNORE ANNOUNCEMENTS
     bool reload_from_server = false;
     if (current_url.toString(false).fromFirstOccurrenceOf(".com/", false, false) == "" ||
@@ -864,7 +864,7 @@ void UIHtmlView::add_image(const juce::String &url_, bool show_content_)
         OUT("add_image");
         return;
     });
-    // CHECK IF ALREDY EXIST AND DOWNLOAD IF NOT
+    // CHECK IF ALREADY EXISTS AND DOWNLOAD IF NOT
     juce::File image_cache_folder = get_manual_folder().getChildFile("images");
     image_cache_folder.createDirectory();
     juce::File image_file =

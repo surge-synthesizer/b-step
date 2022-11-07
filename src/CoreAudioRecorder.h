@@ -185,7 +185,7 @@ class AudioRecorder : public juce::AudioIODeviceCallback
         {
             activeWriter->write(inputChannelData, numSamples);
 
-            // Create an AudioSampleBuffer to wrap our incomming data, note that this does no
+            // Create an AudioSampleBuffer to wrap our incoming data, note that this does no
             // allocations or copies, it simply references our input data
             const juce::AudioSampleBuffer buffer(const_cast<float **>(inputChannelData), 2,
                                                  numSamples);

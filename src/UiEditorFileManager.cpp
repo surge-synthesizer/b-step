@@ -1396,13 +1396,13 @@ struct PresetItem : public juce::TreeViewItem,
         {
             if (_app_instance_store->last_loaded_project.existsAsFile())
             {
-                // OVERWIRTE?
+                // OVERWRITE?
                 if (_file != _app_instance_store->last_loaded_project && _file.exists())
                 {
                     if (juce::AlertWindow::showOkCancelBox(
                             juce::AlertWindow::WarningIcon, "OVERWRITE EXISTING FILE???",
                             _file.getFileNameWithoutExtension() + juce::String(" already exist.") +
-                                juce::String("\nWould you like to replace by ") +
+                                juce::String("\nWould you like to replace it with ") +
                                 _app_instance_store->last_loaded_project
                                     .getFileNameWithoutExtension() +
                                 juce::String(" ?"),

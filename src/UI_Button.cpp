@@ -495,7 +495,7 @@ void UiButton::cache_paint(juce::Graphics &g, std::uint32_t background_colour_)
             float radius = 6.f * (1.f / 40 * width);
             float line = 1.5 * (1.f / 40 * width);
 
-            // BUTON ITSELFT
+            // BUTTON ITSELF
             g.setGradientFill(juce::ColourGradient(juce::Colour(_foreground_color_1), 0.0f, 0.0f,
                                                    juce::Colour(_foreground_color_2), 0.0f, height,
                                                    false));

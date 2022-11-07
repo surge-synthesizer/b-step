@@ -847,7 +847,7 @@ static inline std::uint8_t get_next_valid_autochain_bar_id(const Pattern &patter
 // LEFT RIGHT SCROLL THROUGH CHAINABLE BARS!
 void Launchpad::process(const juce::MidiMessage &message_)
 {
-    // check if we have the corrent channel
+    // check if we have the correct channel
     // check the mode per pad
     //
     if (message_.getChannel() != channel_in)

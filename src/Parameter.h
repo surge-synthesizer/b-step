@@ -31,7 +31,7 @@ class PodParameterBase
     // --------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------
 
-    // PROPERTIE REFERENCES
+    // PROPERTY REFERENCES
   protected:
     pod_type _value;
     const pod_type MIN;
@@ -305,7 +305,7 @@ class PodParameter : public PodParameterBase
   public:
     typedef PodParameter<MIN_, DEFAULT_, MAX_, OWNER_INDEX_> type;
 
-    // ASIGNMENT
+    // ASSIGNMENT
     inline pod_type operator=(const type &other_) { return PodParameterBase::operator=(other_); }
     inline pod_type operator=(pod_type value_) { return PodParameterBase::operator=(value_); }
 

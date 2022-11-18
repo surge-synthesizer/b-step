@@ -457,7 +457,7 @@ class BarStepPosProcessor
         {
             _absolute_step_counter = absolute_vst_clock_ % 96 / 6;
         }
-        // ABSOLUT STEP FORCE
+        // ABSOLUTE STEP FORCE
         if (_source_bar->barstep(_step_counter).pos_force_to_absolute_step ||
             _tmp_is_forced_to_beat_next_step)
         {
@@ -738,7 +738,7 @@ class BarProcessor
                 step_midi_processor->set_original_note(barstring_id, note);
             }
 
-            // PROCESSING ENABLEING
+            // PROCESSING ENABLING
             bool mute_status = false;
             if (_source_bar->mute)
                 mute_status = true;

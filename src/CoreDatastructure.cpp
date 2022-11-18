@@ -55,7 +55,7 @@ Pattern::Pattern()
                      &swing_duration_offset),
       // TODO has to be stored
       _remote_tune(64),
-      // TODO SHOULD BE ASSOZIATED TO THE TUNE? IT IS. IT IS INDIPENDENT
+      // TODO: SHOULD BE ASSOIATED WITH THE TUNE? IT IS. IT IS INDEPENDENT
       _remote_tune_center(64)
 {
     // CHORD SETS

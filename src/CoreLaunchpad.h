@@ -62,7 +62,7 @@ class Launchpad : public MIDIInListener
     std::uint8_t id;
 
   private:
-    std::uint8_t _current_scroll_offset; // on wich row we are?
+    std::uint8_t _current_scroll_offset; // on which row are we?
 
     enum CONSTS
     {

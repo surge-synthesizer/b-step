@@ -962,7 +962,7 @@ inline void GstepAudioProcessorEditor::get_selecter_area(juce::Rectangle<int> &a
     int selecter_space = width_prop * 3;
     int selecter_width = model->getWidth() + selecter_space * 2;
     int selecter_x =
-        elem_x + column_x + column_wrapper_x - selecter_space; // elemens are 40, width = 50
+        elem_x + column_x + column_wrapper_x - selecter_space; // elements are 40, width = 50
 
     get_bar_area(area_);
     area_.setX(selecter_x);

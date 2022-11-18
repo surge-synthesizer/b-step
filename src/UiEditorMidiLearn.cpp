@@ -369,7 +369,7 @@ void UiEditorMidiLearn::buttonClicked(juce::Button *buttonThatWasClicked)
         CallbackManager *callback = new CallbackManager(&_app_instance_store->midi_in_map, this);
         juce::AlertWindow::showOkCancelBox(
             juce::AlertWindow::WarningIcon, "Clear MIDI mappings?",
-            "This will delete all your assinged controllers! Press OK if you like to do it now!",
+            "This will delete all your assigned controllers! Press OK if you like to do it now!",
             "CLEAR ALL", "KEEP IT", _app_instance_store->editor, callback);
     }
     else if (buttonThatWasClicked == button_info.get())

@@ -565,7 +565,7 @@ void GstepAudioProcessorEditor::resized()
                 height_prop * COLUMN_HEIGHT);
         }
 
-        //// MENUE BARS
+        //// MENU BARS
         _editor_right_mainwindow->setBounds(width_prop * (1242 - 206 - 5), width_prop * 10,
                                             width_prop * 206, height_prop * 748);
         _menue_bar_right->setBounds(width_prop * 1241, 0, width_prop * 38, height_prop * 768);

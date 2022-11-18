@@ -75,7 +75,7 @@ class GstepAudioProcessorEditor : public juce::AudioProcessorEditor,
 
   public:
     bool force_repaint_all;
-    juce::CriticalSection lock; // skipp unneded updates if one is pending
+    juce::CriticalSection lock; // skip unneeded updates if one is pending
   private:
     std::uint8_t parent_menu_bar_height;
     // --------------------------------------------------------------------------------------------

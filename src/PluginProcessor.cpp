@@ -46,7 +46,7 @@
 enum
 {
     SINGLE_SHOT_MESSAGE =
-        -99 // NOTE the livetime will be allways over and it will be removed on the next cleanup
+        -99 // NOTE the lifetime will be always over and it will be removed on the next cleanup
 };
 
 class MessageStoreage
@@ -377,7 +377,7 @@ class MessageProcessor : public Ticker,
     // OPTION RELEASE NOTe SET NOTe BEFORE
     // OPTION RELEASE SET REMOTE TUNE TO 0
 
-    // KEP KEY PRESSED FUNCTION
+    // KEEP KEY PRESSED FUNCTION
 
     juce::Array<bool> pressed_keys_store;
     void handleNoteOn(juce::MidiKeyboardState *source, int midiChannel, int midiNoteNumber,
@@ -633,7 +633,7 @@ class MessageProcessor : public Ticker,
                                     duration_message->message->setNoteNumber(
                                         duration_message->message->getNoteNumber());
                                     // NOTe PLAYBACK MODE, stops notes before a same note will be
-                                    // triggerd
+                                    // triggered
                                     running_midi_messages_per_group->set_same_messages_to_timeover(
                                         duration_message,
                                         _app_instance_store->audio_processor->note_playback_mode);
@@ -643,8 +643,8 @@ class MessageProcessor : public Ticker,
                                     //
 
                                     // TODO function to expand
-                                    // TODO function play last triggerd
-                                    // TODO play highes
+                                    // TODO function play last triggered
+                                    // TODO play highest
                                     // TODO play shortes
                                     // TODO play lowes
                                     precalculated_messages.add(duration_message);
@@ -1181,7 +1181,7 @@ class VSTClockProcessor
             if (!_wasPlaying)
                 _listener->on_vst_continue(lastPosInfo.timeInSamples);
 
-            // TODO THSI CAN BE UINT
+            // TODO THIS CAN BE UINT
             std::uint64_t time_in_samples = lastPosInfo.timeInSamples;
 
             // SPEED CHANGE SHOULD CHANGE POS

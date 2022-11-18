@@ -76,7 +76,7 @@ void UiEditor::center_relative_and_make_visible(juce::Component *const parent_, 
     setUsingNativeTitleBar(false);
 #endif
 
-    // check the heigh
+    // check the height
     bool is_bigger_than_parent = true;
     if (parent_)
         while (is_bigger_than_parent)

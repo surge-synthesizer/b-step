@@ -119,7 +119,7 @@ UiDualAudioMessage::UiDualAudioMessage(AppInstanceStore *app_instance_store_,
 
     old_info_2 = std::make_unique<juce::Label>(
         juce::String(),
-        TRANS("Assigning a audio file will create a copy of the file you like to asign. It "
+        TRANS("Assigning a audio file will create a copy of the file you like to assign. It "
               "also replaces existing audio assigns for this projects (unrestoreable)."));
     addAndMakeVisible(*old_info_2);
     old_info_2->setFont(juce::Font("Oswald", 18.00f, juce::Font::plain));

@@ -190,7 +190,7 @@ class GstepAudioProcessor : public ProcessorUserData,
     bool silenceInProducesSilenceOut() const override;
     double getTailLengthSeconds() const override;
 
-    /// PROGRAMMS - NOT SUPPORTED YET
+    /// PROGRAMS - NOT SUPPORTED YET
 
     int getNumPrograms() override;
     int getCurrentProgram() override;

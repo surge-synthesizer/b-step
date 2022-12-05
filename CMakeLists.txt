@@ -70,6 +70,7 @@ juce_add_plugin(B-Step
   PLUGIN_MANUFACTURER_CODE "VmbA"
   PLUGIN_CODE "bPlg"
   AU_EXPORT_PREFIX "bstepAU"
+  LV2URI "https://surge-synthesizer.github.io/lv2/b-step"
 
   ICON_BIG "${CMAKE_SOURCE_DIR}/resources/Images/b-step-appicon.png"
 

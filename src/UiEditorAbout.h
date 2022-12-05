@@ -22,9 +22,6 @@
 #include "UIEditorToolbar.h"
 
 class AppInstanceStore;
-#ifdef DEVELOPMENT
-class Parser;
-#endif
 
 class UiEditorAbout : public UiEditor, public juce::Button::Listener
 {
@@ -38,23 +35,8 @@ class UiEditorAbout : public UiEditor, public juce::Button::Listener
 
   public:
     void on_close_clicked() override;
-#ifdef DEVELOPMENT
-  private:
-    ScopedPointer<Parser> debug_parser;
-    bool is_on_shutdown;
 
-  public:
-    void print_debug(String text);
-#endif
   private:
-    juce::URL url_facebook;
-    juce::URL url_youtube;
-    juce::URL url_digg;
-    juce::URL url_deli;
-    juce::URL url_twitter;
-    juce::URL url_pinit;
-    juce::URL url_google;
-
     void paint(juce::Graphics &g) override;
     void resized() override;
     void buttonClicked(juce::Button *buttonThatWasClicked) override;
@@ -62,30 +44,21 @@ class UiEditorAbout : public UiEditor, public juce::Button::Listener
     // Binary resources:
     static const char *b_logo_png;
     static const int b_logo_pngSize;
-    static const char *vst_logo_100x_png;
-    static const int vst_logo_100x_pngSize;
-    static const char *au_logo_100x_png;
-    static const int au_logo_100x_pngSize;
-    static const char *aboutbox_png;
-    static const int aboutbox_pngSize;
 
   private:
     //==============================================================================
-    std::unique_ptr<juce::ImageButton> au_button;
-    std::unique_ptr<juce::ImageButton> vst_button;
-    std::unique_ptr<juce::HyperlinkButton> hyperlinkButton8;
-    std::unique_ptr<juce::HyperlinkButton> video_1;
-    std::unique_ptr<juce::HyperlinkButton> video_2;
-    std::unique_ptr<juce::HyperlinkButton> video_3;
+    std::unique_ptr<juce::HyperlinkButton> bstep_gh_link;
+    std::unique_ptr<juce::HyperlinkButton> link_to_manual;
     std::unique_ptr<juce::HyperlinkButton> video_4;
-    std::unique_ptr<juce::HyperlinkButton> video_5;
-    std::unique_ptr<juce::TextEditor> debug_out;
     std::unique_ptr<UiEditorToolbar> toolbar;
-    std::unique_ptr<juce::ImageButton> open_debug;
-
+    struct AboutInfo
+    {
+        std::string value;
+    };
+    std::vector<AboutInfo> info;
+    std::unique_ptr<juce::TextButton> copy_button;
     std::unique_ptr<juce::Label> buildInfo;
 
-    juce::Image cachedImage_aboutbox_png;
     juce::Image cachedImage_b_logo_png;
 
     //==============================================================================

@@ -41,7 +41,8 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
 #else
     std::string platform = "GLaDOS, Orac or Skynet";
 #endif
-    info.push_back({std::string(BStep::Build::FullVersionStr) + " on " + platform});
+    std::string wrapper = app_instance_store_->wrapperType;
+    info.push_back({std::string(BStep::Build::FullVersionStr) + " " + wrapper + " on " + platform});
     info.push_back({std::string(BStep::Build::BuildDate) + " at " + BStep::Build::BuildTime +
                     " using " + BStep::Build::BuildCompiler});
 
@@ -75,9 +76,16 @@ UiEditorAbout::UiEditorAbout(AppInstanceStore *const app_instance_store_)
 
     cachedImage_b_logo_png = juce::ImageCache::getFromMemory(b_logo_png, b_logo_pngSize);
 
+#ifdef JUCE_ANDROID
+    bool state = false;
+    Font android_font = Font("oswald-regular", 21, Font::italic);
+    Font oswald_font =
+        Font(Typeface::createSystemTypefaceFor(reinterpret_cast<const void *>(&android_font), 21));
+#else
     bool state = true;
     juce::Font oswald_font = juce::Font(juce::Typeface::createSystemTypefaceFor(
         BinaryData::OswaldRegular_ttf, BinaryData::OswaldRegular_ttfSize));
+#endif
 
     bstep_gh_link->setFont(oswald_font, state, juce::Justification::left);
     link_to_manual->setFont(oswald_font, state, juce::Justification::left);

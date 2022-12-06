@@ -1848,6 +1848,12 @@ GstepAudioProcessor::GstepAudioProcessor()
     : _current_buffer(nullptr), _app_instance_store(this),
       _message_processor(new MessageProcessor(&_app_instance_store))
 {
+    _app_instance_store.wrapperType = getWrapperTypeDescription(wrapperType);
+    if (wrapperType == wrapperType_Undefined && is_clap)
+    {
+        _app_instance_store.wrapperType = std::string("CLAP");
+    }
+
     OUT_LOG(juce::String("B-STep Startup -  ") + BStep::Build::FullVersionStr);
     if (wrapperType == wrapperType_Standalone)
         bstepIsStandalone = true;

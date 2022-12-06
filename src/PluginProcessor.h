@@ -25,6 +25,7 @@
 #include <juce_audio_devices/juce_audio_devices.h>
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_audio_basics/juce_audio_basics.h>
+#include "clap-juce-extensions/clap-juce-extensions.h"
 
 #include <juce_core/juce_core.h>
 
@@ -40,7 +41,8 @@ class SensingTimer;
 class GstepAudioProcessor : public ProcessorUserData,
                             public MIDIUserData,
                             public juce::AudioProcessor,
-                            public juce::MidiKeyboardState
+                            public juce::MidiKeyboardState,
+                            public clap_juce_extensions::clap_properties
 {
     juce::MidiBuffer *_current_buffer;
 

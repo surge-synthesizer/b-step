@@ -195,6 +195,7 @@ struct AppInstanceStore
     UiLookAndFeel *init_dummy;
     int runtimes;
     juce::Array<MONO_Controller *> midi_mappable_controllers;
+    std::string wrapperType{"Not Set"};
 
   private:
     // TODO PRIVATE

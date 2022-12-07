@@ -131,7 +131,8 @@ enum POSITIONS_LAYER_OLDSCOOL
 // ************************************************************************************************
 inline void GstepAudioProcessorEditor::auto_resize_to_user_area()
 {
-    if (!juce::Desktop::getInstance().getDisplays().getPrimaryDisplay()) return;
+    if (!juce::Desktop::getInstance().getDisplays().getPrimaryDisplay())
+        return;
 #ifndef PRIOR_CODE_FROM_STANDALONE
     resizeLimits.setSizeLimits(
         float(APPDEF_UIUserData::WINDOW_WIDTH) / 2, float(APPDEF_UIUserData::WINDOW_HEIGHT) / 2,

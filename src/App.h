@@ -30,19 +30,19 @@ class AppInstanceStore;
 extern int bstepIsStandalone;
 
 #define BUILD_INFO juce::String("")
-//#	define USE_PLUGIN_PROCESS_BLOCK 1
-//#	define LOG_THE_EVENTS_TO_FILE 1
+// #	define USE_PLUGIN_PROCESS_BLOCK 1
+// #	define LOG_THE_EVENTS_TO_FILE 1
 #ifndef USE_PLUGIN_PROCESS_BLOCK
 #define USE_PLUGIN_PROCESS_BLOCK 1
 
-//#	define USE_ACTIVE_SENSING 1      // to test
+// #	define USE_ACTIVE_SENSING 1      // to test
 #define USE_BIGGER_AREA_HACK 1 // to test
-//#	define DEVELOPMENT 1		 //
+// #	define DEVELOPMENT 1		 //
 
 #endif // TEST // RELEASE
 
-//#undef BUILD_INFO
-//#define BUILD_INFO String(String("FEB-18b
+// #undef BUILD_INFO
+// #define BUILD_INFO String(String("FEB-18b
 //")+Time::getCompilationDate().formatted("%Y:%m:%d-%H:%M:%S" +String(" ")))
 
 // --------------------------------------------------------------------------------------------
@@ -345,7 +345,7 @@ struct AlertHandler
 
 // Own FRAMEWORK
 #include "Parameter.h"
-//#include "AppInstanceStore.h" // included by Parameter.h
+// #include "AppInstanceStore.h" // included by Parameter.h
 
 // --------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------

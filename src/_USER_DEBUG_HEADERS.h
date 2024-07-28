@@ -28,13 +28,13 @@
 // - EVENTS
 
 #define LOG_BUTTON_EVENTS "BUTTON::"
-//#	define LOG_BUTTON_EVENTS 0
+// #	define LOG_BUTTON_EVENTS 0
 
-//#	define LOG_VST_CLOCK "CLOCK::"
+// #	define LOG_VST_CLOCK "CLOCK::"
 #define LOG_VST_CLOCK 0
 
 #define LOG_VST_TRANSPORT_EVENTS "TRANSPORT-EVENT::"
-//#	define LOG_VST_TRANSPORT_EVENTS 0
+// #	define LOG_VST_TRANSPORT_EVENTS 0
 
 // PRINTER
 #define USER_OUT(LOG_TYPE, a, b, c, d)                                                             \

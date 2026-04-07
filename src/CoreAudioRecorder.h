@@ -175,9 +175,11 @@ class AudioRecorder : public juce::AudioIODeviceCallback
 
     void audioDeviceStopped() override { sampleRate = 0; }
 
-    void audioDeviceIOCallback(const float **inputChannelData, int /*numInputChannels*/,
-                               float **outputChannelData, int numOutputChannels,
-                               int numSamples) override
+    void
+    audioDeviceIOCallbackWithContext(const float *const *inputChannelData, int numInputChannels,
+                                     float *const *outputChannelData, int numOutputChannels,
+                                     int numSamples,
+                                     const juce::AudioIODeviceCallbackContext &context) override
     {
         const juce::ScopedLock sl(writerLock);
 

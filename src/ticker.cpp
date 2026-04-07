@@ -110,7 +110,7 @@ TickLoop::~TickLoop()
 
 Ticker::Executer::Executer(Ticker *const ticker_) : Thread("B-Step Sender"), _ticker(ticker_)
 {
-    setPriority(8);
+    setPriority(juce::Thread::Priority::highest);
 }
 
 void Ticker::Executer::run() { _ticker->on_tick_precalculate(); }

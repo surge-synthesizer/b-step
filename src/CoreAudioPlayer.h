@@ -84,7 +84,7 @@ class AudioPlayer : public juce::Component, public juce::Timer, public juce::Sli
                     selected_device = -2;
             }
 
-            thread.startThread(3);
+            thread.startThread(juce::Thread::Priority::high);
             deviceManager.addAudioCallback(&audioSourcePlayer);
 
             audioSourcePlayer.setSource(&transportSource);

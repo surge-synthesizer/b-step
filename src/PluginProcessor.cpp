@@ -1185,7 +1185,7 @@ class VSTClockProcessor
             std::uint64_t time_in_samples = lastPosInfo.timeInSamples;
 
             // SPEED CHANGE SHOULD CHANGE POS
-            float speed_factor = double(_listener->speed) / APPDEF_ProcessorUserData::SPEED_DEVISOR;
+            float speed_factor = double(_listener->speed) / APPDEF_ProcessorUserData::SPEED_DIVISOR;
             if (_last_speed_factor != speed_factor)
             {
                 USER_OUT(LOG_VST_TRANSPORT_EVENTS, "in::generate_clock_callbacks @@@ ",

@@ -747,7 +747,7 @@ bool UIHtmlView::open_question_mark_content(const juce::URL &request_for_, bool 
                         {
                             _view->block_views(false);
                             view_->pending_download = this;
-                            startThread(1);
+                            startThread(juce::Thread::Priority::high);
                         }
                         ~UpdateThread()
                         {

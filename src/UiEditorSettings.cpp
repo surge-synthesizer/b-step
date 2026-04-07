@@ -85,7 +85,7 @@ void UiEditorSettings::fill_drop_downs()
                                       juce::Colour(0xffffffff));
 
     // OUTPUTS
-    juce::StringArray all_devs = juce::MidiOutput::getDevices();
+    auto all_devs = juce::MidiOutput::getAvailableDevices();
     int index = 1;
     add_set_midi_port(cb_midi_pad_out_1.get(), DISABLED_PORT, index,
                       _app_instance_store->midi_io_handler.pad_1_out);
@@ -107,21 +107,21 @@ void UiEditorSettings::fill_drop_downs()
     int i = 0;
     for (; i < all_devs.size(); i++)
     {
-        add_set_midi_port(cb_midi_pad_out_1.get(), all_devs[i], i + index,
+        add_set_midi_port(cb_midi_pad_out_1.get(), all_devs[i].name, i + index,
                           _app_instance_store->midi_io_handler.pad_1_out);
-        add_set_midi_port(cb_midi_pad_out_2.get(), all_devs[i], i + index,
+        add_set_midi_port(cb_midi_pad_out_2.get(), all_devs[i].name, i + index,
                           _app_instance_store->midi_io_handler.pad_2_out);
-        add_set_midi_port(cb_midi_out_port.get(), all_devs[i], i + index,
+        add_set_midi_port(cb_midi_out_port.get(), all_devs[i].name, i + index,
                           _app_instance_store->midi_io_handler.get_out_port(0));
-        add_set_midi_port(cb_midi_out_port_string_g.get(), all_devs[i], i + index,
+        add_set_midi_port(cb_midi_out_port_string_g.get(), all_devs[i].name, i + index,
                           _app_instance_store->midi_io_handler.get_out_port(1));
-        add_set_midi_port(cb_midi_out_port_string_d.get(), all_devs[i], i + index,
+        add_set_midi_port(cb_midi_out_port_string_d.get(), all_devs[i].name, i + index,
                           _app_instance_store->midi_io_handler.get_out_port(2));
-        add_set_midi_port(cb_midi_out_port_string_a.get(), all_devs[i], i + index,
+        add_set_midi_port(cb_midi_out_port_string_a.get(), all_devs[i].name, i + index,
                           _app_instance_store->midi_io_handler.get_out_port(3));
-        add_set_midi_port(cb_midi_out_port_b.get(), all_devs[i], i + index,
+        add_set_midi_port(cb_midi_out_port_b.get(), all_devs[i].name, i + index,
                           _app_instance_store->midi_io_handler.get_out_port(4));
-        add_set_midi_port(cb_midi_learn_out_port.get(), all_devs[i], i + index,
+        add_set_midi_port(cb_midi_learn_out_port.get(), all_devs[i].name, i + index,
                           _app_instance_store->midi_io_handler.midi_learn_out);
     }
 
@@ -163,7 +163,7 @@ void UiEditorSettings::fill_drop_downs()
     }
 
     // INPUTS
-    juce::StringArray all_indevs = juce::MidiInput::getDevices();
+    auto all_indevs = juce::MidiInput::getAvailableDevices();
     index = 1;
     add_set_midi_port(cb_midi_pad_in_1.get(), DISABLED_PORT, index,
                       _app_instance_store->midi_io_handler.pad_1_in);
@@ -177,13 +177,13 @@ void UiEditorSettings::fill_drop_downs()
     i = 0;
     for (; i < all_indevs.size(); i++)
     {
-        add_set_midi_port(cb_midi_pad_in_1.get(), all_indevs[i], i + index,
+        add_set_midi_port(cb_midi_pad_in_1.get(), all_indevs[i].name, i + index,
                           _app_instance_store->midi_io_handler.pad_1_in);
-        add_set_midi_port(cb_midi_pad_in_2.get(), all_indevs[i], i + index,
+        add_set_midi_port(cb_midi_pad_in_2.get(), all_indevs[i].name, i + index,
                           _app_instance_store->midi_io_handler.pad_2_in);
-        add_set_midi_port(cb_midi_in_port.get(), all_indevs[i], i + index,
+        add_set_midi_port(cb_midi_in_port.get(), all_indevs[i].name, i + index,
                           _app_instance_store->midi_io_handler.midi_in);
-        add_set_midi_port(cb_midi_learn_in_port.get(), all_indevs[i], i + index,
+        add_set_midi_port(cb_midi_learn_in_port.get(), all_indevs[i].name, i + index,
                           _app_instance_store->midi_io_handler.midi_learn_in);
     }
 

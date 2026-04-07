@@ -714,7 +714,7 @@ struct PresetItem : public juce::TreeViewItem,
 
             SHOW_CUSTOM_NOTIFICATION("IS LOADING", 2);
 
-            startThread(1);
+            startThread(juce::Thread::Priority::high);
         }
 
         ~UpdateServerFileStructure() {}
@@ -1539,7 +1539,7 @@ struct PresetItem : public juce::TreeViewItem,
         DownloadExecuter *executer = new DownloadExecuter(this, start_new_thread);
         if (start_new_thread)
         {
-            executer->startThread(1);
+            executer->startThread(juce::Thread::Priority::high);
         }
         else
         {

@@ -43,88 +43,72 @@
 #include "CoreSequencer.h"
 #include <juce_core/juce_core.h>
 
-enum POSITIONS_LAYER_OLDSCOOL
-{
-    BORDER_SPACE = 8,
-    COL_SPACE = 10,
+// enum POSITIONS_LAYER_OLDSCOOL
+static constexpr int BORDER_SPACE = 8, COL_SPACE = 10,
 
-    COLUMN_HEIGHT = 50,
-    COLUMN_WIDTH = 945,
-    // YYYY
+                     COLUMN_HEIGHT = 50, COLUMN_WIDTH = 945,
+                     // YYYY
     COL_0_Y = 20,
 
-    COL_1_Y = COL_0_Y + COLUMN_HEIGHT + COL_SPACE + COL_SPACE,
-    COL_2_Y = COL_1_Y + COLUMN_HEIGHT,
-    COL_3_Y = COL_2_Y + COLUMN_HEIGHT,
-    COL_4_Y = COL_3_Y + COLUMN_HEIGHT,
+                     COL_1_Y = COL_0_Y + COLUMN_HEIGHT + COL_SPACE + COL_SPACE,
+                     COL_2_Y = COL_1_Y + COLUMN_HEIGHT, COL_3_Y = COL_2_Y + COLUMN_HEIGHT,
+                     COL_4_Y = COL_3_Y + COLUMN_HEIGHT,
 
-    COL_5_Y = COL_4_Y + COLUMN_HEIGHT + COL_SPACE,
-    COL_6_Y = COL_5_Y + COLUMN_HEIGHT,
+                     COL_5_Y = COL_4_Y + COLUMN_HEIGHT + COL_SPACE,
+                     COL_6_Y = COL_5_Y + COLUMN_HEIGHT,
 
-    COL_7_Y = COL_6_Y + COLUMN_HEIGHT + COL_SPACE + COL_SPACE,
-    COL_8_Y = COL_7_Y + COLUMN_HEIGHT,
-    COL_9_Y = COL_8_Y + COLUMN_HEIGHT,
-    COL_10_Y = COL_9_Y + COLUMN_HEIGHT,
+                     COL_7_Y = COL_6_Y + COLUMN_HEIGHT + COL_SPACE + COL_SPACE,
+                     COL_8_Y = COL_7_Y + COLUMN_HEIGHT, COL_9_Y = COL_8_Y + COLUMN_HEIGHT,
+                     COL_10_Y = COL_9_Y + COLUMN_HEIGHT,
 
-    COL_11_Y = COL_10_Y + COLUMN_HEIGHT + COL_SPACE + COL_SPACE,
-    COL_12_Y = COL_11_Y + COLUMN_HEIGHT,
+                     COL_11_Y = COL_10_Y + COLUMN_HEIGHT + COL_SPACE + COL_SPACE,
+                     COL_12_Y = COL_11_Y + COLUMN_HEIGHT,
 
-    // XXXX
+                     // XXXX
     COL_0_X = 30 + 36,
 
-    COL_1_X = COL_0_X,
-    COL_2_X = COL_0_X,
-    COL_3_X = COL_0_X,
-    COL_4_X = COL_0_X,
+                     COL_1_X = COL_0_X, COL_2_X = COL_0_X, COL_3_X = COL_0_X, COL_4_X = COL_0_X,
 
-    COL_5_X = COL_0_X,
-    COL_6_X = COL_0_X,
+                     COL_5_X = COL_0_X, COL_6_X = COL_0_X,
 
-    COL_7_X = COL_0_X,
-    COL_8_X = COL_0_X,
-    COL_9_X = COL_0_X,
+                     COL_7_X = COL_0_X, COL_8_X = COL_0_X, COL_9_X = COL_0_X,
 
-    COL_10_X = COL_0_X,
-    COL_11_X = COL_0_X,
-    COL_12_X = COL_0_X,
+                     COL_10_X = COL_0_X, COL_11_X = COL_0_X, COL_12_X = COL_0_X,
 
-    // STEP AREA
-    STEP_BG_Y = COL_1_Y - BORDER_SPACE,
-    STEP_BG_X = COL_1_X - BORDER_SPACE,
-    STEP_BG_WIDTH = BORDER_SPACE + COLUMN_WIDTH + BORDER_SPACE,
+                     // STEP AREA
+    STEP_BG_Y = COL_1_Y - BORDER_SPACE, STEP_BG_X = COL_1_X - BORDER_SPACE,
+                     STEP_BG_WIDTH = BORDER_SPACE + COLUMN_WIDTH + BORDER_SPACE,
 
-    STEP_BG_HEIGHT_PAGE_1 = BORDER_SPACE + COL_6_Y + COLUMN_HEIGHT - STEP_BG_Y,
-    STEP_BG_HEIGHT_PAGE_2 = BORDER_SPACE + COL_10_Y + COLUMN_HEIGHT - STEP_BG_Y,
+                     STEP_BG_HEIGHT_PAGE_1 = BORDER_SPACE + COL_6_Y + COLUMN_HEIGHT - STEP_BG_Y,
+                     STEP_BG_HEIGHT_PAGE_2 = BORDER_SPACE + COL_10_Y + COLUMN_HEIGHT - STEP_BG_Y,
 
-    STEP_BG_HEIGHT_PAGE_3 = STEP_BG_HEIGHT_PAGE_2,
+                     STEP_BG_HEIGHT_PAGE_3 = STEP_BG_HEIGHT_PAGE_2,
 
-    STEP_BG_HEIGHT_PAGE_4 = BORDER_SPACE / 2 + COL_4_Y + COLUMN_HEIGHT - STEP_BG_Y,
+                     STEP_BG_HEIGHT_PAGE_4 = BORDER_SPACE / 2 + COL_4_Y + COLUMN_HEIGHT - STEP_BG_Y,
 
-    STEP_BG_HEIGHT_PAGE_5 = STEP_BG_HEIGHT_PAGE_3,
-    STEP_BG_HEIGHT_PAGE_6 = STEP_BG_HEIGHT_PAGE_3,
-    STEP_BG_HEIGHT_PAGE_7 = STEP_BG_HEIGHT_PAGE_3,
+                     STEP_BG_HEIGHT_PAGE_5 = STEP_BG_HEIGHT_PAGE_3,
+                     STEP_BG_HEIGHT_PAGE_6 = STEP_BG_HEIGHT_PAGE_3,
+                     STEP_BG_HEIGHT_PAGE_7 = STEP_BG_HEIGHT_PAGE_3,
 
-    BAR_BG_Y_PAGE_1 = COL_7_Y - BORDER_SPACE,
-    BAR_BG_HEIGHT_PAGE_1 = BORDER_SPACE + COL_12_Y + COLUMN_HEIGHT - BAR_BG_Y_PAGE_1,
+                     BAR_BG_Y_PAGE_1 = COL_7_Y - BORDER_SPACE,
+                     BAR_BG_HEIGHT_PAGE_1 =
+                         BORDER_SPACE + COL_12_Y + COLUMN_HEIGHT - BAR_BG_Y_PAGE_1,
 
-    BAR_BG_Y_PAGE_2 = COL_11_Y - BORDER_SPACE,
-    BAR_BG_HEIGHT_PAGE_2 = BORDER_SPACE + COL_12_Y + COLUMN_HEIGHT - BAR_BG_Y_PAGE_2,
+                     BAR_BG_Y_PAGE_2 = COL_11_Y - BORDER_SPACE,
+                     BAR_BG_HEIGHT_PAGE_2 =
+                         BORDER_SPACE + COL_12_Y + COLUMN_HEIGHT - BAR_BG_Y_PAGE_2,
 
-    BAR_BG_Y_PAGE_3 = BAR_BG_Y_PAGE_2,
-    BAR_BG_HEIGHT_PAGE_3 = BAR_BG_HEIGHT_PAGE_2,
+                     BAR_BG_Y_PAGE_3 = BAR_BG_Y_PAGE_2, BAR_BG_HEIGHT_PAGE_3 = BAR_BG_HEIGHT_PAGE_2,
 
-    BAR_BG_Y_PAGE_4 = COL_5_Y - BORDER_SPACE / 2,
-    BAR_BG_HEIGHT_PAGE_4 = BORDER_SPACE + COL_12_Y + COLUMN_HEIGHT - BAR_BG_Y_PAGE_4,
+                     BAR_BG_Y_PAGE_4 = COL_5_Y - BORDER_SPACE / 2,
+                     BAR_BG_HEIGHT_PAGE_4 =
+                         BORDER_SPACE + COL_12_Y + COLUMN_HEIGHT - BAR_BG_Y_PAGE_4,
 
-    BAR_BG_Y_PAGE_5 = BAR_BG_Y_PAGE_3,
-    BAR_BG_HEIGHT_PAGE_5 = BAR_BG_HEIGHT_PAGE_3,
+                     BAR_BG_Y_PAGE_5 = BAR_BG_Y_PAGE_3, BAR_BG_HEIGHT_PAGE_5 = BAR_BG_HEIGHT_PAGE_3,
 
-    BAR_BG_Y_PAGE_6 = BAR_BG_Y_PAGE_3,
-    BAR_BG_HEIGHT_PAGE_6 = BAR_BG_HEIGHT_PAGE_3,
+                     BAR_BG_Y_PAGE_6 = BAR_BG_Y_PAGE_3, BAR_BG_HEIGHT_PAGE_6 = BAR_BG_HEIGHT_PAGE_3,
 
-    BAR_BG_Y_PAGE_7 = BAR_BG_Y_PAGE_3,
-    BAR_BG_HEIGHT_PAGE_7 = BAR_BG_HEIGHT_PAGE_3,
-};
+                     BAR_BG_Y_PAGE_7 = BAR_BG_Y_PAGE_3, BAR_BG_HEIGHT_PAGE_7 = BAR_BG_HEIGHT_PAGE_3;
 
 // ************************************************************************************************
 // ************************************************************************************************

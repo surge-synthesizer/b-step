@@ -143,9 +143,9 @@ template <class port_type> class MidiIOObject
         if (at_dev_index_ <= 0)
             return false;
 
-        juce::StringArray ports = port_type::getDevices();
+        auto devices = port_type::getAvailableDevices();
 
-        if (ports[at_dev_index_] == name_)
+        if (at_dev_index_ < devices.size() && devices[at_dev_index_].name == name_)
         {
             return true;
         }
@@ -155,12 +155,12 @@ template <class port_type> class MidiIOObject
     // -1 == not found
     static int get_port_index_at_Nth_index(const juce::String &name_, int Nth_index_)
     {
-        juce::StringArray ports = port_type::getDevices();
+        auto devices = port_type::getAvailableDevices();
 
         int Nth_counter = -1;
-        for (int i = 0; i != ports.size(); ++i)
+        for (int i = 0; i != devices.size(); ++i)
         {
-            if (ports[i] == name_)
+            if (devices[i].name == name_)
             {
                 ++Nth_counter;
                 if (Nth_index_ == Nth_counter)
@@ -274,9 +274,10 @@ class MidiInputObject : public MidiIOObject<juce::MidiInput>, public juce::MidiI
         DBG(_port_name);
         if (_port_name != VIRTUAL_PORT)
         {
-            if (_at_dev_index < juce::MidiInput::getDevices().size())
+            auto devices = juce::MidiInput::getAvailableDevices();
+            if (_at_dev_index < devices.size())
             {
-                _midi_port = juce::MidiInput::openDevice(_at_dev_index, this);
+                _midi_port = juce::MidiInput::openDevice(devices[_at_dev_index].identifier, this);
 
                 if (_midi_port)
                 {
@@ -401,9 +402,10 @@ class MidiOutputObject : public MidiIOObject<juce::MidiOutput>
         bool success = false;
         if (_port_name != VIRTUAL_PORT)
         {
-            if (_at_dev_index < juce::MidiOutput::getDevices().size())
+            auto devices = juce::MidiOutput::getAvailableDevices();
+            if (_at_dev_index < devices.size())
             {
-                _midi_port = juce::MidiOutput::openDevice(_at_dev_index);
+                _midi_port = juce::MidiOutput::openDevice(devices[_at_dev_index].identifier);
 
                 if (_midi_port)
                 {

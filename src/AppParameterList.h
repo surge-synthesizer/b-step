@@ -167,9 +167,8 @@ struct APPDEF_ProcessorUserData
         PLAYBACK_MODE_MONOPHON,
         PLAYBACK_MODE_MONOPHON_RETRIGGER,
         PLAYBACK_MODE_MONOPHON_EXPAND_LAST,
-
-        SPEED_DEVISOR = 2
     };
+    static constexpr int SPEED_DIVISOR = 1;
 
     static const char *const class_name;
     static const char *parameter_name(int id);
@@ -833,19 +832,9 @@ struct APPDEF_UIUserData
         LIST_SIZE
     };
 
-    enum OTHER
-    {
-        WINDOW_WIDTH = 1280,
-        WINDOW_HEIGHT = 768,
-
-        WINDOW_WIDTH_DESIGN = 1600,
-        WINDOW_HEIGHT_DESIGN = 900,
-
-        SUM_COLUMNS = 13,
-
-        SHOW_CHORDS = 0,
-        SHOW_DRUMS = 1
-    };
+    static constexpr int WINDOW_WIDTH = 1280, WINDOW_HEIGHT = 768, WINDOW_WIDTH_DESIGN = 1600,
+                         WINDOW_HEIGHT_DESIGN = 900, SUM_COLUMNS = 13, SHOW_CHORDS = 0,
+                         SHOW_DRUMS = 1;
 
     static const char *const class_name;
     static const char *parameter_name(int id);
